@@ -4,7 +4,13 @@
 
 ### Getting Started
 
-  * Follow the [getting started guide](./docs/getting-started.md) to download and run the project
+  * clone this branch
+  * ensure you have Node.js v5.0 or greater
+  * ensure you have NPM v3.3 or greater
+  * ensure you `node-gyp` prerequisites mentioned [here](https://github.com/nodejs/node-gyp)
+  * run npm install
+  * run npm start
+  * Check the react-starter-kit guide for more info or if you have further issues: [getting started guide](./docs/getting-started.md). NOTE: you do not need to download the starter-kit, it's part of our repo already
 
 ### Directory Layout
 
