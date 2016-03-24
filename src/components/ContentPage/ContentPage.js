@@ -37,6 +37,7 @@ var CommentBox = React.createClass({
   loadResourcesFromServer: function() {  
     var callback = function callback(response, textStatus, jqXHR) {
       if (httpRequest.status === 200) {
+        console.log(resources)
         resources = JSON.parse(response.srcElement.response);
         this.setState({data: resources});
       } else {
@@ -65,7 +66,7 @@ var CommentBox = React.createClass({
     return (
       <div className="shelterBox">
           <h1>Resources</h1>
-          <CommentList data={resources} />
+          <CommentList resources={resources} categories={categories} />
       </div>
     );
   }
@@ -73,16 +74,28 @@ var CommentBox = React.createClass({
 
 var CommentList = React.createClass({
   render: function() {
-    var commentNodes = this.props.data.map(function(resource) {
+    var commentNodes = this.props.resources.map(function(resource) {
       return (
         <Comment name={resource.name} key={resource.id} desc={resource.short_description}>
           {resource.short_description}
         </Comment>
       );
     });
+    
+    var categoryNodes = this.props.categories.map(function(category) {
+      return (
+        <Category name={category.name} key={category.id}>
+          This is a category
+        </Category>
+      );
+    });
+    
     return (
       <div className="commentList">
+        <h3>Resources:  </h3>
         {commentNodes}
+        <h3>Categories:  </h3>
+        {categoryNodes}
       </div>
     );
   }
@@ -94,6 +107,21 @@ var Comment = React.createClass({
     return  (
       <li className="comment">
         <p className="commentname">
+          <bold>{this.props.name} </bold> 
+          <span>{this.props.desc}</span>
+        </p>
+          {this.props.status}
+      </li>
+    );
+  }
+});
+
+var Category = React.createClass({
+
+  render: function() {
+    return  (
+      <li className="category">
+        <p className="categoryname">
           <bold>{this.props.name} </bold> 
           <span>{this.props.desc}</span>
         </p>
