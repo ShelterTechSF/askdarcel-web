@@ -10,14 +10,13 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './ContentPage.scss';
-import marked from 'graphiql/node_modules/marked/lib/marked'  
 
 var resources = [];
 var categories = [];
 var data = {};
       
 var CommentBox = React.createClass({
-    loadCategoriesFromServer: function() {  
+  loadCategoriesFromServer: function() {  
     var callback = function callback(response, textStatus, jqXHR) {
       if (httpRequest.status === 200) {
         categories = JSON.parse(response.srcElement.response);
@@ -90,10 +89,6 @@ var CommentList = React.createClass({
 });
 
 var Comment = React.createClass({
-  rawMarkup: function() {
-    // var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    //   return { __html: rawMarkup };
-  },
 
   render: function() {
     return  (
