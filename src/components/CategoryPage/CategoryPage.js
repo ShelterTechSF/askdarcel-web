@@ -16,11 +16,13 @@ var categories = [];
 var CategoryBox = React.createClass({
   loadCategoriesFromServer: function() {  
     var callback = function callback(response, textStatus, jqXHR) {
-      if (httpRequest.status === 200) {
-        categories = JSON.parse(response.srcElement.response);
-        this.setState({categories: categories});
-      } else {
-        console.log('error...');
+      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+        if (httpRequest.status === 200) {
+          categories = JSON.parse(httpRequest.responseText);
+          this.setState({categories: categories});
+        } else {
+          console.log('error...');
+        }
       }
     }.bind(this);
 
@@ -29,10 +31,6 @@ var CategoryBox = React.createClass({
     httpRequest.open('GET', tempUrl, true);
     httpRequest.onreadystatechange = callback;
     httpRequest.send(null);
-  },
-
-  getInitialState: function() {
-    return {data: []};
   },
 
   componentDidMount: function() {
