@@ -12,20 +12,20 @@
 $brand-color: #61dafb;
 
 .root {
-  background: #373277;
+  background: $darcell-blue;
   color: #fff;
 }
 
 .container {
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 15px 0;
   max-width: $max-content-width;
 }
 
 .brand {
-  color: color($brand-color lightness(+10%));
+  color: #fff;
   text-decoration: none;
-  font-size: 1.75em; /* ~28px */
+  font-size: 1.25em;
 }
 
 .brandTxt {

@@ -11,7 +11,7 @@ import React, { Component, PropTypes } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import s from './App.scss';
 import Header from '../Header';
-import ContentPage from '../ContentPage';
+import CategoryPage from '../CategoryPage';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
 
@@ -57,7 +57,9 @@ class App extends Component {
   render() {
     return !this.props.error ? (
       <div>
-        <ContentPage />
+        <Header />
+        <h2 className={'base-max-width align-center'}> Find Resources </h2>
+        <CategoryPage />
       </div>
     ) : this.props.children;
   }

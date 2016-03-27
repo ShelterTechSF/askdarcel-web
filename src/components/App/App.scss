@@ -11,7 +11,7 @@
 
 /*! React Starter Kit | MIT License | https://www.reactstarterkit.com/ */
 
-@import '../variables.scss';
+@import '../variables.scss';{}
 
 /*
  * Base styles
@@ -179,3 +179,17 @@ textarea {
     page-break-after: avoid;
   }
 }
+
+
+/*
+ * Utility Classes
+*/
+
+.base-max-width: {
+  max-width: $max-content-width;
+}
+
+.align-center {
+  text-align: center;
+}
+

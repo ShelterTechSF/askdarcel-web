@@ -15,13 +15,13 @@ var resources = [];
 var categories = [];
 var data = {};
       
-var CommentBox = React.createClass({
+var CategoryBox = React.createClass({
+  
   loadCategoriesFromServer: function() {  
     var callback = function callback(response, textStatus, jqXHR) {
       if (httpRequest.status === 200) {
         categories = JSON.parse(response.srcElement.response);
         this.setState({categories: categories});
-        console.log(categories)
       } else {
         console.log('error...');
       }
@@ -37,7 +37,6 @@ var CommentBox = React.createClass({
   loadResourcesFromServer: function() {  
     var callback = function callback(response, textStatus, jqXHR) {
       if (httpRequest.status === 200) {
-        console.log(resources)
         resources = JSON.parse(response.srcElement.response);
         this.setState({data: resources});
       } else {
@@ -57,14 +56,13 @@ var CommentBox = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('hi!')
     this.loadResourcesFromServer();
     this.loadCategoriesFromServer();
   },
 
   render: function() {
     return (
-      <div className="shelterBox">
+      <div className={s.shelterBox}>
           <h1>Resources</h1>
           <CommentList resources={resources} categories={categories} />
       </div>
@@ -136,8 +134,7 @@ class ContentPage extends Component {
 
   render() {
     return (
-      
-      <CommentBox url="/api/comments"/>
+      <CategoryBox url="/api/comments" />
     );
   }
 
