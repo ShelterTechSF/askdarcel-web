@@ -25,18 +25,28 @@
 	margin: 0 auto;
 }
 
+.category-name {
+	padding: 10px 0;
+}
+
 .category_title {
 	background-color: $darcell-light-blue;
 	color: #fff;
 	padding: 10px 5px;
+  margin: 0;
 }
 
 .category_list {
 	list-style-type: none;
 	padding-left: 5px;
-
+  margin: 0;
 }
 
 .category_list_item {
 	border-bottom: solid 1px lightgray;
+  a {
+    display: block;
+    color: #111;
+    text-decoration: none;
+  }
 }

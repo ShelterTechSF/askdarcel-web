@@ -58,7 +58,7 @@ class App extends Component {
     return !this.props.error ? (
       <div>
         <Header />
-        <h2 className={'base-max-width align-center'}> Find Resources </h2>
+        <h2 className={s['base-max-width']}> Find Resources </h2>
         <CategoryPage />
       </div>
     ) : this.props.children;

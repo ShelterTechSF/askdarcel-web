@@ -8,6 +8,7 @@
  */
 
 import React, { Component, PropTypes } from 'react';
+import Link from '../Link';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './CategoryPage.scss';
 
@@ -70,9 +71,11 @@ var Category = React.createClass({
   render: function() {
     return  (
       <li className={s.category_list_item}>
-        <p className="categoryname">
-          <bold>{this.props.name} </bold> 
-        </p>
+        <div className={s["category-name"]}>
+          <Link className={s.brand} to="/">
+            <span>{this.props.name} </span> 
+          </Link>
+        </div>
       </li>
     );
   }
