@@ -11,21 +11,9 @@ import React from 'react';
 import Resources from './Resources';
 import fetch from '../../core/fetch';
 
+
 export const path = '/resources/:id';
 export const action = async (state) => {
-  // const response = await fetch('/graphql?query={news{title,link,contentSnippet}}');
-  // const { data } = await response.json();
-  var baseUrl = /* ENV.host || */ 'http://localhost:3000/resources';
-  var queryUrl = baseUrl + '/?category_id=' + state.params.id;
-
-  fetch(queryUrl, {method: 'get'})
-  .then(function(resp){
-  	return resp.json();
-  })
-  .then(function(resp) {
-  	console.log(resp)
-  });
-  
   state.context.onSetTitle('Resources');
-  return <h1>category number {state.params.id}</h1>;
+  return <Resources categoryid={state.params.id}/>;
 };

@@ -1,30 +1,53 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Resources.scss';
+import styles from './Resources.scss';
+import ResourcesTable from '../../components/ResourcesTable';
 
-function Resources({ news }) {
-  return (
-    <div className={s.root}>
-      <h1>foobar</h1>
-    </div>
-  );
+class Resources extends React.Component {
+	constructor() {
+		super();
+		this.state = {categoryName: 'Category Name'};
+		this.category = {};
+	}
+
+	loadCategoryFromServer() {
+		//TODO: Once we have an API call to retrieve one category, set categoryName
+		// let callback = function callback(response, textStatus, jqXHR) {
+	 //      if (httpRequest.readyState === XMLHttpRequest.DONE) {
+	 //        if (httpRequest.status === 200) {
+	 //          this.category = JSON.parse(httpRequest.responseText);
+	 //          console.log(this.category);
+	 //          this.setState({categoryName: this.category.name});
+	 //        } else {
+	 //          console.log('error...');
+	 //        }
+	 //      }
+	 //    }.bind(this);
+
+	 //    let url = 'http://localhost:3000/categories?id=' + this.props.categoryid;
+	 //    let httpRequest = new XMLHttpRequest();
+	 //    httpRequest.open('GET', tempUrl, true);
+	 //    httpRequest.onreadystatechange = callback;
+	 //    httpRequest.send(null);
+
+	 //    fetch(url).then(resp => resp.json())
+		// .then(data => this.state.categoryName = data.name)
+		// .catch(e => console.log("Error retrieving category"));
+	}
+
+	componentDidMount() {
+		this.loadCategoryFromServer();
+	}
+
+	render() {
+		return (
+			<div className={styles.container}>
+				<h1>{this.state.categoryName}</h1>
+				<hr />
+				<ResourcesTable categoryid={this.props.categoryid}/>
+			</div>
+		);
+	}
 }
 
-Resources.propTypes = {
-  news: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-    contentSnippet: PropTypes.string,
-  })).isRequired,
-};
-
-export default withStyles(Resources, s);
+export default withStyles(Resources, styles);

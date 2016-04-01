@@ -12,6 +12,7 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 import s from './App.scss';
 import Header from '../Header';
 import CategoryPage from '../CategoryPage';
+import ResourcesTable from '../ResourcesTable';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
 

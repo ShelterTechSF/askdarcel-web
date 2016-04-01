@@ -9,6 +9,18 @@
 
 @import '../../components/variables.scss';
 
+h1 {
+  font-size: 34px;
+  line-height: 1.5;
+  color: #333333;
+  margin: 10.75px 0 0 0;
+}
+
+hr {
+  color: #eeeeee;
+  margin: 0 0 20px 0
+}
+
 .root {
   padding-left: 20px;
   padding-right: 20px;

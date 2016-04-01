@@ -12,6 +12,7 @@ import Router from 'react-routing/src/Router';
 import fetch from './core/fetch';
 import App from './components/App';
 import CategoryPage from './components/CategoryPage';
+import ResourcesTable from './components/ResourcesTable';
 import NotFoundPage from './components/NotFoundPage';
 import ErrorPage from './components/ErrorPage';
 
@@ -35,7 +36,7 @@ const router = new Router(on => {
     const query = `/graphql?query={content(path:"${state.path}"){path,title,content,component}}`;
     const response = await fetch(query);
     const { data } = await response.json();
-    return data && data.content && <CategoryPage {...data.content} />;
+    return data && data.content && <App {...data.content} />;
   });
 
   on('error', (state, error) => state.statusCode === 404 ?

@@ -1,0 +1,65 @@
+
+@import '../variables.scss';
+
+p {
+	margin: 0;
+}
+
+.tablecontainer {
+	width: 100%;
+	background-color: #ffffff;
+	border-radius: 4px;
+	border: solid 1px #dddddd;
+}
+
+.table {
+	display: table;
+	width: 100%;
+}
+
+.row {
+	display: table-row;
+}
+
+.tablebody > .row:hover {
+	background-color: $darcell-gray;
+	cursor: pointer;
+}
+
+.tableheader {
+	display: table-header-group;
+}
+
+.cell {
+	display: table-cell;
+	text-align: left;
+	height: 51px;
+	vertical-align: middle;
+	padding-left: 48px;
+}
+
+.preheader {
+	display: block;
+	background-color: $darcell-gray;
+	height: 40px;
+	width: 100%;
+}
+
+.preheader > p {
+	font-size: 14px;
+	line-height: 1.6;
+	color: #333333;
+	vertical-align: middle;
+	padding: 9px;
+}
+
+.tableheader p {
+	font-family: HelveticaNeue-Bold;
+	font-size: 14px;
+	line-height: 2.6;
+	color: #000000;
+}
+
+.tablebody {
+	display: table-row-group;
+}
