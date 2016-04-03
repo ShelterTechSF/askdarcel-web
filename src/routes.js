@@ -20,7 +20,7 @@ const routes = [
   require('./routes/contact'),
   require('./routes/login'),
   require('./routes/register'),
-  require('./routes/resource')
+  require('./routes/resources')
 ];
 
 const router = new Router(on => {

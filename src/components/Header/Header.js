@@ -18,7 +18,7 @@ function Header() {
     <div className={s.root}>
       <div className={s.container}>
         <Link className={s.brand} to="/">
-          <span className={s.brandTxt}>Ask Darcell</span>
+          <span className={s.brandTxt}>Ask Darcel</span>
         </Link>
       </div>
     </div>

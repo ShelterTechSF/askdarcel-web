@@ -9,9 +9,9 @@
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Resource.scss';
+import s from './Resources.scss';
 
-function Resource({ news }) {
+function Resources({ news }) {
   return (
     <div className={s.root}>
       <h1>foobar</h1>
@@ -19,7 +19,7 @@ function Resource({ news }) {
   );
 }
 
-Resource.propTypes = {
+Resources.propTypes = {
   news: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
@@ -27,4 +27,4 @@ Resource.propTypes = {
   })).isRequired,
 };
 
-export default withStyles(Resource, s);
+export default withStyles(Resources, s);

@@ -52,7 +52,7 @@ var CategoryList = React.createClass({
   
     var categoryNodes = this.props.categories.map(function(category) {
       return (
-        <Category name={category.name} key={category.id} />
+        <Category name={category.name} key={category.id} id={category.id} />
       );
     });
     
@@ -72,7 +72,7 @@ var Category = React.createClass({
     return  (
       <li className={s.category_list_item}>
         <div className={s["category-name"]}>
-          <Link className={s.brand} to="/">
+          <Link className={s.brand} to={"/resources/" + this.props.id}>
             <span>{this.props.name} </span> 
           </Link>
         </div>
