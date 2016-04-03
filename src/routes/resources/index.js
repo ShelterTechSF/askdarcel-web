@@ -25,7 +25,6 @@ export const action = async (state) => {
   .then(function(resp) {
   	console.log(resp)
   });
-  var categoryResourceEndpoint = 'http://localhost:3000/categories'
   
   state.context.onSetTitle('Resources');
   return <h1>resources {state.params.id}</h1>;
