@@ -17,7 +17,8 @@ import ErrorPage from './components/ErrorPage';
 
 const routes = [
   require('./routes/categories'),
-  require('./routes/resources')
+  require('./routes/resources'),  
+  require('./routes/resource')
 ];
 
 const router = new Router(on => {

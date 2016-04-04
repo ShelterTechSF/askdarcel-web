@@ -27,5 +27,5 @@ export const action = async (state) => {
   });
   
   state.context.onSetTitle('Resources');
-  return <h1>resources {state.params.id}</h1>;
+  return <h1>category number {state.params.id}</h1>;
 };
