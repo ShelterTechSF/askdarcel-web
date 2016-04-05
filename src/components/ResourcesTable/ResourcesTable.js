@@ -53,7 +53,6 @@ class ResourcesList extends React.Component {
 	}
 
 	render() {
-
 		let resourcesRows = this.props.resources.map(resource => {
 			return (
 				<ResourcesRow resource={resource}/>	
@@ -73,21 +72,86 @@ class ResourcesRow extends React.Component {
 		super();
 		this.state = {};
 	}
-	render() {
-		let rowClass = cx({
-			row: true
-		});
 
+	render() {
 		return (
 			<div className={styles.row}>
 				<div className={styles.cell}><p>{this.props.resource.name}</p></div>
-				<div className={styles.cell}><p>{this.props.resource.rating}</p></div>
-				<div className={styles.cell}><p>{this.props.resource.hours}</p></div>
+				<div className={styles.cell}><p>{Math.floor(Math.random()*10)%6}</p></div>
+				{buildHoursCell(this.props.resource.schedule.schedule_days)}
+				{buildAddressCell(this.props.resource.addresses)}
 				<div className={styles.cell}><p>{this.props.resource.address}</p></div>
 				<div className={styles.cell}><p>{this.props.resource.categories}</p></div>
 			</div>
 		);
 	}
 }
+
+function buildHoursCell(schedule_days) {
+	let hours = "";
+	let styles = {
+		cell: true
+	};
+	const currentDate = new Date();
+	const currentHour = currentDate.getHours();
+
+	const days = schedule_days.filter(schedule_day => {
+		console.log(schedule_day);
+		return (schedule_day && schedule_day.day == daysOfTheWeek()[currentDate.getDay()] &&
+				currentHour > schedule_day.opens_at && currentHour < schedule_day.closes_at);
+	});
+
+	if(days.length && days.length > 0) {
+		for(let i = 0; i < days.length; i++) {
+			let day = days[i];
+			hours = "open: " + timeToString(day.opens_at) + "-" + timeToString(day.closes_at);
+			if(i != days.length - 1) {
+				hours += ", ";
+			}
+		}
+	} else {
+		hours = "closed";
+		styles.closed = true;
+	}
+
+	return (
+		<div className={cx(styles)}><p>{hours}</p></div>
+	);
+}
+
+function buildAddressCell(addresses) {
+	let addressString = "";
+	if(addresses.length && addresses.length > 0) {
+		let address = addresses[0];
+		addressString += address.address_1 + ", " + address.address_2;
+	}
+
+	return <div className={cx({cell: true})}><p>{addressString}</p></div>
+}
+
+function timeToString(hours) {
+	let hoursString = "" + hours;
+	if(hours < 12) {
+		hoursString += "am";
+	} else {
+		hoursString += "pm";
+	}
+
+	return hoursString;
+}
+
+function daysOfTheWeek() {
+	return [
+		"Sunday",
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday"
+	];
+}
+
+
 
 export default withStyles(ResourcesTable, styles);
