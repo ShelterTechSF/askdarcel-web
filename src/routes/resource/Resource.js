@@ -10,6 +10,7 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Resource.scss';
+import {AddressInfo, BusinessHours, PhoneNumber, Website, Languages} from '../../components/Resource';
 
 class Resource extends React.Component {
 	constructor() {
@@ -35,7 +36,15 @@ class Resource extends React.Component {
 			<div className={styles.container}>
 				<h1>{this.state.resource.name}</h1>
 				<hr />
-				<div>meow</div>
+				<div className={styles.infocontainer}>
+					<AddressInfo addresses={this.state.resource.addresses} />
+					<BusinessHours schedule_days={this.state.resource.addresses} />
+					<PhoneNumber phones={this.state.resource.phones} />
+					<Website website={this.state.resource.website} />
+					<Languages />
+					<hr />
+					<div className={styles.label}><p>Make Edits</p></div>
+				</div>
 			</div>
 		);
 	}

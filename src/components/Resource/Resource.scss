@@ -1,0 +1,23 @@
+@import '../variables.scss';
+
+p {
+	font-size: 14px;
+	display: inline-block;
+	line-height: 1.1;
+}
+
+.wrapper {
+	margin: 10px 0 10px 0;
+}
+
+.doublelineicon {
+	font-size: 28px;
+	color: $icon-light-blue;
+	padding: 0 35px 15px 15px;
+}
+
+.wrapper > svg {
+	font-size: 28px;
+	color: $icon-light-blue;
+	padding: 0 35px 0 15px;
+}

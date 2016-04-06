@@ -103,7 +103,6 @@ function buildHoursCell(schedule_days) {
 	const currentHour = currentDate.getHours();
 
 	const days = schedule_days.filter(schedule_day => {
-		console.log(schedule_day);
 		return (schedule_day && schedule_day.day == daysOfTheWeek()[currentDate.getDay()] &&
 				currentHour > schedule_day.opens_at && currentHour < schedule_day.closes_at);
 	});
@@ -162,7 +161,5 @@ function daysOfTheWeek() {
 		"Saturday"
 	];
 }
-
-
 
 export default withStyles(ResourcesTable, styles);

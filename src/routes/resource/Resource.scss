@@ -17,3 +17,16 @@ hr {
   padding: 0 0 40px;
   max-width: $max-content-width;
 }
+
+.infocontainer {
+	width: 100%;
+	border: solid 1px #e5e5e5;
+}
+
+.label {
+  padding: 0 35px 0 15px;
+}
+
+.infocontainer > hr {
+  margin: 0;
+}
