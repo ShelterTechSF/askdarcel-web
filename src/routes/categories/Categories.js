@@ -84,7 +84,7 @@ var Category = React.createClass({
 class ContentPage extends Component {
   render() {
     return (
-      <div>
+      <div className={s.container}>
         <h1>Find Community Resources</h1>
         <CategoryBox />
       </div>
