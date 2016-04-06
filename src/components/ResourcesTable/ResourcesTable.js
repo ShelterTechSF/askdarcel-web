@@ -130,11 +130,15 @@ function buildAddressCell(addresses) {
 }
 
 function timeToString(hours) {
-	let hoursString = "" + hours;
+	let hoursString = "";
 	if(hours < 12) {
-		hoursString += "am";
+		hoursString += hours + "am";
 	} else {
-		hoursString += "pm";
+		if(hours > 12) {
+			hours -= 12;
+		}
+		
+		hoursString += hours + "pm";
 	}
 
 	return hoursString;
