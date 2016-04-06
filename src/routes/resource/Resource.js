@@ -9,16 +9,36 @@
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Resource.scss';
+import styles from './Resource.scss';
 
-function Resource(resource) {
-  console.log(resource)
-	
-  return (
-    <div className={s.root}>
-      <h1>foobar</h1>
-    </div>
-  );
+class Resource extends React.Component {
+	constructor() {
+		super();
+		this.state = {resource: {}};
+	}
+
+	loadResourceFromServer() {
+		let url = 'http://localhost:3000/resources/' + this.props.resource_id;
+		fetch(url).then(r => r.json())
+		.then(data => {
+			this.setState({resource: data});
+		})
+		.catch(e => console.log("Error retrieving resource"));
+	}
+
+	componentDidMount() {
+		this.loadResourceFromServer();
+	}
+
+	render() {
+		return (
+			<div className={styles.container}>
+				<h1>{this.state.resource.name}</h1>
+				<hr />
+				<div>meow</div>
+			</div>
+		);
+	}
 }
 
 // Resource.propTypes = {
@@ -29,4 +49,4 @@ function Resource(resource) {
 //   })).isRequired,
 // };
 
-export default withStyles(Resource, s);
+export default withStyles(Resource, styles);

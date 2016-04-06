@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ResourcesTable.scss';
 import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Location from '../../core/Location';
 
 let cx = classNames.bind(styles);
 
@@ -16,7 +17,6 @@ class ResourcesTable extends React.Component {
 		fetch(url).then(r => r.json())
 		.then(data => {
 			this.setState({resources: data});
-			console.log(this.state.resources);
 		})
 		.catch(e => console.log("Error retrieving resources"));
 	}
@@ -71,11 +71,18 @@ class ResourcesRow extends React.Component {
 	constructor() {
 		super();
 		this.state = {};
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick() {
+		//TODO: The Link class has a bunch of validations, etc. We should wrap that all in a service and just
+		//call that.
+		Location.push("/resource/" + this.props.resource.id);
 	}
 
 	render() {
 		return (
-			<div className={styles.row}>
+			<div className={styles.row} onClick={this.handleClick}>
 				<div className={styles.cell}><p>{this.props.resource.name}</p></div>
 				<div className={styles.cell}><p>{Math.floor(Math.random()*10)%6}</p></div>
 				{buildHoursCell(this.props.resource.schedule.schedule_days)}

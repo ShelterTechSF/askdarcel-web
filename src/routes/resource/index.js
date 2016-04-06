@@ -13,16 +13,15 @@ import fetch from '../../core/fetch';
 
 export const path = '/resource/:id';
 export const action = async (state) => {
-  const baseUrl = /* ENV.host || */ 'http://localhost:3000/resources';
-  const queryUrl = baseUrl + '/?resource_id=' + state.params.id;
+  // const baseUrl = /* ENV.host || */ 'http://localhost:3000/resources';
+  // const queryUrl = baseUrl + '/?resource_id=' + state.params.id;
 
-  const response = await fetch(queryUrl);
-  const resourceObj = await response.json();
+  // const response = await fetch(queryUrl);
+  // const resourceObj = await response.json();
   
   state.context.onSetTitle('Resource');
   
-  return <div>
-  			<Resource resource={resourceObj} />
-  			<h1>resource number: {state.params.id}</h1>;
-		 </div>
+  return (
+  	<Resource resource_id={state.params.id} />
+	);
 };
