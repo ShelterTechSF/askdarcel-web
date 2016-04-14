@@ -6,6 +6,15 @@ p {
 	line-height: 1.1;
 }
 
+hr {
+  color: #eeeeee;
+  margin: 0 0 20px 0
+}
+
+.section {
+  margin: 0 0 10px 0;
+}
+
 .wrapper {
 	margin: 10px 0 10px 0;
 }
@@ -16,8 +25,104 @@ p {
 	padding: 0 35px 15px 15px;
 }
 
-.wrapper > svg {
+.infocontainer {
+  width: 100%;
+  border: solid 1px #e5e5e5;
+  margin: 0 0 20px 0;
+}
+
+.infocontainer > hr {
+  margin: 0;
+}
+
+.communicationcontainer {
+  height: 64px;
+  width: 94px;
+  border: solid 1px #dddddd;
+  display: inline-block;
+}
+
+.borderleft {
+  border-right: 0;
+}
+
+.borderright {
+  border-left: 0;
+}
+
+.communicationicon {
+  font-size: 28px;
+  margin: auto;
+  color: $icon-light-gray;
+}
+
+.communicationtext {
+  font-size: 16px;
+  margin: auto;
+  display: block;
+  color: $icon-light-gray;
+}
+
+.icon {
 	font-size: 28px;
 	color: $icon-light-blue;
 	padding: 0 35px 0 15px;
+}
+
+.inactive {
+  color: $icon-light-gray;
+}
+
+.active {
+  color: $icon-light-blue;
+}
+
+.title {
+  color: #4d8ffb;
+  font-size: 14px;
+}
+
+.title:hover {
+  cursor: pointer;
+}
+
+.servicecontainer {
+  margin-bottom: 25px;
+}
+
+.hidden {
+  display: none;
+}
+
+.table {
+  display: table;
+  width: 95%;
+  border-collapse: collapse;
+}
+
+.row {
+  display: table-row;
+  border: solid 1px #dddddd;
+}
+
+.cell {
+  display: table-cell;
+  text-align: left;
+}
+
+.subjectcell {
+  width: 20%;
+}
+
+.bordercontainer {
+  width: 95%;
+  border: solid 1px #dddddd;
+}
+
+.label {
+  background-color: #f5f5f5;
+}
+
+.green {
+  background-color: #dff0d8;
 }

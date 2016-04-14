@@ -1,4 +1,5 @@
 @import '../../components/variables.scss';
+@import '../../components/Resource/Resource.scss';
 
 h1 {
   font-size: 34px;
@@ -7,9 +8,9 @@ h1 {
   margin: 10.75px 0 0 0;
 }
 
-hr {
-  color: #eeeeee;
-  margin: 0 0 20px 0
+h4 {
+  font-size: 16px;
+  margin: 10px 0 0 0;
 }
 
 .container {
@@ -18,15 +19,6 @@ hr {
   max-width: $max-content-width;
 }
 
-.infocontainer {
-	width: 100%;
-	border: solid 1px #e5e5e5;
-}
-
 .label {
   padding: 0 35px 0 15px;
-}
-
-.infocontainer > hr {
-  margin: 0;
 }
