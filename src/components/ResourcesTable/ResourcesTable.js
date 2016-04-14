@@ -88,7 +88,7 @@ class ResourcesRow extends React.Component {
 				{buildHoursCell(this.props.resource.schedule.schedule_days)}
 				{buildAddressCell(this.props.resource.addresses)}
 				<div className={styles.cell}><p>{this.props.resource.address}</p></div>
-				<div className={styles.cell}><p>{this.props.resource.categories}</p></div>
+				<div className={styles.cell}><p>meow</p></div>
 			</div>
 		);
 	}
