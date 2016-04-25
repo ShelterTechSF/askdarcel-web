@@ -87,11 +87,18 @@ class ResourcesRow extends React.Component {
 				<div className={styles.cell}><p>{Math.floor(Math.random()*10)%6}</p></div>
 				{buildHoursCell(this.props.resource.schedule.schedule_days)}
 				{buildAddressCell(this.props.resource.addresses)}
-				<div className={styles.cell}><p>{this.props.resource.address}</p></div>
-				<div className={styles.cell}><p>meow</p></div>
+				<div className={styles.cell}><p>{displayCategories(this.props.resource.categories)}</p></div>
 			</div>
 		);
 	}
+}
+
+function displayCategories(categories) {
+    let categoryNames = categories.map(category => category.name);
+    let categoryString = '';
+    categoryNames.forEach(category => categoryString += category + ', ');
+
+    return categoryString.substr(0, categoryString.length-2);
 }
 
 function buildHoursCell(schedule_days) {
