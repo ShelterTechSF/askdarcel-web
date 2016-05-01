@@ -8,50 +8,38 @@ let cx = classNames.bind(styles);
 class Services extends React.Component {
     constructor() {
         super();
-        this.state = {services: [{}]};
+        this.renderServices.bind(this);
+        this.renderServicesSection.bind(this);
     }
 
-    loadServicesFromServer() {
-        //let url = 'http://localhost:3000/resources/' + this.props.resource_id;
-        //fetch(url).then(r => r.json())
-        //    .then(data => {
-        //        this.setState({resource: data});
-        //    })
-        //    .catch(e => console.log("Error retrieving resource"));
-        this.setState({services: [
-            {
-                title: '150 Bed Shelter',
-                description: 'Service description goes here'
-            },
-            {
-                title: 'Case Management',
-                description: 'Service description goes here'
-            }
-        ]})
-    }
-
-    componentDidMount() {
-        this.loadServicesFromServer();
-    }
-
-    renderServices() {
-        return this.state.services.map(service => {
-            console.log(service);
+    renderServicesSection() {
+        if(this.props.services && this.props.services.length > 0) {
             return (
-                <Service service={service} />
+                <div>
+                    <hr />
+                    <div className={styles.innercontainer}>
+                        <h4>Services</h4>
+                        {this.renderServices(this.props.services)}
+                    </div>
+                </div>
             );
+        }
+    }
+
+    renderServices(services) {
+        return services.map(service => {
+            return <Service service={service} />
         });
     }
 
     render() {
-
         return (
             <div className={styles.infocontainer}>
-                <h4>Description</h4>
-                <p>{this.props.description}</p>
-                <hr />
-                <h4>Services</h4>
-                {this.renderServices()}
+                <div className={styles.innercontainer}>
+                    <h4>Description</h4>
+                    <p>{this.props.description}</p>
+                </div>
+                {this.renderServicesSection()}
             </div>
         );
     }
@@ -69,32 +57,31 @@ class Service extends React.Component {
 
     render() {
         let serviceInfoContainerStyles = cx({
-            servicecontainer: true,
             hidden: this.state.infoHidden
         });
 
         let applicationProcessStyles = cx({
             bordercontainer: true,
-            green: true
+            greenbg: true
         });
 
         return (
-            <div>
-                <span className={styles.title} onClick={this.toggleVisible.bind(this)}>{this.props.service.title}</span>
+            <div className={styles.servicecontainer}>
+                <span className={styles.title} onClick={this.toggleVisible.bind(this)}>{this.props.service.name}</span>
                 <div className={serviceInfoContainerStyles}>
-                    <p>{this.props.service.description}</p>
+                    <p>{this.props.service.long_description}</p>
                     <div className={styles.section}>
                         <div className={styles.table}>
-                            <ServiceEligibility subject='Eligibility' result='Families'/>
-                            <ServiceEligibility subject='Required Documents' result='None'/>
-                            <ServiceEligibility subject='Fee' result='Free'/>
+                            <ServiceEligibility subject='Eligibility' result={this.props.service.eligibility}/>
+                            <ServiceEligibility subject='Required Documents' result={this.props.service.required_documents}/>
+                            <ServiceEligibility subject='Fee' result={this.props.service.fee}/>
                         </div>
                     </div>
                     <div className={styles.section}>
-                        <div className={applicationProcessStyles}><p>Application Process:</p></div>
-                        <div className={styles.bordercontainer}><p>Application description goes here</p></div>
+                        <div className={applicationProcessStyles}><p className={styles.label}>Application Process:</p></div>
+                        <div className={styles.bordercontainer}><p className={styles.label}>{this.props.service.application_process}</p></div>
                     </div>
-                    <Notes />
+                    <Notes notes={this.props.service.notes}/>
                 </div>
             </div>
         );
@@ -121,27 +108,44 @@ class Notes extends React.Component {
     render() {
         let notesStyles = cx({
             bordercontainer: true,
-            label: true
+            graybg: true
         });
 
+        let notes = this.props.notes.map(note => {
+            return <Note note={note} />
+        });
+
+        return (
+            <div className={styles.section}>
+                <div className={notesStyles}><p className={styles.label}>Notes:</p></div>
+                <div className={styles.table}>
+                    {notes}
+                </div>
+            </div>
+        );
+    }
+}
+
+class Note extends React.Component {
+    render() {
         let notesDate = cx({
             cell: true,
             subjectcell: true
         });
 
         return (
-            <div className={styles.section}>
-                <div className={notesStyles}><p>Notes:</p></div>
-                <div className={styles.table}>
-                    <div className={styles.row}>
-                        <div className={notesDate}><p>3/24/16</p></div>
-                        <div className={styles.cell}><p>HoT Employee</p></div>
-                        <div className={styles.cell}><p>Shelter is full</p></div>
-                    </div>
-                </div>
+            <div className={styles.row}>
+                <div className={notesDate}><p>{formatDate(this.props.note.updated_at)}</p></div>
+                <div className={notesDate}><p>Employee</p></div>
+                <div className={styles.cell}><p>{this.props.note.note}</p></div>
             </div>
         );
     }
+}
+
+function formatDate(dateString) {
+    let date = new Date(dateString);
+    return (date.getMonth() + 1) + '/' + (date.getDate()) + '/' + date.getFullYear();
 }
 
 export default withStyles(Services, styles);

@@ -31,15 +31,33 @@ hr {
   margin: 0 0 20px 0;
 }
 
+.innercontainer {
+  margin: 0 10px 0 10px;
+}
+
+.center {
+  margin: 10% 0;
+}
+.center > * {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+
 .infocontainer > hr {
   margin: 0;
 }
 
 .communicationcontainer {
-  height: 64px;
-  width: 94px;
   border: solid 1px #dddddd;
+  height: 64px;
+  width: 188px;
+  margin: 0 0 20px 0;
+}
+
+.communicationcontainer > div {
   display: inline-block;
+  width: 50%;
 }
 
 .borderleft {
@@ -52,13 +70,11 @@ hr {
 
 .communicationicon {
   font-size: 28px;
-  margin: auto;
   color: $icon-light-gray;
 }
 
 .communicationtext {
   font-size: 16px;
-  margin: auto;
   display: block;
   color: $icon-light-gray;
 }
@@ -87,7 +103,7 @@ hr {
 }
 
 .servicecontainer {
-  margin-bottom: 25px;
+  margin: 10px 0 15px 0;
 }
 
 .hidden {
@@ -96,7 +112,7 @@ hr {
 
 .table {
   display: table;
-  width: 95%;
+  width: 100%;
   border-collapse: collapse;
 }
 
@@ -108,6 +124,13 @@ hr {
 .cell {
   display: table-cell;
   text-align: left;
+  vertical-align: middle;
+}
+
+.cell > p,
+.label {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .subjectcell {
@@ -115,14 +138,14 @@ hr {
 }
 
 .bordercontainer {
-  width: 95%;
+  width: 100%;
   border: solid 1px #dddddd;
 }
 
-.label {
+.graybg {
   background-color: #f5f5f5;
 }
 
-.green {
+.greenbg {
   background-color: #dff0d8;
 }

@@ -23,25 +23,19 @@ class CommunicationBoxes extends React.Component {
             active: this.isPhone
         });
 
-        let websiteContainer = cx({
-            communicationcontainer: true,
-            borderleft: true
-        });
-
-        let phoneContainer = cx({
-            communicationcontainer: true,
-            borderright: true
-        });
-
         return (
-            <div>
-                <div className={websiteContainer}>
-                    <MdPublic className={iconStyle}/>
-                    <p className={textStyle}>Website</p>
+            <div className={styles.communicationcontainer}>
+                <div>
+                    <div className={styles.center}>
+                        <MdPublic className={iconStyle}/>
+                        <p className={textStyle}>Website</p>
+                    </div>
                 </div>
-                <div className={phoneContainer}>
-                    <MdLocalPhone className={iconStyle}/>
-                    <p className={textStyle}>Phone</p>
+                <div>
+                    <div className={styles.center}>
+                        <MdLocalPhone className={iconStyle}/>
+                        <p className={textStyle}>Phone</p>
+                    </div>
                 </div>
             </div>
         );

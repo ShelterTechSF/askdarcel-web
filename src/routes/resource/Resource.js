@@ -39,7 +39,7 @@ class Resource extends React.Component {
 				<h1>{this.state.resource.name}</h1>
 				<hr />
                 <CommunicationBoxes />
-                <Services description={this.state.resource.long_description}/>
+                <Services description={this.state.resource.long_description} services={this.state.resource.services}/>
 				<div className={styles.infocontainer}>
 					<AddressInfo addresses={this.state.resource.addresses} />
 					<BusinessHours schedule_days={this.state.resource.addresses} />
