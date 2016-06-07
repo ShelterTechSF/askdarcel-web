@@ -1,21 +1,18 @@
-
-$brand-color: #61dafb;
-
 .header_root {
-  background: $darcell-blue;
-  color: #fff;
+  background: $color-brand;
+  color: $color-white;
 }
 
 .header_container {
   margin: 0 auto;
-  padding: 15px 0;
+  padding: calc-em(15px) 0;
   max-width: $max-content-width;
 }
 
 .header_brand {
-  color: #fff;
+  color: $color-white;
   text-decoration: none;
-  font-size: 1.25em;
+  font-size: $font-size-hero;
 }
 
 .header_brandTxt {

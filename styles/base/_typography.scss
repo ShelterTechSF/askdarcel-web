@@ -1,1 +1,134 @@
-$font-family-base: 'Segoe UI', 'HelveticaNeue-Light', sans-serif;
+//////////////////////////////////////////////////////////////////////////////////////////
+// TYPEFACES
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic);
+@font-face {
+  font-family: 'Fat Frank';
+  src: url('../assets/fonts/fatfrank-free-web.woff2') format('woff2'),
+  url('../assets/fonts/fatfrank-free-web.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$font-family-base: 'Open Sans', 'HelveticaNeue', 'Arial', sans-serif;
+$font-family-hero: 'Fat Frank', 'Arial Black', 'Verdana', sans-serif;
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// FONT SIZES
+
+.font-size-hero {
+  font-size: calc-em(60px);
+  @include r_min_max($screen-xs-min, $screen-md-min) {
+    font-size: calc-em(44px);
+  }
+  @include r_max($screen-xs-min) {
+    font-size: calc-em(26px);
+  }
+}
+.font-size-largest {
+  font-size: calc-em(32px);
+  @include r_min_max($screen-xs-min, $screen-md-min) {
+    font-size: calc-em(28px);
+  }
+  @include r_max($screen-xs-min) {
+    font-size: calc-em(24px);
+  }
+}
+.font-size-large {
+  font-size: calc-em(28px);
+  @include r_min_max($screen-xs-min, $screen-md-min) {
+    font-size: calc-em(24px);
+  }
+  @include r_max($screen-xs-min) {
+    font-size: calc-em(20px);
+  }
+}
+.font-size-medium {
+  font-size: calc-em(24px);
+  @include r_min_max($screen-xs-min, $screen-md-min) {
+    font-size: calc-em(20px);
+  }
+  @include r_max($screen-xs-min) {
+    font-size: calc-em(18px);
+  }
+}
+.font-size-default {
+  font-size: calc-em($font-size);
+  font-weight: 400;
+}
+.font-size-small {
+  font-weight: 400;
+  font-size: calc-em(14px);
+  @include r_min_max($screen-xs-min, $screen-md-min) {
+    font-size: calc-em(13px);
+  }
+  @include r_max($screen-xs-min) {
+    font-size: calc-em(12px);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// FONT STYLES
+
+body {
+  line-height: 1.25;
+  font-family: $font-family-base;
+  font-weight: 400;
+  word-wrap: break-word;
+  color: $color-black;
+}
+
+h1 {
+  @extend .font-size-largest;
+  font-weight: 400;
+  hyphens: auto;
+}
+h2 {
+  @extend .font-size-large;
+  font-weight: 400;
+  font-style: italic;
+}
+h3 {
+  @extend .font-size-medium;
+  font-weight: 700;
+}
+h4 {
+  @extend .font-size-medium;
+  font-weight: 700;
+  color: $color-grey;
+}
+h5 {
+  @extend .font-size-default;
+  font-weight: 700;
+}
+p {
+  @extend .font-size-default;
+  font-weight: 400;
+}
+small {
+  @extend .font-size-small;
+}
+
+a {
+  color: $color-brand;
+  cursor: pointer;
+  &:hover {
+    color: $color-brand-dark;
+    text-decoration: underline;
+  }
+  @include transition(all .2s);
+}
+
+em {
+  font-style: italic;
+}
+strong {
+  font-weight: 700;
+}
+button{
+  font-family: $font-family-base;
+  cursor: pointer;
+}
+textarea, input{
+  font-family: $font-family-base;
+}

@@ -2,18 +2,19 @@
  * Colors
  * ========================================================================== */
 
-$white-base: hsl(255, 255, 255);
-$gray-darker: #222;        /* color(black lightness(+13.5%)) */
-$gray-dark: #404040;       /* color(black lightness(+25%)) */
-$gray: #555;               /* color(black lightness(+33.5%)) */
-$gray-light: #777;         /* color(black lightness(+46.7%)) */
-$gray-lighter: #eee;       /* color(black lightness(+93.5%)) */
+$color-brand: #116EEA;
+$color-brand-dark: #0856AD;
 
-$darcell-light-blue: #337ab7;
-$darcell-blue: #3b5999;
-$darcell-gray: #f5f5f5;
-$icon-light-blue: #4d8ffb;
-$icon-light-gray: #b1b1b1;
+$color-green: #01C270;
+$color-green-yellow: #AECA0D;
+$color-orange: #F3AE00;
+$color-red: #F93D3D;
+
+$color-white: #ffffff;
+$color-light: #f5f5f5;
+$color-grey: #818181;
+$color-dark: #444444;
+$color-black: #222222;
 
 /*
  * Layout
@@ -25,7 +26,7 @@ $max-content-width: 1000px;
  * Media queries breakpoints
  * ========================================================================== */
 
-$screen-xs-min: 480px;  /* Extra small screen / phone */
-$screen-sm-min: 768px;  /* Small screen / tablet */
-$screen-md-min: 992px;  /* Medium screen / desktop */
-$screen-lg-min: 1200px; /* Large screen / wide desktop */
+$screen-xs-min: 600px;  /* Extra small screen / phone */
+$screen-sm-min: 767px;  /* Small screen / tablet */
+$screen-md-min: 960px;  /* Medium screen / desktop */
+$screen-lg-min: 1140px; /* Large screen / wide desktop */
