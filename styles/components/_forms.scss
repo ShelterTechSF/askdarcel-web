@@ -1,0 +1,40 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// FORM ELEMENTS
+
+.form-row {
+  @include display(flex);
+  > * {
+    margin-right: calc-em(15px);
+    @include flex-grow(1);
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  > button {
+    @include flex-grow(0);
+  }
+}
+
+input[type="text"] {
+  background: $color-white;
+  border: 0;
+  border-radius: 4px;
+  height: calc-em(44px);
+  padding: calc-em(6px) calc-em(15px);
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+  display: inline-block;
+  @extend .font-size-default;
+}
+
+button {
+  border: 0;
+  border-radius: 4px;
+  height: calc-em(44px);
+  padding: calc-em(6px) calc-em(25px);
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
+  color: $color-white;
+  background: $color-green;
+  display: inline-block;
+  font-weight: 600;
+  @extend .font-size-default;
+}

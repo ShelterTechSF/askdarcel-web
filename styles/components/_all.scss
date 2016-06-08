@@ -1,11 +1,18 @@
-// All the component styles are imported
+//////////////////////////////////////////////////////////////////////////////////////////
+// COMPONENT STYLES
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// GLOBAL COMPONENTS
 @import 'app';
-@import 'categorypage';
-@import 'footer';
-@import 'header';
-@import 'largeheader';
+@import 'forms';
 @import 'navigation';
+@import 'header';
+@import 'footer';
+@import 'largeheader';
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// PAGE SPECIFIC STYLES
+@import 'categorypage';
 @import 'resource';
 @import 'resourcestable';
 @import 'map';

@@ -1,7 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // TYPEFACES
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic);
 @font-face {
   font-family: 'Fat Frank';
   src: url('../assets/fonts/fatfrank-free-web.woff2') format('woff2'),
@@ -10,7 +11,7 @@
   font-style: normal;
 }
 
-$font-family-base: 'Open Sans', 'HelveticaNeue', 'Arial', sans-serif;
+$font-family-base: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
 $font-family-hero: 'Fat Frank', 'Arial Black', 'Verdana', sans-serif;
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -71,11 +72,19 @@ $font-family-hero: 'Fat Frank', 'Arial Black', 'Verdana', sans-serif;
 // FONT STYLES
 
 body {
+  @extend .font-size-default;
   line-height: 1.25;
   font-family: $font-family-base;
   font-weight: 400;
   word-wrap: break-word;
   color: $color-black;
+}
+
+.h1-hero {
+  @extend .font-size-hero;
+  font-family: $font-family-hero;
+  line-height: 1.2;
+  color: $color-white;
 }
 
 h1 {
@@ -131,4 +140,13 @@ button{
 }
 textarea, input{
   font-family: $font-family-base;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// MATERIAL ICONS
+
+.material-icons {
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
 }

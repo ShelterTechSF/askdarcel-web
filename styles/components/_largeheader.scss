@@ -1,46 +1,28 @@
-.largeheader_background {
-  background-position: right;
-}
+//////////////////////////////////////////////////////////////////////////////////////////
+// HERO
 
-#largeheader_content {
-  height: inherit;
-  margin-bottom: 40px;
-}
-
-#largeheader_searchbutton {
-  color: white;
-  background-color: #01c270;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-}
-
-.navbar-brand > img {
-  width: 160px;
-}
-
-
-.largeheader_centerText {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  font-size: 48px;
-  line-height: 1.2;
-  color: #ffffff;
-  width: 100%;
-  text-align: center;
-  font-family: 'Fat Frank';
-  font-weight: 700;
-}
-
-@media only screen and (max-width: 768px) {
-    .largeheader_centerText {
-        font-size: 24px;
+.header-large {
+  .push {
+    height: $navigation-height;
+  }
+  .hero {
+    width: 100vw;
+    height: calc-em(450px);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: calc-em(85px) 0;
+    h1 {
+      @extend .h1-hero;
+      text-align: center;
     }
-}
-
-.largeheader_searchBox {
-  width: 100%;
-  text-align: center;
-  font-family: 'Open Sans';
-  font-weight: 700;
-  font-size: 14px;
-  color: #ffffff;
+  }
+  .search-container {
+    max-width: calc-em(800px);
+    width: 90%;
+    margin: calc-em(40px) auto 0;
+  }
+  input, button {
+    height: calc-em(60px);
+  }
 }

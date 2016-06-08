@@ -10,9 +10,9 @@
 }
 
 .header_brand {
+  @extend .font-size-hero;
   color: $color-white;
   text-decoration: none;
-  font-size: $font-size-hero;
 }
 
 .header_brandTxt {

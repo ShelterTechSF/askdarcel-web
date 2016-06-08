@@ -1,37 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// NAVIGATION
 
-.nav_root {
-  margin: 0;
+$navigation-height: calc-em(80px);
+
+.navbar {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: $navigation-height;
+  background: $color-brand;
+  padding: calc-em(15px) calc-em(20px);
 }
 
-.nav_link {
-  display: inline-block;
-  padding: 3px 8px;
-  text-decoration: none;
-  font-size: 1.125em; /* ~18px */
-}
-
-.nav_link,
-.nav_link:active,
-.nav_link:visited {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.nav_link:hover {
-  color: rgba(255, 255, 255, 1);
-}
-
-.nav_highlight {
-  margin-right: 8px;
-  margin-left: 8px;
-  border-radius: 3px;
-  background: rgba(0, 0, 0, 0.15);
-  color: #fff;
-}
-
-.nav_highlight:hover {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.nav_spacer {
-  color: rgba(255, 255, 255, 0.3);
+.navbar-brand {
+  img {
+    height: calc-em(44px);
+    width: auto;
+  }
 }
