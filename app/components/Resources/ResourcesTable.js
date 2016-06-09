@@ -25,7 +25,7 @@ class ResourcesTable extends Component {
 		let url = '/api/resources?category_id=' + categoryid;
 		fetch(url).then(r => r.json())
 		.then(data => {
-			this.setState({resources: data});
+			this.setState({resources: data.resources});
 		});
 	}
 
