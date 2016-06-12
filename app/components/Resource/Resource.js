@@ -16,7 +16,7 @@ class Resource extends React.Component {
 		let url = '/api/resources/' + resourceID;
 		fetch(url).then(r => r.json())
 		.then(data => {
-			this.setState({resource: data});
+			this.setState({resource: data.resource});
 		})
 		;
 	}

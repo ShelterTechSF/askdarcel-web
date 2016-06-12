@@ -34,7 +34,7 @@ class ResourcesTable extends Component {
 		let url = '/api/resources?category_id=' + categoryid;
 		fetch(url).then(r => r.json())
 		.then(data => {
-			this.setState({resources: data, currentResources: data.slice(0,9)});
+			this.setState({resources: data.resources, currentResources: data.resources.slice(0,9)});
 		});
 	}
 
