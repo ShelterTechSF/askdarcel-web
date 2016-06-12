@@ -23,10 +23,6 @@ server {
         proxy_redirect off;
     }
 
-    location /assets/ {
-        try_files /$uri =404;
-    }
-
     location ~ ^/dist/(.*)$ {
         try_files /$1 /robots.txt =404;
     }

@@ -1,8 +1,6 @@
 FROM nginx:1.10
 
-COPY build/public /app/askdarcel
-COPY assets /app/askdarcel/assets
-COPY index.html /app/askdarcel/index.html
+COPY build /app/askdarcel
 
 RUN apt-get update && apt-get -y install ruby && gem install tiller
 

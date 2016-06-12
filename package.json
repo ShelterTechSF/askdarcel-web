@@ -16,6 +16,8 @@
     "express": "4.13.4",
     "file-loader": "^0.8.5",
     "history": "2.0.1",
+    "html-webpack-plugin": "^2.19.0",
+    "image-webpack-loader": "^1.8.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-router": "^2.4.0",
@@ -26,6 +28,7 @@
     "babel-loader": "^6.2.4",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
+    "extended-define-webpack-plugin": "^0.1.0",
     "node-sass": "^3.7.0",
     "react-icons": "^2.0.1",
     "sass-loader": "^3.2.0",
@@ -37,7 +40,7 @@
     "test": "echo 'Yee-haw!'",
     "postinstall": "npm run build",
     "build": "webpack",
-    "dev": "webpack-dev-server --hot --inline --open"
+    "dev": "webpack-dev-server --hot --inline --open --content-base build"
   },
   "repository": {
     "type": "git",
