@@ -18,13 +18,13 @@
   .category-item {
     width: calc-em(140px);
     height: calc-em(140px);
+    border-radius: 4px;
     @include transition(all 200ms ease-in-out);
     &:hover {
       background: $color-light;
     }
     @include r_max($screen-xs-min) {
       border: 1px solid $color-light;
-      border-radius: 4px;
       width: 100%;
       height: calc-em(60px);
     }

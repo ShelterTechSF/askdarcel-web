@@ -31,7 +31,7 @@ class ResourcesTable extends Component {
 
 	getLocationGoogle() {
 		// Results are not very accurate
-		let url = 'https://www.googleapis.com/geolocation/v1/geolocate?key= AIzaSyBrt0fmU5Iarh0LdqEDp6bjMIqEOQB2hqU'; 
+		let url = 'https://www.googleapis.com/geolocation/v1/geolocate?key= AIzaSyBrt0fmU5Iarh0LdqEDp6bjMIqEOQB2hqU';
 		fetch(url, {method: 'post'}).then(r => r.json())
 		.then(data => {
 			this.setState({location: data.location});
@@ -76,11 +76,26 @@ class ResourcesTable extends Component {
 		}
 
 		this.loadResourcesFromServer();
-		
+
 	}
 
 	render() {
-		return !this.state.resources.length || !this.state.location ? <div>Loading...</div> : (
+		return !this.state.resources.length || !this.state.location ? <div className="loader">
+      <div className="sk-fading-circle">
+        <div className="sk-circle1 sk-circle"></div>
+        <div className="sk-circle2 sk-circle"></div>
+        <div className="sk-circle3 sk-circle"></div>
+        <div className="sk-circle4 sk-circle"></div>
+        <div className="sk-circle5 sk-circle"></div>
+        <div className="sk-circle6 sk-circle"></div>
+        <div className="sk-circle7 sk-circle"></div>
+        <div className="sk-circle8 sk-circle"></div>
+        <div className="sk-circle9 sk-circle"></div>
+        <div className="sk-circle10 sk-circle"></div>
+        <div className="sk-circle11 sk-circle"></div>
+        <div className="sk-circle12 sk-circle"></div>
+      </div>
+    </div> : (
 			<div className="resourcetable_main">
 			  <div className="row">
 					<div className="col-xs-12 col-md-5">
@@ -121,7 +136,7 @@ class ResourcesList extends Component {
 		let location = this.props.location;
 		let resourcesRows = this.props.resources.map((resource, index) => {
 			return (
-				<ResourcesRow resource={resource} key={index} number={index + 1} location={location || {}}/>	
+				<ResourcesRow resource={resource} key={index} number={index + 1} location={location || {}}/>
 			);
 		});
 
@@ -294,7 +309,7 @@ function timeToString(hours) {
 		if(hours > 12) {
 			hours -= 12;
 		}
-		
+
 		hoursString += hours + "pm";
 	}
 
