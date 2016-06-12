@@ -1,12 +1,16 @@
-.footer_container {
-  height: inherit;
-  text-align: center;
-  margin: 0 auto;
-  max-width: $max-content-width;
-}
+//////////////////////////////////////////////////////////////////////////////////////////
+// SITE FOOTER
 
-.footer_text {
-  font-family: 'Open Sans';
-  font-size: 14px;
-  color: #818181;
+.site-footer {
+  @extend .base-max-width;
+  color: $color-grey;
+  text-align: center;
+  margin: calc-em(25px) auto;
+  a {
+    color: $color-grey;
+  }
+  ul {
+    display: inline-block;
+    text-align: left;
+  }
 }

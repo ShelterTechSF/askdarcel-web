@@ -31,3 +31,11 @@ button {
   font-weight: 600;
   @extend .font-size-default;
 }
+
+.search {
+  @include r_max($screen-xs-min) {
+    span {
+      display: none;
+    }
+  }
+}

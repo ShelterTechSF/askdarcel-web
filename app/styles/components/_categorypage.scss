@@ -32,25 +32,31 @@
 
   .category-button {
     display: block;
-    padding: calc-em(25px) 0 0 0;
+    padding: calc-em(25px) 0;
+    .category-button-icon {
+      margin-bottom: calc-em(10px);
+    }
     img {
       width: auto;
       height: calc-em(50px);
-      margin-bottom: calc-em(10px);
     }
     .category-button-title {
       word-break: keep-all;
       @include r_max($screen-xs-min) {
         display: inline-block;
+        vertical-align: middle;
       }
     }
     @include r_max($screen-xs-min) {
-      padding: calc-em(14px) calc-em(25px) 0;
+      padding: calc-em(14px) calc-em(25px);
       text-align: left;
-      img {
-        height: calc-em(30px);
+      .category-button-icon {
         margin: 0 calc-em(25px) 0 0;
         display: inline-block;
+        width: calc-em(35px);
+      }
+      img {
+        height: calc-em(30px);
       }
     }
   }
