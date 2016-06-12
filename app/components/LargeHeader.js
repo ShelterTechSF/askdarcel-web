@@ -8,11 +8,11 @@ function LargeHeader() {
     <header className="header-large">
       <nav className="navbar navbar-default" role="navigation">
         <a className="navbar-brand" href="#">
-          <img src={'assets/images/logo-small-white@3x.png'} alt="Ask Darcel"/>
+          <img src={smallLogo} alt="Ask Darcel"/>
         </a>
       </nav>
       <div className="push"></div>
-      <div className="hero" style={{backgroundImage: 'url(' + 'assets/images/bg.png' +')'}} role="banner">
+      <div className="hero" style={{backgroundImage: 'url(' + bgImage +')'}} role="banner">
         <h1>
           Find the best community<br />
           resources for your needs
