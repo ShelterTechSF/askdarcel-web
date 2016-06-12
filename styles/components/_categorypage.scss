@@ -1,89 +1,58 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// HOME PAGE CATEGORY LIST
 
-.category_root {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.container {
-  margin: 0 auto;
-  height: inherit;
-  padding: 20px 0 40px;
-  max-width: $max-content-width;
-}
-
-.category_shelterBox {
-	max-width: $max-content-width;
-	margin: 0 auto;
-}
-
-.category-name {
+.category-list {
   text-align: center;
-  float: left;
-  width: 140px;
-  font-family: 'Open Sans';
-  font-size: 16px;
-  color: #191919;
+  margin: calc-em(30px) auto;
+
+  header {
+    margin-bottom: calc-em(25px);
+  }
+
+  .category-items {
+    @extend .flex-row-center;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .category-item {
+    width: calc-em(140px);
+    height: calc-em(140px);
+    @include transition(all 200ms ease-in-out);
+    &:hover {
+      background: $color-light;
+    }
+    @include r_max($screen-xs-min) {
+      border: 1px solid $color-light;
+      border-radius: 4px;
+      width: 100%;
+      height: calc-em(60px);
+    }
+  }
+
+  .category-button {
+    display: block;
+    padding: calc-em(25px) 0 0 0;
+    img {
+      width: auto;
+      height: calc-em(50px);
+      margin-bottom: calc-em(10px);
+    }
+    .category-button-title {
+      word-break: keep-all;
+      @include r_max($screen-xs-min) {
+        display: inline-block;
+      }
+    }
+    @include r_max($screen-xs-min) {
+      padding: calc-em(14px) calc-em(25px) 0;
+      text-align: left;
+      img {
+        height: calc-em(30px);
+        margin: 0 calc-em(25px) 0 0;
+        display: inline-block;
+      }
+    }
+  }
 }
 
-.category_brand > img {
-  display: block;
-  margin: auto;
-  height: 50px;
-}
-
-.category_title {
-	background-color: $color-brand;
-	color: #fff;
-	padding: 10px 5px;
-  margin: 0;
-  width: 100%;
-}
-
-.category_option {
-  margin-top: 20px;
-  font-family: 'Open Sans';
-  font-size: 16px;
-  text-align: center;
-  color: #191919;
-}
-
-.category_button {
-  width: 100%;
-  height: 60px;
-  text-align: left;
-}
-.category_button_text {
-  float: left;
-}
-
-.category_list {
-	list-style-type: none;
-	padding-left: 5px;
-  margin: 0;
-  line-height: 2.25em;
-}
-
-.browseCategoriesText {
-  text-align: center;
-  font-family: 'Open Sans';
-  font-size: 16px;
-  color: #818181;
-  margin-bottom: 20px;
-}
-
-.category_xs_text {
-  text-align: left;
-  font-family: 'Open Sans';
-  font-size: 16px;
-  color: #191919;
-}
-
-.category_xs_button_image {
-  height: 100%;
-}
-
-.category_xs_button_image > img {
-  display: block;
-  margin: auto;
-  height: 50px;
-}

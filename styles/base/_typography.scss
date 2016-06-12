@@ -71,7 +71,7 @@ $font-family-hero: 'Fat Frank', 'Arial Black', 'Verdana', sans-serif;
 //////////////////////////////////////////////////////////////////////////////////////////
 // FONT STYLES
 
-body {
+html, body {
   @extend .font-size-default;
   line-height: 1.25;
   font-family: $font-family-base;

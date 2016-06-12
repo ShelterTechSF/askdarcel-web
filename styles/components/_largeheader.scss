@@ -4,6 +4,9 @@
 .header-large {
   .push {
     height: $navigation-height;
+    @include r_max($screen-xs-min) {
+      height: $navigation-height-small;
+    }
   }
   .hero {
     width: 100vw;
@@ -12,17 +15,30 @@
     background-repeat: no-repeat;
     background-size: cover;
     padding: calc-em(85px) 0;
+    @include r_max($screen-xs-min) {
+      height: calc-em(250px);
+      padding: calc-em(30px);
+    }
     h1 {
       @extend .h1-hero;
       text-align: center;
     }
   }
   .search-container {
-    max-width: calc-em(800px);
-    width: 90%;
+    @extend .base-max-width;
     margin: calc-em(40px) auto 0;
   }
   input, button {
     height: calc-em(60px);
+  }
+  .location-field {
+    max-width: calc-em(240px);
+    background-repeat: no-repeat;
+    // background-image: url(../assets/images/ic-location.png);
+    background-size: 18px 18px;
+    background-position: center left;
+    @include r_max($screen-xs-min) {
+      display:none;
+    }
   }
 }

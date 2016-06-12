@@ -2,6 +2,7 @@
 // NAVIGATION
 
 $navigation-height: calc-em(80px);
+$navigation-height-small: calc-em(60px);
 
 .navbar {
   z-index: 1000;
@@ -9,15 +10,25 @@ $navigation-height: calc-em(80px);
   top: 0;
   left: 0;
   right: 0;
-  width: 100vw;
+  width: 100%;
   height: $navigation-height;
   background: $color-brand;
   padding: calc-em(15px) calc-em(20px);
+  @include r_max($screen-xs-min) {
+    height: $navigation-height-small;
+  }
 }
 
 .navbar-brand {
+  @include r_max($screen-xs-min) {
+    display: block;
+    text-align: center;
+  }
   img {
     height: calc-em(44px);
     width: auto;
+    @include r_max($screen-xs-min) {
+      height: calc-em(24px);
+    }
   }
 }
