@@ -5,12 +5,17 @@
   @extend .base-max-width;
   color: $color-grey;
   text-align: center;
-  margin: calc-em(25px) auto;
+  padding: calc-em(25px) 0;
   a {
     color: $color-grey;
   }
   ul {
     display: inline-block;
-    text-align: left;
+    text-align: center;
+    > li {
+      text-align: left;
+      display :inline-block;
+      margin: calc-em(5px) calc-em(15px);
+    }
   }
 }

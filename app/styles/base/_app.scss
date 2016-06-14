@@ -1,6 +1,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // HELPER BASE STYLES
 
+html {
+  background: $color-brand;
+}
+
+body {
+  background: $color-white;
+}
+
 ::-moz-selection {
   background: $color-brand-light;
 }

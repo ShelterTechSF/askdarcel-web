@@ -54,10 +54,20 @@ $font-family-hero: 'Fat Frank', 'Arial Black', 'Verdana', sans-serif;
   }
 }
 .font-size-default {
-  font-size: calc-em($font-size);
+  font-size: calc-em(18px);
   font-weight: 400;
 }
 .font-size-small {
+  font-weight: 400;
+  font-size: calc-em(16px);
+  @include r_min_max($screen-xs-min, $screen-md-min) {
+    font-size: calc-em(14px);
+  }
+  @include r_max($screen-xs-min) {
+    font-size: calc-em(13px);
+  }
+}
+.font-size-tiny {
   font-weight: 400;
   font-size: calc-em(14px);
   @include r_min_max($screen-xs-min, $screen-md-min) {
@@ -72,7 +82,7 @@ $font-family-hero: 'Fat Frank', 'Arial Black', 'Verdana', sans-serif;
 // FONT STYLES
 
 html, body {
-  @extend .font-size-default;
+  font-size: $font-size;
   line-height: 1.25;
   font-family: $font-family-base;
   font-weight: 400;
@@ -148,5 +158,5 @@ textarea, input{
 .material-icons {
   vertical-align: middle;
   position: relative;
-  top: -1px;
+  top: -2px;
 }

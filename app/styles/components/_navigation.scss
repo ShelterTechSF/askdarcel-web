@@ -20,15 +20,41 @@ $navigation-height-small: calc-em(60px);
 }
 
 .navbar-brand {
-  @include r_max($screen-xs-min) {
-    display: block;
-    text-align: center;
-  }
+  display: inline-block;
+  margin-right: calc-em(25px);
+  position: relative;
+  top: calc-em(-4px);
   img {
     height: calc-em(44px);
     width: auto;
     @include r_max($screen-xs-min) {
       height: calc-em(24px);
     }
+  }
+  @include r_max($screen-xs-min) {
+    display: block;
+    text-align: center;
+  }
+}
+
+.nav-search {
+  display: inline-block;
+  @include r_max($screen-xs-min) {
+    display: none;
+  }
+  .search-field {
+    background-repeat: no-repeat;
+    background-image: url(../assets/images/ic-search.png);
+    background-size: 18px 18px;
+    background-position: calc-em(15px) center;
+    padding-left: calc-em(45px);
+    width: calc-em(300px);
+  }
+}
+
+.push {
+  height: $navigation-height;
+  @include r_max($screen-xs-min) {
+    height: $navigation-height-small;
   }
 }

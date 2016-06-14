@@ -2,12 +2,6 @@
 // HERO
 
 .header-large {
-  .push {
-    height: $navigation-height;
-    @include r_max($screen-xs-min) {
-      height: $navigation-height-small;
-    }
-  }
   .hero {
     width: 100%;
     height: calc-em(450px);

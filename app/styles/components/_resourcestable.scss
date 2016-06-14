@@ -1,131 +1,211 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // RESOURCE TABLE STYLESs
 
-.resourcetable_main {
-	font-family: OpenSans;
+.results {
+  width: 100%;
+  height: calc(100vh - #{$navigation-height});
+  max-height: calc(100vh - #{$navigation-height});
+  overflow: hidden;
+  @include display(flex);
 
-	.resourcetable_filter li{
-	  margin: 1em;
-	}
+  .map {
+    height: calc(100vh - #{$navigation-height});
+    max-height: calc(100vh - #{$navigation-height});
+    @include flex(1 1 auto);
+    position: relative;
+    z-index: 1;
+    @include r_max($screen-xs-min) {
+      display: none;
+    }
+  }
 }
 
-.resourcetable_entry {
-	border-bottom: 1px solid #474747;
-	color: #111;
-	font-family: OpenSans;
+.results-table {
+  max-width: calc-em(650px);
+  width: 100%;
+  height: calc(100vh - #{$navigation-height});
+  max-height: calc(100vh - #{$navigation-height});
+  @include flex(0 0 auto);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+  @include display(flex);
+  @include flex-direction(column);
 
-	img {
-	  margin: 10px;
-	  border-radius: 4px;
-	}
-
-	.resourcetable_general_info {
-	  div {
-      display: block;
-	  }
-	}
-
-	.resourcetable_name {
-	  margin-top: 10px;
-	  font-weight: bold;
-	  font-size: 16px;
-	  color: #116eea;
-	  float: left;
-	}
-
-	.resourcetable_address {
-		font-size: 14px;
-		color: #818181;
-		clear: left;
-	}
-
-	.resourcetable_reviewbox {
-	  width: 3em;
-	  height: 2em;
-	  color: #fff;
-    padding-top: 0.5em;
-    margin-top: 10px;
-	  background-color: #aeca0d;
-	  border-radius: 4px;
-	}
-
-	.resourcetable_subtext p {
-	  height: 19px;
-	  font-size: 14px;
-		color: #474747;
-		margin-left: 10px;
-		display: block;
-	}
-
-	button {
-	  font-weight: bold;
-	}
-
+  header {
+    @include flex(0 0 auto);
+    padding: calc-em(20px);
+    display: table;
+    width: 100%;
+    .title {
+      display: inline-block;
+      font-weight: 600;
+    }
+    .results-count {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: right;
+    }
+  }
 }
 
-resourcetable_hours:hover {
-	  text-decoration: none;
-	}
-
-.resourcetable_entry:hover {
-	border: 1px solid #000;
-	cursor: pointer;
-	text-decoration: none;
+.results-filters {
+  @include flex(0 0 auto);
+  background: $color-light-grey;
+  padding: calc-em(20px);
+  font-weight: 600;
+  color: $color-grey;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+  li {
+    display: inline-block;
+    margin-right: calc-em(15px);
+    .filters-button {
+      color: $color-grey;
+      border: 1px solid $color-medium-grey;
+      background: $color-white;
+      border-radius: 4px;
+      padding: calc-em(8px) calc-em(12px);
+      text-decoration: none;
+      &:hover {
+        opacity: 0.35;
+      }
+      &.disabled {
+        opacity: 0.35;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
 }
 
-.resourcetable_preheader {
-  padding-top: 15px;
-	.resourcetable_title {
-		font-family: OpenSans-Bold;
-		font-size: 24px;
-		color: #818181;
-	}
+.results-table-body {
+  overflow: scroll;
+  @include flex(1 1 auto);
 }
 
-.resourcetable_filter {
-	height: 3em;
-	background-color: #f2f2f2;
-
-	ul {
-
-		li {
-		  font-family: OpenSans-Bold;
-			font-size: 14px;
-			color: #818181;
-			&:hover {
-			  cursor: pointer;
-			  border: 1px solid #818181;
-		  }
-		}
-	}
+.results-table-entry {
+  @include transition(all 200ms);
+  border-left: calc-em(7px) solid $color-white;
+  &:hover {
+    border-left: calc-em(7px) solid $color-brand;
+  }
+  & > a {
+    @include display(flex);
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
-.resourcetable_tableheader p {
-	font-family: HelveticaNeue-Bold;
-	font-size: 14px;
-	line-height: 2.6;
-	color: #000000;
+.entry-photo-rating {
+  @include flex(0 0 auto);
+  width: calc-em(120px);
+  padding: calc-em(25px) calc-em(15px) calc-em(25px) calc-em(13px);
+
+  .entry-img {
+    width: 100%;
+    @include aspect-ratio(1, 1);
+    border-radius: 4px 4px 0 0;
+    background: $color-light-grey;
+  }
+
+  .entry-rating {
+    width: 100%;
+    border-radius: 0 0 4px 4px;
+    text-align: center;
+    padding: calc-em(5px) 0;
+    color: $color-white;
+    &.excellent {
+      background: $color-green;
+    }
+    &.above-average {
+      background: $color-green-yellow;
+    }
+    &.average {
+      background: $color-orange;
+    }
+    &.below-average {
+      background: $color-red;
+    }
+    i {
+      display: inline-block;
+      margin-right: calc-em(5px);
+    }
+    span {
+      display: inline-block;
+      @extend .font-size-default;
+      font-weight: 700;
+    }
+  }
 }
 
-.resourcetable_closed {
-	color: red;
+.entry-details {
+  padding: calc-em(25px) calc-em(20px) calc-em(25px) 0;
+  @include flex(1 1 auto);
+  color: $color-grey;
+
+  .entry-title {
+    color: $color-brand;
+    font-weight: 600;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.2em;
+    /* max-height = line-height (1.2) * lines max number (3) */
+    max-height: 2.4em;
+    text-align: left;
+    margin-right: -1em;
+    padding-right: 1em;
+  }
+
+  .entry-organization {
+    padding: calc-em(3px) 0;
+  }
+
+  .entry-meta {
+    @extend .font-size-small;
+    padding: 0 0 calc-em(10px) 0;
+  }
+
+  .entry-actions {
+    border-top: 1px solid $color-light-grey;
+    padding-top: calc-em(10px);
+  }
 }
 
-.col-md-5 {
-	padding: 0;
+.quote {
+  background: $color-brand-verylight;
+  border-radius: 4px;
+  padding: calc-em(10px);
+  @extend .flex-row-left;
+  margin-bottom: calc-em(10px);
 }
 
-.row {
-	margin: 0;
+.quote-img {
+  @include aspect-ratio(1, 1);
+  width: calc-em(36px);
+  height: calc-em(36px);
+  background: $color-light-grey;
+  border-radius: 4px;
+  @include flex(0 0 auto);
+  margin-right: 8px;
 }
 
-.container-fluid {
-	padding: 0;
-	div {
-	    padding-right: 0;
-	    padding-left: 0;
-	    div {
-	      padding: 0;
-	    }
-	  }
+.quote-meta {
+  @extend .font-size-small;
+  margin-bottom: calc-em(1px);
+}
+.quote-text {
+  @extend .font-size-default;
+  color: $color-dark-grey;
+}
+
+.pagination {
+  padding: calc-em(30px) calc-em(20px);
+  .pagination-count {
+    @extend .font-size-small;
+    color: $color-grey;
+    margin-bottom: calc-em(10px);
+  }
 }

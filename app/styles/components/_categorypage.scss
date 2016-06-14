@@ -21,10 +21,10 @@
     border-radius: 4px;
     @include transition(all 200ms ease-in-out);
     &:hover {
-      background: $color-light;
+      background: $color-light-grey;
     }
     @include r_max($screen-xs-min) {
-      border: 1px solid $color-light;
+      border: 1px solid $color-light-grey;
       width: 100%;
       height: calc-em(60px);
     }
@@ -33,6 +33,9 @@
   .category-button {
     display: block;
     padding: calc-em(25px) 0;
+    &:hover {
+      text-decoration: none;
+    }
     .category-button-icon {
       margin-bottom: calc-em(10px);
     }
