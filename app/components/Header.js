@@ -7,7 +7,7 @@ function Header() {
   return (
 	<header>
     <nav className="navbar" role="navigation">
-      <a className="navbar-brand" href="#">
+      <a className="navbar-brand" href="/">
         <img src={images.logoSmall} alt="Ask Darcel"/>
       </a>
       <div className="nav-search">
