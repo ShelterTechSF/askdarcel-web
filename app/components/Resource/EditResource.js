@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import linkedState from 'react-link';
 import Loader from '../Loader';
 import EditServices from './EditServices';
+import EditPhones from './EditPhones';
+import EditAddress from './EditAddress';
 
 
 class EditResource extends Component {
@@ -14,8 +16,11 @@ class EditResource extends Component {
 
 		this.resource = null;
 
-		this.renderServices = this.renderServices.bind(this);
-		this.updateService = this.updateService.bind(this);
+		this.handleServicesChange = this.handleServicesChange.bind(this);
+		this.handleFieldChange = this.handleFieldChange.bind(this);
+		this.handleAddressChange = this.handleAddressChange.bind(this);
+		this.handleNestedChange = this.handleNestedChange.bind(this);
+		this.submitResource = this.submitResource.bind(this);
 	}
 
 	loadResourceFromServer() {
@@ -36,9 +41,9 @@ class EditResource extends Component {
 				postal_code: '12152-5338',
 				state_province: "CA"
 			},
-			phones: {
+			phones: [{
 				number: "(415) 911-9111"
-			},
+			}],
 			website: "www.google.com",
 			services: [
 				{
@@ -68,46 +73,50 @@ class EditResource extends Component {
 		this.loadResourceFromServer();
 	}
 
-	updateService(index, value) {
-		let services = this.state.services;
-		services[index].long_description = value;
-		
-		this.setState({ services: services });
-		console.log(this.state);
+	
+
+	handleFieldChange(e) {
+		let resource = this.state.resource;
+		resource[e.target.dataset.field] = e.target.value;
+		this.setState({resource: resource});
 	}
 
-	renderServices() {
-		let servicesArray = [];
-		for(let i = 0; i < this.state.services.length; i++) {
-			servicesArray.push(<EditServices key={i} index={i} service= {this.state.services[i]} onBlur={this.updateService} />);
-		}
+	handleAddressChange(address) {
+		let resource = this.state.resource;
+		resource.address = address;
+		this.setState({resource: resource});
+	}
 
-		return servicesArray;
+	handleServicesChange(services) {
+		let resource = this.state.resource;
+		resource.services = services;
+		this.setState({resource: resource});
+	}
+
+	handleNestedChange(field, obj) {
+		let resource = this.state.resource;
+		resource[field] = obj;
+		this.setState({resource: resource});
+	}
+
+	submitResource() {
+		console.log(this.state.resource);
 	}
 
 	render() {
 		return ( !this.state.resource ? <Loader /> :
 			<div>
+				<button type='button' className='btn btn-primary' onClick={this.submitResource}>Meow</button>
 				<div>Name</div>
-				<textarea valueLink={linkedState(this, 'name')} />
-				<div>Description</div>
-				<textarea valueLink={linkedState(this, 'long_description')} />
-				<div>Address</div>
-				<textarea valueLink={linkedState(this, 'address_1')} />
-				<div>City</div>
-				<textarea valueLink={linkedState(this, 'city')} />
-				<div>Country</div>
-				<textarea valueLink={linkedState(this, 'country')} />
-				<div>Postal Code</div>
-				<textarea valueLink={linkedState(this, 'postal_code')} />
-				<div>State/Province</div>
-				<textarea valueLink={linkedState(this, 'state_province')} />
-				<div>Phone Number</div>
-				<textarea valueLink={linkedState(this, 'phone_number')} />
+				<textarea defaultValue={this.state.resource.name} data-field='name' onBlur={this.handleFieldChange} />
+				<div>Long Description</div>
+				<textarea defaultValue={this.state.resource.long_description} data-field='long_description' onBlur={this.handleFieldChange} />
+				<div>Short Description</div>
+				<textarea defaultValue={this.state.resource.short_description} data-field='short_description' onBlur={this.handleFieldChange} />
 				<div>Website</div>
-				<textarea valueLink={linkedState(this, 'website')} />
-				<div>SERVICES</div>
-				{this.renderServices()}
+				<textarea defaultValue={this.state.resource.website} data-field='website' onBlur={this.handleFieldChange} />
+				<EditPhones field='phones' phones={this.state.resource.phones} handlePhoneChange={this.handleNestedChange} />
+				<EditServices field='services' services={this.state.resource.services} handleServiceChange={this.handleNestedChange} />
 			</div>
 		);
 	}
