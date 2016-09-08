@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Gmap from './ResourcesMap.js';
 import queryString from 'query-string';
+import Loader from '../Loader';
 
 // Show the span of results (11 - 20 for example rather than the #10)
 // Make the map update with proper markers
@@ -37,11 +38,12 @@ class ResourcesTable extends Component {
     let categoryId = query.categoryid;
     let searchQuery = query.query;
 
-    var path = '/api/resources';
-    var params = {
-      lat: userLocation.lat,
-      long: userLocation.lng
-    };
+    let path = '/api/resources';
+    let params = {};
+    if(userLocation) {
+      params.lat = userLocation.lat;
+      params.long = userLocation.lng;
+    }
     if (categoryId) {
       this.setState({
         categoryName: cats[categoryId]
@@ -55,21 +57,34 @@ class ResourcesTable extends Component {
       });
     }
     let url = path + '?' + queryString.stringify(params);
-    fetch(url).then(r => r.json())
-      .then(data => {
-        let openResources = data.resources.filter(resource => {
-          let hours = openHours(resource.schedule.schedule_days);
-          if(hours) {
-            return resource;
-          }
-        });
-        this.setState({
-          allResources: data.resources,
-          resources: data.resources,
-          currentPage: data.resources.slice(0,resultsPerPage),
-          openResources: openResources
-        });
+    fetch(url)
+    .then(r => {
+    	if(r.status == 200) {
+    		return r.json();
+    	} else {
+    		throw "Error fetching: " + r.status
+    	}
+    })
+    .then(data => {
+      let openResources = data.resources.filter(resource => {
+        let hours = openHours(resource.schedule.schedule_days);
+        if(hours) {
+          return resource;
+        }
       });
+      this.setState({
+        allResources: data.resources,
+        resources: data.resources,
+        currentPage: data.resources.slice(0,resultsPerPage),
+        openResources: openResources
+      });
+    })
+    .catch(err => {
+    	console.error(err);
+    	this.setState({
+    		resources: []
+    	});
+    });
   }
 
   getNextResources() {
@@ -92,7 +107,14 @@ class ResourcesTable extends Component {
   getLocationGoogle() {
     // Results are not very accurate
     let url = 'https://www.googleapis.com/geolocation/v1/geolocate?key= AIzaSyBrt0fmU5Iarh0LdqEDp6bjMIqEOQB2hqU';
-    return fetch(url, {method: 'post'}).then(r => r.json())
+    return fetch(url, {method: 'post'})
+      .then(r => {
+      	if(r.status == 200) {
+      	  return r.json();
+      	} else {
+      		throw "Error getting location from google " + r.status;
+      	}
+      })
       .then(data => {
         this.setState({location: data.location});
         return data.location;
@@ -146,53 +168,43 @@ class ResourcesTable extends Component {
       this.getLocationGoogle()
         .then(loc => {
           self.loadResourcesFromServer(loc);
+        })
+        .catch(err => {
+          console.log(err);
+          self.loadResourcesFromServer(null);
         });
     }
   }
 
   render() {
-    return !this.state.resources ? <div className="loader">
-      <div className="sk-fading-circle">
-        <div className="sk-circle1 sk-circle"></div>
-        <div className="sk-circle2 sk-circle"></div>
-        <div className="sk-circle3 sk-circle"></div>
-        <div className="sk-circle4 sk-circle"></div>
-        <div className="sk-circle5 sk-circle"></div>
-        <div className="sk-circle6 sk-circle"></div>
-        <div className="sk-circle7 sk-circle"></div>
-        <div className="sk-circle8 sk-circle"></div>
-        <div className="sk-circle9 sk-circle"></div>
-        <div className="sk-circle10 sk-circle"></div>
-        <div className="sk-circle11 sk-circle"></div>
-        <div className="sk-circle12 sk-circle"></div>
-      </div>
-    </div> : (<div className="results">
-                <div className="results-table">
-                  <header>
-                    <h1 className="results-title">{this.state.categoryName}</h1>
-                    <span className="results-count">{this.state.allResources.length} Results</span>
-                  </header>
-                  <div className="results-filters">
-                    <ul>
-                      <li>Filter:</li>
-                      <li><a className="filters-button disabled" onClick={this.filterResources.bind(this)}>{this.state.openFilter ? "All" : "Open Now"}</a></li>
-                    </ul>
-                  </div>
-                  <div className="results-table-body">
-                    <ResourcesList resources={this.state.currentPage} location={this.state.location} page={this.state.page} />
-                    <div className="pagination">
-                      <div className="pagination-count">
-                        {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} Results</p> : <p>No results found</p>}
-                      </div>
-                      {this.state.page ? <button className="btn btn-link" onClick={this.getPreviousResources.bind(this)}> Previous </button> : null}
-                      {Math.floor(this.state.currentPage.length / resultsPerPage) && this.state.allResources.length !== (this.state.page + 1) * resultsPerPage ? <button className="btn btn-link" onClick={this.getNextResources.bind(this)}> Next </button> : null}
-                    </div>
-                  </div>
-              </div>
-              <div className="map">
-              <Gmap markers={getMapMarkers(this.state.currentPage, this.state.location)} />
+    return !this.state.resources ? <Loader />
+      : (<div className="results">
+          <div className="results-table">
+            <header>
+              <h1 className="results-title">{this.state.categoryName}</h1>
+              <span className="results-count">{this.state.allResources.length} Results</span>
+            </header>
+            <div className="results-filters">
+              <ul>
+                <li>Filter:</li>
+                <li><a className="filters-button disabled" onClick={this.filterResources.bind(this)}>{this.state.openFilter ? "All" : "Open Now"}</a></li>
+              </ul>
+            </div>
+            <div className="results-table-body">
+              <ResourcesList resources={this.state.currentPage} location={this.state.location} page={this.state.page} />
+              <div className="pagination">
+                <div className="pagination-count">
+                  {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} Results</p> : <p>No results found</p>}
+                </div>
+                {this.state.page ? <button className="btn btn-link" onClick={this.getPreviousResources.bind(this)}> Previous </button> : null}
+                {Math.floor(this.state.currentPage.length / resultsPerPage) && this.state.allResources.length !== (this.state.page + 1) * resultsPerPage ? <button className="btn btn-link" onClick={this.getNextResources.bind(this)}> Next </button> : null}
               </div>
             </div>
+        </div>
+        <div className="map">
+        <Gmap markers={getMapMarkers(this.state.currentPage, this.state.location)} />
+        </div>
+      </div>
     );
   }
 }
