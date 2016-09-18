@@ -9,7 +9,7 @@ import EditAddress from './EditAddress';
 class EditResource extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { 
+		this.state = {
 			resource: null,
 			address_1: null
 		};
@@ -24,56 +24,46 @@ class EditResource extends Component {
 	}
 
 	loadResourceFromServer() {
-	    // let { query } = this.props.location;
-	    // let resourceID = query.id;
-	    // let url = '/api/resources/' + resourceID;
-	    // fetch(url).then(r => r.json())
-	    // .then(data => {
-	    //   	this.setState({resource: data.resource});
-	    // });
-		let resource = {
-			name: "Poops",
-			long_description: "hella desribing bro",
-			address: {
-				address_1: "123 Fake St.",
-				city: "San Francisco",
-				country: "USA",
-				postal_code: '12152-5338',
-				state_province: "CA"
-			},
-			phones: [{
-				number: "(415) 911-9111"
-			}],
-			website: "www.google.com",
-			services: [
-				{
-					name: "Laundry",
-					long_description: "meow meow meow"
-				}
-			]
-		};
+	    let { query } = this.props.location;
+	    let resourceID = query.id;
+	    let url = '/api/resources/' + resourceID;
+	    fetch(url).then(r => r.json())
+	    .then(data => {
+	      	this.setState({resource: data.resource});
+	    });
 
-		this.resource = resource;
-		this.setState({
-			resource: resource,
-			name: resource.name,
-			long_description: resource.long_description,
-			address_1: resource.address.address_1,
-			city: resource.address.city,
-			country: resource.address.country,
-			postal_code: resource.address.postal_code,
-			state_province: resource.address.state_province,
-			phone_number: resource.phones.number,
-			website: resource.website,
-			services: resource.services
-		});
+		// MOCK DATA
+		// let resource = {
+		// 	name: "Demo",
+		// 	long_description: "hella desribing bro",
+		// 	address: {
+		// 		address_1: "123 Fake St.",
+		// 		city: "San Francisco",
+		// 		country: "USA",
+		// 		postal_code: '12152-5338',
+		// 		state_province: "CA"
+		// 	},
+		// 	phones: [{
+		// 		number: "(415) 911-9111"
+		// 	}],
+		// 	website: "www.google.com",
+		// 	services: [
+		// 		{
+		// 			name: "Laundry",
+		// 			long_description: "meow meow meow"
+		// 		}
+		// 	]
+		// };
+
+		// this.resource = resource;
+		// this.setState({
+		// 	resource: resource
+		// });
   	}
 
 	componentDidMount() {
 		this.loadResourceFromServer();
 	}
-
-	
 
 	handleFieldChange(e) {
 		let resource = this.state.resource;
@@ -106,7 +96,7 @@ class EditResource extends Component {
 	render() {
 		return ( !this.state.resource ? <Loader /> :
 			<div>
-				<button type='button' className='btn btn-primary' onClick={this.submitResource}>Meow</button>
+				<button type='button' className='btn btn-primary' onClick={this.submitResource}>Save</button>
 				<div>Name</div>
 				<textarea defaultValue={this.state.resource.name} data-field='name' onBlur={this.handleFieldChange} />
 				<div>Long Description</div>
