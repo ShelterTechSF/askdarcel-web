@@ -1,11 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-// MIXINS - ADD CUSTOM MIXINS HERE
-
-//////////////////////////////////////////////////////////////////////////////////////////
 // CALCULATE EMS
 
 @function calc-em($target-px, $context:$font-size) {
-  @return ($target-px / $context) * 1rem;
+    @return ($target-px / $context) * 1rem;
 }
 
 
@@ -20,41 +17,49 @@
 // MEDIA QUERIES
 
 @mixin r_max($width) {
-  @media screen and (max-width:calc-em($width,16px)) { @content; }
+    @media screen and (max-width:calc-em($width,16px)) { @content; }
 }
 @mixin r_min($width) {
-  @media screen and (min-width:calc-em($width,16px)) { @content; }
+    @media screen and (min-width:calc-em($width,16px)) { @content; }
 }
 
 @mixin r_h_max($height) {
-  @media screen and (max-height:calc-em($height,16px)) { @content; }
+    @media screen and (max-height:calc-em($height,16px)) { @content; }
+}
+@mixin r_h_min($height) {
+    @media screen and (min-height:calc-em($height,16px)) { @content; }
 }
 
-
 @mixin r_min_max($min-width, $max-width) {
-  @media screen and (min-width:calc-em($min-width,16px)) and (max-width:calc-em($max-width,16px)) { @content; }
+    @media screen and (min-width:calc-em($min-width,16px)) and (max-width:calc-em($max-width,16px)) { @content; }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // VERTICAL CENTERING CLASS
 
-%cv {
-  height:100%;
-  &:before {
-    content:'';
-    display:inline-block;
-    height:100%;
-    vertical-align:middle;
-    margin-right:-0.25em;
-  }
-  &>* {
-    display:inline-block;
-    vertical-align:middle;
-  }
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Aspect ratio
+
+@mixin maintain-ratio($ratio: 1 1) {
+  @if length($ratio) < 2 or length($ratio) > 2 {
+    @warn "$ratio must be a list with two values.";
+  }
+
+  $width: 100%;
+  $height: percentage(nth($ratio, 2) / nth($ratio, 1));
+
+  width: $width;
+  height: 0;
+  padding-bottom: $height;
+}
 
 @mixin aspect-ratio($width, $height) {
   position: relative;
@@ -64,7 +69,7 @@
     width: 100%;
     padding-top: ($height / $width) * 100%;
   }
-  > .u-content {
+  > .content {
     position: absolute;
     top: 0;
     left: 0;
@@ -239,10 +244,10 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 @mixin display($value) {
   // flex | inline-flex
   @if $value == "flex" {
-    // 2009
-    display: -webkit-box;
-    display: -moz-box;
-    display: box;
+    // // 2009
+    // display: -webkit-box;
+    // display: -moz-box;
+    // display: box;
 
     // 2012
     display: -webkit-flex;

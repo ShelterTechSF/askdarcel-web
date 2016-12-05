@@ -1,74 +1,8 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-// HELPER BASE STYLES
-
-html {
-  background: $color-brand;
-}
-
-body {
-  background: $color-white;
-}
-
-::-moz-selection {
-  background: $color-brand-light;
-}
-
-::selection {
-  background: $color-brand-light;
-}
-
-.base-max-width {
-  max-width: calc-em($max-content-width);
-  width: 90%;
-  margin: 0 auto;
-}
-
-.align-center {
-  text-align: center;
-}
-
-.flex-row-left {
-  @include display(flex);
-  > * {
-    margin-right: calc-em(15px);
-    @include flex-grow(1);
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
-.flex-row-center {
-  @include display(flex);
-  @include flex-wrap(wrap);
-  @include justify-content(center);
-  > * {
-    margin: calc-em(15px);
-    @include flex(0 0 auto);
-    @include r_min($screen-xs-min) {
-      &:first-child {
-        margin-left: 0;
-      }
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-    @include r_max($screen-xs-min) {
-      margin: calc-em(5px) 0;
-      @include flex(0 1 100%);
-    }
-  }
-}
-
-#root {
-  min-height: 100vh;
-  > div {
-    min-height: 100vh;
-  }
-}
+////////////////////////////////////////////////////////////////////////////////////////
+// LOADER STYLES
 
 .loader {
-  @extend %cv;
+  @extend %flex-center;
   text-align: center;
 
   .sk-fading-circle {
@@ -208,31 +142,4 @@ body {
   }
 }
 
-.rating-summary {
-  width: calc-em(100px);
-  border-radius: 4px;
-  text-align: center;
-  padding: calc-em(5px) 0;
-  color: $color-white;
-  &.excellent {
-    background: $color-green;
-  }
-  &.above-average {
-    background: $color-green-yellow;
-  }
-  &.average {
-    background: $color-orange;
-  }
-  &.below-average {
-    background: $color-red;
-  }
-  i {
-    display: inline-block;
-    margin-right: calc-em(5px);
-  }
-  span {
-    display: inline-block;
-    @extend .font-size-default;
-    font-weight: 700;
-  }
-}
+

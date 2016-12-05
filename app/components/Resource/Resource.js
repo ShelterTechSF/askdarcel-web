@@ -31,48 +31,43 @@ class Resource extends Component {
     return ( !this.state.resource ? <Loader /> :
       <div className="org-container">
         <article className="org">
-          <div className="main-column">
-            <section className="org-summary">
-              <header>
+          <section className="org-summary">
+            <header className="org-header">
+              <div className="org-map">
+                <ResourceMap name={this.state.resource.name} lat={ this.state.resource.address.latitude} long={this.state.resource.address.longitude} />
                 <StreetView address={this.state.resource.address} />
-                <div className="org-info">
-                  <h1>{this.state.resource.name}</h1>
-                  <h4><ResourceCategories categories={this.state.resource.categories} /></h4>
-                  <p><AddressInfo address={this.state.resource.address} /></p>
+              </div>
+              <div className="org-info">
+                <div className="org-details">
+                  <h1 className="org-title">{this.state.resource.name}</h1>
+                  <div className="org-rating-summary disabled-feature">
+                    <p className="excellent">{Math.floor(Math.random()*10)%6} <i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i></p>
+                  </div>
+                  <div className="org-desc">
+                    <p>{this.state.resource.long_description || this.state.resource.short_description || "No Description available"}</p>
+                  </div>
                 </div>
-              </header>
-              <div className="rating-summary-container">
-                <div className="rating-summary excellent">
-                  <i className="material-icons">sentiment_very_satisfied</i>
-                  <span>{Math.floor(Math.random()*10)%6}/5</span>
-                </div>
-                <div className="rating-summary-details">
-                  <a href="#reviews">12 reviews</a>
+                <div className="org-cta">
+                  <a href="" className="directions-btn"></a>
+                  <p className="org-distance">15 min</p>
                 </div>
               </div>
-              <div className="org-desc">
-                <p>{this.state.resource.long_description || this.state.resource.short_description || "No Description available"}</p>
-              </div>
-              <ul className="org-details">
-                <BusinessHours schedule_days={this.state.resource.schedule_days} />
-                <PhoneNumber phones={this.state.resource.phones} />
-                <Website website={this.state.resource.website} />
-                <Languages />
-              </ul>
-              <div className="org-actions">
-                <a href="#" className="button">Make Edits</a>
-              </div>
-            </section>
+            </header>
 
             <Services description={this.state.resource.long_description} services={this.state.resource.services}/>
-          </div>
 
-          <aside className="org-map">
-            <div className="map-container">
-              <ResourceMap name={this.state.resource.name} lat={ this.state.resource.address.latitude} long={this.state.resource.address.longitude} />
-            </div>
-          </aside>
-
+            <ul className="org-meta">
+              <AddressInfo address={this.state.resource.address} />
+              <BusinessHours schedule_days={this.state.resource.schedule.schedule_days} />
+              <PhoneNumber phones={this.state.resource.phones} />
+              <Website website={this.state.resource.website} />
+              <Languages />
+              <li>
+                <i className="material-icons">edit</i>
+                <p><a href="#" className="button">Make Edits</a></p>
+              </li>
+            </ul>
+          </section>
         </article>
       </div>
     );

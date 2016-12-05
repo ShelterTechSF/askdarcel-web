@@ -1,0 +1,87 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// LAYOUT
+
+@import "mixins";
+
+$font-size: 16px;
+$break-tablet-s: 767px;
+$break-tablet-p: 960px;
+$break-tablet-l: 1140px;
+$break-desktop: 1439px;
+$break-desktop-l: 1600px;
+$break-desktop-xl: 2000px;
+
+
+%flex-row {
+  @include display(flex);
+  @include flex-wrap(nowrap);
+  @include align-items(center);
+}
+
+%flex-row-center {
+  @include display(flex);
+  @include justify-content(center);
+  @include align-items(center);
+}
+
+%flex-column {
+  @include display(flex);
+  @include flex-direction(column);
+  @include flex-wrap(nowrap);
+  @include justify-content(flex-start);
+  @include align-items(stretch);
+}
+
+%flex-column-center {
+  @include display(flex);
+  @include flex-direction(column);
+  @include flex-wrap(nowrap);
+  @include justify-content(center);
+  @include align-items(stretch);
+}
+
+%flex-grid {
+  @include display(flex);
+  @include flex-wrap(wrap);
+  @include align-items(flex-start);
+  @include align-content(flex-start);
+}
+
+%flex-center {
+  @include display(flex);
+  @include justify-content(center);
+  @include align-items(center);
+  @include align-content(center);
+}
+
+body, html {
+  overflow:hidden;
+  height:100%;
+  min-height: inherit;
+  position:fixed;
+  width:100%;
+  top:0;
+  left:0;
+}
+
+#root {
+  @extend %flex-column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+  @include r_max($break-tablet-s) {
+    padding-bottom: calc-em(60px);
+  }
+}
+
+$max-content-width: 1200px;
+
+%base-max-width {
+  max-width: calc-em($max-content-width);
+  width: 90%;
+  margin: 0 auto;
+  @include r_max($break-tablet-s) {
+    width: 100%;
+  }
+}

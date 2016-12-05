@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import LargeHeader from './LargeHeader.js'
-import Footer from './Footer.js'
-import Category from './Category.js'
+import Footer from '../Footer.js'
+import Navigation from '../Navigation.js'
+import FindHeader from './FindHeader.js'
+import CategoryItem from './CategoryItem.js'
 
 var categories = [];
 
@@ -10,7 +11,7 @@ var CategoryBox = React.createClass({
     var callback = function callback(response, textStatus, jqXHR) {
       if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
-          categories = JSON.parse(httpRequest.responseText);
+          categories = JSON.parse(httpRequest.responseText).categories;
           this.setState({categories: categories});
         } else {
           console.log('error...');
@@ -32,9 +33,8 @@ var CategoryBox = React.createClass({
   render: function() {
     return (
       <div>
-        <LargeHeader />
+        <FindHeader />
         <CategoryList categories={categories} />
-        <Footer />
       </div>
     );
   }
@@ -45,14 +45,14 @@ var CategoryList = React.createClass({
 
     var categoryNodes = this.props.categories.map(function(category) {
       return (
-        <Category name={category.name} key={category.id} categoryid={category.id} image_path={category.image_path}/>
+        <CategoryItem name={category.name} key={category.id} categoryid={category.id} />
       );
     });
 
     return (
       <section className="category-list" role="main">
         <header>
-          <h3>Browse Categories</h3>
+          <h2>Most used resources</h2>
         </header>
         <ul className="category-items">
           {categoryNodes}
@@ -65,10 +65,13 @@ var CategoryList = React.createClass({
 class ContentPage extends Component {
   render() {
     return (
+      <div className="find-page">
+      <Navigation />
       <CategoryBox />
+      <Footer />
+      </div>
     );
   }
 }
 
 export default ContentPage;
-

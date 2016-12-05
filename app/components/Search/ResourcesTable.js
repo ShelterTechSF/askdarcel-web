@@ -21,7 +21,7 @@ class ResourcesTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryName: 'Category Name', 
+      categoryName: 'Category Name',
       allResources: [],
       openResources: [],
       resources: null,
@@ -50,6 +50,9 @@ class ResourcesTable extends Component {
     } else if (searchQuery) {
       path += '/search';
       params.query = searchQuery;
+      this.setState({
+        categoryName: 'Search: ' + searchQuery
+      });
     }
     let url = path + '?' + queryString.stringify(params);
     fetch(url).then(r => r.json())
@@ -88,7 +91,10 @@ class ResourcesTable extends Component {
 
   getLocationGoogle() {
     // Results are not very accurate
-    let url = 'https://www.googleapis.com/geolocation/v1/geolocate?key= AIzaSyBrt0fmU5Iarh0LdqEDp6bjMIqEOQB2hqU';
+    let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
+    if(CONFIG.GOOGLE_API_KEY) {
+      url += '?key=' + CONFIG.GOOGLE_API_KEY;
+    }
     return fetch(url, {method: 'post'}).then(r => r.json())
       .then(data => {
         this.setState({location: data.location});
@@ -163,34 +169,40 @@ class ResourcesTable extends Component {
         <div className="sk-circle11 sk-circle"></div>
         <div className="sk-circle12 sk-circle"></div>
       </div>
-    </div> : (
-                        <div className="results">
-                                                <div className="results-table">
-                                                        <header>
-                <h1 className="results-title">{this.state.categoryName}</h1>
-                <span className="results-count">{this.state.allResources.length} Results</span>
-              </header>
-                                                        <div className="results-filters">
-                                                                <ul>
-                                                                        <li>Filter:</li>
-                                                                        <li><a className="filters-button disabled" onClick={this.filterResources.bind(this)}>{this.state.openFilter ? "All" : "Open Now"}</a></li>
-                                                                </ul>
-                                                        </div>
-              <div className="results-table-body">
-                <ResourcesList resources={this.state.currentPage} location={this.state.location} page={this.state.page} />
-                <div className="pagination">
-                  <div className="pagination-count">
-                    {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} Results</p> : <p>No results found</p>}
+    </div> : (<div className="results">
+                <div className="results-table">
+                  <header>
+                    <h1 className="results-title">{this.state.categoryName}</h1>
+                    <span className="results-count">{this.state.allResources.length} Results</span>
+                  </header>
+                  <div className="results-filters">
+                    <ul>
+                      <li>Filter:</li>
+                      <li><a className="filters-button" onClick={this.filterResources.bind(this)}>{this.state.openFilter ? "All" : "Open Now"}</a></li>
+                    </ul>
                   </div>
-                  {this.state.page ? <button className="btn btn-link" onClick={this.getPreviousResources.bind(this)}> Previous </button> : null}
-                  {Math.floor(this.state.currentPage.length / resultsPerPage) && this.state.allResources.length !== (this.state.page + 1) * resultsPerPage ? <button className="btn btn-link" onClick={this.getNextResources.bind(this)}> Next </button> : null}
-                </div>
+                  <div className="results-table-body">
+                    <ResourcesList resources={this.state.currentPage} location={this.state.location} page={this.state.page} />
+                    <div className="add-resource">
+                      <li className="results-table-entry">
+                        <Link to={"ADD_PAGE"}>
+                          <h4 className="entry-headline"><i className="material-icons">add_circle</i> Add a new resource</h4>
+                        </Link>
+                      </li>
+                    </div>
+                    <div className="pagination">
+                      <div className="pagination-count">
+                        {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} Results</p> : <p>No results found</p>}
+                      </div>
+                      {this.state.page ? <button className="btn btn-link" onClick={this.getPreviousResources.bind(this)}> Previous </button> : null}
+                      {Math.floor(this.state.currentPage.length / resultsPerPage) && this.state.allResources.length !== (this.state.page + 1) * resultsPerPage ? <button className="btn btn-link" onClick={this.getNextResources.bind(this)}> Next </button> : null}
+                    </div>
+                  </div>
               </div>
-                                                </div>
-                                        <div className="map">
-            <Gmap markers={getMapMarkers(this.state.currentPage, this.state.location)} />
-          </div>
-                        </div>
+              <div className="results-map">
+              <Gmap markers={getMapMarkers(this.state.currentPage, this.state.location)} />
+              </div>
+            </div>
     );
   }
 }
@@ -210,7 +222,7 @@ class ResourcesList extends Component {
     });
 
     return (
-      <ul className="resource-table-entries">
+      <ul className="results-table-entries">
         {resourcesRows}
       </ul>
     );
@@ -275,39 +287,61 @@ class ResourcesRow extends Component {
     let resourceDescription = this.props.resource.long_description ||
           this.props.resource.short_description ||
           (firstService && firstService.long_description);
+    let hiddenStyle = {visibility: 'hidden'};
     return (
-                        <li className="results-table-entry">
-                                <Link to={{ pathname: "resource", query: { id: this.props.resource.id } }}>
-                                        <div className="entry-photo-rating">
-                                          <img className="entry-img" src={buildImgURL(this.props.resource.address)} />
-            <div className="entry-rating excellent">
-              <i className="material-icons">sentiment_very_satisfied</i>
-              <span>{Math.floor(Math.random()*10)%6}</span>
-            </div>
-          </div>
-          <div className="entry-details">
-            <h4 className="entry-title">{this.props.number}. {this.props.resource.name}</h4>
-            <p className="entry-organization">{resourceDescription}</p>
-            <p className="entry-meta">{buildAddressCell(this.props.resource.address)} &bull; {this.state.walkTime || "unknown"} walking</p>
-            <div className="quote">
-              <img className="quote-img" src="http://lorempixel.com/100/100/people/" />
-              <div className="quote-content">
-                <p className="quote-meta">username • April 22, 2016</p>
-                <p className="quote-text">they were nice and helpful</p>
-              </div>
-            </div>
-            <ul className="entry-actions">
-              <li>
-                <div className="button">
-                  <i className="material-icons">turned_in</i>
-                  <span>Save</span>
+        <li className="results-table-entry">
+          <Link to={{ pathname: "resource", query: { id: this.props.resource.id } }}>
+            <header>
+              <div className="entry-details">
+                <h4 className="entry-headline">{this.props.number}. {firstService.name}</h4>
+                <div className="entry-subhead">
+                  <Rating ratings={this.props.resource.ratings} />
+                  <p className="entry-distance">{buildAddressCell(this.props.resource.address)} &bull; {this.state.walkTime || "unknown"} walking</p>
                 </div>
-              </li>
-            </ul>
-          </div>
-                                </Link>
-                        </li>
+              </div>
+              <img className="entry-photo entry-img" src={buildImgURL(this.props.resource.address)} />
+            </header>
+            <div className="entry-meta">
+              <p className="entry-organization">{this.props.resource.name}</p>
+              <p className="entry-description">{resourceDescription}</p>
+              <p className="entry-hours">Open until 6:00pm</p>
+            </div>
+          </Link>
+        </li>
     );
+  }
+}
+
+class Rating extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (this.props.ratings.length ?
+      <div className="entry-rating">
+        {Math.round(this.props.ratings.reduce((total, rating) => {return total + rating}) / 5)}
+      </div> :
+      null
+    )
+  }
+}
+
+class Quote extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    let quote = this.props.quote;
+    return (this.props.quote ?
+      <div className="quote">
+        <img className="quote-img" src={quote.url} />
+        <div className="quote-content">
+          <p className="quote-meta">{quote.username} • {quote.date}</p>
+          <p className="quote-text">{quote.text}</p>
+        </div>
+      </div> :
+      null
+    )
   }
 }
 
@@ -373,9 +407,13 @@ function buildAddressCell(address) {
 
 function buildImgURL(address) {
   if(address) {
-    return "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" +
+    let url = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" +
       address.latitude + "," + address.longitude +
       "&fov=90&heading=235&pitch=10";
+    if(CONFIG.GOOGLE_API_KEY) {
+      url += '&key=' + CONFIG.GOOGLE_API_KEY;
+    }
+    return url;
   } else {
     return "http://lorempixel.com/200/200/city/";
   }

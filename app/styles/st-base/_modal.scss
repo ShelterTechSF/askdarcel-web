@@ -1,0 +1,98 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// GLOBAL MODAL STYLES
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999999;
+  overflow: hidden;
+  @extend %flex-center;
+
+  button {
+    @extend %st-btn;
+  }
+}
+
+.modal-group {
+  @extend %flex-column;
+  position: relative;
+  z-index: 2;
+  width: 95vw;
+  max-width: calc-em(340px);
+  text-align: center;
+}
+
+.modal-container {
+  border-radius: 4px;
+  background-color: $color-white;
+  border: 1px solid $color-grey3;
+  padding: calc-em(30px) calc-em(30px);
+
+  .title {
+    text-align:center;
+    width:100%;
+    color:$color-grey4;
+    text-transform: uppercase;
+    @extend %font-size-tiny;
+    font-weight: 700;
+    margin-bottom: calc-em(25px);
+  }
+
+  button:last-of-type {
+    margin-bottom: 0;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    margin-bottom: calc-em(15px);
+  }
+}
+
+.modal-feedback-text {
+  @extend %font-size-tiny;
+  color: $color-grey4;
+  margin-bottom: calc-em(20px);
+  &.error {
+    color: $color-red;
+  }
+}
+
+.modal-close {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: rgba($color-white, 0.90);
+  &:after {
+    content: '';
+    width: calc-em(50px);
+    height: calc-em(50px);
+    background-image: url(../assets/img/closeFullscreenBtn.png);
+    background-repeat: no-repeat;
+    background-size: calc-em(14px);
+    background-position: center center;
+    position: fixed;
+    top: 5vh;
+    right: 5vw;
+    z-index: 1;
+    cursor: pointer;
+  }
+  &.no-cancel {
+    &:after {
+    content: '';
+    background-image: none;
+    position: fixed;
+    top: 5vh;
+    right: 5vw;
+    z-index: 1;
+    cursor: normal;
+  }
+  }
+}

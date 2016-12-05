@@ -1,0 +1,255 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// ORGANIZATION PAGE STYLES
+
+.org-container {
+  background: $color-grey1;
+  padding: calc-em(30px) 0;
+  min-height: calc(100vh - #{$navigation-height});
+  margin-top: #{$navigation-height};
+  @include r_max($break-tablet-s) {
+    margin-top: 0;
+    margin-bottom: #{$navigation-height};
+    padding: 0;
+  }
+}
+
+.org {
+  @extend %base-max-width;
+  background: $color-white;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.2);
+  @include r_max($break-tablet-s) {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  p {
+    color: $color-grey6;
+  }
+}
+
+.org-summary {
+  width: 100%;
+  margin: 0 0 calc-em(30px);
+}
+
+.org-category {
+  margin: 0 5px 0 0;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// MAP STYLES
+
+.org-map {
+  background: $color-grey1;
+  max-height: calc-em(250px);
+  position: relative;
+  @include r_max($break-tablet-s) {
+    max-height: calc-em(200px);
+  }
+
+  .map_canvas {
+    max-height: calc-em(250px);
+    @include r_max($break-tablet-s) {
+      max-height: calc-em(200px);
+    }
+  }
+}
+
+.org-streetview {
+  position: absolute;
+  bottom: calc-em(20px);
+  left: calc-em(40px);
+  @include r_max($break-tablet-s) {
+    left: calc-em(20px);
+  }
+}
+
+.org-img {
+  @include aspect-ratio(1, 1);
+  width: calc-em(80px);
+  background: $color-grey2;
+  @include r_max($break-tablet-s) {
+    width: calc-em(60px);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// ORG MAIN INFO
+
+.org-header {
+  border-bottom: 1px solid $color-grey3;
+}
+
+.org-info {
+  @extend %flex-row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: calc-em(40px);
+  position: relative;
+  @include r_max($break-tablet-s) {
+    z-index: 2;
+    box-shadow: 0 -2px 4px 0 rgba(0,0,0,0.2);
+    padding: calc-em(20px);
+  }
+}
+
+.org-details {
+  @extend %flex-column;
+  margin-right: calc-em(20px);
+}
+
+.org-title {
+  @extend %font-size-x-large;
+  margin-bottom: calc-em(5px);
+}
+
+.org-rating-summary {
+  margin-bottom: calc-em(15px);
+  p {
+    @extend %font-size-medium;
+  }
+  .excellent {
+    color: $color-green;
+  }
+  .good {
+    color: $color-green-yellow;
+  }
+  .average {
+    color: $color-orange;
+  }
+  .poor {
+    color: $color-red;
+  }
+  i {
+    @extend %font-size-default;
+    display: inline;
+  }
+}
+
+.org-cta {
+  @extend %flex-column-center;
+}
+
+.directions-btn {
+  @extend %bg-image;
+  display: block;
+  background-color: $color-brand;
+  background-image: url(../assets/img/ic-walk.png);
+  background-size: calc-em(20px) calc-em(33px);
+  border-radius: 50%;
+  width: calc-em(70px);
+  height: calc-em(70px);
+  &:active, &:hover, &:focus {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+  }
+}
+
+.org-distance {
+  @extend %font-size-small;
+  text-align: center;
+  color: $color-grey5;
+  margin-top: calc-em(10px);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// SERVICES STYLES
+
+.service {
+  border-bottom: 1px solid $color-grey3;
+  padding: calc-em(40px);
+  @include r_max($break-tablet-s) {
+    padding: calc-em(20px);
+  }
+}
+
+.service-header {
+  @extend %font-size-large;
+  color: $color-black;
+  margin-bottom: calc-em(5px);
+}
+
+.service-details {
+  margin-bottom: calc-em(10px);
+}
+
+.service-application-process-container {
+  margin-bottom: calc-em(10px);
+  display: none;
+}
+
+.service-application-header {
+  color: $color-black;
+  margin-bottom: calc-em(5px);
+}
+
+.service-application-process {
+  margin-bottom: calc-em(10px);
+}
+
+.service-table {
+  .service-table-row {
+    margin-bottom: calc-em(10px);
+    p:first-of-type {
+      font-weight: 600;
+    }
+  }
+  p {
+    @extend %font-size-small;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// ORG META
+
+.org-meta {
+  @extend %flex-row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: calc-em(40px);
+  border-bottom: 1px solid $color-grey3;
+
+  .material-icons {
+    color: $color-brand;
+  }
+  a {
+    @extend %font-size-default;
+  }
+  li {
+    color: $color-grey6;
+    @extend %font-size-default;
+    margin-bottom: calc-em(20px);
+    width: 45%;
+    p {
+      @extend %font-size-default;
+      display: inline;
+      width: 90%;
+      margin-left: calc-em(10px);
+    }
+  }
+
+  @include r_max($break-tablet-s) {
+    padding: calc-em(20px);
+    flex-direction: column;
+    align-items: stretch;
+    li {
+      width: 100%;
+      flex: 1 1 auto;
+    }
+  }
+}
+
+.current-hours {
+  display: inline;
+}
+
+.address {
+  .address-block {
+    display: inline-block;
+    margin-left: calc-em(10px);
+  }
+  i {
+    vertical-align: top;
+    top: 0;
+  }
+}

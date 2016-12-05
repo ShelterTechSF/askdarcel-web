@@ -52,14 +52,12 @@ class Service extends Component {
 
     return (
       <section className="service">
-        <header className="service-header">
-          <h2>{this.props.service.name}</h2>
-        </header>
+        <h2 className="service-header">{this.props.service.name}</h2>
         <div className={serviceInfoContainerStyles}>
           <p className="service-description">{this.props.service.long_description}</p>
         </div>
         <div className="service-application-process-container">
-          <h5>What To Do Next</h5>
+          <p className="service-application-header">What To Do Next</p>
           <div className="service-application-process">{this.props.service.application_process}
             <Notes notes={this.props.service.notes}/>
           </div>

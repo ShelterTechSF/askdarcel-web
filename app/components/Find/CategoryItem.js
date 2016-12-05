@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { images } from '../assets';
+import { images } from '../../assets';
 
-var Category = React.createClass({
+var CategoryItem = React.createClass({
   render: function() {
     return (
     <li className="category-item">
@@ -11,7 +11,7 @@ var Category = React.createClass({
           <div className="category-button-icon">
             <img src={images.icon(this.props.name)} alt={this.props.name} className="img-responsive"/>
           </div>
-          <h5 className="category-button-title">{this.props.name}</h5>
+          <p className="category-button-title">{this.props.name}</p>
         </div>
       </Link>
     </li>
@@ -19,4 +19,4 @@ var Category = React.createClass({
   }
 });
 
-export default Category;
+export default CategoryItem;

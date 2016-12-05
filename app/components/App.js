@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import CategoryPage from './CategoryPage';
-import ResourcesTable from './Resources/ResourcesTable';
+import Navigation from './Navigation';
+import CategoryPage from './Find/FindPage';
+import ResourcesTable from './Search/ResourcesTable';
 
 class App extends Component {
 
@@ -38,7 +38,7 @@ class App extends Component {
 
     return (!this.props.error && this.props.location.pathname != '/') ? (
       <div>
-        <Header />
+        <Navigation />
         {childrenWithProps}
       </div>
     ) : <div>

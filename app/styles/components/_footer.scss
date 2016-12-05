@@ -2,20 +2,19 @@
 // SITE FOOTER
 
 .site-footer {
-  @extend .base-max-width;
-  color: $color-grey;
-  text-align: center;
+  @extend %base-max-width;
+  @extend %flex-row;
+  color: $color-grey5;
   padding: calc-em(25px) 0;
   a {
-    color: $color-grey;
+    color: $color-grey5;
   }
   ul {
     display: inline-block;
-    text-align: center;
     > li {
       text-align: left;
       display :inline-block;
-      margin: calc-em(5px) calc-em(15px);
+      margin: 0 calc-em(15px) calc-em(10px) 0;
     }
   }
 }

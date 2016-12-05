@@ -1,0 +1,186 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// ORG TABLE STYLES
+
+.results {
+  @extend %flex-row;
+  width: 100%;
+  height: calc(100vh - #{$navigation-height});
+  overflow: hidden;
+  margin-top: #{$navigation-height};
+  @include r_max($break-tablet-s) {
+    margin-top: 0;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: #{$navigation-height};
+  }
+}
+
+.results-map {
+  flex: 1 1 auto;
+  position: relative;
+  z-index: 1;
+  @include r_max($break-tablet-s) {
+    order: 1;
+    height: calc-em(200px);
+    width: 100%;
+  }
+}
+
+.results-table {
+  @extend %flex-column;
+  max-width: calc-em(650px);
+  width: 100%;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 2;
+  background: $color-white;
+  height: 100%;
+  @include r_max($break-tablet-s) {
+    order: 2;
+  }
+
+  > header {
+    @include flex(0 0 auto);
+    padding: calc-em(20px);
+    display: table;
+    width: 100%;
+    @include r_max($break-tablet-s) {
+      padding: calc-em(10px) calc-em(20px);
+    }
+    .results-title {
+      @include r_max($break-tablet-s) {
+        font-size: calc-em(20px);
+      }
+    }
+    .results-count {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: right;
+    }
+  }
+}
+
+.results-filters {
+  @extend %font-size-tiny;
+  background: $color-grey1;
+  font-weight: bold;
+  padding: calc-em(10px) calc-em(20px);
+  color: $color-grey5;
+  li {
+    display: inline-block;
+    margin-right: calc-em(15px);
+    .filters-button {
+      font-weight: 600;
+      text-decoration: none;
+      color: $color-brand;
+      &:hover {
+        color: $color-grey4;
+      }
+    }
+  }
+}
+
+.results-table-body {
+  overflow-y: scroll;
+  flex: 1 1 auto;
+}
+
+.pagination {
+  padding: calc-em(30px) calc-em(20px);
+
+  .pagination-count {
+    @extend %font-size-small;
+    color: $color-grey5;
+    margin-bottom: calc-em(10px);
+  }
+
+  .btn:first-of-type {
+    margin-right: calc-em(10px);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// RESOURCE ENTRY
+
+.results-table-entry {
+  position: relative;
+  list-style-type: none;
+  transition: all 200ms ease;
+  border-left: calc-em(7px) solid $color-white;
+  border-bottom: 1px solid $color-grey3;
+  background: $color-white;
+  &:active, &:hover, &:focus {
+    border-left: calc-em(7px) solid $color-brand;
+    z-index: 1;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.2);
+  }
+  > a {
+    display: block;
+    padding: calc-em(20px);
+    color: $color-grey5;
+    &:hover {
+      text-decoration: none;
+    }
+    @include r_max($break-tablet-s) {
+      padding: calc-em(20px) calc-em(20px) calc-em(20px) calc-em(13px);
+    }
+  }
+  header {
+    @extend %flex-row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: calc-em(5px);
+  }
+}
+
+.entry-details {
+  @extend %flex-column;
+  margin-right: calc-em(20px);
+}
+
+.entry-headline {
+  color: $color-black;
+  font-weight: 400;
+  margin-bottom: calc-em(6px);
+}
+
+.entry-subhead {
+  @extend %flex-column;
+  p {
+    @extend %font-size-small;
+  }
+}
+
+.entry-img {
+  @include aspect-ratio(1, 1);
+  width: calc-em(80px);
+  background: $color-grey2;
+  @include r_max($break-tablet-s) {
+    width: calc-em(60px);
+  }
+}
+
+.entry-meta p {
+  @extend %font-size-small;
+  margin-bottom: calc-em(5px);
+}
+
+.entry-organization {
+  padding: calc-em(3px) 0;
+}
+
+.entry-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// ADD ENTRY BUTTON
+
+.add-resource {
+  h4 {
+    margin-bottom: 0;
+  }
+}

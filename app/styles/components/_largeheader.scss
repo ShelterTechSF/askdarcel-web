@@ -1,41 +1,64 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // HERO
 
-.header-large {
-  .hero {
+.hero.header-large {
+  @extend %bg-image;
+  background-image: url(../assets/img/bg.png);
+  background-size: cover;
+  width: 100%;
+  padding: calc-em(105px) 0 calc-em(85px);
+  @include r_max($break-tablet-s) {
+    padding: calc-em(30px);
+  }
+
+  h1 {
+    @extend %font-size-hero;
+    @extend %base-max-width;
+    font-weight: 700;
+    color: $color-white;
+    text-align: center;
+    @include r_max($break-tablet-s) {
+      text-align: left;
+    }
+  }
+}
+
+.hero .search-container {
+  @extend %flex-row;
+  @extend %base-max-width;
+  margin: calc-em(40px) auto 0;
+  @include r_max($break-tablet-s) {
     width: 100%;
-    height: calc-em(450px);
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: calc-em(85px) 0;
-    @include r_max($screen-xs-min) {
-      height: calc-em(250px);
-      padding: calc-em(30px);
-    }
-    h1 {
-      @extend .h1-hero;
-      text-align: center;
-    }
+    margin: calc-em(30px) auto 0;
   }
-  .search-container {
-    @extend .base-max-width;
-    margin: calc-em(40px) auto 0;
-    @include r_max($screen-xs-min) {
-      width: 100%;
-    }
-  }
+
   input, button {
     height: calc-em(60px);
+  }
+  .search-field {
+    @extend %bg-image;
+    flex: 1 1 auto;
+    background-image: url(../assets/img/ic-search.png);
+    background-size: calc-em(18px);
+    background-position: calc-em(17px) center;
+    padding-left: calc-em(45px);
+    @include r_min($break-tablet-s) {
+      border-right: 1px solid $color-grey3;
+    }
   }
   .location-field {
     max-width: calc-em(240px);
     background-repeat: no-repeat;
-    background-image: url(../assets/images/ic-location.png);
+    background-image: url(../assets/img/ic-location.png);
     background-size: 18px 18px;
     background-position: calc-em(15px) center;
     padding-left: calc-em(40px);
-    @include r_max($screen-xs-min) {
+    @include r_max($break-tablet-s) {
+      display:none;
+    }
+  }
+  .button.search {
+    @include r_max($break-tablet-s) {
       display:none;
     }
   }

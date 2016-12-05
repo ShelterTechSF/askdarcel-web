@@ -1,4 +1,4 @@
-var icons = require.context("../assets/images", true, /ic-.*\.png$/i);
+var icons = require.context("../assets/img", true, /ic-.*\.png$/i);
 var iconPathMap = {};
 icons.keys().forEach(function (key) {
   iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.png/)[1]] = icons(key);
@@ -9,7 +9,7 @@ function icon(name) {
 }
 
 export const images = {
-  background: require('../assets/images/bg.png'),
-  logoSmall: require('../assets/images/logo-small-white@3x.png'),
+  background: require('../assets/img/bg.png'),
+  logoSmall: require('../assets/img/logo-small-white@3x.png'),
   icon: icon
 };

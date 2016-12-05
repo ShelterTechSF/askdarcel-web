@@ -1,0 +1,92 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// ADD/EDIT PAGE
+
+.edit-header {
+  @extend %flex-row;
+  @extend %bg-image;
+  justify-content: space-between;
+  background-image: url(../assets/img/bg.png);
+  background-size: cover;
+  height: 10vh;
+  height: calc-em(80px);
+  padding: 0 calc-em(10px);
+  @include r_max($break-tablet-s) {
+    height: calc-em(60px);
+  }
+
+  .back-btn {
+    opacity: 0;
+    flex: 0 0 auto;
+  }
+}
+
+.edit-title {
+  @extend %font-size-medium;
+  color: $color-white;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin: 0 calc-em(10px);
+}
+
+.edit-submit-btn {
+  flex: 0 0 auto;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: $color-white;
+  letter-spacing: 0.5px;
+  padding: calc-em(14px) calc-em(15px);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// EDIT SECTION FORMS
+
+.edit-section {
+  @extend %base-max-width;
+  border-bottom: 1px solid $color-grey3;
+  padding: calc-em(30px) 0;
+  &:last-of-type {
+    border-bottom: 0;
+  }
+}
+
+.edit-section-item {
+  label {
+    @extend %font-size-small;
+    display: block;
+    padding: 0 calc-em(20px);
+    margin-bottom: calc-em(10px);
+  }
+
+  input {
+    @extend %font-size-default;
+    background: $color-grey0;
+    display: block;
+    width: 100%;
+    padding: calc-em(12px) calc-em(20px);
+    border: 0;
+    margin-bottom: calc-em(20px);
+  }
+}
+
+.edit-hours-list {
+  li {
+    @extend %flex-row;
+    @include r_max($break-tablet-s) {
+      padding: 0 calc-em(20px);
+    }
+
+    p {
+      flex: 0 0 auto;
+      width: calc-em(36px);
+    }
+    input {
+      flex: 1 1 auto;
+      &:first-of-type {
+        margin-right: calc-em(10px);
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 
 class Cat extends Component {
   render() {
-    return <span>{this.props.category}</span>;
+    return <span className="org-category">{this.props.category}</span>;
   }
 }
 
@@ -14,8 +14,13 @@ class ResourceCategories extends Component {
 
   render() {
     if(this.props.categories.length) {
-      let cats = this.props.categories.map((cat, i) =>{
-        return <Cat category={cat.name} key={i} />
+      let categoryMap = {};
+      this.props.categories.forEach(category => {
+        categoryMap[category.name] = true;
+      });
+
+      let cats = Object.keys(categoryMap).map((cat, i) =>{
+        return <Cat category={cat} key={i} />
       });
       return <div>{cats}</div>;
     } else {
@@ -27,9 +32,12 @@ class ResourceCategories extends Component {
 class AddressInfo extends Component {
   render() {
     return (
-      <span className="address">
-        {buildLocation(this.props.address)}
-      </span>
+      <li className="address">
+        <i className="material-icons">place</i>
+        <div className="address-block">
+          {buildLocation(this.props.address)}
+        </div>
+      </li>
     );
   }
 }
@@ -39,12 +47,9 @@ class BusinessHours extends Component {
     return (
       <li className="hours">
         <i className="material-icons">schedule</i>
-        <a href="" className="expand-hours">
           <div className="current-hours">
             {buildHoursText(this.props.schedule_days)}
-            <i className="material-icons">expand_more</i>
           </div>
-        </a>
       </li>
     );
   }
@@ -77,7 +82,7 @@ class Website extends Component {
     return (
       <li className="website">
         <i className="material-icons">public</i>
-        <p><a href="{this.props.website}" target="_blank">Website</a></p>
+        <p><a href={this.props.website} target="_blank">{this.props.website}</a></p>
       </li>
     );
   }
@@ -86,7 +91,7 @@ class Website extends Component {
 class StreetView extends Component {
   render() {
     return (
-      <div>
+      <div className="org-streetview">
         <img className="org-img" src={buildImgURL(this.props.address)} />
       </div>
     );
@@ -179,9 +184,13 @@ function buildPhoneNumber(phones) {
 
 function buildImgURL(address) {
   if(address) {
-    return "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" +
+     let url = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" +
       address.latitude + "," + address.longitude +
       "&fov=90&heading=235&pitch=10";
+      if(CONFIG.GOOGLE_API_KEY) {
+        url += '&key=' + CONFIG.GOOGLE_API_KEY;
+      }
+      return url;
   } else {
     return "http://lorempixel.com/200/200/city/";
   }

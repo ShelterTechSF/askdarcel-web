@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="18px" viewBox="0 0 27 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>navChecklist</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Mobile-Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mobile---find" transform="translate(-249.000000, -621.000000)" stroke="#888888" stroke-width="2">
+            <g id="header" transform="translate(0.000000, 606.000000)">
+                <g id="navChecklist" transform="translate(250.000000, 16.000000)">
+                    <path d="M10,3 L26,3" id="Stroke-94"></path>
+                    <polyline id="Stroke-95" points="7 0 2 4 0 2"></polyline>
+                    <path d="M10,14 L26,14" id="Stroke-96"></path>
+                    <polyline id="Stroke-97" points="7 11 2 15 0 13"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
