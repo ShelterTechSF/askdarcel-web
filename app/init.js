@@ -8,6 +8,8 @@ import ResourcesTable from './components/Search/ResourcesTable';
 import Resource from './components/Resource/Resource';
 import EditResource from './components/Resource/EditResource';
 import Edit from './components/Edit/Edit';
+import EditSections from './components/Edit/EditSections';
+
 import Google from './utils/google';
 
 require('./styles/main.scss');
@@ -24,7 +26,7 @@ ReactDOM.render((
     <Route path="/" component={ App } >
       <IndexRoute component={ CategoryPage } />
       <Route name="resources" path="/resources" component={ ResourcesTable } />
-      <Route name="editResource" path="resource/edit" component={ EditResource } />
+      <Route name="editResource" path="/resource/edit" component={ EditSections } />
       <Route name="resource" path="/resource" component={ Resource } />
       <Route path="*" onEnter={ redirectToRoot } />
     </Route>

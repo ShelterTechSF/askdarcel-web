@@ -5,6 +5,7 @@ import CommunicationBoxes from './CommunicationBoxes';
 import Services from './Services';
 import Loader from '../Loader';
 import ResourceMap from './ResourceMap';
+import { Link } from 'react-router';
 
 class Resource extends Component {
   constructor(props) {
@@ -64,7 +65,11 @@ class Resource extends Component {
               <Languages />
               <li>
                 <i className="material-icons">edit</i>
-                <p><a href="#" className="button">Make Edits</a></p>
+                <p>
+                    <Link to={{ pathname: "/resource/edit", query: { resourceid: this.state.resource.id } }} className="button">
+                        Make Edits
+                    </Link>
+                </p>
               </li>
             </ul>
           </section>
