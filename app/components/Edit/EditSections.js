@@ -3,7 +3,9 @@ import { Link } from 'react-router';
 import { browserHistory } from 'react-router'
 import { images } from '../../assets';
 import Loader from '../Loader';
+import EditAddress from './EditAddress';
 import * as dataService from '../../utils/DataService';
+import { withRouter } from 'react-router';
 
 class EditSections extends React.Component {
     constructor(props) {
@@ -13,7 +15,8 @@ class EditSections extends React.Component {
             schedule_days: {},
             resourceFields: {},
             serviceFields: {},
-            addressFields: {}
+            addressFields: {},
+            submitting: false
         };
         this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
         this.handleScheduleChange = this.handleScheduleChange.bind(this);
@@ -39,7 +42,10 @@ class EditSections extends React.Component {
     }
 
     handleSubmit() {
+        this.setState({submitting: true});
         let resource = this.state.resource;
+        let promises = [];
+
         //Resource
         let resourceChangeRequest = {};
         if(this.state.name && this.state.name !== resource.name) {
@@ -62,13 +68,7 @@ class EditSections extends React.Component {
             change_request: resourceChangeRequest
         };
         //fire off resource request
-        dataService.post('/api/resources/' + resource.id + '/change_requests', JSON.stringify(resourceReqBlob))
-            .then(function(response) {
-                console.log("move to resource page");
-            }).catch(function(err) {
-                console.log(err);
-            });
-
+        promises.push(dataService.post('/api/resources/' + resource.id + '/change_requests', JSON.stringify(resourceReqBlob)));
 
         //Phone
         let phoneChangeRequests = {};
@@ -83,12 +83,7 @@ class EditSections extends React.Component {
         //Fire off phone requests
         for(let key in phoneChangeRequests) {
             if(phoneChangeRequests.hasOwnProperty(key)) {
-                dataService.post('/api/phones/' + key + '/change_requests', phoneChangeRequests[key])
-                    .then(function() {
-                        console.log("Posted Phone " + key);
-                    }).catch(function(err) {
-                        console.log(err);
-                    })
+                promises.push(dataService.post('/api/phones/' + key + '/change_requests', phoneChangeRequests[key]));
             }
         }
 
@@ -96,14 +91,17 @@ class EditSections extends React.Component {
         let schedule_days = this.state.schedule_days;
         for(let key in schedule_days) {
             if(schedule_days.hasOwnProperty(key)) {
-                dataService.post('/api/schedule_days/' + key + '/change_requests', schedule_days[key])
-                    .then(function(response) {
-                        console.log(response);
-                    }).catch(function(err) {
-                        console.log(err);
-                    });
+                promises.push(dataService.post('/api/schedule_days/' + key + '/change_requests', schedule_days[key]));
             }
         }
+
+        var that = this;
+        Promise.all(promises).then(function(resp) {
+
+            that.props.router.push({ pathname: "/resource", query: { id: that.state.resource.id } });
+        }).catch(function(err) {
+            console.log(err);
+        });
 
     }
 
@@ -149,6 +147,10 @@ class EditSections extends React.Component {
 
     getDayHours(day, field) {
         let dayRecord = this.state.scheduleMap[day];
+        if(!dayRecord) {
+            return null;
+        }
+
         let hours = dayRecord[field];
         let returnStr = '' + hours;
 
@@ -164,10 +166,10 @@ class EditSections extends React.Component {
 
         return (
             <ul className="edit-section-list">
-            <li key="name" className="edit-section-item">
-                <label>Name</label>
-                <input type="text" placeholder="Name" defaultValue={resource.name} onChange={this.handleResourceFieldChange} />
-            </li>
+                <li key="name" className="edit-section-item">
+                    <label>Name</label>
+                    <input type="text" placeholder="Name" defaultValue={resource.name} onChange={this.handleResourceFieldChange} />
+                </li>
                 <li key="tel" className="edit-section-item tel">
                     <label>Telephone</label>
                     <input type="tel" placeholder="Phone number" data-id={resource.phones[0] && resource.phones[0].id} defaultValue={resource.phones[0] && resource.phones[0].number} onChange={this.handlePhoneChange} />
@@ -226,14 +228,7 @@ class EditSections extends React.Component {
                     </ul>
                 </li>
             </ul>
-        )
-
-        // return (
-        //     <li className="edit-section-item text">
-        //     <label>Database Field</label>
-        //     <input type="text" placeholder="ex. XXXX" />
-        //     </li>
-        // );
+        );
     }
 
     render() {
@@ -242,8 +237,8 @@ class EditSections extends React.Component {
             <div className="edit-page">
                 <header className="edit-header">
                     <a className="back-btn"></a>
-                    <h1 className="edit-title">Organisation Name</h1>
-                    <a className="edit-submit-btn" onClick={this.handleSubmit}>Save</a>
+                    <h1 className="edit-title">{this.state.resource.name}</h1>
+                    <button className="edit-submit-btn" disabled={this.state.submitting} onClick={this.handleSubmit}>Save</button>
                 </header>
                 <ul className="edit-sections">
                 <section className="edit-section SECTION_NAME">
@@ -256,4 +251,4 @@ class EditSections extends React.Component {
     }
 }
 
-export default EditSections;
+export default withRouter(EditSections);

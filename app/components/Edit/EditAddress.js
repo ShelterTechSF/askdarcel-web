@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Loader from '../Loader';
 
 class EditAddress extends Component {
 	constructor(props) {
@@ -50,6 +49,3 @@ class EditAddress extends Component {
 		);
 	}
 }
-
-
-

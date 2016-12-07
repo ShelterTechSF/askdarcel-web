@@ -3,7 +3,7 @@ import linkedState from 'react-link';
 import Loader from '../Loader';
 import EditServices from './EditServices';
 import EditPhones from './EditPhones';
-import EditAddress from './EditAddress';
+// import EditAddress from './EditAddress';
 
 
 class EditResource extends Component {
