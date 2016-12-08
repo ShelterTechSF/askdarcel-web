@@ -168,7 +168,7 @@ class EditSections extends React.Component {
             <ul className="edit-section-list">
                 <li key="name" className="edit-section-item">
                     <label>Name</label>
-                    <input type="text" placeholder="Name" defaultValue={resource.name} onChange={this.handleResourceFieldChange} />
+                    <input type="text" placeholder="Name" data-field='name' defaultValue={resource.name} onChange={this.handleResourceFieldChange} />
                 </li>
                 <li key="tel" className="edit-section-item tel">
                     <label>Telephone</label>
