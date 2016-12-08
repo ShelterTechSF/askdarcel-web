@@ -48,27 +48,31 @@ class EditSections extends React.Component {
 
         //Resource
         let resourceChangeRequest = {};
+        let resourceModified = false;
         if(this.state.name && this.state.name !== resource.name) {
             resourceChangeRequest.name = this.state.name;
+            resourceModified = true;
         }
         if(this.state.long_description && this.state.long_description !== resource.long_description) {
             resourceChangeRequest.long_description = this.state.long_description;
+            resourceModified = true;
         }
         if(this.state.short_description && this.state.short_description !== resource.short_description) {
             resourceChangeRequest.short_description = this.state.short_description;
+            resourceModified = true;
         }
         if(this.state.website && this.state.website !== resource.website) {
             resourceChangeRequest.website = this.state.website;
+            resourceModified = true;
         }
         if(this.state.name && this.state.name !== resource.name) {
             resourceChangeRequest.name = this.state.name;
+            resourceModified = true;
         }
-
-        let resourceReqBlob = {
-            change_request: resourceChangeRequest
-        };
         //fire off resource request
-        promises.push(dataService.post('/api/resources/' + resource.id + '/change_requests', JSON.stringify(resourceReqBlob)));
+        if(resourceModified) {
+            promises.push(dataService.post('/api/resources/' + resource.id + '/change_requests', {change_request: resourceChangeRequest}));
+        }
 
         //Phone
         let phoneChangeRequests = {};
@@ -76,14 +80,14 @@ class EditSections extends React.Component {
             for(let key in this.state.phone) {
                 if(this.state.phone.hasOwnProperty(key) &&
                 this.state.phone[key].number !== resource.phones[0].number) {
-                    phoneChangeRequests[key] = {number: this.state.phone.number};
+                    phoneChangeRequests[key] = {number: this.state.phone[key].number};
                 }
             }
         }
         //Fire off phone requests
         for(let key in phoneChangeRequests) {
             if(phoneChangeRequests.hasOwnProperty(key)) {
-                promises.push(dataService.post('/api/phones/' + key + '/change_requests', phoneChangeRequests[key]));
+                promises.push(dataService.post('/api/phones/' + key + '/change_requests', {change_request: phoneChangeRequests[key]}));
             }
         }
 
@@ -91,7 +95,7 @@ class EditSections extends React.Component {
         let schedule_days = this.state.schedule_days;
         for(let key in schedule_days) {
             if(schedule_days.hasOwnProperty(key)) {
-                promises.push(dataService.post('/api/schedule_days/' + key + '/change_requests', schedule_days[key]));
+                promises.push(dataService.post('/api/schedule_days/' + key + '/change_requests', {change_request: schedule_days[key]}));
             }
         }
 
@@ -138,6 +142,10 @@ class EditSections extends React.Component {
             schedule_days[serverDay.id] = newDay;
             this.setState({schedule_days: schedule_days});
         }
+    }
+
+    handleAddressChange(addressObj) {
+
     }
 
     formatTime(time) {
