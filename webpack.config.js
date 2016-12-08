@@ -11,7 +11,7 @@ var buildDir = path.resolve(__dirname, 'build');
 
 module.exports = {
   context: __dirname,
-  entry: path.resolve(appRoot, 'init.js'),
+  entry: ['whatwg-fetch', path.resolve(appRoot, 'init.js')],
   output: {
     path: buildDir,
     publicPath: '/dist/',
@@ -69,4 +69,3 @@ module.exports = {
     }
   }
 };
-
