@@ -2,7 +2,6 @@
 // ADD/EDIT PAGE
 .edit-page {
     width: 100%;
-    height: calc(100vh - #{$navigation-height});
     overflow: hidden;
     margin-top: #{$navigation-height};
 }
