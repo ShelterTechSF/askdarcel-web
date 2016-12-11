@@ -3,49 +3,37 @@ import React, { Component } from 'react';
 class EditAddress extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {address: this.props.address};
-		this.handleBlur = this.handleBlur.bind(this);
-		this.handlePhoneChange = this.handlePhoneChange.bind(this);
+		this.state = {address: {}};
+		this.handleAddressChange = this.handleAddressChange.bind(this);
 	}
 
-	handleBlur(e) {
+	handleAddressChange(e) {
+		let field = e.target.dataset.field;
+		let value = e.target.value;
 		let address = this.state.address;
-		address[e.target.dataset.field] = e.target.value;
-
-		this.setState({address: address});
-		this.props.handleAddressChange('address', this.state.address);
-	}
-
-	handlePhoneChange(phones) {
-		let address = this.state.address;
-		address.phones = phones;
-
-		this.setState({address: address});
-		this.props.handleAddressChange(this.state.address);
+		address[field] = value;
+		this.setState(address, function() {
+			this.props.updateAddress(address);
+		});
 	}
 
 	render() {
+		let address = this.props.address;
+
 		return (
-			<div>
-				<div>Address 1</div>
-				<textarea defaultValue={this.props.address.address_1} data-field='address_1' onBlur={handleBlur} />
-				<div>Address 2</div>
-				<textarea defaultValue={this.props.address.address_2} data-field='address_2' onBlur={handleBlur} />
-				<div>Address 3</div>
-				<textarea defaultValue={this.props.address.address_3} data-field='address_3' onBlur={handleBlur} />
-				<div>Address 4</div>
-				<textarea defaultValue={this.props.address.address_4} data-field='address_4' onBlur={handleBlur} />
-				<div>Attention</div>
-				<textarea defaultValue={this.props.address.attention} data-field='attention' onBlur={handleBlur} />
-				<div>City</div>
-				<textarea defaultValue={this.props.address.city} data-field='city' onBlur={handleBlur} />
-				<div>Country</div>
-				<textarea defaultValue={this.props.address.country} data-field='country' onBlur={handleBlur} />
-				<div>Postal Code</div>
-				<textarea defaultValue={this.props.address.postal_code} data-field='postal_code' onBlur={handleBlur} />
-				<div>State/Province</div>
-				<textarea defaultValue={this.props.address.state_province} data-field='state_province' onBlur={handleBlur} />
-			</div>
+			<li key="address" className="edit-section-item">
+				<label>Address</label>
+				<input type="text" placeholder="Address 1" data-field='address_1' defaultValue={address.address_1} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="Address 2" data-field='address_2' defaultValue={address.address_2} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="Address 3" data-field='address_3' defaultValue={address.address_3} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="Address 4" data-field='address_4' defaultValue={address.address_4} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="City" data-field='city' defaultValue={address.city} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="State/Province" data-field='state_province' defaultValue={address.state_province} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="Country" data-field='country' defaultValue={address.country} onChange={this.handleAddressChange} />
+				<input type="text" placeholder="Postal/Zip Code" data-field='posta_code' defaultValue={address.postal_code} onChange={this.handleAddressChange} />
+			</li>
 		);
 	}
 }
+
+export default EditAddress;

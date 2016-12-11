@@ -21,9 +21,21 @@ class EditSections extends React.Component {
         this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
         this.handleScheduleChange = this.handleScheduleChange.bind(this);
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
+        this.handleAddressChange = this.handleAddressChange.bind(this);
         this.formatTime = this.formatTime.bind(this);
         this.getDayHours = this.getDayHours.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    hasKeys(object) {
+        let size = 0;
+        for(let key in object) {
+            if(object.hasOwnProperty(key)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     componentDidMount() {
@@ -99,9 +111,15 @@ class EditSections extends React.Component {
             }
         }
 
+        //address
+        if(this.hasKeys(this.state.address) && this.state.resource.address) {
+            promises.push(dataService.post('/api/addresses/' + this.state.resource.address.id + '/change_requests', {
+                change_request: this.state.address
+            }));
+        }
+
         var that = this;
         Promise.all(promises).then(function(resp) {
-
             that.props.router.push({ pathname: "/resource", query: { id: that.state.resource.id } });
         }).catch(function(err) {
             console.log(err);
@@ -145,7 +163,7 @@ class EditSections extends React.Component {
     }
 
     handleAddressChange(addressObj) {
-
+        this.setState({address: addressObj});
     }
 
     formatTime(time) {
@@ -194,6 +212,7 @@ class EditSections extends React.Component {
                     <label>Short Description</label>
                     <textarea defaultValue={resource.short_description} data-field='short_description' onChange={this.handleResourceFieldChange} />
                 </li>
+                <EditAddress address={this.state.resource.address} updateAddress={this.handleAddressChange}/>
 
                 <li key="hours" className="edit-section-item hours">
                     <label>Hours of Operation</label>
