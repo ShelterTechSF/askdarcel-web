@@ -48,23 +48,19 @@ button, input, textarea {
 %st-btn {
   @extend %font-size-small;
   @extend %flex-center;
-  color: $color-grey4;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  color: $color-brand;
   background-color: $color-white;
-  border: 1px solid $color-grey3;
-  height: calc-em(50px);
   display: block;
-  width: 100%;
-  margin: calc-em(20px) auto 0;
   cursor: pointer;
   background-repeat: no-repeat;
   background-position: center;
-  &:hover {
-    background-color: $color-brand;
-    color: $color-white;
-    border: 1px solid $color-brand;
+  padding: calc-em(18px) calc-em(20px);
+  position: relative;
+  &:active, &:hover, &:focus {
+    color: $color-brand;
+    z-index: 1;
+    text-decoration: none;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
   }
   &.loading {
     background-image: url(../assets/img/smallLoader.svg);

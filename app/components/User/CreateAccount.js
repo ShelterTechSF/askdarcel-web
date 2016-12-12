@@ -3,13 +3,13 @@ import { Link } from 'react-router';
 import { browserHistory } from 'react-router'
 import { images } from '../../assets';
 
-class Login extends React.Component {
+class CreateAccount extends React.Component {
   render() {
     return (
-    <div className="login-page">
+    <div className="create-account-page">
       <div className="auth-container">
         <header>
-          <p className="splash-instructions">Enter your username and password</p>
+          <p className="splash-instructions">Enter a username and password</p>
         </header>
         <div className="splash-actions">
           <div className="input-container">
@@ -26,4 +26,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default CreateAccount;

@@ -117,10 +117,15 @@ button{
 textarea, input{
   font-family: $font-family-base;
 }
+%hide-text {
+  display: inline-block;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 ::-moz-selection {
   background: $color-brand-light;
 }
-
 ::selection {
   background: $color-brand-light;
 }

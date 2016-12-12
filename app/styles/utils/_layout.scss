@@ -37,7 +37,7 @@ $break-desktop-xl: 2000px;
   @include flex-direction(column);
   @include flex-wrap(nowrap);
   @include justify-content(center);
-  @include align-items(stretch);
+  @include align-items(center);
 }
 
 %flex-grid {

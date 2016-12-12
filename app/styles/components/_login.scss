@@ -1,0 +1,111 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// LOGIN AND AUTH
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// SPLASH PAGE
+
+.splash-page {
+  @extend %bg-image;
+  @extend %flex-center;
+  background-size: cover;
+  background-image: url(../assets/img/bg.png);
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.auth-container {
+  @extend %flex-column-center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: calc-em(320px);
+  min-height: calc-em(600px);
+  text-align: center;
+  padding: calc-em(50px) 0 calc-em(25px);
+  @include r_max($break-tablet-s) {
+    min-height: 100vh;
+    text-align: left;
+  }
+}
+
+.splash-logo {
+  @extend %hide-text;
+  @extend %bg-image;
+  width: calc-em(188px);
+  height: calc-em(136px);
+  background-image: url(../assets/img/askdarcel-logo.png);
+  margin-bottom: calc-em(30px);
+}
+
+.splash-instructions {
+  @extend %font-size-medium;
+  color: $color-white;
+}
+
+.splash-actions {
+  width: 100%;
+}
+
+.signup-btn {
+  @extend %st-btn;
+  margin-bottom: calc-em(15px);
+}
+
+.login-btn {
+  @extend %st-btn;
+}
+
+.splash-legal {
+  @extend %font-size-tiny;
+  color: $color-white;
+  opacity: 0.5;
+  a {
+    color: $color-white;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// LOGIN PAGE
+
+.login-page {
+  @extend .splash-page;
+
+  header {
+    margin-bottom: calc-em(30px);
+  }
+
+  .auth-container {
+    min-height: auto;
+    @include r_max($break-tablet-s) {
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+  }
+}
+
+.input-container {
+  width: 100%;
+
+  label {
+    @extend %font-size-small;
+    display: block;
+    color: $color-white;
+    margin-bottom: calc-em(10px)
+  }
+
+  input {
+    width: 100%;
+    padding: calc-em(14px) calc-em(20px);
+    margin-bottom: calc-em(15px);
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// CREATE ACCOUNT PAGE
+
+.create-account-page {
+  @extend .login-page;
+}
