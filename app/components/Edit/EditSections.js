@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import { images } from '../../assets';
 import Loader from '../Loader';
 import EditAddress from './EditAddress';
+import EditServices from '../Resource/EditServices';
 import * as dataService from '../../utils/DataService';
 import { withRouter } from 'react-router';
 
@@ -22,6 +23,7 @@ class EditSections extends React.Component {
         this.handleScheduleChange = this.handleScheduleChange.bind(this);
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
+        this.handleServiceChange = this.handleServiceChange.bind(this);
         this.formatTime = this.formatTime.bind(this);
         this.getDayHours = this.getDayHours.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -97,19 +99,10 @@ class EditSections extends React.Component {
             }
         }
         //Fire off phone requests
-        for(let key in phoneChangeRequests) {
-            if(phoneChangeRequests.hasOwnProperty(key)) {
-                promises.push(dataService.post('/api/phones/' + key + '/change_requests', {change_request: phoneChangeRequests[key]}));
-            }
-        }
+        this.postObject(phoneChangeRequests, 'phones', promises);
 
         //schedule
-        let schedule_days = this.state.schedule_days;
-        for(let key in schedule_days) {
-            if(schedule_days.hasOwnProperty(key)) {
-                promises.push(dataService.post('/api/schedule_days/' + key + '/change_requests', {change_request: schedule_days[key]}));
-            }
-        }
+        this.postObject(this.state.schedule_days, 'schedule_days', promises);
 
         //address
         if(this.hasKeys(this.state.address) && this.state.resource.address) {
@@ -118,6 +111,9 @@ class EditSections extends React.Component {
             }));
         }
 
+        //Services
+        this.postObject(this.state.services, 'services', promises);
+
         var that = this;
         Promise.all(promises).then(function(resp) {
             that.props.router.push({ pathname: "/resource", query: { id: that.state.resource.id } });
@@ -125,6 +121,14 @@ class EditSections extends React.Component {
             console.log(err);
         });
 
+    }
+
+    postObject(object, path, promises) {
+        for(let key in object) {
+            if(object.hasOwnProperty(key)) {
+                promises.push(dataService.post('/api/' + path + '/' + key + '/change_requests', {change_request: object[key]}));
+            }
+        }
     }
 
     handlePhoneChange(e) {
@@ -164,6 +168,10 @@ class EditSections extends React.Component {
 
     handleAddressChange(addressObj) {
         this.setState({address: addressObj});
+    }
+
+    handleServiceChange(servicesObj) {
+        this.setState({services: servicesObj});
     }
 
     formatTime(time) {
@@ -213,6 +221,7 @@ class EditSections extends React.Component {
                     <textarea defaultValue={resource.short_description} data-field='short_description' onChange={this.handleResourceFieldChange} />
                 </li>
                 <EditAddress address={this.state.resource.address} updateAddress={this.handleAddressChange}/>
+                <EditServices services={this.state.resource.services} handleServiceChange={this.handleServiceChange} />
 
                 <li key="hours" className="edit-section-item hours">
                     <label>Hours of Operation</label>

@@ -5,25 +5,26 @@ class EditServices extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {services: this.props.services};
+		this.state = {};
 
-		this.renderServices = this.renderServices.bind(this)
+		this.renderServices = this.renderServices.bind(this);
+		this.handleServiceChange = this.handleServiceChange.bind(this);
 	}
 
-	handleServiceChange(index, service) {
-		let services = this.state.services;
-		services[index] = service;
-		this.setState({services: services});
-
-		this.handleServiceChange(this.props.field, services);
+	handleServiceChange(id, service) {
+		let object = {};
+		object[id] = service;
+		this.setState(object, function() {
+			this.props.handleServiceChange(this.state);
+		});
 	}
 
 	renderServices() {
 		let servicesArray = [];
-		let services = this.state.services;
-		for(let i = 0; i < this.state.services.length; i++) {
+
+		for(let i = 0; i < this.props.services.length; i++) {
 			servicesArray.push(
-				<EditService key={i} index={i} service={this.state.services[i]} handleChange={this.handleServiceChange} />
+				<EditService key={i} index={i} service={this.props.services[i]} handleChange={this.handleServiceChange} />
 			);
 		}
 
@@ -32,9 +33,10 @@ class EditServices extends Component {
 
 	render() {
 		return (
-			<div>
+			<li key="services" className="edit-section-item">
+				<label>Services</label>
 				{this.renderServices()}
-			</div>
+			</li>
 		);
 	}
 }
@@ -42,7 +44,9 @@ class EditServices extends Component {
 class EditService extends Component {
 	constructor(props) {
 		super(props);
-		this.state = ({service: this.props.service});
+		this.state = {
+			service: {}
+		};
 		this.handleFieldChange = this.handleFieldChange.bind(this);
 	}
 
@@ -51,19 +55,19 @@ class EditService extends Component {
 		service[e.target.dataset.field] = e.target.value;
 		this.setState({service: service});
 
-		this.props.handleChange(this.props.index, service);
+		this.props.handleChange(this.props.service.id, service);
 	}
 
 	render() {
 		return (
-			<div>
-				<div>Service #{this.props.index+1}</div>
-				<div>Name</div>
-				<textarea data-field='name' defaultValue={this.props.service.name} onBlur={this.handleFieldChange} />
-				<div>Long Description</div>
-				<textarea data-field='long_description' defaultValue={this.props.service.long_description} onBlur={this.handleFieldChange} />
-				<div>Eligibility</div>
-				<textarea data-field='eligibility' defaultValue={this.props.service.eligibility} onBlur={this.handleFieldChange} />
+			<div className="edit-service">
+				<label>Service #{this.props.index+1}</label>
+				<input placeholder='Name' data-field='name' defaultValue={this.props.service.name} onChange={this.handleFieldChange} />
+				<textarea placeholder='Description' data-field='long_description' defaultValue={this.props.service.long_description} onChange={this.handleFieldChange} />
+				<textarea placeholder='Eligibility' data-field='eligibility' defaultValue={this.props.service.eligibility} onChange={this.handleFieldChange} />
+				<textarea placeholder='Application Process' data-field='application_process' defaultValue={this.props.service.application_process} onChange={this.handleFieldChange} />
+				<input placeholder='Fee' data-field='fee' defaultValue={this.props.service.fee} onChange={this.handleFieldChange} />
+				<textarea placeholder='Required Documents' data-field='required_documents' defaultValue={this.props.service.required_documents} onChange={this.handleFieldChange} />
 			</div>
 		);
 	}
