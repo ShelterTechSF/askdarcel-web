@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 import { images } from '../../assets';
 import Loader from '../Loader';
 import EditAddress from './EditAddress';
-import EditServices from '../Resource/EditServices';
+import EditServices from './EditServices';
 import * as dataService from '../../utils/DataService';
 import { withRouter } from 'react-router';
 

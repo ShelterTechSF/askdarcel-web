@@ -6,7 +6,6 @@ import App from './components/App';
 import CategoryPage from './components/Find/FindPage';
 import ResourcesTable from './components/Search/ResourcesTable';
 import Resource from './components/Resource/Resource';
-import EditResource from './components/Resource/EditResource';
 import EditSections from './components/Edit/EditSections';
 
 import Google from './utils/google';
