@@ -200,6 +200,7 @@ class EditSections extends React.Component {
 
         return (
             <ul className="edit-section-list">
+                <label>Contact</label>
                 <li key="name" className="edit-section-item">
                     <label>Name</label>
                     <input type="text" placeholder="Name" data-field='name' defaultValue={resource.name} onChange={this.handleResourceFieldChange} />
@@ -212,6 +213,7 @@ class EditSections extends React.Component {
                     <label>Website</label>
                     <input type="url" defaultValue={resource.website} data-field='website' onChange={this.handleResourceFieldChange}/>
                 </li>
+                <label>Description</label>
                 <li key="long_description" className="edit-section-item">
                     <label>Long Description</label>
                     <textarea defaultValue={resource.long_description} data-field='long_description' onChange={this.handleResourceFieldChange} />
@@ -220,9 +222,12 @@ class EditSections extends React.Component {
                     <label>Short Description</label>
                     <textarea defaultValue={resource.short_description} data-field='short_description' onChange={this.handleResourceFieldChange} />
                 </li>
+                <label>Address</label>
                 <EditAddress address={this.state.resource.address} updateAddress={this.handleAddressChange}/>
+                <label>Services</label>
                 <EditServices services={this.state.resource.services} handleServiceChange={this.handleServiceChange} />
 
+                <label>Hours</label>
                 <li key="hours" className="edit-section-item hours">
                     <label>Hours of Operation</label>
                     <ul className="edit-hours-list">

@@ -34,7 +34,6 @@ class EditServices extends Component {
 	render() {
 		return (
 			<li key="services" className="edit-section-item">
-				<label>Services</label>
 				{this.renderServices()}
 			</li>
 		);

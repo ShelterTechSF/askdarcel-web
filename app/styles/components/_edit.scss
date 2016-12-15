@@ -56,6 +56,14 @@
   }
 }
 
+.edit-section-list {
+    label {
+        @extend %font-size-large;
+        display: block;
+        margin-bottom: calc-em(3px);
+    }
+}
+
 .edit-section-item {
   label {
     @extend %font-size-small;
