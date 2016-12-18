@@ -29,44 +29,50 @@ class Resource extends Component {
   }
 
   render() {
-    return ( !this.state.resource ? <Loader /> :
+    const { resource } = this.state;
+    return ( !resource ? <Loader /> :
       <div className="org-container">
         <article className="org">
           <section className="org-summary">
             <header className="org-header">
               <div className="org-map">
-                <ResourceMap name={this.state.resource.name} lat={ this.state.resource.address.latitude} long={this.state.resource.address.longitude} />
-                <StreetView address={this.state.resource.address} />
+                <ResourceMap name={resource.name} lat={ resource.address.latitude} long={resource.address.longitude} />
+                <StreetView address={resource.address} />
               </div>
               <div className="org-info">
                 <div className="org-details">
-                  <h1 className="org-title">{this.state.resource.name}</h1>
+                  <h1 className="org-title">{resource.name}</h1>
                   <div className="org-rating-summary disabled-feature">
                     <p className="excellent">{Math.floor(Math.random()*10)%6} <i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i><i className="material-icons">sentiment_very_satisfied</i></p>
                   </div>
                   <div className="org-desc">
-                    <p>{this.state.resource.long_description || this.state.resource.short_description || "No Description available"}</p>
+                    <p>{resource.long_description || resource.short_description || "No Description available"}</p>
                   </div>
                 </div>
                 <div className="org-cta">
-                  <a href="" className="directions-btn"></a>
+                  <a 
+                    href={`https://maps.google.com?saddr=Current+Location&daddr=${resource.address.latitude},${resource.address.longitude}&dirflg=w`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="directions-btn" 
+                  />
                   <p className="org-distance">15 min</p>
                 </div>
               </div>
             </header>
 
-            <Services description={this.state.resource.long_description} services={this.state.resource.services}/>
+            <Services description={resource.long_description} services={resource.services}/>
 
             <ul className="org-meta">
-              <AddressInfo address={this.state.resource.address} />
-              <BusinessHours schedule_days={this.state.resource.schedule.schedule_days} />
-              <PhoneNumber phones={this.state.resource.phones} />
-              <Website website={this.state.resource.website} />
+              <AddressInfo address={resource.address} />
+              <BusinessHours schedule_days={resource.schedule.schedule_days} />
+              <PhoneNumber phones={resource.phones} />
+              <Website website={resource.website} />
               <Languages />
               <li>
                 <i className="material-icons">edit</i>
                 <p>
-                    <Link to={{ pathname: "/resource/edit", query: { resourceid: this.state.resource.id } }} className="button">
+                    <Link to={{ pathname: "/resource/edit", query: { resourceid: resource.id } }} className="button">
                         Make Edits
                     </Link>
                 </p>
