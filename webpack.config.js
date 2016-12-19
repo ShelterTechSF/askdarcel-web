@@ -17,6 +17,9 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'bundle.js'
   },
+  resolve: {
+    extensions: ['', '.tsx', '.ts', '.jsx', '.js'],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Ask Darcel',
