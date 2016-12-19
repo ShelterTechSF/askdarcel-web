@@ -30,7 +30,7 @@ class Resource extends Component {
 
   render() {
     const { resource } = this.state;
-    return ( !resource ? <Loader /> :
+    return ( !resource || !window.google ? <Loader /> :
       <div className="org-container">
         <article className="org">
           <section className="org-summary">
