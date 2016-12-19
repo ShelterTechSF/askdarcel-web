@@ -3,6 +3,7 @@ import Navigation from './Navigation';
 import CategoryPage from './Find/FindPage';
 import ResourcesTable from './Search/ResourcesTable';
 
+
 class App extends Component {
 
   constructor(props) {
