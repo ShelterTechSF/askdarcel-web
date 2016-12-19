@@ -64,7 +64,7 @@ class ResourcesRow extends Component {
     let hiddenStyle = {visibility: 'hidden'};
     return (
         <li className="results-table-entry">
-          <Link to={{ pathname: "resource", query: { id: this.props.resource.id } }}>
+          <Link to={{ pathname: "resource", query: { id: this.props.resource.id, time: this.state.walkTime } }}>
             <header>
               <div className="entry-details">
                 <h4 className="entry-headline">{this.props.number}. {firstService.name}</h4>
