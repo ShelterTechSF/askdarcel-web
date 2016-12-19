@@ -7,7 +7,6 @@ class ResourceMap extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props);
       let latLng = new google.maps.LatLng(this.props.lat, this.props.long);
       let map = new google.maps.Map(this.refs.map_canvas, {
         center: latLng,

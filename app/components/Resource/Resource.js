@@ -56,7 +56,7 @@ class Resource extends Component {
                     rel="noopener noreferrer"
                     className="directions-btn" 
                   />
-                  <p className="org-distance">15 min</p>
+                  <p className="org-distance">{this.props.location.query.time || ''}</p>
                 </div>
               </div>
             </header>
