@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Gmap from './ResourcesMap.js';
 import queryString from 'query-string';
+import ResourcesList from './ResourcesList'
 
 // Show the span of results (11 - 20 for example rather than the #10)
 // Make the map update with proper markers
@@ -182,7 +183,7 @@ class ResourcesTable extends Component {
                     </ul>
                   </div>
                   <div className="results-table-body">
-                    <ResourcesList resources={this.state.currentPage} location={this.state.location} page={this.state.page} />
+                    <ResourcesList resources={this.state.currentPage} location={this.state.location} page={this.state.page} resultsPerPage={resultsPerPage} />
                     <div className="add-resource">
                       <li className="results-table-entry">
                         <Link to={"ADD_PAGE"}>
@@ -204,144 +205,6 @@ class ResourcesTable extends Component {
               </div>
             </div>
     );
-  }
-}
-
-class ResourcesList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    let location = this.props.location;
-    let resourcesRows = this.props.resources.map((resource, index) => {
-      return (
-          <ResourcesRow resource={resource} key={index} number={index + 1 + (resultsPerPage * this.props.page)} location={location || {}}/>
-      );
-    });
-
-    return (
-      <ul className="results-table-entries">
-        {resourcesRows}
-      </ul>
-    );
-  }
-}
-
-class ResourcesRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dest: {lat: props.resource.address.latitude, lng: props.resource.address.longitude},
-      walkTime: null
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    //TODO: The Link class has a bunch of validations, etc. We should wrap that all in a service and just
-    //call that.
-    // Location.push("/resource/" + this.props.resource.id);
-  }
-
-  getWalkTime(dest, cb) {
-    let directionsService = new google.maps.DirectionsService();
-    let myLatLng = new google.maps.LatLng(this.props.location.lat, this.props.location.lng);
-    let destLatLang = new google.maps.LatLng(dest.lat, dest.lng);
-    let preferences = {
-      origin: myLatLng,
-      destination: destLatLang,
-      travelMode: google.maps.TravelMode.WALKING
-    };
-    directionsService.route(preferences, function(result, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        cb(result.routes[0].legs[0].duration.text);
-      }
-    });
-  }
-
-  getReview() {
-    let placeHolderReviews = [
-      "safe and friendly",
-      "clean place",
-      "great if you can get in",
-      "okay",
-      "not the best"
-    ];
-
-    return placeHolderReviews[Math.floor(Math.random() * placeHolderReviews.length)];
-  }
-
-  componentDidMount() {
-    var num = this.props.number;
-    this.getWalkTime(this.state.dest, (duration) => {
-      this.setState({
-        walkTime: duration
-      });
-    });
-  }
-
-  render() {
-    let firstService = this.props.resource.services[0];
-    let resourceDescription = this.props.resource.long_description ||
-          this.props.resource.short_description ||
-          (firstService && firstService.long_description);
-    let hiddenStyle = {visibility: 'hidden'};
-    return (
-        <li className="results-table-entry">
-          <Link to={{ pathname: "resource", query: { id: this.props.resource.id } }}>
-            <header>
-              <div className="entry-details">
-                <h4 className="entry-headline">{this.props.number}. {firstService.name}</h4>
-                <div className="entry-subhead">
-                  <Rating ratings={this.props.resource.ratings} />
-                  <p className="entry-distance">{buildAddressCell(this.props.resource.address)} &bull; {this.state.walkTime || "unknown"} walking</p>
-                </div>
-              </div>
-              <img className="entry-photo entry-img" src={buildImgURL(this.props.resource.address)} />
-            </header>
-            <div className="entry-meta">
-              <p className="entry-organization">{this.props.resource.name}</p>
-              <p className="entry-description">{resourceDescription}</p>
-              <p className="entry-hours">Open until 6:00pm</p>
-            </div>
-          </Link>
-        </li>
-    );
-  }
-}
-
-class Rating extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (this.props.ratings.length ?
-      <div className="entry-rating">
-        {Math.round(this.props.ratings.reduce((total, rating) => {return total + rating}) / 5)}
-      </div> :
-      null
-    )
-  }
-}
-
-class Quote extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    let quote = this.props.quote;
-    return (this.props.quote ?
-      <div className="quote">
-        <img className="quote-img" src={quote.url} />
-        <div className="quote-content">
-          <p className="quote-meta">{quote.username} • {quote.date}</p>
-          <p className="quote-text">{quote.text}</p>
-        </div>
-      </div> :
-      null
-    )
   }
 }
 
