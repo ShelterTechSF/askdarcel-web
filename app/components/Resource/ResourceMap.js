@@ -18,6 +18,33 @@ class ResourceMap extends Component {
       map,
       title: this.props.name
     });
+
+    let currentLocationMarker = new google.maps.Marker({map: map, icon: '../../assets/img/current-location.png'});
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        let pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        currentLocationMarker.setPosition(pos);
+        map.setCenter(pos);
+      }, function() {
+        handleLocationError(true, currentLocationMarker, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, currentLocationMarker, map.getCenter());
+    }
+
+    function handleLocationError(browserHasGeolocation, currentLocationMarker, pos) {
+      currentLocationMarker.setPosition(pos);
+      currentLocationMarker.setContent(browserHasGeolocation ?
+                            'Error: The Geolocation service failed.' :
+                            'Error: Your browser doesn\'t support geolocation.');
+    }
   }
 
   render() {
