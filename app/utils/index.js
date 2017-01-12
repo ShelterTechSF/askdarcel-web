@@ -1,10 +1,11 @@
 export function getAuthRequestHeaders() {
-  let authHeaders = JSON.parse(localStorage.authHeaders);
+  let authHeaders = localStorage;
+
   return {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "access-token": authHeaders['access-token'],
-        "client": authHeaders.client,
-        "uid": authHeaders.uid
+        "access-token": JSON.parse(authHeaders['access-token']),
+        "client": JSON.parse(authHeaders.client),
+        "uid": JSON.parse(authHeaders.uid)
       };
 }

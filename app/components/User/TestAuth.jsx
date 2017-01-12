@@ -9,13 +9,17 @@ import { getAuthRequestHeaders } from '../../utils/index';
 class TestAuth extends React.Component {
   constructor(props) {
     super(props);
-  
     this.state = {};
   }
 
   componentDidMount() {
-    let authHeaders = JSON.parse(localStorage.authHeaders);
-    fetch("/api/change_requests", {headers: getAuthRequestHeaders()}).then(resp => {
+    fetch("/api/change_requests", {
+      headers: getAuthRequestHeaders(), 
+    }).then(resp => {
+      const accessToken = resp.headers.get('access-token');
+      if(accessToken) {
+        localStorage.setItem("access-token", JSON.stringify(accessToken));
+      }
       console.log(`Api response: ${resp}`);
     })
     .catch(err => console.log('auth err:',err));

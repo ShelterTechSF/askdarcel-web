@@ -29,11 +29,11 @@ export default {
           if( response.status === 200) {
             dispatch(adminLoginSuccess());
             const headers = response.headers;
-            localStorage.setItem('authHeaders', JSON.stringify({
-              "access-token":headers.get('access-token'),
-              client: headers.get('client'),
-              uid: headers.get('uid')
-            }));
+
+            localStorage.setItem('access-token', JSON.stringify(headers.get('access-token')));
+            localStorage.setItem('client', JSON.stringify(headers.get('client')));
+            localStorage.setItem('uid', JSON.stringify(headers.get('uid')));
+
             browserHistory.push('/testAuth');
           } else if( response.status === 401) {
             alert('Incorrect email or password, please try again.');
