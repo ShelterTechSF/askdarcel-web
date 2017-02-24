@@ -6,12 +6,13 @@ class EditServices extends Component {
 		super(props);
 
 		this.state = {
-			services: props.services.map((service) => {
+			services: {},
+			existingServices: props.services.map((service) => {
 				let newService = service;
 				newService.key = service.id;
 				return newService;
 			}),
-			uuid: 0
+			uuid: -1
 		};
 
 		this.renderServices = this.renderServices.bind(this);
@@ -21,29 +22,28 @@ class EditServices extends Component {
 
 	handleServiceChange(key, service) {
 		let services = this.state.services;
+		services[key] = service;
 		this.setState({
-			services: services.map((existingService) => {
-				return existingService.key === service.key ? service : existingService;
-			})
+			services: services
 		}, function() {
-			this.props.handleServiceChange(this.state.services);
+			this.props.handleServiceChange(this.state);
 		});
 	}
 
 	addService() {
-		let services = this.state.services;
-		let newUUID = --this.state.uuid;
-		services.unshift({
+		let existingServices = this.state.existingServices;
+		let newUUID = this.state.uuid--;
+		existingServices.unshift({
 			key: newUUID
 		});
-		this.setState({services: services, uuid: newUUID});
+		this.setState({existingServices: existingServices, uuid: newUUID});
 	}
 
 	renderServices() {
 		let servicesArray = [];
 
-		for(let i = 0; i < this.state.services.length; i++) {
-			let service = this.state.services[i];
+		for(let i = 0; i < this.state.existingServices.length; i++) {
+			let service = this.state.existingServices[i];
 			servicesArray.push(
 				<EditService key={service.key} index={i} service={service} handleChange={this.handleServiceChange} />
 			);
@@ -71,7 +71,7 @@ class EditService extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			service: props.service
+			service: {}
 		};
 		this.handleFieldChange = this.handleFieldChange.bind(this);
 	}

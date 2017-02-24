@@ -112,7 +112,7 @@ class EditSections extends React.Component {
         }
 
         //Services
-        this.updateItems(this.state.services, 'services', promises);
+        this.postServices(this.state.services.services, promises);
 
         var that = this;
         Promise.all(promises).then(function(resp) {
@@ -131,29 +131,19 @@ class EditSections extends React.Component {
         }
     }
 
-    updateItems(items, path, promises) {
-        items.forEach((item) => {
-            delete item.key;
-            if(item.id) {
-                this.updateItem(item, path, promises);
-            } else {
-                this.createItem(item, path, promises);
+    postServices(servicesObj, promises) {
+        for(let key in servicesObj) {
+            if(servicesObj.hasOwnProperty(key)) {
+                let currentService = servicesObj[key];
+                if(key < 0) {
+                    let uri = '/api/resources/' + this.state.resource.id + '/services';
+                    promises.push(dataService.post(uri, currentService));
+                } else {
+                    let uri = '/api/services/' + key + '/change_requests';
+                    promises.push(dataService.post(uri, {change_request: currentService}));
+                }
             }
-        });
-    }
-
-    updateItem(item, path, promises) {
-        promises.push(dataService.post('/api/' + path + '/' + item.id + '/change_requests', {change_request: item}));
-    }
-
-    createItem(item, path, promises) {
-        let uri = '/api/resources/' + this.state.resource.id + '/'+ path;
-        promises.push(
-            dataService.post(
-                uri,
-                item
-            )
-        );
+        }
     }
 
     handlePhoneChange(e) {
