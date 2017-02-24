@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // ADD/EDIT PAGE
+.edit-section-title
 .edit-page {
     width: 100%;
     overflow: hidden;
@@ -55,12 +56,21 @@
     border-bottom: 0;
   }
 }
+.title-container {
+    display: flex;
+
+    .material-icons {
+        line-height: calc-em(38px);
+        cursor: pointer;
+        width: calc-em(24px);
+    }
+}
 
 .edit-section-list {
     label {
         @extend %font-size-large;
         display: block;
-        margin-bottom: calc-em(3px);
+        margin: 0 calc-em(5px) calc-em(3px) 0;
     }
 }
 

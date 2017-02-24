@@ -112,7 +112,7 @@ class EditSections extends React.Component {
         }
 
         //Services
-        this.postObject(this.state.services, 'services', promises);
+        this.updateItems(this.state.services, 'services', promises);
 
         var that = this;
         Promise.all(promises).then(function(resp) {
@@ -131,13 +131,34 @@ class EditSections extends React.Component {
         }
     }
 
+    updateItems(items, path, promises) {
+        items.forEach((item) => {
+            delete item.key;
+            if(item.id) {
+                this.updateItem(item, path, promises);
+            } else {
+                this.createItem(item, path, promises);
+            }
+        });
+    }
+
+    updateItem(item, path, promises) {
+        promises.push(dataService.post('/api/' + path + '/' + item.id + '/change_requests', {change_request: item}));
+    }
+
+    createItem(item, path, promises) {
+        let uri = '/api/resources/' + this.state.resource.id + '/'+ path;
+        promises.push(
+            dataService.post(
+                uri,
+                item
+            )
+        );
+    }
+
     handlePhoneChange(e) {
         if(this.state.resource.phones[0]) {
-            let phoneObj = {};
-            phoneObj[e.target.dataset.id] = {
-                number: e.target.value
-            }
-            this.setState({phone: phoneObj});
+            this.setState({phone: {number: e.target.value}});
         }
     }
 
@@ -224,7 +245,7 @@ class EditSections extends React.Component {
                 </li>
                 <label>Address</label>
                 <EditAddress address={this.state.resource.address} updateAddress={this.handleAddressChange}/>
-                <label>Services</label>
+
                 <EditServices services={this.state.resource.services} handleServiceChange={this.handleServiceChange} />
 
                 <label>Hours</label>
