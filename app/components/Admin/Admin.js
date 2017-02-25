@@ -10,61 +10,99 @@ class Admin extends React.Component {
         super();
         this.state = {
             change_requests: [],
-            loaded: false
+            changeRequestsLoaded: false,
+            pendingServicesLoaded: false
         };
 
         this.actionHandler = this.actionHandler.bind(this);
         this.getChangeRequests = this.getChangeRequests.bind(this);
         this.removeChangeRequest = this.removeChangeRequest.bind(this);
+        this.getPendingServices = this.getPendingServices.bind(this);
     }
 
     componentDidMount() {
         this.getChangeRequests();
+        this.getPendingServices();
+    }
+
+    getPendingServices() {
+        let json = {
+            services: [
+                {
+                    resource: {
+                        id: 27
+                    },
+                    service: {
+                        id: 1,
+                        name: "hella service bro",
+                        description: "every day we service its like weeeooooeeeooo"
+                    }
+                },
+                {
+                    resource: {
+                        id: 27
+                    },
+                    service: {
+                        id: 2,
+                        name: "yet another service",
+                        description: "more scripts"
+                    }
+                }
+            ]
+
+        };
+        this.setState({
+            services: json.services,
+            pendingServicesLoaded: true
+        })
+        // dataService.get('/api/services/pending', getAuthRequestHeaders()).then((json) => {
+        //     this.setState({
+        //
+        //     });
+        // });
     }
 
     getChangeRequests() {
       dataService.get('/api/change_requests', getAuthRequestHeaders()).then((json) => {
-        let changeRequestsMap = {};
-        let resources = {};
-        json.change_requests.forEach((changeRequest) => {
-          changeRequestsMap[changeRequest.id] = changeRequest;
-          let resource = changeRequest.resource;
-          if(resource) {
-              resources[resource.id] = resource;
-          }
-        });
-
         this.setState({
           change_requests: json.change_requests,
-          loaded: true
+          changeRequestsLoaded: true
         });
       });
     }
 
-    actionHandler(changeRequestID, action) {
-      if(action === changeRequestConstants.APPROVE) {
-        dataService.post(
-            '/api/change_requests/' + changeRequestID + '/approve',
-            getAuthRequestHeaders()
-        ).then((response) => {
-            if(response.ok) {
-                this.removeChangeRequest(changeRequestID);
-            } else {
-                console.log("Error while trying to approve change request.");
-            }
-        });
-      } else if(action === changeRequestConstants.DELETE) {
-        dataService.post(
-            '/api/change_requests/' + changeRequestID + '/reject',
-            getAuthRequestHeaders()
-        ).then((response) => {
-            if(response.ok) {
-                this.removeChangeRequest(changeRequestID);
-            } else {
-                console.log("Error while trying to reject change request.");
-            }
-        });
-      }
+    actionHandler(id, action) {
+        let requestString = action.replace(/{(.*?)}/, id);
+        let removalFunc;
+        let logMessage;
+
+        switch(action) {
+            case changeRequestConstants.APPROVE:
+                removalFunc = this.removeChangeRequest;
+                logMessage = "Error while trying to approve change request.";
+                break;
+            case changeRequestConstants.DELETE:
+                removalFunc = this.removeChangeRequest;
+                logMessage = "Error while trying to reject change request.";
+                break;
+            case changeRequestConstants.APPROVE_SERVICE:
+                removalFunc = this.removeService;
+                logMessage = "Error while trying to approve service";
+                break;
+            case changeRequestConstants.REJECT_SERVICE:
+                removalFunc = this.removeService;
+                logMessage = "Error while trying to reject service";
+                break;
+        }
+
+        dataService.post(requestString, getAuthRequestHeaders())
+            .then((response) => {
+                if(response.ok) {
+                    removalFunc(id);
+                } else {
+                    console.log(logMessage);
+                }
+            })
     }
 
     removeChangeRequest(changeRequestID) {
@@ -72,11 +110,22 @@ class Admin extends React.Component {
         this.setState({ change_requests: changeRequests.filter(changeRequest => changeRequest.id != changeRequestID) });
     }
 
+    removeService(serviceID) {
+        let services = this.state.services;
+        this.setState({ services: services.filter(service => service.service.id != serviceID)});
+    }
+
     render() {
+        let pendingServicesLoaded = this.state.pendingServicesLoaded;
+        let changeRequestsLoaded = this.state.changeRequestsLoaded;
         return (
-            !this.state.loaded ? <Loader /> :
+            !(this.state.pendingServicesLoaded &&
+                this.state.changeRequestsLoaded) ? <Loader /> :
             <div className="admin">
-              <ChangeRequests changeRequests={this.state.change_requests} actionHandler={this.actionHandler}/>
+              <ChangeRequests
+                changeRequests={this.state.change_requests}
+                services={this.state.services}
+                actionHandler={this.actionHandler}/>
             </div>
         )
     }

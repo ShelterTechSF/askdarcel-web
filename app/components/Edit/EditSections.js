@@ -17,6 +17,7 @@ class EditSections extends React.Component {
             resourceFields: {},
             serviceFields: {},
             addressFields: {},
+            services: {},
             submitting: false
         };
         this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
