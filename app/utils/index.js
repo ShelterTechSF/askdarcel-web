@@ -8,3 +8,30 @@ export function getAuthRequestHeaders() {
         "uid": authHeaders.uid
       };
 }
+
+export function timeToString(hours) {
+  let hoursString = "";
+  if(hours < 12) {
+    hoursString += hours + "am";
+  } else {
+    if(hours > 12) {
+      hours -= 12;
+    }
+
+    hoursString += hours + "pm";
+  }
+
+  return hoursString;
+}
+
+export function daysOfTheWeek() {
+  return [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+}

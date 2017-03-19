@@ -30,7 +30,10 @@ class ChangeRequest extends React.Component {
                 object = resource.schedule.schedule_days.filter(day => day.id === changeRequest.object_id)[0];
                 break;
             case 'AddressChangeRequest':
-                object = resources.address;
+                object = resource.address;
+                break;
+            case 'PhoneChangeRequest':
+                object = resource.phones.filter(phone => phone.id === changeRequest.object_id)[0];
                 break;
         }
 

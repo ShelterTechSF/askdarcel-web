@@ -163,6 +163,10 @@
   }
 }
 
+.service-row {
+  margin-left: 10px;
+}
+
 .service-header {
   @extend %font-size-large;
   color: $color-black;
@@ -175,7 +179,6 @@
 
 .service-application-process-container {
   margin-bottom: calc-em(10px);
-  display: none;
 }
 
 .service-application-header {
@@ -207,7 +210,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   padding: calc-em(40px);
-  border-bottom: 1px solid $color-grey3;
+  // border-bottom: 1px solid $color-grey3;
 
   .material-icons {
     color: $color-brand;
@@ -241,6 +244,22 @@
 
 .current-hours {
   display: inline;
+  &:hover{
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.details-toggle {
+  color: $color-brand;
+  &:hover{
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.weekly-hours {
+  margin-left: 45px;
 }
 
 .address {

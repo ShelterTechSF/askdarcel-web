@@ -82,6 +82,6 @@ $max-content-width: 1200px;
   width: 90%;
   margin: 0 auto;
   @include r_max($break-tablet-s) {
-    width: 100%;
+    width: 90%;
   }
 }

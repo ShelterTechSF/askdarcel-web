@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class ResourceMap extends Component {
   constructor(props) {
     super(props);
-    this.state = { userLocation: null };
   }
 
   componentDidMount() {
@@ -30,21 +29,8 @@ class ResourceMap extends Component {
             },
             title: 'Your position'
           });
-      // Try HTML5 geolocation.
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          let pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          userMarker.setPosition(pos);
-
-        }, function() {
-            console.log('Error getting users location');
-        });
-      } else {
-        // Browser doesn't support Geolocation
-        console.log('Browser does not support geolocation');
+      if (this.props.userLocation) {
+        userMarker.setPosition(this.props.userLocation);
       }
   }
 

@@ -11,14 +11,6 @@ class Gmap extends Component {
     };
   }
 
-  // getLocation(callback) {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(callback);
-  //   } else {
-  //     console.log("Geolocation is not supported by this browser.");
-  //   }
-  // }
-
   setMapOnAll(map, markers) {
     for (var i = 0; i < markers.length; i++) {
       markers[i].setMap(map);

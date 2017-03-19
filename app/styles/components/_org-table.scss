@@ -21,7 +21,7 @@
   z-index: 1;
   @include r_max($break-tablet-s) {
     order: 1;
-    height: calc-em(200px);
+    height: calc-em(180px);
     width: 100%;
   }
 }

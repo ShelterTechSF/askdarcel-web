@@ -36,7 +36,7 @@ class Resource extends Component {
           <section className="org-summary">
             <header className="org-header">
               <div className="org-map">
-                <ResourceMap name={resource.name} lat={ resource.address.latitude} long={resource.address.longitude} />
+                <ResourceMap name={resource.name} lat={ resource.address.latitude} long={resource.address.longitude} userLocation={this.props.userLocation} />
                 <StreetView address={resource.address} />
               </div>
               <div className="org-info">
