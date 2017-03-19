@@ -32,7 +32,7 @@ class EditServices extends Component {
 
 	addService() {
 		let existingServices = this.state.existingServices;
-		let newUUID = this.state.uuid--;
+		let newUUID = this.state.uuid-1;
 		existingServices.unshift({
 			key: newUUID
 		});

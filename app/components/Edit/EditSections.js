@@ -133,17 +133,22 @@ class EditSections extends React.Component {
     }
 
     postServices(servicesObj, promises) {
+        let newServices = [];
         for(let key in servicesObj) {
             if(servicesObj.hasOwnProperty(key)) {
                 let currentService = servicesObj[key];
                 if(key < 0) {
-                    let uri = '/api/resources/' + this.state.resource.id + '/services';
-                    promises.push(dataService.post(uri, {services: [currentService]}));
+                    newServices.push(currentService);
                 } else {
                     let uri = '/api/services/' + key + '/change_requests';
                     promises.push(dataService.post(uri, {change_request: currentService}));
                 }
             }
+        }
+
+        if(newServices.length > 0) {
+            let uri = '/api/resources/' + this.state.resource.id + '/services';
+            promises.push(dataService.post(uri, {services: newServices}));
         }
     }
 

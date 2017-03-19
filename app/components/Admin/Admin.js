@@ -27,35 +27,6 @@ class Admin extends React.Component {
     }
 
     getPendingServices() {
-        // let json = {
-        //     services: [
-        //         {
-        //             resource: {
-        //                 id: 27
-        //             },
-        //             service: {
-        //                 id: 1,
-        //                 name: "hella service bro",
-        //                 description: "every day we service its like weeeooooeeeooo"
-        //             }
-        //         },
-        //         {
-        //             resource: {
-        //                 id: 27
-        //             },
-        //             service: {
-        //                 id: 2,
-        //                 name: "yet another service",
-        //                 description: "more scripts"
-        //             }
-        //         }
-        //     ]
-        //
-        // };
-        // this.setState({
-        //     services: json.services,
-        //     pendingServicesLoaded: true
-        // })
         dataService.get('/api/services/pending', getAuthRequestHeaders()).then((json) => {
             this.setState({
                 services: json.services,

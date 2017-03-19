@@ -47,17 +47,6 @@ function renderChangeRequests(changeRequests, services, actionHandler) {
         );
     }
 
-    // for(let resourceID in resourceToChangeRequests) {
-    //     if(resourceToChangeRequests.hasOwnProperty(resourceID)) {
-    //         changeRequestWrappers.push(
-    //             <div key={resourceID} className="group-container">
-    //                 <h1>{resourceObjects[resourceID].name}</h1>
-    //                 {renderIndividualRequests(resourceToChangeRequests[resourceID], actionHandler)}
-    //             </div>
-    //         );
-    //     }
-    // }
-
     return changeRequestWrappers;
 }
 
