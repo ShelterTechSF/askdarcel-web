@@ -138,7 +138,7 @@ class EditSections extends React.Component {
                 let currentService = servicesObj[key];
                 if(key < 0) {
                     let uri = '/api/resources/' + this.state.resource.id + '/services';
-                    promises.push(dataService.post(uri, currentService));
+                    promises.push(dataService.post(uri, {services: [currentService]}));
                 } else {
                     let uri = '/api/services/' + key + '/change_requests';
                     promises.push(dataService.post(uri, {change_request: currentService}));

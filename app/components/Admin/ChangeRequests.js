@@ -33,7 +33,7 @@ function renderChangeRequests(changeRequests, services, actionHandler) {
         if(!resourceToServices.hasOwnProperty(resourceID)) {
             resourceToServices[resourceID] = [];
         }
-        resourceToServices[resourceID].push(service.service);
+        resourceToServices[resourceID].push(service);
         resourceObjects[resourceID] = service.resource;
     });
 

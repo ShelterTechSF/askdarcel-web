@@ -67,7 +67,7 @@ class ResourcesRow extends Component {
           <Link to={{ pathname: "resource", query: { id: this.props.resource.id, time: this.state.walkTime } }}>
             <header>
               <div className="entry-details">
-                <h4 className="entry-headline">{this.props.number}. {firstService.name}</h4>
+                <h4 className="entry-headline">{this.props.number}. {firstService && firstService.name}</h4>
                 <div className="entry-subhead">
                   <Rating ratings={this.props.resource.ratings} />
                   <p className="entry-distance">{buildAddressCell(this.props.resource.address)} &bull; {this.state.walkTime || "unknown"} walking</p>

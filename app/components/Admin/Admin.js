@@ -18,6 +18,7 @@ class Admin extends React.Component {
         this.getChangeRequests = this.getChangeRequests.bind(this);
         this.removeChangeRequest = this.removeChangeRequest.bind(this);
         this.getPendingServices = this.getPendingServices.bind(this);
+        this.removeService = this.removeService.bind(this);
     }
 
     componentDidMount() {
@@ -26,40 +27,41 @@ class Admin extends React.Component {
     }
 
     getPendingServices() {
-        let json = {
-            services: [
-                {
-                    resource: {
-                        id: 27
-                    },
-                    service: {
-                        id: 1,
-                        name: "hella service bro",
-                        description: "every day we service its like weeeooooeeeooo"
-                    }
-                },
-                {
-                    resource: {
-                        id: 27
-                    },
-                    service: {
-                        id: 2,
-                        name: "yet another service",
-                        description: "more scripts"
-                    }
-                }
-            ]
-
-        };
-        this.setState({
-            services: json.services,
-            pendingServicesLoaded: true
-        })
-        // dataService.get('/api/services/pending', getAuthRequestHeaders()).then((json) => {
-        //     this.setState({
+        // let json = {
+        //     services: [
+        //         {
+        //             resource: {
+        //                 id: 27
+        //             },
+        //             service: {
+        //                 id: 1,
+        //                 name: "hella service bro",
+        //                 description: "every day we service its like weeeooooeeeooo"
+        //             }
+        //         },
+        //         {
+        //             resource: {
+        //                 id: 27
+        //             },
+        //             service: {
+        //                 id: 2,
+        //                 name: "yet another service",
+        //                 description: "more scripts"
+        //             }
+        //         }
+        //     ]
         //
-        //     });
-        // });
+        // };
+        // this.setState({
+        //     services: json.services,
+        //     pendingServicesLoaded: true
+        // })
+        dataService.get('/api/services/pending', getAuthRequestHeaders()).then((json) => {
+            this.setState({
+                services: json.services,
+                pendingServicesLoaded: true
+            });
+        });
     }
 
     getChangeRequests() {
@@ -112,7 +114,7 @@ class Admin extends React.Component {
 
     removeService(serviceID) {
         let services = this.state.services;
-        this.setState({ services: services.filter(service => service.service.id != serviceID)});
+        this.setState({ services: services.filter(service => service.id != serviceID)});
     }
 
     render() {
