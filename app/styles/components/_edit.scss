@@ -75,22 +75,38 @@
 }
 
 .edit-section-item {
-  label {
-    @extend %font-size-small;
-    display: block;
-    padding: 0 calc-em(20px);
-    margin-bottom: calc-em(10px);
-  }
+    margin-left: calc-em(20px);
+    label {
+        @extend %font-size-small;
+        display: block;
+        padding: 0 calc-em(20px);
+        margin-bottom: calc-em(10px);
+    }
 
-  input, textarea {
-    @extend %font-size-default;
-    background: $color-grey0;
-    display: block;
-    width: 100%;
-    padding: calc-em(12px) calc-em(20px);
-    border: 0;
-    margin-bottom: calc-em(20px);
-  }
+    input, textarea {
+        @extend %font-size-default;
+        background: $color-grey0;
+        display: block;
+        width: 98%;
+        padding: calc-em(12px) calc-em(20px);
+        border: 0;
+        margin-bottom: calc-em(20px);
+        margin-left: calc-em(10px);
+        margin-right: calc-em(10px);
+    }
+}
+
+.notes-title {
+    font-weight: bold;
+}
+
+.edit-notes {
+    margin-left: calc-em(20px);
+}
+
+.edit-service {
+    border: 1px dotted black;
+    margin-bottom: calc-em(5px);
 }
 
 .edit-hours-list {

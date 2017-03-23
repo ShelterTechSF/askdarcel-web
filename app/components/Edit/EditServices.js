@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../Loader';
+import EditNotes from './EditNotes';
 
 class EditServices extends Component {
 	constructor(props) {
@@ -74,13 +75,20 @@ class EditService extends Component {
 			service: {}
 		};
 		this.handleFieldChange = this.handleFieldChange.bind(this);
+		this.handleNotesChange = this.handleNotesChange.bind(this);
 	}
 
 	handleFieldChange(e) {
 		let service = this.state.service;
 		service[e.target.dataset.field] = e.target.value;
 		this.setState({service: service});
+		this.props.handleChange(this.props.service.key, service);
+	}
 
+	handleNotesChange(notesObj) {
+		let service = this.state.service;
+		service.notesObj = notesObj;
+		this.setState({service: service});
 		this.props.handleChange(this.props.service.key, service);
 	}
 
@@ -94,6 +102,7 @@ class EditService extends Component {
 				<textarea placeholder='Application Process' data-field='application_process' defaultValue={this.props.service.application_process} onChange={this.handleFieldChange} />
 				<input placeholder='Fee' data-field='fee' defaultValue={this.props.service.fee} onChange={this.handleFieldChange} />
 				<textarea placeholder='Required Documents' data-field='required_documents' defaultValue={this.props.service.required_documents} onChange={this.handleFieldChange} />
+				<EditNotes notes={this.props.service.notes} handleNotesChange={this.handleNotesChange} />
 			</li>
 		);
 	}

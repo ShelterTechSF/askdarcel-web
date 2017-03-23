@@ -191,6 +191,10 @@ class EditSections extends React.Component {
         this.setState({services: servicesObj});
     }
 
+    handleNoteChange(notesObj) {
+        this.setState({notes: notesObj});
+    }
+
     formatTime(time) {
         //FIXME: Use full times once db holds such values.
         return time.substring(0, 2);
