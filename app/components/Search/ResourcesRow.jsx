@@ -175,9 +175,6 @@ function buildImgURL(address) {
   }
 }
 
-<<<<<<< HEAD
-export default ResourcesRow;
-=======
 function timeToString(hours) {
   let hoursString = "";
   if(hours < 12) {
@@ -194,4 +191,3 @@ function timeToString(hours) {
 }
 
 export default ResourcesRow;
->>>>>>> master
