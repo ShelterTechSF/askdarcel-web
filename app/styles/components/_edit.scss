@@ -96,17 +96,13 @@
     }
 }
 
-.notes-title {
-    font-weight: bold;
-}
-
-.edit-notes {
-    margin-left: calc-em(20px);
-}
-
 .edit-service {
     border: 1px dotted black;
     margin-bottom: calc-em(5px);
+
+    .edit-notes {
+        margin-left: calc-em(20px);
+    }
 }
 
 .edit-hours-list {

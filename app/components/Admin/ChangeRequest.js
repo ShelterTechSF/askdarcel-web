@@ -35,9 +35,29 @@ class ChangeRequest extends React.Component {
             case 'PhoneChangeRequest':
                 object = resource.phones.filter(phone => phone.id === changeRequest.object_id)[0];
                 break;
+            case 'NoteChangeRequest':
+                let resourceNotes = resource.notes.filter(note => note.id === changeRequest.object_id);
+                if(resourceNotes.length > 0) {
+                    object = resourceNotes[0];
+                } else {
+                    object = this.findNoteFromServices(resource.services, changeRequest.object_id);
+                }
+                break;
         }
 
         this.setState({existingRecord: object});
+    }
+
+    findNoteFromServices(services, noteID) {
+        for(let i = 0; i < services.length; i++) {
+            let notes = services[i].notes;
+            for(let j = 0; j < notes.length; j++) {
+                let note = notes[j];
+                if(note.id === noteID) {
+                    return note;
+                }
+            }
+        }
     }
 
     renderChangeRequest() {

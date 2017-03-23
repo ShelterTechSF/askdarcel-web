@@ -5,6 +5,7 @@ import { images } from '../../assets';
 import Loader from '../Loader';
 import EditAddress from './EditAddress';
 import EditServices from './EditServices';
+import EditNotes from './EditNotes';
 import * as dataService from '../../utils/DataService';
 import { withRouter } from 'react-router';
 
@@ -18,6 +19,7 @@ class EditSections extends React.Component {
             serviceFields: {},
             addressFields: {},
             services: {},
+            notes: {},
             submitting: false
         };
         this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
@@ -25,9 +27,12 @@ class EditSections extends React.Component {
         this.handlePhoneChange = this.handlePhoneChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleServiceChange = this.handleServiceChange.bind(this);
+        this.handleNotesChange = this.handleNotesChange.bind(this);
         this.formatTime = this.formatTime.bind(this);
         this.getDayHours = this.getDayHours.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.postServices = this.postServices.bind(this);
+        this.postNotes = this.postNotes.bind(this);
     }
 
     hasKeys(object) {
@@ -115,6 +120,9 @@ class EditSections extends React.Component {
         //Services
         this.postServices(this.state.services.services, promises);
 
+        //Notes
+        this.postNotes(this.state.notes.notes, promises);
+
         var that = this;
         Promise.all(promises).then(function(resp) {
             that.props.router.push({ pathname: "/resource", query: { id: that.state.resource.id } });
@@ -137,11 +145,19 @@ class EditSections extends React.Component {
         for(let key in servicesObj) {
             if(servicesObj.hasOwnProperty(key)) {
                 let currentService = servicesObj[key];
-                if(key < 0) {
-                    newServices.push(currentService);
-                } else {
-                    let uri = '/api/services/' + key + '/change_requests';
-                    promises.push(dataService.post(uri, {change_request: currentService}));
+
+                if(currentService.notesObj) {
+                    this.postNotes(currentService.notesObj.notes, promises, {path: 'services', id: key});
+                    delete currentService.notesObj;
+                }
+
+                if(!isEmpty(currentService)) {
+                    if(key < 0) {
+                        newServices.push(currentService);
+                    } else {
+                        let uri = '/api/services/' + key + '/change_requests';
+                        promises.push(dataService.post(uri, {change_request: currentService}));
+                    }
                 }
             }
         }
@@ -149,6 +165,23 @@ class EditSections extends React.Component {
         if(newServices.length > 0) {
             let uri = '/api/resources/' + this.state.resource.id + '/services';
             promises.push(dataService.post(uri, {services: newServices}));
+        }
+    }
+
+    postNotes(notesObj, promises, uriObj) {
+        let newNotes = [];
+        for(let key in notesObj) {
+            if(notesObj.hasOwnProperty(key)) {
+                let currentNote = notesObj[key];
+                if(key < 0) {
+                    let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';
+                    // promises.push(dataService.post(uri, {notes: }))
+                    console.log(uri);
+                } else {
+                    let uri = '/api/notes/' + key + '/change_requests';
+                    promises.push(dataService.post(uri, {change_request: currentNote}));
+                }
+            }
         }
     }
 
@@ -191,8 +224,12 @@ class EditSections extends React.Component {
         this.setState({services: servicesObj});
     }
 
-    handleNoteChange(notesObj) {
+    handleNotesChange(notesObj) {
         this.setState({notes: notesObj});
+    }
+
+    handleServiceNotesChange(notesObj) {
+        this.setState({serviceNotes: notesObj});
     }
 
     formatTime(time) {
@@ -245,6 +282,8 @@ class EditSections extends React.Component {
                 </li>
                 <label>Address</label>
                 <EditAddress address={this.state.resource.address} updateAddress={this.handleAddressChange}/>
+
+                <EditNotes notes={this.state.resource.notes} handleNotesChange={this.handleNotesChange} />
 
                 <EditServices services={this.state.resource.services} handleServiceChange={this.handleServiceChange} />
 
@@ -311,6 +350,13 @@ class EditSections extends React.Component {
 
         )
     }
+}
+
+function isEmpty(map) {
+   for(var key in map) {
+      return !map.hasOwnProperty(key);
+   }
+   return true;
 }
 
 export default withRouter(EditSections);
