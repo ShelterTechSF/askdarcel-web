@@ -122,7 +122,7 @@ class EditSections extends React.Component {
         this.postServices(this.state.services.services, promises);
 
         //Notes
-        this.postNotes(this.state.notes.notes, promises);
+        this.postNotes(this.state.notes.notes, promises, {path: "resources", id: this.state.resource.id});
 
         var that = this;
         Promise.all(promises).then(function(resp) {
@@ -176,8 +176,7 @@ class EditSections extends React.Component {
                 let currentNote = notesObj[key];
                 if(key < 0) {
                     let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';
-                    // promises.push(dataService.post(uri, {notes: }))
-                    console.log(uri);
+                    promises.push(dataService.post(uri, {note: currentNote}));
                 } else {
                     let uri = '/api/notes/' + key + '/change_requests';
                     promises.push(dataService.post(uri, {change_request: currentNote}));
