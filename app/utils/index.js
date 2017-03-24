@@ -10,18 +10,6 @@ export function getAuthRequestHeaders() {
 }
 
 export function timeToString(time, twentyFourHour) {
-  // let hoursString = "";
-  // if(hours < 12) {
-  //   hoursString += hours + "am";
-  // } else {
-  //   if(hours > 12) {
-  //     hours -= 12;
-  //   }
-  //
-  //   hoursString += hours + "pm";
-  // }
-  //
-  // return hoursString;
   let timeString = "" + time;
   let conversionArray = timeString.split('');
   let length = conversionArray.length;
@@ -32,16 +20,23 @@ export function timeToString(time, twentyFourHour) {
   let hoursString = conversionArray[0]+conversionArray[1];
   let hours = parseInt(hoursString);
   let minutesString = conversionArray[2]+conversionArray[3];
-  let timeOfDay = "am";
+  let timeOfDay = "";
 
-  if(hours > 12) {
-      timeOfDay = "pm";
-      hours -= 12;
-  } else if(hours === 0) {
-      hours = 12;
+  if(!twentyFourHour) {
+      if(hours > 12) {
+          timeOfDay = "pm";
+          hours -= 12;
+      } else if(hours === 0) {
+          timeOfDay = "am";
+          hours = 12;
+      } else {
+          timeOfDay = "am";
+      }
+
+      hoursString = "" + hours;
   }
 
-  return ""+hours+":"+minutesString+timeOfDay;
+  return ""+hoursString+":"+minutesString+timeOfDay;
 }
 
 export function daysOfTheWeek() {
