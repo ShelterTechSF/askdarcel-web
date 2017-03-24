@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from '../Loader';
 import EditNotes from './EditNotes';
+import EditSchedule from './EditSchedule';
 
 class EditServices extends Component {
 	constructor(props) {
@@ -112,7 +113,7 @@ class EditService extends Component {
 				<input placeholder='Fee' data-field='fee' defaultValue={this.props.service.fee} onChange={this.handleFieldChange} />
 				<textarea placeholder='Required Documents' data-field='required_documents' defaultValue={this.props.service.required_documents} onChange={this.handleFieldChange} />
 				<EditNotes notes={this.props.service.notes} handleNotesChange={this.handleNotesChange} />
-				
+				<EditSchedule schedule={this.props.service.schedule} handleScheduleChange={this.handleScheduleChange} />
 			</li>
 		);
 	}

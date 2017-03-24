@@ -162,7 +162,12 @@ class EditSections extends React.Component {
                     }
                 } else {
                     let uri = '/api/services/' + key + '/change_requests';
-                    promises.push(dataService.post(uri, {change_request: currentService}));
+                    this.postNotes(currentService.notesObj.notes, promises, {path: "services", id: key});
+                    delete currentService.notesObj;
+                    if(!isEmpty(currentService)) {
+                        promises.push(dataService.post(uri, {change_request: currentService}));
+                    }
+
                 }
             }
         }
