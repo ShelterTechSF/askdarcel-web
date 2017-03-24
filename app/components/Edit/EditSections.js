@@ -34,6 +34,7 @@ class EditSections extends React.Component {
         this.postServices = this.postServices.bind(this);
         this.postObject = this.postObject.bind(this);
         this.postNotes = this.postNotes.bind(this);
+        this.postSchedule = this.postSchedule.bind(this);
     }
 
     hasKeys(object) {
@@ -154,11 +155,11 @@ class EditSections extends React.Component {
                         currentService.notes = notes;
                     }
 
-                    // if(currentService.scheduleObj) {
-                    //     let schedule_days = this.objToArray(currentService.scheduleObj);
-                    //     delete currentService.scheduleObj;
-                    //     currentService.schedule = {schedule_days: scheduleDays};
-                    // }
+                    if(currentService.scheduleObj) {
+                        let schedule_days = this.objToArray(currentService.scheduleObj);
+                        delete currentService.scheduleObj;
+                        currentService.schedule = {schedule_days: scheduleDays};
+                    }
 
                     if(!isEmpty(currentService)) {
                         newServices.push(currentService);
@@ -167,6 +168,8 @@ class EditSections extends React.Component {
                     let uri = '/api/services/' + key + '/change_requests';
                     this.postNotes(currentService.notesObj, promises, {path: "services", id: key});
                     delete currentService.notesObj;
+                    this.postSchedule(currentService.scheduleObj, promises);
+                    delete currentService.scheduleObj;
                     if(!isEmpty(currentService)) {
                         promises.push(dataService.post(uri, {change_request: currentService}));
                     }
@@ -192,7 +195,11 @@ class EditSections extends React.Component {
         return arr;
     }
 
-
+    postSchedule(scheduleObj, promises, uriObj) {
+        if(scheduleObj) {
+            this.postObject(scheduleObj, 'schedule_days', promises);
+        }
+    }
 
     postNotes(notesObj, promises, uriObj) {
         if(notesObj) {
