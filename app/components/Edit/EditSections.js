@@ -122,7 +122,7 @@ class EditSections extends React.Component {
         this.postServices(this.state.services.services, promises);
 
         //Notes
-        this.postNotes(this.state.notes.notes, promises, {path: "resources", id: this.state.resource.id});
+        this.postNotes(this.state.notes, promises, {path: "resources", id: this.state.resource.id});
 
         var that = this;
         Promise.all(promises).then(function(resp) {
@@ -150,19 +150,22 @@ class EditSections extends React.Component {
                 if(key < 0) {
                     if(currentService.notesObj) {
                         let notes = this.objToArray(currentService.notesObj.notes);
-                        // let schedule_days = this.objToArray(currentService.scheduleObj);
                         delete currentService.notesObj;
-                        // delete currentService.scheduleObj;
                         currentService.notes = notes;
-                        // currentService.schedule = {schedule_days: scheduleDays};
                     }
+
+                    // if(currentService.scheduleObj) {
+                    //     let schedule_days = this.objToArray(currentService.scheduleObj);
+                    //     delete currentService.scheduleObj;
+                    //     currentService.schedule = {schedule_days: scheduleDays};
+                    // }
 
                     if(!isEmpty(currentService)) {
                         newServices.push(currentService);
                     }
                 } else {
                     let uri = '/api/services/' + key + '/change_requests';
-                    this.postNotes(currentService.notesObj.notes, promises, {path: "services", id: key});
+                    this.postNotes(currentService.notesObj, promises, {path: "services", id: key});
                     delete currentService.notesObj;
                     if(!isEmpty(currentService)) {
                         promises.push(dataService.post(uri, {change_request: currentService}));
@@ -189,17 +192,22 @@ class EditSections extends React.Component {
         return arr;
     }
 
+
+
     postNotes(notesObj, promises, uriObj) {
-        let newNotes = [];
-        for(let key in notesObj) {
-            if(notesObj.hasOwnProperty(key)) {
-                let currentNote = notesObj[key];
-                if(key < 0) {
-                    let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';
-                    promises.push(dataService.post(uri, {note: currentNote}));
-                } else {
-                    let uri = '/api/notes/' + key + '/change_requests';
-                    promises.push(dataService.post(uri, {change_request: currentNote}));
+        if(notesObj) {
+            let notes = notesObj.notes;
+            let newNotes = [];
+            for(let key in notes) {
+                if(notesObj.hasOwnProperty(key)) {
+                    let currentNote = notes[key];
+                    if(key < 0) {
+                        let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';
+                        promises.push(dataService.post(uri, {note: currentNote}));
+                    } else {
+                        let uri = '/api/notes/' + key + '/change_requests';
+                        promises.push(dataService.post(uri, {change_request: currentNote}));
+                    }
                 }
             }
         }
