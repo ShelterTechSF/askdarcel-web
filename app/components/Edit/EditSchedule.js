@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { timeToString, daysOfTheWeek } from '../../utils/index';
+import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
 
 class EditSchedule extends Component {
     constructor(props) {
@@ -25,12 +25,12 @@ class EditSchedule extends Component {
         let day = e.target.dataset.key;
         let value = e.target.value;
         let serverDay = currScheduleMap[day];
-        let formattedTime = this.formatTime(value);
+        let formattedTime = stringToTime(value);
 
         if(formattedTime !== serverDay[field]) {
             let schedule_days = this.state.schedule_days;
             let newDay = schedule_days[serverDay.id] ? schedule_days[serverDay.id] : {};
-            newDay[field] = value;
+            newDay[field] = formattedTime;
             schedule_days[serverDay.id] = newDay;
             this.setState({schedule_days: schedule_days}, function() {
                 this.props.handleScheduleChange(schedule_days);

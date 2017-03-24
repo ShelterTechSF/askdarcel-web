@@ -39,6 +39,10 @@ export function timeToString(time, twentyFourHour) {
   return ""+hoursString+":"+minutesString+timeOfDay;
 }
 
+export function stringToTime(timeString, twentyFourHour) {
+    return parseInt(timeString.replace(":", ""));
+}
+
 export function daysOfTheWeek() {
   return [
     "Sunday",
