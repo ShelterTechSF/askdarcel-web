@@ -32,6 +32,7 @@ class EditSections extends React.Component {
         this.handleNotesChange = this.handleNotesChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.postServices = this.postServices.bind(this);
+        this.postObject = this.postObject.bind(this);
         this.postNotes = this.postNotes.bind(this);
     }
 
@@ -108,7 +109,7 @@ class EditSections extends React.Component {
         this.postObject(phoneChangeRequests, 'phones', promises);
 
         //schedule
-        this.postObject(this.state.schedule_days, 'schedule_days', promises);
+        this.postObject(this.state.scheduleObj, 'schedule_days', promises);
 
         //address
         if(this.hasKeys(this.state.address) && this.state.resource.address) {
@@ -200,20 +201,6 @@ class EditSections extends React.Component {
 	}
 
     handleScheduleChange(scheduleObj) {
-        // let currScheduleMap = this.state.scheduleMap;
-        // let field = e.target.dataset.field;
-        // let day = e.target.dataset.key;
-        // let value = e.target.value;
-        // let serverDay = currScheduleMap[day];
-        // let formattedTime = this.formatTime(value);
-        //
-        // if(formattedTime !== serverDay[field]) {
-        //     let schedule_days = this.state.schedule_days;
-        //     let newDay = schedule_days[serverDay.id] ? schedule_days[serverDay.id] : {};
-        //     newDay[field] = value;
-        //     schedule_days[serverDay.id] = newDay;
-        //     this.setState({schedule_days: schedule_days});
-        // }
         this.setState({scheduleObj: scheduleObj});
     }
 
@@ -281,7 +268,7 @@ class EditSections extends React.Component {
 
     render() {
         return (
-            !this.state.resource || !this.state.scheduleMap? <Loader /> :
+            !this.state.resource ? <Loader /> :
             <div className="edit-page">
                 <header className="edit-header">
                     <a className="back-btn"></a>

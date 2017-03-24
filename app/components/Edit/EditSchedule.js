@@ -32,7 +32,9 @@ class EditSchedule extends Component {
             let newDay = schedule_days[serverDay.id] ? schedule_days[serverDay.id] : {};
             newDay[field] = value;
             schedule_days[serverDay.id] = newDay;
-            this.setState({schedule_days: schedule_days});
+            this.setState({schedule_days: schedule_days}, function() {
+                this.props.handleScheduleChange(schedule_days);
+            });
         }
     }
 
@@ -46,14 +48,6 @@ class EditSchedule extends Component {
         if(!dayRecord) {
             return null;
         }
-
-        // let hours = dayRecord[field];
-        // let returnStr = '' + hours;
-        //
-        // if(returnStr.length == 1) {
-        //     returnStr = '0'+returnStr;
-        // }
-        // return returnStr + ':00';
 
         let time = dayRecord[field];
         return timeToString(time, true);

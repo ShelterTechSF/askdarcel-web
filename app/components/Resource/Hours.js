@@ -5,7 +5,7 @@ import { timeToString, daysOfTheWeek } from '../../utils/index';
 export default class Hours extends Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       showDetailedHours: false,
     };
@@ -14,7 +14,7 @@ export default class Hours extends Component {
   }
 
   toggleDetailedHours() {
-    this.setState({ showDetailedHours: !this.state.showDetailedHours });    
+    this.setState({ showDetailedHours: !this.state.showDetailedHours });
   }
   render() {
     let { schedule } = this.props;
@@ -25,7 +25,7 @@ export default class Hours extends Component {
         <i className="material-icons">schedule</i>
           <div className="current-hours" onClick={this.toggleDetailedHours}>
             {buildHoursText(schedule)}
-            <span>{showDetailedHours ? 
+            <span>{showDetailedHours ?
               <i className="material-icons">keyboard_arrow_up</i> :
               <i className="material-icons">keyboard_arrow_down</i>}</span>
           </div>
