@@ -147,18 +147,22 @@ class EditSections extends React.Component {
             if(servicesObj.hasOwnProperty(key)) {
                 let currentService = servicesObj[key];
 
-                if(currentService.notesObj) {
-                    this.postNotes(currentService.notesObj.notes, promises, {path: 'services', id: key});
-                    delete currentService.notesObj;
-                }
-
-                if(!isEmpty(currentService)) {
-                    if(key < 0) {
-                        newServices.push(currentService);
-                    } else {
-                        let uri = '/api/services/' + key + '/change_requests';
-                        promises.push(dataService.post(uri, {change_request: currentService}));
+                if(key < 0) {
+                    if(currentService.notesObj) {
+                        let notes = this.objToArray(currentService.notesObj.notes);
+                        // let schedule_days = this.objToArray(currentService.scheduleObj);
+                        delete currentService.notesObj;
+                        // delete currentService.scheduleObj;
+                        currentService.notes = notes;
+                        // currentService.schedule = {schedule_days: scheduleDays};
                     }
+
+                    if(!isEmpty(currentService)) {
+                        newServices.push(currentService);
+                    }
+                } else {
+                    let uri = '/api/services/' + key + '/change_requests';
+                    promises.push(dataService.post(uri, {change_request: currentService}));
                 }
             }
         }
@@ -167,6 +171,17 @@ class EditSections extends React.Component {
             let uri = '/api/resources/' + this.state.resource.id + '/services';
             promises.push(dataService.post(uri, {services: newServices}));
         }
+    }
+
+    objToArray(obj) {
+        let arr = [];
+        for(let key in obj) {
+            if(obj.hasOwnProperty(key)) {
+                arr.push(obj[key]);
+            }
+        }
+
+        return arr;
     }
 
     postNotes(notesObj, promises, uriObj) {

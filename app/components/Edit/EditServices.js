@@ -77,6 +77,7 @@ class EditService extends Component {
 		};
 		this.handleFieldChange = this.handleFieldChange.bind(this);
 		this.handleNotesChange = this.handleNotesChange.bind(this);
+		this.handleScheduleChange = this.handleScheduleChange.bind(this);
 	}
 
 	handleFieldChange(e) {
@@ -93,6 +94,13 @@ class EditService extends Component {
 		this.props.handleChange(this.props.service.key, service);
 	}
 
+	handleScheduleChange(scheduleObj) {
+		let service = this.state.service;
+		service.scheduleObj = scheduleObj;
+		this.setState({service: service});
+		this.props.handleChange(this.props.service.key, service);
+	}
+
 	render() {
 		return (
 			<li className="edit-service">
@@ -104,6 +112,7 @@ class EditService extends Component {
 				<input placeholder='Fee' data-field='fee' defaultValue={this.props.service.fee} onChange={this.handleFieldChange} />
 				<textarea placeholder='Required Documents' data-field='required_documents' defaultValue={this.props.service.required_documents} onChange={this.handleFieldChange} />
 				<EditNotes notes={this.props.service.notes} handleNotesChange={this.handleNotesChange} />
+				
 			</li>
 		);
 	}
