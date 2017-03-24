@@ -9,6 +9,7 @@ import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import * as dataService from '../../utils/DataService';
 import { withRouter } from 'react-router';
+import { daysOfTheWeek } from '../../utils/index';
 
 class EditSections extends React.Component {
     constructor(props) {
@@ -156,9 +157,8 @@ class EditSections extends React.Component {
                     }
 
                     if(currentService.scheduleObj) {
-                        let schedule_days = this.objToArray(currentService.scheduleObj);
+                        currentService.schedule = this.createFullSchedule(currentService.scheduleObj);
                         delete currentService.scheduleObj;
-                        currentService.schedule = {schedule_days: scheduleDays};
                     }
 
                     if(!isEmpty(currentService)) {
@@ -184,6 +184,36 @@ class EditSections extends React.Component {
         }
     }
 
+    createFullSchedule(scheduleObj) {
+        let daysTemplate = {};
+        for(let i = 0; i < daysOfTheWeek().length; i++) {
+            let day = daysOfTheWeek()[i];
+            daysTemplate[day] = {
+                day: day,
+                opens_at: null,
+                closes_at: null
+            }
+        }
+
+        for(let key in scheduleObj) {
+            if(scheduleObj.hasOwnProperty(key)) {
+                let scheduleDay = scheduleObj[key];
+                for(let dayKey in scheduleDay) {
+                    daysTemplate[scheduleDay.day][dayKey] = scheduleDay[dayKey];
+                }
+            }
+        }
+
+        let scheduleDays = [];
+        for(let day in daysTemplate) {
+            if(daysTemplate.hasOwnProperty(day)) {
+                scheduleDays.push(daysTemplate[day]);
+            }
+        }
+
+        return {schedule_days: scheduleDays};
+    }
+
     objToArray(obj) {
         let arr = [];
         for(let key in obj) {
@@ -206,7 +236,7 @@ class EditSections extends React.Component {
             let notes = notesObj.notes;
             let newNotes = [];
             for(let key in notes) {
-                if(notesObj.hasOwnProperty(key)) {
+                if(notes.hasOwnProperty(key)) {
                     let currentNote = notes[key];
                     if(key < 0) {
                         let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';

@@ -12,7 +12,8 @@ class EditSchedule extends Component {
 
         this.state = {
             scheduleMap: scheduleMap,
-            schedule_days: {}
+            schedule_days: {},
+            uuid: -1
         };
 
         this.getDayHours = this.getDayHours.bind(this);
@@ -26,13 +27,16 @@ class EditSchedule extends Component {
         let value = e.target.value;
         let serverDay = currScheduleMap[day];
         let formattedTime = stringToTime(value);
+        let newUUID = this.state.uuid-1;
 
         if(formattedTime !== serverDay[field]) {
             let schedule_days = this.state.schedule_days;
             let newDay = schedule_days[serverDay.id] ? schedule_days[serverDay.id] : {};
             newDay[field] = formattedTime;
-            schedule_days[serverDay.id] = newDay;
-            this.setState({schedule_days: schedule_days}, function() {
+            newDay.day = day;
+            let key = serverDay.id ? serverDay.id : newUUID;
+            schedule_days[key] = newDay;
+            this.setState({schedule_days: schedule_days, uuid: newUUID}, function() {
                 this.props.handleScheduleChange(schedule_days);
             });
         }

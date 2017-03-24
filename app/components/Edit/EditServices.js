@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from '../Loader';
 import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
+import { createTemplateSchedule } from '../../utils/index';
 
 class EditServices extends Component {
 	constructor(props) {
@@ -37,7 +38,10 @@ class EditServices extends Component {
 		let newUUID = this.state.uuid-1;
 		existingServices.unshift({
 			key: newUUID,
-			notes: []
+			notes: [],
+			schedule: {
+				schedule_days: createTemplateSchedule()
+			}
 		});
 		this.setState({existingServices: existingServices, uuid: newUUID});
 	}

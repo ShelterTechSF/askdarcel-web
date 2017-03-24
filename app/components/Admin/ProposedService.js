@@ -28,19 +28,19 @@ function renderProposedServiceFields(service) {
                     jsx.push(tableEntry("note"+noteCount++, "note", note.note));
                 });
             }
-            // else if (field === "schedule") {
-            //     let schedule = service[field];
-            //     let scheduleDays = schedule.schedule_days;
-            //     scheduleDays.forEach((day) => {
-            //         jsx.push(
-            //             tableEntry(
-            //                 "sched"+day.day,
-            //                 "Schedule ("+day+")",
-            //                 "Opens at: "+day.opens_at+", Closes at: "+day.closes_at
-            //             )
-            //         );
-            //     })
-            // }
+            else if (field === "schedule") {
+                let schedule = service[field];
+                let scheduleDays = schedule.schedule_days;
+                scheduleDays.forEach((day) => {
+                    jsx.push(
+                        tableEntry(
+                            "sched"+day.day,
+                            "Schedule ("+day.day+")",
+                            "Opens at: "+day.opens_at+", Closes at: "+day.closes_at
+                        )
+                    );
+                })
+            }
             else {
                 jsx.push(tableEntry(field, field, service[field]));
             }

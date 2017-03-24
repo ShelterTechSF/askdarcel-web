@@ -54,3 +54,17 @@ export function daysOfTheWeek() {
     "Saturday"
   ];
 }
+
+export function createTemplateSchedule() {
+    let daysTemplate = [];
+    for(let i = 0; i < daysOfTheWeek().length; i++) {
+        let day = daysOfTheWeek()[i];
+        daysTemplate.push({
+            day: day,
+            opens_at: null,
+            closes_at: null
+        });
+    }
+
+    return daysTemplate;
+}
