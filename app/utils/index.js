@@ -9,19 +9,39 @@ export function getAuthRequestHeaders() {
       };
 }
 
-export function timeToString(hours) {
-  let hoursString = "";
-  if(hours < 12) {
-    hoursString += hours + "am";
-  } else {
-    if(hours > 12) {
-      hours -= 12;
-    }
-
-    hoursString += hours + "pm";
+export function timeToString(time, twentyFourHour) {
+  // let hoursString = "";
+  // if(hours < 12) {
+  //   hoursString += hours + "am";
+  // } else {
+  //   if(hours > 12) {
+  //     hours -= 12;
+  //   }
+  //
+  //   hoursString += hours + "pm";
+  // }
+  //
+  // return hoursString;
+  let timeString = "" + time;
+  let conversionArray = timeString.split('');
+  let length = conversionArray.length;
+  for(let i = length; i < 4; i++) {
+      conversionArray.unshift('0');
   }
 
-  return hoursString;
+  let hoursString = conversionArray[0]+conversionArray[1];
+  let hours = parseInt(hoursString);
+  let minutesString = conversionArray[2]+conversionArray[3];
+  let timeOfDay = "am";
+
+  if(hours > 12) {
+      timeOfDay = "pm";
+      hours -= 12;
+  } else if(hours === 0) {
+      hours = 12;
+  }
+
+  return ""+hours+":"+minutesString+timeOfDay;
 }
 
 export function daysOfTheWeek() {
