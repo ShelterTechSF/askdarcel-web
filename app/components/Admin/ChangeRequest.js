@@ -32,7 +32,7 @@ class ChangeRequest extends React.Component {
     //"ChangeRequest" is 13 characters, so this will give us the first part of the string
     let objectType = changeRequest.type;
     let object = {};
-    
+
     switch (objectType) {
       case 'ResourceChangeRequest':
         object = resource;
@@ -118,6 +118,5 @@ class ChangeRequest extends React.Component {
     );
   }
 }
-
 
 export default ChangeRequest;

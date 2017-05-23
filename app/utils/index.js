@@ -11,16 +11,14 @@ export function getAuthRequestHeaders() {
 
 export function timeToString(hours) {
   let date = new Date();
-  if (hours) {
-    let hoursString = hours.toString();
-    date.setHours(hoursString.substring(0,hoursString.length - 2));
-    date.setMinutes(hoursString.substring(hoursString.length - 2,hoursString.length));
-    date.setSeconds(0)
+  let hoursString = hours.toString();
 
-    let timeString = date.toLocaleTimeString().replace(/:\d+ /, ' ');
-    return timeString;
-  }
-  return null;
+  date.setHours(hoursString.substring(0,hoursString.length - 2));
+  date.setMinutes(hoursString.substring(hoursString.length - 2,hoursString.length));
+  date.setSeconds(0)
+
+  let timeString = date.toLocaleTimeString().replace(/:\d+ /, ' ');
+  return timeString;
 }
 
 export function stringToTime(timeString, twentyFourHour) {
