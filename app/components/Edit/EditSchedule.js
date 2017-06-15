@@ -6,7 +6,7 @@ class EditSchedule extends Component {
         super(props);
 
         let scheduleMap = {};
-        props.schedule.schedule_days.forEach(function(day) {
+        props.schedule && props.schedule.schedule_days.forEach(function(day) {
             scheduleMap[day.day] = day;
         });
 

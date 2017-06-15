@@ -146,7 +146,7 @@ class ResourcesTable extends Component {
                 <div className="results-table">
                   <header>
                     <h1 className="results-title">{this.state.categoryName}</h1>
-                    <span className="results-count">{this.state.allResources.length} Results</span>
+                    <span className="results-count">{this.state.resources.length} Total Results</span>
                   </header>
                   <div className="results-filters">
                     <ul>
@@ -165,7 +165,7 @@ class ResourcesTable extends Component {
                     </div>
                     <div className="pagination">
                       <div className="pagination-count">
-                        {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} Results</p> : <p>No results found</p>}
+                        {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} of {this.state.resources.length} Results</p> : <p>No results found</p>}
                       </div>
                       {this.state.page ? <button className="btn btn-link" onClick={this.getPreviousResources.bind(this)}> Previous </button> : null}
                       {Math.floor(this.state.currentPage.length / resultsPerPage) && this.state.allResources.length !== (this.state.page + 1) * resultsPerPage ? <button className="btn btn-link" onClick={this.getNextResources.bind(this)}> Next </button> : null}
