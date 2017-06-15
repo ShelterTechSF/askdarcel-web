@@ -50,6 +50,7 @@ class Resource extends Component {
                 </div>
                 <div className="org--main--header--hours">
                 	<TodaysHours schedule_days={resource.schedule.schedule_days} />
+<<<<<<< HEAD
                 </div>
                 <div className="org--main--header--phone">
                 <PhoneNumber phones={resource.phones} />
@@ -58,18 +59,35 @@ class Resource extends Component {
                 	<header>About this resource</header>
                   <p>{resource.long_description || resource.short_description || "No Description available"}</p>
                 </div>
+=======
+                </div>
+                <div className="org--main--header--phone">
+                <PhoneNumber phones={resource.phones} />
+                </div>
+                <div className="org--main--header--description">
+                	<header>About this resource</header>
+                  <p>{resource.long_description || resource.short_description || "No Description available"}</p>
+                </div>
+>>>>>>> master
 		          </header>
 
 		          <section className="service--section" id="services">
 				      	<header className="service--section--header">
+<<<<<<< HEAD
+				      		<h4>Services {resource.services.length}</h4>
+=======
 				      		<h4>Services</h4>
+>>>>>>> master
 				      	</header>
 				      	<ul className="service--section--list">
 		          		<Services description={resource.long_description} services={resource.services}/>
 				      	</ul>
 				      </section>
+<<<<<<< HEAD
+=======
 
               <Notes notes={this.state.resource.notes} />
+>>>>>>> master
 
 				      <section className="info--section" id="info">
 				      	<header className="service--section--header">
@@ -81,9 +99,12 @@ class Resource extends Component {
 				            <AddressInfo address={resource.address} />
 				            <PhoneNumber phones={resource.phones} />
 				            <Website website={resource.website} />
+<<<<<<< HEAD
+=======
                     <span className="website">
                       <a href={"mailto:"+this.state.resource.email} target="_blank">{this.state.resource.email}</a>
                     </span>
+>>>>>>> master
 				          </div>
 				          <div className="info--column">
 			            	<DetailedHours schedule={resource.schedule.schedule_days} />

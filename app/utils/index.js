@@ -10,6 +10,17 @@ export function getAuthRequestHeaders() {
 }
 
 export function timeToString(hours) {
+<<<<<<< HEAD
+  let date = new Date();
+  if (hours) {
+    let hoursString = hours.toString();
+    date.setHours(hoursString.substring(0,hoursString.length - 2));
+    date.setMinutes(hoursString.substring(hoursString.length - 2,hoursString.length));
+    date.setSeconds(0)
+
+    let timeString = date.toLocaleTimeString().replace(/:\d+ /, ' ');
+    return timeString;
+=======
   const date = new Date();
   if (hours) {
     const hoursString = hours.toString();
@@ -18,6 +29,7 @@ export function timeToString(hours) {
     date.setSeconds(0);
 
     return date.toLocaleTimeString().replace(/:\d+ /, ' ');
+>>>>>>> master
   }
   return null;
 }
@@ -96,4 +108,50 @@ export function sortScheduleDays(scheduleDays) {
   return scheduleDays.sort((a, b) => (
     a.day !== b.day ? days.indexOf(a.day) - days.indexOf(b.day) : a.opens_at - b.opens_at
   ));
+}
+
+export function buildHoursText(schedule_days) {
+  if(!schedule_days) {
+    return;
+  }
+
+  let hours = "";
+  let styles = {
+    cell: true
+  };
+  const currentDate = new Date();
+  const currentHour = currentDate.getHours();
+
+  const days = schedule_days.filter(schedule_day => {
+    return (schedule_day && schedule_day.day.replace(/,/g, '') == daysOfTheWeek()[currentDate.getDay()] &&
+        currentHour >= schedule_day.opens_at && currentHour < schedule_day.closes_at);
+  });
+
+
+
+  if(days.length && days.length > 0) {
+    for(let i = 0; i < days.length; i++) {
+      let day = days[i];
+      if(day.opens_at == 0 && day.closes_at >= 2359) {
+        hours = "Open 24 Hours";
+      } else {
+        hours = "Open Now: " + timeToString(day.opens_at) + "-" + timeToString(day.closes_at);
+      }
+      if(i != days.length - 1) {
+        hours += ", ";
+      }
+    }
+  } else {
+    hours = "Closed Now";
+    styles.closed = true;
+  }
+
+  return hours;
+}
+
+export function sortScheduleDays(schedule_days) {
+  let days = daysOfTheWeek();
+  return schedule_days.sort(function(a, b) {
+      return a.day != b.day ? days.indexOf(a.day) - days.indexOf(b.day) : a.opens_at - b.opens_at;
+  });
 }

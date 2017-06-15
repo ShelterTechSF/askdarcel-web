@@ -84,13 +84,20 @@ class ChangeRequest extends React.Component {
     let existingRecord = this.state.existingRecord;
     let changeRequestFields = this.state.changeRequestFields;
 
+<<<<<<< HEAD
+=======
     // TODO: existingRecord && existingRecord[field], need to fix this still
+>>>>>>> master
     for (let field in changeRequestFields) {
       changedFields.push(
         <div key={field} className="request-fields">
 					<div className="request-entry">
 						<p className="request-cell name existing">{field}</p>
+<<<<<<< HEAD
+						<p className="request-cell value existing">{existingRecord[field]}</p>
+=======
 						<p className="request-cell value existing">{existingRecord && existingRecord[field]}</p>
+>>>>>>> master
 					</div>
 					<div className="request-entry">
 						<p className="request-cell name">{field}</p>
