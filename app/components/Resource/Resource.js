@@ -4,6 +4,7 @@ import {AddressInfo, TodaysHours, PhoneNumber, WeeklyHours, ResourceCategories, 
 import DetailedHours from './DetailedHours';
 import CommunicationBoxes from './CommunicationBoxes';
 import Services from './Services';
+import Notes from './Notes';
 import Loader from '../Loader';
 import ResourceMap from './ResourceMap';
 import { Link } from 'react-router';
@@ -20,9 +21,10 @@ class Resource extends Component {
     let url = '/api/resources/' + resourceID;
     fetch(url).then(r => r.json())
     .then(data => {
+      data.resource.notes.push({note: "meow meow meowm oemwemmwwmowmoemowemow"});
+      data.resource.notes.push({note: "dljfjdjdjkkjlklklakjaljkajk"});
       this.setState({resource: data.resource});
-    })
-    ;
+    });
   }
 
   componentDidMount() {
@@ -60,12 +62,14 @@ class Resource extends Component {
 
 		          <section className="service--section" id="services">
 				      	<header className="service--section--header">
-				      		<h4>Services {resource.services.length}</h4>
+				      		<h4>Services</h4>
 				      	</header>
 				      	<ul className="service--section--list">
 		          		<Services description={resource.long_description} services={resource.services}/>
 				      	</ul>
 				      </section>
+
+              <Notes notes={this.state.resource.notes} />
 
 				      <section className="info--section" id="info">
 				      	<header className="service--section--header">
@@ -77,6 +81,9 @@ class Resource extends Component {
 				            <AddressInfo address={resource.address} />
 				            <PhoneNumber phones={resource.phones} />
 				            <Website website={resource.website} />
+                    <span className="website">
+                      <a href={"mailto:"+this.state.resource.email} target="_blank">{this.state.resource.email}</a>
+                    </span>
 				          </div>
 				          <div className="info--column">
 			            	<DetailedHours schedule={resource.schedule.schedule_days} />
