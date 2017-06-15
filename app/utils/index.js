@@ -1,3 +1,5 @@
+import padStart from 'lodash/padStart';
+
 export function getAuthRequestHeaders() {
   const authHeaders = JSON.parse(localStorage.authHeaders);
   return {
@@ -20,6 +22,11 @@ export function timeToString(hours) {
     return date.toLocaleTimeString().replace(/:\d+ /, ' ');
   }
   return null;
+}
+
+export function formatTimeForForm(hours) {
+  hours = padStart(hours, 4, '0');
+  return hours.substring(0, 2) + ':' + hours.substring(2, hours.length);
 }
 
 export function stringToTime(timeString) {

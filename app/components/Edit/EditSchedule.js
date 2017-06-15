@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
+import { timeToString, stringToTime, daysOfTheWeek, formatTimeForForm } from '../../utils/index';
 
 class EditSchedule extends Component {
     constructor(props) {
@@ -54,7 +54,7 @@ class EditSchedule extends Component {
         }
 
         let time = dayRecord[field];
-        return timeToString(time, true);
+        return formatTimeForForm(time);
     }
 
     render() {
