@@ -1,16 +1,75 @@
+// import * as ChangeRequestTypes from './ChangeRequestTypes';
+// import Actions from './Actions';
 import React from 'react';
-import ChangeRequest from './ChangeRequest';
-import * as ChangeRequestTypes from './ChangeRequestTypes';
-import ProposedService from './ProposedService';
-import Actions from './Actions';
 import * as _ from 'lodash/fp/object';
-
+import ChangeRequest from './ChangeRequest';
+import ProposedService from './ProposedService';
 
 class ChangeRequests extends React.Component {
+
+  static renderRequestWrapper(changeRequest, actionHandler) {
+    return (
+      <div className="request-container">
+        <ChangeRequest changeRequest={changeRequest} actionHandler={actionHandler} />
+      </div>
+    );
+  }
+
+  static renderIndividualRequests(changeRequests, actionHandler) {
+    if (!changeRequests) { return; }
+    const resourceInfoToRender = [];
+    const requestsToRender = [];
+
+    changeRequests.forEach((changeRequest) => {
+      switch (changeRequest.type) {
+        case 'ResourceChangeRequest':
+          resourceInfoToRender.push(
+            <div key={`cr${changeRequest.id}`}>
+              <span> { ChangeRequests.renderRequestWrapper(changeRequest, actionHandler) } </span>
+            </div>,
+          );
+          break;
+        case 'ServiceChangeRequest':
+          requestsToRender.push(
+            <div key={`cr${changeRequest.id}`} className="service-wrapper">
+              { ChangeRequests.renderRequestWrapper(changeRequest, actionHandler) }
+            </div>,
+          );
+          break;
+        default:
+          // console.log('rendering unknown', changeRequest);
+          // TODO: Pretty sure there are no other types for now
+      }
+    });
+
+    if (requestsToRender.length) {
+      requestsToRender.unshift(
+        <span key="title">
+          <hr />
+          <h3>Services</h3>
+        </span>
+      );
+    }
+
+    return resourceInfoToRender.concat(requestsToRender);
+  }
+
+  static renderProposedServices(services, actionHandler) {
+    if (!services) { return; }
+    return services.map(service => (
+      <div key={`svc${service.id}`}>
+        <p>Proposed Service</p>
+        <div className="request-container">
+          <ProposedService service={service} actionHandler={actionHandler} />
+        </div>
+      </div>
+    ));
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      resourceToCollapsed: {}
+      resourceToCollapsed: {},
     };
     this.props.changeRequests.forEach((changeRequest) => {
       let resourceID = changeRequest.resource.id;
@@ -20,31 +79,24 @@ class ChangeRequests extends React.Component {
       let resourceID = service.resource.id;
       this.state.resourceToCollapsed[resourceID] = true;
     });
-
   }
 
   toggleCollapsed(resourceID) {
     let resourceToCollapsed = _.extend({}, this.state.resourceToCollapsed);
     resourceToCollapsed[resourceID] ^= true;
     this.setState({
-      resourceToCollapsed: resourceToCollapsed
+      resourceToCollapsed: resourceToCollapsed,
     });
   }
 
-  render() {
-    return (
-      <div className="change-requests">
-        {this.renderChangeRequests(this.props.changeRequests, this.props.services, this.props.actionHandler)}
-      </div>
-    );
-  }
-
   renderChangeRequests(changeRequests, services, actionHandler) {
-    let resourceToChangeRequests = {};
-    let resourceObjects = {};
-    let changeRequestWrappers = [];
+    const resourceToChangeRequests = {};
+    const resourceObjects = {};
+    const changeRequestWrappers = [];
+    const resourceToServices = {};
+
     changeRequests.forEach((changeRequest) => {
-      let resourceID = changeRequest.resource.id;
+      const resourceID = changeRequest.resource.id;
 
       if (!resourceToChangeRequests.hasOwnProperty(resourceID)) {
         resourceToChangeRequests[resourceID] = [];
@@ -54,9 +106,9 @@ class ChangeRequests extends React.Component {
       resourceObjects[resourceID] = changeRequest.resource;
     });
 
-    let resourceToServices = {};
     services.forEach((service) => {
-      let resourceID = service.resource.id;
+      console.log(service)
+      const resourceID = service.resource.id;
       if (!resourceToServices.hasOwnProperty(resourceID)) {
         resourceToServices[resourceID] = [];
       }
@@ -65,16 +117,16 @@ class ChangeRequests extends React.Component {
     });
 
     for (let resourceID in resourceObjects) {
-      let collapsed = this.state.resourceToCollapsed[resourceID] ? "collapsed" : "";
+      const collapsed = this.state.resourceToCollapsed[resourceID] ? 'collapsed' : '';
       changeRequestWrappers.push(
-        <div key={resourceID} className="group-container">
-          <h1 onClick={() => this.toggleCollapsed(resourceID)}>
+        <div key={resourceID} className={`group-container ${collapsed}`}>
+          <h2 onClick={() => this.toggleCollapsed(resourceID)}>
             {resourceObjects[resourceID].name}
-            <span className={`material-icons expander ${collapsed}`}>expand_less</span>
-          </h1>
+            <span className={`material-icons expander ${collapsed} right`}>expand_less</span>
+          </h2>
           <div className={`group-content ${collapsed}`}>
-            {renderProposedServices(resourceToServices[resourceID], actionHandler)}
-            {renderIndividualRequests(resourceToChangeRequests[resourceID], actionHandler)}
+            {ChangeRequests.renderIndividualRequests(resourceToChangeRequests[resourceID], actionHandler)}
+            {ChangeRequests.renderProposedServices(resourceToServices[resourceID], actionHandler)}
           </div>
         </div>
       );
@@ -82,41 +134,21 @@ class ChangeRequests extends React.Component {
 
     return changeRequestWrappers;
   }
-}
 
-function renderProposedServices(services, actionHandler) {
-  if (!services) {
-    return;
-  }
-  return services.map((service) => {
+  render() {
     return (
-      <div key={'svc'+service.id}>
-        <p>Proposed Service</p>
-        <div className="request-container">
-          <ProposedService service={service} actionHandler={actionHandler} />
-        </div>
+      <div className="change-requests">
+        <h1 className="page-title">
+          {`Change Requests (${this.props.changeRequests.length})`}
+        </h1>
+        {this.renderChangeRequests(
+          this.props.changeRequests,
+          this.props.services,
+          this.props.actionHandler,
+        )}
       </div>
     );
-  });
-}
-
-function renderIndividualRequests(changeRequests, actionHandler) {
-  if (!changeRequests) {
-    return;
   }
-  let requestsToRender = [];
-  changeRequests.forEach((changeRequest) => {
-    requestsToRender.push(
-      <div key={'cr'+changeRequest.id}>
-        <p>{changeRequest.type}</p>
-        <div className="request-container">
-          <ChangeRequest changeRequest={changeRequest} actionHandler={actionHandler} />
-        </div>
-      </div>
-    );
-  });
-
-  return requestsToRender;
 }
 
 export default ChangeRequests;

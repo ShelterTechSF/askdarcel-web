@@ -9,6 +9,7 @@ module.exports = {
     "browser": true
   },
   "rules": {
-    "react/jsx-filename-extension": 0
+    "react/jsx-filename-extension": 0,
+    "no-plusplus": 0,
   }
 };

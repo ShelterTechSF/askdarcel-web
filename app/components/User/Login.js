@@ -17,7 +17,7 @@ class Login extends React.Component {
   }
   componentWillMount() {
     if(this.props.isAuthenticated) {
-      browserHistory.push('/testAuth');
+      // browserHistory.push('/testAuth');
     }
   }
   render() {
