@@ -108,14 +108,17 @@ export function buildHoursText(scheduleDays) {
   };
   const currentDate = new Date();
   const currentHour = currentDate.getHours();
+  const currentMinutes = currentDate.getMinutes();
+
+  const currentTime = (currentHour * 100) + currentMinutes;
 
   const days = scheduleDays.filter(scheduleDay =>
     scheduleDay &&
     scheduleDay.day.replace(/,/g, '') === daysOfTheWeek()[currentDate.getDay()] &&
-    currentHour >= scheduleDay.opens_at &&
-    currentHour < scheduleDay.closes_at,
+    currentTime >= scheduleDay.opens_at &&
+    currentTime < scheduleDay.closes_at,
   );
-
+  
   if (days.length && days.length > 0) {
     for (let i = 0; i < days.length; i += 1) {
       const day = days[i];
