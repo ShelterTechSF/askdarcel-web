@@ -47,7 +47,12 @@ class Admin extends React.Component {
   bulkActionHandler(action, changeRequests) {
     return Promise.all(
       changeRequests.map((changeRequest) => { // Create an action handler for each CR
-        const changeRequestFields = changeRequest.field_changes.reduce((a, c) => { // reduce fields into one object
+        const changeRequestFields = changeRequest.field_changes.reduce((a, c) => {
+          if (a[c.field_name] !== undefined) {
+            console.warn('Discarding duplicate field name in action handler: ', { current: a[c.field_name], duplicate: c });
+            return a;
+          }
+
           a[c.field_name] = c.field_value;
           return a;
         }, {});
@@ -62,8 +67,6 @@ class Admin extends React.Component {
     let removalFunc;
     let logMessage;
     let body = {};
-
-    // console.log('performing action', id, requestString, changeRequestFields);
 
     switch (action) {
       case changeRequestConstants.APPROVE:

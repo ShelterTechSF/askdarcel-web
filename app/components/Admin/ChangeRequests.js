@@ -108,7 +108,6 @@ class ChangeRequests extends React.Component {
     });
 
     services.forEach((service) => {
-      console.log(service)
       const resourceID = service.resource.id;
       if (!resourceToServices.hasOwnProperty(resourceID)) {
         resourceToServices[resourceID] = [];
@@ -116,8 +115,6 @@ class ChangeRequests extends React.Component {
       resourceToServices[resourceID].push(service);
       resourceObjects[resourceID] = service.resource;
     });
-
-    // console.log(changeRequests)
 
     for (let resourceID in resourceObjects) {
       const collapsed = this.state.resourceToCollapsed[resourceID] ? 'collapsed' : '';

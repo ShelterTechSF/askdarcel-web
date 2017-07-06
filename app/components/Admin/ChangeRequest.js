@@ -1,6 +1,5 @@
 import React from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
-// import * as dataService from '../../utils/DataService';
 import * as ChangeRequestTypes from './ChangeRequestTypes';
 import Actions from './Actions';
 
@@ -28,7 +27,6 @@ class ChangeRequest extends React.Component {
     const resource = changeRequest.resource;
     // "ChangeRequest" is 13 characters, so this will give us the first part of the string
     const objectType = changeRequest.type;
-    let resourceNotes;
     let object = {};
 
     switch (objectType) {
@@ -49,7 +47,7 @@ class ChangeRequest extends React.Component {
         object = resource.phones.filter(phone => phone.id === changeRequest.object_id)[0];
         break;
       case 'NoteChangeRequest':
-        resourceNotes = resource.notes.filter(note => note.id === changeRequest.object_id);
+        const resourceNotes = resource.notes.filter(note => note.id === changeRequest.object_id);
         if (resourceNotes.length > 0) {
           object = resourceNotes[0];
         } else {
@@ -102,7 +100,6 @@ class ChangeRequest extends React.Component {
             </div>
             <div className="request-entry">
               <p className="request-cell value existing">{existingRecord[field] || '{ NEW }'}</p>
-              {/* <pre>{ JSON.stringify(this.state.changeRequestFields, null, 2) }</pre> */}
             </div>
           </div>
         </div>
