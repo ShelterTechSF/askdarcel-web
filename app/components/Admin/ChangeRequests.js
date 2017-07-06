@@ -135,6 +135,12 @@ class ChangeRequests extends React.Component {
       );
     }
 
+    if (!changeRequestWrappers.length) {
+      changeRequestWrappers.push(
+        <p className="message">Hurrah, it looks like you've handled all the outstanding change requests!</p>
+      );
+    }
+
     return changeRequestWrappers;
   }
 
