@@ -77,7 +77,6 @@ class ChangeRequest extends React.Component {
     tempChangeRequestFields[key] = value;
     // tempChangeRequestFields.edited = true;
     this.setState({ changeRequestFields: tempChangeRequestFields });
-    console.log('made an edit:', this.state.changeRechangeRequestFields, tempChangeRequestFields);
   }
 
   renderChangeRequest() {
