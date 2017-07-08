@@ -232,3 +232,21 @@
 	flex-direction: column;
 	margin-top: calc-em(60px);
 }
+
+.checkbox-label {
+	display: flex;
+	flex-direction: row;
+
+	.checkbox {
+		width: 5%;
+	}
+
+	label {
+		color: black;
+		font-size: calc-em(16px);
+	}
+}
+
+.hidden {
+	display: none;
+}

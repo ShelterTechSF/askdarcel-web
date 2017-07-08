@@ -60,6 +60,7 @@ class EditSections extends React.Component {
 	    let url = '/api/resources/' + resourceID;
 	    fetch(url).then(r => r.json())
 	    .then(data => {
+            data.resource.services[0].inherit_schedule = true;
 	      	this.setState({
                   resource: data.resource,
                   originalResource: data.resource
@@ -200,7 +201,9 @@ class EditSections extends React.Component {
                         currentService.notes = notes;
                     }
 
-                    currentService.schedule = this.createFullSchedule(currentService.scheduleObj);
+                    if(!currentService.inherit_schedule) {
+                        currentService.schedule = this.createFullSchedule(currentService.scheduleObj);
+                    }
                     delete currentService.scheduleObj;
 
                     if(!isEmpty(currentService)) {
@@ -210,8 +213,12 @@ class EditSections extends React.Component {
                     let uri = '/api/services/' + key + '/change_requests';
                     this.postNotes(currentService.notesObj, promises, {path: "services", id: key});
                     delete currentService.notesObj;
-                    this.postSchedule(currentService.scheduleObj, promises);
+
+                    if(!currentService.inherit_schedule) {
+                        this.postSchedule(currentService.scheduleObj, promises);
+                    }
                     delete currentService.scheduleObj;
+
                     if(!isEmpty(currentService)) {
                         promises.push(dataService.post(uri, {change_request: currentService}));
                     }
@@ -271,7 +278,11 @@ class EditSections extends React.Component {
 
     postSchedule(scheduleObj, promises, uriObj) {
         if(scheduleObj) {
-            this.postObject(scheduleObj, 'schedule_days', promises);
+            if(scheduleObj.inheritSchedule) {
+                //Post schedule with flag set
+            } else {
+                this.postObject(scheduleObj, 'schedule_days', promises);
+            }
         }
     }
 

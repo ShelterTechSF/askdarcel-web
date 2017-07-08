@@ -96,9 +96,16 @@ class EditService extends Component {
 		this.props.handleChange(this.props.service.key, service);
 	}
 
-	handleScheduleChange(scheduleObj) {
+	handleScheduleChange(scheduleObj, inheritSchedule) {
 		let service = this.state.service;
-		service.scheduleObj = scheduleObj;
+		if(scheduleObj !== null) {
+			service.scheduleObj = scheduleObj;
+		}
+
+		if(inheritSchedule !== null) {
+			service.inherit_schedule = inheritSchedule;
+		}
+		
 		this.setState({service: service});
 		this.props.handleChange(this.props.service.key, service);
 	}
@@ -107,8 +114,8 @@ class EditService extends Component {
 		return (
 			<li className="edit--service edit--section">
 				<header className="edit--section--header">
-      		<h4>Service {this.props.index+1}: {this.props.service.name}</h4>
-      	</header>
+      				<h4>Service {this.props.index+1}: {this.props.service.name}</h4>
+      			</header>
 
 				<ul className="edit--section--list">
 					<li className="edit--section--list--item">
@@ -146,7 +153,7 @@ class EditService extends Component {
 						<textarea placeholder='Required Documents' data-field='required_documents' defaultValue={this.props.service.required_documents} onChange={this.handleFieldChange} />
 					</li>
 
-					<EditSchedule schedule={this.props.service.schedule} handleScheduleChange={this.handleScheduleChange} />
+					<EditSchedule schedule={this.props.service.schedule} inheritSchedule={true} inheritable={true} handleScheduleChange={this.handleScheduleChange} />
 
 					<EditNotes notes={this.props.service.notes} handleNotesChange={this.handleNotesChange} />
 				</ul>
