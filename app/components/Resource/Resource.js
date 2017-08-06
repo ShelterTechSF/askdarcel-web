@@ -106,7 +106,15 @@ class Resource extends Component {
 		          	<nav className="org--aside--content--nav">
 		          		<ul>
 		          			<li><a href="#resource">{resource.name}</a></li>
-		          			<li><a href="#services">Services</a></li>
+		          			<li><a href="#services">Services</a>
+                      <ul className="service--nav--list">
+                        { 
+                          resource.services.map(function(service){
+                            return <li>{service.name}</li>;
+                          })
+                        }
+                      </ul>
+                    </li>
 		          			<li><a href="#info">Info</a></li>
 		          		</ul>
 		          	</nav>
