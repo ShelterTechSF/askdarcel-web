@@ -21,7 +21,7 @@ class Services extends Component {
 
   renderServices(services) {
     return services.map((service, i) => {
-      return <Service service={service} key={i} serviceRef={(el) => { this.serviceItem = el; }} />
+      return <Service service={service} key={i} />
     });
   }
 
@@ -48,7 +48,7 @@ class Service extends Component {
   render() {
     let { infoHidden } = this.state;
     return (
-		<li className="service" id={this.props.service.name} ref={this.props.serviceRef} >
+		<li className="service" id={`service-${this.props.service.id}`} >
 			<div className="service--meta disabled-feature">
 				<p><ServiceCategory category={this.props.service.category} /></p>
 				<p>updated {this.props.service.updated_date}</p>

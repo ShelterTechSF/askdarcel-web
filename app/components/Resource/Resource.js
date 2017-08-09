@@ -13,6 +13,13 @@ class Resource extends Component {
   constructor(props) {
     super(props);
     this.state = { resource: null };
+    this.scrollToElement = this.scrollToElement.bind(this);
+  }
+
+  scrollToElement(e, serviceid){
+    console.log("hello");
+    e.preventDefault();
+    document.getElementById(serviceid).scrollIntoView();
   }
 
   loadResourceFromServer() {
@@ -110,8 +117,7 @@ class Resource extends Component {
                       <ul className="service--nav--list">
                         { 
                           resource.services.map(function(service){
-                            return <li>{service.name}</li>;
-                          })
+                            return <li key={`servicenav-${service.id}`}><a href={`#service-${service.id}`} onClick={ () => this.scrollToElement(service.id) }>{service.name}</a></li>; })
                         }
                       </ul>
                     </li>
