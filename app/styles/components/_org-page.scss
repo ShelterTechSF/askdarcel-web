@@ -264,14 +264,14 @@
 				  	}
 				  }
 				}
-			}
-			ul.service--nav--list {
-				list-style: disc;
-				margin-left: 1em;
-				list-style-position: inside;
+				&.service--nav--list {
+					list-style: disc;
+					margin-left: 1em;
+					list-style-position: inside;
 
-				li {
-					line-height: 1em;
+					li {
+						line-height: 1em;
+					}
 				}
 			}
 		}
