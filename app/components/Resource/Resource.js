@@ -7,6 +7,7 @@ import Services from './Services';
 import Notes from './Notes';
 import Loader from '../Loader';
 import ResourceMap from './ResourceMap';
+import * as dataService from '../../utils/DataService';
 
 function scrollToElement(selector) {
   const elem = document.getElementById(selector);
@@ -19,6 +20,7 @@ class Resource extends Component {
   constructor(props) {
     super(props);
     this.state = { resource: null };
+    this.verifyResource = this.verifyResource.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +35,19 @@ class Resource extends Component {
     .then((data) => {
       this.setState({ resource: data.resource });
     });
+  }
+
+  verifyResource() {
+    const changeRequest = { verified_at: new Date().toISOString() };
+    dataService.post(`/api/resources/${this.state.resource.id}/change_requests`, { change_request: changeRequest })
+      .then((response) => {
+        // TODO: Do not use alert() for user notifications.
+        if (response.ok) {
+          alert('Resource verified. Thanks!');  // eslint-disable-line no-alert
+        } else {
+          alert('Issue verifying resource. Please try again.');  // eslint-disable-line no-alert
+        }
+      });
   }
 
   render() {
@@ -120,6 +135,12 @@ class Resource extends Component {
               <Link to={{ pathname: '/resource/edit', query: { resourceid: resource.id } }} className="org--aside--content--button edit-button">
                   Make Edits
               </Link>
+              <button
+                className="org--aside--content--button"
+                onClick={this.verifyResource}
+              >
+                Mark Info as Correct
+              </button>
               <nav className="org--aside--content--nav">
                 <ul>
                   <li><a href="#resource">{resource.name}</a></li>

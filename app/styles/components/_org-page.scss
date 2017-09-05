@@ -239,6 +239,8 @@
 			margin-top: calc-em(10px);
 			display: block;
 			text-align: center;
+			width: 100%;
+			height: auto; // Unset global height for button tag name selector
 			&-first-of-type {
 				margin-top: 0;
 			}
