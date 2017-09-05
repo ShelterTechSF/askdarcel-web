@@ -20,7 +20,6 @@ app/components/Find/FindPage.js
 app/components/Footer.js
 app/components/Resource/CommunicationBoxes.js
 app/components/Resource/Hours.js
-app/components/Resource/Resource.js
 app/components/Resource/ResourceMap.js
 app/components/Resource/Services.js
 app/components/Resource/DetailedHours.js
