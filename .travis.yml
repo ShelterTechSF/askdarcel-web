@@ -1,7 +1,5 @@
 sudo: false
 language: node_js
-node_js:
-  - '5'
 env:
   - CXX=g++-4.8
 
