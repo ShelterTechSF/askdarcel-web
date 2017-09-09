@@ -112,7 +112,7 @@ class Resource extends Component {
                   <PhoneNumber phones={resource.phones} />
                   <Website website={resource.website} />
                   <span className="website">
-                    <a href={`mailto:${this.state.resource.email}`} target="_blank">{this.state.resource.email}</a>
+                    <a href={`mailto:${this.state.resource.email}`} target="_blank" rel="noopener noreferrer">{this.state.resource.email}</a>
                   </span>
                 </div>
                 <div className="info--column">
