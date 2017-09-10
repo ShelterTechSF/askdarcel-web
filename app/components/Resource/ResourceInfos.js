@@ -82,6 +82,10 @@ AddressInfo.propTypes = {
   address: AddressType,
 };
 
+AddressInfo.defaultProps = {
+  address: null,
+};
+
 
 function TodaysHours(props) {
   return (
@@ -96,6 +100,10 @@ TodaysHours.propTypes = {
     id: PropTypes.number.isRequired,
     opens_at: PropTypes.number.isRequired,
   })),
+};
+
+TodaysHours.defaultProps = {
+  schedule_days: null,
 };
 
 
@@ -129,6 +137,9 @@ PhoneNumber.propTypes = {
 
 
 function Website(props) {
+  if (!props.website) {
+    return null;
+  }
   return (
     <span className="website">
       <a href={props.website} target="_blank" rel="noopener noreferrer">{props.website}</a>
@@ -138,6 +149,10 @@ function Website(props) {
 
 Website.propTypes = {
   website: PropTypes.string,
+};
+
+Website.defaultProps = {
+  website: null,
 };
 
 
@@ -156,6 +171,9 @@ function buildImgURL(address) {
 }
 
 function StreetView(props) {
+  if (!props.address) {
+    return null;
+  }
   return (
     <div className="org-streetview">
       <img
@@ -170,6 +188,10 @@ function StreetView(props) {
 StreetView.propTypes = {
   address: AddressType,
   resourceName: PropTypes.string.isRequired,
+};
+
+StreetView.defaultProps = {
+  address: null,
 };
 
 export { Cat, AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, StreetView };
