@@ -5,7 +5,7 @@ import Loader from '../Loader';
 
 import queryString from 'query-string';
 import ResourcesList from './ResourcesList'
-import { timeToString, stringToTime, daysOfTheWeek} from '../../utils/index';
+import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
 
 // Show the span of results (11 - 20 for example rather than the #10)
 // Make the map update with proper markers
