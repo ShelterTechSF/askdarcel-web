@@ -5,7 +5,11 @@ import Loader from '../Loader';
 
 import queryString from 'query-string';
 import ResourcesList from './ResourcesList'
-import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
+<<<<<<< Updated upstream
+import { timeToString, stringToTime, daysOfTheWeek, round } from '../../utils/index';
+=======
+import { timeToString, stringToTime, daysOfTheWeek} from '../../utils/index';
+>>>>>>> Stashed changes
 
 // Show the span of results (11 - 20 for example rather than the #10)
 // Make the map update with proper markers
@@ -44,8 +48,8 @@ class ResourcesTable extends Component {
 
     var path = '/api/resources';
     var params = {
-      lat: userLocation.lat,
-      long: userLocation.lng
+      lat: round(userLocation.lat, 4),
+      long: round(userLocation.lng, 4)
     };
     if (categoryId) {
       this.setState({

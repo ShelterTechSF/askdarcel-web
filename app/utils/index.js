@@ -145,3 +145,14 @@ export function sortScheduleDays(scheduleDays) {
     a.day !== b.day ? days.indexOf(a.day) - days.indexOf(b.day) : a.opens_at - b.opens_at
   ));
 }
+
+/**
+ * Round numbers to a specified decimal place.
+ *
+ * E.g.
+ * round(-122.312360, 4) -> -122.3124
+ * round(33.102938, 2) -> -33.10
+ */
+export function round(value, decimals) {
+  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navigation from './Navigation';
 import CategoryPage from './Find/FindPage';
 import ResourcesTable from './Search/ResourcesTable';
+import { round } from '../utils/index';
 import 'react-select/dist/react-select.css';
 
 
@@ -52,7 +53,7 @@ class App extends Component {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-          let coords = {lat: position.coords.latitude, lng: position.coords.longitude};
+          let coords = {lat: round(position.coords.latitude, 4), lng: round(position.coords.longitude, 4)};
           if (this.coordsInSanFrancisco(coords)) {
             resolve(coords);
           } else {
@@ -113,7 +114,7 @@ class App extends Component {
       console.log(e);
       this.setState({
         // HACK: Hardcode middle of San Francisco
-        userLocation: {lat: 37.774930, lng: -122.419416}
+        userLocation: {lat: 37.7749, lng: -122.4194}
       });
     });
   }
