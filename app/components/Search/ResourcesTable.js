@@ -257,26 +257,40 @@ function buildImgURL(address) {
 // Returns the open hours today or null if closed
 function openHours(scheduleDays) {
   const currentDate = new Date();
+  let yesterday = new Date(currentDate);
+  yesterday.setDate(currentDate.getDate() - 1);
+
   const currentHour = currentDate.getHours();
   let hours = null;
+  let currDayHours = [];
+  let prevDayHoursPastMidnight = [];
+  let days = [];
 
-  const days = scheduleDays.filter(scheduleDay => {
+  scheduleDays.forEach(scheduleDay => {
     let day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
-    return (day && day === daysOfTheWeek()[currentDate.getDay()] &&
-            currentHour > scheduleDay.opens_at && currentHour < scheduleDay.closes_at);
+    let opensAt = scheduleDay.opens_at;
+    let closesAt = scheduleDay.closes_at;
+
+     if (day) {
+      if (day === daysOfTheWeek()[currentDate.getDay()]) {
+        currDayHours.push(scheduleDay);
+        if(currentHour > opensAt && currentHour < closesAt) {
+          days.push(scheduleDay)
+        }
+      }
+
+      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt > 1200) {
+        prevDayHoursPastMidnight.push(scheduleDay);
+        if(currentHour < closesAt) {
+          days.push(scheduleDay);
+        }
+      }
+     }
   });
 
-  if(days.length) {
-    for(let i = 0; i < days.length; i++) {
-      let day = days[i];
-      hours = "open: " + timeToString(day.opens_at) + "-" + timeToString(day.closes_at);
-      if(i != days.length - 1) {
-        hours += ", ";
-      }
-    }
+  if (days.length > 0) {
+    return days;
   }
-
-  return hours;
 }
 
 export default ResourcesTable;
