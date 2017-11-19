@@ -6,6 +6,7 @@ import Loader from '../Loader';
 import queryString from 'query-string';
 import ResourcesList from './ResourcesList'
 import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
+import moment from 'moment';
 
 // Show the span of results (11 - 20 for example rather than the #10)
 // Make the map update with proper markers
@@ -260,11 +261,12 @@ function openHours(scheduleDays) {
   let yesterday = new Date(currentDate);
   yesterday.setDate(currentDate.getDate() - 1);
 
-  const currentHour = currentDate.getHours();
+  const currentTime = parseInt(moment().format("HHMM"));
   let hours = null;
   let currDayHours = [];
   let prevDayHoursPastMidnight = [];
   let days = [];
+  debugger;
 
   scheduleDays.forEach(scheduleDay => {
     let day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
@@ -274,14 +276,14 @@ function openHours(scheduleDays) {
      if (day) {
       if (day === daysOfTheWeek()[currentDate.getDay()]) {
         currDayHours.push(scheduleDay);
-        if(currentHour > opensAt && currentHour < closesAt) {
-          days.push(scheduleDay)
+        if(currentTime > opensAt && currentTime < closesAt) {
+          days.push(scheduleDay);
         }
       }
 
       if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt > 1200) {
         prevDayHoursPastMidnight.push(scheduleDay);
-        if(currentHour < closesAt) {
+        if(currentTime > opensAt && currentTime < closesAt) {
           days.push(scheduleDay);
         }
       }
