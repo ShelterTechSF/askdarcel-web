@@ -46,30 +46,30 @@
 	max-height: 100vh;
 	padding: calc-em(30px) 0 0 calc-em(30px);
 	width: 100%;
-	max-width: 10em;
+	max-width: 12em;
 	&--content {
 		position: fixed;
 		width: 100%;
-		max-width: 10em;
-		&--submit {
+		max-width: 12em;
+		&--button {
 			color: #FFFFFF;
 			font-size: 17px;
 			font-weight: bold;
 			padding: calc-em(9px) calc-em(25px);
 			background: #1C72E6;
 			border-radius: 8px;
-      width: 100%;
+      		width: 100%;
 		}
-    &--deactivate{
-      color: #FFFFFF;
-      font-size: 17px;
-      font-weight: bold;
-      padding: calc-em(9px) calc-em(25px);
-      background: #e6092c;
-      border-radius: 8px;
-      width: 100%;
-      margin-top: 10px;
-    }
+	    &--deactivate{
+			color: #FFFFFF;
+			font-size: 17px;
+			font-weight: bold;
+			padding: calc-em(9px) calc-em(25px);
+			background: #e6092c;
+			border-radius: 8px;
+			width: 100%;
+		    margin-top: 10px;
+	    }
 		&--nav {
 			margin: calc-em(30px) 0;
 			ul {
@@ -94,6 +94,11 @@
 			}
 		}
 	}
+}
+
+.cancel--button {
+    margin-top: 10px;
+    background: $color-grey5;
 }
 
 
