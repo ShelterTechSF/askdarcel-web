@@ -33,8 +33,11 @@ class ResourcesTable extends Component {
       openFilter: false,
       currentPage: [],
       page: 0,
-      categoryId: null
+      categoryId: null,
+      newResources: [],
     };
+
+    this.prepOpenResources = this.prepOpenResources.bind(this);
   }
 
   loadResourcesFromServer(userLocation) {
@@ -63,17 +66,13 @@ class ResourcesTable extends Component {
     let url = path + '?' + queryString.stringify(params);
     fetch(url,{ credentials: 'include' }).then(r => r.json())
       .then(data => {
-        let openResources = data.resources.filter(resource => {
-          let hours = openHours(resource.schedule.schedule_days);
-          if(hours) {
-            return resource;
-          }
-        });
+        let openResources = this.prepOpenResources(data.resources);
+        
         this.setState({
           allResources: data.resources,
           resources: data.resources,
-          currentPage: data.resources.slice(0,resultsPerPage),
-          openResources: openResources
+          currentPage: data.resources.slice(0, resultsPerPage),
+          openResources: openResources,
         });
       });
   }
@@ -139,6 +138,22 @@ class ResourcesTable extends Component {
     if (nextProps.userLocation) {
       this.loadResourcesFromServer(nextProps.userLocation);
     }
+  }
+
+  prepOpenResources(resources) {
+    let preparedOpenResources = [];
+
+    resources.forEach(resource => {
+
+      let { openUntil, isOpen } = getTimes(resource.schedule.schedule_days);
+      resource.openUntil = openUntil;
+      resource.isOpen = isOpen;
+
+      if (isOpen) {
+        preparedOpenResources.push(resource);
+      }
+    });
+    return preparedOpenResources;
   }
 
   render() {
@@ -263,11 +278,11 @@ function openHours(scheduleDays) {
 
   const currentTime = parseInt(moment().format("HHMM"));
   let hours = null;
-  let currDayHours = [];
-  let prevDayHoursPastMidnight = [];
   let days = [];
-  debugger;
 
+  // Logic to determine if the current resource is open
+  // includes special logic for when a resource is open past midnight
+  // on the previous day
   scheduleDays.forEach(scheduleDay => {
     let day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
     let opensAt = scheduleDay.opens_at;
@@ -275,14 +290,12 @@ function openHours(scheduleDays) {
 
      if (day) {
       if (day === daysOfTheWeek()[currentDate.getDay()]) {
-        currDayHours.push(scheduleDay);
         if(currentTime > opensAt && currentTime < closesAt) {
           days.push(scheduleDay);
         }
       }
 
       if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt > 1200) {
-        prevDayHoursPastMidnight.push(scheduleDay);
         if(currentTime > opensAt && currentTime < closesAt) {
           days.push(scheduleDay);
         }
@@ -292,6 +305,44 @@ function openHours(scheduleDays) {
 
   if (days.length > 0) {
     return days;
+  }
+}
+
+function getTimes(scheduleDays) {
+  const currentDate = new Date();
+  let yesterday = new Date(currentDate);
+  yesterday.setDate(currentDate.getDate() - 1);
+
+  const currentTime = parseInt(moment().format("hhmm"));
+  let hours = null;
+  let openUntil = null;
+  // Logic to determine if the current resource is open
+  // includes special logic for when a resource is open past midnight
+  // on the previous day
+  scheduleDays.forEach(scheduleDay => {
+    let day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
+    let opensAt = scheduleDay.opens_at;
+    let closesAt = scheduleDay.closes_at;
+
+     if (day) {
+      if (day === daysOfTheWeek()[currentDate.getDay()]) {
+        if(currentTime > opensAt && currentTime < closesAt) {
+          openUntil = closesAt;
+        }
+      }
+
+      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt < opensAt) {
+        if(currentTime < closesAt) {
+          openUntil = closesAt;
+        }
+      }
+     }
+  });
+
+  if (openUntil) {
+    return { openUntil, isOpen: true };
+  } else {
+    return { openUntil, isOpen: false };
   }
 }
 
