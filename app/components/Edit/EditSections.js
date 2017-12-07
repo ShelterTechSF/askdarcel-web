@@ -43,6 +43,15 @@ function createCollectionObject(object, path, promises, resourceID) {
   );
 }
 
+function createNewPhoneNumber(item, resourceID, promises) {
+  promises.push(
+    dataService.post(
+      `/api/phones/${resourceID}/change_requests`,
+      { change_request: item },
+    ),
+  );
+}
+
 function postCollection(collection, originalCollection, path, promises, resourceID) {
   for (let i = 0; i < collection.length; i += 1) {
     const item = collection[i];
@@ -55,7 +64,11 @@ function postCollection(collection, originalCollection, path, promises, resource
       }
     } else if (item.dirty) {
       delete item.dirty;
-      createCollectionObject(item, path, promises, resourceID);
+      if(path === 'phones') {
+        createNewPhoneNumber(item, resourceID, promises)
+      } else {
+        createCollectionObject(item, path, promises, resourceID);
+      }
     }
   }
 }
@@ -302,7 +315,7 @@ class EditSections extends React.Component {
     }
 
     //Fire off phone requests
-    postCollection(this.state.phones, this.state.resource.phones, 'phones', promises);
+    postCollection(this.state.phones, this.state.resource.phones, 'phones', promises, this.state.resource.id);
 
     // schedule
     postSchedule(this.state.scheduleObj, promises);
