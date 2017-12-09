@@ -515,10 +515,10 @@ class EditSections extends React.Component {
             updateAddress={this.handleAddressChange}
           />
 
-          {/* <EditPhones
+          <EditPhones
             collection={this.state.resource.phones}
             handleChange={this.handlePhoneChange}
-          /> */}
+          />
 
           <li key="website" className="edit--section--list--item email">
             <label htmlFor="edit-website-input">Website</label>
