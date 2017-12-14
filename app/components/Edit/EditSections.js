@@ -266,7 +266,7 @@ class EditSections extends React.Component {
   }
 
   handleCancel() {
-    if (confirm("Do you want to leave without saving your changes?") === true) {
+    if (confirm("Are you sure you want to leave without saving your changes?") === true) {
       browserHistory.goBack();
     }
   }
@@ -337,21 +337,23 @@ class EditSections extends React.Component {
   }
 
   handleDeactivation(type, id) {
-    let path = null;
-    if (type === 'resource') {
-      path = `/api/resources/${id}`;
-    } else if (type === 'service') {
-      path = `/api/services/${id}`;
-    }
-    dataService.APIDelete(path, { change_request: { status: "2" } })
-    .then(() => {
-      alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.')
-      if(type === 'resource') {
-        this.props.router.push({ pathname: "/" });
-      } else {
-        window.location.reload();
+    if (confirm('Are you sure you want to deactive this resource?') === true) {
+      let path = null;
+      if (type === 'resource') {
+        path = `/api/resources/${id}`;
+      } else if (type === 'service') {
+        path = `/api/services/${id}`;
       }
-    });
+      dataService.APIDelete(path, { change_request: { status: "2" } })
+      .then(() => {
+        alert('successfully deactivated! \n \nif this was a mistake, please let someone from the sheltertech team know.')
+        if(type === 'resource') {
+          this.props.router.push({ pathname: "/" });
+        } else {
+          window.location.reload();
+        }
+      });
+    }
   }
 
   postServices(servicesObj, promises) {
