@@ -76,8 +76,7 @@ test('Edit resource phone number', async t => {
 });
 
 
-// TODO: Stop skipping once feature actually works.
-test.skip('Add resource phone number', async t => {
+test('Add resource phone number', async t => {
   const newNumber = '415-555-5556';
   const newFormattedNumber = '(415) 555-5556';
   const newServiceType = 'Added number';
