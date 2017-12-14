@@ -353,7 +353,7 @@ class EditSections extends React.Component {
     .then(() => {
       alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.')
       if(type === 'resource') {
-        this.props.router.push({ pathname: "/" });  
+        this.props.router.push({ pathname: "/" });
       } else {
         window.location.reload();
       }
