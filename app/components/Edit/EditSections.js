@@ -346,7 +346,7 @@ class EditSections extends React.Component {
       }
       dataService.APIDelete(path, { change_request: { status: "2" } })
       .then(() => {
-        alert('successfully deactivated! \n \nif this was a mistake, please let someone from the sheltertech team know.')
+        alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.')
         if(type === 'resource') {
           this.props.router.push({ pathname: "/" });
         } else {
@@ -597,7 +597,7 @@ class EditSections extends React.Component {
   render() {
     let resource = this.state.resource;
     let actionButtons = [
-      <button className="edit--aside--content--button" disabled={this.state.submitting} onClick={this.handleSubmit}>Save changes</button>,
+      <button className="edit--aside--content--button" disabled={this.state.submitting} onClick={this.handleSubmit}>Save Changes</button>,
       <button className="edit--aside--content--button cancel--button" onClick={this.handleCancel}>Discard Changes</button>,
       <button className="edit--aside--content--deactivate" disabled={this.state.submitting} onClick={() => this.handleDeactivation('resource', resource.id)}>Deactivate</button>
     ];
