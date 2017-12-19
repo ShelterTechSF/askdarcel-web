@@ -70,8 +70,7 @@ class Resource extends Component {
 
             <header className="org--main--header">
               {
-                // eslint-disable-next-line no-use-before-define
-                <img className="certified" src={HAPcertified} alt="Verified by the Homeless Assistance Project" />
+<img className="certified" src={HAPcertified} alt="Verified by the Homeless Assistance Project" />
               }
               <h1 className="org--main--header--title">{resource.name}</h1>
               <div className="org--main--header--rating disabled-feature">
