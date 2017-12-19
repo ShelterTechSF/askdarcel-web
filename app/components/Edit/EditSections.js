@@ -486,7 +486,7 @@ class EditSections extends React.Component {
   }
 
   certifyHAP() {
-    dataService.post(`/resources/${this.state.resource.id}/certify`).then(d => {
+    dataService.post(`/api/resources/${this.state.resource.id}/certify`).then(d => {
       console.log('certified', d);
       const res = this.state.resource;
       res.certified = true;
