@@ -2,7 +2,7 @@ COMMIT=${TRAVIS_COMMIT::8}
 SANITIZED_BRANCH=$(echo $TRAVIS_BRANCH|sed 's|/|-|g')
 REPO=sheltertechsf/askdarcel-web
 
-docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
 if [[ -n "$TRAVIS_TAG" ]]; then
     TAG="$TRAVIS_TAG"
