@@ -6,6 +6,7 @@ import DetailedHours from './DetailedHours';
 import Services from './Services';
 import Notes from './Notes';
 import Loader from '../Loader';
+import HAPcertified from '../../assets/img/ic-hap.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
 
@@ -68,6 +69,14 @@ class Resource extends Component {
           <div className="org--main--left">
 
             <header className="org--main--header">
+              {
+                resource.certified &&
+                <img
+                  className="certified"
+                  src={HAPcertified}
+                  alt="Verified by the Homeless Assistance Project"
+                />
+              }
               <h1 className="org--main--header--title">{resource.name}</h1>
               <div className="org--main--header--rating disabled-feature">
                 <p className="excellent">
@@ -87,6 +96,7 @@ class Resource extends Component {
               <div className="org--main--header--description">
                 <header>About this resource</header>
                 <p>{resource.long_description || resource.short_description || 'No Description available'}</p>
+                <pre>{JSON.stringify(resource, null, 2)}</pre>
               </div>
             </header>
 
