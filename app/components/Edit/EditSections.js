@@ -46,8 +46,12 @@ function createCollectionObject(object, path, promises, resourceID) {
 function createNewPhoneNumber(item, resourceID, promises) {
   promises.push(
     dataService.post(
-      `/api/phones/${resourceID}/change_requests`,
-      { change_request: item },
+      '/api/change_requests',
+      {
+        change_request: item,
+        type: 'phones',
+        parent_resource_id: resourceID,
+      },
     ),
   );
 }
