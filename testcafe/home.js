@@ -18,3 +18,11 @@ test('Basic navigation test', async t => {
     .expect(resourcePage.description.textContent).contains('About this resource')
     ;
 });
+
+test('Basic search test', async t => {
+  await t
+    .typeText(findPage.searchBox, 'Food')
+    .pressKey('enter')
+    .expect(searchPage.resultsCount.textContent).contains('Total Results')
+    ;
+});
