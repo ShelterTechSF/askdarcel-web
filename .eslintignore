@@ -15,7 +15,6 @@ app/components/Edit/EditNotes.js
 app/components/Edit/EditSchedule.js
 app/components/Edit/EditServices.js
 app/components/Find/CategoryItem.js
-app/components/Find/FindHeader.js
 app/components/Find/FindPage.js
 app/components/Footer.js
 app/components/Resource/CommunicationBoxes.js
