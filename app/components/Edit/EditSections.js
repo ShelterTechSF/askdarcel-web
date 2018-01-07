@@ -184,6 +184,7 @@ class EditSections extends React.Component {
     this.postSchedule = this.postSchedule.bind(this);
     this.createResource = this.createResource.bind(this);
     this.prepServicesData = this.prepServicesData.bind(this);
+    this.certifyHAP = this.certifyHAP.bind(this);
   }
 
   componentDidMount() {
@@ -497,10 +498,20 @@ class EditSections extends React.Component {
     this.setState({ serviceNotes: notesObj });
   }
 
+  certifyHAP() {
+    dataService.post(`/api/resources/${this.state.resource.id}/certify`).then(d => {
+      console.log('certified', d);
+      const res = this.state.resource;
+      res.certified = true;
+      this.setState({ resource: res });
+    })
+  }
+
   formatTime(time) {
     //FIXME: Use full times once db holds such values.
     return time.substring(0, 2);
   }
+
   renderSectionFields() {
     const resource = this.state.resource;
     return (
@@ -599,11 +610,19 @@ class EditSections extends React.Component {
   }
 
   render() {
-    let resource = this.state.resource;
-    let actionButtons = [<button className="edit--aside--content--submit" disabled={this.state.submitting} onClick={this.handleSubmit}>Save changes</button>,
-    <button className="edit--aside--content--deactivate" disabled={this.state.submitting} onClick={() => this.handleDeactivation('resource', resource.id)}>Deactivate</button>];
+    const resource = this.state.resource;
+    let actionButtons = [
+      <button className="edit--aside--content--submit" disabled={this.state.submitting} onClick={this.handleSubmit}>Save changes</button>,
+      <button className="edit--aside--content--deactivate" disabled={this.state.submitting} onClick={() => this.handleDeactivation('resource', resource.id)}>Deactivate</button>
+    ];
+
     if (this.state.newResource) {
       actionButtons = [<button className="edit--aside--content--submit" disabled={this.state.submitting} onClick={this.createResource}>Submit</button>];
+    }
+    if (resource && !resource.certified) {
+      actionButtons.push(
+        <button className="edit--aside--content--submit" onClick={this.certifyHAP}>HAP Certify</button>
+      );
     }
     return (!resource && !this.state.newResource ? <Loader /> :
       <div className="edit">
