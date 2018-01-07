@@ -23,7 +23,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Ask Darcel',
-      template: 'app/index.html'
+      template: 'app/index.html',
+      favicon: 'app/favicon.ico',
     }),
     new ExtendedDefinePlugin({
       CONFIG: config
