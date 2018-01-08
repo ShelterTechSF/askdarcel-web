@@ -5,7 +5,6 @@ import { timeToString, sortScheduleDays } from '../../utils/index';
 export default function DetailedHours(props) {
   let { schedule } = props;
   schedule = sortScheduleDays(schedule);
-  console.log(schedule);
   const hoursList = schedule.map((item) => {
     if (item.opens_at === 0 && item.closes_at >= 2359) {
       return (
