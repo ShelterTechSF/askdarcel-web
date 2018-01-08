@@ -1,5 +1,5 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { images } from '../assets';
 
 class Navigation extends React.Component {
@@ -22,9 +22,9 @@ class Navigation extends React.Component {
     return (
       <nav className="site-nav">
         <div className="nav-left">
-          <a className="nav-logo" href="/">
+          <Link className="nav-logo" to={'/'}>
             <img src={images.logoSmall} alt="Ask Darcel" />
-          </a>
+          </Link>
           <form
             onSubmit={this.submitSearch}
             className="nav-search search-container form-row"

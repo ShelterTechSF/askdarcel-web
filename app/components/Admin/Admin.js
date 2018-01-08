@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class Admin extends React.Component {
   constructor() {
@@ -31,7 +32,9 @@ class Admin extends React.Component {
   render() {
     return (
       <ul>
-        <li><a href="/admin/changes">Change Requests</a></li>
+        <li>
+          <Link to={'/admin/changes'}>Change Requests</Link>
+        </li>
       </ul>
     );
   }
