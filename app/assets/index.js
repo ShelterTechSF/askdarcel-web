@@ -5,7 +5,7 @@ icons.keys().forEach((key) => {
 });
 
 function icon(name) {
-  return iconPathMap[name.toLowerCase().replace(/\s+/g, '-')];
+  return iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
 }
 
 /* eslint-disable global-require */
