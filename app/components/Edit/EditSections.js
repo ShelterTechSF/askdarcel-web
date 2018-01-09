@@ -606,11 +606,7 @@ class EditSections extends React.Component {
     if (this.state.newResource) {
       actionButtons = [<button className="edit--aside--content--submit" disabled={this.state.submitting} onClick={this.createResource}>Submit</button>];
     }
-    if (resource && !resource.certified) {
-      actionButtons.push(
-        <button className="edit--aside--content--submit" onClick={this.certifyHAP}>HAP Certify</button>
-      );
-    }
+
     return (!resource && !this.state.newResource ? <Loader /> :
       <div className="edit">
             <div className="edit--main">
