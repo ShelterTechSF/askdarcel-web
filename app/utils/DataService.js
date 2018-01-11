@@ -26,6 +26,7 @@ export function post(url, body, headers) {
     method: 'POST',
     mode: 'cors',
     headers: queryHeaders,
+    credentials: 'include',
     body: JSON.stringify(body),
   }).then((resp) => {
     if (!resp.ok) { throw resp; }
@@ -44,6 +45,7 @@ export function get(url, headers) {
   return fetch(url, {
     method: 'GET',
     mode: 'cors',
+    credentials: 'include',
     headers: queryHeaders,
   }).then((resp) => {
     if (!resp.ok) { throw resp; }
@@ -63,6 +65,7 @@ export function APIDelete(url, headers) {
     method: 'DELETE',
     mode: 'cors',
     headers: queryHeaders,
+    credentials: 'include'
   }).then((resp) => {
     if (!resp.ok) { throw resp; }
     setAuthHeaders(resp);
