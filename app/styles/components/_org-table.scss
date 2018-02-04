@@ -87,6 +87,14 @@
   flex: 1 1 auto;
 }
 
+.results-algolia-logo-wrapper {
+  margin-top: 1em;
+}
+
+.results-algolia-logo {
+  max-height: 1.5em;
+}
+
 .pagination {
   padding: calc-em(30px) calc-em(20px);
 

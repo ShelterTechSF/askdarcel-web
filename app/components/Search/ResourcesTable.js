@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import { images } from '../../assets';
 import { daysOfTheWeek } from '../../utils/index';
 import Loader from '../Loader';
 import ResourcesList from './ResourcesList';
@@ -258,6 +259,15 @@ class ResourcesTable extends Component {
             {showNextButton &&
               <button className="btn btn-link" onClick={this.getNextResources}>Next</button>
             }
+            <div className="results-algolia-logo-wrapper">
+              <a href="https://algolia.com">
+                <img
+                  className="results-algolia-logo"
+                  src={images.algolia}
+                  alt="Powered by Algolia"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>
