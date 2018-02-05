@@ -130,8 +130,13 @@ function postNotes(notesObj, promises, uriObj) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
         promises.push(dataService.post(uri, { note: currentNote }));
       } else {
-        const uri = `/api/notes/${key}/change_requests`;
-        promises.push(dataService.post(uri, { change_request: currentNote }));
+        if (currentNote.isRemoved) {
+          let uri = '/api/notes/' + key;
+          promises.push(dataService.APIDelete(uri));
+        } else {
+          let uri = '/api/notes/' + key + '/change_requests';
+          promises.push(dataService.post(uri, { change_request: currentNote }));
+        }
       }
     });
   }
@@ -500,8 +505,13 @@ class EditSections extends React.Component {
             let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';
             promises.push(dataService.post(uri, { note: currentNote }));
           } else {
-            let uri = '/api/notes/' + key + '/change_requests';
-            promises.push(dataService.post(uri, { change_request: currentNote }));
+            if (currentNote.isRemoved) {
+              let uri = '/api/notes/' + key;
+              promises.push(dataService.APIDelete(uri));
+            } else {
+              let uri = '/api/notes/' + key + '/change_requests';
+              promises.push(dataService.post(uri, { change_request: currentNote }));
+            }
           }
         }
       }

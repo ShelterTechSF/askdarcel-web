@@ -17,6 +17,7 @@ class EditNotes extends Component {
     this.renderNotes = this.renderNotes.bind(this);
     this.handleNoteChange = this.handleNoteChange.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.removeNote = this.removeNote.bind(this);
   }
 
   handleNoteChange(key, note) {
@@ -33,9 +34,31 @@ class EditNotes extends Component {
     let existingNotes = this.state.existingNotes;
     let newUUID = this.state.uuid - 1;
     existingNotes.unshift({
-      key: newUUID
+      key: newUUID,
     });
     this.setState({ existingNotes: existingNotes, uuid: newUUID });
+  }
+
+  removeNote(index) {
+    let existingNotes = this.state.existingNotes;
+    let currentNote = existingNotes[index];
+    currentNote.isRemoved = true;
+    let key = currentNote.key;
+    let notes = this.state.notes;
+    // If we haven't created the note in our DB yet
+    // just remove it from the object locally
+    if (key < 0) {
+      delete notes[key];
+    } else {
+      notes[key] = { isRemoved: true }; 
+    }
+    
+    this.setState({
+      notes: notes,
+      existingNotes: existingNotes,
+    }, function() {
+      this.props.handleNotesChange(this.state);
+    });
   }
 
   renderNotes() {
@@ -44,7 +67,7 @@ class EditNotes extends Component {
     for (let i = 0; i < this.state.existingNotes.length; i++) {
       let note = this.state.existingNotes[i];
       notesArray.push(
-        <EditNote key={note.key} index={i} note={note} handleChange={this.handleNoteChange} />
+        <EditNote key={note.key} index={i} note={note} handleChange={this.handleNoteChange} removeNote={this.removeNote} />
       );
     }
 
@@ -81,11 +104,19 @@ class EditNote extends Component {
   }
 
   render() {
+    let note = null;
+    let currentNote = this.props.note;
+    if (!currentNote.isRemoved) {
+      note = (
+        <li>
+          <label>Note {this.props.index+1}</label>
+          <textarea className="large-input input" placeholder='Note' defaultValue={currentNote.note} onChange={this.handleFieldChange} />
+          <button onClick={() => this.props.removeNote(this.props.index)}>Delete</button>
+        </li>
+      )
+    }
     return (
-      <li>
-				<label>Note {this.props.index+1}</label>
-				<textarea className="large-input input" placeholder='Note' defaultValue={this.props.note.note} onChange={this.handleFieldChange} />
-			</li>
+      note
     );
   }
 }
