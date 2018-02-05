@@ -213,7 +213,7 @@ Resource.propTypes = {
       resourceid: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  // Not required because will be lazy-loaded after initial render.
+  // userLocation is not required because will be lazy-loaded after initial render.
   userLocation: PropTypes.shape({
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,

@@ -23,7 +23,6 @@ app/components/Resource/ResourceMap.js
 app/components/Resource/Services.js
 app/components/Resource/DetailedHours.js
 app/components/Search/ResourcesMap.js
-app/components/Search/ResourcesTable.js
 app/components/Search/ResourcesRow.js
 app/components/User/CreateAccount.js
 app/components/User/Login.js
@@ -44,7 +43,6 @@ app/components/Edit/EditSchedule.js
 app/components/Edit/EditSections.js
 app/components/Edit/EditServices.js
 app/components/Edit/EditScheduleDay.js
-app/components/Search/ResourcesTable.js
 app/reducers/formConfig.js
 app/reducers/index.js
 app/routes.jsx

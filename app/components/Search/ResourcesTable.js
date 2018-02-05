@@ -1,25 +1,99 @@
+import moment from 'moment';
+import queryString from 'query-string';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import Gmap from './ResourcesMap.js';
-import Loader from '../Loader';
 
-import queryString from 'query-string';
-import ResourcesList from './ResourcesList'
-import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
-import moment from 'moment';
+import { daysOfTheWeek } from '../../utils/index';
+import Loader from '../Loader';
+import ResourcesList from './ResourcesList';
+import Gmap from './ResourcesMap';
 
 // Show the span of results (11 - 20 for example rather than the #10)
 // Make the map update with proper markers
 
 const cats = {
-  1: "Shelter",
-  2: "Food",
-  3: "Medical",
-  4: "Hygiene",
-  5: "Technology"
+  1: 'Shelter',
+  2: 'Food',
+  3: 'Medical',
+  4: 'Hygiene',
+  5: 'Technology',
 };
 
 const resultsPerPage = 9;
+
+function getTimes(scheduleDays) {
+  const currentDate = new Date();
+  const yesterday = new Date(currentDate);
+  yesterday.setDate(currentDate.getDate() - 1);
+
+  const currentTime = parseInt(moment().format('hhmm'), 10);
+  let openUntil = null;
+  // Logic to determine if the current resource is open
+  // includes special logic for when a resource is open past midnight
+  // on the previous day
+  scheduleDays.forEach((scheduleDay) => {
+    const day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
+    const opensAt = scheduleDay.opens_at;
+    const closesAt = scheduleDay.closes_at;
+
+    if (day) {
+      if (day === daysOfTheWeek()[currentDate.getDay()]) {
+        if (currentTime > opensAt && currentTime < closesAt) {
+          openUntil = closesAt;
+        }
+      }
+
+      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt < opensAt) {
+        if (currentTime < closesAt) {
+          openUntil = closesAt;
+        }
+      }
+    }
+  });
+
+  if (openUntil) {
+    return { openUntil, isOpen: true };
+  }
+  return { openUntil, isOpen: false };
+}
+
+function getMapMarkers(resources, userLoc) {
+  const processAddress = (resource) => {
+    if (resource) {
+      const address = resource.address;
+      if (!address) {
+        return null;
+      }
+      return [+address.latitude, +address.longitude];
+    }
+    return null;
+  };
+
+  const markers = {};
+
+  markers.results = resources.map(resource => processAddress(resource));
+
+  markers.user = userLoc;
+
+  return markers;
+}
+
+function prepOpenResources(resources) {
+  const preparedOpenResources = [];
+
+  resources.forEach((r) => {
+    const resource = r;
+    const { openUntil, isOpen } = getTimes(resource.schedule.schedule_days);
+    resource.openUntil = openUntil;
+    resource.isOpen = isOpen;
+
+    if (isOpen) {
+      preparedOpenResources.push(resource);
+    }
+  });
+  return preparedOpenResources;
+}
 
 class ResourcesTable extends Component {
 
@@ -36,96 +110,9 @@ class ResourcesTable extends Component {
       categoryId: null,
       newResources: [],
     };
-
-    this.prepOpenResources = this.prepOpenResources.bind(this);
-  }
-
-  loadResourcesFromServer(userLocation) {
-    let { query } = this.props.location;
-    let categoryId = query.categoryid;
-    this.setState({categoryId});
-    let searchQuery = query.query;
-
-    var path = '/api/resources';
-    var params = {
-      lat: userLocation.lat,
-      long: userLocation.lng
-    };
-    if (categoryId) {
-      this.setState({
-        categoryName: cats[categoryId]
-      });
-      params.category_id = categoryId;
-    } else if (searchQuery) {
-      path += '/search';
-      params.query = searchQuery;
-      this.setState({
-        categoryName: 'Search: ' + searchQuery
-      });
-    }
-    let url = path + '?' + queryString.stringify(params);
-    fetch(url,{ credentials: 'include' }).then(r => r.json())
-      .then(data => {
-        let openResources = this.prepOpenResources(data.resources);
-        
-        this.setState({
-          allResources: data.resources,
-          resources: data.resources,
-          currentPage: data.resources.slice(0, resultsPerPage),
-          openResources: openResources,
-        });
-      });
-  }
-
-  getNextResources() {
-    let page = this.state.page + 1;
-    let currentPage = this.state.resources.slice(page * resultsPerPage, page * resultsPerPage + (resultsPerPage));
-    this.setState({
-      page,
-      currentPage
-    });
-  }
-
-  getPreviousResources() {
-    let page = this.state.page - 1;
-    this.setState({
-      page: page,
-      currentPage: this.state.resources.slice(page * resultsPerPage, (page + 1) * resultsPerPage)
-    });
-  }
-
-  getWalkTime(dest, cb) {
-    let directionsService = new google.maps.DirectionsService();
-    let myLatLng = new google.maps.LatLng(this.props.userLocation.lat, this.props.userLocation.lng);
-    let destLatLang = new google.maps.LatLng(dest.lat, dest.lng);
-    let preferences = {
-      origin: myLatLng,
-      destination: destLatLang,
-      travelMode: google.maps.TravelMode.WALKING
-    };
-    directionsService.route(preferences, function(result, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        cb(result.routes[0].legs[0].duration.text);
-      }
-    });
-  }
-
-  filterResources() {
-    if(this.state.openFilter) {
-      this.setState({
-        page: 0,
-        resources: this.state.allResources,
-        currentPage: this.state.allResources.slice(0, resultsPerPage),
-        openFilter: false
-      });
-    } else {
-      this.setState({
-        page: 0,
-        resources: this.state.openResources,
-        currentPage: this.state.openResources.slice(0, resultsPerPage),
-        openFilter: true
-      });
-    }
+    this.filterResources = this.filterResources.bind(this);
+    this.getPreviousResources = this.getPreviousResources.bind(this);
+    this.getNextResources = this.getNextResources.bind(this);
   }
 
   componentDidMount() {
@@ -140,210 +127,163 @@ class ResourcesTable extends Component {
     }
   }
 
-  prepOpenResources(resources) {
-    let preparedOpenResources = [];
-
-    resources.forEach(resource => {
-
-      let { openUntil, isOpen } = getTimes(resource.schedule.schedule_days);
-      resource.openUntil = openUntil;
-      resource.isOpen = isOpen;
-
-      if (isOpen) {
-        preparedOpenResources.push(resource);
-      }
+  getPreviousResources() {
+    const page = this.state.page - 1;
+    this.setState({
+      page,
+      currentPage: this.state.resources.slice(page * resultsPerPage, (page + 1) * resultsPerPage),
     });
-    return preparedOpenResources;
+  }
+
+  getNextResources() {
+    const page = this.state.page + 1;
+    const currentPage = this.state.resources.slice(
+      page * resultsPerPage,
+      (page * resultsPerPage) + resultsPerPage,
+    );
+    this.setState({
+      page,
+      currentPage,
+    });
+  }
+
+  filterResources() {
+    if (this.state.openFilter) {
+      this.setState({
+        page: 0,
+        resources: this.state.allResources,
+        currentPage: this.state.allResources.slice(0, resultsPerPage),
+        openFilter: false,
+      });
+    } else {
+      this.setState({
+        page: 0,
+        resources: this.state.openResources,
+        currentPage: this.state.openResources.slice(0, resultsPerPage),
+        openFilter: true,
+      });
+    }
+  }
+
+  loadResourcesFromServer(userLocation) {
+    const { query } = this.props.location;
+    const categoryId = query.categoryid;
+    this.setState({ categoryId });
+    const searchQuery = query.query;
+
+    let path = '/api/resources';
+    const params = {
+      lat: userLocation.lat,
+      long: userLocation.lng,
+    };
+    if (categoryId) {
+      this.setState({
+        categoryName: cats[categoryId],
+      });
+      params.category_id = categoryId;
+    } else if (searchQuery) {
+      path += '/search';
+      params.query = searchQuery;
+      this.setState({
+        categoryName: `Search: ${searchQuery}`,
+      });
+    }
+    const url = `${path}?${queryString.stringify(params)}`;
+    fetch(url, { credentials: 'include' }).then(r => r.json())
+      .then((data) => {
+        const openResources = prepOpenResources(data.resources);
+
+        this.setState({
+          allResources: data.resources,
+          resources: data.resources,
+          currentPage: data.resources.slice(0, resultsPerPage),
+          openResources,
+        });
+      });
   }
 
   render() {
+    const resultsRangeBegin = (this.state.page * resultsPerPage) + 1;
+    const resultsRangeEnd = (this.state.resources && this.state.resources.length) ?
+       Math.min(
+        this.state.resources.length,
+        (this.state.page + 1) * resultsPerPage,
+      ) : null;
+    const showPreviousButton = this.state.page !== 0;
+    const showNextButton = Math.floor(this.state.currentPage.length / resultsPerPage) !== 0 &&
+      this.state.allResources.length !== (this.state.page + 1) * resultsPerPage;
     return (!this.state.resources ? <Loader /> :
-              <div className="results">
-                <div className="results-table">
-                  <header>
-                    <h1 className="results-title">{this.state.categoryName}</h1>
-                    <span className="results-count">{this.state.resources.length} Total Results</span>
-                  </header>
-                  <div className="results-filters">
-                    <ul>
-                      <li>Filter:</li>
-                      <li><a className="filters-button" onClick={this.filterResources.bind(this)}>{this.state.openFilter ? "All" : "Open Now"}</a></li>
-                    </ul>
-                  </div>
-                  <div className="results-table-body">
-                    <ResourcesList resources={this.state.currentPage} location={this.props.userLocation} page={this.state.page} resultsPerPage={resultsPerPage} categoryId={this.state.categoryId} />
-                    <div className="add-resource">
-                      <li className="results-table-entry">
-                        <Link to={"/resource/new"}>
-                          <h4 className="entry-headline"><i className="material-icons">add_circle</i> Add a new resource</h4>
-                        </Link>
-                      </li>
-                    </div>
-                    <div className="pagination">
-                      <div className="pagination-count">
-                        {this.state.resources && this.state.resources.length ? <p>{this.state.page * resultsPerPage + 1} — {Math.min(this.state.resources.length, (this.state.page + 1) * resultsPerPage)} of {this.state.resources.length} Results</p> : <p>No results found</p>}
-                      </div>
-                      {this.state.page ? <button className="btn btn-link" onClick={this.getPreviousResources.bind(this)}> Previous </button> : null}
-                      {Math.floor(this.state.currentPage.length / resultsPerPage) && this.state.allResources.length !== (this.state.page + 1) * resultsPerPage ? <button className="btn btn-link" onClick={this.getNextResources.bind(this)}> Next </button> : null}
-                    </div>
-                  </div>
-              </div>
-              <div className="results-map">
-              <Gmap markers={getMapMarkers(this.state.currentPage, this.props.userLocation)} />
-              </div>
+    <div className="results">
+      <div className="results-table">
+        <header>
+          <h1 className="results-title">{this.state.categoryName}</h1>
+          <span className="results-count">{this.state.resources.length} Total Results</span>
+        </header>
+        <div className="results-filters">
+          <ul>
+            <li>Filter:</li>
+            <li><a className="filters-button" onClick={this.filterResources} role="button" tabIndex="0">{this.state.openFilter ? 'All' : 'Open Now'}</a></li>
+          </ul>
+        </div>
+        <div className="results-table-body">
+          <ResourcesList
+            resources={this.state.currentPage}
+            location={this.props.userLocation}
+            page={this.state.page}
+            resultsPerPage={resultsPerPage}
+            categoryId={this.state.categoryId}
+          />
+          <div className="add-resource">
+            <li className="results-table-entry">
+              <Link to={'/resource/new'}>
+                <h4 className="entry-headline">
+                  <i className="material-icons">add_circle</i> Add a new resource
+                </h4>
+              </Link>
+            </li>
+          </div>
+          <div className="pagination">
+            <div className="pagination-count">
+              {this.state.resources && this.state.resources.length ?
+                <p>
+                  {resultsRangeBegin} — {resultsRangeEnd} of {this.state.resources.length} Results
+                </p>
+                :
+                <p>No results found</p>
+              }
             </div>
+            {showPreviousButton &&
+              <button className="btn btn-link" onClick={this.getPreviousResources}>Previous</button>
+            }
+            {showNextButton &&
+              <button className="btn btn-link" onClick={this.getNextResources}>Next</button>
+            }
+          </div>
+        </div>
+      </div>
+      <div className="results-map">
+        <Gmap markers={getMapMarkers(this.state.currentPage, this.props.userLocation)} />
+      </div>
+    </div>
     );
   }
 }
 
-function getMapMarkers(resources, userLoc) {
-  const processAddress = (resource) => {
-    if(resource) {
-      let address = resource.address;
-      if(!address) {
-        return null;
-      }
-      return [+address.latitude, +address.longitude];
-    }
-    return null;
-  };
+ResourcesTable.defaultProps = {
+  userLocation: null,
+};
 
-  var markers = {};
-
-  markers.results = resources.map(resource => {
-    return processAddress(resource);
-  });
-
-  markers.user = userLoc;
-
-  return markers;
-}
-
-function displayCategories(categories) {
-  let categoryNames = categories.map(category => category.name);
-  let categoryString = '';
-  categoryNames.forEach(category => categoryString += category + ', ');
-
-  return categoryString.substr(0, categoryString.length-2);
-}
-
-function buildHoursCell(schedule_days) {
-
-  let styles = {
-    cell: true
-  };
-
-  let hours = openHours(schedule_days);
-
-  if(!hours) {
-    hours = "closed";
-    styles.closed = true;
-  }
-
-  return (
-      <span className="resourcetable_hours">{hours}</span>
-  );
-}
-
-function buildAddressCell(address) {
-  let addressString = "";
-  addressString += address.address_1;
-  if(address.address_2) {
-    addressString += ", " + address.address_2;
-  }
-
-
-  return <span>{addressString}</span>
-}
-
-function buildImgURL(address) {
-  if(address) {
-    let url = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" +
-      address.latitude + "," + address.longitude +
-      "&fov=90&heading=235&pitch=10";
-    if(CONFIG.GOOGLE_API_KEY) {
-      url += '&key=' + CONFIG.GOOGLE_API_KEY;
-    }
-    return url;
-  } else {
-    return "http://lorempixel.com/200/200/city/";
-  }
-}
-
-// Returns the open hours today or null if closed
-function openHours(scheduleDays) {
-  const currentDate = new Date();
-  let yesterday = new Date(currentDate);
-  yesterday.setDate(currentDate.getDate() - 1);
-
-  const currentTime = parseInt(moment().format("HHMM"));
-  let hours = null;
-  let days = [];
-
-  // Logic to determine if the current resource is open
-  // includes special logic for when a resource is open past midnight
-  // on the previous day
-  scheduleDays.forEach(scheduleDay => {
-    let day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
-    let opensAt = scheduleDay.opens_at;
-    let closesAt = scheduleDay.closes_at;
-
-     if (day) {
-      if (day === daysOfTheWeek()[currentDate.getDay()]) {
-        if(currentTime > opensAt && currentTime < closesAt) {
-          days.push(scheduleDay);
-        }
-      }
-
-      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt > 1200) {
-        if(currentTime > opensAt && currentTime < closesAt) {
-          days.push(scheduleDay);
-        }
-      }
-     }
-  });
-
-  if (days.length > 0) {
-    return days;
-  }
-}
-
-function getTimes(scheduleDays) {
-  const currentDate = new Date();
-  let yesterday = new Date(currentDate);
-  yesterday.setDate(currentDate.getDate() - 1);
-
-  const currentTime = parseInt(moment().format("hhmm"));
-  let hours = null;
-  let openUntil = null;
-  // Logic to determine if the current resource is open
-  // includes special logic for when a resource is open past midnight
-  // on the previous day
-  scheduleDays.forEach(scheduleDay => {
-    let day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
-    let opensAt = scheduleDay.opens_at;
-    let closesAt = scheduleDay.closes_at;
-
-     if (day) {
-      if (day === daysOfTheWeek()[currentDate.getDay()]) {
-        if(currentTime > opensAt && currentTime < closesAt) {
-          openUntil = closesAt;
-        }
-      }
-
-      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt < opensAt) {
-        if(currentTime < closesAt) {
-          openUntil = closesAt;
-        }
-      }
-     }
-  });
-
-  if (openUntil) {
-    return { openUntil, isOpen: true };
-  } else {
-    return { openUntil, isOpen: false };
-  }
-}
+ResourcesTable.propTypes = {
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      resourceid: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+  // userLocation is not required because will be lazy-loaded after initial render.
+  userLocation: PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+  }),
+};
 
 export default ResourcesTable;
