@@ -56,11 +56,20 @@ function createNewPhoneNumber(item, resourceID, promises) {
   );
 }
 
+function deletCollectionObject(item, path, promises) {
+  if (path === 'phones') {
+    promises.push(
+      dataService.APIDelete(`/api/phones/${item.id}`),
+    );
+  }
+}
+
 function postCollection(collection, originalCollection, path, promises, resourceID) {
   for (let i = 0; i < collection.length; i += 1) {
     const item = collection[i];
-
-    if (i < originalCollection.length && item.dirty) {
+    if(item.isRemoved) {
+      deletCollectionObject(item, path, promises);
+    }else if (i < originalCollection.length && item.dirty) {
       const diffObj = getDiffObject(item, originalCollection[i]);
       if (!_.isEmpty(diffObj)) {
         delete diffObj.dirty;
@@ -69,7 +78,7 @@ function postCollection(collection, originalCollection, path, promises, resource
     } else if (item.dirty) {
       delete item.dirty;
       if(path === 'phones') {
-        createNewPhoneNumber(item, resourceID, promises)
+        createNewPhoneNumber(item, resourceID, promises);
       } else {
         createCollectionObject(item, path, promises, resourceID);
       }

@@ -40,7 +40,12 @@ export default function editCollectionHOC(ResourceObjectItem,
 
         removeItem(index, item) {
             let collection = this.state.collection;
-            collection[index] = { ...item, isRemoved: true };
+            if(collection[index].id) {
+                collection[index] = { ...item, isRemoved: true };    
+            } else {
+                collection.splice(index, 1);
+            }
+            
             this.setState(collection, () => this.props.handleChange(collection));
         }
 
