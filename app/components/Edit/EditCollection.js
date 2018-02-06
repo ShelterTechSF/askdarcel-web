@@ -22,6 +22,7 @@ export default function editCollectionHOC(ResourceObjectItem,
             this.addItem = this.addItem.bind(this);
             this.handleChange = this.handleChange.bind(this);
             this.createItemComponents = this.createItemComponents.bind(this);
+            this.removeItem = this.removeItem.bind(this);
         }
 
         addItem() {
@@ -37,18 +38,29 @@ export default function editCollectionHOC(ResourceObjectItem,
             this.setState(collection, () => this.props.handleChange(collection));
         }
 
+        removeItem(index, item) {
+            let collection = this.state.collection;
+            collection[index] = { ...item, isRemoved: true };
+            this.setState(collection, () => this.props.handleChange(collection));
+        }
+
         createItemComponents() {
             let collection = this.state.collection;
             let items = [];
             for(let i = 0; i < collection.length; i++) {
-                items.push(
-                    <ResourceObjectItem
-                        key = {i}
-                        index = {i}
-                        item = {collection[i]}
-                        handleChange = {this.handleChange}
-                    />
-                );
+                if(!collection[i].isRemoved) {
+                    items.push(
+                        <div>
+                            <ResourceObjectItem
+                                key = {i}
+                                index = {i}
+                                item = {collection[i]}
+                                handleChange = {this.handleChange}
+                            />
+                            <button onClick={() => this.removeItem(i, collection[i])}>Remove</button>
+                        </div>
+                    );
+                }
             }
 
             return items;
