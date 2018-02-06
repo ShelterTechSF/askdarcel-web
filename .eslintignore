@@ -13,7 +13,6 @@ app/components/Edit/EditAddress.js
 app/components/Edit/EditCollection.js
 app/components/Edit/EditNotes.js
 app/components/Edit/EditSchedule.js
-app/components/Edit/EditServices.js
 app/components/Find/CategoryItem.js
 app/components/Find/FindPage.js
 app/components/Footer.js

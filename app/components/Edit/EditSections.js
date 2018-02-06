@@ -654,14 +654,14 @@ class EditSections extends React.Component {
   render() {
     let resource = this.state.resource;
     let actionButtons = [
-      <button className="edit--aside--content--button" disabled={this.state.submitting} onClick={this.handleSubmit}>Save Changes</button>,
-      <button className="edit--aside--content--button cancel--button" onClick={this.handleCancel}>Discard Changes</button>,
-      <button className="edit--aside--content--deactivate" disabled={this.state.submitting} onClick={() => this.handleDeactivation('resource', resource.id)}>Deactivate</button>
+      <button className="edit--aside--content--button" key='submit' disabled={this.state.submitting} onClick={this.handleSubmit}>Save Changes</button>,
+      <button className="edit--aside--content--button cancel--button" key='cancel' onClick={this.handleCancel}>Discard Changes</button>,
+      <button className="edit--aside--content--deactivate" key='deactive' disabled={this.state.submitting} onClick={() => this.handleDeactivation('resource', resource.id)}>Deactivate</button>
     ];
     if (this.state.newResource) {
       actionButtons = [
-        <button className="edit--aside--content--button" disabled={this.state.submitting} onClick={this.createResource}>Submit</button>,
-        <button className="edit--aside--content--button cancel--button" onClick={this.handleCancel}>Cancel</button>,
+        <button className="edit--aside--content--button" key='submit' disabled={this.state.submitting} onClick={this.createResource}>Submit</button>,
+        <button className="edit--aside--content--button cancel--button" key='cancel' onClick={this.handleCancel}>Cancel</button>,
       ];
     }
 
