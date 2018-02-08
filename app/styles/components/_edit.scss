@@ -137,6 +137,16 @@
 			margin-bottom: 0;
 		}
 
+    &--collection-container{
+      display: flex;
+      & > .trash-button {
+        background: #e6092c;
+        & > i {
+          margin-right: 0;
+        }
+      }
+    }
+
 		label {
 			color: #888888;
 			font-size: calc-em(19px);

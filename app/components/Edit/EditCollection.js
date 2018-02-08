@@ -55,14 +55,14 @@ export default function editCollectionHOC(ResourceObjectItem,
             for(let i = 0; i < collection.length; i++) {
                 if(!collection[i].isRemoved) {
                     items.push(
-                        <div>
+                        <div className="edit--section--list--item--collection-container">
                             <ResourceObjectItem
                                 key = {i}
                                 index = {i}
                                 item = {collection[i]}
                                 handleChange = {this.handleChange}
                             />
-                            <button onClick={() => this.removeItem(i, collection[i])}>Remove</button>
+                            <button className='trash-button' onClick={() => this.removeItem(i, collection[i])}><i className="material-icons">&#xE872;</i></button>
                         </div>
                     );
                 }
