@@ -312,6 +312,14 @@
 		textarea {
 			height: calc-em(185px);
 		}
+    .delete-note {
+      margin-left: 20px;
+      background: #e6092c;
+
+      & > i {
+        margin-right: 0;
+      }
+    }
 	}
 }
 

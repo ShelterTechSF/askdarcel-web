@@ -111,7 +111,7 @@ class EditNote extends Component {
         <li>
           <label>Note {this.props.index+1}</label>
           <textarea className="large-input input" placeholder='Note' defaultValue={currentNote.note} onChange={this.handleFieldChange} />
-          <button onClick={() => this.props.removeNote(this.props.index)}>Delete</button>
+          <button className="delete-note" onClick={() => this.props.removeNote(this.props.index)}><i className="material-icons">&#xE872;</i></button>
         </li>
       )
     }
