@@ -54,6 +54,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-testcafe": "^0.2.1",
     "extended-define-webpack-plugin": "^0.1.3",
     "jasmine-core": "^2.4.1",
     "js-yaml": "^3.9.0",
@@ -74,7 +75,7 @@
   "scripts": {
     "testserver": "cross-env NODE_ENV=test karma start internals/testing/karma.conf.js",
     "test": "cross-env NODE_ENV=test karma start internals/testing/karma.conf.js --single-run",
-    "lint": "eslint app/",
+    "lint": "eslint app/ testcafe/",
     "postinstall": "npm run build",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "webpack-dev-server --inline --open",

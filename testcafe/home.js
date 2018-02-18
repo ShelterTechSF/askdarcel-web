@@ -10,16 +10,17 @@ const resourcePage = new ResourcePage();
 fixture `Home Page`
   .page `${config.baseUrl}`;
 
-test('Basic navigation test', async t => {
+test('Basic navigation test', async (t) => {
   await t
     .click(findPage.categoryButton.withText('Food'))
     .expect(searchPage.resultsCount.textContent).contains('Total Results')
     .click(searchPage.resultEntry)
-    .expect(resourcePage.description.textContent).contains('About this resource')
+    .expect(resourcePage.description.textContent)
+    .contains('About this resource')
     ;
 });
 
-test('Basic search test', async t => {
+test('Basic search test', async (t) => {
   await t
     .typeText(findPage.searchBox, 'Food')
     .pressKey('enter')

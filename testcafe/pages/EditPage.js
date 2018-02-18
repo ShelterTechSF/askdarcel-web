@@ -32,7 +32,7 @@ export default class EditPage {
     this.saveButton = baseSelector.find('.edit--aside--content--button');
   }
 
-  getPhone(index) {
+  static getPhone(index) {
     return new EditPhone(index);
   }
 }
