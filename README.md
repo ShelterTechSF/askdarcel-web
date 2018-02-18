@@ -2,7 +2,43 @@
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/askdarcel-web-master.svg)](https://saucelabs.com/u/askdarcel-web-master)
 
-## Installation
+## Docker-based Development Set-up Instructions (Recommended)
+
+### Requirements
+
+Docker Community Edition (CE) >= 17.06
+Docker Compose >= 1.18
+
+Follow the [Docker installation instructions](https://www.docker.com/products/overview) for your OS.
+
+### Set up the project
+
+This is not a full guide to Docker and Docker Compose, so please consult other
+guides to learn more about those tools.
+
+The docker-compose.yml is configured to mount the git repo on your host
+filesystem into the Docker container so that any changes you make on your host
+machine will be synced into the container and vice versa.
+
+```sh
+# Install node dependencies
+# docker-compose run --rm web npm install
+
+# Build static assets bundle
+# docker-compose run --rm web npm build
+
+# Run dev server
+# docker-compose up
+```
+
+You should be able to view the web app in your browser at http://localhost:8080.
+
+By default, this assumes that you have also set up askdarcel-api project using
+the Docker setup instructions and that the API server is running. If you want to
+target a different instance of askdarcel-api, you can modify the `API_URL`
+environment variable in docker-compose.yml.
+
+## Non-Docker Set-up Instructions
 
 ### Installing Node.js and npm
 We recommend using [nvm](https://github.com/creationix/nvm) (Node Version
