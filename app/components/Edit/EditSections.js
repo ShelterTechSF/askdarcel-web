@@ -271,7 +271,7 @@ class EditSections extends React.Component {
       short_description,
       website,
       email,
-      address
+      address,
     } = this.state;
 
     let schedule = this.prepSchedule(scheduleObj);
@@ -285,6 +285,7 @@ class EditSections extends React.Component {
       website,
       notes: notes.notes ? this.prepNotesData(notes.notes) : [],
       schedule: { schedule_days: schedule },
+      phones,
     };
 
     let requestString = '/api/resources';
