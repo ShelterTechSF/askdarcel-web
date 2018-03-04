@@ -22,13 +22,13 @@ machine will be synced into the container and vice versa.
 
 ```sh
 # Install node dependencies
-# docker-compose run --rm web npm install
+$ docker-compose run --rm web npm install
 
 # Build static assets bundle
-# docker-compose run --rm web npm build
+$ docker-compose run --rm web npm run build
 
 # Run dev server
-# docker-compose up
+$ docker-compose up
 ```
 
 You should be able to view the web app in your browser at http://localhost:8080.
@@ -86,6 +86,6 @@ Note: Make sure you have the dev server running (`npm run dev`) before you try r
 If you are using Docker, then you'll need to run it somewhat like this:
 
 ```
-$ docker run --rm -v $PWD:/usr/src/app -p 1337:1337 -e BASE_URL=>URL_TO_ASKDARCEL_WEB> -w /usr/src/app node npm run testcafe -- --skip-js-errors remote --skip-js-errors --hostname localhost --ports 1337,1338
+$ docker-compose run --rm -p 1337:1337 -e BASE_URL=http://web:8080 web npm run testcafe -- --skip-js-errors remote --skip-js-errors --hostname localhost --ports 1337,1338 ./testcafe/
 ```
 This will spin up a web server at http://localhost:1337/ and print out a URL to use. You should manually enter it into your browser to start the tests.
