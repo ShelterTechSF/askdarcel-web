@@ -31,7 +31,7 @@ class Login extends React.Component {
           </header>
           <div className="splash-actions">
             <div className="input-container">
-              <input onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="username" /> 
+              <input onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="username" />
             </div>
             <div className="input-container">
               <input type="password" onChange={(e) => this.setState({ password: e.target.value })} placeholder="password" />
@@ -46,13 +46,13 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticated: true,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    adminLogin: (email, password) => dispatch(authActions.adminLogin(email, password)),
+   // adminLogin: (email, password) => dispatch(authActions.adminLogin(email, password)),
   };
 }
 

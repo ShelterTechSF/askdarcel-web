@@ -74,7 +74,7 @@ class ChangeRequestsPage extends React.Component {
       })
       .catch((err) => {
         console.log(err);
-        browserHistory.push('/login?next=/admin/changes');
+        // browserHistory.push('/login?next=/admin/changes');
       });
   }
 

@@ -39,8 +39,8 @@ export default (
     <Route name="editResource" path="/resource/edit" component={ EditSections } />
     <Route name="newResource" path="/resource/new" component={ EditSections } />
     <Route name="resource" path="/resource" component={ Resource }  />
-    <Route name="admin" path="/admin" component={ RequireAuth(Admin) } />
-    <Route name="changeRequests" path="/admin/changes" component={ RequireAuth(ChangeRequests) } />
+    <Route name="admin" path="/admin" component={ Admin } />
+    <Route name="changeRequests" path="/admin/changes" component={ ChangeRequests } />
     <Route name="login" path="/login" component={ Login } />
     <Route path="*" onEnter={ redirectToRoot } />
   </Route>

@@ -1,11 +1,11 @@
 export function getAuthRequestHeaders() {
-  const authHeaders = JSON.parse(localStorage.authHeaders);
+ // const authHeaders = JSON.parse(localStorage.authHeaders);
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'access-token': authHeaders['access-token'],
-    client: authHeaders.client,
-    uid: authHeaders.uid,
+   // 'access-token': authHeaders['access-token'],
+   // client: authHeaders.client,
+   // uid: authHeaders.uid,
   };
 }
 

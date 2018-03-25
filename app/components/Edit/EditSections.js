@@ -219,7 +219,7 @@ class EditSections extends React.Component {
     let resourceID = query.resourceid;
     if (resourceID) {
       let url = '/api/resources/' + resourceID;
-      fetch(url).then(r => r.json())
+      fetch(url, { credentials: 'include' }).then(r => r.json())
         .then(data => {
           this.setState({
             resource: data.resource,
