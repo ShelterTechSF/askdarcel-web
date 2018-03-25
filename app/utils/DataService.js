@@ -1,4 +1,5 @@
 import * as _ from 'lodash/fp/object';
+import config from '../../config';
 
 function setAuthHeaders(resp) {
   const headers = resp.headers;
@@ -14,7 +15,35 @@ function setAuthHeaders(resp) {
   }
 }
 
+function request(method, reqUrl, reqHeaders = {}, body) {
+  let url;
+
+  if (config.api) {
+    url = config.api + reqUrl;
+  } else {
+    url = reqUrl;
+  }
+
+  const headers = Object.assign({
+    'Content-Type': 'application/json',
+  }, reqHeaders);
+
+  const requestParams = Object.assign({
+    headers,
+    method,
+    mode: 'cors',
+    body,
+  });
+
+  return fetch(url, requestParams).then((resp) => {
+    if (!resp.ok) { throw resp; }
+    setAuthHeaders(resp);
+    return resp.json();
+  });
+}
+
 export function post(url, body, headers) {
+  console.log(url)
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -34,22 +63,24 @@ export function post(url, body, headers) {
   });
 }
 
-export function get(url, headers) {
-  let queryHeaders = {
-    'Content-Type': 'application/json',
-  };
-  if (headers) {
-    queryHeaders = _.assignIn(queryHeaders, headers);
-  }
-  return fetch(url, {
-    method: 'GET',
-    mode: 'cors',
-    headers: queryHeaders,
-  }).then((resp) => {
-    if (!resp.ok) { throw resp; }
-    setAuthHeaders(resp);
-    return resp.json();
-  });
+export function get(url, headers = {}) {
+  return request('GET', url, headers);
+  // console.log(url)
+  // let queryHeaders = {
+  //   'Content-Type': 'application/json',
+  // };
+  // if (headers) {
+  //   queryHeaders = _.assignIn(queryHeaders, headers);
+  // }
+  // return fetch(url, {
+  //   method: 'GET',
+  //   mode: 'cors',
+  //   headers: queryHeaders,
+  // }).then((resp) => {
+  //   if (!resp.ok) { throw resp; }
+  //   setAuthHeaders(resp);
+  //   return resp.json();
+  // });
 }
 
 export function APIDelete(url, headers) {
