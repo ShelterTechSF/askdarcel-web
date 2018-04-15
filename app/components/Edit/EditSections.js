@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, browserHistory } from 'react-router';
 import _ from 'lodash';
-import Loader from '../Loader';
+
+import { Loader } from 'components/ui';
 import EditAddress from './EditAddress';
 import EditServices from './EditServices';
 import EditNotes from './EditNotes';

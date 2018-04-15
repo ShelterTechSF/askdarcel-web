@@ -12,7 +12,7 @@ class FindHeader extends React.Component {
     e.preventDefault();
     if (this.searchComponent.value) {
       browserHistory.push({
-        pathname: '/resources',
+        pathname: '/search',
         query: { query: this.searchComponent.value },
       });
     }
@@ -32,7 +32,7 @@ class FindHeader extends React.Component {
             ref={(c) => { this.searchComponent = c; }}
             type="text"
             className="search-field"
-            placeholder="Search resources and providers"
+            placeholder="Search for a service or organization"
             name="srch-term"
             id="srch-term"
           />

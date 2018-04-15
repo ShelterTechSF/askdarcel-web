@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function getAuthRequestHeaders() {
   const authHeaders = JSON.parse(localStorage.authHeaders);
   return {
@@ -155,4 +157,57 @@ export function sortScheduleDays(scheduleDays) {
  */
 export function round(value, decimals) {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
+
+export function getWalkTime(currLocation, dest, cb) {
+    let directionsService = new google.maps.DirectionsService();
+    let myLatLng = new google.maps.LatLng(currLocation.lat, currLocation.lng);
+    let destLatLang = new google.maps.LatLng(dest.lat, dest.lng);
+    let preferences = {
+      origin: myLatLng,
+      destination: destLatLang,
+      travelMode: google.maps.TravelMode.WALKING
+    };
+    directionsService.route(preferences, function(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        cb(result.routes[0].legs[0].duration.text);
+      }
+    });
+  }
+
+
+export function getTimes(scheduleDays) {
+  const currentDate = new Date();
+  const yesterday = new Date(currentDate);
+  yesterday.setDate(currentDate.getDate() - 1);
+
+  const currentTime = parseInt(moment().format('hhmm'), 10);
+  let openUntil = null;
+  // Logic to determine if the current resource is open
+  // includes special logic for when a resource is open past midnight
+  // on the previous day
+  scheduleDays.forEach((scheduleDay) => {
+    const day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
+    const opensAt = scheduleDay.opens_at;
+    const closesAt = scheduleDay.closes_at;
+
+    if (day) {
+      if (day === daysOfTheWeek()[currentDate.getDay()]) {
+        if (currentTime > opensAt && currentTime < closesAt) {
+          openUntil = closesAt;
+        }
+      }
+
+      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt < opensAt) {
+        if (currentTime < closesAt) {
+          openUntil = closesAt;
+        }
+      }
+    }
+  });
+
+  if (openUntil) {
+    return { openUntil, isOpen: true };
+  }
+  return { openUntil, isOpen: false };
 }

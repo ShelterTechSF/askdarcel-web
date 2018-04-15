@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
-
 import configureStore from './store/configureStore';
 import routes from './routes';
+import 'instantsearch.css/themes/reset.css';
 
 require('./styles/main.scss');
 

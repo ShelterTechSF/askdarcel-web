@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
-import { images } from '../assets';
+import { images } from 'assets';
 
 class Navigation extends React.Component {
   constructor() {
@@ -11,7 +11,7 @@ class Navigation extends React.Component {
     e.preventDefault();
     if (this.searchComponent.value) {
       browserHistory.push({
-        pathname: '/resources',
+        pathname: '/search',
         query: { query: this.searchComponent.value },
       });
       window.location.reload();
@@ -34,7 +34,7 @@ class Navigation extends React.Component {
               ref={(c) => { this.searchComponent = c; }}
               type="text"
               className="search-field"
-              placeholder="I'm looking for..."
+              placeholder="Search for a service or organization"
               name="srch-term"
               id="srch-term"
             />

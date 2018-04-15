@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
-import Loader from '../Loader';
+import Loader from '../ui/Loader';
 import ChangeRequest from './ChangeRequest';
 import ProposedService from './ProposedService';
 

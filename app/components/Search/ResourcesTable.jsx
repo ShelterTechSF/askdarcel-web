@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 
 import { images } from '../../assets';
 import { daysOfTheWeek } from '../../utils/index';
-import Loader from '../Loader';
+import Loader from '../ui/Loader';
 import ResourcesList from './ResourcesList';
 import Gmap from './ResourcesMap';
 

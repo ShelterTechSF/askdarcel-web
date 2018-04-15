@@ -5,7 +5,7 @@ import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Str
 import DetailedHours from './DetailedHours';
 import Services from './Services';
 import Notes from './Notes';
-import Loader from '../Loader';
+import Loader from 'components/ui/Loader';
 import HAPcertified from '../../assets/img/ic-hap.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
