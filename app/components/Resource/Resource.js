@@ -95,7 +95,7 @@ class Resource extends Component {
               </div>
               <div className="org--main--header--description">
                 <header>About this resource</header>
-                <p>{resource.long_description || resource.short_description || 'No Description available'}</p>
+                <pre style="white-space: pre-wrap;">{resource.long_description || resource.short_description || 'No Description available'}</pre>
               </div>
             </header>
 
