@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import SearchBox from '../components/Search/SearchBox';
+import { SearchBox } from 'components/search';
 
 
 class Search extends Component {
@@ -29,9 +29,10 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
+
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -1,11 +1,22 @@
 import React from 'react';
 import ResourcesRow from './ResourcesRow';
 
-
-const ResourcesList = function ResourcesList({ location, resources, resultsPerPage, page, categoryId }) {
-  let resourcesRows = resources.map((resource, index) => {
+const ResourcesList = function ResourcesList({
+  location,
+  resources,
+  resultsPerPage,
+  page,
+  categoryId,
+}) {
+  const resourcesRows = resources.map((resource, index) => {
     return (
-        <ResourcesRow resource={resource} key={index} number={index + 1 + (resultsPerPage * page)} location={location || {}} categoryId={categoryId} />
+      <ResourcesRow
+        resource={resource}
+        key={resource.id}
+        number={index + 1 + (resultsPerPage * page)}
+        location={location || {}}
+        categoryId={categoryId}
+      />
     );
   });
 
@@ -14,6 +25,6 @@ const ResourcesList = function ResourcesList({ location, resources, resultsPerPa
       {resourcesRows}
     </ul>
   );
-}
+};
 
 export default ResourcesList;

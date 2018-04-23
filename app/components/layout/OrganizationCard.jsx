@@ -8,7 +8,8 @@ import RelativeOpeningTime from 'components/listing/RelativeOpeningTime';
 class OrganizationCard extends React.Component {
   calculateShortDescription() {
     const { org } = this.props;
-    // TODO This should be done better, so that we can ellipsis the text and enforce height based on maxHeight
+    // TODO This should be done better, so that we can ellipsis the text and
+    // enforce height based on maxHeight
     return org.short_description || org.long_description.split('\n')[0];
   }
 
@@ -17,7 +18,7 @@ class OrganizationCard extends React.Component {
     const maxHeight = '106px'
 
     return (
-      <Link to={{ pathname: '/resource', query: { id } }} className="card" style={{ maxHeight }}>
+      <Link to={{ pathname: `/resource/${id}` }} className="card" style={{ maxHeight }}>
         <StreetViewImage address={address} size={maxHeight} />
         <header className="content">
           <h3>{ name }</h3>

@@ -1,13 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtendedDefinePlugin = require('extended-define-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 
-//Change this to config.js and add a key to the config file
-var config = require(path.resolve(__dirname, 'app/utils/config.example.js'));
+// Change this to config.js and add a key to the config file
+const config = require(path.resolve(__dirname, 'app/utils/config.example.js'));
 
-var appRoot = path.resolve(__dirname, 'app/');
-var buildDir = path.resolve(__dirname, 'build');
+const appRoot = path.resolve(__dirname, 'app');
+const buildDir = path.resolve(__dirname, 'build');
 
 module.exports = {
   context: __dirname,
@@ -21,9 +21,8 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
     alias: {
       assets: path.resolve(appRoot, 'assets'),
-      actions: path.resolve(appRoot, 'actions'),
+      models: path.resolve(appRoot, 'models'),
       components: path.resolve(appRoot, 'components'),
-      reducers: path.resolve(appRoot, 'reducers'),
       styles: path.resolve(appRoot, 'styles'),
       utils: path.resolve(appRoot, 'utils'),
     },
@@ -37,6 +36,7 @@ module.exports = {
     new ExtendedDefinePlugin({
       CONFIG: config,
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devtool: 'source-map',
   module: {
@@ -75,19 +75,19 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name]-[sha512:hash:hex:8].[ext]',
-            }
+            },
           },
           {
             loader: 'image-webpack-loader',
             options: {
               bypassOnDebug: true,
               optimizationLevel: 7,
-              interlaced: false
-            }
-          }
-        ]
-      }
-    ]
+              interlaced: false,
+            },
+          },
+        ],
+      },
+    ],
   },
   devServer: {
     contentBase: buildDir,
@@ -97,10 +97,10 @@ module.exports = {
     proxy: {
       '/api/*': {
         target: process.env.API_URL || 'http://localhost:3000',
-        rewrite: function(req) {
+        rewrite(req) {
           req.url = req.url.replace(/^\/api/, '');
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };

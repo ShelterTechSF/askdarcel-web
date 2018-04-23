@@ -9,8 +9,6 @@ class ContactInfoTable extends React.Component {
     const email = item.email || item.resource.email;
     const phones = item.phones || item.resource.phones;
 
-    console.log(item);
-
     if (!website && !phones && !email) {
       return (
         <span>
@@ -18,7 +16,10 @@ class ContactInfoTable extends React.Component {
           <table>
             <tbody>
               <tr>
-                <td>It seems like we have no contact info on record, please click edit and add it if you can!</td>
+                <td>
+                  It seems like we have no contact info on record,
+                  please click edit and add it if you can!
+                </td>
               </tr>
             </tbody>
           </table>
@@ -53,7 +54,7 @@ class ContactInfoTable extends React.Component {
                 <th>Phone</th>
                 <td>
                   <ul>
-                    { phones.map(phone => <li>{phone.number} {phone.service_type && `(${phone.service_type})`}</li>) }
+                    { phones.map(phone => <li key={phone.id}>{phone.number} {phone.service_type && `(${phone.service_type})`}</li>) }
                   </ul>
                 </td>
               </tr> : null

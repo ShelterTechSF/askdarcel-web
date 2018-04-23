@@ -27,7 +27,7 @@ class MapOfLocations extends React.Component {
     // TODO We should probably not just have google on the global namespace
     if (google === undefined) { return; }
 
-    const { Map, Marker, LatLng, SymbolPath } = google.maps
+    const { Map, Marker, LatLng, SymbolPath } = google.maps;
     const { locations } = this.state;
     const { latitude, longitude } = locations[0].address;
     // TODO Geocode from address if no lat/long
@@ -49,7 +49,7 @@ class MapOfLocations extends React.Component {
     }
 
     locations.forEach((loc) => {
-      console.log(loc)
+      console.log(loc);
       const { address, name } = loc;
       const locMarker = new google.maps.Marker({
         map,
@@ -60,13 +60,10 @@ class MapOfLocations extends React.Component {
         position: new LatLng(Number(address.latitude), Number(address.longitude)),
       });
     });
-
-    console.log(map)
   }
 
   render() {
     const { locations } = this.state;
-    console.log(locations)
     return (
       <div>
         <div ref="map" className="map" />
@@ -74,7 +71,7 @@ class MapOfLocations extends React.Component {
           <Accordion>
             { locations.map((loc, i) => (
               <AccordionItem
-                key={loc.id}
+                key={i}
                 title={loc.address.address_1}
                 headerRenderer={title => (
                   <div>

@@ -1,31 +1,40 @@
 module.exports = {
-  "extends": [
-    "airbnb",
-    "plugin:testcafe/recommended",
+  extends: [
+    'airbnb',
+    'plugin:testcafe/recommended',
   ],
-  "globals": {
-    "google": true,
+  globals: {
+    google: true,
+    CONFIG: true,
   },
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "import",
-    "testcafe",
+  plugins: [
+    'react',
+    'jsx-a11y',
+    'import',
+    'testcafe',
   ],
-  "env": {
-    "browser": true,
+  env: {
+    browser: true,
   },
-  "rules": {
-    "camelcase": 0,
-    "import/no-extraneous-dependencies": 0,
-    "no-underscore-dangle": 0,
-    "no-unused-expressions": [2, { "allowTaggedTemplates": true }],
-    "react/forbid-prop-types": 0,
-    "react/jsx-filename-extension": 2,
-    "react/prefer-stateless-function": 0,
-    "react/prop-types": 0,
+  rules: {
+    'camelcase': 0,
+    'import/extensions': 0,
+    'import/no-dynamic-require': 0,
+    'import/no-extraneous-dependencies': 0,
+    'import/no-unresolved': [2, { ignore: ['models/'] }],
+    'no-console': [0, { allow: ['warn', 'error'] }],
+    'no-underscore-dangle': 0,
+    'no-unused-expressions': [2, { 'allowTaggedTemplates': true }],
+    'react/forbid-prop-types': 0,
+    'react/jsx-filename-extension': 2,
+    'react/prefer-stateless-function': 0,
+    'react/prop-types': 0,
   },
-  "settings": {
-    "import/resolver": "webpack",
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.config.js',
+      }
+    },
   },
 };

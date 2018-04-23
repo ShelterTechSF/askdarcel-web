@@ -83,8 +83,8 @@
   "scripts": {
     "testserver": "cross-env NODE_ENV=test karma start internals/testing/karma.conf.js",
     "test": "cross-env NODE_ENV=test karma start internals/testing/karma.conf.js --single-run",
-    "lint": "eslint app/ testcafe/",
-    "lint:fix": "eslint --fix app/ testcafe/",
+    "lint": "eslint --ext .js,.jsx app/ testcafe/",
+    "lint:fix": "eslint --ext .js,.jsx --fix app/ testcafe/",
     "postinstall": "npm run build",
     "precommit": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack",

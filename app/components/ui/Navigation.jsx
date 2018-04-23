@@ -7,6 +7,7 @@ class Navigation extends React.Component {
     super();
     this.submitSearch = this.submitSearch.bind(this);
   }
+
   submitSearch(e) {
     e.preventDefault();
     if (this.searchComponent.value) {
@@ -18,6 +19,7 @@ class Navigation extends React.Component {
     }
     return false;
   }
+
   render() {
     return (
       <nav className="site-nav">

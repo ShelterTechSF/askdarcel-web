@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { MultiSelectDropdown } from 'components/ui';
 import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
-import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
 
 class ProvidedService extends Component {
