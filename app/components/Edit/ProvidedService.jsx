@@ -35,6 +35,15 @@ class ProvidedService extends Component {
         defaultValue: this.props.service.required_documents,
         onChange: this.handleFieldChange.bind(this),
       },
+      {
+        // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
+        //       and seed it with languages
+        label: 'What interpretation services do they offer',
+        placeholder: 'Interpretation Services',
+        field: 'interpretation_services',
+        defaultValue: this.props.service.interpretation_services,
+        onChange: this.handleFieldChange.bind(this),
+      },
     ];
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -99,6 +108,17 @@ class ProvidedService extends Component {
             />
           </li>
 
+          <li className="edit--section--list--item">
+            <label htmlFor="input">Alternate name</label>
+            <input
+              type="text"
+              placeholder="Alternat Name"
+              data-field="alternate_name"
+              defaultValue={this.props.service.alternate_name}
+              onChange={this.handleFieldChange}
+            />
+          </li>
+
           <li key="email" className="edit--section--list--item email">
             <label htmlFor="email">Service E-Mail</label>
             <input
@@ -142,6 +162,26 @@ class ProvidedService extends Component {
               placeholder="Fee"
               data-field="fee"
               defaultValue={this.props.service.fee}
+              onChange={this.handleFieldChange}
+            />
+          </li>
+
+          <li className="edit--section--list--item">
+            <label htmlFor="input">Wait Time</label>
+            <input
+              placeholder="Wait Time"
+              data-field="wait_time"
+              defaultValue={this.props.service.wait_time}
+              onChange={this.handleFieldChange}
+            />
+          </li>
+
+          <li className="edit--section--list--item">
+            <label htmlFor="input">URL</label>
+            <input
+              placeholder="URL"
+              data-field="url"
+              defaultValue={this.props.service.url}
               onChange={this.handleFieldChange}
             />
           </li>

@@ -360,6 +360,14 @@ class EditSections extends React.Component {
       resourceChangeRequest.email = this.state.email;
       resourceModified = true;
     }
+    if (this.state.alternate_name && this.state.alternate_name !== resource.alternate_name) {
+      resourceChangeRequest.alternate_name = this.state.alternate_name;
+      resourceModified = true;
+    }
+    if (this.state.legal_status && this.state.legal_status !== resource.legal_status) {
+      resourceChangeRequest.legal_status = this.state.legal_status;
+      resourceModified = true;
+    }
     // fire off resource request
     if (resourceModified) {
       promises.push(dataService.post(`/api/resources/${resource.id}/change_requests`, { change_request: resourceChangeRequest }));
@@ -595,6 +603,19 @@ class EditSections extends React.Component {
             />
           </li>
 
+          <li key="alternate_name" className="edit--section--list--item">
+            <label htmlFor="edit-alternate-name-input">Alternate Name</label>
+            <input
+              id="edit-alternate-name-input"
+              type="text"
+              className="input"
+              placeholder="Alternate Name"
+              data-field="alternate_name"
+              defaultValue={resource.alternate_name}
+              onChange={this.handleResourceFieldChange}
+            />
+          </li>
+
           <EditAddress
             address={this.state.resource.address}
             updateAddress={this.handleAddressChange}
@@ -636,6 +657,18 @@ class EditSections extends React.Component {
               className="input"
               defaultValue={resource.long_description}
               data-field="long_description"
+              onChange={this.handleResourceFieldChange}
+            />
+          </li>
+
+          <li key="legal_status" className="edit--section--list--item email">
+            <label htmlFor="edit-legal-status-input">Legal Status</label>
+            <input
+              id="edit-legal-status-input"
+              type="text"
+              className="input"
+              defaultValue={resource.legal_status}
+              data-field="legal_status"
               onChange={this.handleResourceFieldChange}
             />
           </li>
