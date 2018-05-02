@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { getTimes, timeToString } from '../../utils/index';
 
+// TODO: create a shared component for Resource and Service entries
 class ServiceEntry extends Component {
   constructor(props) {
     super(props);
@@ -23,16 +25,21 @@ class ServiceEntry extends Component {
     this.setState({
       isOpen: openInfo.isOpen,
       openUntil: openInfo.openUntil,
+      is24hour: openInfo.is24hour,
     });
   }
 
   render() {
     const { hit } = this.props;
-    const { isOpen, openUntil } = this.state;
+    const { isOpen, openUntil, is24hour } = this.state;
     const description = hit.long_description || 'No description, yet...';
     let timeInfo = null;
     if (isOpen) {
-      timeInfo = `Open Until ${timeToString(openUntil)}`;
+      if (is24hour) {
+        timeInfo = 'Open 24 hours';
+      } else {
+        timeInfo = `Open Until ${timeToString(openUntil)}`;
+      }
     } else {
       timeInfo = 'Closed';
     }
@@ -58,7 +65,7 @@ class ServiceEntry extends Component {
         </div>
         <div className="entry-action-buttons">
           <ul className="action-buttons">
-            <li className="action-button">Details</li>
+            <li className="action-button"><Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>Details</Link></li>
             <li className="action-button">
               <a
                 href={`https://maps.google.com?saddr=Current+Location&daddr=${hit._geoloc.lat},${hit._geoloc.lng}&dirflg=w`}

@@ -7,6 +7,8 @@ class TableOfOpeningTimes extends React.Component {
 
     // TODO order with current day first
     // TODO Show relativeOpeningTime for current day
+    // TODO Show days without entries in the schedule as closed
+    // TODO Order with current day at top
     
     return (
       <table className="compact">
@@ -24,7 +26,11 @@ class TableOfOpeningTimes extends React.Component {
 }
 
 TableOfOpeningTimes.propTypes = {
-  schedule: PropTypes.object.isRequired,
+  schedule: PropTypes.object,
+};
+
+TableOfOpeningTimes.defaultProps = {
+  schedule: {},
 };
 
 export default TableOfOpeningTimes;

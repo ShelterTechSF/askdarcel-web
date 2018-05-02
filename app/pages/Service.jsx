@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getService } from 'actions/serviceActions';
+import { fetchService } from 'actions/serviceActions';
 
 import { Datatable, Loader } from 'components/ui';
-import { OrganizationCard, ServiceCard, ListingTitleLink } from 'components/layout';
+import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { ActionSidebar, TableOfContactInfo, TableOfOpeningTimes, CategoryTag } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
 
@@ -14,7 +14,7 @@ import 'react-tippy/dist/tippy.css';
 class ServicePage extends React.Component {
   componentWillMount() {
     const { routeParams: { service } } = this.props;
-    this.props.getService(service);
+    this.props.fetchService(service);
   }
 
   generateDetailsRows() {
@@ -30,7 +30,9 @@ class ServicePage extends React.Component {
       // ['Funding Sources', ] // TODO Doesn't exist
       ['Notes', service.notes.map(d => d.note).join('\n')],
     ];
-    return rows.map(row => ({ title: row[0], value: row[1] }));
+    return rows
+      .filter(row => row[1])
+      .map(row => ({ title: row[0], value: row[1] }));
   }
 
   render() {
@@ -38,6 +40,17 @@ class ServicePage extends React.Component {
     if (!service) { return (<Loader />); }
 
     const { resource, program, schedule } = service;
+    const details = this.generateDetailsRows();
+
+    // TODO This should be serviceAtLocation
+    const locations = [
+      resource.address,
+    ].map(address => ({
+      id: address.id,
+      address,
+      name: service.name,
+      schedule,
+    }));
 
     return (
       <div className="listing-container">
@@ -60,7 +73,7 @@ class ServicePage extends React.Component {
                 <p>{ service.long_description }</p>
               </section>
 
-              <section>
+              { details.length ? <section>
                 <h2>Service Details</h2>
                 <Datatable
                   rowRenderer={d => (
@@ -71,7 +84,7 @@ class ServicePage extends React.Component {
                   )}
                   rows={this.generateDetailsRows()}
                 />
-              </section>
+              </section> : null}
 
               <section>
                 <h2>Contact Info</h2>
@@ -80,30 +93,25 @@ class ServicePage extends React.Component {
 
               <section>
                 <h2>Locations and Hours</h2>
-                <MapOfLocations locations={[{
-                  address: resource.address,
-                  name: service.name,
-                  schedule,
-                }]}
+                <MapOfLocations
+                  locations={locations}
+                  locationRenderer={location => (
+                    <TableOfOpeningTimes schedule={location.schedule} />
+                  )}
                 />
-                <TableOfOpeningTimes schedule={schedule} />
+                {/* TODO Transport Options */}
               </section>
 
               { resource.services.length > 1 ? <section>
                 <h2>Other Services at this Location</h2>
                 {/* TODO Exclude the current service from this list */}
-                { resource.services.map(srv => (<ServiceCard service={srv} key={srv.id}/>)) }
+                { resource.services.map(srv => (<ServiceCard service={srv} key={srv.id} />)) }
               </section> : null}
 
-              <section>
-                {/* <h2>Similar Services Near You</h2> */}
-                {/* TODO Need an API to get similar services, maybe same category for now? */}
-              </section>
-
-              <section>
-                <OrganizationCard org={service.resource} />
-                <pre>{ JSON.stringify(this.props.activeService, null, 4)}</pre>
-              </section>
+              {/* TODO Need an API to get similar services, maybe same category for now? */}
+              {/* <section>
+                <h2>Similar Services Near You</h2>
+              </section> */}
 
             </div>
             <div className="listing--aside">
@@ -111,7 +119,8 @@ class ServicePage extends React.Component {
                 // TODO Edit should add service ID header
                 { name: 'Edit', icon: 'edit', to: `/resource/edit?resourceid=${resource.id}` }, // TODO Update with path to /resource/:id
                 { name: 'Print', icon: 'print', handler: () => { window.print(); } },
-                // { name: 'Share', icon: 'share' }, // TODO Integrate with mobile share, how to handle shares
+                // TODO Integrate with mobile share, how to handle shares
+                // { name: 'Share', icon: 'share' },
                 // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
                 // TODO Directions to address, not lat/long, is much better UX
                 { name: 'Directions', icon: 'directions', link: `http://google.com/maps/dir/?api=1&destination=${resource.address.latitude},${resource.address.longitude}` },
@@ -133,5 +142,5 @@ ServicePage.propTypes = {
 
 export default connect(
   state => ({ ...state.services }),
-  dispatch => bindActionCreators({ getService }, dispatch),
+  dispatch => bindActionCreators({ fetchService }, dispatch),
 )(ServicePage);

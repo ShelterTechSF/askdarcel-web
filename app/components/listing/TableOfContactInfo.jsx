@@ -4,15 +4,22 @@ import PropTypes from 'prop-types';
 class ContactInfoTable extends React.Component {
   render() {
     const { item } = this.props;
+    // TODO May break for non services, need a better check for inheritance
+    const website = item.website || item.resource.website;
+    const email = item.email || item.resource.email;
+    const phones = item.phones || item.resource.phones;
 
-    if (!item.website && !item.phones) {
+    if (!website && !phones && !email) {
       return (
         <span>
           {/* TODO Style this better with some generic warning icon? */}
           <table>
             <tbody>
               <tr>
-                <td>It seems like we have no contact info on record, please click edit and add it if you can!</td>
+                <td>
+                  It seems like we have no contact info on record,
+                  please click edit and add it if you can!
+                </td>
               </tr>
             </tbody>
           </table>
@@ -23,22 +30,44 @@ class ContactInfoTable extends React.Component {
 
     return (
       <table>
-        { item.website
-            ? <tr>
-              <th>Website</th>
-              <td>${item.website}</td>
-            </tr> : null
-        }
+        <tbody>
+          { website
+              ? <tr>
+                <th>Website</th>
+                <td>
+                  <a href={website}>{website}</a>
+                </td>
+              </tr> : null
+          }
 
-        { item.phones
-            ? <tr>
-              <th>Phone</th>
-              <td>{ JSON.stringify(item.phones, null, 2) }</td>
-              {/* TODO Render phones properly */}
-            </tr> : null
-        }
+          { email
+              ? <tr>
+                <th>Email</th>
+                <td>
+                  <a href={`mailto:${email}`}>{email}</a>
+                </td>
+              </tr> : null
+          }
 
-        {/* TODO Contact Person */}
+          { phones.length
+              ? <tr>
+                <th>Phone</th>
+                <td>
+                  <ul>
+                    {
+                      phones.map(phone => (
+                        <li key={phone.number}>
+                          {phone.number} {phone.service_type && `(${phone.service_type})`}
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </td>
+              </tr> : null
+          }
+
+          {/* TODO Contact Person */}
+        </tbody>
       </table>
     );
   }

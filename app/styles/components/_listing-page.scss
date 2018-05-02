@@ -16,6 +16,11 @@
 .listing {
 	background: $color-white;
 
+	h1, h2, h3 {
+		font-weight: bold;
+		padding: $padding-default;
+	}
+
   h1 {
     font-size: 26px;
 		text-transform: capitalize;
@@ -29,7 +34,8 @@
   }
 
   p {
-    color: $color-textfade;
+		color: $color-textfade;
+		padding: $padding-default;
   }
 
   header {
@@ -264,6 +270,22 @@
 			width: calc-em(130px);
 		}
 	}
+}
+
+.relativeTime {
+	padding: $padding-default;
+	font-weight: bold;
+	// &.warning {
+	// 	color: $color-orange;
+	// }
+
+	// &.success {
+	// 	color: $color-green;
+	// }
+
+	// &.danger {
+	// 	color: $color-red;
+	// }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

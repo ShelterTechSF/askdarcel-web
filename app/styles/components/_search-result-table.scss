@@ -34,6 +34,9 @@
 .results {
   @extend %flex-row;
   width: 100%;
+  max-width: calc-em(2280px);
+  margin-right: auto;
+  margin-left: auto;
   margin-top: #{$navigation-height};
   align-items: flex-start;
   @include r_max($break-tablet-s) {
@@ -212,5 +215,18 @@
   margin-right: auto;
   .ais-Pagination-item {
     padding: 10px;
+  }
+  .ais-Pagination-item--selected {
+    font-weight: 900;
+    font-size: 20px;
+  }
+}
+
+.algolia-img-wrapper {
+  justify-content: flex-end;
+  display: flex;
+
+  & > img {
+    height: 20px;
   }
 }

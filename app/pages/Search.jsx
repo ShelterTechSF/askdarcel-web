@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { 
-  InstantSearch, 
+import {
+  InstantSearch,
   Configure,
-  Index,
   SearchBox,
-  Hits,
-  Pagination,
-  RefinementList,
   } from 'react-instantsearch/dom';
-import SearchMap from '../components/Search/SearchMap';
-import MapTest from '../components/Search/MapTest';
-import { connectStateResults } from 'react-instantsearch/connectors';
-import ServiceEntry from '../components/Search/ServiceEntry';
-import ResourceEntry from '../components/Search/ResourceEntry';
-import SearchTable from '../components/Search/SearchTable';
-import SearchResultsContainer from '../components/Search/SearchResultsContainer';
-import qs from 'qs';
 import { isEqual } from 'lodash';
+import qs from 'qs';
+import SearchResultsContainer from '../components/Search/SearchResultsContainer';
 
 
 class Search extends Component {
@@ -27,7 +16,6 @@ class Search extends Component {
 
     this.state = { searchState: { ...qs.parse(props.router.location.query) } };
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
-    this.createURL = this.createURL.bind(this);
   }
   componentWillReceiveProps() {
     this.setState({ searchState: qs.parse(this.props.router.location.query) });
@@ -43,15 +31,15 @@ class Search extends Component {
     this.setState({ lastPush: newPush, searchState: nextSearchState });
     if (this.state.lastPush && newPush - this.state.lastPush <= THRESHOLD) {
       this.props.router.replace(
-        nextSearchState ? `search?${qs.stringify(nextSearchState)}` : ''
+        nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
       );
     } else {
       this.props.router.push(
-        nextSearchState ? `search?${qs.stringify(nextSearchState)}` : ''
+        nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
       );
     }
   }
-
+  // eslint-disable-next-line class-methods-use-this
   createURL(state) {
     return `search?${qs.stringify(state)}`;
   }
@@ -63,13 +51,13 @@ class Search extends Component {
     ) : (
       <Configure aroundLatLngViaIP aroundRadius="all" />
     );
-
+    /* eslint-disable no-undef */
     return (
       <div className="search-page-container">
         <InstantSearch
-          appId="J8TVT53HPZ"
-          apiKey="fdf77b152ff7ce0ea4e4221ff3d17d85"
-          indexName="development_service_Resource"
+          appId={CONFIG.ALGOLIA_APPLICATION_ID}
+          apiKey={CONFIG.ALGOLIA_READ_ONLY_API_KEY}
+          indexName={CONFIG.ALGOLIA_INDEX}
           searchState={this.state.searchState}
           onSearchStateChange={this.onSearchStateChange}
           createURL={this.createURL}
@@ -85,6 +73,7 @@ class Search extends Component {
       </div>
     );
   }
+  /* eslint-enable no-undef */
 }
 
 function mapStateToProps(state) {
@@ -93,9 +82,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (Search);
+export default connect(mapStateToProps)(Search);

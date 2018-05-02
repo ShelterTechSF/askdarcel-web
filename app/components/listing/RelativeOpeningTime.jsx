@@ -1,12 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { buildHoursText } from '../../utils';
 
 class RelativeOpeningTime extends React.Component {
+  constructor(...args) {
+    super(...args);
+    this.tick = null;
+    this.state = {};
+  }
+
+  componentWillMount() {
+    this.tick = setInterval(() => this.setState(this.state), 60000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.tick);
+  }
+
   render() {
-    // console.log('rendering opening times', this.props);
-    // TODO Implement Closed Now, Open Now, Closing Soon, Opening Soon states
-    // TODO Implement with more details on hover
-    return (<span>Closed Now</span>);
+    const classes = 'relativeTime';
+    const text = buildHoursText(this.props.schedule.schedule_days);
+
+    return (
+      <span className={classes}>
+        { text }
+      </span>
+    );
   }
 }
 

@@ -7,7 +7,7 @@ class CategoryTag extends React.Component {
   render() {
     const { category } = this.props;
     return (
-      <Link to={`/resources?categoryid=${category.id}`}>
+      <Link className="tag block" to={`/search?query=${category.name}`}>
         <i className="material-icons">label</i> { category.name }
       </Link>
     );
@@ -15,7 +15,7 @@ class CategoryTag extends React.Component {
 }
 
 CategoryTag.propTypes = {
-  category: PropTypes.object.isRequired
+  category: PropTypes.object.isRequired,
 };
 
 export default CategoryTag;

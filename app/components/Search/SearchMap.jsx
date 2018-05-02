@@ -1,5 +1,4 @@
 import React from 'react';
-import { connectHits } from 'react-instantsearch/connectors';
 import { connect } from 'react-redux';
 import GoogleMap from 'google-map-react';
 
@@ -14,35 +13,6 @@ function createMapOptions(maps) {
     },
     mapTypeControl: true,
   };
-}
-
-function HitsMap({ hits, userLocation }) {
-  if (!hits.length) {
-    return null;
-  }
-
-  const markers = hits.map(hit => (
-    <CustomMarker lat={hit._geoloc.lat} lng={hit._geoloc.lng} key={hit.objectID} />
-  ));
-
-  markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} />);
-
-  return (
-    <div className="results-map">
-      <div className="map-wrapper">
-        <GoogleMap
-          bootstrapURLKeys={{
-            key: CONFIG.GOOGLE_API_KEY,
-          }}
-          center={{ lat: userLocation.lat, lng: userLocation.lng }}
-          defaultZoom={14}
-          options={createMapOptions}
-        >
-          {markers}
-        </GoogleMap>
-      </div>
-    </div>
-  );
 }
 
 function UserLocationMarker() {
@@ -83,17 +53,17 @@ function CustomMarker() {
 
 // const SearchMap = connectHits(HitsMap);
 
-const SearchMap = ({hits, userLocation}) => {
+const SearchMap = ({ hits, userLocation }) => {
   if (!hits || !hits.length) {
     return null;
   }
-  console.log('hits:', hits)
 
   const markers = hits.map(hit => (
     <CustomMarker lat={hit._geoloc.lat} lng={hit._geoloc.lng} key={hit.objectID} />
   ));
 
-  markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1}/>);
+  markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
+  /* eslint-disable no-undef */
   return (
     <div className="results-map">
       <div className="map-wrapper">
@@ -110,7 +80,8 @@ const SearchMap = ({hits, userLocation}) => {
       </div>
     </div>
   );
-}
+  /* eslint-enable no-undef */
+};
 
 function mapStateToProps(state) {
   return {

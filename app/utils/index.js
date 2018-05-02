@@ -18,7 +18,7 @@ export function getAuthRequestHeaders() {
  * '700' to new Date(..., ..., ..., 7, 0)
  * '1330' to new Date(..., ..., ..., 13, 30)
  */
-function timeToDate(hours) {
+export function timeToDate(hours) {
   if (hours === null) {
     return null;
   }
@@ -127,7 +127,9 @@ export function buildHoursText(scheduleDays) {
       if (day.opens_at === 0 && day.closes_at >= 2359) {
         hours = 'Open 24 Hours';
       } else {
-        hours = `Open Now: ${timeToString(day.opens_at)}-${timeToString(day.closes_at)}`;
+        const openStr = timeToString(day.opens_at);
+        const closeStr = timeToString(day.closes_at);
+        hours = `Open Now: ${openStr.slice(0, openStr.length - 3)}-${closeStr.slice(0, closeStr.length - 3)}`;
       }
       if (i !== days.length - 1) {
         hours += ', ';
@@ -207,7 +209,11 @@ export function getTimes(scheduleDays) {
   });
 
   if (openUntil) {
-    return { openUntil, isOpen: true };
+    if(openUntil === 2359) {
+      return { openUntil, isOpen: true, is24hour: true };
+    } else {
+      return { openUntil, isOpen: true };
+    }
   }
   return { openUntil, isOpen: false };
 }

@@ -40,6 +40,11 @@ table {
     th, td {
       padding: 10px;
       text-align: left;
+
+      &.iconcell {
+        max-width: $padding-xxlarge;
+        $padding: 10px $padding-default
+      }
     }
 
     th {

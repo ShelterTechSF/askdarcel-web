@@ -4,6 +4,8 @@ import { Loader } from 'components/ui';
 import SearchTable from './SearchTable';
 import SearchMap from './SearchMap';
 
+// Connects the Algolia searchState and searchResults to this component
+// Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html
 const searchResultsContainer = connectStateResults(
   ({ searchState, searchResults, searching }) => {
     let output = null;

@@ -6,7 +6,7 @@ import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import { OrganizationCard, ServiceCard } from './index';
 
-class ListingTitle extends React.Component {
+class ListingTitleLink extends React.Component {
   getTooltipContent() {
     const { type, listing } = this.props;
     switch (type) {
@@ -41,9 +41,9 @@ class ListingTitle extends React.Component {
   }
 }
 
-ListingTitle.propTypes = {
+ListingTitleLink.propTypes = {
   type: PropTypes.oneOf(['org', 'service']).isRequired, // TODO PROGRAM
   listing: PropTypes.object.isRequired,
 };
 
-export default ListingTitle;
+export default ListingTitleLink;

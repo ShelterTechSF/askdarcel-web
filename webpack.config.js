@@ -24,6 +24,7 @@ module.exports = {
       actions: path.resolve(appRoot, 'actions'),
       components: path.resolve(appRoot, 'components'),
       reducers: path.resolve(appRoot, 'reducers'),
+      styles: path.resolve(appRoot, 'styles'),
       utils: path.resolve(appRoot, 'utils'),
     },
   },
@@ -34,8 +35,8 @@ module.exports = {
       favicon: 'app/favicon.ico',
     }),
     new ExtendedDefinePlugin({
-      CONFIG: config
-    })
+      CONFIG: config,
+    }),
   ],
   devtool: 'source-map',
   module: {
@@ -47,8 +48,8 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: ['es2015', 'react', 'stage-0'],
-            }
-          }
+            },
+          },
         ],
         exclude: [/node_modules/, /typings/],
       },
@@ -62,10 +63,10 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'fonts/[name].[ext]'
-            }
-          }
-        ]
+              name: 'fonts/[name].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,

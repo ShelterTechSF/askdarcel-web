@@ -2,7 +2,7 @@ import React from 'react';
 import ServiceEntry from './ServiceEntry';
 import ResourceEntry from './ResourceEntry';
 
-const SearchRow = ({hit}) => {
+const SearchRow = ({ hit }) => {
   let entry = null;
   switch (hit.type) {
     case 'service':
@@ -12,14 +12,16 @@ const SearchRow = ({hit}) => {
       entry = <ResourceEntry hit={hit} />;
       break;
     default:
-      console.log('Support for the following entry is not supported yet:', hit.type)
+      // eslint-disable-next-line no-console
+      console.log('Support for the following entry is not supported yet:', hit.type);
   }
+
   return (
     <div>
       {entry}
     </div>
   );
-}
+};
 
 
 export default SearchRow;

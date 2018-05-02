@@ -12,6 +12,7 @@ pre {
 // Card Styles
 .card {
   border: 1px solid #CCC;
+  width: 100%;
   // min-width: 440px;
   border-radius: 2px;
   display: inline-block;
@@ -107,4 +108,12 @@ ul.actions {
     border: 0;
     text-align: left;
   }
+}
+
+.right {
+  text-align: right;
+}
+
+.block {
+  display: block;
 }
