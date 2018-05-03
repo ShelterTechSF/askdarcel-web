@@ -230,3 +230,43 @@
     height: 20px;
   }
 }
+
+.service-entry-additional-info {
+  height: calc-em(102px);
+  margin: calc-em(20px) 0 0 calc-em(28px);
+
+  .service-entry-tabs {
+    margin-bottom: calc-em(10px); 
+
+     div {
+      color: $color-grey10; 
+      text-transform: uppercase;
+      font-size: calc-em(13px);
+      font-weight: bold;  
+      line-height: calc-em(16px);
+      display: inline-block;
+      margin-right: calc-em(25px);
+    }
+    div:hover {
+      color: $color-brand;
+      cursor: pointer;
+    } 
+  }
+
+  .service-entry-tabs-active {
+
+    div {
+      color: $color-brand;
+    }
+  }
+    .service-entry-body p { 
+    font-size: calc-em(15px);  
+    line-height: calc-em(18px);
+    color: $color-grey6;
+    margin-right: calc-em(20px);
+    height: calc-em(60px);
+    //padding-bottom: calc-em(20px);
+    overflow: auto;
+    //overflow-x: hidden;
+  }
+}
