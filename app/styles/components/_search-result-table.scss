@@ -170,8 +170,9 @@
     line-height: calc-em(18px);
     color: $color-grey6;
     padding-right: calc-em(20px);
-    height: calc-em(60px);
-    overflow: scroll;
+    max-height: calc-em(56px);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
