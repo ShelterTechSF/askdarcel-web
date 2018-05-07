@@ -57,7 +57,7 @@ class Search extends Component {
         <InstantSearch
           appId={CONFIG.ALGOLIA_APPLICATION_ID}
           apiKey={CONFIG.ALGOLIA_READ_ONLY_API_KEY}
-          indexName={CONFIG.ALGOLIA_INDEX}
+          indexName={`${CONFIG.ALGOLIA_INDEX_PREFIX}_services_search`}
           searchState={this.state.searchState}
           onSearchStateChange={this.onSearchStateChange}
           createURL={this.createURL}
