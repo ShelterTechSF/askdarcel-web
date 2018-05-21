@@ -108,3 +108,19 @@ test('Add resource phone number', async (t) => {
     .eql(originalCount + 1)
     ;
 });
+
+test('Delete resource phone number', async (t) => {
+  await t.hover(resourcePage.phones);
+  const originalCount = await resourcePage.phones.with({ boundTestRun: t }).count;
+
+  await t
+    .click(resourcePage.editButton)
+    .click(editPage.deletePhoneButton)
+    .click(editPage.saveButton)
+    ;
+
+  await t
+    .expect(resourcePage.phones.count)
+    .eql(originalCount - 1)
+    ;
+});

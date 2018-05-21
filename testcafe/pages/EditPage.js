@@ -29,6 +29,7 @@ export default class EditPage {
     this.name = baseSelector.find('#edit-name-input');
     this.address = new EditAddress();
     this.addPhoneButton = ReactSelector('EditPhones').find('.edit--section--list--item--button');
+    this.deletePhoneButton = ReactSelector('EditPhones').find('.trash-button');
     this.saveButton = baseSelector.find('.edit--aside--content--button');
   }
 

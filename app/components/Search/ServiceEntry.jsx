@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getTimes, timeToString } from '../../utils/index';
+import SearchTabView from './SearchTabView';
 
 // TODO: create a shared component for Resource and Service entries
 class ServiceEntry extends Component {
@@ -32,6 +33,7 @@ class ServiceEntry extends Component {
     const { hit } = this.props;
     const { isOpen, openUntil, is24hour } = this.state;
     const description = hit.long_description || 'No description, yet...';
+    const sched = hit.schedule || 'No hours listed.';
     let timeInfo = null;
     if (isOpen) {
       if (is24hour) {
@@ -55,14 +57,9 @@ class ServiceEntry extends Component {
           </div>
         </header>
         <div className="line-break" />
-        <div className="entry-additional-info">
-          <div className="entry-tabs">
-            <p>Description</p>
-          </div>
-          <div className="entry-body">
-            <p>{description}</p>
-          </div>
-        </div>
+
+        <SearchTabView description={description} schedule={sched}/>
+
         <div className="entry-action-buttons">
           <ul className="action-buttons">
             <li className="action-button"><Link to={{ pathname: `/services/${hit.service_id}` }}>Details</Link></li>
