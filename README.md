@@ -9,7 +9,7 @@
 Docker Community Edition (CE) >= 17.06
 Docker Compose >= 1.18
 
-Follow the [Docker installation instructions](https://www.docker.com/get-docker#/overview) for your OS.
+Follow the [Docker installation instructions](https://www.docker.com/community-edition#/download) for your OS.
 
 ### Set up the project
 
