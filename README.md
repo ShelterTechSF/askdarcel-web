@@ -9,7 +9,7 @@
 Docker Community Edition (CE) >= 17.06
 Docker Compose >= 1.18
 
-Follow the [Docker installation instructions](https://www.docker.com/products/overview) for your OS.
+Follow the [Docker installation instructions](https://www.docker.com/get-docker#/overview) for your OS.
 
 ### Set up the project
 
@@ -57,15 +57,15 @@ $ npm install -g npm@5.2.0  # Make sure this matches .travis.yml
 To install the dependencies, from the top directory run
 ```sh
 npm install
-``` 
-To build the bundled script with webpack run 
+```
+To build the bundled script with webpack run
 ```sh
 npm run build
-``` 
-And to run the dev server, run 
+```
+And to run the dev server, run
 ```sh
 npm run dev
-``` 
+```
 
 ## End to end testing
 #### Quick summary of what TestCafe is and how it works
