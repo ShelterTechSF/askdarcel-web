@@ -1,4 +1,4 @@
-import ReactSelector from 'testcafe-react-selectors';
+import { ReactSelector } from 'testcafe-react-selectors';
 
 class EditAddress {
   constructor() {
@@ -29,10 +29,11 @@ export default class EditPage {
     this.name = baseSelector.find('#edit-name-input');
     this.address = new EditAddress();
     this.addPhoneButton = ReactSelector('EditPhones').find('.edit--section--list--item--button');
-    this.saveButton = baseSelector.find('.edit--aside--content--submit');
+    this.deletePhoneButton = ReactSelector('EditPhones').find('.trash-button');
+    this.saveButton = baseSelector.find('.edit--aside--content--button');
   }
 
-  getPhone(index) {
+  static getPhone(index) {
     return new EditPhone(index);
   }
 }

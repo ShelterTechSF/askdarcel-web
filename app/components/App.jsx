@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import Navigation from './Navigation';
+import Navigation from './ui/Navigation';
 import CategoryPage from './Find/FindPage';
 import ResourcesTable from './Search/ResourcesTable';
 import { round } from '../utils/index';
 import 'react-select/dist/react-select.css';
+import { connect } from 'react-redux';
+import userActions from '../actions/userActions';
 
 
 class App extends Component {
@@ -73,7 +75,7 @@ class App extends Component {
         console.log(msg);
         reject(msg);
       }
-    });
+    }, {timeout: 10000});
   }
 
   /**
@@ -109,12 +111,14 @@ class App extends Component {
 
   componentDidMount() {
     this.getLocation().then(coords => {
+      this.props.setUserLocation(coords);
       this.setState({
         userLocation: coords
       });
     }).catch(e => {
       console.log("Could not obtain location, defaulting to San Francisco.");
       console.log(e);
+      this.props.setUserLocation({ lat: 37.7749, lng: -122.4194 })
       this.setState({
         // HACK: Hardcode middle of San Francisco
         userLocation: {
@@ -144,4 +148,16 @@ class App extends Component {
 
 };
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    userLocation: state.user.location,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setUserLocation: (location) => dispatch(userActions.setUserLocation(location)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (App);

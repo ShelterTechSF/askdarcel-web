@@ -44,7 +44,6 @@ class Gmap extends Component {
     });
 
     let userMarker = new google.maps.Marker({
-      position: this.props.markers.user,
       map: map,
       icon: {
         path: google.maps.SymbolPath.CIRCLE,

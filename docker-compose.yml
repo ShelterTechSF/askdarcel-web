@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  web:
+    command: npm -- run dev --host 0.0.0.0
+    environment:
+      API_URL: http://api:3000
+      ALGOLIA_INDEX_PREFIX:
+      ALGOLIA_APPLICATION_ID:
+      ALGOLIA_READ_ONLY_API_KEY:
+    image: node:8.4
+    networks:
+      - askdarcel
+    ports:
+      - '8080:8080'
+    volumes:
+      - .:/usr/src/app:delegated
+    working_dir: /usr/src/app
+
+networks:
+  # Used to connect to askdarcel-api in a different docker-compose instance
+  askdarcel:
+    name: askdarcel

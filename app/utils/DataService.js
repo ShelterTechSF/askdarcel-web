@@ -51,3 +51,20 @@ export function get(url, headers) {
     return resp.json();
   });
 }
+
+export function APIDelete(url, headers) {
+  let queryHeaders = {
+    'Content-Type': 'application/json',
+  };
+  if (headers) {
+    queryHeaders = _.assignIn(queryHeaders, headers);
+  }
+  return fetch(url, {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: queryHeaders,
+  }).then((resp) => {
+    if (!resp.ok) { throw resp; }
+    setAuthHeaders(resp);
+  });
+}

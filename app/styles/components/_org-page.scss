@@ -74,6 +74,16 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG HEADER
 
+.certified {
+	float: right;
+	height: 36px;
+	margin-right: $padding-default;
+
+	&:after {
+		clear: both;
+	}
+}
+
 .org--main--header {
 	&--title {
 		@extend %font-size-x-large;
@@ -101,6 +111,8 @@
 			color: #888888;
 		}
 		p {
+			white-space: pre-line;
+			padding-right: 6px;
 			margin-top: calc-em(10px);
 		}
 	}

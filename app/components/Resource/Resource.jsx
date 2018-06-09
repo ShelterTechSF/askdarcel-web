@@ -5,7 +5,8 @@ import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Str
 import DetailedHours from './DetailedHours';
 import Services from './Services';
 import Notes from './Notes';
-import Loader from '../Loader';
+import Loader from 'components/ui/Loader';
+import HAPcertified from '../../assets/img/ic-hap.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
 
@@ -68,6 +69,14 @@ class Resource extends Component {
           <div className="org--main--left">
 
             <header className="org--main--header">
+              {
+                resource.certified &&
+                <img
+                  className="certified"
+                  src={HAPcertified}
+                  alt="Verified by the Homeless Assistance Project"
+                />
+              }
               <h1 className="org--main--header--title">{resource.name}</h1>
               <div className="org--main--header--rating disabled-feature">
                 <p className="excellent">
@@ -179,7 +188,7 @@ Resource.propTypes = {
       resourceid: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  // Not required because will be lazy-loaded after initial render.
+  // userLocation is not required because will be lazy-loaded after initial render.
   userLocation: PropTypes.shape({
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,

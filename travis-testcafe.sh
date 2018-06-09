@@ -9,7 +9,17 @@ cleanup() {
   fi
 }
 
-#trap cleanup EXIT
+trap cleanup EXIT
+
+# Use master branch credentials so that build status badges are tied to only the
+# master branch.
+if [[ $TRAVIS_BRANCH = "master" ]]; then
+  export SAUCE_ACCESS_KEY=$SAUCE_MASTER_ACCESS_KEY
+  export SAUCE_USERNAME=$SAUCE_MASTER_USERNAME
+fi
+
+export SAUCE_JOB="all"
+export SAUCE_BUILD="build-$TRAVIS_JOB_NUMBER"
 
 docker network create --driver bridge askdarcel
 docker run -d --network=askdarcel --name=db postgres:9.5

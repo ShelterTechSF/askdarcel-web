@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import { withRouter, browserHistory } from 'react-router';
 import _ from 'lodash';
 
-import Loader from '../Loader';
+import { Loader } from 'components/ui';
 import EditAddress from './EditAddress';
 import EditServices from './EditServices';
 import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import EditPhones from './EditPhones';
+import EditSidebar from './EditSidebar';
 import * as dataService from '../../utils/DataService';
-import { getAuthRequestHeaders } from '../../utils/index';
-import { daysOfTheWeek } from '../../utils/index';
 
 function getDiffObject(curr, orig) {
   return Object.entries(curr).reduce((acc, [key, value]) => {
@@ -43,11 +42,33 @@ function createCollectionObject(object, path, promises, resourceID) {
   );
 }
 
+function createNewPhoneNumber(item, resourceID, promises) {
+  promises.push(
+    dataService.post(
+      '/api/change_requests',
+      {
+        change_request: item,
+        type: 'phones',
+        parent_resource_id: resourceID,
+      },
+    ),
+  );
+}
+
+function deletCollectionObject(item, path, promises) {
+  if (path === 'phones') {
+    promises.push(
+      dataService.APIDelete(`/api/phones/${item.id}`),
+    );
+  }
+}
+
 function postCollection(collection, originalCollection, path, promises, resourceID) {
   for (let i = 0; i < collection.length; i += 1) {
     const item = collection[i];
-
-    if (i < originalCollection.length && item.dirty) {
+    if (item.isRemoved) {
+      deletCollectionObject(item, path, promises);
+    } else if (i < originalCollection.length && item.dirty) {
       const diffObj = getDiffObject(item, originalCollection[i]);
       if (!_.isEmpty(diffObj)) {
         delete diffObj.dirty;
@@ -55,7 +76,11 @@ function postCollection(collection, originalCollection, path, promises, resource
       }
     } else if (item.dirty) {
       delete item.dirty;
-      createCollectionObject(item, path, promises, resourceID);
+      if (path === 'phones') {
+        createNewPhoneNumber(item, resourceID, promises);
+      } else {
+        createCollectionObject(item, path, promises, resourceID);
+      }
     }
   }
 }
@@ -99,7 +124,7 @@ function postSchedule(scheduleObj, promises) {
         if (!curr.openChanged && !curr.closeChanged) {
           return;
         }
-        promises.push(dataService.post(`/api/change_requests`, { ...value }));
+        promises.push(dataService.post('/api/change_requests', { ...value }));
       }
     });
   });
@@ -112,6 +137,9 @@ function postNotes(notesObj, promises, uriObj) {
       if (key < 0) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
         promises.push(dataService.post(uri, { note: currentNote }));
+      } else if (currentNote.isRemoved) {
+        const uri = `/api/notes/${key}`;
+        promises.push(dataService.APIDelete(uri));
       } else {
         const uri = `/api/notes/${key}/change_requests`;
         promises.push(dataService.post(uri, { change_request: currentNote }));
@@ -122,10 +150,10 @@ function postNotes(notesObj, promises, uriObj) {
 
 function createFullSchedule(scheduleObj) {
   if (scheduleObj) {
-    let newSchedule = [];
+    const newSchedule = [];
     let tempDay = {};
-    Object.keys(scheduleObj).forEach(day => {
-      scheduleObj[day].forEach(curr => {
+    Object.keys(scheduleObj).forEach((day) => {
+      scheduleObj[day].forEach((curr) => {
         tempDay = {};
         tempDay.day = day;
         tempDay.opens_at = curr.opens_at;
@@ -135,9 +163,8 @@ function createFullSchedule(scheduleObj) {
     });
 
     return { schedule_days: newSchedule };
-  } else {
-    return { schedule_days: [] };
   }
+  return { schedule_days: [] };
 }
 
 class EditSections extends React.Component {
@@ -156,8 +183,13 @@ class EditSections extends React.Component {
       phones: [],
       submitting: false,
       newResource: false,
+      inputsDirty: false,
     };
 
+    this.certifyHAP = this.certifyHAP.bind(this);
+    this.routerWillLeave = this.routerWillLeave.bind(this);
+    this.keepOnPage = this.keepOnPage.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
@@ -165,6 +197,7 @@ class EditSections extends React.Component {
     this.handleServiceChange = this.handleServiceChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeactivation = this.handleDeactivation.bind(this);
     this.postServices = this.postServices.bind(this);
     this.postNotes = this.postNotes.bind(this);
     this.postSchedule = this.postSchedule.bind(this);
@@ -173,32 +206,57 @@ class EditSections extends React.Component {
   }
 
   componentDidMount() {
-    let { query, pathname } = this.props.location;
-    let splitPath = pathname.split('/');
+    const { query, pathname } = this.props.location;
+    const splitPath = pathname.split('/');
+    window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
       this.setState({ newResource: true, resource: {}, originalResource: {}, scheduleMap: {} });
     }
-    let resourceID = query.resourceid;
+    const resourceID = query.resourceid;
     if (resourceID) {
-      let url = '/api/resources/' + resourceID;
+      const url = `/api/resources/${resourceID}`;
       fetch(url).then(r => r.json())
-        .then(data => {
+        .then((data) => {
           this.setState({
             resource: data.resource,
             originalResource: data.resource,
           });
 
-          let scheduleMap = {};
-          data.resource && data.resource.schedule && data.resource.schedule.schedule_days.forEach(function(day) {
+          const scheduleMap = {};
+          data.resource && data.resource.schedule && data.resource.schedule.schedule_days.forEach((day) => {
             scheduleMap[day.day] = day;
           });
-          this.setState({ scheduleMap: scheduleMap });
+          this.setState({ scheduleMap });
         });
     }
   }
 
+  componentWillMount() {
+    this.props.router.setRouteLeaveHook(
+      this.props.route,
+      this.routerWillLeave,
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.keepOnPage);
+  }
+
+  keepOnPage(e) {
+    if (this.state.inputsDirty) {
+      const message = 'Are you sure you want to leave? Any changes you have made will be lost.';
+      e.returnValue = message;
+      return message;
+    }
+  }
+
+  routerWillLeave() {
+    if (this.state.inputsDirty && this.state.submitting !== true) {
+      return 'Are you sure you want to leave? Any changes you have made will be lost.';
+    }
+  }
   createResource() {
-    let {
+    const {
       scheduleObj,
       notes,
       phones,
@@ -209,39 +267,42 @@ class EditSections extends React.Component {
       short_description,
       website,
       email,
-      address
-    } = this.state;
-
-    let schedule = this.prepSchedule(scheduleObj);
-
-    // let newServices = this.prepServicesData(services.services);
-    let newResource = {
-      name,
       address,
-      long_description,
-      email,
-      website,
-      notes: notes.notes ? this.prepNotesData(notes.notes) : [],
-      schedule: { schedule_days: schedule },
-    };
+    } = this.state,
+      newResource = {
+        name,
+        address,
+        long_description,
+        email,
+        website,
+        notes: notes.notes ? this.prepNotesData(notes.notes) : [],
+        schedule: { schedule_days: schedule },
+        phones,
+      },
+      requestString = '/api/resources',
+      schedule = this.prepSchedule(scheduleObj);
+    // let newServices = this.prepServicesData(services.services);
 
-    let requestString = '/api/resources';
-    dataService.post(requestString, { resources: [newResource] }, getAuthRequestHeaders())
+    this.setState({ submitting: true });
+    dataService.post(requestString, { resources: [newResource] })
       .then((response) => {
         if (response.ok) {
           alert('Resource successfuly created. Thanks!');
           browserHistory.push('/');
         } else {
-          alert('Issue creating resource, please try again.');
-          console.log(logMessage);
+          Promise.reject(response);
         }
       })
+      .catch((error) => {
+        alert('Issue creating resource, please try again.');
+        console.log(error);
+      });
   }
 
 
   hasKeys(object) {
-    let size = 0;
-    for (let key in object) {
+    const size = 0;
+    for (const key in object) {
       if (object.hasOwnProperty(key)) {
         return true;
       }
@@ -249,10 +310,10 @@ class EditSections extends React.Component {
     }
   }
   prepSchedule(scheduleObj) {
-    let newSchedule = [];
+    const newSchedule = [];
     let tempDay = {};
-    Object.keys(scheduleObj).forEach(day => {
-      scheduleObj[day].forEach(curr => {
+    Object.keys(scheduleObj).forEach((day) => {
+      scheduleObj[day].forEach((curr) => {
         tempDay = {};
         tempDay.day = day;
         tempDay.opens_at = curr.opens_at;
@@ -263,13 +324,17 @@ class EditSections extends React.Component {
     return newSchedule;
   }
 
+  handleCancel() {
+    browserHistory.goBack();
+  }
+
   handleSubmit() {
     this.setState({ submitting: true });
-    let resource = this.state.resource;
-    let promises = [];
+    const resource = this.state.resource;
+    const promises = [];
 
-    //Resource
-    let resourceChangeRequest = {};
+    // Resource
+    const resourceChangeRequest = {};
     let resourceModified = false;
     if (this.state.name && this.state.name !== resource.name) {
       resourceChangeRequest.name = this.state.name;
@@ -295,37 +360,64 @@ class EditSections extends React.Component {
       resourceChangeRequest.email = this.state.email;
       resourceModified = true;
     }
-    //fire off resource request
+    if (this.state.alternate_name && this.state.alternate_name !== resource.alternate_name) {
+      resourceChangeRequest.alternate_name = this.state.alternate_name;
+      resourceModified = true;
+    }
+    if (this.state.legal_status && this.state.legal_status !== resource.legal_status) {
+      resourceChangeRequest.legal_status = this.state.legal_status;
+      resourceModified = true;
+    }
+    // fire off resource request
     if (resourceModified) {
-      promises.push(dataService.post('/api/resources/' + resource.id + '/change_requests', { change_request: resourceChangeRequest }));
+      promises.push(dataService.post(`/api/resources/${resource.id}/change_requests`, { change_request: resourceChangeRequest }));
     }
 
-    //Fire off phone requests
-    postCollection(this.state.phones, this.state.resource.phones, 'phones', promises);
+    // Fire off phone requests
+    postCollection(this.state.phones, this.state.resource.phones, 'phones', promises, this.state.resource.id);
 
     // schedule
     postSchedule(this.state.scheduleObj, promises);
 
-    //address
+    // address
     if (this.hasKeys(this.state.address) && this.state.resource.address) {
-      promises.push(dataService.post('/api/addresses/' + this.state.resource.address.id + '/change_requests', {
-        change_request: this.state.address
+      promises.push(dataService.post(`/api/addresses/${this.state.resource.address.id}/change_requests`, {
+        change_request: this.state.address,
       }));
     }
 
-    //Services
+    // Services
     this.postServices(this.state.services.services, promises);
 
-    //Notes
-    this.postNotes(this.state.notes, promises, { path: "resources", id: this.state.resource.id });
+    // Notes
+    this.postNotes(this.state.notes, promises, { path: 'resources', id: this.state.resource.id });
 
-    var that = this;
-    Promise.all(promises).then(function(resp) {
-      that.props.router.push({ pathname: "/resource", query: { id: that.state.resource.id } });
-    }).catch(function(err) {
+    const that = this;
+    Promise.all(promises).then((resp) => {
+      that.props.router.push({ pathname: '/resource', query: { id: that.state.resource.id } });
+    }).catch((err) => {
       console.log(err);
     });
+  }
 
+  handleDeactivation(type, id) {
+    if (confirm('Are you sure you want to deactive this resource?') === true) {
+      let path = null;
+      if (type === 'resource') {
+        path = `/api/resources/${id}`;
+      } else if (type === 'service') {
+        path = `/api/services/${id}`;
+      }
+      dataService.APIDelete(path, { change_request: { status: '2' } })
+        .then(() => {
+          alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
+          if (type === 'resource') {
+            this.props.router.push({ pathname: '/' });
+          } else {
+            window.location.reload();
+          }
+        });
+    }
   }
 
   postServices(servicesObj, promises) {
@@ -365,14 +457,14 @@ class EditSections extends React.Component {
   }
 
   prepServicesData(servicesObj) {
-    let newServices = [];
-    for (let key in servicesObj) {
+    const newServices = [];
+    for (const key in servicesObj) {
       if (servicesObj.hasOwnProperty(key)) {
-        let currentService = servicesObj[key];
+        const currentService = servicesObj[key];
 
         if (key < 0) {
           if (currentService.notesObj) {
-            let notes = this.objToArray(currentService.notesObj.notes);
+            const notes = this.objToArray(currentService.notesObj.notes);
             delete currentService.notesObj;
             currentService.notes = notes;
           }
@@ -389,8 +481,8 @@ class EditSections extends React.Component {
   }
 
   prepNotesData(notes) {
-    let newNotes = [];
-    for (let key in notes) {
+    const newNotes = [];
+    for (const key in notes) {
       if (notes.hasOwnProperty(key)) {
         newNotes.push({ note: notes[key].note });
       }
@@ -399,8 +491,8 @@ class EditSections extends React.Component {
   }
 
   objToArray(obj) {
-    let arr = [];
-    for (let key in obj) {
+    const arr = [];
+    for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         arr.push(obj[key]);
       }
@@ -417,16 +509,19 @@ class EditSections extends React.Component {
 
   postNotes(notesObj, promises, uriObj) {
     if (notesObj) {
-      let notes = notesObj.notes;
-      let newNotes = [];
-      for (let key in notes) {
+      const notes = notesObj.notes;
+      const newNotes = [];
+      for (const key in notes) {
         if (notes.hasOwnProperty(key)) {
-          let currentNote = notes[key];
+          const currentNote = notes[key];
           if (key < 0) {
-            let uri = '/api/' + uriObj.path + '/' + uriObj.id + '/notes';
+            const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
             promises.push(dataService.post(uri, { note: currentNote }));
+          } else if (currentNote.isRemoved) {
+            const uri = `/api/notes/${key}`;
+            promises.push(dataService.APIDelete(uri));
           } else {
-            let uri = '/api/notes/' + key + '/change_requests';
+            const uri = `/api/notes/${key}/change_requests`;
             promises.push(dataService.post(uri, { change_request: currentNote }));
           }
         }
@@ -434,7 +529,7 @@ class EditSections extends React.Component {
     }
   }
   handlePhoneChange(phoneCollection) {
-    this.setState({ phones: phoneCollection });
+    this.setState({ phones: phoneCollection, inputsDirty: true });
   }
 
   handleResourceFieldChange(e) {
@@ -442,33 +537,50 @@ class EditSections extends React.Component {
     const value = e.target.value;
     const object = {};
     object[field] = value;
+    object.inputsDirty = true;
     this.setState(object);
   }
 
   handleScheduleChange(scheduleObj) {
-    this.setState({ scheduleObj });
+    this.setState({ scheduleObj, inputsDirty: true });
   }
 
   handleAddressChange(addressObj) {
-    this.setState({ address: addressObj });
+    this.setState({ address: addressObj, inputsDirty: true });
   }
 
   handleServiceChange(servicesObj) {
-    this.setState({ services: servicesObj });
+    this.setState({ services: servicesObj, inputsDirty: true });
   }
 
   handleNotesChange(notesObj) {
-    this.setState({ notes: notesObj });
+    this.setState({ notes: notesObj, inputsDirty: true });
   }
 
   handleServiceNotesChange(notesObj) {
-    this.setState({ serviceNotes: notesObj });
+    this.setState({ serviceNotes: notesObj, inputsDirty: true });
+  }
+
+  certifyHAP() {
+    dataService.post(`/api/resources/${this.state.resource.id}/certify`)
+      .then((response) => {
+        // TODO: Do not use alert() for user notifications.
+        if (response.ok) {
+          alert('HAP Certified. Thanks!');  // eslint-disable-line no-alert
+          const resource = this.state.resource;
+          resource.certified = response.ok;
+          this.setState({ resource });
+        } else {
+          alert('Issue verifying resource. Please try again.');  // eslint-disable-line no-alert
+        }
+      });
   }
 
   formatTime(time) {
-    //FIXME: Use full times once db holds such values.
+    // FIXME: Use full times once db holds such values.
     return time.substring(0, 2);
   }
+
   renderSectionFields() {
     const resource = this.state.resource;
     return (
@@ -487,6 +599,19 @@ class EditSections extends React.Component {
               placeholder="Name"
               data-field="name"
               defaultValue={resource.name}
+              onChange={this.handleResourceFieldChange}
+            />
+          </li>
+
+          <li key="alternate_name" className="edit--section--list--item">
+            <label htmlFor="edit-alternate-name-input">Alternate Name</label>
+            <input
+              id="edit-alternate-name-input"
+              type="text"
+              className="input"
+              placeholder="Alternate Name"
+              data-field="alternate_name"
+              defaultValue={resource.alternate_name}
               onChange={this.handleResourceFieldChange}
             />
           </li>
@@ -536,6 +661,18 @@ class EditSections extends React.Component {
             />
           </li>
 
+          <li key="legal_status" className="edit--section--list--item email">
+            <label htmlFor="edit-legal-status-input">Legal Status</label>
+            <input
+              id="edit-legal-status-input"
+              type="text"
+              className="input"
+              defaultValue={resource.legal_status}
+              data-field="legal_status"
+              onChange={this.handleResourceFieldChange}
+            />
+          </li>
+
           <EditSchedule
             schedule={this.state.resource.schedule}
             handleScheduleChange={this.handleScheduleChange}
@@ -552,54 +689,54 @@ class EditSections extends React.Component {
   }
 
   renderServices() {
-    let fields = [];
-    let resource = this.state.resource;
     return (
       <section id="services" className="edit--section">
-                <header className="edit--section--header">
-                    <h4>Services</h4>
-                </header>
-                <ul className="edit--section--list">
-                    <EditServices services={this.state.resource.services} handleServiceChange={this.handleServiceChange} />
-                </ul>
-            </section>
-    )
+        <header className="edit--section--header">
+          <h4>Services</h4>
+        </header>
+        <ul className="edit--section--list">
+          <EditServices
+            services={this.state.resource.services}
+            handleServiceChange={this.handleServiceChange}
+            handleDeactivation={this.handleDeactivation}
+          />
+        </ul>
+      </section>
+    );
   }
 
   render() {
-    let actionButton = <button className="edit--aside--content--submit" disabled={this.state.submitting} onClick={this.handleSubmit}>Save changes</button>;
-    if (this.state.newResource) {
-      actionButton = <button className="edit--aside--content--submit" disabled={this.state.submitting} onClick={this.createResource}>Submit Resource</button>;
-    }
-    return (!this.state.resource && !this.state.newResource ? <Loader /> :
-      <div className="edit">
-            <div className="edit--main">
-            <header className="edit--main--header">
-              <h1 className="edit--main--header--title">{this.state.resource.name}</h1>
-            </header>
-            <div className="edit--sections">
-                {this.renderSectionFields()}
-                {this.state.newResource ? null : this.renderServices()}
-            </div>
-          </div>
-          <div className="edit--aside">
-            <div className="edit--aside--content">
-                {actionButton}
-                <nav className="edit--aside--content--nav">
-                    <ul>
-                        <li><a href="#info">Info</a></li>
-                        {this.state.newResource ? null : <li><a href="#services">Services</a></li>}
-                    </ul>
-                </nav>
-              </div>
-          </div>
+    const resource = this.state.resource;
+
+    return (!resource && !this.state.newResource ? <Loader /> :
+    <div className="edit">
+      <EditSidebar
+        createResource={this.createResource}
+        handleSubmit={this.handleSubmit}
+        handleCancel={this.handleCancel}
+        handleDeactivation={this.handleDeactivation}
+        resource={this.state.resource}
+        submitting={this.state.submitting}
+        certifyHAP={this.certifyHAP}
+        newServices={this.state.services.services}
+        newResource={this.state.newResource}
+      />
+      <div className="edit--main">
+        <header className="edit--main--header">
+          <h1 className="edit--main--header--title">{resource.name}</h1>
+        </header>
+        <div className="edit--sections">
+          {this.renderSectionFields()}
+          {this.state.newResource ? null : this.renderServices()}
         </div>
-    )
+      </div>
+    </div>
+    );
   }
 }
 
 function isEmpty(map) {
-  for (var key in map) {
+  for (const key in map) {
     return !map.hasOwnProperty(key);
   }
   return true;

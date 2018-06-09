@@ -69,8 +69,8 @@ class EditScheduleDay extends Component {
 
 EditScheduleDay.propTypes = {
   dayHours: PropTypes.arrayOf(PropTypes.shape({
-    closes_at: PropTypes.number.isRequired,
-    opens_at: PropTypes.number.isRequired,
+    closes_at: PropTypes.number,
+    opens_at: PropTypes.number,
   })).isRequired,
   addTime: PropTypes.func.isRequired,
   getDayHours: PropTypes.func.isRequired,

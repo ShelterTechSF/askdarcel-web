@@ -47,18 +47,6 @@
       border-right: 1px solid $color-grey3;
     }
   }
-  .location-field {
-  	display:none;
-    max-width: calc-em(240px);
-    background-repeat: no-repeat;
-    background-image: url(../assets/img/ic-location.png);
-    background-size: 18px 18px;
-    background-position: calc-em(15px) center;
-    padding-left: calc-em(40px);
-    @include r_max($break-tablet-s) {
-      display:none;
-    }
-  }
   .button.search {
     @include r_max($break-tablet-s) {
       display:none;

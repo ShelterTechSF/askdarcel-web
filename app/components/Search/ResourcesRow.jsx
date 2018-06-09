@@ -44,6 +44,14 @@ class ResourcesRow extends Component {
     let closingOpeningTimes = {};
     let currDay = days[day];
     let result = { open: false };
+    let resource = this.props.resource;
+
+    if (resource.isOpen) {
+      return {
+        open: true,
+        time: timeToString(resource.openUntil),
+      };
+    }
 
     schedule.forEach(item => {
       closingOpeningTimes[item.day.replace(/,/g, '')] = {
@@ -53,35 +61,28 @@ class ResourcesRow extends Component {
     });
 
 
-    if(closingOpeningTimes[currDay] && currTime < closingOpeningTimes[currDay].close) {
-      return {
-        open:true,
-        time: timeToString(closingOpeningTimes[currDay].close)
-      };
-    } else {
-      let remainingDays = days.splice(day+1);
-      remainingDays.some(d => {
-        if(closingOpeningTimes[d]) {
-          result = {
-            open: false,
-            time: `${timeToString(closingOpeningTimes[d].open)} ${d}`
-          };
-          return true;
-        }
-      });
+    let remainingDays = days.splice(day+1);
+    remainingDays.some(d => {
+      if(closingOpeningTimes[d]) {
+        result = {
+          open: false,
+          time: `${timeToString(closingOpeningTimes[d].open)} ${d}`
+        };
+        return true;
+      }
+    });
 
-      if(result.time) return result;
+    if(result.time) return result;
 
-      days.some(d => {
-        if(closingOpeningTimes[d]) {
-          result =  {
-            open: false,
-            time: `${timeToString(closingOpeningTimes[d].open)} ${d}`
-          };
-          return true;
-        }
-      })
-    }
+    days.some(d => {
+      if(closingOpeningTimes[d]) {
+        result =  {
+          open: false,
+          time: `${timeToString(closingOpeningTimes[d].open)} ${d}`
+        };
+        return true;
+      }
+    })
 
     return result;
   }
@@ -147,7 +148,7 @@ class ResourcesRow extends Component {
             <div className="entry-meta">
               <p className="entry-organization">{serviceName}</p>
               <p className="entry-description">{resourceDescription}</p>
-              <p className="entry-hours">{open ? `Open until ${time}` : time ? `Closed until ${time}` : 'No hours found for this location'}</p>
+              <p className="entry-hours">{open ? `Open until ${time}` : time ? `Closed` : 'No hours found for this location'}</p>
             </div>
           </Link>
         </li>

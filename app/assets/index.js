@@ -5,7 +5,7 @@ icons.keys().forEach((key) => {
 });
 
 function icon(name) {
-  return iconPathMap[name.toLowerCase().replace(/\s+/g, '-')];
+  return iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
 }
 
 /* eslint-disable global-require */
@@ -13,6 +13,7 @@ const images = {
   background: require('../assets/img/bg.png'),
   logoLarge: require('../assets/img/askdarcel-logo.png'),
   logoSmall: require('../assets/img/logo-small-white@3x.png'),
+  algolia: require('../assets/img/search-by-algolia.png'),
   icon,
 };
 /* eslint-enable global-require */

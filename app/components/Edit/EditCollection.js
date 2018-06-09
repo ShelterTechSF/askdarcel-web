@@ -22,6 +22,7 @@ export default function editCollectionHOC(ResourceObjectItem,
             this.addItem = this.addItem.bind(this);
             this.handleChange = this.handleChange.bind(this);
             this.createItemComponents = this.createItemComponents.bind(this);
+            this.removeItem = this.removeItem.bind(this);
         }
 
         addItem() {
@@ -37,18 +38,34 @@ export default function editCollectionHOC(ResourceObjectItem,
             this.setState(collection, () => this.props.handleChange(collection));
         }
 
+        removeItem(index, item) {
+            let collection = this.state.collection;
+            if(collection[index].id) {
+                collection[index] = { ...item, isRemoved: true };    
+            } else {
+                collection.splice(index, 1);
+            }
+            
+            this.setState(collection, () => this.props.handleChange(collection));
+        }
+
         createItemComponents() {
             let collection = this.state.collection;
             let items = [];
             for(let i = 0; i < collection.length; i++) {
-                items.push(
-                    <ResourceObjectItem
-                        key = {i}
-                        index = {i}
-                        item = {collection[i]}
-                        handleChange = {this.handleChange}
-                    />
-                );
+                if(!collection[i].isRemoved) {
+                    items.push(
+                        <div className="edit--section--list--item--collection-container">
+                            <ResourceObjectItem
+                                key = {i}
+                                index = {i}
+                                item = {collection[i]}
+                                handleChange = {this.handleChange}
+                            />
+                            <button className='trash-button' onClick={() => this.removeItem(i, collection[i])}><i className="material-icons">&#xE872;</i></button>
+                        </div>
+                    );
+                }
             }
 
             return items;

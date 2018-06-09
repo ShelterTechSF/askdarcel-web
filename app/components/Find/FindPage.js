@@ -1,13 +1,17 @@
-import React, { Component, PropTypes } from 'react';
-import Footer from '../Footer.js'
-import Navigation from '../Navigation.js'
-import FindHeader from './FindHeader.js'
-import CategoryItem from './CategoryItem.js'
+import React from 'react';
+import Footer from '../ui/Footer';
+import Navigation from '../ui/Navigation';
+import FindHeader from './FindHeader';
+import CategoryItem from './CategoryItem';
 
 var categories = [];
 
-var CategoryBox = React.createClass({
-  loadCategoriesFromServer: function() {
+class CategoryBox extends React.Component {
+  componentDidMount() {
+    this.loadCategoriesFromServer();
+  }
+
+  loadCategoriesFromServer() {
     var callback = function callback(response, textStatus, jqXHR) {
       if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
@@ -24,13 +28,9 @@ var CategoryBox = React.createClass({
     httpRequest.open('GET', tempUrl, true);
     httpRequest.onreadystatechange = callback;
     httpRequest.send(null);
-  },
+  }
 
-  componentDidMount: function() {
-    this.loadCategoriesFromServer();
-  },
-
-  render: function() {
+  render() {
     return (
       <div>
         <FindHeader />
@@ -38,10 +38,10 @@ var CategoryBox = React.createClass({
       </div>
     );
   }
-});
+}
 
-var CategoryList = React.createClass({
-  render: function() {
+class CategoryList extends React.Component {
+  render() {
 
     var categoryNodes = this.props.categories.map(function(category) {
       return (
@@ -60,9 +60,9 @@ var CategoryList = React.createClass({
       </section>
     );
   }
-});
+}
 
-class ContentPage extends Component {
+class ContentPage extends React.Component {
   render() {
     return (
       <div className="find-page">

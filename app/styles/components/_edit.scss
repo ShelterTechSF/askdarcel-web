@@ -2,31 +2,25 @@
 // ADD/EDIT PAGE
 .edit {
 	width:100%;
-  max-width: calc-em(1000px);
-  padding: 0 calc-em(20px);
-  margin: 0 auto;
-  display: flex;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDIT MAIN
 
 .edit--main {
-	width: calc-em(660px);
-	border-right: 1px solid #ddd;
+	width: 60%;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	align-content: stretch;
+	margin-left: 30%;
 }
 
 .edit--main--header {
-  position: fixed;
   background: #fff;
   padding: calc-em(35px) calc-em(30px) calc-em(30px) 0;
-  width: 100%;
-  max-width: calc-em(659px);
+  width: 60%;
   z-index: 999;
   &--title {
 		color: #333333;
@@ -40,24 +34,66 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// EDIT ASIDE
+// SIDEBAR 
+
+.sidebar {
+	width: 20%;
+	background-color: #F2F2F2;
+  top: #{$navigation-height};
+  left: 0;
+  bottom: 0;
+	&--list--heading h3 {
+		padding-top: 25px;
+		text-transform: uppercase;
+	}
+	& li {
+		padding-left: 25px;
+		padding-right: 25px;
+		margin-top: 10px;
+	}
+	&--organization--name {
+		border-left: 1px solid $color-brand;
+		color: $color-brand;
+	}
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	position: fixed;
+	& a {
+		color: black;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	& hr {
+		border-color: $color-grey3;
+	}
+}
+
+.button--group {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 10px;
+}
 
 .edit--aside {
 	max-height: 100vh;
 	padding: calc-em(30px) 0 0 calc-em(30px);
 	width: 100%;
-	max-width: calc-em(240px);
+	max-width: 12em;
 	&--content {
 		position: fixed;
 		width: 100%;
-		max-width: calc-em(240px);
-		&--submit {
+		max-width: 12em;
+		&--button {
 			color: #FFFFFF;
 			font-size: 17px;
 			font-weight: bold;
 			padding: calc-em(9px) calc-em(25px);
 			background: #1C72E6;
 			border-radius: 8px;
+			width: 70%;
 		}
 		&--nav {
 			margin: calc-em(30px) 0;
@@ -85,13 +121,23 @@
 	}
 }
 
+.cancel--button {
+	margin-top: 10px;
+	background: $color-grey5;
+}
+
+.deactivate--button {
+	margin-top: 10px;
+	background: #e6092c;
+}
+
+.hap--button {
+	margin-top: 10px;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDIT SECTION FORMS
-
-.edit--sections {
-	padding-top: calc-em(100px);
-}
 
 .edit--section {
   margin-bottom: calc-em(60px);
@@ -121,6 +167,16 @@
 			margin-bottom: 0;
 		}
 
+    &--collection-container{
+      display: flex;
+      & > .trash-button {
+        background: #e6092c;
+        & > i {
+          margin-right: 0;
+        }
+      }
+    }
+
 		label {
 			color: #888888;
 			font-size: calc-em(19px);
@@ -139,6 +195,11 @@
 				}
 			}
 		}
+
+    &#service--deactivation {
+      background: #e6092c;
+      width: 100%;
+    }
 
 		.input {
 			padding: calc-em(15px);
@@ -291,6 +352,14 @@
 		textarea {
 			height: calc-em(185px);
 		}
+    .delete-note {
+      margin-left: 20px;
+      background: #e6092c;
+
+      & > i {
+        margin-right: 0;
+      }
+    }
 	}
 }
 

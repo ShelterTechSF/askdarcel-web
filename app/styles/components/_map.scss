@@ -2,3 +2,8 @@
   height: calc(100vh - #{$navigation-height});
   width: 100%;
 }
+
+.map {
+  width: 100%;
+  min-height: 250px;
+}

@@ -30,3 +30,40 @@
     background-position: center center;
   }
 }
+
+table {
+  width: 100%;
+
+  tr {
+    transition: all 0.2s ease-in-out;
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+
+      &.iconcell {
+        max-width: $padding-xxlarge;
+        $padding: 10px $padding-default
+      }
+    }
+
+    th {
+      font-weight: bold;
+      color: $color-textfade;
+    }
+
+    &:hover {
+      background: $color-grey1;
+    }
+  }
+
+  &.compact {
+    width: auto;
+
+    tr {
+      td, th {
+        padding: $padding-default $padding-large;
+      }
+    }
+  }
+}
