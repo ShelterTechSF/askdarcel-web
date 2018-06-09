@@ -1,0 +1,10 @@
+# This file contains the config needed to configure the UI.
+# Environment variables will override this config if they exist
+# You need to create a config.yml file with your own values to run locally
+
+GOOGLE_API_KEY: 'AIzaSyCZxTONKtTHyz3qp-x4tJlH4c6VUKn9sd4'
+
+ALGOLIA_INDEX_PREFIX: '<ENTER_YOUR_GITHUB_USERNAME_HERE>'
+ALGOLIA_APPLICATION_ID: 'J8TVT53HPZ'
+ALGOLIA_READ_ONLY_API_KEY: 'fdf77b152ff7ce0ea4e4221ff3d17d85'
+
