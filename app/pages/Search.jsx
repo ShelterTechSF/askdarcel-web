@@ -7,7 +7,7 @@ import {
   } from 'react-instantsearch/dom';
 import { isEqual } from 'lodash';
 import qs from 'qs';
-import SearchResultsContainer from '../components/search/SearchResultsContainer';
+import SearchResultsContainer from '../components/Search/SearchResultsContainer';
 
 
 class Search extends Component {
