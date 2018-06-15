@@ -2,7 +2,7 @@
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/askdarcel-web-master.svg)](https://saucelabs.com/u/askdarcel-web-master)
 
-## Option 1: Docker-based Development Set-up Instructions (Recommended)
+## Docker-based Development Environment (Recommended)
 
 ### Requirements
 
@@ -11,13 +11,29 @@ Docker Compose >= 1.18
 
 Follow the [Docker installation instructions](https://www.docker.com/community-edition#/download) for your OS.
 
-### Docker Setup
+### Set up the project
+
 This is not a full guide to Docker and Docker Compose, so please consult other
 guides to learn more about those tools.
 
 The docker-compose.yml is configured to mount the git repo on your host
 filesystem into the Docker container so that any changes you make on your host
 machine will be synced into the container and vice versa.
+
+#### Creating the `.env` file
+
+The `.env` file is a de facto file format that allows you to specify environment
+variables that can be read by an application. It makes it easier to pass
+environment variables to an application without manually having to set them in
+the environment. It is supported by:
+- [Docker](https://code.visualstudio.com/docs/python/environments) (built in)
+- [NodeJS](https://www.npmjs.com/package/dotenv) (as a library)
+- [Ruby](https://github.com/bkeepers/dotenv) (as a library)
+
+Create a file named `.env` with the credentials listed in [this
+document](https://sheltertech.quip.com/2ft5Ax19Kc6h).
+
+#### Building and running the application
 
 ```sh
 # Install node dependencies
@@ -37,7 +53,7 @@ the Docker setup instructions and that the API server is running. If you want to
 target a different instance of askdarcel-api, you can modify the `API_URL`
 environment variable in docker-compose.yml.
 
-## Option 2: Non-Docker Set-up Instructions
+## Non-Docker Development Environment
 
 ### Installing Node.js and npm
 We recommend using [nvm](https://github.com/creationix/nvm) (Node Version

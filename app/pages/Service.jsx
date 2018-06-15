@@ -68,12 +68,12 @@ class ServicePage extends React.Component {
                 </p>
               </header>
 
-              <section>
+              <section className="listing--main--left--about">
                 <h2>About This Service</h2>
                 <p>{ service.long_description }</p>
               </section>
 
-              { details.length ? <section>
+              { details.length ? <section className="listing--main--left--details">
                 <h2>Service Details</h2>
                 <Datatable
                   rowRenderer={d => (
@@ -86,12 +86,12 @@ class ServicePage extends React.Component {
                 />
               </section> : null}
 
-              <section>
+              <section className="listing--main--left--contact">
                 <h2>Contact Info</h2>
                 <TableOfContactInfo item={service} />
               </section>
 
-              <section>
+              <section className="listing--main--left--hours">
                 <h2>Locations and Hours</h2>
                 <MapOfLocations
                   locations={locations}
