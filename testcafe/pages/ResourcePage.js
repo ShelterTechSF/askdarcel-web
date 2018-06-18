@@ -14,6 +14,8 @@ export default class ResourcePage {
     // in between React component names.
     // https://github.com/DevExpress/testcafe-react-selectors/issues/51
     this.phones = baseSelector.find('.org--main--header--phone .phone p');
+    this.website = baseSelector.findReact('Website');
+    this.email = baseSelector.findReact('Email');
     this.editButton = baseSelector.find('.edit-button');
   }
 

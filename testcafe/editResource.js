@@ -7,15 +7,19 @@ const editResourcePage = new EditResourcePage();
 fixture `Edit Resource`
   .page(ResourcePage.url(1));
 
-test('Edit resource name', async (t) => {
-  const newName = 'New Resource Name';
+
+async function testEditTextProperty(t, showPageSelector, editPageSelector, newValue) {
   await t
     .click(resourcePage.editButton)
-    .typeText(editResourcePage.name, newName, { replace: true })
+    .typeText(editPageSelector, newValue, { replace: true })
     .click(editResourcePage.saveButton)
-    .expect(resourcePage.resourceName.textContent)
-    .contains(newName)
+    .expect(showPageSelector.textContent)
+    .contains(newValue)
     ;
+}
+
+test('Edit resource name', async (t) => {
+  await testEditTextProperty(t, resourcePage.resourceName, editResourcePage.name, 'New Resource Name');
 });
 
 
@@ -122,4 +126,31 @@ test('Delete resource phone number', async (t) => {
     .expect(resourcePage.phones.count)
     .eql(originalCount - 1)
     ;
+});
+
+test('Edit resource website', async (t) => {
+  await testEditTextProperty(
+    t,
+    resourcePage.website,
+    editResourcePage.website,
+    'http://www.example.com/',
+  );
+});
+
+test('Edit resource email', async (t) => {
+  await testEditTextProperty(
+    t,
+    resourcePage.email,
+    editResourcePage.email,
+    'example@example.com',
+  );
+});
+
+test('Edit resource description', async (t) => {
+  await testEditTextProperty(
+    t,
+    resourcePage.description,
+    editResourcePage.description,
+    'This is my new description',
+  );
 });
