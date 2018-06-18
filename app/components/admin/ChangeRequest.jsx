@@ -14,8 +14,9 @@ class ChangeRequest extends React.Component {
     };
   }
 
+  /* eslint-disable class-methods-use-this */
   getExistingValueFromChangeRequest(changeRequest, fieldName, fieldValue) {
-    let { resource } = changeRequest;
+    const { resource } = changeRequest;
     switch (changeRequest.type) {
       case 'ResourceChangeRequest':
       case 'AddressChangeRequest':
@@ -51,7 +52,7 @@ class ChangeRequest extends React.Component {
       getAuthRequestHeaders(),
     )
     .then(response =>
-      this.props.updateFunction(response, this.props.changeRequest)
+      this.props.updateFunction(response, this.props.changeRequest),
     )
     .catch((err) => {
       console.log(err);
@@ -65,7 +66,7 @@ class ChangeRequest extends React.Component {
       getAuthRequestHeaders(),
     )
     .then(response =>
-      this.props.updateFunction(response, this.props.changeRequest, {})
+      this.props.updateFunction(response, this.props.changeRequest, {}),
     )
     .catch((err) => {
       console.log(err);

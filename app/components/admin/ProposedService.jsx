@@ -20,23 +20,23 @@ class ProposedService extends React.Component {
   }
 
   componentDidMount() {
-    let tempService = this.props.service;
-    let newServiceFields = this.state.serviceFields;
-    let tempNotes = this.state.notes;
-    let tempSchedule = this.state.schedule;
+    const tempService = this.props.service;
+    const newServiceFields = this.state.serviceFields;
+    const tempNotes = this.state.notes;
+    const tempSchedule = this.state.schedule;
     let tempCategories = this.state.categories;
 
-    for (let field in tempService) {
+    /* eslint-disable no-restricted-syntax */
+    for (const field in tempService) {
       if (tempService.hasOwnProperty(field) && field !== 'id' && field !== 'resource') {
         if (field === 'notes') {
-          let notes = tempService[field];
-          let tempNoteObj = {};
+          const notes = tempService[field];
           notes.forEach((curr, i) => {
             tempNotes[i] = curr.note;
           });
         } else if (field === 'schedule') {
-          let schedule = tempService[field];
-          let scheduleDays = schedule.schedule_days;
+          const schedule = tempService[field];
+          const scheduleDays = schedule.schedule_days;
           scheduleDays.forEach((day, i) => {
             tempSchedule[i] = { day: day.day, opens_at: day.opens_at, closes_at: day.closes_at };
           });
@@ -47,6 +47,7 @@ class ProposedService extends React.Component {
         }
       }
     }
+    /* eslint-disable react/no-did-mount-set-state */
     this.setState({
       serviceFields: newServiceFields,
       notes: tempNotes,
@@ -66,7 +67,7 @@ class ProposedService extends React.Component {
     )
 
     .then(response =>
-      this.props.updateFunction(response, this.props.service)
+      this.props.updateFunction(response, this.props.service),
     )
 
     .catch((err) => {
@@ -75,7 +76,7 @@ class ProposedService extends React.Component {
   }
 
   reject() {
-    console.log('rejecting')
+    console.log('rejecting');
     return DataService.post(
       `/api/services/${this.props.service.id}/reject`,
       {},
@@ -83,7 +84,7 @@ class ProposedService extends React.Component {
     )
 
     .then(response =>
-      this.props.updateFunction(response, this.props.service)
+      this.props.updateFunction(response, this.props.service),
     )
 
     .catch((err) => {
@@ -93,42 +94,58 @@ class ProposedService extends React.Component {
 
   changeScheduleValue(day, value, time) {
     console.log('time', time);
-    let { schedule } = this.state;
+    const { schedule } = this.state;
     let tempSchedule = {};
-    if(time == 'open') {
-      tempSchedule = Object.assign({}, schedule, {[day]: Object.assign({}, schedule[day], { opens_at: parseInt(value) } )});  
+    if (time === 'open') {
+      tempSchedule = Object.assign(
+        {},
+        schedule,
+        { [day]: Object.assign({}, schedule[day], { opens_at: parseInt(value, 10) }) },
+      );
     } else {
-      tempSchedule = Object.assign({}, schedule, {[day]: Object.assign({}, schedule[day], { closes_at: parseInt(value) } )});  
+      tempSchedule = Object.assign(
+        {},
+        schedule,
+        { [day]: Object.assign({}, schedule[day], { closes_at: parseInt(value, 10) }) },
+      );
     }
     this.setState({ schedule: tempSchedule });
   }
 
   changeNoteValue(note, value) {
-    let tempNotes = Object.assign({}, this.state.notes, { [note]: value });
+    const tempNotes = Object.assign({}, this.state.notes, { [note]: value });
     this.setState({ notes: tempNotes });
   }
 
   changeServiceValue(serviceField, value) {
-    let tempServiceFields = Object.assign({}, this.state.serviceFields, { [serviceField]: value });
+    const tempServiceFields = Object.assign(
+      {},
+      this.state.serviceFields,
+      { [serviceField]: value },
+    );
     this.setState({ serviceFields: tempServiceFields });
   }
 
   renderScheduleFields() {
-    let { schedule } = this.state;
-    let scheduleOutput = [];
-    for(let day in schedule) {
+    const { schedule } = this.state;
+    const scheduleOutput = [];
+    /* eslint-disable guard-for-in */
+    for (const day in schedule) {
+      const scheduleDay = `input-${day}`;
+      const scheduleDayOpens = `${scheduleDay}-opens`;
+      const scheduleDayCloses = `${scheduleDay}-closes`;
       scheduleOutput.push(
-          <div key={"sched" + day} className="change-wrapper request-entry half">
-            <label className="request-cell name">{schedule[day].day + " (Opens at)"}</label>
-            <input className="value request-cell" value={schedule[day].opens_at || ''} onChange={(e) => this.changeScheduleValue(day, e.target.value, 'open')} />
-          </div>
+        <div key={`sched${day}`} className="change-wrapper request-entry half">
+          <label htmlFor={scheduleDayOpens} className="request-cell name">{`${schedule[day].day} (Opens at)`}</label>
+          <input name={scheduleDayOpens} className="value request-cell" value={schedule[day].opens_at || ''} onChange={e => this.changeScheduleValue(day, e.target.value, 'open')} />
+        </div>,
       );
       scheduleOutput.push(
-        <div key={"sched closes" + day} className="change-wrapper request-entry half">
-          <label className="request-cell name">{schedule[day].day + " (Closes at)"}</label>
-          <input className="value request-cell" value={schedule[day].closes_at || ''} onChange={(e) => this.changeScheduleValue(day, e.target.value, 'close')} />
-        </div>
-      )
+        <div key={`sched closes${day}`} className="change-wrapper request-entry half">
+          <label htmlFor={scheduleDayCloses} className="request-cell name">{`${schedule[day].day} (Closes at)`}</label>
+          <input name={scheduleDayCloses} className="value request-cell" value={schedule[day].closes_at || ''} onChange={e => this.changeScheduleValue(day, e.target.value, 'close')} />
+        </div>,
+      );
     }
     // scheduleOutput.push(
     //   <div key={"sched-key-" + this.props.service.id}>
@@ -141,52 +158,56 @@ class ProposedService extends React.Component {
   renderCategoryFields() {
     return (
       <div className="change-wrapper request-entry">
-        <label className="request-cell name">Categories</label>
-        <input readOnly className="request-cell value" value={this.state.categories} />
+        <label htmlFor="category" className="request-cell name">Categories</label>
+        <input
+          name="category"
+          readOnly
+          className="request-cell value"
+          value={this.state.categories}
+        />
       </div>
     );
   }
 
   renderNotesFields() {
-    let { notes } = this.state;
-    let notesOutput = [];
-    for (let note in notes) {
+    const { notes } = this.state;
+    const notesOutput = [];
+    for (const note in notes) {
       notesOutput.push(
         <div key={`note-${note}`} className="change-wrapper request-entry">
-          <label className="request-cell name">{`Note ${note}`}</label>
+          <label htmlFor="note" className="request-cell name">{`Note ${note}`}</label>
           <TextareaAutosize
             value={notes[note] || ''}
-            onChange={(e) => this.changeNoteValue(note, e.target.value)}
+            onChange={e => this.changeNoteValue(note, e.target.value)}
             className="request-cell value"
           />
           { /* this.renderLineItem(notes, this.props.service) */ }
-        </div>
+        </div>,
       );
     }
     return notesOutput;
   }
 
   renderAdditionalFields() {
-    let { serviceFields } = this.state;
-    let additionalOutput = [];
-    for(let field in serviceFields) {
+    const { serviceFields } = this.state;
+    const additionalOutput = [];
+    for (const field in serviceFields) {
       additionalOutput.push(
         <div key={field} className="change-wrapper request-entry">
           <label htmlFor={field} className="request-cell">{field.replace(/_/g, ' ')}</label>
           <TextareaAutosize
             value={serviceFields[field] || ''}
-            onChange={(e) => this.changeServiceValue(field, e.target.value)}
+            onChange={e => this.changeServiceValue(field, e.target.value)}
             className="request-cell value"
           />
-          { /*this.renderLineItem(serviceFields, this.props.service, 'additional')*/ }
-        </div>
+          { /* this.renderLineItem(serviceFields, this.props.service, 'additional') */ }
+        </div>,
       );
     }
     return additionalOutput;
   }
 
   render() {
-    let { notes, schedule, serviceFields } = this.state;
     return (
       <div className="change-request">
         <h4>New Service:</h4>

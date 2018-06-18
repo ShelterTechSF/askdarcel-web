@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { timeToTimeInputValue, stringToTime, daysOfTheWeek } from '../../utils/index';
+import { timeToTimeInputValue, stringToTime } from '../../utils/index';
 import EditScheduleDay from './EditScheduleDay';
 
 function buildSchedule(schedule) {
-  let scheduleId = schedule ? schedule.id : null;
-  let currSchedule = {};
+  const scheduleId = schedule ? schedule.id : null;
+  const currSchedule = {};
   let finalSchedule = {};
   let currDay = '';
 
-  let is24Hours = {
+  const is24Hours = {
     Monday: false,
     Tuesday: false,
     Wednesday: false,
@@ -18,7 +18,7 @@ function buildSchedule(schedule) {
     Sunday: false,
   };
 
-  let tempSchedule = {
+  const tempSchedule = {
     Monday: [{ opens_at: null, closes_at: null, scheduleId }],
     Tuesday: [{ opens_at: null, closes_at: null, scheduleId }],
     Wednesday: [{ opens_at: null, closes_at: null, scheduleId }],
@@ -72,20 +72,20 @@ class EditSchedule extends Component {
   }
 
   handleScheduleChange(day, index, field, value) {
-    let tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
+    const tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
     tempDaySchedule[index][field] = stringToTime(value);
     tempDaySchedule[index][field === 'opens_at' ? 'openChanged' : 'closeChanged'] = true;
     if (!tempDaySchedule[index].id && tempDaySchedule[index].id !== null) {
       tempDaySchedule.id = null;
     }
-    let tempScheduleDays = Object.assign({}, this.state.scheduleDays, {[day]: tempDaySchedule });
-    this.setState({ scheduleDays: tempScheduleDays}, function() {
-        this.props.handleScheduleChange(tempScheduleDays);
-      });
+    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
+    this.setState({ scheduleDays: tempScheduleDays }, function () {
+      this.props.handleScheduleChange(tempScheduleDays);
+    });
   }
 
   removeTime(day, index) {
-    let tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
+    const tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
     tempDaySchedule[index].opens_at = null;
     tempDaySchedule[index].closes_at = null;
     tempDaySchedule[index].openChanged = true;
@@ -95,19 +95,19 @@ class EditSchedule extends Component {
       tempDaySchedule.id = null;
     }
 
-    let tempScheduleDays = Object.assign({}, this.state.scheduleDays, {[day]: tempDaySchedule });
-    this.setState({ scheduleDays: tempScheduleDays}, function() {
-        this.props.handleScheduleChange(tempScheduleDays);
-      });
+    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
+    this.setState({ scheduleDays: tempScheduleDays }, function () {
+      this.props.handleScheduleChange(tempScheduleDays);
+    });
   }
 
   addTime(day) {
-    let tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
+    const tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
     tempDaySchedule.push({ opens_at: null, closes_at: null, scheduleId: this.state.scheduleId });
-    let tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
-    this.setState({ scheduleDays: tempScheduleDays}, function() {
-        this.props.handleScheduleChange(tempScheduleDays);
-      });
+    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
+    this.setState({ scheduleDays: tempScheduleDays }, function () {
+      this.props.handleScheduleChange(tempScheduleDays);
+    });
   }
 
   formatTime(time) {
@@ -116,11 +116,11 @@ class EditSchedule extends Component {
   }
 
   getDayHours(day, field, index) {
-    let dayRecord = this.state.scheduleDays[day] && this.state.scheduleDays[day][index];
+    const dayRecord = this.state.scheduleDays[day] && this.state.scheduleDays[day][index];
     if (!dayRecord) {
       return null;
     }
-    let time = dayRecord[field];
+    const time = dayRecord[field];
     return timeToTimeInputValue(time, true);
   }
 
@@ -144,14 +144,14 @@ class EditSchedule extends Component {
       tempDaySchedule.id = null;
     }
 
-    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, {[day]: [tempDaySchedule] })
-    this.setState({ scheduleDays: tempScheduleDays }, function() {
+    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: [tempDaySchedule] });
+    this.setState({ scheduleDays: tempScheduleDays }, function () {
       this.props.handleScheduleChange(tempScheduleDays);
     });
   }
 
   render() {
-    let daysOfWeek = {
+    const daysOfWeek = {
       Monday: 'M',
       Tuesday: 'T',
       Wednesday: 'W',
@@ -159,33 +159,31 @@ class EditSchedule extends Component {
       Friday: 'F',
       Saturday: 'S',
       Sunday: 'Su',
-    } 
+    };
 
-    let schedule = this.state.scheduleDays;
+    const schedule = this.state.scheduleDays;
     return (
       <li key="hours" className="edit--section--list--item hours">
         <label>Hours</label>
-        <label className='open-24-label'>24 hrs?</label>
-          <ul className="edit-hours-list">
-            {
-              Object.keys(schedule).map((day, i) => {
-                return (
-                  <EditScheduleDay
-                    day={day}
-                    dayAbbrev={daysOfWeek[day]}
-                    dayHours={schedule[day]}
-                    key={i}
-                    handleScheduleChange={this.handleScheduleChange}
-                    toggle24Hours={this.toggle24Hours}
-                    getDayHours={this.getDayHours}
-                    addTime={this.addTime}
-                    removeTime={this.removeTime}
-                  />
-                );
-              })
+        <label className="open-24-label">24 hrs?</label>
+        <ul className="edit-hours-list">
+          {
+              Object.keys(schedule).map((day, i) => (
+                <EditScheduleDay
+                  day={day}
+                  dayAbbrev={daysOfWeek[day]}
+                  dayHours={schedule[day]}
+                  key={i}
+                  handleScheduleChange={this.handleScheduleChange}
+                  toggle24Hours={this.toggle24Hours}
+                  getDayHours={this.getDayHours}
+                  addTime={this.addTime}
+                  removeTime={this.removeTime}
+                />
+                ))
             }
-         </ul>
-     </li>
+        </ul>
+      </li>
     );
   }
 }

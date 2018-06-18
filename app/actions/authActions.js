@@ -1,6 +1,6 @@
+import { browserHistory } from 'react-router';
 import * as types from './actionTypes';
 import * as authApi from '../api/auth';
-import { browserHistory } from 'react-router';
 
 function adminLoginRequest() {
   return {
@@ -22,11 +22,11 @@ function adminLoginError() {
 
 export default {
   adminLogin(email, password) {
-    return dispatch => {
+    return (dispatch) => {
       dispatch(adminLoginRequest());
       authApi.adminLogin(email, password)
-        .then(response => {
-          if ( response.status === 200) {
+        .then((response) => {
+          if (response.status === 200) {
             dispatch(adminLoginSuccess());
             const headers = response.headers;
             localStorage.setItem('authHeaders', JSON.stringify({
@@ -40,9 +40,9 @@ export default {
             dispatch(adminLoginError());
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('err', error);
-        })
-    }
-  }
-}
+        });
+    };
+  },
+};

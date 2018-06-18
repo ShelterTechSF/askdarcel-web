@@ -23,6 +23,7 @@ export default function DetailedHours(props) {
         </div>
       );
     }
+    return null;
   });
   return (
     <span className="weekly-hours-list">

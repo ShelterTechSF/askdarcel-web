@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
+/* eslint-disable import/prefer-default-export */
 export function RequireAuth(Component) {
   class AuthenticatedComponent extends React.Component {
     componentWillMount() {

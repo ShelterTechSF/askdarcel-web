@@ -4,7 +4,7 @@ import Navigation from '../ui/Navigation';
 import FindHeader from './FindHeader';
 import CategoryItem from './CategoryItem';
 
-var categories = [];
+let categories = [];
 
 class CategoryBox extends React.Component {
   componentDidMount() {
@@ -12,19 +12,20 @@ class CategoryBox extends React.Component {
   }
 
   loadCategoriesFromServer() {
-    var callback = function callback(response, textStatus, jqXHR) {
+    const httpRequest = new XMLHttpRequest();
+    const tempUrl = '/api/categories?top_level=true';
+
+    const callback = function callback() {
       if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
           categories = JSON.parse(httpRequest.responseText).categories;
-          this.setState({categories: categories});
+          this.setState({ categories });
         } else {
           console.log('error...');
         }
       }
     }.bind(this);
 
-    var tempUrl = '/api/categories?top_level=true';
-    var httpRequest = new XMLHttpRequest();
     httpRequest.open('GET', tempUrl, true);
     httpRequest.onreadystatechange = callback;
     httpRequest.send(null);
@@ -40,14 +41,12 @@ class CategoryBox extends React.Component {
   }
 }
 
+/* eslint-disable react/no-multi-comp */
 class CategoryList extends React.Component {
   render() {
-
-    var categoryNodes = this.props.categories.map(function(category) {
-      return (
-        <CategoryItem name={category.name} key={category.id} categoryid={category.id} />
-      );
-    });
+    const categoryNodes = this.props.categories.map(category => (
+      <CategoryItem name={category.name} key={category.id} categoryid={category.id} />
+      ));
 
     return (
       <section className="category-list" role="main">
@@ -66,9 +65,9 @@ class ContentPage extends React.Component {
   render() {
     return (
       <div className="find-page">
-      <Navigation />
-      <CategoryBox />
-      <Footer />
+        <Navigation />
+        <CategoryBox />
+        <Footer />
       </div>
     );
   }

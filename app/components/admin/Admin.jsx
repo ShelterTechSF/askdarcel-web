@@ -16,7 +16,10 @@ class Admin extends React.Component {
   //     changeRequests.map((changeRequest) => { // Create an action handler for each CR
   //       const changeRequestFields = changeRequest.field_changes.reduce((a, c) => {
   //         if (a[c.field_name] !== undefined) {
-  //           console.warn('Discarding duplicate field name in action handler: ', { current: a[c.field_name], duplicate: c });
+  //           console.warn(
+  //            'Discarding duplicate field name in action handler: ',
+  //            { current: a[c.field_name], duplicate: c }
+  //           );
   //           return a;
   //         }
 

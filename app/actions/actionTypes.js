@@ -3,8 +3,7 @@ export const ADMIN_LOGIN_ERROR = 'ADMIN_LOGIN_ERROR';
 export const ADMIN_LOGIN_REQUEST = 'ADMIN_LOGIN_REQUEST';
 
 
-
-// User actions 
+// User actions
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 
 

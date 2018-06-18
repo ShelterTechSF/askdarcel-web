@@ -10,6 +10,7 @@ class EditServices extends Component {
     const { services } = props;
     const existingServices = services ?
       services.map((service) => {
+        /* eslint-disable no-param-reassign */
         service.key = service.id;
         return service;
       }) : [];
@@ -44,8 +45,8 @@ class EditServices extends Component {
    * @description Creates a brand new service
    */
   addService() {
-    const { existingServices } = this.state,
-      newUUID = this.state.uuid - 1;
+    const { existingServices } = this.state;
+    const newUUID = this.state.uuid - 1;
 
     existingServices.unshift({
       id: newUUID,
@@ -90,8 +91,8 @@ class EditServices extends Component {
 }
 
 EditServices.propTypes = {
-  handleDeactivation: PropTypes.func,
-  handleServiceChange: PropTypes.func,
+  handleDeactivation: PropTypes.func.isRequired,
+  handleServiceChange: PropTypes.func.isRequired,
 };
 
 export default EditServices;

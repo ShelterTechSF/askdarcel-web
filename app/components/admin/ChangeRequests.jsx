@@ -51,6 +51,7 @@ class ChangeRequestsPage extends React.Component {
         // Track invidivual Resources
         const ensureResourceExists = (resource) => {
           if (parsedChanges.resources[resource.id] === undefined) {
+            /* eslint-disable no-param-reassign */
             resource._changeRequests = [];
             resource._proposedServices = [];
             resource._collapsed = true;
@@ -129,13 +130,12 @@ class ChangeRequestsPage extends React.Component {
           </div>
         );
       });
-    } else {
-      return (
-        <p className="message">
+    }
+    return (
+      <p className="message">
           Hurrah, it looks like you&#39;ve handled all the outstanding change requests!
         </p>
-      );
-    }
+    );
   }
 
   /**
@@ -204,11 +204,11 @@ class ChangeRequestsPage extends React.Component {
       }
     });
 
-    resource._proposedServices.forEach((service) => {
+    resource._proposedServices.forEach((svc) => {
       proposedServices.push(
         <ProposedService
-          key={service.id}
-          service={service}
+          key={svc.id}
+          service={svc}
           updateFunction={this.update}
         />,
       );

@@ -1,8 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
-import { images } from '../../assets';
 
 import authActions from '../../actions/authActions';
 
@@ -16,7 +13,7 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
-    if(this.props.isAuthenticated) {
+    if (this.props.isAuthenticated) {
       // browserHistory.push('/testAuth');
     }
   }
@@ -31,16 +28,31 @@ class Login extends React.Component {
           </header>
           <div className="splash-actions">
             <div className="input-container">
-              <input onChange={(e) => this.setState({ email: e.target.value })} type="text" placeholder="username" /> 
+              <input
+                onChange={e => this.setState({ email: e.target.value })}
+                type="text"
+                placeholder="username"
+              />
             </div>
             <div className="input-container">
-              <input type="password" onChange={(e) => this.setState({ password: e.target.value })} placeholder="password" />
+              <input
+                type="password"
+                onChange={e => this.setState({ password: e.target.value })}
+                placeholder="password"
+              />
             </div>
-            <a onClick={() => this.props.adminLogin(email, password)} className="login-btn">Login</a>
+            <a
+              role="link"
+              onClick={() => this.props.adminLogin(email, password)}
+              className="login-btn"
+              tabIndex={0}
+            >
+                Login
+            </a>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
