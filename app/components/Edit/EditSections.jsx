@@ -288,7 +288,7 @@ class EditSections extends React.Component {
       .then((response) => {
         if (response.ok) {
           alert('Resource successfuly created. Thanks!');
-          browserHistory.push('/');
+          response.json().then(res => browserHistory.push(`/resource?id=${res.resources[0].resource.id}`));
         } else {
           Promise.reject(response);
         }
