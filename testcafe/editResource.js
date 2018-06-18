@@ -5,7 +5,7 @@ const resourcePage = new ResourcePage();
 const editResourcePage = new EditResourcePage();
 
 fixture `Edit Resource`
-  .page(EditResourcePage.url(1));
+  .page(ResourcePage.url(1));
 
 test('Edit resource name', async (t) => {
   const newName = 'New Resource Name';

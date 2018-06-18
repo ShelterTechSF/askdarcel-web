@@ -1,4 +1,5 @@
 import { ReactSelector } from 'testcafe-react-selectors';
+import config from '../config';
 
 export default class ResourcePage {
   constructor() {
@@ -14,5 +15,9 @@ export default class ResourcePage {
     // https://github.com/DevExpress/testcafe-react-selectors/issues/51
     this.phones = baseSelector.find('.org--main--header--phone .phone p');
     this.editButton = baseSelector.find('.edit-button');
+  }
+
+  static url(resourceId) {
+    return `${config.baseUrl}/resource?id=${resourceId}`;
   }
 }
