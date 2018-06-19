@@ -1,17 +1,18 @@
-module.exports = function(config) {
+module.exports = (config) => {
   config.set({
-    basePath: '../..',
+    basePath: '..',
     frameworks: ['jasmine'],
 
     files: [
-      'app/**/*.test.js'
+      'app/**/*.test.js',
     ],
 
     preprocessors: {
-      '**/*.test.js': ['webpack']
+      '**/*.test.js': ['webpack'],
     },
 
-    webpack: require('../../webpack.config.js'),
+    /* eslint-disable global-require */
+    webpack: require('../webpack.config.js'),
 
     reporters: ['progress'],
 
@@ -28,6 +29,6 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
-    concurrency: Infinity
+    concurrency: Infinity,
   });
 };

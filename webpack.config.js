@@ -1,13 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtendedDefinePlugin = require('extended-define-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 
-//Change this to config.js and add a key to the config file
-var config = require(path.resolve(__dirname, 'app/utils/config.example.js'));
+// Change this to config.js and add a key to the config file
+/* eslint-disable import/no-dynamic-require */
+const config = require(path.resolve(__dirname, 'app/utils/config.example.js'));
 
-var appRoot = path.resolve(__dirname, 'app/');
-var buildDir = path.resolve(__dirname, 'build');
+const appRoot = path.resolve(__dirname, 'app/');
+const buildDir = path.resolve(__dirname, 'build');
 
 module.exports = {
   context: __dirname,
@@ -75,19 +75,19 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name]-[sha512:hash:hex:8].[ext]',
-            }
+            },
           },
           {
             loader: 'image-webpack-loader',
             options: {
               bypassOnDebug: true,
               optimizationLevel: 7,
-              interlaced: false
-            }
-          }
-        ]
-      }
-    ]
+              interlaced: false,
+            },
+          },
+        ],
+      },
+    ],
   },
   devServer: {
     contentBase: buildDir,
@@ -97,10 +97,10 @@ module.exports = {
     proxy: {
       '/api/*': {
         target: process.env.API_URL || 'http://localhost:3000',
-        rewrite: function(req) {
+        rewrite(req) {
           req.url = req.url.replace(/^\/api/, '');
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };
