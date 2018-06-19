@@ -120,7 +120,9 @@ class ServiceEligibilities extends Component {
     return this.props.eligibilities.length > 0 ? (
       <li className="service--details--item">
         <header>{this.props.subject}</header>
-        <div className="service--details--item--info">{this.props.eligibilities.map(eligibility => <p>{eligibility.name}</p>)}</div>
+        <div className="service--details--item--info">
+          {this.props.eligibilities.map(eligibility => <p>{eligibility.name}</p>)}
+        </div>
       </li>
     ) : null;
   }
