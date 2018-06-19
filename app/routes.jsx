@@ -4,7 +4,7 @@ import { Route, Link, browserHistory, IndexRoute, withRouter } from 'react-route
 import configureStore from './store/configureStore';
 import App from './components/App';
 import CategoryPage from './components/Find/FindPage';
-import ResourcesTable from './components/Search/ResourcesTable';
+import ResourcesTable from './components/search/ResourcesTable';
 import Resource from './components/Resource/Resource';
 import EditSections from './components/Edit/EditSections';
 import ServicePage from './pages/Service'
@@ -12,8 +12,8 @@ import Login from './components/User/Login';
 import Google from './utils/google';
 import CreateAccount from './components/User/CreateAccount';
 import TestAuth from './components/User/TestAuth';
-import Admin from './components/Admin/Admin';
-import ChangeRequests from './components/Admin/ChangeRequests';
+import Admin from './components/admin/Admin';
+import ChangeRequests from './components/admin/ChangeRequests';
 import Search from './pages/Search';
 
 import { RequireAuth } from './components/Auth/RequireAuth';
