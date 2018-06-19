@@ -136,13 +136,22 @@ PhoneNumber.propTypes = {
 };
 
 
+function ExternalLink(props) {
+  return <a href={props.to} target="_blank" rel="noopener noreferrer">{props.children}</a>;
+}
+
+ExternalLink.propTypes = {
+  to: PropTypes.string.isRequired,
+};
+
+
 function Website(props) {
   if (!props.website) {
     return null;
   }
   return (
     <span className="website">
-      <a href={props.website} target="_blank" rel="noopener noreferrer">{props.website}</a>
+      <ExternalLink href={props.website}>{props.website}</ExternalLink>
     </span>
   );
 }
@@ -153,6 +162,26 @@ Website.propTypes = {
 
 Website.defaultProps = {
   website: null,
+};
+
+
+function Email(props) {
+  if (!props.email) {
+    return null;
+  }
+  return (
+    <span className="email">
+      <ExternalLink to={`mailto:${props.email}`}>{props.email}</ExternalLink>
+    </span>
+  );
+}
+
+Email.propTypes = {
+  email: PropTypes.string,
+};
+
+Email.defaultProps = {
+  email: null,
 };
 
 
@@ -194,4 +223,13 @@ StreetView.defaultProps = {
   address: null,
 };
 
-export { Cat, AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, StreetView };
+export {
+  Cat,
+  AddressInfo,
+  TodaysHours,
+  PhoneNumber,
+  ResourceCategories,
+  Website,
+  Email,
+  StreetView,
+};

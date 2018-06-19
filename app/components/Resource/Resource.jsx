@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, StreetView } from './ResourceInfos';
+import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Email, StreetView } from './ResourceInfos';
 import DetailedHours from './DetailedHours';
 import Services from './Services';
 import Notes from './Notes';
@@ -121,9 +121,7 @@ class Resource extends Component {
                   <AddressInfo address={resource.address} />
                   <PhoneNumber phones={resource.phones} />
                   <Website website={resource.website} />
-                  <span className="website">
-                    <a href={`mailto:${this.state.resource.email}`} target="_blank" rel="noopener noreferrer">{this.state.resource.email}</a>
-                  </span>
+                  <Email email={resource.email} />
                 </div>
                 <div className="info--column">
                   <DetailedHours schedule={resource.schedule.schedule_days} />
