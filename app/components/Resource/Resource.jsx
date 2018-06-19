@@ -9,6 +9,7 @@ import Loader from 'components/ui/Loader';
 import HAPcertified from '../../assets/img/ic-hap.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
+import ReactMarkdown from 'react-markdown';
 
 function scrollToElement(selector) {
   const elem = document.getElementById(selector);
@@ -95,7 +96,7 @@ class Resource extends Component {
               </div>
               <div className="org--main--header--description">
                 <header>About this resource</header>
-                <p>{resource.long_description || resource.short_description || 'No Description available'}</p>
+                <ReactMarkdown source={resource.long_description || resource.short_description || 'No Description available'} />
               </div>
             </header>
 

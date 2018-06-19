@@ -659,6 +659,7 @@ class EditSections extends React.Component {
               data-field="long_description"
               onChange={this.handleResourceFieldChange}
             />
+            <p>If you&#39;d like to add formatting to descriptions, we support <a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Github flavored markdown</a>.</p>
           </li>
 
           <li key="legal_status" className="edit--section--list--item email">

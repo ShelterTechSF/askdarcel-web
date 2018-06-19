@@ -93,6 +93,7 @@ class EditNotes extends Component {
             <i className="material-icons">add_box</i> Add Note
           </button>
         </label>
+        <p><a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Markdown</a> is also supported for notes.</p>
         <ul className="edit--section--list--item--sublist">
           {this.renderNotes()}
         </ul>
