@@ -19,11 +19,15 @@ class Navigation extends React.Component {
     return false;
   }
   render() {
+    let imageSource = images.logoSmall;
+    if (window.location.hostname.split('.')[0] === 'help') {
+      imageSource = '';
+    }
     return (
       <nav className="site-nav">
         <div className="nav-left">
           <Link className="nav-logo" to={'/'}>
-            <img src={images.logoSmall} alt="Ask Darcel" />
+            <img src={imageSource} alt="Ask Darcel" />
           </Link>
           <form
             onSubmit={this.submitSearch}
