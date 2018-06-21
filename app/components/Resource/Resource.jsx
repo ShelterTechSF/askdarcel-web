@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, StreetView } from './ResourceInfos';
+import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Email, StreetView } from './ResourceInfos';
 import DetailedHours from './DetailedHours';
 import Services from './Services';
 import Notes from './Notes';
@@ -9,6 +9,7 @@ import Loader from 'components/ui/Loader';
 import HAPcertified from '../../assets/img/ic-hap.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
+import ReactMarkdown from 'react-markdown';
 
 function scrollToElement(selector) {
   const elem = document.getElementById(selector);
@@ -95,7 +96,7 @@ class Resource extends Component {
               </div>
               <div className="org--main--header--description">
                 <header>About this resource</header>
-                <p>{resource.long_description || resource.short_description || 'No Description available'}</p>
+                <ReactMarkdown source={resource.long_description || resource.short_description || 'No Description available'} />
               </div>
             </header>
 
@@ -120,9 +121,7 @@ class Resource extends Component {
                   <AddressInfo address={resource.address} />
                   <PhoneNumber phones={resource.phones} />
                   <Website website={resource.website} />
-                  <span className="website">
-                    <a href={`mailto:${this.state.resource.email}`} target="_blank" rel="noopener noreferrer">{this.state.resource.email}</a>
-                  </span>
+                  <Email email={resource.email} />
                 </div>
                 <div className="info--column">
                   <DetailedHours schedule={resource.schedule.schedule_days} />

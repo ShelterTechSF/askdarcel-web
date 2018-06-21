@@ -13,7 +13,7 @@ require('./styles/main.scss');
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
-if (process.env.NODE_ENV === 'production') {
+if (NODE_ENV === 'production') {
   ReactGA.initialize('UA-116318550-1');
   history.listen((loc) => {
     const page = loc.pathname + loc.search;
