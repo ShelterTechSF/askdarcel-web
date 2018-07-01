@@ -117,3 +117,44 @@ ul.actions {
 .block {
   display: block;
 }
+
+.listing {
+  &.text-page {
+    h1,
+    h2,
+    h3 {
+      padding-top: 26px;
+      padding-bottom: 16px;
+    }
+
+    ul,
+    ol {
+      margin: 24px 0;
+      padding-left: 36px;
+    }
+
+    ul {
+      li {
+        list-style-type: disc;
+      }
+    }
+
+    ol {
+      li {
+        list-style-type: decimal;
+        margin: 6px 0;
+
+        ol {
+          margin-top: 6px;
+          padding-top: 6px;
+          padding-bottom: 6px;
+          padding-left: 16px;
+
+          li {
+            list-style-type: lower-roman;
+          }
+        }
+      }
+    }
+  }
+}
