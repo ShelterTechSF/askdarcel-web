@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="40px" viewBox="0 0 60 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>cat-technology</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M30,35 L75,35 L75,30 L30,30 C27.2375,30 25,32.2375 25,35 L25,62.5 L20,62.5 L20,70 L55,70 L55,62.5 L30,62.5 L30,35 Z M77.5,40 L62.5,40 C61.125,40 60,41.125 60,42.5 L60,67.5 C60,68.875 61.125,70 62.5,70 L77.5,70 C78.875,70 80,68.875 80,67.5 L80,42.5 C80,41.125 78.875,40 77.5,40 Z M75,62.5 L65,62.5 L65,45 L75,45 L75,62.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="askdarcel/icon/category/technoloy" transform="translate(-20.000000, -30.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="cat-technology" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

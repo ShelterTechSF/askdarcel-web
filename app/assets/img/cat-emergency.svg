@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="53px" viewBox="0 0 60 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>cat-emergency</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M20,74 L80,74 L50,21 L20,74 Z M53.5294118,66.9333333 L46.4705882,66.9333333 L46.4705882,59.8666667 L53.5294118,59.8666667 L53.5294118,66.9333333 Z M53.5294118,56.3333333 L46.4705882,56.3333333 L46.4705882,42.2 L53.5294118,42.2 L53.5294118,56.3333333 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="askdarcel/icon/category/emergency" transform="translate(-20.000000, -21.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="cat-emergency" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

@@ -27,6 +27,16 @@ $navigation-height: calc-em(80px);
   }
 }
 
+.find-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - #{$navigation-height});
+}
+
+.find-content-container {
+  flex: 1 0 auto;
+}
+
 .nav-logo {
   display: inline-block;
   margin-right: calc-em(25px);
