@@ -6,7 +6,7 @@ class ListCategoryItem extends React.Component {
   render() {
     return (
       <li className="list-category-item">
-        <Link className="list-category-button" to={{ pathname: "search", query: { query: this.props.name } }} >
+        <Link className="list-category-button" to={`/search?refinementList[categories][0]=${this.props.name}`} >
           <div className="list-category-button-content">
             <p className="list-category-button-title">{this.props.name}</p>
           </div>
