@@ -8,6 +8,7 @@ import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { ActionSidebar, TableOfContactInfo, TableOfOpeningTimes, CategoryTag } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
+import ReactMarkdown from 'react-markdown';
 
 import 'react-tippy/dist/tippy.css';
 
@@ -70,7 +71,7 @@ class ServicePage extends React.Component {
 
               <section className="listing--main--left--about">
                 <h2>About This Service</h2>
-                <p>{ service.long_description }</p>
+                <ReactMarkdown source={service.long_description} />
               </section>
 
               { details.length ? <section className="listing--main--left--details">
