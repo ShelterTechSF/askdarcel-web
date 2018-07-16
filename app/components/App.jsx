@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Navigation from './ui/Navigation';
-import CategoryPage from './Find/FindPage';
-import ResourcesTable from './Search/ResourcesTable';
-import { round } from '../utils/index';
-import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
+import 'react-select/dist/react-select.css';
+
+import Navigation from './ui/Navigation';
+// import CategoryPage from './Find/FindPage';
+// import ResourcesTable from './Search/ResourcesTable';
+import { round } from '../utils/index';
 import userActions from '../actions/userActions';
 
 
