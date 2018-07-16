@@ -34,6 +34,7 @@ class ServiceEntry extends Component {
     const { hit } = this.props;
     const { isOpen, openUntil, is24hour } = this.state;
     const description = hit.long_description || 'No description, yet...';
+    const applicationProcess = hit.application_process
     const sched = hit.schedule;
     let timeInfo = null;
     if (isOpen) {
@@ -67,7 +68,7 @@ class ServiceEntry extends Component {
         </header>
         <div className="line-break" />
 
-        <SearchTabView description={description} schedule={sched}/>
+        <SearchTabView applicationProcess={applicationProcess} description={description} schedule={sched}/>
 
         <div className="entry-action-buttons">
           <ul className="action-buttons">
