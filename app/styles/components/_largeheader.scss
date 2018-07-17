@@ -3,45 +3,34 @@
 
 .hero.header-large {
   @extend %bg-image;
-  // background-image: url(../assets/img/bg.png);
-  background-color: rgba(239, 239, 239, 0.5);
+  background-image: url(../assets/img/bg.png);
   background-size: cover;
   width: 100%;
-  padding: calc-em(105px) 0 calc-em(175px);
+  padding: calc-em(105px) 0 calc-em(85px);
   @include r_max($break-tablet-s) {
-    padding: calc-em(20px) 0 calc-em(65px);
+    padding: calc-em(20px);
   }
 
   h1 {
     @extend %font-size-hero;
     @extend %base-max-width;
-    font-weight: 600;
-    color: $color-black;
+    font-weight: 700;
+    color: $color-white;
     text-align: center;
-    margin-bottom: calc-em(12px);
     @include r_max($break-tablet-s) {
+      text-align: left;
       width: 100%;
-      margin-bottom: calc-em(18px);
-      max-width: 20rem;
     }
-  }
-  h3 {
-    @extend %font-size-sub-hero;
-    @extend %base-max-width;
-    text-align: center;
-    font-weight: 600;
-    color: $color-black;
   }
 }
 
 .hero .search-container {
   @extend %flex-row;
-  @extend %search-max-width;
+  @extend %base-max-width;
   margin: calc-em(40px) auto 0;
   @include r_max($break-tablet-s) {
     width: 100%;
     margin: calc-em(20px) auto 0;
-    padding: 0 calc-em(20px) 0 calc-em(20px);
   }
 
   input, button {
@@ -50,25 +39,15 @@
   .search-field {
     @extend %bg-image;
     flex: 1 1 auto;
-    height: calc-em(50px);
     background-image: url(../assets/img/ic-search.png);
     background-size: calc-em(18px);
     background-position: calc-em(17px) center;
-    background-color: $color-white;
-    border-radius: 3px;
     padding-left: calc-em(45px);
     @include r_min($break-tablet-s) {
       border-right: 1px solid $color-grey3;
     }
   }
   .button.search {
-    @extend %font-size-small;
-    font-weight: 400;
-    background-color: $color-brand;
-    width: calc-em(118px);
-    height: calc-em(50px);
-    border-radius: calc-em(3px);
-    margin-left: calc-em(15px);
     @include r_max($break-tablet-s) {
       display:none;
     }

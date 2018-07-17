@@ -16,27 +16,18 @@
 .category-items {
   @extend %flex-grid;
   margin: 0 auto;
-  margin-top: calc-em(-132px);
-  max-width: calc-em(661px);
-  margin-bottom: calc-em(50px);
   @include r_max($break-tablet-s) {
     flex-direction: column;
-    margin-top: calc-em(-60px);
-    margin-bottom: calc-em(60px);
     align-items: stretch;
   }
 }
 
 .category-item {
   @include transition(all 200ms ease-in-out);
-  width: calc-em(205px);
-  height: calc-em(205px);
-  border: 1px solid #E0E0E0;
-  border-radius: 3px;
-  background-color: $color-white;
-  &:not(:last-child) {
-    margin-right: calc-em(23px);
-  }
+  width: calc-em(140px);
+  height: calc-em(140px);
+  border: 1px solid $color-grey3;
+  margin: 0 calc-em(10px) calc-em(10px) 0;
   &:active, &:hover, &:focus {
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
   }
@@ -49,7 +40,7 @@
 
 .category-button {
   display: block;
-  padding: calc-em(55px) 0;
+  padding: calc-em(25px) 0;
   text-align: center;
   &:hover {
     text-decoration: none;
@@ -61,10 +52,10 @@
 }
 
 .category-button-icon {
-  margin-bottom: calc-em(15px);
+  margin-bottom: calc-em(10px);
   img {
     width: auto;
-    height: calc-em(60px);
+    height: calc-em(50px);
   }
   @include r_max($break-tablet-s) {
     margin: 0 calc-em(15px) 0 0;
@@ -79,59 +70,10 @@
 
 .category-button-title {
   word-break: keep-all;
-  color: $color-black;
-  font-weight: 600;
-  padding: 0 calc-em(25px) 0 calc-em(25px);
+  color: $color-grey5;
+  font-weight: 400;
   @include r_max($break-tablet-s) {
-    padding: 0;
     display: inline-block;
     vertical-align: middle;
-  }
-}
-
-
-.list-category-items {
-  @extend %flex-grid;
-  margin: 0 auto;
-  max-width: calc-em(661px);
-  margin-bottom: 100px;
-  @include r_max($break-tablet-s) {
-    flex-direction: column;
-    margin-bottom: 50px;
-    margin-top: calc-em(-60px);
-    align-items: stretch;
-  }
-}
-
-.list-category-item {
-  @include transition(all 200ms ease-in-out);
-  border: 1px solid #E0E0E0;
-  border-radius: 3px;
-  background-color: $color-white;
-  width: 100%;
-  height: calc-em(60px);
-  margin: 0 0 calc-em(10px) 0;
-  &:active, &:hover, &:focus {
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
-  }
-  @include r_max($break-tablet-s) {
-    height: calc-em(50px);
-  }  
-}
-
-.list-category-button-title {
-  word-break: keep-all;
-  color: $color-black;
-  line-height: 20px;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.list-category-button {
-  display: block;
-  padding: calc-em(20px) calc-em(0px) calc-em(20px) calc-em(25px);
-  text-align: left;
-  @include r_max($break-tablet-s) {
-    padding: calc-em(15px) calc-em(0px) calc-em(15px) calc-em(25px);
   }
 }

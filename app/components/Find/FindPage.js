@@ -1,13 +1,10 @@
 import React from 'react';
 import Footer from '../ui/Footer';
 import Navigation from '../ui/Navigation';
-import WhiteLabel from '../ui/WhiteLabel';
 import FindHeader from './FindHeader';
 import CategoryItem from './CategoryItem';
-import ListCategoryItem from './ListCategoryItem'
 
 var categories = [];
-const subDomain = window.location.host.split('.')[0];
 
 class CategoryBox extends React.Component {
   componentDidMount() {
@@ -35,7 +32,7 @@ class CategoryBox extends React.Component {
 
   render() {
     return (
-      <div className="find-content-container">
+      <div>
         <FindHeader />
         <CategoryList categories={categories} />
       </div>
@@ -45,28 +42,20 @@ class CategoryBox extends React.Component {
 
 class CategoryList extends React.Component {
   render() {
-    let categoryNodes = [];
-    let listCategoryNodes = [];
 
-    this.props.categories.forEach(category => {
-      if(category.featured) {
-        if(category.name === 'MOHCD Funded Services') {
-          categoryNodes.unshift(<CategoryItem name={category.name} key={category.id} categoryid={category.id} />);
-        } else {
-          categoryNodes.push(<CategoryItem name={category.name} key={category.id} categoryid={category.id} />);
-        }
-      } else {
-        listCategoryNodes.push(<ListCategoryItem name={category.name} key={category.id} categoryid={category.id} />);
-      }
+    var categoryNodes = this.props.categories.map(function(category) {
+      return (
+        <CategoryItem name={category.name} key={category.id} categoryid={category.id} />
+      );
     });
 
     return (
       <section className="category-list" role="main">
+        <header>
+          <h2>Most used resources</h2>
+        </header>
         <ul className="category-items">
           {categoryNodes}
-        </ul>
-        <ul className="list-category-items">
-          {listCategoryNodes}
         </ul>
       </section>
     );
@@ -77,10 +66,9 @@ class ContentPage extends React.Component {
   render() {
     return (
       <div className="find-page">
-        <Navigation />
-        <CategoryBox />
-        {subDomain === CONFIG.MOHCD_SUBDOMAIN ? <WhiteLabel /> :null}
-        <Footer />
+      <Navigation />
+      <CategoryBox />
+      <Footer />
       </div>
     );
   }

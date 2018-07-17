@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getTimes, timeToString } from '../../utils/index';
-import { images } from '../../assets';
 
 // TODO: create a shared component for Resource and Service entries
 class ServiceEntry extends Component {
@@ -51,17 +50,9 @@ class ServiceEntry extends Component {
           <div className="entry-details">
             <h4 className="entry-headline">{hit.name}</h4>
             <div className="entry-subhead">
-              <p>{`${hit.address ? hit.address.address_1 : 'No address found'} • ${timeInfo}`}</p>
+              <p>{`${hit.address.address_1} • ${timeInfo}`}</p>
             </div>
           </div>
-          {hit.is_mohcd_funded ?
-            <div className="mohcd-funded">
-              <img src={images.mohcdSeal} alt="MOHCD seal" />
-              <p>Funded by MOHCD</p>
-            </div>
-            :
-            null
-          }
         </header>
         <div className="line-break" />
         <div className="entry-additional-info">

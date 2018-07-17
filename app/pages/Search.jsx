@@ -4,7 +4,6 @@ import {
   InstantSearch,
   Configure,
   SearchBox,
-  RefinementList,
   } from 'react-instantsearch/dom';
 import { isEqual } from 'lodash';
 import qs from 'qs';
@@ -66,9 +65,6 @@ class Search extends Component {
           {configuration}
           <div className="search-box">
             <SearchBox />
-          </div>
-          <div className="refinement-list">
-            <RefinementList attribute="categories" />
           </div>
           <div>
             <SearchResultsContainer />

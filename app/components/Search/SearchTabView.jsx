@@ -11,7 +11,7 @@ class SearchTabView extends React.Component {
     }
     
   getSchedule(scheduleInfo) {
-    if (!scheduleInfo) {
+    if (scheduleInfo === undefined || scheduleInfo.length == 0) {
         return 'No hours listed';
     } else { 
         return (<table className="compact">

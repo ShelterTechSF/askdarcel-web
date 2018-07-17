@@ -188,7 +188,7 @@ export function getTimes(scheduleDays) {
   // Logic to determine if the current resource is open
   // includes special logic for when a resource is open past midnight
   // on the previous day
-  scheduleDays && scheduleDays.forEach((scheduleDay) => {
+  scheduleDays.forEach((scheduleDay) => {
     const day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
     const opensAt = scheduleDay.opens_at;
     const closesAt = scheduleDay.closes_at;
