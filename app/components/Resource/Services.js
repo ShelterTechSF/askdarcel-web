@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 import classNames from 'classnames';
 import DetailedHours from './DetailedHours';
 
@@ -54,7 +55,7 @@ class Service extends Component {
 				<p>updated {this.props.service.updated_date}</p>
 			</div>
       <h2 className="service--header">{this.props.service.name}</h2>
-      <p className="service--description">{this.props.service.long_description}</p>
+      <ReactMarkdown className="service--description" source={this.props.service.long_description} />
       <div className="service--details-toggle" onClick={this.toggleVisible}>
         <span>{infoHidden ?
             <span>More Info <i className="material-icons">keyboard_arrow_down</i></span> :

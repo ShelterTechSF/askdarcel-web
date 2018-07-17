@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 import SearchTabHelper from './SearchTabHelper';
 import TableOfOpeningTimes from '../listing/TableOfOpeningTimes';
 import { timeToString } from '../../utils/index';
 
 class SearchTabView extends React.Component {
     constructor(props) {
-        super(props);
-        this.state = {active: 'hta'};
-        this.getSchedule = this.getSchedule.bind(this);
+      super(props);
+      this.state = { active: this.props.applicationProcess ? 'How to Apply' : 'Description' };
+      this.getSchedule = this.getSchedule.bind(this);
     }
     
   getSchedule(scheduleInfo) {
@@ -25,30 +26,36 @@ class SearchTabView extends React.Component {
         </tbody>
       </table>)}
   }
+
+  getTabList() {
+    const { applicationProcess, description, schedule } = this.props;
+    const tabs = [];
+    if (applicationProcess) { tabs.push({ title: 'How to Apply', content: <p>{applicationProcess}</p> }); }
+    tabs.push({ title: 'Description', content: <ReactMarkdown source={description} /> });
+    tabs.push({ title: 'Hours', content: this.getSchedule(schedule) });
+    return tabs;
+  }
     
-    render(){
-        
-        const content = {
-            hta: 'If you need emergency shelter, call the support line at (415)255-0165 for referrals, shelter intake, or counseling.',
-            desc: this.props.description,
-            hours: this.getSchedule(this.props.schedule),
-        };
-        return (
-            <div className="service-entry-additional-info">
-              <div className="service-entry-tabs">
-                <SearchTabHelper
-                  active={this.state.active}
-                  onChange={active => this.setState({active})}>
-                  <div key="hta">how to apply</div>
-                  <div key="desc">description</div>
-                  <div key="hours">hours</div>
-                </SearchTabHelper>
-              </div>
-              <div className="service-entry-body">
-                <p>{content[this.state.active]}</p>
-              </div>
-            </div> 
-        )
-    }
+  render() {
+    const tabs = this.getTabList();
+    const activeTab = tabs.find(tab => tab.title === this.state.active);
+
+    return (
+      <div className="service-entry-additional-info">
+        <div className="service-entry-tabs">
+          <SearchTabHelper
+            active={this.state.active}
+            onChange={active => this.setState({ active })}
+          >
+            { tabs.map(tab => <div key={tab.title}>{ tab.title }</div>) }
+          </SearchTabHelper>
+        </div>
+        <div className="service-entry-body">
+          { activeTab.content }
+        </div>
+      </div>
+    );
+  }
 }
+
 export default SearchTabView;
