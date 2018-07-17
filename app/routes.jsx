@@ -7,14 +7,16 @@ import CategoryPage from './components/Find/FindPage';
 import ResourcesTable from './components/Search/ResourcesTable';
 import Resource from './components/Resource/Resource';
 import EditSections from './components/Edit/EditSections';
-import ServicePage from './pages/Service'
+import ServicePage from './pages/Service';
 import Login from './components/User/Login';
-import Google from './utils/google';
-import CreateAccount from './components/User/CreateAccount';
-import TestAuth from './components/User/TestAuth';
+// import Google from './utils/google';
+// import CreateAccount from './components/User/CreateAccount';
+// import TestAuth from './components/User/TestAuth';
 import Admin from './components/Admin/Admin';
 import ChangeRequests from './components/Admin/ChangeRequests';
 import Search from './pages/Search';
+import PrivacyPolicyPage from './pages/legal/PrivacyPolicy';
+import TermsOfServicePage from './pages/legal/TermsOfService';
 
 import { RequireAuth } from './components/Auth/RequireAuth';
 
@@ -46,6 +48,8 @@ export default (
     <Route name="admin" path="/admin" component={ RequireAuth(Admin) } />
     <Route name="changeRequests" path="/admin/changes" component={ RequireAuth(ChangeRequests) } />
     <Route name="login" path="/login" component={ Login } />
+    <Route name="privacyPolicy" path="/privacy-policy" component={ PrivacyPolicyPage } />
+    <Route name="termsOfService" path="/terms-of-service" component={ TermsOfServicePage } />
     <Route path="*" onEnter={ redirectToRoot } />
   </Route>
 );

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
+import Loader from 'components/ui/Loader';
 import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Email, StreetView } from './ResourceInfos';
 import DetailedHours from './DetailedHours';
 import Services from './Services';
 import Notes from './Notes';
-import Loader from 'components/ui/Loader';
 import HAPcertified from '../../assets/img/ic-hap.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
-import ReactMarkdown from 'react-markdown';
 
 function scrollToElement(selector) {
   const elem = document.getElementById(selector);
