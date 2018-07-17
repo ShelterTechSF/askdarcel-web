@@ -10,7 +10,7 @@ class ServiceCard extends React.Component {
     const { service: { id, name, long_description } } = this.props;
 
     return (
-      <Link to={{ pathname: `/service/${id}` }} className="card">
+      <Link to={{ pathname: `/services/${id}` }} className="card">
         <header className="content">
           <h3>{ name }</h3>
           <p>{ long_description }</p>
