@@ -7,7 +7,7 @@ import { timeToString } from '../../utils/index';
 class SearchTabView extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { active: this.props.applicationProcess ? 'How To Apply' : 'Description' };
+      this.state = { active: this.props.applicationProcess ? 'How to Apply' : 'Description' };
       this.getSchedule = this.getSchedule.bind(this);
     }
     
