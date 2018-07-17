@@ -1,9 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+
+const dayMapping = {
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+  Sunday: 7,
+};
 
 class TableOfOpeningTimes extends React.Component {
+  parseTime(time) {
+    const str = '0000' + time;
+    const t = new moment(str.slice(-4), 'HHmm');
+    console.log(t);
+    return t.format('h:mma');
+  }
+
   render() {
     const { schedule } = this.props;
+
+    const days = schedule.schedule_days
+      .sort((a, b) => dayMapping[a.day] > dayMapping[b.day])
 
     // TODO order with current day first
     // TODO Show relativeOpeningTime for current day
@@ -13,10 +34,10 @@ class TableOfOpeningTimes extends React.Component {
     return (
       <table className="compact">
         <tbody>
-          { schedule.schedule_days.map(sched => (
+          { days.map(sched => (
             <tr key={sched.day}>
               <th>{ sched.day }</th>
-              <td>{ sched.opens_at }-{ sched.closes_at }</td>
+              <td>{ this.parseTime(sched.opens_at) } - { this.parseTime(sched.closes_at) }</td>
             </tr>
           )) }
         </tbody>
