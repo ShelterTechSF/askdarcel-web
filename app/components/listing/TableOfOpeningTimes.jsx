@@ -16,7 +16,6 @@ class TableOfOpeningTimes extends React.Component {
   parseTime(time) {
     const str = '0000' + time;
     const t = new moment(str.slice(-4), 'HHmm');
-    console.log(t);
     return t.format('h:mma');
   }
 

@@ -78,7 +78,7 @@ class ServicePage extends React.Component {
                 <Datatable
                   rowRenderer={d => (
                     <tr key={d.title}>
-                      <th>{ d.title }</th>
+                      <th className="service-details-key">{ d.title }</th>
                       <td>{ Array.isArray(d.value) ? d.value.join('\n') : d.value }</td>
                     </tr>
                   )}

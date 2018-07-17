@@ -52,7 +52,11 @@
 
     p {
       white-space: pre-line;
-    }
+		}
+		
+		th.service-details-key {
+			min-width: 120px;
+		}
   }
 }
 

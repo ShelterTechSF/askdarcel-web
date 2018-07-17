@@ -1,8 +1,8 @@
 import React from 'react';
 
 class SearchTabHelper extends React.Component {
-  componentDidMount() {
-  }
+  componentDidMount() {}
+
   render() {
     return (
       <div>
