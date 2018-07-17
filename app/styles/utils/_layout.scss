@@ -14,6 +14,7 @@ $padding-default: 6px;
 $padding-large: 16px;
 $padding-xlarge: 26px;
 $padding-xxlarge: 36px;
+$max-container-width: 1280px;
 
 
 %flex-row {
@@ -76,6 +77,15 @@ $max-content-width: 1200px;
 
 %base-max-width {
   max-width: calc-em($max-content-width);
+  width: 90%;
+  margin: 0 auto;
+  @include r_max($break-tablet-s) {
+    width: 90%;
+  }
+}
+
+%search-max-width {
+  max-width: calc-em(660px);
   width: 90%;
   margin: 0 auto;
   @include r_max($break-tablet-s) {

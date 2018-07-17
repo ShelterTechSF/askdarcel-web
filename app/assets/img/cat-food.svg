@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="60px" viewBox="0 0 54 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>cat-food</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M47,41 L41,41 L41,20 L35,20 L35,41 L29,41 L29,20 L23,20 L23,41 C23,47.36 27.98,52.52 34.25,52.91 L34.25,80 L41.75,80 L41.75,52.91 C48.02,52.52 53,47.36 53,41 L53,20 L47,20 L47,41 Z M62,32 L62,56 L69.5,56 L69.5,80 L77,80 L77,20 C68.72,20 62,26.72 62,32 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="askdarcel/icon/category/food" transform="translate(-23.000000, -20.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="cat-food" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
