@@ -178,7 +178,7 @@
     }
     
   }
-  & > .entry-body > p { 
+  & > .entry-body p { 
     font-size: calc-em(15px);  
     line-height: calc-em(18px);
     color: $color-grey6;
@@ -291,7 +291,7 @@
       color: $color-brand;
     }
   }
-    .service-entry-body p { 
+  .service-entry-body p { 
     font-size: calc-em(15px);  
     line-height: calc-em(18px);
     color: $color-grey6;

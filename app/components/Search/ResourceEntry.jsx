@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import ReactMarkdown from 'react-markdown';
 import { getTimes, timeToString } from '../../utils/index';
 import { images } from '../../assets';
 
@@ -69,7 +70,7 @@ class ServiceEntry extends Component {
             <p>Description</p>
           </div>
           <div className="entry-body">
-            <p>{description}</p>
+            <ReactMarkdown source={description} />
           </div>
         </div>
         <div className="entry-action-buttons">
