@@ -8,9 +8,10 @@ class SearchTabView extends React.Component {
     constructor(props) {
       super(props);
       this.state = { active: this.props.applicationProcess ? 'How to Apply' : 'Description' };
-      this.getSchedule = this.getSchedule.bind(this);
+      // this.getSchedule = this.getSchedule.bind(this);
     }
-    
+  
+  // @Deprecated for now
   getSchedule(scheduleInfo) {
     if (!scheduleInfo) {
         return 'No hours listed';
@@ -32,7 +33,7 @@ class SearchTabView extends React.Component {
     const tabs = [];
     if (applicationProcess) { tabs.push({ title: 'How to Apply', content: <p>{applicationProcess}</p> }); }
     tabs.push({ title: 'Description', content: <ReactMarkdown source={description} /> });
-    tabs.push({ title: 'Hours', content: this.getSchedule(schedule) });
+    // tabs.push({ title: 'Hours', content: this.getSchedule(schedule) });
     return tabs;
   }
     
