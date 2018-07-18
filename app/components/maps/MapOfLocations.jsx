@@ -78,7 +78,7 @@ class MapOfLocations extends React.Component {
                     <table>
                       <tbody>
                         <tr>
-                          <td className="iconcell">{i}.</td>
+                          {/* <td className="iconcell">{i}.</td> */}
                           <td><strong>{title}</strong></td>
                           <td className="right"><RelativeOpeningTime schedule={loc.schedule} /></td>
                           <td className="iconcell">
