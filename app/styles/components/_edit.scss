@@ -1,20 +1,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // ADD/EDIT PAGE
 .edit {
-	width:100%;
+  width: 100%;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDIT MAIN
 
 .edit--main {
-	width: 60%;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	align-content: stretch;
-	margin-left: 30%;
+  width: 60%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+  margin-left: 30%;
 }
 
 .edit--main--header {
@@ -23,118 +23,124 @@
   width: 60%;
   z-index: 999;
   &--title {
-		color: #333333;
-		font-size: calc-em(30px);
-		font-weight: bold;
-		line-height: calc-em(36px);
-		white-space: nowrap;
-	  overflow: hidden;
-	  text-overflow: ellipsis;
-	}
+    color: #333333;
+    font-size: calc-em(30px);
+    font-weight: bold;
+    line-height: calc-em(36px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// SIDEBAR 
+// SIDEBAR
 
 .sidebar {
-	width: 20%;
-	background-color: #F2F2F2;
+  width: 20%;
+  background-color: #f2f2f2;
   top: #{$navigation-height};
   left: 0;
   bottom: 0;
-	&--list--heading h3 {
-		padding-top: 25px;
-		text-transform: uppercase;
-	}
-	& li {
-		padding-left: 25px;
-		padding-right: 25px;
-		margin-top: 10px;
-	}
-	&--organization--name {
-		border-left: 1px solid $color-brand;
-		color: $color-brand;
-	}
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-	position: fixed;
-	& a {
-		color: black;
-		&:hover {
-			text-decoration: none;
-		}
-	}
-	& hr {
-		border-color: $color-grey3;
-	}
+  &--list--heading h3 {
+    padding-top: 25px;
+    text-transform: uppercase;
+  }
+  & li {
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 10px;
+  }
+  &--organization--name {
+    border-left: 1px solid $color-brand;
+    color: $color-brand;
+  }
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: fixed;
+  & a {
+    color: black;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  & hr {
+    border-color: $color-grey3;
+  }
 }
 
 .button--group {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .edit--aside {
-	max-height: 100vh;
-	padding: calc-em(30px) 0 0 calc-em(30px);
-	width: 100%;
-	max-width: 12em;
-	&--content {
-		position: fixed;
-		width: 100%;
-		max-width: 12em;
-		&--button {
-			color: #FFFFFF;
-			font-size: 17px;
-			font-weight: bold;
-			padding: calc-em(9px) calc-em(25px);
-			background: #1C72E6;
-			border-radius: 8px;
-			width: 70%;
-		}
-		&--nav {
-			margin: calc-em(30px) 0;
-			ul {
-				list-style-type: none;
-				li {
-					width: 100%;
-					white-space: nowrap;
-				  overflow: hidden;
-				  text-overflow: ellipsis;
-				  margin-bottom: calc-em(10px);
-				  &:last-of-type {
-				  	margin-bottom: 0;
-				  }
+  padding: calc-em(30px) 0 0 calc-em(30px);
+  width: 100%;
+  max-width: 12em;
 
-				  a {
-				  	color: #333333;
-				  	&:hover {
-				  		color: #1C72E6;
-				  	}
-				  }
-				}
-			}
-		}
-	}
+  &--content {
+    position: relative;
+    width: 100%;
+    max-width: 12em;
+
+    &--button {
+      height: auto;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: bold;
+      padding: calc-em(9px) calc-em(25px);
+      background: #1c72e6;
+      border-radius: 8px;
+      width: 70%;
+      @media screen and (max-width: 800px) {
+        height: auto;
+        width: auto;
+      }
+    }
+    &--nav {
+      margin: calc-em(30px) 0;
+      ul {
+        list-style-type: none;
+        li {
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: calc-em(10px);
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+
+          a {
+            color: #333333;
+            &:hover {
+              color: #1c72e6;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .cancel--button {
-	margin-top: 10px;
-	background: $color-grey5;
+  margin-top: 10px;
+  background: $color-grey5;
 }
 
 .deactivate--button {
-	margin-top: 10px;
-	background: #e6092c;
+  margin-top: 10px;
+  background: #e6092c;
 }
 
 .hap--button {
-	margin-top: 10px;
+  margin-top: 10px;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDIT SECTION FORMS
@@ -142,32 +148,32 @@
 .edit--section {
   margin-bottom: calc-em(60px);
   &--header {
-  	border-bottom: 1px solid #DDDDDD;
-  	margin-bottom: calc-em(20px);
-  	h4 {
-  		display: inline-block;
-			color: #1C72E6;
-			font-size: calc-em(19px);
-			font-weight: bold;
-			padding-bottom: calc-em(10px);
-			border-bottom: 3px solid #1C72E6;
-		}
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: calc-em(20px);
+    h4 {
+      display: inline-block;
+      color: #1c72e6;
+      font-size: calc-em(19px);
+      font-weight: bold;
+      padding-bottom: calc-em(10px);
+      border-bottom: 3px solid #1c72e6;
+    }
   }
 }
 
 .edit--section--list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
-	&--item {
-		margin: 0 calc-em(30px) calc-em(20px) 0;
+  &--item {
+    margin: 0 calc-em(30px) calc-em(20px) 0;
 
-		&:last-of-type {
-			margin-bottom: 0;
-		}
+    &:last-of-type {
+      margin-bottom: 0;
+    }
 
-    &--collection-container{
+    &--collection-container {
       display: flex;
       & > .trash-button {
         background: #e6092c;
@@ -177,73 +183,73 @@
       }
     }
 
-		label {
-			color: #888888;
-			font-size: calc-em(19px);
-			font-weight: bold;
-			margin-bottom: calc-em(15px);
-			display: block;
-			button {
-				margin-left: calc-em(10px);
-				height: calc-em(38px);
-				font-size: calc-em(15px);
-				i {
-					height: calc-em(18px);
-					width: calc-em(18px);
-					font-size: 18px;
-					top: -1px;
-				}
-			}
-		}
+    label {
+      color: #888888;
+      font-size: calc-em(19px);
+      font-weight: bold;
+      margin-bottom: calc-em(15px);
+      display: block;
+      button {
+        margin-left: calc-em(10px);
+        height: calc-em(38px);
+        font-size: calc-em(15px);
+        i {
+          height: calc-em(18px);
+          width: calc-em(18px);
+          font-size: 18px;
+          top: -1px;
+        }
+      }
+    }
 
     &#service--deactivation {
       background: #e6092c;
       width: 100%;
     }
 
-		.input {
-			padding: calc-em(15px);
-			width: 100%;
-			border: 1px solid #DDDDDD;
-			border-radius: 2px;
-			background-color: #F2F2F2;
-			font-size: calc-em(17px);
-			color: #333333;
-			margin-bottom: calc-em(10px);
-		}
+    .input {
+      padding: calc-em(15px);
+      width: 100%;
+      border: 1px solid #dddddd;
+      border-radius: 2px;
+      background-color: #f2f2f2;
+      font-size: calc-em(17px);
+      color: #333333;
+      margin-bottom: calc-em(10px);
+    }
 
-		input:not(last-of-type) {
-			margin-right: calc-em(10px);
-		}
+    input:not(last-of-type) {
+      margin-right: calc-em(10px);
+    }
 
-		textarea {
-			height: calc-em(200px);
+    textarea {
+      height: calc-em(200px);
       &:disabled {
         cursor: not-allowed;
       }
-		}
+    }
 
-		button {
-			border-radius: 8px;
-			background-color: #AAAAAA;
-			color: #ffffff;
-			padding: calc-em(10px) calc-em(12px);
-			cursor: pointer;
-			font-size: calc-em(17px);
-			font-weight: 600;
-			&:hover {
-				background-color: darken(#AAAAAA, 20%);
-			}
+    button {
+      border-radius: 8px;
+      background-color: #aaaaaa;
+      color: #ffffff;
+      padding: calc-em(10px) calc-em(12px);
+      cursor: pointer;
+      font-size: calc-em(17px);
+      font-weight: 600;
+      &:hover {
+        background-color: darken(#aaaaaa, 20%);
+      }
 
-			i {
-				margin-right: calc-em(8px);
-			}
-		}
+      i {
+        margin-right: calc-em(8px);
+      }
+    }
 
-		&--sublist .edit--section--list--item {
-			margin-right: 0;
-		}
-	}
+    &--sublist .edit--section--list--item {
+      margin-right: 0;
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -304,7 +310,7 @@
     align-items: center;
     margin-bottom: calc-em(10px);
     &:last-of-type {
-    	margin-bottom: 0;
+      margin-bottom: 0;
     }
     p {
       flex: 0 0 auto;
@@ -325,7 +331,7 @@
       &:first-of-type {
         margin-right: calc-em(10px);
       }
-      &[type=checkbox] {
+      &[type='checkbox'] {
         width: 35px;
         margin-left: 30px;
         float: right;
@@ -338,20 +344,20 @@
 // EDIT NOTES
 
 .edit--notes {
-	ul li {
-		display: flex;
-		margin-bottom: calc-em(10px);
-		label {
-			width: calc-em(150px);
-			color: #333333;
-			flex-shrink: 0;
-			font-size: calc-em(17px);
-			font-weight: bold;
-			padding-top: calc-em(15px);
-		}
-		textarea {
-			height: calc-em(185px);
-		}
+  ul li {
+    display: flex;
+    margin-bottom: calc-em(10px);
+    label {
+      width: calc-em(150px);
+      color: #333333;
+      flex-shrink: 0;
+      font-size: calc-em(17px);
+      font-weight: bold;
+      padding-top: calc-em(15px);
+    }
+    textarea {
+      height: calc-em(185px);
+    }
     .delete-note {
       margin-left: 20px;
       background: #e6092c;
@@ -360,14 +366,14 @@
         margin-right: 0;
       }
     }
-	}
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDIT SERVICES
 
 .edit--service {
-	display: flex;
-	flex-direction: column;
-	margin-top: calc-em(60px);
+  display: flex;
+  flex-direction: column;
+  margin-top: calc-em(60px);
 }
