@@ -143,6 +143,7 @@ class ResourcesRow extends Component {
                   <p className="entry-distance">{buildAddressCell(this.props.resource.address)} &bull; {this.state.walkTime || "unknown"} walking</p>
                 </div>
               </div>
+              div.mohcd-fundinge
               <img className="entry-photo entry-img" src={buildImgURL(this.props.resource.address)} />
             </header>
             <div className="entry-meta">

@@ -11,13 +11,22 @@ $font-family-base: 'Lato', 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
 // FONT SIZES
 
 %font-size-hero {
-  font-size: calc-em(50px);
-  line-height: calc-em(53px);
+  font-size: calc-em(32px);
+  line-height: calc-em(43px);
   @include r_max($break-tablet-s) {
-    font-size: calc-em(30px);
-    line-height: calc-em(36px);
+    font-size: calc-em(28px);
+    line-height: calc-em(28px);
   }
 }
+
+%font-size-sub-hero {
+  font-size: calc-em(15px);
+  line-height: calc-em(20px);
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
+}
+
 %font-size-x-large {
   font-size: calc-em(30px);
   line-height: calc-em(36px);
@@ -138,5 +147,32 @@ textarea, input{
 
   &.blue {
     color: $color-brand;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// MARKDOWN COMPONENT OVERRIDES
+
+.org--main--header--description,
+.service--description {
+  h1 {
+    @extend %font-size-medium;
+    font-weight: 700;
+    color: $color-grey5;
+  }
+
+  h2 {
+    @extend %font-size-small;
+    font-weight: 700;
+    color: $color-grey5;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    @extend %font-size-small;
+    font-weight: 400;
+    color: $color-grey5;
   }
 }

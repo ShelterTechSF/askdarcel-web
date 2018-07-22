@@ -2,19 +2,60 @@
 // SITE FOOTER
 
 .site-footer {
-  @extend %base-max-width;
   @extend %flex-row;
-  color: $color-grey5;
+  width: 100%;
+  flex-shrink: 0;
+  color: $color-white;
+  min-height: calc-em(98px);
+  background-color: $color-dark-grey;
   padding: calc-em(25px) 0;
   a {
-    color: $color-grey5;
+    color: $color-white;
   }
-  ul {
-    display: inline-block;
-    > li {
-      text-align: left;
-      display :inline-block;
-      margin: 0 calc-em(15px) calc-em(10px) 0;
+
+  .footer-content {
+    width: $max-container-width;
+    margin: 0 auto;
+    @include r_max($break-tablet-p) {
+      width: auto;
+    }
+
+    .footer-text {
+      display: inline-block;
+      padding-left: calc-em(170px);
+      @include r_max($break-tablet-p) {
+        display: block;
+        padding-left: 0;
+        text-align: center;
+        padding-left: 0;
+        padding-bottom: 23px;
+      }
+    }
+    .footer-links {
+      float: right;
+      display: inline-block;
+      padding-right: calc-em(170px);
+      @include r_max($break-tablet-p) {
+        padding-right: 0;
+        display: block;
+        float: none;
+      }
+      & > li {
+        text-align: left;
+        display :inline-block;
+        margin: 0 0 calc-em(10px) 0;
+        &:not(:last-child) {
+          padding-right: calc-em(40px);
+        }
+
+        @include r_max($break-tablet-p) {
+          display: block;
+          text-align: center;
+          &:not(:last-child) {
+            padding-right: 0;
+          }
+        }
+      }
     }
   }
 }

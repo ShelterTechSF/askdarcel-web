@@ -288,7 +288,7 @@ class EditSections extends React.Component {
       .then((response) => {
         if (response.ok) {
           alert('Resource successfuly created. Thanks!');
-          browserHistory.push('/');
+          response.json().then(res => browserHistory.push(`/resource?id=${res.resources[0].resource.id}`));
         } else {
           Promise.reject(response);
         }
@@ -652,6 +652,7 @@ class EditSections extends React.Component {
 
           <li key="long_description" className="edit--section--list--item">
             <label htmlFor="edit-description-input">Description</label>
+            <p>If you'd like to add formatting to descriptions, we support <a href="https://github.github.com/gfm/" target="_blank">Github flavored markdown</a>.</p>
             <textarea
               id="edit-description-input"
               className="input"

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="55px" viewBox="0 0 60 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>cat-housing</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M29.6,30.4695652 L29.6,21 L36.8,21 L36.8,27.1273657 L50,21 L80,34.9258312 L76.4,38.5127877 L50,25.7826087 L23.6,38.5127877 L20,34.9258312 L29.6,30.4695652 Z M27.2,73.6086957 L72.8,73.6086957 L75.2,76 L24.8,76 L27.2,73.6086957 Z M27.2,40.1304348 L50,29.3695652 L72.8,40.1304348 L72.8,70.0217391 L27.2,70.0217391 L27.2,40.1304348 Z M40.4,44.9130435 L40.4,59.2608696 L47.6,59.2608696 L47.6,44.9130435 L40.4,44.9130435 Z M52.4,44.9130435 L52.4,59.2608696 L59.6,59.2608696 L59.6,44.9130435 L52.4,44.9130435 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="askdarcel/icon/category/housing" transform="translate(-20.000000, -21.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="cat-housing" fill="#D8D8D8" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

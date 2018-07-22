@@ -28,6 +28,7 @@
     "react-ga": "^2.4.1",
     "react-instantsearch": "^5.0.1",
     "react-link": "^1.0.3",
+    "react-markdown": "^3.3.2",
     "react-redux": "^5.0.1",
     "react-redux-form": "^1.12.1",
     "react-router": "^3.2.1",
@@ -74,7 +75,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-webpack": "^1.7.0",
     "mocha": "^5.2.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.0",
     "nyc": "^11.8.0",
     "react-icons": "^2.0.1",
     "react-test-renderer": "^15.6.2",
@@ -97,7 +98,7 @@
     "postinstall": "npm run build",
     "precommit": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "webpack-dev-server --inline --open",
+    "dev": "NODE_ENV=development webpack-dev-server --inline --open",
     "testcafe": "testcafe"
   },
   "repository": {

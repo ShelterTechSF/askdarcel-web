@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export default function Notes(props) {
     return (
@@ -17,7 +18,7 @@ function renderNotes(notes) {
     return notes.map((noteObj) => {
         return (
             <li className="service">
-                <p className="service--description">{noteObj.note}</p>
+                <div className="service--description"><ReactMarkdown source={noteObj.note} /></div>
             </li>    
         );
     });
