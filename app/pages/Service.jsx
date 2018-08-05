@@ -108,7 +108,7 @@ class ServicePage extends React.Component {
                 {
                   resource.services
                     .filter(srv => srv.id !== service.id)
-                    .map(srv => (<ServiceCard service={srv} key={srv.id} />))
+                    .map(srv => <ServiceCard service={srv} key={srv.id} />)
                 }
               </section> : null}
 
