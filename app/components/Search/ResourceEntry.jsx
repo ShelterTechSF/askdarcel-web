@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import { getTimes, timeToString } from '../../utils/index';
 import { images } from '../../assets';
+import RelativeOpeningTime from '../listing/RelativeOpeningTime';
 
 // TODO: create a shared component for Resource and Service entries
 class ServiceEntry extends Component {
@@ -35,7 +36,9 @@ class ServiceEntry extends Component {
     const { hit } = this.props;
     const { isOpen, openUntil, is24hour } = this.state;
     const description = hit.long_description || 'No description, yet...';
+    const schedule = hit.schedule ? { schedule_days: hit.schedule } : null;
     let timeInfo = null;
+
     if (isOpen) {
       if (is24hour) {
         timeInfo = 'Open 24 hours';
@@ -52,7 +55,11 @@ class ServiceEntry extends Component {
           <div className="entry-details">
             <h4 className="entry-headline">{hit.name}</h4>
             <div className="entry-subhead">
-              <p>{`${hit.address ? hit.address.address_1 : 'No address found'} • ${timeInfo}`}</p>
+              <p>
+                { hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found' }
+                { hit.schedule ? ' • ' : null }
+                { schedule ? <RelativeOpeningTime schedule={schedule} /> : null }
+              </p>
             </div>
           </div>
           {hit.is_mohcd_funded ?

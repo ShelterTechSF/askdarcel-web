@@ -64,6 +64,8 @@ class MapOfLocations extends React.Component {
   render() {
     const { locations } = this.state;
 
+    console.log(locations)
+
     return (
       <div>
         <div ref="map" className="map" />
