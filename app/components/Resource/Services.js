@@ -49,7 +49,7 @@ class Service extends Component {
   render() {
     const { infoHidden } = this.state;
     const { service } = this.props
-    console.log(this.props.service)
+
     return (
 		<li className="service" id={`service-${this.props.service.id}`} >
 			<div className="service--meta disabled-feature">
