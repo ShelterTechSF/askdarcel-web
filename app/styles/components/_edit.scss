@@ -87,13 +87,18 @@
 		width: 100%;
 		max-width: 12em;
 		&--button {
+			$button-color: #1C72E6;
 			color: #FFFFFF;
 			font-size: 17px;
 			font-weight: bold;
 			padding: calc-em(9px) calc-em(25px);
-			background: #1C72E6;
+			background: $button-color;
 			border-radius: 8px;
 			width: 70%;
+			&:disabled {
+				background: lighten(desaturate($button-color, 50%), 20%);
+				cursor: not-allowed;
+			}
 		}
 		&--nav {
 			margin: calc-em(30px) 0;
