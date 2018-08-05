@@ -57,7 +57,7 @@ class ServiceEntry extends Component {
             <div className="entry-subhead">
               <p>
                 { hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found' }
-                { hit.schedule ? ' • ' : null }
+                { schedule ? ' • ' : null }
                 { schedule ? <RelativeOpeningTime schedule={schedule} /> : null }
               </p>
             </div>
