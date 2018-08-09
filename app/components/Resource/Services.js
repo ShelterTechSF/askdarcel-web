@@ -47,7 +47,9 @@ class Service extends Component {
   }
 
   render() {
-    let { infoHidden } = this.state;
+    const { infoHidden } = this.state;
+    const { service } = this.props
+
     return (
 		<li className="service" id={`service-${this.props.service.id}`} >
 			<div className="service--meta disabled-feature">
@@ -65,8 +67,9 @@ class Service extends Component {
       { infoHidden ? null :
         <div className="service-application-process-container">
           <ul className="service--details">
+            <ServiceContactDetails email={service.email}/>
             <ServiceEligibility subject='How to apply' result={this.props.service.application_process}/>
-            <ServiceEligibilities subject='Eligibilities' eligibilities={this.props.service.eligibilities}/>
+            <ServiceEligibility subject='Eligibilities' result={this.props.service.eligibility}/>
             <ServiceEligibility subject='Required documents' result={this.props.service.required_documents}/>
             <ServiceEligibility subject='Fees' result={this.props.service.fee}/>
             {this.props.service.notes.length ? <Notes notes={this.props.service.notes}/> : null  }
@@ -103,6 +106,20 @@ class ServiceCategory extends Component {
 			<span>{this.props.category}</span>
 		);
 	}
+}
+
+class ServiceContactDetails extends Component {
+  render () {
+    const { email } = this.props
+    return email ? (
+      <li className="service--details--item">
+        <header>Contact Info</header>
+        <div className="service--details--item--info">
+          <p>Email: <a href={'mailto:' + email}>{email}</a></p>
+        </div>
+      </li>
+    ) : null
+  }
 }
 
 class ServiceEligibility extends Component {

@@ -105,8 +105,11 @@ class ServicePage extends React.Component {
 
               { resource.services.length > 1 ? <section>
                 <h2>Other Services at this Location</h2>
-                {/* TODO Exclude the current service from this list */}
-                { resource.services.map(srv => (<ServiceCard service={srv} key={srv.id} />)) }
+                {
+                  resource.services
+                    .filter(srv => srv.id !== service.id)
+                    .map(srv => <ServiceCard service={srv} key={srv.id} />)
+                }
               </section> : null}
 
               {/* TODO Need an API to get similar services, maybe same category for now? */}
