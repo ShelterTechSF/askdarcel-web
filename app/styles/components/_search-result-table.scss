@@ -1,6 +1,9 @@
 // Map styles
 .results-map {
   flex: 1 1 auto;
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
 }
 
 .map-wrapper {
@@ -78,15 +81,15 @@
 
 .results-table {
   @extend %flex-column;
-  max-width: calc-em(650px);
-  width: 100%;
+  width: 50%;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 2;
-  background: $color-white;
+  background: #F3F5F7;
   height: 100%;
   @include r_max($break-tablet-s) {
     order: 2;
+    width: 100%;
   }
 
   > header {
@@ -114,7 +117,6 @@
   flex: 1 1 auto;
   padding: 20px 30px 20px 30px;
   background-color: #F3F5F7;
-  max-width: calc-em(840px);
 }
 
 .results-table-entry {
@@ -316,4 +318,11 @@
   .service-entry-body {
     @include result-body;
   }
+}
+
+.no-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
 }
