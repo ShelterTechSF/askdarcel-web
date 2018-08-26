@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="51px" viewBox="0 0 60 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>cat-goods</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M78.7988521,37.6 L66.7989544,28.6 C66.2799588,28.21 65.6469642,28 64.9989697,28 L60.2410103,28 L58.1200284,25.879 C57.5560332,25.315 56.7940397,25 55.9990464,25 L43.9991487,25 C43.2041555,25 42.439162,25.315 41.8781668,25.879 L39.7571849,28 L34.9992254,28 C34.3512309,28 33.7182363,28.21 33.1992407,28.6 L21.199343,37.6 C20.0383529,38.47 19.6693561,40.045 20.3173505,41.341 L26.3172994,53.341 C27.0612931,54.823 28.8582777,55.429 30.3432651,54.682 L32.0022509,53.854 L32.0022509,73 C32.0022509,74.656 33.3462395,76 35.0022254,76 L65.0019697,76 C66.6579556,76 68.0019442,74.656 68.0019442,73 L68.0019442,53.854 L69.66093,54.682 C71.1489173,55.426 72.945902,54.82 73.6868957,53.341 L79.6868446,41.341 C80.3288391,40.048 79.9598422,38.47 78.7988521,37.6 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="askdarcel/icon/category/goods" transform="translate(-20.000000, -25.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="cat-goods" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

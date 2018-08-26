@@ -1,3 +1,5 @@
+@import '../../styles/utils/_helpers.scss';
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // NAVIGATION
 
@@ -13,18 +15,22 @@ $navigation-height: calc-em(80px);
   right: 0;
   width: 100%;
   height: $navigation-height;
-  background: $color-brand;
-  padding: calc-em(10px) calc-em(20px);
+  background: $color-white;
+  padding: calc-em(10px) calc-em(30px);
+  border-bottom: 1px solid $color-grey3;
   @include r_max($break-tablet-s) {
     padding-top: 0;
     padding-bottom: 0;
   }
 }
 
-.find-page .site-nav {
-  .nav-search {
-    display: none;
-  }
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.find-content-container {
+  flex: 1 0 auto;
 }
 
 .nav-logo {
@@ -32,7 +38,7 @@ $navigation-height: calc-em(80px);
   margin-right: calc-em(25px);
   vertical-align: top;
   img {
-    height: calc-em(34px);
+    height: calc-em(20px);
     width: auto;
   }
 }
@@ -44,12 +50,14 @@ $navigation-height: calc-em(80px);
   }
   .search-field {
     background-repeat: no-repeat;
-    background-image: url(../assets/img/ic-search.png);
+    background-image: url(../../assets/img/ic-search.png);
     background-size: 18px 18px;
     background-position: calc-em(15px) center;
     padding-left: calc-em(45px);
     width: calc-em(400px);
     height: calc-em(40px);
+    border: 0;
+    background-color: $color-grey1;
   }
 }
 
@@ -66,7 +74,9 @@ $navigation-height: calc-em(80px);
     @extend %flex-column;
     flex: 1 0 auto;
     a {
-      @extend %bg-image;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
       @extend %font-size-tiny;
       background-size: calc-em(24px);
       background-position: center 25%;
@@ -85,20 +95,20 @@ $navigation-height: calc-em(80px);
   }
 
   .find {
-    background-image: url(../assets/img/ic-find.png);
+    background-image: url(../../assets/img/ic-find.png);
   }
   .saved {
-    background-image: url(../assets/img/ic-saved.png);
+    background-image: url(../../assets/img/ic-saved.png);
     background-size: calc-em(18px) calc-em(24px);
   }
   .review {
-    background-image: url(../assets/img/ic-review.png);
+    background-image: url(../../assets/img/ic-review.png);
   }
   .goals {
-    background-image: url(../assets/img/ic-goals.png);
+    background-image: url(../../assets/img/ic-goals.png);
     background-size: calc-em(26px) calc-em(15px);
   }
   .me {
-    background-image: url(../assets/img/ic-me.png);
+    background-image: url(../../assets/img/ic-me.png);
   }
 }

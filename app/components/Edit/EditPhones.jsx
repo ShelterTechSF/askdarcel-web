@@ -44,7 +44,7 @@ class EditPhone extends Component {
         <input
           type="tel"
           className="input"
-          placeholder="Service type"
+          placeholder="ex. Fax, Voice, SMS"
           data-field="service_type"
           defaultValue={phone.service_type}
           onChange={this.handleFieldChange}

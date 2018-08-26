@@ -1,0 +1,201 @@
+@import '../../styles/utils/_helpers.scss';
+
+////////////////////////////////////////////////////////////////////////////////////////
+// ADD/EDIT PAGE
+.edit {
+  display: flex;
+  height: calc(100vh - #{$navigation-height});
+  overflow: hidden;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// EDIT MAIN
+
+.edit--main {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+  overflow-y: scroll;
+  padding: 0 calc-em(60px);
+}
+
+.edit--main--header {
+  background: #fff;
+  padding: calc-em(35px) calc-em(30px) calc-em(30px) 0;
+  width: 100%;
+  z-index: 999;
+  text-align: center;
+  &--title {
+		color: #333333;
+		font-size: calc-em(30px);
+		font-weight: bold;
+		line-height: calc-em(36px);
+		white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	}
+}
+
+.edit--service {
+  display: flex;
+  flex-direction: column;
+  margin-top: calc-em(60px);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// EDIT SECTION FORMS
+
+.edit--section {
+  margin-bottom: calc-em(60px);
+  background: #fff;
+  border-radius: 8px;
+  padding: calc-em(40px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid $color-grey3;
+}
+
+.edit--section--header {
+	margin-bottom: calc-em(20px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit--section--header h4 {
+  color: $color-grey8;
+  font-size: calc-em(24px);
+  font-weight: bold;
+}
+
+.edit--section--list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	&--item {
+		margin: 0 calc-em(30px) calc-em(20px) 0;
+
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+
+    &--collection-container{
+      display: flex;
+    }
+
+		label {
+			color: #888888;
+			font-size: calc-em(16px);
+			margin-bottom: calc-em(15px);
+			display: block;
+			button {
+				margin-left: calc-em(10px);
+				height: calc-em(38px);
+				font-size: calc-em(15px);
+				i {
+					height: calc-em(18px);
+					width: calc-em(18px);
+					font-size: 18px;
+					top: -1px;
+				}
+			}
+		}
+
+    &#service--deactivation {
+      background: #e6092c;
+      width: 100%;
+    }
+
+		.input {
+			padding: calc-em(15px);
+			width: 100%;
+			border: 1px solid #DDDDDD;
+			border-radius: 2px;
+			background-color: #F2F2F2;
+			font-size: calc-em(17px);
+			color: #333333;
+			margin-bottom: calc-em(10px);
+		}
+
+		input:not(last-of-type) {
+			margin-right: calc-em(10px);
+		}
+
+		textarea {
+			height: calc-em(200px);
+      &:disabled {
+        cursor: not-allowed;
+      }
+		}
+
+
+		&--sublist .edit--section--list--item {
+			margin-right: 0;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// BUTTONS
+
+.edit--section--list--item button {
+  border-radius: 3px;
+  border: 1px solid $color-brand;
+  background: transparent;
+  color: $color-brand;
+  padding: calc-em(10px) calc-em(14px);
+  height: calc-em(44px);
+  cursor: pointer;
+  font-size: calc-em(17px);
+  font-weight: 600;
+
+  i {
+    margin-right: calc-em(8px);
+  }
+
+  &.new-service {
+    width: 100%;
+  }
+  &:hover {
+    background: $color-brand;
+    color: #fff;
+  }
+}
+
+.edit--section--list--item button.icon-button {
+  background: transparent;
+  border: none;
+  color: $color-grey6;
+  &:hover {
+    color: $color-white;
+    background: $color-brand;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.edit--section--list--item button.icon-button i {
+  margin-right: 0;
+  font-size: calc-em(20px);
+}
+
+.edit--section--list--item button.trash-button,
+.edit--section--list--item button.remove-time,
+.edit--section--list--item button.delete-note {
+  color: $color-red;
+  border: none;
+  &:hover {
+    background: $color-red;
+    color: $color-white;
+    border: none;
+  }
+}
+
+.edit--section--list--item button.remove-item {
+  color: $color-red;
+  border: 1px solid $color-red;
+  &:hover {
+    background: $color-red;
+    color: $color-white;
+  }
+}

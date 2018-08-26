@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /**
- * 
+ *
  * @param {Component} ResourceObjectItem individual component to have a collection for
  * @param {string} label title field for items
  * @param {Object} blankTemplateObj blank template to fill new items in the collection with
@@ -41,11 +41,11 @@ export default function editCollectionHOC(ResourceObjectItem,
         removeItem(index, item) {
             let collection = this.state.collection;
             if(collection[index].id) {
-                collection[index] = { ...item, isRemoved: true };    
+                collection[index] = { ...item, isRemoved: true };
             } else {
                 collection.splice(index, 1);
             }
-            
+
             this.setState(collection, () => this.props.handleChange(collection));
         }
 
@@ -62,7 +62,7 @@ export default function editCollectionHOC(ResourceObjectItem,
                                 item = {collection[i]}
                                 handleChange = {this.handleChange}
                             />
-                            <button className='trash-button' onClick={() => this.removeItem(i, collection[i])}><i className="material-icons">&#xE872;</i></button>
+                            <button className='trash-button icon-button' onClick={() => this.removeItem(i, collection[i])}><i className="material-icons">delete</i></button>
                         </div>
                     );
                 }

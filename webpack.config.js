@@ -48,6 +48,7 @@ module.exports = {
     }),
     new ExtendedDefinePlugin({
       CONFIG: config,
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     }),
   ],
   devtool: 'source-map',

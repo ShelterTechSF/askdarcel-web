@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { timeToTimeInputValue, stringToTime, daysOfTheWeek } from '../../utils/index';
 import EditScheduleDay from './EditScheduleDay';
 
+import './EditSchedule.scss';
+
 function buildSchedule(schedule) {
   let scheduleId = schedule ? schedule.id : null;
   let currSchedule = {};
@@ -159,7 +161,7 @@ class EditSchedule extends Component {
       Friday: 'F',
       Saturday: 'S',
       Sunday: 'Su',
-    } 
+    }
 
     let schedule = this.state.scheduleDays;
     return (

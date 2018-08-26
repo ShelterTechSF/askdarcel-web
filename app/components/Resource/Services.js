@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 import classNames from 'classnames';
 import DetailedHours from './DetailedHours';
 
@@ -46,7 +47,9 @@ class Service extends Component {
   }
 
   render() {
-    let { infoHidden } = this.state;
+    const { infoHidden } = this.state;
+    const { service } = this.props
+
     return (
 		<li className="service" id={`service-${this.props.service.id}`} >
 			<div className="service--meta disabled-feature">
@@ -54,7 +57,7 @@ class Service extends Component {
 				<p>updated {this.props.service.updated_date}</p>
 			</div>
       <h2 className="service--header">{this.props.service.name}</h2>
-      <p className="service--description">{this.props.service.long_description}</p>
+      <ReactMarkdown className="service--description" source={this.props.service.long_description} />
       <div className="service--details-toggle" onClick={this.toggleVisible}>
         <span>{infoHidden ?
             <span>More Info <i className="material-icons">keyboard_arrow_down</i></span> :
@@ -64,8 +67,9 @@ class Service extends Component {
       { infoHidden ? null :
         <div className="service-application-process-container">
           <ul className="service--details">
+            <ServiceContactDetails email={service.email}/>
             <ServiceEligibility subject='How to apply' result={this.props.service.application_process}/>
-            <ServiceEligibilities subject='Eligibilities' eligibilities={this.props.service.eligibilities}/>
+            <ServiceEligibility subject='Eligibilities' result={this.props.service.eligibility}/>
             <ServiceEligibility subject='Required documents' result={this.props.service.required_documents}/>
             <ServiceEligibility subject='Fees' result={this.props.service.fee}/>
             {this.props.service.notes.length ? <Notes notes={this.props.service.notes}/> : null  }
@@ -104,6 +108,20 @@ class ServiceCategory extends Component {
 	}
 }
 
+class ServiceContactDetails extends Component {
+  render () {
+    const { email } = this.props
+    return email ? (
+      <li className="service--details--item">
+        <header>Contact Info</header>
+        <div className="service--details--item--info">
+          <p>Email: <a href={'mailto:' + email}>{email}</a></p>
+        </div>
+      </li>
+    ) : null
+  }
+}
+
 class ServiceEligibility extends Component {
   render() {
     return this.props.result ? (
@@ -120,7 +138,9 @@ class ServiceEligibilities extends Component {
     return this.props.eligibilities.length > 0 ? (
       <li className="service--details--item">
         <header>{this.props.subject}</header>
-        <div className="service--details--item--info">{this.props.eligibilities.map(eligibility => <p>{eligibility.name}</p>)}</div>
+        <div className="service--details--item--info">
+          {this.props.eligibilities.map(eligibility => <p>{eligibility.name}</p>)}
+        </div>
       </li>
     ) : null;
   }

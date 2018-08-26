@@ -65,11 +65,11 @@ class EditServices extends Component {
     return (
       <li className="edit--section--list--item">
         <button
-          className="edit--section--list--item--button"
+          className="edit--section--list--item--button new-service"
           onClick={this.addService}
         >
           <i className="material-icons">add_box</i>
-          Add Service
+          Add New Service
         </button>
         <ul className="edit--section--list--item--sublist edit--service--list">
           {

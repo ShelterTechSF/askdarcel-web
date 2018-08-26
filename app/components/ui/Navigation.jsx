@@ -1,6 +1,7 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
 import { images } from 'assets';
+import './Navigation.scss';
 
 class Navigation extends React.Component {
   constructor() {
