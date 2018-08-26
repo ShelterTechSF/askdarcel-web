@@ -11,6 +11,7 @@ const environmentConfig = [
   'ALGOLIA_INDEX_PREFIX',
   'ALGOLIA_APPLICATION_ID',
   'ALGOLIA_READ_ONLY_API_KEY',
+  'MOHCD_SUBDOMAIN',
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
