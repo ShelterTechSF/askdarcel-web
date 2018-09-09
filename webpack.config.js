@@ -23,6 +23,7 @@ const appRoot = path.resolve(__dirname, 'app/');
 const buildDir = path.resolve(__dirname, 'build');
 
 module.exports = {
+  mode: process.env.NODE_ENV || 'production',
   context: __dirname,
   entry: ['whatwg-fetch', 'babel-polyfill', path.resolve(appRoot, 'init.jsx')],
   output: {
@@ -94,9 +95,13 @@ module.exports = {
           {
             loader: 'image-webpack-loader',
             options: {
-              bypassOnDebug: true,
-              optimizationLevel: 7,
-              interlaced: false,
+              gifsicle: {
+                interlaced: false,
+              },
+              optipng: {
+                optimizationLevel: 7,
+              },
+              disable: true,
             },
           },
         ],
@@ -106,14 +111,10 @@ module.exports = {
   devServer: {
     contentBase: buildDir,
     historyApiFallback: true,
-    devtool: 'source-map',
-    colors: true,
     proxy: {
-      '/api/*': {
+      '/api': {
         target: process.env.API_URL || 'http://localhost:3000',
-        rewrite(req) {
-          req.url = req.url.replace(/^\/api/, '');
-        },
+        pathRewrite: { '^\/api': '' },
       },
     },
   },

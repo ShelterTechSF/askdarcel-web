@@ -75,7 +75,6 @@ git repo:
 
 ```sh
 $ nvm install  # Reads from .nvmrc
-$ npm install -g npm@5.2.0  # Make sure this matches .travis.yml
 ```
 
 ### Installing npm dependencies

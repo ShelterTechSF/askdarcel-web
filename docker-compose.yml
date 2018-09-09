@@ -1,13 +1,13 @@
 version: '3.5'
 services:
   web:
-    command: npm -- run dev --host 0.0.0.0
+    command: npm -- run dev --host 0.0.0.0 --disable-host-check
     environment:
       API_URL: http://api:3000
       ALGOLIA_INDEX_PREFIX:
       ALGOLIA_APPLICATION_ID:
       ALGOLIA_READ_ONLY_API_KEY:
-    image: node:8.4
+    image: node:8.11.4
     networks:
       - askdarcel
     ports:
