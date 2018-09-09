@@ -35,7 +35,7 @@ class EditNotes extends Component {
   addNote() {
     let existingNotes = this.state.existingNotes;
     let newUUID = this.state.uuid - 1;
-    existingNotes.unshift({
+    existingNotes.push({
       key: newUUID,
     });
     this.setState({ existingNotes: existingNotes, uuid: newUUID });
@@ -79,12 +79,12 @@ class EditNotes extends Component {
   render() {
     return (
       <li className="edit--section--list--item edit--notes">
-				<label>Notes <button className="edit--section--list--item--button" onClick={this.addNote}><i className="material-icons">add_box</i>Add Note</button> </label>
+				<label>Notes </label>
 				<p style={{margin: '0 0 15px 0'}}><a href="https://guides.github.com/features/mastering-markdown/" target="_blank">Markdown</a> is also supported for notes.</p>
-
         <ul className="edit--section--list--item--sublist">
 					{this.renderNotes()}
 				</ul>
+        <button className="edit--section--list--item--button" onClick={this.addNote}><i className="material-icons">add_box</i>Add Note</button>
 			</li>
     );
   }
