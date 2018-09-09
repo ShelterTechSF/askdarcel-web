@@ -40,6 +40,10 @@ class EditServices extends Component {
     });
   }
 
+  getAlert() {
+    alert('clicked');
+  }
+
   /* @method addService
    * @description Creates a brand new service
    */
@@ -79,6 +83,7 @@ class EditServices extends Component {
         </ul>
         <button
           className="edit--section--list--item--button new-service"
+          id="new-service-button"
           onClick={this.addService}
         >
           <i className="material-icons">add_box</i>

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withRouter, browserHistory } from 'react-router';
 import _ from 'lodash';
@@ -205,6 +206,7 @@ class EditSections extends React.Component {
     this.postSchedule = this.postSchedule.bind(this);
     this.createResource = this.createResource.bind(this);
     this.prepServicesData = this.prepServicesData.bind(this);
+    this.addService = this.addService.bind(this);
   }
 
   componentDidMount() {
@@ -702,9 +704,17 @@ class EditSections extends React.Component {
           services={this.state.resource.services}
           handleServiceChange={this.handleServiceChange}
           handleDeactivation={this.handleDeactivation}
+          ref={instance => { this.serviceChild = instance; }}
         />
       </ul>
     );
+  }
+
+  addService() {
+    this.serviceChild.addService();
+    const newService =document.getElementById('new-service-button');
+    const domNode = ReactDOM.findDOMNode(newService);
+    domNode.scrollIntoView({behavior: "smooth"});
   }
 
   render() {
@@ -722,6 +732,7 @@ class EditSections extends React.Component {
         certifyHAP={this.certifyHAP}
         newServices={this.state.services.services}
         newResource={this.state.newResource}
+        addService={this.addService}
       />
       <div className="edit--main">
         <header className="edit--main--header">
