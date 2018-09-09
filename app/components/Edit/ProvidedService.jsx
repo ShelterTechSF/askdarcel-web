@@ -16,21 +16,21 @@ class ProvidedService extends Component {
     this.textAreas = [
       {
         label: 'Service description',
-        placeholder: 'Description',
+        placeholder: "Describe what you'll receive from this service in a few sentences.",
         field: 'long_description',
         defaultValue: this.props.service.long_description,
         onChange: this.handleFieldChange.bind(this),
       },
       {
-        label: 'How do you apply for this service',
-        placeholder: 'Application Process',
+        label: 'Application Process',
+        placeholder: 'How do you apply for this service?',
         field: 'application_process',
         defaultValue: this.props.service.application_process,
         onChange: this.handleFieldChange.bind(this),
       },
       {
-        label: 'What documents do you need to bring to apply',
-        placeholder: 'Required Documents',
+        label: 'Required Documents',
+        placeholder: 'What documents do you need to bring to apply?',
         field: 'required_documents',
         defaultValue: this.props.service.required_documents,
         onChange: this.handleFieldChange.bind(this),
@@ -38,8 +38,8 @@ class ProvidedService extends Component {
       {
         // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
         //       and seed it with languages
-        label: 'What interpretation services do they offer',
-        placeholder: 'Interpretation Services',
+        label: 'Interpretation Services',
+        placeholder: 'What interpretation services do they offer?',
         field: 'interpretation_services',
         defaultValue: this.props.service.interpretation_services,
         onChange: this.handleFieldChange.bind(this),
@@ -94,14 +94,22 @@ class ProvidedService extends Component {
       <li id={`${this.props.service.id}`} className="edit--service edit--section">
         <header className="edit--section--header">
           <h4>Service {this.props.index + 1}: {this.props.service.name}</h4>
+          <button
+            className="remove-item"
+            id="service--deactivation"
+            disabled={this.state.submitting}
+            onClick={() => this.props.handleDeactivation('service', this.props.service.id)}
+          >
+            Remove Service
+            </button>
         </header>
 
         <ul className="edit--section--list">
           <li className="edit--section--list--item">
-            <label htmlFor="input">Service name</label>
+            <label htmlFor="input">Name of the Service</label>
             <input
               type="text"
-              placeholder="Name"
+              placeholder="What is this service called?"
               data-field="name"
               defaultValue={this.props.service.name}
               onChange={this.handleFieldChange}
@@ -109,10 +117,10 @@ class ProvidedService extends Component {
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">Alternate name</label>
+            <label htmlFor="input">Nickname</label>
             <input
               type="text"
-              placeholder="Alternate Name"
+              placeholder="What it's known as in the community"
               data-field="alternate_name"
               defaultValue={this.props.service.alternate_name}
               onChange={this.handleFieldChange}
@@ -140,14 +148,6 @@ class ProvidedService extends Component {
           ))}
 
           <li className="edit--section--list--item">
-            <label htmlFor="textarea">Old Elgibility (not editable)</label>
-            <textarea
-              disabled
-              placeholder="Please use the Eligibility field below"
-              data-field="eligibility"
-              defaultValue={this.props.service.eligibility}
-              onChange={this.handleFieldChange}
-            />
             <MultiSelectDropdown
               selectedItems={this.props.service.eligibilities}
               handleSelectChange={this.handleElgibilityChange}
@@ -157,9 +157,9 @@ class ProvidedService extends Component {
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">How much does this service cost</label>
+            <label htmlFor="input">Cost</label>
             <input
-              placeholder="Fee"
+              placeholder="How much does this service cost?"
               data-field="fee"
               defaultValue={this.props.service.fee}
               onChange={this.handleFieldChange}
@@ -169,7 +169,7 @@ class ProvidedService extends Component {
           <li className="edit--section--list--item">
             <label htmlFor="input">Wait Time</label>
             <input
-              placeholder="Wait Time"
+              placeholder="Is there a waiting list or wait time?"
               data-field="wait_time"
               defaultValue={this.props.service.wait_time}
               onChange={this.handleFieldChange}
@@ -177,9 +177,9 @@ class ProvidedService extends Component {
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">URL</label>
+            <label htmlFor="input">Service&#39;s Website</label>
             <input
-              placeholder="URL"
+              placeholder="http://"
               data-field="url"
               defaultValue={this.props.service.url}
               onChange={this.handleFieldChange}
@@ -199,17 +199,6 @@ class ProvidedService extends Component {
             label={'Categories'}
             optionsRoute={'categories'}
           />
-
-          <li className="edit--section--list--item">
-            <button
-              className="edit--section--list--item"
-              id="service--deactivation"
-              disabled={this.state.submitting}
-              onClick={() => this.props.handleDeactivation('service', this.props.service.id)}
-            >
-              Deactivate
-              </button>
-          </li>
         </ul>
       </li>
     );

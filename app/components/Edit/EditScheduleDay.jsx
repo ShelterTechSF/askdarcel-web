@@ -21,7 +21,7 @@ class EditScheduleDay extends Component {
           <div>
             <input type="time" defaultValue={this.props.getDayHours(day, 'opens_at', index)} data-key={day} data-field="opens_at" onChange={e => this.props.handleScheduleChange(day, index, 'opens_at', e.target.value)} />
             <input type="time" defaultValue={this.props.getDayHours(day, 'closes_at', index)} data-key={day} data-field="closes_at" onChange={e => this.props.handleScheduleChange(day, index, 'closes_at', e.target.value)} />
-            {index > 0 ? <button onClick={() => this.props.removeTime(day, index)}className="remove-time">x</button> : ''}
+            {index > 0 ? <button onClick={() => this.props.removeTime(day, index)}className="remove-time icon-button"><i className="material-icons">delete</i></button> : ''}
           </div>
         }
       </li>
@@ -50,7 +50,7 @@ class EditScheduleDay extends Component {
           {is24Hours ?
             null
             :
-            <button onClick={() => this.props.addTime(day)}>+</button>
+            <button className="icon-button" onClick={() => this.props.addTime(day)}><i className="material-icons">add</i></button>
           }
         </div>
         <div className="is-24-hours">

@@ -36,11 +36,13 @@ export default {
             }));
             browserHistory.push('/admin/changes');
           } else if (response.status === 401) {
+            // eslint-disable-next-line
             alert('Incorrect email or password, please try again.');
             dispatch(adminLoginError());
           }
         })
         .catch((error) => {
+          // eslint-disable-next-line
           console.log('err', error);
         });
     };

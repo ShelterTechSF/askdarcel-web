@@ -114,7 +114,9 @@ button, input, textarea {
 }
 
 .back-btn {
-  @extend %bg-image;
+  background-repeat: no-repeat;
+background-size: contain;
+background-position: center;
   display: block;
   width: calc-em(50px);
   height: calc-em(50px);

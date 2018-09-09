@@ -1,10 +1,23 @@
+const { readFileSync } = require('fs');
+const yaml = require('js-yaml');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 
-// Change this to config.js and add a key to the config file
-/* eslint-disable import/no-dynamic-require */
-const config = require(path.resolve(__dirname, 'app/utils/config.example.js'));
+// Take the user config from the file, and override keys with environment variables if they exist
+const userConfig = yaml.safeLoad(readFileSync('./config.yml', 'utf8'));
+const environmentConfig = [
+  'GOOGLE_API_KEY',
+  'ALGOLIA_INDEX_PREFIX',
+  'ALGOLIA_APPLICATION_ID',
+  'ALGOLIA_READ_ONLY_API_KEY',
+  'MOHCD_SUBDOMAIN',
+];
+
+const config = environmentConfig.reduce((acc, key) => {
+  if (process.env[key] !== undefined) { acc[key] = process.env[key]; }
+  return acc;
+}, userConfig);
 
 const appRoot = path.resolve(__dirname, 'app/');
 const buildDir = path.resolve(__dirname, 'build');

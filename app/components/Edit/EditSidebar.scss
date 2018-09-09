@@ -1,0 +1,109 @@
+@import '../../styles/utils/_helpers.scss';
+
+////////////////////////////////////////////////////////////////////////////////////////
+// SIDEBAR
+
+.sidebar {
+	width: calc-em(250px);
+	background-color: $color-grey1;
+  display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.sidebar--content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar--list {
+  border-bottom: 1px solid $color-grey3;
+  padding-bottom: 20px;
+  &:last-of-type() {
+    border-bottom: 0;
+  }
+}
+
+.sidebar--list--heading h3{
+	padding: 20px 25px 10px 25px;
+	text-transform: uppercase;
+  font-size: calc-em(13px);
+  font-weight: 700;
+  color: $color-grey7;
+  & a {
+    color: $color-grey7;
+    &:hover {
+      color: $color-brand;
+    }
+  }
+}
+
+.sidebar--list--item {
+  a {
+		color: $color-grey5;
+    border-left: 2px solid transparent;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    padding: 11px 25px 11px 23px;
+    height: calc-em(40px);
+    display: block;
+		&:hover {
+			text-decoration: none;
+      color: $color-brand;
+		}
+	}
+
+  &.active a {
+    border-left: 2px solid $color-brand !important;
+    color: $color-brand;
+    font-weight: 700;
+  }
+}
+
+.sidebar--actions {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+  border-top: 1px solid $color-grey3;
+  padding: 15px 25px;
+  width: 250px;
+  background: $color-grey1;
+  z-index: 2;
+}
+
+.sidebar--actions--button {
+		color: #FFFFFF;
+		font-size: calc-em(15px);
+		padding: calc-em(7px) calc-em(15px);
+		border: 1px solid $color-brand;
+    background: transparent;
+    color: $color-brand;
+		border-radius: 3px;
+		width: 100%;
+    flex: 0 0 auto;
+    margin: 5px 0;
+    &:hover {
+      background: $color-brand;
+      color: $color-white;
+    }
+
+    &.cancel {
+      border: 1px solid $color-grey5;
+      color: $color-red;
+      &:hover {
+        background: $color-red;
+        color: $color-white;
+      }
+    }
+
+    &.deactivate {
+      border: 1px solid $color-red;
+      color: $color-red;
+      &:hover {
+        background: $color-red;
+        color: $color-white;
+      }
+    }
+}

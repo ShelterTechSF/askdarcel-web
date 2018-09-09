@@ -10,7 +10,7 @@ export default function editCollectionHOC(ResourceObjectItem,
   label,
   blankTemplateObj,
   showAdd = true,
-                        ) {
+) {
   return class EditCollection extends Component {
     constructor(props) {
       super(props);
@@ -64,7 +64,7 @@ export default function editCollectionHOC(ResourceObjectItem,
                 handleChange={this.handleChange}
               />
               <button
-                className="trash-button"
+                className="trash-button icon-button"
                 onClick={() => this.removeItem(i, collection[i])}
               >
                 <i className="material-icons">&#xE872;</i>

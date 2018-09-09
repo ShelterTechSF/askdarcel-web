@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactMarkdown from 'react-markdown';
 import DetailedHours from './DetailedHours';
 
 class Services extends Component {
@@ -45,35 +46,39 @@ class Service extends Component {
 
   render() {
     const { infoHidden } = this.state;
+    const { service } = this.props;
+
     return (
-      <li className="service" id={`service-${this.props.service.id}`} >
+      <li className="service" id={`service-${service.id}`} >
         <div className="service--meta disabled-feature">
-          <p><ServiceCategory category={this.props.service.category} /></p>
-          <p>updated {this.props.service.updated_date}</p>
+          <p><ServiceCategory category={service.category} /></p>
+          <p>updated {service.updated_date}</p>
         </div>
-        <h2 className="service--header">{this.props.service.name}</h2>
-        <p className="service--description">{this.props.service.long_description}</p>
+        <h2 className="service--header">{service.name}</h2>
+        <ReactMarkdown className="service--description" source={service.long_description} />
         <div
-          role="button"
-          tabIndex={0}
           className="service--details-toggle"
           onClick={this.toggleVisible}
+          role="button"
+          tabIndex="0"
         >
-          <span>{infoHidden ?
-            <span>More Info <i className="material-icons">keyboard_arrow_down</i></span> :
-            null}</span>
+          { infoHidden
+            ? <span>More Info <i className="material-icons">keyboard_arrow_down</i></span>
+            : null
+          }
         </div>
 
         { infoHidden ? null :
         <div className="service-application-process-container">
           <ul className="service--details">
+            <ServiceContactDetails email={service.email} />
             <ServiceEligibility
               subject="How to apply"
               result={this.props.service.application_process}
             />
-            <ServiceEligibilities
+            <ServiceEligibility
               subject="Eligibilities"
-              eligibilities={this.props.service.eligibilities}
+              result={this.props.service.eligibility}
             />
             <ServiceEligibility
               subject="Required documents"
@@ -125,6 +130,20 @@ class ServiceCategory extends Component {
   }
 }
 
+class ServiceContactDetails extends Component {
+  render() {
+    const { email } = this.props;
+    return email ? (
+      <li className="service--details--item">
+        <header>Contact Info</header>
+        <div className="service--details--item--info">
+          <p>Email: <a href={'mailto:' + email}>{email}</a></p>
+        </div>
+      </li>
+    ) : null;
+  }
+}
+
 class ServiceEligibility extends Component {
   render() {
     return this.props.result ? (
@@ -133,42 +152,6 @@ class ServiceEligibility extends Component {
         <div className="service--details--item--info">{this.props.result}</div>
       </li>
     ) : null;
-  }
-}
-
-class ServiceEligibilities extends Component {
-  render() {
-    return this.props.eligibilities.length > 0 ? (
-      <li className="service--details--item">
-        <header>{this.props.subject}</header>
-        <div className="service--details--item--info">
-          {this.props.eligibilities.map(eligibility => <p>{eligibility.name}</p>)}
-        </div>
-      </li>
-    ) : null;
-  }
-}
-
-class Notes extends Component {
-  render() {
-    const notes = this.props.notes
-      ? this.props.notes.map(note => <Note note={note} key={note.id} />)
-      : [];
-
-    return (
-      <li className="service--details--item">
-        <header>Notes</header>
-        <ul className="service--details--item--info">{notes}</ul>
-      </li>
-    );
-  }
-}
-
-class Note extends Component {
-  render() {
-    return (
-      <li className="services--details--notes-list--item">{this.props.note.note}</li>
-    );
   }
 }
 

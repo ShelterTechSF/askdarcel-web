@@ -1,5 +1,4 @@
-@import '../../../styles/utils/_layout.scss';
-@import '../../../styles/st-base/_colors.scss';
+@import '../../../styles/utils/_helpers.scss';
 
 ul.accordion {
   width: 100%;
@@ -42,7 +41,7 @@ ul.accordion {
     }
 
     &.open {
-      background: $color-grey0;
+      background: $color-grey1;
 
       header {
         .selector {
@@ -57,7 +56,7 @@ ul.accordion {
     }
 
     &:nth-of-type(2n) {
-      // background: $color-grey0;
+      // background: $color-grey1;
     }
   }
 }

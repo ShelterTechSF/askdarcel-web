@@ -13,11 +13,11 @@ const searchResultsContainer = connectStateResults(
     if (!searchResults && searching) {
       output = <Loader />;
     } else if (searchResults && searchResults.nbHits === 0) {
-      output = <div>No results have been found for {searchState.query}</div>;
+      output = <div className="no-results">No results have been found for {searchState.query}</div>;
     } else if (searchResults) {
       output = (
         <div className="results">
-          <div>
+          <div className="results-table">
             <SearchTable />
             <div className="add-resource">
               <h4>Can&apos;t find the organization you&apos;re looking for? </h4>

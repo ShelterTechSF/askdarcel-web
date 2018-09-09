@@ -1,5 +1,6 @@
 # ShelterTech Web App [![Travis CI Status](https://travis-ci.org/ShelterTechSF/askdarcel-web.svg?branch=master)](https://travis-ci.org/ShelterTechSF/askdarcel-web)
 
+## Sauce Labs Browser Test Status
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/askdarcel-web-master.svg)](https://saucelabs.com/u/askdarcel-web-master)
 
 ## Docker-based Development Environment (Recommended)
@@ -53,6 +54,15 @@ the Docker setup instructions and that the API server is running. If you want to
 target a different instance of askdarcel-api, you can modify the `API_URL`
 environment variable in docker-compose.yml.
 
+## Configuration (For both Dockerized or Local setup)
+
+All config should be added in a file called `config.yml`. A sample `config.example.yml` is provided, you need to copy it to add your own
+
+### Algolia
+[Algolia](https://www.algolia.com/doc/guides/getting-started/what-is-algolia/) is used as our search engine and in order for it to operate properly for everyone, we each need our own [index](https://www.algolia.com/doc/guides/indexing/indexing-overview/).
+
+- in `config.yml` set _your_ github username as the value for `ALGOLIA_INDEX_PREFIX`. This will point to the search index matching your local environment.
+
 ## Non-Docker Development Environment
 
 ### Installing Node.js and npm
@@ -81,12 +91,6 @@ And to run the dev server, run
 ```sh
 npm run dev
 ```
-## Configuration
-### Algolia
-[Algolia](https://www.algolia.com/doc/guides/getting-started/what-is-algolia/) is used as our search engine and in order for it to operate properly for everyone, we each need our own [index](https://www.algolia.com/doc/guides/indexing/indexing-overview/).
-
-In `app/utils/config.example.js`, change the index to match the index name you configured on the backend:
- - ALGOLIA_INDEX_PREFIX: process.env.ALGOLIA_INDEX_PREFIX || '[your GH handle]'
 
 ## End to end testing
 #### Quick summary of what TestCafe is and how it works
@@ -110,3 +114,10 @@ If you are using Docker, then you'll need to run it somewhat like this:
 $ docker-compose run --rm -p 1337:1337 -e BASE_URL=http://web:8080 web npm run testcafe -- --skip-js-errors remote --skip-js-errors --hostname localhost --ports 1337,1338 ./testcafe/
 ```
 This will spin up a web server at http://localhost:1337/ and print out a URL to use. You should manually enter it into your browser to start the tests.
+
+
+## Big Thanks
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
+
+[<img src="powered-by-sauce-labs-badges-red.svg" alt="Powered By Sauce Labs" width="200" />](https://saucelabs.com/)

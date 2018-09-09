@@ -8,15 +8,15 @@ class ResourcesRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dest: {lat: props.resource.address.latitude, lng: props.resource.address.longitude},
+      dest: { lat: props.resource.address.latitude, lng: props.resource.address.longitude },
       walkTime: null
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    //TODO: The Link class has a bunch of validations, etc. We should wrap that all in a service and just
-    //call that.
+    // TODO: The Link class has a bunch of validations, etc. We should wrap that all in a service and just
+    // call that.
     // Location.push("/resource/" + this.props.resource.id);
   }
 
@@ -143,6 +143,7 @@ class ResourcesRow extends Component {
                   <p className="entry-distance">{buildAddressCell(this.props.resource.address)} &bull; {this.state.walkTime || "unknown"} walking</p>
                 </div>
               </div>
+              div.mohcd-fundinge
               <img className="entry-photo entry-img" src={buildImgURL(this.props.resource.address)} />
             </header>
             <div className="entry-meta">

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { timeToTimeInputValue, stringToTime } from '../../utils/index';
 import EditScheduleDay from './EditScheduleDay';
 
+import './EditSchedule.scss';
+
 function buildSchedule(schedule) {
   const scheduleId = schedule ? schedule.id : null;
   const currSchedule = {};
