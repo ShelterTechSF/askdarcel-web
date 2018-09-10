@@ -77,7 +77,6 @@
 .certified {
 	float: right;
 	height: 36px;
-	margin-right: $padding-default;
 
 	&:after {
 		clear: both;
@@ -115,6 +114,16 @@
 			padding-right: 6px;
 			margin-top: calc-em(10px);
 		}
+	}
+	.badges {
+		display: flex;
+    float: right;
+    flex-direction: column;
+    margin-right: $padding-default;
+    .mohcd-funded {
+    	width: 55px;
+    	margin: 10px auto;
+    }
 	}
 }
 

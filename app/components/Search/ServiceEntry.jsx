@@ -80,7 +80,7 @@ class ServiceEntry extends Component {
             <li className="action-button"><Link to={{ pathname: `/services/${hit.service_id}` }}>Details</Link></li>
             <li className="action-button">
               <a
-                href={`https://maps.google.com?saddr=Current+Location&daddr=${hit._geoloc.lat},${hit._geoloc.lng}&dirflg=w`}
+                href={`https://maps.google.com?saddr=Current+Location&daddr=${hit._geoloc ? hit._geoloc.lat : 0},${hit._geoloc ? hit._geoloc.lng : 0}&dirflg=w`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
