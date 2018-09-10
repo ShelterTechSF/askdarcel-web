@@ -59,7 +59,7 @@ const SearchMap = ({ hits, userLocation }) => {
   }
 
   const markers = hits.map(hit => (
-    <CustomMarker lat={hit._geoloc.lat} lng={hit._geoloc.lng} key={hit.objectID} />
+    <CustomMarker lat={hit._geoloc ? hit._geoloc.lat : 0} lng={hit._geoloc ? hit._geoloc.lng : 0} key={hit.objectID} />
   ));
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);

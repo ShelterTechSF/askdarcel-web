@@ -48,7 +48,7 @@ class ServiceEntry extends Component {
     } else {
       timeInfo = 'Closed';
     }
-
+    // debugger;
     return (
       <li className="results-table-entry resource-entry">
         <header>
@@ -85,7 +85,7 @@ class ServiceEntry extends Component {
             <li className="action-button"><Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>Details</Link></li>
             <li className="action-button">
               <a
-                href={`https://maps.google.com?saddr=Current+Location&daddr=${hit._geoloc.lat},${hit._geoloc.lng}&dirflg=w`}
+                href={`https://maps.google.com?saddr=Current+Location&daddr=${hit._geoloc ? hit._geoloc.lat : 0},${hit._geoloc ? hit._geoloc.lng : 0}&dirflg=w`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

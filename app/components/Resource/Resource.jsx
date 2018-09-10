@@ -7,6 +7,7 @@ import Services from './Services';
 import Notes from './Notes';
 import Loader from 'components/ui/Loader';
 import HAPcertified from '../../assets/img/ic-hap.png';
+import MOHCDFunded from '../../assets/img/ic-mohcd-funded-services.png';
 import ResourceMap from './ResourceMap';
 import * as dataService from '../../utils/DataService';
 import ReactMarkdown from 'react-markdown';
@@ -23,6 +24,7 @@ class Resource extends Component {
     super(props);
     this.state = { resource: null };
     this.verifyResource = this.verifyResource.bind(this);
+    this.isMOHCDFunded = this.isMOHCDFunded.bind(this);
   }
 
   componentDidMount() {
@@ -52,8 +54,22 @@ class Resource extends Component {
       });
   }
 
+  isMOHCDFunded() {
+    let { resource } = this.state;
+    let isMOHCDFunded = false;
+
+    resource && resource.categories.map(category => {
+      if( category.name === "MOHCD Funded" ) {
+        isMOHCDFunded = true;
+      }
+    });
+
+    return isMOHCDFunded;
+  }
+
   render() {
     const { resource } = this.state;
+    const isMOHCDFunded = this.isMOHCDFunded();
     return (!resource || !window.google ? <Loader /> :
     <div className="org-container">
       <article className="org" id="resource">
@@ -70,14 +86,24 @@ class Resource extends Component {
           <div className="org--main--left">
 
             <header className="org--main--header">
-              {
-                resource.certified &&
-                <img
-                  className="certified"
-                  src={HAPcertified}
-                  alt="Verified by the Homeless Assistance Project"
-                />
-              }
+              <div className="badges">
+                {
+                  resource.certified &&
+                  <img
+                    className="certified"
+                    src={HAPcertified}
+                    alt="Verified by the Homeless Assistance Project"
+                  />
+                }
+                {
+                  isMOHCDFunded &&
+                  <img
+                    className="mohcd-funded"
+                    src={MOHCDFunded}
+                    alt="Verified by MOHCD"
+                  />
+                }
+              </div>
               <h1 className="org--main--header--title">{resource.name}</h1>
               <div className="org--main--header--rating disabled-feature">
                 <p className="excellent">
