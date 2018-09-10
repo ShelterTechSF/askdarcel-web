@@ -94,7 +94,7 @@
     "test:watch": "npm run test -- --watch --watch-extensions jsx --inspect",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "postinstall": "ls ./app/components/Search && ls ./app/components/search && npm run build",
+    "postinstall": "ls ./app/components/Search && echo 'seperate' ls ./app/components/search && ls ./app/components && npm run build",
     "precommit": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack-dev-server --inline --open --mode=development",
