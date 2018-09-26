@@ -8,5 +8,4 @@ npm-debug.log
 app/utils/config.js
 .env
 config.yml
-config.example.yml
 package-lock.json
