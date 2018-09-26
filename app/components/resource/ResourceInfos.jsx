@@ -151,7 +151,7 @@ function Website(props) {
   }
   return (
     <span className="website">
-      <ExternalLink href={props.website}>{props.website}</ExternalLink>
+      <ExternalLink to={props.website}>{props.website}</ExternalLink>
     </span>
   );
 }
