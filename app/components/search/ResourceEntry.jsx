@@ -7,7 +7,7 @@ import { images } from '../../assets';
 import RelativeOpeningTime from '../listing/RelativeOpeningTime';
 
 // TODO: create a shared component for Resource and Service entries
-class ServiceEntry extends Component {
+class ResourceEntry extends Component {
   constructor(props) {
     super(props);
 
@@ -108,4 +108,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps)(ServiceEntry);
+export default connect(mapStateToProps)(ResourceEntry);

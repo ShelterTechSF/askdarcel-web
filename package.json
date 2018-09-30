@@ -105,5 +105,5 @@
     "url": "git+https://github.com/ShelterTechSF/askdarcel-web.git"
   },
   "author": "ShelterTech",
-  "license": "MIT"
+  "license": "GPL-3.0-or-later"
 }
