@@ -1,24 +1,17 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // TOP LEVEL IMPORTS - DO NOT ADD CSS HERE
 
-@import 'utils/layout';
+@import 'utils/helpers';
 @import 'utils/reset';
-@import 'utils/mixins';
-@import 'utils/images';
 
 // Basic Styles
-@import 'st-base/colors';
 @import 'st-base/buttons';
-@import 'st-base/typography';
 @import 'st-base/forms';
 @import 'st-base/modal';
 @import 'st-base/layout';
-@import 'st-base/notify';
-@import 'st-base/tables';
 @import 'st-base/loader';
 
 // GLOBAL COMPONENTS
-@import 'components/navigation';
 @import 'components/header';
 @import 'components/footer';
 @import 'components/largeheader';
@@ -30,15 +23,6 @@
 @import 'components/org-page';
 @import 'components/search-result-table';
 @import 'components/map';
-@import 'components/edit';
 @import 'components/login';
 @import 'components/admin';
 @import 'components/white-label';
-
-.disabled-feature {
-  display: none !important;
-}
-
-.container {
-  margin-top: #{$navigation-height}
-}

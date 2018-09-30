@@ -158,24 +158,24 @@ export function sortScheduleDays(scheduleDays) {
  * round(33.102938, 2) -> -33.10
  */
 export function round(value, decimals) {
-  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+  return Number(`${Math.round(`${value}e${decimals}`)}e-${decimals}`);
 }
 
 export function getWalkTime(currLocation, dest, cb) {
-    let directionsService = new google.maps.DirectionsService();
-    let myLatLng = new google.maps.LatLng(currLocation.lat, currLocation.lng);
-    let destLatLang = new google.maps.LatLng(dest.lat, dest.lng);
-    let preferences = {
-      origin: myLatLng,
-      destination: destLatLang,
-      travelMode: google.maps.TravelMode.WALKING
-    };
-    directionsService.route(preferences, function(result, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        cb(result.routes[0].legs[0].duration.text);
-      }
-    });
-  }
+  const directionsService = new google.maps.DirectionsService();
+  const myLatLng = new google.maps.LatLng(currLocation.lat, currLocation.lng);
+  const destLatLang = new google.maps.LatLng(dest.lat, dest.lng);
+  const preferences = {
+    origin: myLatLng,
+    destination: destLatLang,
+    travelMode: google.maps.TravelMode.WALKING,
+  };
+  directionsService.route(preferences, (result, status) => {
+    if (status === google.maps.DirectionsStatus.OK) {
+      cb(result.routes[0].legs[0].duration.text);
+    }
+  });
+}
 
 
 export function getTimes(scheduleDays) {
@@ -188,6 +188,7 @@ export function getTimes(scheduleDays) {
   // Logic to determine if the current resource is open
   // includes special logic for when a resource is open past midnight
   // on the previous day
+  // eslint-disable-next-line
   scheduleDays && scheduleDays.forEach((scheduleDay) => {
     const day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
     const opensAt = scheduleDay.opens_at;
@@ -209,11 +210,10 @@ export function getTimes(scheduleDays) {
   });
 
   if (openUntil) {
-    if(openUntil === 2359) {
+    if (openUntil === 2359) {
       return { openUntil, isOpen: true, is24hour: true };
-    } else {
-      return { openUntil, isOpen: true };
     }
+    return { openUntil, isOpen: true };
   }
   return { openUntil, isOpen: false };
 }

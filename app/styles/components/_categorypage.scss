@@ -79,7 +79,7 @@
 
 .category-button-title {
   word-break: keep-all;
-  color: $color-black;
+  color: $color-grey8;
   font-weight: 600;
   padding: 0 calc-em(25px) 0 calc-em(25px);
   @include r_max($break-tablet-s) {
@@ -121,7 +121,7 @@
 
 .list-category-button-title {
   word-break: keep-all;
-  color: $color-black;
+  color: $color-grey8;
   line-height: 20px;
   font-weight: 600;
   display: inline-block;

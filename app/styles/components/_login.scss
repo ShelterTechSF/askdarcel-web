@@ -5,7 +5,9 @@
 // SPLASH PAGE
 
 .splash-page {
-  @extend %bg-image;
+  background-repeat: no-repeat;
+background-size: contain;
+background-position: center;
   @extend %flex-center;
   background-size: cover;
   background-image: url(../assets/img/bg.png);
@@ -29,7 +31,9 @@
 
 .splash-logo {
   @extend %hide-text;
-  @extend %bg-image;
+  background-repeat: no-repeat;
+background-size: contain;
+background-position: center;
   width: calc-em(188px);
   height: calc-em(136px);
   background-image: url(../assets/img/askdarcel-logo.png);

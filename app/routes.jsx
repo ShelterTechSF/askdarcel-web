@@ -3,22 +3,22 @@ import { Route, Link, browserHistory, IndexRoute, withRouter } from 'react-route
 
 import configureStore from './store/configureStore';
 import App from './components/App';
-import CategoryPage from './components/Find/FindPage';
-import ResourcesTable from './components/Search/ResourcesTable';
-import Resource from './components/Resource/Resource';
-import EditSections from './components/Edit/EditSections';
-import ServicePage from './pages/Service'
-import Login from './components/User/Login';
+import CategoryPage from './components/find/FindPage';
+import ResourcesTable from './components/search/ResourcesTable';
+import Resource from './components/resource/Resource';
+import EditSections from './components/edit/EditSections';
+import ServicePage from './pages/Service';
+import Login from './components/user/Login';
 import Google from './utils/google';
-import CreateAccount from './components/User/CreateAccount';
-import TestAuth from './components/User/TestAuth';
-import Admin from './components/Admin/Admin';
-import ChangeRequests from './components/Admin/ChangeRequests';
+import CreateAccount from './components/user/CreateAccount';
+import TestAuth from './components/user/TestAuth';
+import Admin from './components/admin/Admin';
+import ChangeRequests from './components/admin/ChangeRequests';
 import Search from './pages/Search';
-import TermsOfServicePage from './pages/legal/TermsOfService'
-import PrivacyPolicyPage from './pages/legal/PrivacyPolicy'
+import TermsOfServicePage from './pages/legal/TermsOfService';
+import PrivacyPolicyPage from './pages/legal/PrivacyPolicy';
 
-import { RequireAuth } from './components/Auth/RequireAuth';
+import { RequireAuth } from './components/auth/RequireAuth';
 
 function redirectToRoot (nextState, replace) {
   replace({

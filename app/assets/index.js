@@ -26,8 +26,8 @@ if (subDomain === CONFIG.MOHCD_SUBDOMAIN) {
 } else {
   appImages = {
     background: require('../assets/img/bg.png'),
-    logoLarge: require('../assets/img/askdarcel-logo.png'),
-    logoSmall: require('../assets/img/logo-small-white@3x.png'),
+    logoLarge: require('../assets/img/askdarcel.svg'),
+    logoSmall: require('../assets/img/askdarcel.svg'),
     algolia: require('../assets/img/search-by-algolia.png'),
     mohcdSeal: require('../assets/img/sf-seal.png'),
     icon,

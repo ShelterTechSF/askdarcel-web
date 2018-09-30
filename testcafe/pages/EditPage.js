@@ -33,7 +33,7 @@ export default class EditPage {
     this.email = baseSelector.find('#edit-email-input');
     this.description = baseSelector.find('#edit-description-input');
     this.deletePhoneButton = ReactSelector('EditPhones').find('.trash-button');
-    this.saveButton = baseSelector.find('.edit--aside--content--button');
+    this.saveButton = baseSelector.find('.sidebar--actions--button');
   }
 
   static getPhone(index) {

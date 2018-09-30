@@ -1,0 +1,114 @@
+@import '../../styles/utils/_helpers.scss';
+
+////////////////////////////////////////////////////////////////////////////////////////
+// NAVIGATION
+
+$navigation-height: calc-em(80px);
+
+.site-nav {
+  @extend %flex-row;
+  justify-content: space-between;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: $navigation-height;
+  background: $color-white;
+  padding: calc-em(10px) calc-em(30px);
+  border-bottom: 1px solid $color-grey3;
+  @include r_max($break-tablet-s) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.find-content-container {
+  flex: 1 0 auto;
+}
+
+.nav-logo {
+  display: inline-block;
+  margin-right: calc-em(25px);
+  vertical-align: top;
+  img {
+    height: calc-em(20px);
+    width: auto;
+  }
+}
+
+.nav-search {
+  display: inline-block;
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
+  .search-field {
+    background-repeat: no-repeat;
+    background-image: url(../../assets/img/ic-search.png);
+    background-size: 18px 18px;
+    background-position: calc-em(15px) center;
+    padding-left: calc-em(45px);
+    width: calc-em(400px);
+    height: calc-em(40px);
+    border: 0;
+    background-color: $color-grey1;
+  }
+}
+
+.nav-list {
+  @extend %flex-row;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: stretch;
+  @include r_max($break-tablet-s) {
+    flex: 1 1 auto;
+  }
+
+  li {
+    @extend %flex-column;
+    flex: 1 0 auto;
+    a {
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      @extend %font-size-tiny;
+      background-size: calc-em(24px);
+      background-position: center 25%;
+      width: 100%;
+      height: 100%;
+      display: block;
+      height: calc-em(60px);
+      text-align: center;
+      padding: calc-em(35px) calc-em(15px) 0;
+      text-transform: lowercase;
+      color: $color-white;
+      @include r_max($break-tablet-s) {
+        color: $color-grey5;
+      }
+    }
+  }
+
+  .find {
+    background-image: url(../../assets/img/ic-find.png);
+  }
+  .saved {
+    background-image: url(../../assets/img/ic-saved.png);
+    background-size: calc-em(18px) calc-em(24px);
+  }
+  .review {
+    background-image: url(../../assets/img/ic-review.png);
+  }
+  .goals {
+    background-image: url(../../assets/img/ic-goals.png);
+    background-size: calc-em(26px) calc-em(15px);
+  }
+  .me {
+    background-image: url(../../assets/img/ic-me.png);
+  }
+}

@@ -1,0 +1,89 @@
+@import '../../styles/utils/_helpers.scss';
+
+////////////////////////////////////////////////////////////////////////////////////////
+// EDIT HOURS
+
+.hour-label {
+  text-align: right;
+}
+
+.day-group {
+  display: flex;
+  margin-bottom: 20px;
+
+  .hours {
+    width: 85%;
+  }
+
+  .remove-time {
+    position: absolute;
+    right: calc-em(-67px);
+    background-color: white;
+    color: $color-red;
+  }
+
+  .add-time {
+    width: 10%;
+    align-self: flex-start;
+    padding-left: 20px;
+    margin-top: 8.5px;
+
+    button {
+      height: 40px;
+    }
+  }
+
+  .is-24-hours {
+    height: 40px;
+    padding-left: 20px;
+    input:not(:checked) {
+      margin-top: 20px;
+    }
+  }
+  .open-24-hours {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.open-24-label {
+  text-align: right;
+  width: 100%;
+}
+
+.edit-hours-list {
+  li {
+    @extend %flex-row;
+    align-items: center;
+    margin-bottom: calc-em(10px);
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    p {
+      flex: 0 0 auto;
+      width: calc-em(36px);
+    }
+    .open24 {
+      flex: 1 1 auto;
+    }
+    div {
+      align-items: center;
+      display: flex;
+      width: 100%;
+      position: relative;
+    }
+    input {
+      flex: 1 1 auto;
+      margin: 0;
+      cursor: text;
+      &:first-of-type {
+        margin-right: calc-em(10px);
+      }
+      &[type='checkbox'] {
+        width: 35px;
+        margin-left: 30px;
+        float: right;
+      }
+    }
+  }
+}

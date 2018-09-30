@@ -1,0 +1,13 @@
+@import '../../styles/utils/_helpers.scss';
+
+.find-page .site-nav {
+  .nav-search {
+    display: none;
+  }
+}
+
+.find-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - #{$navigation-height});
+}
