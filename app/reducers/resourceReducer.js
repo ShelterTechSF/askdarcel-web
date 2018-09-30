@@ -1,5 +1,3 @@
-import * as types from '../actions/actionTypes';
-
 const initialState = {
   resource: null,
 };

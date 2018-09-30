@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { images } from '..';
 
 describe('images', () => {

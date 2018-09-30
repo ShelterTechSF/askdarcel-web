@@ -88,12 +88,12 @@
     "webpack-dev-server": "^3.1.6"
   },
   "scripts": {
-    "testserver": "cross-env NODE_ENV=test karma start internals/testing/karma.conf.js",
+    "testserver": "cross-env NODE_ENV=test karma start testing/karma.conf.js",
     "test": "NODE_ENV=test mocha --reporter spec testing/mocha.js app/**/*.spec.js*",
     "test:coverage": "nyc --extension .jsx --reporter=text npm test -- --exit",
     "test:watch": "npm run test -- --watch --watch-extensions jsx --inspect",
-    "lint": "eslint app/ testcafe/",
-    "lint:fix": "eslint --fix app/ testcafe/",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "postinstall": "npm run build",
     "precommit": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack",

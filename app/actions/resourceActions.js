@@ -1,5 +1,5 @@
 export default {
-  addResource(resource) {
+  addResource() {
 
   },
 };
