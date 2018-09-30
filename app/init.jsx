@@ -6,22 +6,20 @@ import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from './store/configureStore';
 import routes from './routes';
-import 'instantsearch.css/themes/reset.css';
 
+require('instantsearch.css/themes/reset.css');
 require('./styles/main.scss');
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
+const googleAnalyticsId = (NODE_ENV === 'production' || window.location.host === 'www.askdarcel.org') ? 'UA-116318550-1' : 'UA-116318550-2';
 
-if (NODE_ENV === 'production') {
-  ReactGA.initialize('UA-116318550-1');
-  history.listen((loc) => {
-    const page = loc.pathname + loc.search;
-    ReactGA.set({ page });
-    ReactGA.pageview(loc.pathname);
-  });
-}
-
+ReactGA.initialize(googleAnalyticsId);
+history.listen((loc) => {
+  const page = loc.pathname + loc.search;
+  ReactGA.set({ page });
+  ReactGA.pageview(loc.pathname);
+});
 
 ReactDOM.render((
   <Provider store={store} key="provider">
