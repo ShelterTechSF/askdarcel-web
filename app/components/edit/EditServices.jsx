@@ -41,10 +41,6 @@ class EditServices extends Component {
     });
   }
 
-  getAlert() {
-    alert('clicked');
-  }
-
   /* @method addService
    * @description Creates a brand new service
    */
