@@ -144,7 +144,7 @@ ServicePage.propTypes = {
   routeParams: PropTypes.object.isRequired,
 };
 
-export default connect(
+export const ServiceListingPage = connect(
   state => ({ ...state.services }),
   dispatch => bindActionCreators({ fetchService }, dispatch),
 )(ServicePage);

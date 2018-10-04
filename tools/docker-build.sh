@@ -24,6 +24,8 @@ echo "{
   \"build\": \"$TRAVIS_BUILD_NUMBER\"
 }" > version.json
 
+CONFIG_YAML=config.docker.yml npm run build
+
 docker build -f Dockerfile -t $REPO:$COMMIT .
 echo "Pushing tags for '$COMMIT' and '$TAG'"
 docker tag $REPO:$COMMIT $REPO:$TAG

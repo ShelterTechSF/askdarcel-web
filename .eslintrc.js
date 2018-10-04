@@ -22,7 +22,10 @@ module.exports = {
   "rules": {
     "camelcase": 0,
     "import/no-extraneous-dependencies": 0,
+    "import/default": 0,
+    "import/prefer-default-export": 0,
     "no-plusplus": 0,
+    "arrow-parens": [1, "as-needed"],
     "no-prototype-builtins": 0,
     "no-underscore-dangle": 0,
     "no-unused-expressions": [2, { "allowTaggedTemplates": true }],

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { RelativeOpeningTime } from '../listing';
+// import { RelativeOpeningTime } from '../listing';
 import { Accordion, AccordionItem } from '../ui/Accordion';
 
 class MapOfLocations extends React.Component {
@@ -80,7 +80,7 @@ class MapOfLocations extends React.Component {
                         <tr>
                           <td className="iconcell">{i}.</td>
                           <td><strong>{title}</strong></td>
-                          <td className="right"><RelativeOpeningTime schedule={loc.schedule} /></td>
+                          {/* <td className="right"><RelativeOpeningTime schedule={loc.schedule} /></td> */}
                           <td className="iconcell">
                             <div className="selector">
                               <i className="material-icons">keyboard_arrow_down</i>

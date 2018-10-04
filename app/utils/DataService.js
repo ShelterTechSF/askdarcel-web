@@ -29,7 +29,7 @@ export function post(url, body, headers) {
     mode: 'cors',
     headers: queryHeaders,
     body: JSON.stringify(body),
-  }).then((resp) => {
+  }).then(resp => {
     if (!resp.ok) { throw resp; }
     setAuthHeaders(resp);
     return resp;
@@ -47,7 +47,7 @@ export function get(url, headers) {
     method: 'GET',
     mode: 'cors',
     headers: queryHeaders,
-  }).then((resp) => {
+  }).then(resp => {
     if (!resp.ok) { throw resp; }
     setAuthHeaders(resp);
     return resp.json();
@@ -65,7 +65,7 @@ export function APIDelete(url, headers) {
     method: 'DELETE',
     mode: 'cors',
     headers: queryHeaders,
-  }).then((resp) => {
+  }).then(resp => {
     if (!resp.ok) { throw resp; }
     setAuthHeaders(resp);
   });

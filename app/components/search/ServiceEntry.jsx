@@ -57,8 +57,8 @@ class ServiceEntry extends Component {
               <p className="entry-affiliated-resource">a service offered by <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{hit.service_of}</Link></p>
               <p>
                 { hit.addresses && hit.addresses.address_1 ? hit.addresses.address_1 : 'No address found' }
-                { schedule ? ' • ' : null }
-                { schedule ? <RelativeOpeningTime schedule={schedule} /> : null }
+                {/* { schedule ? ' • ' : null } */}
+                {/* { schedule ? <RelativeOpeningTime schedule={schedule} /> : null } */}
               </p>
             </div>
           </div>

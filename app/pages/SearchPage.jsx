@@ -5,13 +5,14 @@ import {
   Configure,
   SearchBox,
   RefinementList,
-  } from 'react-instantsearch/dom';
+} from 'react-instantsearch/dom';
 import { isEqual } from 'lodash';
 import qs from 'qs';
 import SearchResultsContainer from '../components/search/SearchResultsContainer';
+import config from '../config';
 
 
-class Search extends Component {
+class SearchPage extends Component {
   constructor(props) {
     super(props);
 
@@ -56,9 +57,9 @@ class Search extends Component {
     return (
       <div className="search-page-container">
         <InstantSearch
-          appId={CONFIG.ALGOLIA_APPLICATION_ID}
-          apiKey={CONFIG.ALGOLIA_READ_ONLY_API_KEY}
-          indexName={`${CONFIG.ALGOLIA_INDEX_PREFIX}_services_search`}
+          appId={config.ALGOLIA_APPLICATION_ID}
+          apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
+          indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
           searchState={this.state.searchState}
           onSearchStateChange={this.onSearchStateChange}
           createURL={this.createURL}
@@ -86,4 +87,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Search);
+export const SearchResultsPage = connect(mapStateToProps)(SearchPage);

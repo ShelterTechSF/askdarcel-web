@@ -22,10 +22,10 @@ function adminLoginError() {
 
 export default {
   adminLogin(email, password) {
-    return (dispatch) => {
+    return dispatch => {
       dispatch(adminLoginRequest());
       authApi.adminLogin(email, password)
-        .then((response) => {
+        .then(response => {
           if (response.status === 200) {
             dispatch(adminLoginSuccess());
             const headers = response.headers;
@@ -41,7 +41,7 @@ export default {
             dispatch(adminLoginError());
           }
         })
-        .catch((error) => {
+        .catch(error => {
           // eslint-disable-next-line
           console.log('err', error);
         });

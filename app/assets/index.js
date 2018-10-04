@@ -1,6 +1,8 @@
+import config from '../config';
+
 const icons = require.context('../assets/img', true, /ic-.*\.(png|svg)$/i);
 const iconPathMap = {};
-icons.keys().forEach((key) => {
+icons.keys().forEach(key => {
   iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg|png)/)[1]] = icons(key);
 });
 
@@ -11,8 +13,7 @@ function icon(name) {
 const subDomain = window.location.host.split('.')[0];
 
 let appImages = {};
-/* eslint-disable no-undef */
-if (subDomain === CONFIG.MOHCD_SUBDOMAIN) {
+if (subDomain === config.MOHCD_SUBDOMAIN) {
 /* eslint-enable no-undef */
     /* eslint-disable global-require */
   appImages = {
