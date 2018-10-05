@@ -6,7 +6,7 @@ const searchPage = new SearchPage();
 fixture `Listings Page`
   .page `${config.baseUrl}/resources?categoryid=234`;
 
-test('Confirm listings page describes resources/services correctly', async (t) => {
+test('Confirm listings page describes resources/services correctly', async t => {
   const numResults = '1 Total Results';
   const walkingDistance = ' walking';
   const resourceName = 'A Test Resource';

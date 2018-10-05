@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Rating from './Rating'
 import { timeToString, stringToTime, daysOfTheWeek } from '../../utils/index';
 import moment from 'moment';
+import config from '../../config';
 
 class ResourcesRow extends Component {
   constructor(props) {
@@ -173,8 +174,8 @@ function buildImgURL(address) {
     let url = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" +
       address.latitude + "," + address.longitude +
       "&fov=90&heading=235&pitch=10";
-    if(CONFIG.GOOGLE_API_KEY) {
-      url += '&key=' + CONFIG.GOOGLE_API_KEY;
+    if(config.GOOGLE_API_KEY) {
+      url += '&key=' + config.GOOGLE_API_KEY;
     }
     return url;
   } else {

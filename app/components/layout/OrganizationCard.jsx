@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router';
 import StreetViewImage from 'components/maps/StreetViewImage';
-import RelativeOpeningTime from 'components/listing/RelativeOpeningTime';
+// import RelativeOpeningTime from 'components/listing/RelativeOpeningTime';
 
 class OrganizationCard extends React.Component {
   calculateShortDescription() {
@@ -13,8 +13,8 @@ class OrganizationCard extends React.Component {
   }
 
   render() {
-    const { org, org: { id, address, schedule, name } } = this.props;
-    const maxHeight = '106px'
+    const { org, org: { id, address, name } } = this.props; // schedule
+    const maxHeight = '106px';
 
     return (
       <Link to={{ pathname: '/resource', query: { id } }} className="card" style={{ maxHeight }}>
@@ -24,7 +24,7 @@ class OrganizationCard extends React.Component {
           <h4>
             <span>{ address.address_1 }</span>
             {/* TODO Walking distance */}
-            <RelativeOpeningTime schedule={schedule} />
+            {/* <RelativeOpeningTime schedule={schedule} /> */}
           </h4>
           {/* TODO Add Rating */}
           {/* TODO HAP Certification */}

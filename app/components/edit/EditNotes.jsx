@@ -33,7 +33,7 @@ class EditNotes extends Component {
   addNote() {
     const existingNotes = this.state.existingNotes;
     const newUUID = this.state.uuid - 1;
-    existingNotes.unshift({
+    existingNotes.push({
       key: newUUID,
     });
     this.setState({ existingNotes, uuid: newUUID });
@@ -85,18 +85,17 @@ class EditNotes extends Component {
       <li className="edit--section--list--item edit--notes">
         <label htmlFor="add-note">
           Notes
-          <button
-            id="add-note"
-            className="edit--section--list--item--button"
-            onClick={this.addNote}
-          >
-            <i className="material-icons">add_box</i> Add Note
-          </button>
         </label>
         <p><a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Markdown</a> is also supported for notes.</p>
         <ul className="edit--section--list--item--sublist">
           {this.renderNotes()}
         </ul>
+        <button
+          className="edit--section--list--item--button"
+          onClick={this.addNote}
+        >
+          <i className="material-icons">add_box</i> Add Note
+        </button>
       </li>
     );
   }

@@ -8,6 +8,7 @@
   },
   "main": "app.js",
   "dependencies": {
+    "@sentry/browser": "^4.0.6",
     "es6-promise": "^3.0.2",
     "express": "4.13.4",
     "google-map-react": "^0.34.0",
@@ -104,5 +105,5 @@
     "url": "git+https://github.com/ShelterTechSF/askdarcel-web.git"
   },
   "author": "ShelterTech",
-  "license": "MIT"
+  "license": "GPL-3.0-or-later"
 }

@@ -8,7 +8,7 @@ class AskDarcelClient {
 
   signIn(email, password) {
     return this.postData('/admin/auth/sign_in', { email, password })
-      .then((d) => {
+      .then(d => {
         this.headers['access-token'] = d.headers['access-token'];
         this.headers.client = d.headers.client;
         this.headers.uid = d.headers.uid;

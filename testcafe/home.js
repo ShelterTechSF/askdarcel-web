@@ -21,7 +21,7 @@ fixture `Home Page`
 //     ;
 // });
 
-test('Basic search test', async (t) => {
+test('Basic search test', async t => {
   await t
     .typeText(findPage.searchBox, 'Food')
     .pressKey('enter')

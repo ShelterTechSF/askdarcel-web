@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { buildHoursText } from '../../utils/index';
+import { buildHoursText } from '../../utils';
 
 export default class Hours extends Component {
   render() {

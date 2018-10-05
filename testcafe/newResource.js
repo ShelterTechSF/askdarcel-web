@@ -5,7 +5,7 @@ const newResourcePage = new NewResourcePage();
 fixture `Add New Resource`
   .page(NewResourcePage.url());
 
-test('Add new resource, basic', async (t) => {
+test('Add new resource, basic', async t => {
   const newName = 'New Resource Name';
   // TODO: These are all currently required, but should they be?
   const newAddress = {

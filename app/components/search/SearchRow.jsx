@@ -17,9 +17,9 @@ const SearchRow = ({ hit }) => {
   }
 
   return (
-    <div>
+    <ul>
       {entry}
-    </div>
+    </ul>
   );
 };
 

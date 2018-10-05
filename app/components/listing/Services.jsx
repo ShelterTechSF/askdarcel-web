@@ -1,34 +1,27 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import DetailedHours from './DetailedHours';
+import Notes from './Notes';
 
 class Services extends Component {
   constructor(props) {
     super(props);
-    this.renderServices.bind(this);
     this.renderServicesSection.bind(this);
   }
 
   renderServicesSection() {
     return this.props.services && this.props.services.length > 0
       ? (
-        <div>
-          {this.renderServices(this.props.services)}
-        </div>
+          <ul className="service--section--list">
+            {this.props.services.map((service, i) => (
+              <Service service={service} key={i} />
+            ))}
+          </ul>
       ) : null;
   }
 
-  /* eslint-disable class-methods-use-this */
-  renderServices(services) {
-    return services.map(service => <Service service={service} key={service.id} />);
-  }
-
   render() {
-    return (
-      <div className="services-container">
-        {this.renderServicesSection()}
-      </div>
-    );
+    return this.renderServicesSection();
   }
 }
 

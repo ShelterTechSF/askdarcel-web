@@ -6,7 +6,7 @@ fixture `Service Page`
   // TODO: Dynamically find a service to test against
   .page(servicePage.url(1));
 
-test('Confirm Page Loads with Information', async (t) => {
+test('Confirm Page Loads with Information', async t => {
   await t
         // Name element should exist
         .expect(servicePage.serviceName.exists)

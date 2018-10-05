@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Email, StreetView } from './ResourceInfos';
-import DetailedHours from './DetailedHours';
-import Services from './Services';
-import Notes from './Notes';
+import { AddressInfo, TodaysHours, PhoneNumber, ResourceCategories, Website, Email, StreetView } from 'components/listing/ResourceInfos';
+import DetailedHours from 'components/listing/DetailedHours';
+import Services from 'components/listing/Services';
+import Notes from 'components/listing/Notes';
 import Loader from 'components/ui/Loader';
-import HAPcertified from '../../assets/img/ic-hap.png';
-import MOHCDFunded from '../../assets/img/ic-mohcd-funded-services.png';
-import ResourceMap from './ResourceMap';
-import * as dataService from '../../utils/DataService';
-import ReactMarkdown from 'react-markdown';
+import ResourceMap from 'components/listing/ResourceMap';
+import HAPcertified from '../assets/img/ic-hap.png';
+import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
+import * as dataService from '../utils/DataService';
+
 
 function scrollToElement(selector) {
   const elem = document.getElementById(selector);
   if (elem) {
-    elem.scrollIntoView({ block: 'start', behaviour: 'smooth' });
+    elem.scrollIntoView({ block: 'center', behaviour: 'smooth' });
   }
 }
 
-class Resource extends Component {
+export class OrganizationListingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { resource: null };
@@ -55,11 +56,12 @@ class Resource extends Component {
   }
 
   isMOHCDFunded() {
-    let { resource } = this.state;
+    const { resource } = this.state;
     let isMOHCDFunded = false;
 
-    resource && resource.categories.map(category => {
-      if( category.name === "MOHCD Funded" ) {
+    // eslint-disable-next-line
+    resource && resource.categories.forEach(category => {
+      if (category.name === 'MOHCD Funded') {
         isMOHCDFunded = true;
       }
     });
@@ -130,12 +132,10 @@ class Resource extends Component {
               <header className="service--section--header">
                 <h4>Services</h4>
               </header>
-              <ul className="service--section--list">
-                <Services description={resource.long_description} services={resource.services} />
-              </ul>
+              <Services description={resource.long_description} services={resource.services} />
             </section>
 
-            <Notes notes={this.state.resource.notes} />
+            <Notes notes={this.state.resource.notes} id="notes" />
 
             <section className="info--section" id="info">
               <header className="service--section--header">
@@ -203,11 +203,11 @@ class Resource extends Component {
   }
 }
 
-Resource.defaultProps = {
+OrganizationListingPage.defaultProps = {
   userLocation: null,
 };
 
-Resource.propTypes = {
+OrganizationListingPage.propTypes = {
   location: PropTypes.shape({
     query: PropTypes.shape({
       resourceid: PropTypes.string,
@@ -219,5 +219,3 @@ Resource.propTypes = {
     lng: PropTypes.number.isRequired,
   }),
 };
-
-export default Resource;

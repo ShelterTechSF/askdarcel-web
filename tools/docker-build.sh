@@ -5,7 +5,7 @@ REPO=sheltertechsf/askdarcel-web
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
 if [[ -n "$TRAVIS_TAG" ]]; then
-    TAG="$TRAVIS_TAG"
+    TAG="dev-$TRAVIS_TAG"
 else
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         TAG="pull-request-$TRAVIS_PULL_REQUEST"
@@ -23,6 +23,8 @@ echo "{
   \"image\": \"$TAG\",
   \"build\": \"$TRAVIS_BUILD_NUMBER\"
 }" > version.json
+
+CONFIG_YAML=config.docker.yml npm run build
 
 docker build -f Dockerfile -t $REPO:$TAG .
 echo "Pushing tags for '$TAG'"

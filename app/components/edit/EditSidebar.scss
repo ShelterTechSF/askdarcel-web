@@ -30,6 +30,22 @@
   font-size: calc-em(13px);
   font-weight: 700;
   color: $color-grey7;
+  .service--action--button {
+    color: $color-grey5;
+    background: none;
+    padding: 0;
+    height: 100%;
+    float: right;
+
+    &:hover {
+      box-shadow: none;
+      color: $color-brand;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
   & a {
     color: $color-grey7;
     &:hover {
