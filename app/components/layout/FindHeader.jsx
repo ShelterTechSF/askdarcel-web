@@ -2,7 +2,6 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import './FindHeader.scss';
 
-
 class FindHeader extends React.Component {
   constructor() {
     super();

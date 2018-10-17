@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Hours from './Hours';
+import config from '../../config';
 
 function Cat(props) {
   return <p>{props.category}</p>;
@@ -188,12 +189,9 @@ Email.defaultProps = {
 function buildImgURL(address) {
   if (address) {
     let url = `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${address.latitude},${address.longitude}&fov=90&heading=235&pitch=10`;
-    // Ignore undefined CONFIG because it gets injected by extended-define-webpack-plugin
-    /* eslint-disable no-undef */
-    if (CONFIG.GOOGLE_API_KEY) {
-      url += `&key=${CONFIG.GOOGLE_API_KEY}`;
+    if (config.GOOGLE_API_KEY) {
+      url += `&key=${config.GOOGLE_API_KEY}`;
     }
-    /* eslint-enable no-undef */
     return url;
   }
   return 'http://lorempixel.com/200/200/city/';

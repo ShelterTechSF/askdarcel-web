@@ -1,18 +1,19 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withRouter, browserHistory } from 'react-router';
 import _ from 'lodash';
 
 import { Loader } from 'components/ui';
-import EditAddress from './EditAddress';
-import EditServices from './EditServices';
-import EditNotes from './EditNotes';
-import EditSchedule from './EditSchedule';
-import EditPhones from './EditPhones';
-import EditSidebar from './EditSidebar';
-import * as dataService from '../../utils/DataService';
+import EditAddress from '../components/edit/EditAddress';
+import EditServices from '../components/edit/EditServices';
+import EditNotes from '../components/edit/EditNotes';
+import EditSchedule from '../components/edit/EditSchedule';
+import EditPhones from '../components/edit/EditPhones';
+import EditSidebar from '../components/edit/EditSidebar';
+import * as dataService from '../utils/DataService';
 
-import './EditSections.scss';
+import './OrganizationEditPage.scss';
 
 function getDiffObject(curr, orig) {
   return Object.entries(curr).reduce((acc, [key, value]) => {
@@ -169,7 +170,7 @@ function createFullSchedule(scheduleObj) {
   return { schedule_days: [] };
 }
 
-class EditSections extends React.Component {
+export class OrganizationEditPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -205,6 +206,7 @@ class EditSections extends React.Component {
     this.postSchedule = this.postSchedule.bind(this);
     this.createResource = this.createResource.bind(this);
     this.prepServicesData = this.prepServicesData.bind(this);
+    this.addService = this.addService.bind(this);
   }
 
   componentDidMount() {
@@ -704,9 +706,17 @@ class EditSections extends React.Component {
           services={this.state.resource.services}
           handleServiceChange={this.handleServiceChange}
           handleDeactivation={this.handleDeactivation}
+          ref={instance => { this.serviceChild = instance; }}
         />
       </ul>
     );
+  }
+
+  addService() {
+    this.serviceChild.addService();
+    const newService =document.getElementById('new-service-button');
+    const domNode = ReactDOM.findDOMNode(newService);
+    domNode.scrollIntoView({behavior: "smooth"});
   }
 
   render() {
@@ -724,6 +734,7 @@ class EditSections extends React.Component {
         certifyHAP={this.certifyHAP}
         newServices={this.state.services.services}
         newResource={this.state.newResource}
+        addService={this.addService}
       />
       <div className="edit--main">
         <header className="edit--main--header">
@@ -753,7 +764,7 @@ function isEmpty(map) {
   return true;
 }
 
-EditSections.propTypes = {
+OrganizationEditPage.propTypes = {
   // TODO: location is only ever used to get the resourceid; we should just pass
   // in the resourceid directly as a prop
   location: PropTypes.shape({
@@ -765,4 +776,4 @@ EditSections.propTypes = {
   router: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default withRouter(EditSections);
+export default withRouter(OrganizationEditPage);

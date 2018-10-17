@@ -1,13 +1,13 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
-import Loader from '../ui/Loader';
-import ChangeRequest from './ChangeRequest';
-import ProposedService from './ProposedService';
+import Loader from '../../components/ui/Loader';
+import ChangeRequest from '../../components/admin/ChangeRequest';
+import ProposedService from '../../components/admin/ProposedService';
 
 import * as DataService from '../../utils/DataService';
 import { getAuthRequestHeaders } from '../../utils/index';
 
-class ChangeRequestsPage extends React.Component {
+export class ChangeRequestsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -266,5 +266,3 @@ class ChangeRequestsPage extends React.Component {
     );
   }
 }
-
-export default ChangeRequestsPage;

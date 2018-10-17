@@ -8,6 +8,7 @@
   },
   "main": "app.js",
   "dependencies": {
+    "@sentry/browser": "^4.0.6",
     "es6-promise": "^3.0.2",
     "express": "4.13.4",
     "google-map-react": "^0.34.0",
@@ -95,7 +96,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "postinstall": "npm run build",
-    "precommit": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack-dev-server --inline --open --mode=development",
     "testcafe": "testcafe"

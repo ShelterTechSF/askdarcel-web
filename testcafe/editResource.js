@@ -18,12 +18,12 @@ async function testEditTextProperty(t, showPageSelector, editPageSelector, newVa
     ;
 }
 
-test('Edit resource name', async (t) => {
+test('Edit resource name', async t => {
   await testEditTextProperty(t, resourcePage.resourceName, editResourcePage.name, 'New Resource Name');
 });
 
 
-test('Edit resource address', async (t) => {
+test('Edit resource address', async t => {
   const newProps = {
     address1: '123 Fake St.',
     address2: 'Suite 456',
@@ -60,7 +60,7 @@ test('Edit resource address', async (t) => {
 });
 
 
-test('Edit resource phone number', async (t) => {
+test('Edit resource phone number', async t => {
   const newNumber = '415-555-5555';
   const newFormattedNumber = '(415) 555-5555';
   const newServiceType = 'Main number';
@@ -82,7 +82,7 @@ test('Edit resource phone number', async (t) => {
 });
 
 
-test('Add resource phone number', async (t) => {
+test('Add resource phone number', async t => {
   const newNumber = '415-555-5556';
   const newFormattedNumber = '(415) 555-5556';
   const newServiceType = 'Added number';
@@ -112,7 +112,7 @@ test('Add resource phone number', async (t) => {
     ;
 });
 
-test('Delete resource phone number', async (t) => {
+test('Delete resource phone number', async t => {
   await t.hover(resourcePage.phones);
   const originalCount = await resourcePage.phones.with({ boundTestRun: t }).count;
 
@@ -128,7 +128,7 @@ test('Delete resource phone number', async (t) => {
     ;
 });
 
-test('Edit resource website', async (t) => {
+test('Edit resource website', async t => {
   await testEditTextProperty(
     t,
     resourcePage.website,
@@ -137,7 +137,7 @@ test('Edit resource website', async (t) => {
   );
 });
 
-test('Edit resource email', async (t) => {
+test('Edit resource email', async t => {
   await testEditTextProperty(
     t,
     resourcePage.email,
@@ -146,7 +146,7 @@ test('Edit resource email', async (t) => {
   );
 });
 
-test('Edit resource description', async (t) => {
+test('Edit resource description', async t => {
   await testEditTextProperty(
     t,
     resourcePage.description,

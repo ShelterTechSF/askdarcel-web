@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-class Admin extends React.Component {
+export class AdminPage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -42,5 +42,3 @@ class Admin extends React.Component {
     );
   }
 }
-
-export default Admin;

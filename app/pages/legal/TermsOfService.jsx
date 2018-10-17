@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Footer from '../../components/ui/Footer';
 
-export default class TermsOfServicePage extends React.Component {
+export class TermsOfServicePage extends React.Component {
   static get content() {
     return `
 # AskDarcel Terms of Service

@@ -48,7 +48,7 @@ class EditServices extends Component {
     const { existingServices } = this.state;
     const newUUID = this.state.uuid - 1;
 
-    existingServices.unshift({
+    existingServices.push({
       id: newUUID,
       key: newUUID,
       notes: [],
@@ -65,13 +65,6 @@ class EditServices extends Component {
   render() {
     return (
       <li className="edit--section--list--item">
-        <button
-          className="edit--section--list--item--button new-service"
-          onClick={this.addService}
-        >
-          <i className="material-icons">add_box</i>
-          Add New Service
-        </button>
         <ul className="edit--section--list--item--sublist edit--service--list">
           {
             this.state.existingServices.map((service, index) => (
@@ -85,6 +78,14 @@ class EditServices extends Component {
             ))
           }
         </ul>
+        <button
+          className="edit--section--list--item--button new-service"
+          id="new-service-button"
+          onClick={this.addService}
+        >
+          <i className="material-icons">add_box</i>
+          Add New Service
+        </button>
       </li>
     );
   }

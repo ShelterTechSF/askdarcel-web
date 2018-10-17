@@ -62,18 +62,21 @@ class EditSidebar extends React.Component {
           </ul>
           <ul className="sidebar--list">
             <li className="sidebar--list--heading">
-              <h3><a href="#services">Services</a></h3>
+              <h3>
+                <a href="#services">Services</a>
+                <button className="service--action--button" onClick={this.props.addService}><i className="material-icons">add</i></button>
+              </h3>
             </li>
-            {Object.keys(this.props.newServices).reverse().map(service => (
-              <li className="sidebar--list--item">
-                <a href={`#${service}`} style={{ display: 'block' }}>{this.props.newServices[service].name}</a>
-              </li>
-            ))}
             { resource.services ? resource.services.map(service => (
               <li className="sidebar--list--item">
                 <a href={`#${service.id}`}>{service.name}</a>
               </li>
             )) : null }
+            {Object.keys(this.props.newServices).map(service => (
+              <li className="sidebar--list--item">
+                <a href={`#${service}`} style={{ display: 'block' }}>{this.props.newServices[service].name}</a>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="sidebar--actions">

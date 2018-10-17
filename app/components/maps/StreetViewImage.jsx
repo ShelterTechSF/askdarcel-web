@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import config from '../../config';
 
 class StreetViewImage extends React.Component {
   buildImageUrl() {
@@ -12,7 +13,7 @@ class StreetViewImage extends React.Component {
       url += `&location=${address.latitude},${address.longitude}`;
       url += '&fov=90&heading=235&pitch=10';
 
-      if (CONFIG.GOOGLE_API_KEY) { url += `&key=${CONFIG.GOOGLE_API_KEY}`; }
+      if (config.GOOGLE_API_KEY) { url += `&key=${config.GOOGLE_API_KEY}`; }
 
       return url;
     } else {

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Navigation from './ui/Navigation';
-import CategoryPage from './find/FindPage';
-import ResourcesTable from './search/ResourcesTable';
+// import CategoryPage from './find/FindPage';
+// import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import userActions from '../actions/userActions';
+import config from '../config';
 
 
 class App extends Component {
@@ -85,8 +86,8 @@ class App extends Component {
     return new Promise((resolve, reject) => {
       // Results are not very accurate
       let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
-      if(CONFIG.GOOGLE_API_KEY) {
-        url += '?key=' + CONFIG.GOOGLE_API_KEY;
+      if(config.GOOGLE_API_KEY) {
+        url += '?key=' + config.GOOGLE_API_KEY;
       }
       return fetch(url, {method: 'post'}).then(r => r.json())
         .then(data => {

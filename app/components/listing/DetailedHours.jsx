@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { timeToString, sortScheduleDays } from '../../utils/index';
+import { timeToString, sortScheduleDays } from '../../utils';
 
 export default function DetailedHours(props) {
   let { schedule } = props;

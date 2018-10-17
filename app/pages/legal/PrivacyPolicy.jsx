@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Footer from '../../components/ui/Footer';
 
-export default class PrivacyPolicyPage extends React.Component {
+export class PrivacyPolicyPage extends React.Component {
   static get content() {
     return `
 # Privacy Policy
