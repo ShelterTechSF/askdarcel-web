@@ -36,22 +36,44 @@ class ServicePage extends React.Component {
       .map(row => ({ title: row[0], value: row[1] }));
   }
 
+  getSidebarActions(resource){
+    const sidebarActions = [
+      // TODO Edit should add service ID header
+      { name: 'Edit', icon: 'edit', to: `/resource/edit?resourceid=${resource.id}` }, // TODO Update with path to /resource/:id
+      { name: 'Print', icon: 'print', handler: () => { window.print(); } },
+      // TODO Integrate with mobile share, how to handle shares
+      // { name: 'Share', icon: 'share' },
+      // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
+    ]
+    if(resource.address){
+      sidebarActions.push(
+        // TODO Directions to address, not lat/long, is much better UX
+        { name: 'Directions', icon: 'directions', link: `http://google.com/maps/dir/?api=1&destination=${resource.address.latitude},${resource.address.longitude}` },
+      )
+    }
+    return sidebarActions
+  }
+
+  getServiceLocations(service, resource, schedule){
+    // TODO This should be serviceAtLocation
+    return resource.address ?
+      [ resource.address ]
+        .map(address => ({
+          id: address.id,
+          address,
+          name: service.name,
+          schedule,
+        })) : [];
+  }
+
   render() {
     const { activeService: service } = this.props;
     if (!service) { return (<Loader />); }
 
     const { resource, program, schedule } = service;
     const details = this.generateDetailsRows();
-
-    // TODO This should be serviceAtLocation
-    const locations = [
-      resource.address,
-    ].map(address => ({
-      id: address.id,
-      address,
-      name: service.name,
-      schedule,
-    }));
+    const sidebarActions = this.getSidebarActions(resource);
+    const locations = this.getServiceLocations(service, resource, schedule);
 
     return (
       <div className="listing-container">
@@ -119,18 +141,7 @@ class ServicePage extends React.Component {
 
             </div>
             <div className="listing--aside">
-              <ActionSidebar actions={[
-                // TODO Edit should add service ID header
-                { name: 'Edit', icon: 'edit', to: `/resource/edit?resourceid=${resource.id}` }, // TODO Update with path to /resource/:id
-                { name: 'Print', icon: 'print', handler: () => { window.print(); } },
-                // TODO Integrate with mobile share, how to handle shares
-                // { name: 'Share', icon: 'share' },
-                // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
-                // TODO Directions to address, not lat/long, is much better UX
-                { name: 'Directions', icon: 'directions', link: `http://google.com/maps/dir/?api=1&destination=${resource.address.latitude},${resource.address.longitude}` },
-              ]}
-              />
-
+              <ActionSidebar actions={sidebarActions}/>
               { service.categories.map(cat => (<CategoryTag key={cat.id} category={cat} />)) }
             </div>
           </div>
