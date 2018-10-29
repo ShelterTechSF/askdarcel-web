@@ -78,6 +78,8 @@ export class OrganizationListingPage extends React.Component {
     return (!resource || !window.google ? <Loader /> :
     <div className="org-container">
       <article className="org" id="resource">
+      {
+        resource.address &&
         <div className="org--map">
           <ResourceMap
             name={resource.name}
@@ -87,6 +89,7 @@ export class OrganizationListingPage extends React.Component {
           />
           <StreetView address={resource.address} resourceName={resource.name} />
         </div>
+      }
         <div className="org--main">
           <div className="org--main--left">
 
@@ -147,7 +150,10 @@ export class OrganizationListingPage extends React.Component {
               <ul className="info">
                 <div className="info--column">
                   <ResourceCategories categories={resource.categories} />
-                  <AddressInfo address={resource.address} />
+                  {
+                    resource.address &&
+                    <AddressInfo address={resource.address} />
+                  }
                   <PhoneNumber phones={resource.phones} />
                   <Website website={resource.website} />
                   <Email email={resource.email} />
@@ -161,14 +167,17 @@ export class OrganizationListingPage extends React.Component {
 
           <div className="org--aside">
             <div className="org--aside--content">
-              <a
-                href={`https://maps.google.com?saddr=Current+Location&daddr=${resource.address.latitude},${resource.address.longitude}&dirflg=w`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="org--aside--content--button directions-button"
-              >
-                Get Directions
-              </a>
+              {
+                resource.address &&
+                <a
+                  href={`https://maps.google.com?saddr=Current+Location&daddr=${resource.address.latitude},${resource.address.longitude}&dirflg=w`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="org--aside--content--button directions-button"
+                >
+                  Get Directions
+                </a>
+              }
               <Link to={{ pathname: '/resource/edit', query: { resourceid: resource.id } }} className="org--aside--content--button edit-button">
                   Make Edits
               </Link>
