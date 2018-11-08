@@ -21,18 +21,20 @@ The docker-compose.yml is configured to mount the git repo on your host
 filesystem into the Docker container so that any changes you make on your host
 machine will be synced into the container and vice versa.
 
-#### Creating the `.env` file
+#### Creating the `config.yml` file
 
-The `.env` file is a de facto file format that allows you to specify environment
-variables that can be read by an application. It makes it easier to pass
-environment variables to an application without manually having to set them in
-the environment. It is supported by:
-- [Docker](https://code.visualstudio.com/docs/python/environments) (built in)
-- [NodeJS](https://www.npmjs.com/package/dotenv) (as a library)
-- [Ruby](https://github.com/bkeepers/dotenv) (as a library)
+All config should be added in a file called `config.yml`. A sample `config.example.yml` is provided, you need to copy it and edit any parts that ask you to enter in your own information.
 
-Create a file named `.env` with the credentials listed in [this
-document](https://sheltertech.quip.com/2ft5Ax19Kc6h).
+```sh
+$ cp config.example.yml config.yml
+
+# Open it in your preferred text editor
+```
+
+##### Algolia
+[Algolia](https://www.algolia.com/doc/guides/getting-started/what-is-algolia/) is used as our search engine and in order for it to operate properly for everyone, we each need our own [index](https://www.algolia.com/doc/guides/indexing/indexing-overview/).
+
+- in `config.yml` set _your_ github username as the value for `ALGOLIA_INDEX_PREFIX`. This will point to the search index matching your local environment.
 
 #### Building and running the application
 
@@ -53,15 +55,6 @@ By default, this assumes that you have also set up askdarcel-api project using
 the Docker setup instructions and that the API server is running. If you want to
 target a different instance of askdarcel-api, you can modify the `API_URL`
 environment variable in docker-compose.yml.
-
-## Configuration (For both Dockerized or Local setup)
-
-All config should be added in a file called `config.yml`. A sample `config.example.yml` is provided, you need to copy it to add your own
-
-### Algolia
-[Algolia](https://www.algolia.com/doc/guides/getting-started/what-is-algolia/) is used as our search engine and in order for it to operate properly for everyone, we each need our own [index](https://www.algolia.com/doc/guides/indexing/indexing-overview/).
-
-- in `config.yml` set _your_ github username as the value for `ALGOLIA_INDEX_PREFIX`. This will point to the search index matching your local environment.
 
 ## Non-Docker Development Environment
 
