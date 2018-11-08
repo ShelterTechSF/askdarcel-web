@@ -41,7 +41,7 @@ function CustomMarker({index}) {
             fill="#E6D2FC"
           />
         </g>
-        <text fontSize="45px" x="65" y="55" fill="#276ce5" fontWeight="bold" textAnchor="middle" >{index}</text>
+        <text fontSize="45px" x="65" y="55" fill="#276ce5" fontWeight="bold" textAnchor="middle" >{index + 1}</text>
       </g>
     </svg>
   );
