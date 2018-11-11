@@ -11,4 +11,4 @@ RUN rm /etc/nginx/conf.d/*
 ADD docker/tiller /etc/tiller
 
 CMD ["tiller", "-v"]
-ENTRYPOINT ["/app/askdarcel/replace-environment-config", "/app/askdarcel/bundle.js"]
+ENTRYPOINT ["/app/askdarcel/replace-environment-config.sh", "/app/askdarcel/bundle.js"]
