@@ -154,3 +154,55 @@ test('Edit resource description', async t => {
     'This is my new description',
   );
 });
+
+test('Add new service', async t => {
+  // Navigate to edit page
+  await t
+    .click(resourcePage.editButton);
+
+  // Wait for page to load before counting services by using hover action.
+  await t.hover(editResourcePage.addServiceButton);
+  // Count the number of services
+  const originalServiceCount = await editResourcePage.services.with({ boundTestRun: t }).count;
+
+  // Add a service
+  await t
+    .click(editResourcePage.addServiceButton);
+
+  // Check edit resource page
+  await t
+    .expect(editResourcePage.services.count)
+    .eql(originalServiceCount + 1);
+
+  // Save and check resource page
+  await t
+    .typeText(editResourcePage.newServiceName, 'Test Service', { replace: true })
+    .click(editResourcePage.saveButton)
+    .expect(resourcePage.services.count)
+    .eql(originalServiceCount + 1);
+});
+
+test('Delete a service', async t => {
+  // Wait for page to load before counting services by using hover action.
+  await t
+    .hover(resourcePage.editButton);
+
+  // Count the number of services
+  const originalServiceCount = await resourcePage.services.with({ boundTestRun: t }).count;
+
+  // Navigate to edit page and delete the last service
+  await t
+    .click(resourcePage.editButton)
+    .setNativeDialogHandler(() => true)
+    .click(editResourcePage.removeFirstServiceButton);
+
+  // Wait for page to load before counting services by using hover action.
+  await t
+    .hover(editResourcePage.addServiceButton)
+    .click(editResourcePage.saveButton);
+
+  // Test
+  await t
+    .expect(resourcePage.services.count)
+    .eql(originalServiceCount - 1);
+});

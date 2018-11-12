@@ -34,6 +34,10 @@ export default class EditPage {
     this.description = baseSelector.find('#edit-description-input');
     this.deletePhoneButton = ReactSelector('EditPhones').find('.trash-button');
     this.saveButton = baseSelector.find('.sidebar--actions--button');
+    this.addServiceButton = baseSelector.find('.new-service');
+    this.removeFirstServiceButton = baseSelector.find('.remove-item:nth-last-of-type(1)');
+    this.services = baseSelector.find('.edit--service');
+    this.newServiceName = baseSelector.find('.edit--service--list .edit--section:last-child .edit--section--list--item:first-child input');
   }
 
   static getPhone(index) {

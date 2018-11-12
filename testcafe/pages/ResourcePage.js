@@ -17,6 +17,7 @@ export default class ResourcePage {
     this.website = baseSelector.findReact('Website');
     this.email = baseSelector.findReact('Email');
     this.editButton = baseSelector.find('.edit-button');
+    this.services = baseSelector.find('#services.service--section .service');
   }
 
   static url(resourceId) {
