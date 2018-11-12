@@ -64,25 +64,25 @@ class Service extends Component {
         { infoHidden ? null :
         <div className="service-application-process-container">
           <ul className="service--details">
-            <ServiceContactDetails email={service.email} />
+            <ServiceContactDetails email={service.email} website={service.url} />
             <ServiceEligibility
               subject="How to apply"
-              result={this.props.service.application_process}
+              result={service.application_process}
             />
             <ServiceEligibility
               subject="Eligibilities"
-              result={this.props.service.eligibility}
+              result={service.eligibility}
             />
             <ServiceEligibility
               subject="Required documents"
-              result={this.props.service.required_documents}
+              result={service.required_documents}
             />
             <ServiceEligibility
               subject="Fees"
-              result={this.props.service.fee}
+              result={service.fee}
             />
-            {this.props.service.notes.length ? <Notes notes={this.props.service.notes} /> : null }
-            <WeeklyHours schedule={this.props.service.schedule} />
+            {service.notes.length ? <Notes notes={service.notes} /> : null }
+            <WeeklyHours schedule={service.schedule} />
           </ul>
           <div
             role="button"
@@ -125,12 +125,13 @@ class ServiceCategory extends Component {
 
 class ServiceContactDetails extends Component {
   render() {
-    const { email } = this.props;
-    return email ? (
+    const { email, website } = this.props;
+    return email || website ? (
       <li className="service--details--item">
         <header>Contact Info</header>
         <div className="service--details--item--info">
-          <p>Email: <a href={'mailto:' + email}>{email}</a></p>
+          {email && <p>Email: <a href={'mailto:' + email}>{email}</a></p>}
+          {website && <p>Website: <a href={website}>{website}</a></p>}
         </div>
       </li>
     ) : null;
