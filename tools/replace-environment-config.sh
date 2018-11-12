@@ -13,17 +13,6 @@ env_vars='GOOGLE_API_KEY ALGOLIA_INDEX_PREFIX ALGOLIA_APPLICATION_ID ALGOLIA_REA
 
 for env_var in $env_vars; do
   env_var_value=$(eval echo \$$env_var)
-
-  if [ ${env_var_value} == "travisci" ]
-  then
-    if [ ${TRAVIS_BRANCH}  == "master" ]
-    then
-        env_var_value="staging"
-    else
-        env_var_value="production"
-    fi
-  fi
-
   sed -i.bak "s/${env_var}_REPLACE_ME/${env_var_value}/g" $js_bundle
 done
 

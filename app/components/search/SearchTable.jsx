@@ -4,12 +4,13 @@ import {
   Pagination,
   } from 'react-instantsearch/dom';
 import { images } from 'assets';
+import CustomSearchHits from './CustomSearchHits';
 
 import SearchRow from './SearchRow';
 
 const SearchTable = () => (
   <div className="results-table-body">
-    <Hits hitComponent={SearchRow} />
+    <CustomSearchHits />
     <div className="results-pagination">
       <Pagination
         padding={2}
