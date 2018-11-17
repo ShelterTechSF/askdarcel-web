@@ -51,7 +51,12 @@ sleep 60
 # Print out container logs in case if an error occurs
 docker logs api
 
+# The hostname needs to be passed in explicitly or else when the TestCafe tests
+# run, they use the IP address of the Travis CI instance, which is
+# nondeterministically generated and will not have been added to the whitelist
+# for using the Google API key.
 npm run testcafe -- 'saucelabs:Chrome@beta:Windows 10' \
+  --hostname=localhost \
   --quarantine-mode \
   --skip-js-errors \
   --assertion-timeout 50000 \
