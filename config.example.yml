@@ -3,10 +3,12 @@
 # You need to create a config.yml file with your own values to run locally
 
 # This key needs access to the following APIs:
+# - Geolocation API
 # - Maps JavaScript API
 # - Street View API
 # Note that the settings for this key are in Google Cloud Platform under the
-# AskDarcel Staging project
+# AskDarcel Staging project > APIs & Services > Credentials > API Keys >
+# "Google Maps API Key"
 GOOGLE_API_KEY: 'AIzaSyBeryKXoJ8TRlRCC4NLM5tBi0vZWB-Ft5c'
 
 ALGOLIA_INDEX_PREFIX: '<ENTER_YOUR_GITHUB_USERNAME_HERE>'
