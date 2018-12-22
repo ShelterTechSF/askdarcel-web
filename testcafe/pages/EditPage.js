@@ -22,6 +22,45 @@ class EditPhone {
   }
 }
 
+class EditScheduleDay {
+  constructor(parentSelector, index) {
+    const baseSelector = parentSelector.find(`.day-group:nth-child(${index})`);
+    this.addButton = baseSelector.find('.add-time');
+    this.removeButton = baseSelector.find('.remove-time');
+    this.times = baseSelector.find('input').withAttribute('type', 'time');
+    this.start = this.times.withAttribute('data-field', 'opens_at');
+    this.lastStart = baseSelector.find('.hours li:last-child input').nth(0);
+    this.end = this.times.withAttribute('data-field', 'closes_at');
+    this.lastEnd = baseSelector.find('.hours li:last-child input').nth(1);
+  }
+}
+
+class EditSchedule {
+  constructor(parentSelector) {
+    const baseSelector = parentSelector.findReact('EditSchedule');
+    this.tuesday = new EditScheduleDay(baseSelector, 2);
+  }
+}
+
+class EditService {
+  constructor(serviceId) {
+    const baseSelector = ReactSelector('ProvidedService').withAttribute('id', `${serviceId}`);
+    this.baseSelector = baseSelector;
+    this.monday = baseSelector.find('.edit-hours-list .day-group:nth-child(1)');
+    this.tuesday = baseSelector.find('.edit-hours-list .day-group:nth-child(2)');
+    this.wednesday = baseSelector.find('.edit-hours-list .day-group:nth-child(3)');
+    this.thursday = baseSelector.find('.edit-hours-list .day-group:nth-child(4)');
+    this.friday = baseSelector.find('.edit-hours-list .day-group:nth-child(5)');
+    this.saturday = baseSelector.find('.edit-hours-list .day-group:nth-child(6)');
+    this.sunday = baseSelector.find('.edit-hours-list .day-group:nth-child(7)');
+    this.schedule = new EditSchedule(baseSelector);
+  }
+
+  static getSchedule() {
+    return new EditSchedule(this.baseSelector);
+  }
+}
+
 export default class EditPage {
   constructor() {
     const baseSelectorName = 'OrganizationEditPage';
@@ -42,5 +81,9 @@ export default class EditPage {
 
   static getPhone(index) {
     return new EditPhone(index);
+  }
+
+  static getService(serviceId) {
+    return new EditService(serviceId);
   }
 }
