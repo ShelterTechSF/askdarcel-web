@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-// TODO Until we use actual timestamps, this one constant converts everything to PST below
-const timezoneOffset = 8;
+// TODO Until we use actual timestamps, this one constant converts everything to the correct timezone
+const timezoneOffset = new Date().getTimezoneOffset() / 60;
 
 export class RelativeOpeningTime extends React.Component {
   static parseAsDate(fourOrThreeDigitNumber) {
