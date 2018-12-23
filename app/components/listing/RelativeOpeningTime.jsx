@@ -39,19 +39,6 @@ export class RelativeOpeningTime extends React.Component {
       .add(closingTime.getHours(), 'hours')
       .add(closingTime.getMinutes(), 'minutes');
 
-    // console.log({
-    //   str: `${schedule_day.day}:${schedule_day.opens_at}->${schedule_day.closes_at} = ${opens_at.format('LLLL')} -> ${closes_at.format('LLLL')}`,
-    //   today,
-    //   opens_at,
-    //   closes_at,
-    //   schedule_day,
-    //   daysFromToday,
-    //   openingTime,
-    //   closingTime,
-    //   currentDate,
-    //   orderedDaysOfTheWeek,
-    // });
-
     return { opens_at, closes_at };
   }
 
