@@ -12,7 +12,7 @@
   width: 100%;
   padding: calc-em(105px) 0 calc-em(175px);
   @include r_max($break-tablet-s) {
-    padding: calc-em(20px) 0 calc-em(65px);
+    padding: calc-em(25px) 0 calc-em(150px);
   }
 
   .header-container {

@@ -8,27 +8,30 @@ export class CategoryList extends React.Component {
     const categoryNodes = [];
     const listCategoryNodes = [];
 
-    this.props.categories.forEach((category) => {
+    this.props.categories.forEach(category => {
       if (category.featured) {
         if (category.name === 'MOHCD Funded Services') {
           categoryNodes.unshift(
-            <CategoryItem name={category.name} key={category.id} categoryid={category.id} />
+            <CategoryItem name={category.name} key={category.id} categoryid={category.id} />,
           );
         } else {
           categoryNodes.push(
-            <CategoryItem name={category.name} key={category.id} categoryid={category.id} />
+            <CategoryItem name={category.name} key={category.id} categoryid={category.id} />,
           );
         }
       } else {
         listCategoryNodes.push(
-          <ListCategoryItem name={category.name} key={category.id} categoryid={category.id} />
+          <ListCategoryItem name={category.name} key={category.id} categoryid={category.id} />,
         );
       }
     });
 
     return (
       <section className="category-list" role="main">
-        <ul className="category-items"> {categoryNodes} </ul>
+        <div className="featured-categories">
+          <span>Discover resources by category</span>
+          <ul className="category-items"> {categoryNodes} </ul>
+        </div>
         <ul className="list-category-items"> {listCategoryNodes} </ul>
       </section>
     );

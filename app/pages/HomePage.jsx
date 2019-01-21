@@ -30,7 +30,7 @@ export class HomePage extends React.Component {
   }
 
   loadCategoriesFromServer() {
-    ax.get('/api/categories?top_level=true').then(resp => {
+    ax.get('/api/categories/featured').then(resp => {
       this.setState({ categories: resp.data.categories });
     });
   }
