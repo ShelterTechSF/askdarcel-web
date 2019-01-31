@@ -38,7 +38,7 @@
       padding-right: calc-em(20px);
     }
   }
-  @include r_max($break-tablet-p) {
+  @include r_max($break-tablet-s) {
     display: none;
   }
 }
