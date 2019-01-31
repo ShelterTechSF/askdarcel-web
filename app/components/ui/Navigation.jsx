@@ -58,6 +58,16 @@ class Navigation extends React.Component {
             <button className={styles.searchButton} onClick={this.toggleSecondarySearch} />
             <button className={styles.hamburgerButton} onClick={this.props.toggleHamburgerMenu} />
           </div>
+          <ul className={styles.navRight}>
+            <li><a href="https://www.sheltertech.org" target="_blank" rel="noopener noreferrer">
+                About Us
+              </a>
+            </li>
+            <li><a href="https://www.sheltertech.org/volunteer" target="_blank" rel="noopener noreferrer">
+                Volunteer
+              </a>
+            </li>
+          </ul>
         </div>
         <div className={`${styles.secondaryRowWrapper} ${this.state.showSecondarySearch ? '' : styles.hide}`}>
           <div className={styles.secondaryRow}>
