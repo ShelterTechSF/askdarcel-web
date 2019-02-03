@@ -5,6 +5,7 @@ import Partners from 'components/ui/Partners';
 import WhiteLabel from 'components/ui/WhiteLabel';
 import FindHeader from 'components/layout/FindHeader';
 import { CategoryList } from 'components/layout/CategoryList';
+import BasicNeedsBlockConfig from 'components/ui/BasicNeedsBlockConfig';
 import LegalBlockConfig from 'components/ui/LegalBlockConfig';
 import config from '../config';
 
@@ -46,6 +47,7 @@ export class HomePage extends React.Component {
           <CategoryList categories={categories} />
         </div>
         {subDomain === config.MOHCD_SUBDOMAIN ? <WhiteLabel /> : null}
+        <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
         <LandingPageResourceBlock config={LegalBlockConfig}>
           <div className="legal-block__resources-hammer" />
         </LandingPageResourceBlock>

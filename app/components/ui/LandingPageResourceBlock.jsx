@@ -20,9 +20,10 @@ class LandingPageResourceBlock extends Component {
                 <LandingPageCard
                   title={category.title}
                   content={category.content}
-                  query={HOST_QUERY + category.query}
+                  query={category.query ? HOST_QUERY + category.query : null}
                   imgClass={category.imgClass}
-                  key={category.query}
+                  key={category.query || category.resource}
+                  resource={category.resource}
                 />
               ))}
             </div>
@@ -31,9 +32,10 @@ class LandingPageResourceBlock extends Component {
                 <LandingPageCard
                   title={category.title}
                   content={category.content}
-                  query={HOST_QUERY + category.query}
+                  query={category.query ? HOST_QUERY + category.query : null}
                   imgClass={category.imgClass}
-                  key={category.query}
+                  key={category.query || category.resource}
+                  resource={category.resource}
                 />
               ))}
             </div>
@@ -57,7 +59,10 @@ LandingPageResourceBlock.props = {
 };
 
 const LandingPageCard = props => (
-  <a href={props.query} className="landing-page-card">
+  <a
+    href={props.query || props.resource}
+    className="landing-page-card"
+  >
     <h1 className="landing-page-card__title">{props.title}</h1>
     <div className={`langing-page-card__image ${props.imgClass}`} />
     <h2 className="landing-page-card__content">{props.content}</h2>
