@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const HOST_QUERY = 'https://askdarcel.org/search?query=';
+const HOST_QUERY = '/search?query=';
 
 class LandingPageResourceBlock extends Component {
   render() {
