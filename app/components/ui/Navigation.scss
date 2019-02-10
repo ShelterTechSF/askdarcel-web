@@ -31,6 +31,18 @@
   align-items: center;
 }
 
+.navRight {
+  display: flex;
+  li {
+    &:not(:last-child) {
+      padding-right: calc-em(20px);
+    }
+  }
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
+}
+
 .navLogo {
   display: inline-block;
   margin-right: calc-em(25px);
