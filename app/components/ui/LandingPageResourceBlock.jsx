@@ -10,35 +10,23 @@ class LandingPageResourceBlock extends Component {
         <div className="landing-page-resource-block__resources">
           {this.props.children}
           <div className="landing-page-resource-block__resources-title">
-            <h1>{this.props.config.TITLE.BEFORE_BLUE_WORD}</h1>
-            <h1 className="blue-word">{this.props.config.TITLE.BLUE_WORD}</h1>
-            <h1>{this.props.config.TITLE.AFTER_BLUE_WORD}</h1>
+            <h1>
+              {this.props.config.TITLE.BEFORE_BLUE_WORD}
+              <span className="blue-word"> {this.props.config.TITLE.BLUE_WORD} </span>
+              {this.props.config.TITLE.AFTER_BLUE_WORD}
+            </h1>
           </div>
           <div className="landing-page-resource-block__cards">
-            <div className="landing-page-resource-block__cards-first-row">
-              { this.props.config.FIRST_ROW.map(category => (
-                <LandingPageCard
-                  title={category.title}
-                  content={category.content}
-                  query={category.query ? HOST_QUERY + category.query : null}
-                  imgClass={category.imgClass}
-                  key={category.query || category.resource}
-                  resource={category.resource}
-                />
-              ))}
-            </div>
-            <div className="landing-page-resource-block__cards-second-row">
-              { this.props.config.SECOND_ROW.map(category => (
-                <LandingPageCard
-                  title={category.title}
-                  content={category.content}
-                  query={category.query ? HOST_QUERY + category.query : null}
-                  imgClass={category.imgClass}
-                  key={category.query || category.resource}
-                  resource={category.resource}
-                />
-              ))}
-            </div>
+            { this.props.config.CARDS.map(category => (
+              <LandingPageCard
+                title={category.title}
+                content={category.content}
+                query={category.query ? HOST_QUERY + category.query : null}
+                imgClass={category.imgClass}
+                key={category.query || category.resource}
+                resource={category.resource}
+              />
+            ))}
           </div>
         </div>
       </div>

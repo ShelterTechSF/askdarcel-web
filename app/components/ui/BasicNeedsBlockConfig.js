@@ -2,9 +2,9 @@ const BasicNeedsBlockConfig = {
   TITLE: {
     BEFORE_BLUE_WORD: 'Discover',
     BLUE_WORD: 'Basic Needs & Shelter',
-    AFTER_BLUE_WORD: 'Resources',
+    AFTER_BLUE_WORD: 'resources',
   },
-  FIRST_ROW: [
+  CARDS: [
     {
       title: 'Apply for the shelter system',
       content: 'Get a 24-hour, weekend, or a 90 day bed in San Francisco',
@@ -27,8 +27,6 @@ const BasicNeedsBlockConfig = {
       query: 'storage',
       imgClass: 'basic-block-lockers',
     },
-  ],
-  SECOND_ROW: [
     {
       title: 'Public toilets and showers',
       content: 'Toilets, showers, sharps disposal, and pet waste collection',

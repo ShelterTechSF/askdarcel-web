@@ -9,9 +9,9 @@
   padding-top: 50px;
   padding-bottom: 50px;
   position: relative;
-  width: 945px;
-  @include r_max($break-tablet-l) {
-    padding: 50px 0;
+  max-width: 945px;
+  @include r_max($break-tablet-p) {
+    padding: 50px 20px;
   }
 }
 
@@ -31,8 +31,8 @@
 .landing-page-resource-block__cards {
   display: flex;
   flex-wrap: wrap;
-}
-
-.landing-page-resource-block__cards-first-row, .landing-page-resource-block__cards-second-row {
-  display: flex;
+  @include r_max($break-tablet-p) {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
 }

@@ -2,9 +2,9 @@ const LegalBlockConfig = {
   TITLE: {
     BEFORE_BLUE_WORD: 'Discover',
     BLUE_WORD: 'Legal',
-    AFTER_BLUE_WORD: 'Resources',
+    AFTER_BLUE_WORD: 'resources',
   },
-  FIRST_ROW: [
+  CARDS: [
     {
       title: 'Housing',
       content: 'Eviction defense, housing help, homeownership',
@@ -23,8 +23,6 @@ const LegalBlockConfig = {
       query: 'Family+Law',
       imgClass: 'legal-block-family',
     },
-  ],
-  SECOND_ROW: [
     {
       title: 'Criminal & Tickets',
       content: 'Criminal process questions, quality of life, record expungement',
