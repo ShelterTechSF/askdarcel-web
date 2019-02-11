@@ -18,21 +18,29 @@
   @include r_max($break-tablet-s) {
     margin: calc-em(-145px) auto 0;
   }
-  span {
+
+  &__title {
+    color: rgba(0, 0, 0, 0.6);
     display: block;
+    font-size: 18px;
     margin-bottom: 1rem;
+
+    @include r_max($break-tablet-p) {
+      font-size: 16px;
+    }
   }
 }
 
 .category-items {
   @extend %flex-row;
   margin: 0 auto;
-  margin-bottom: calc-em(50px);
-  overflow: scroll;
+  overflow-x: scroll;
 }
 
 .category-item {
   @include transition(all 200ms ease-in-out);
+  display: flex;
+  align-items: center;
   min-width: calc-em(150px);
   width: calc-em(150px);
   height: calc-em(150px);
@@ -54,7 +62,6 @@
 
 .category-button {
   display: block;
-  padding: calc-em(30px) 0;
   text-align: center;
   &:hover {
     text-decoration: none;
