@@ -8,6 +8,9 @@ class LandingPageEligibilityBlock extends Component {
     return (
       <div className="landing-page-eligibility-block">
         <div className="landing-page-eligibility-block__resources">
+          <h2 className="landing-page-eligibility-block__resources__title">
+            Discover resources by eligibility
+          </h2>
           {/* <a className="scroll-button scroll-button-left">&lt;</a> */}
           <div className="landing-page-eligibility-block__resources-scroller">
             { this.props.eligibilities.map(eligibility => (
@@ -36,7 +39,7 @@ LandingPageEligibilityBlock.props = {
 
 const LandingPageCard = props => (
   <Link to={`/search?refinementList[eligibilities][0]=${props.name}`} className="landing-page-eligibility-card">
-    <h2 className="landing-page-card__title">{props.name}</h2>
+    <h2 className="landing-page-eligibility-card__title">{props.name}</h2>
     <span className="card-count">{props.count}</span>
   </Link>
 );

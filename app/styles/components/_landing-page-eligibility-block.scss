@@ -1,21 +1,18 @@
 .landing-page-eligibility-block {
   background-color: #FFF;
-  padding: 64px 0;
+  margin: 50px 0;
   position: relative;
 }
 
 .landing-page-eligibility-block__resources {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  width: 945px;
+  max-width: 945px;
   margin: 0 auto;
   max-height: 360px;
   position: relative;
 
-  @include r_max($break-tablet-l) {
-    padding: 50px 0;
+  @include r_max($break-tablet-p) {
+    margin: 0 20px;
   }
-
 
   .scroll-button {
     background: #FFF;
@@ -49,6 +46,16 @@
       right: -25px;
     }
   }
+
+  &__title {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+    margin-bottom: 15px;
+
+    @include r_max($break-tablet-p) {
+      font-size: 16px;
+    }
+  }
 }
 
 .landing-page-eligibility-block__resources-scroller {
@@ -62,6 +69,7 @@
   overflow-y: hidden;
   overflow: -moz-scrollbars-none;
   position: relative;
+  margin: 0 -5px;  // Set negative margin to allow for box-shadow to be visible
 
   &::-webkit-scrollbar {
     width: 0 !important
@@ -71,23 +79,32 @@
 .landing-page-eligibility-card {
   width: 305px;
   transition: all .2s ease-in-out;
-  box-shadow: 2px 4px 4px #F7F7F7;
-  margin: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 5px 10px;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   &:hover {
-    box-shadow: 4px 4px 4px #EEE;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   }
 
-  h2.landing-page-card__title {
-    margin: 0;
+  @include r_max($break-tablet-p) {
+    width: 240px;
+  }
+
+  &__title {
+    margin: 0 15px 0 0;
     padding: 0;
+    color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  span.card-count {
-    color: #999;
+  .card-count {
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 13px;
   }
 }
