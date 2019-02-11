@@ -19,7 +19,6 @@ class SearchPage extends Component {
 
     this.state = { searchState: { ...qs.parse(props.router.location.query) } };
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
-    console.log(this)
   }
   componentWillReceiveProps() {
     this.setState({ searchState: qs.parse(this.props.router.location.query) });
@@ -30,7 +29,6 @@ class SearchPage extends Component {
   }
 
   onSearchStateChange(nextSearchState) {
-    console.log('updating searchState', nextSearchState)
     const THRESHOLD = 700;
     const newPush = Date.now();
     this.setState({ lastPush: newPush, searchState: nextSearchState });
