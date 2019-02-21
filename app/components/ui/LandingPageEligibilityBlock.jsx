@@ -38,7 +38,10 @@ LandingPageEligibilityBlock.props = {
 };
 
 const LandingPageCard = props => (
-  <Link to={`/search?refinementList[eligibilities][0]=${props.name}`} className="landing-page-eligibility-card">
+  <Link
+    to={`/search?refinementList[eligibilities][0]=${encodeURIComponent(props.name)}`}
+    className="landing-page-eligibility-card"
+  >
     <h2 className="landing-page-eligibility-card__title">{props.name}</h2>
     <span className="card-count">{props.count}</span>
   </Link>
