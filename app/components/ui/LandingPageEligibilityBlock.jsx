@@ -17,7 +17,7 @@ class LandingPageEligibilityBlock extends Component {
               <LandingPageCard
                 key={eligibility.id}
                 name={eligibility.name}
-                count={eligibility.resource_count}
+                count={eligibility.service_count}
               />))
             }
           </div>
@@ -33,7 +33,7 @@ LandingPageEligibilityBlock.props = {
     name: PropTypes.string,
     id: PropTypes.number,
     feature_rank: PropTypes.number,
-    resource_count: PropTypes.number,
+    service_count: PropTypes.number,
   }),
 };
 
