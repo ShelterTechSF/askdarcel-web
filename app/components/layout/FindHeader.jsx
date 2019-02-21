@@ -1,11 +1,25 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import './FindHeader.scss';
+import * as ax from 'axios';
 
 class FindHeader extends React.Component {
   constructor() {
     super();
     this.submitSearch = this.submitSearch.bind(this);
+    this.state = {
+      resourceCount: '',
+    };
+  }
+
+  componentDidMount() {
+    this.getResourceCount();
+  }
+
+  getResourceCount() {
+    ax.get('/api/resources/count').then(resp => {
+      this.setState({ resourceCount: resp.data });
+    });
   }
 
   submitSearch(e) {
@@ -39,10 +53,10 @@ class FindHeader extends React.Component {
           role="search"
         >
           <input
-            ref={(c) => { this.searchComponent = c; }}
+            ref={c => { this.searchComponent = c; }}
             type="text"
             className="search-field"
-            placeholder="Search 1,768 resources in San Francisco"
+            placeholder={`Search ${this.state.resourceCount} resources in San Francisco`}
             name="srch-term"
             id="srch-term"
           />
