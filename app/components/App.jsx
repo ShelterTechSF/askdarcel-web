@@ -1,115 +1,109 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import Intercom from 'react-intercom';
+import { connect } from 'react-redux';
 import Navigation from './ui/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
-import { connect } from 'react-redux';
 import userActions from '../actions/userActions';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
 
 
-class App extends Component {
-  /**
-   * Get user location.
-   *
-   * Makes use of both the HTML5 Geolocation API and the Google Maps Geolocation
-   * API. Currently restricts the location to within San Francisco to avoid
-   * inaccurate geolocation results, but this should be removed if more locations
-   * are added.
-   *
-   * @returns A Promise of a location, which is either an object with `lat` and
-   * `lng` properties or an error if location is unavaible or out of bounds.
-   */
-  getLocation() {
-    return new Promise((resolve, reject) => {
-      this.getLocationBrowser()
-        .then(resolve)
-        .catch(e => {
-          this.getLocationGoogle()
-            .then(resolve)
-            .catch(reject);
-        });
-    });
-  }
+const coordsInSanFrancisco = coords => {
+  // These are conservative bounds, extending into the ocean, the Bay, and Daly
+  // City.
+  const bb = {
+    top: 37.820633,
+    left: -122.562447,
+    bottom: 37.688167,
+    right: -122.326927,
+  };
+  return coords.lat > bb.bottom
+    && coords.lat < bb.top
+    && coords.lng > bb.left
+    && coords.lng < bb.right;
+};
 
-  coordsInSanFrancisco(coords) {
-    // These are conservative bounds, extending into the ocean, the Bay, and Daly
-    // City.
-    const bb = {
-      top: 37.820633,
-      left: -122.562447,
-      bottom: 37.688167,
-      right: -122.326927,
-    };
-    return coords.lat > bb.bottom
-      && coords.lat < bb.top
-      && coords.lng > bb.left
-      && coords.lng < bb.right;
-  }
-
-  /**
-   * Get location via HTML5 Geolocation API.
-   */
-  getLocationBrowser() {
-    return new Promise((resolve, reject) => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          const coords = {
-            lat: round(position.coords.latitude, 4),
-            lng: round(position.coords.longitude, 4),
-          };
-          if (this.coordsInSanFrancisco(coords)) {
-            resolve(coords);
-          } else {
-            const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
-            console.log(msg);
-            reject(msg);
-          }
-        }, error => {
-          console.log(error);
-          reject(error);
-        });
+/**
+ * Get location via HTML5 Geolocation API.
+ */
+const getLocationBrowser = () => new Promise((resolve, reject) => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      const coords = {
+        lat: round(position.coords.latitude, 4),
+        lng: round(position.coords.longitude, 4),
+      };
+      if (coordsInSanFrancisco(coords)) {
+        resolve(coords);
       } else {
-        const msg = 'Geolocation is not supported by this browser.';
+        const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
         console.log(msg);
         reject(msg);
       }
-    }, { timeout: 10000 });
+    }, error => {
+      console.log(error);
+      reject(error);
+    });
+  } else {
+    const msg = 'Geolocation is not supported by this browser.';
+    console.log(msg);
+    reject(msg);
   }
+}, { timeout: 10000 });
 
-  /**
-   * Get location via the Google Maps Geolocation API.
-   */
-  getLocationGoogle() {
-    return new Promise((resolve, reject) => {
-      // Results are not very accurate
-      let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
-      if (config.GOOGLE_API_KEY) {
-        url += `?key=${config.GOOGLE_API_KEY}`;
+/**
+ * Get location via the Google Maps Geolocation API.
+ */
+const getLocationGoogle = () => new Promise((resolve, reject) => {
+  // Results are not very accurate
+  let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
+  if (config.GOOGLE_API_KEY) {
+    url += `?key=${config.GOOGLE_API_KEY}`;
+  }
+  return fetch(url, { method: 'post' }).then(r => r.json())
+    .then(data => {
+      if (coordsInSanFrancisco(data.location)) {
+        resolve(data.location);
+      } else {
+        const msg = 'User location out of bounds';
+        console.log(msg);
+        reject(msg);
       }
-      return fetch(url, { method: 'post' }).then(r => r.json())
-        .then(data => {
-          if (this.coordsInSanFrancisco(data.location)) {
-            resolve(data.location);
-          } else {
-            const msg = 'User location out of bounds';
-            console.log(msg);
-            reject(msg);
-          }
-        })
+    })
+    .catch(reject);
+});
+
+/**
+ * Get user location.
+ *
+ * Makes use of both the HTML5 Geolocation API and the Google Maps Geolocation
+ * API. Currently restricts the location to within San Francisco to avoid
+ * inaccurate geolocation results, but this should be removed if more locations
+ * are added.
+ *
+ * @returns A Promise of a location, which is either an object with `lat` and
+ * `lng` properties or an error if location is unavaible or out of bounds.
+ */
+const getLocation = () => new Promise((resolve, reject) => {
+  getLocationBrowser()
+    .then(resolve)
+    .catch(() => {
+      getLocationGoogle()
+        .then(resolve)
         .catch(reject);
     });
-  }
+});
 
+
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userLocation: null,
       userLocation: null,
       hamburgerMenuIsOpen: false,
     };
@@ -118,30 +112,34 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getLocation().then(coords => {
-      this.props.setUserLocation(coords);
+    const { setUserLocation } = this.props;
+    getLocation().then(coords => {
+      setUserLocation(coords);
       this.setState({ userLocation: coords });
     }).catch(e => {
       console.log('Could not obtain location, defaulting to San Francisco.', e);
       // HACK: Hardcode middle of San Francisco
       const userLocation = { lat: 37.7749, lng: -122.4194 };
-      this.props.setUserLocation(userLocation);
+      setUserLocation(userLocation);
       this.setState({ userLocation });
     });
-  }
-
-  toggleHamburgerMenu() {
-    this.setState((state, props) => ({ hamburgerMenuIsOpen: !state.hamburgerMenuIsOpen }));
   }
 
   onHamburgerMenuStateChange(state) {
     this.setState({ hamburgerMenuIsOpen: state.isOpen });
   }
 
+  toggleHamburgerMenu() {
+    this.setState(state => ({ hamburgerMenuIsOpen: !state.hamburgerMenuIsOpen }));
+  }
+
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, child => React.cloneElement(child, {
-      userLocation: this.state.userLocation,
-    }));
+    const { children, location } = this.props;
+    const { hamburgerMenuIsOpen, userLocation } = this.state;
+    const childrenWithProps = React.Children.map(
+      children,
+      child => React.cloneElement(child, { userLocation }),
+    );
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
@@ -152,15 +150,15 @@ class App extends Component {
         </Helmet>
         {config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
         <HamburgerMenu
-          isOpen={this.state.hamburgerMenuIsOpen}
-          location={this.props.location}
+          isOpen={hamburgerMenuIsOpen}
+          location={location}
           outerContainerId={outerContainerId}
           onStateChange={this.onHamburgerMenuStateChange}
           pageWrapId={pageWrapId}
           toggleHamburgerMenu={this.toggleHamburgerMenu}
         />
         <div id={pageWrapId}>
-          <Navigation showSearch={this.props.location.pathname != '/'} toggleHamburgerMenu={this.toggleHamburgerMenu} />
+          <Navigation showSearch={location.pathname !== '/'} toggleHamburgerMenu={this.toggleHamburgerMenu} />
           <div className="container">
             {childrenWithProps}
           </div>

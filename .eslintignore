@@ -1,5 +1,4 @@
 build
-app/components/App.jsx
 app/components/admin/ChangeRequest.jsx
 app/components/admin/ProposedService.jsx
 app/components/auth/RequireAuth.jsx
