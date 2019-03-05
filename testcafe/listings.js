@@ -28,10 +28,9 @@ test('Confirm listings page describes resources/services correctly', async t => 
     .contains(serviceName)
 
     .expect(searchPage.firstServiceDesc.textContent)
-    .contains(serviceDesc)
+    .contains(serviceDesc);
 
   // TODO: Uncomment once service hours are back
   // .expect(searchPage.openHours.textContent)
   // .match(hoursRegEx)
-  ;
 });

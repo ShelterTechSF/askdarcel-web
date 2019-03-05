@@ -57,5 +57,3 @@ app/pages/admin/Admin.jsx
 app/pages/admin/ChangeRequests.jsx
 app/pages/admin/Login.jsx
 app/pages/debug/ListingDemoPage.jsx
-testcafe/editResource.js
-testcafe/listings.js
