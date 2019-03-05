@@ -43,7 +43,6 @@ app/components/ui/Accordion/Accordion.jsx
 app/components/ui/Accordion/AccordionItem.jsx
 app/components/ui/LandingPageEligibilityBlock.jsx
 app/components/ui/LandingPageResourceBlock.jsx
-app/components/ui/Navigation.jsx
 app/components/ui/WhiteLabel.jsx
 app/pages/HomePage.jsx
 app/pages/OrganizationEditPage.jsx
