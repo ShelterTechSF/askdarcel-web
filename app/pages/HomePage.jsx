@@ -51,10 +51,10 @@ export class HomePage extends React.Component {
         </div>
         {subDomain === config.MOHCD_SUBDOMAIN ? <WhiteLabel /> : null}
         <LandingPageEligibilityBlock eligibilities={this.state.eligibilities} />
-        <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
         <LandingPageResourceBlock config={LegalBlockConfig}>
           <div className="legal-block__resources-hammer" />
         </LandingPageResourceBlock>
+        <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
         <Partners />
         <Footer />
       </div>
