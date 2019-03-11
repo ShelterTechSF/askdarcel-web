@@ -26,7 +26,6 @@ app/components/listing/ResourceMap.jsx
 app/components/listing/Services.jsx
 app/components/listing/__tests__/RelativeOpeningTimes.spec.jsx
 app/components/listing/index.js
-app/components/maps/MapOfLocations.jsx
 app/components/search/CustomSearchHits.jsx
 app/components/search/Filtering.jsx
 app/components/search/ResourceEntry.jsx
