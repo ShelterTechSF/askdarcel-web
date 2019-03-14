@@ -8,22 +8,28 @@ class Navigation extends React.Component {
   constructor() {
     super();
     this.state = {
+      value: '',
       showSecondarySearch: false,
     };
     this.submitSearch = this.submitSearch.bind(this);
+    this.onQueryChanged = this.onQueryChanged.bind(this);
     this.toggleSecondarySearch = this.toggleSecondarySearch.bind(this);
   }
 
   submitSearch(e) {
     e.preventDefault();
-    if (this.searchComponent.value) {
+    if (this.state.query) {
       browserHistory.push({
         pathname: '/search',
-        query: { query: this.searchComponent.value },
+        query: { query: this.state.query },
       });
       window.location.reload();
     }
     return false;
+  }
+
+  onQueryChanged(e) {
+    this.setState({ query: e.target.value });
   }
 
   toggleSecondarySearch() {
@@ -46,7 +52,8 @@ class Navigation extends React.Component {
                   role="search"
                 >
                   <input
-                    ref={c => { this.searchComponent = c; }}
+                    onChange={this.onQueryChanged}
+                    value={this.state.query}
                     type="text"
                     className={styles.searchField}
                     placeholder="Search for a service or organization"
@@ -81,8 +88,9 @@ class Navigation extends React.Component {
               role="search"
             >
               <input
+                onChange={this.onQueryChanged}
+                value={this.state.query}
                 className={styles.secondarySearchField}
-                ref={c => { this.searchComponent = c; }}
                 type="text"
                 /* TODO: update placeholder text to include dynamic number of resources */
                 placeholder="Search for a service or organization"
