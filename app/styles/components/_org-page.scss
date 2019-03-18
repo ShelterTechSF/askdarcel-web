@@ -157,7 +157,12 @@
 	&--header {
 		@extend %font-size-large;
 		font-weight: 600;
-		color: #333333;
+		a {
+			color: #333333;
+			&:hover {
+				color: #1C72E6;
+			}
+		}
 	}
 	&--description {
 		margin-top: calc-em(15px);

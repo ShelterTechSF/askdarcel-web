@@ -50,7 +50,11 @@ updated
             {service.updated_date}
           </p>
         </div>
-        <h2 className="service--header">{service.name}</h2>
+        <h2 className="service--header">
+          <a href={`/services/${service.id}`}>
+            {service.name}
+          </a>
+        </h2>
         <ReactMarkdown className="rendered-markdown service--description" source={service.long_description} />
         <div
           className="service--details-toggle"
