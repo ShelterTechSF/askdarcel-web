@@ -11,10 +11,11 @@
 }
 
 .partners__bar {
-  background-image: url(../assets/img/legal-block-bar.png);
-  height: 50px;
-  width: 200px;
+  background-image: url(../assets/img/legal-block-jdc.png);
+  height: 80px;
+  width: 210px;
   background-repeat: no-repeat;
+  background-size: contain;
   @include r_max($break-tablet-p) {
     margin: auto;
     margin-bottom: 25px;
@@ -26,7 +27,21 @@
   height: 55px;
   width: 210px;
   background-repeat: no-repeat;
+  background-size: contain;
   @include r_max($break-tablet-p) {
     margin: auto;
+    margin-bottom: 25px;
+  }
+}
+
+.partners__benetech {
+  background-image: url(../assets/img/legal-block-benetech.png);
+  height: 80px;
+  width: 210px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  @include r_max($break-tablet-p) {
+    margin: auto;
+    margin-bottom: 25px;
   }
 }

@@ -8,6 +8,9 @@ const Partners = () => (
     <a href="https://sfmohcd.org">
       <div className="partners__mayor" />
     </a>
+    <a href="https://benetech.org/">
+      <div className="partners__benetech" />
+    </a>
   </div>
 );
 
