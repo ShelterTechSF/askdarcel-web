@@ -15,7 +15,7 @@ class ProvidedService extends Component {
 
     this.textAreas = [
       {
-        label: 'Service description',
+        label: 'Service Description',
         placeholder: "Describe what you'll receive from this service in a few sentences.",
         field: 'long_description',
         defaultValue: this.props.service.long_description,
@@ -50,7 +50,7 @@ class ProvidedService extends Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
-    this.handleElgibilityChange = this.handleElgibilityChange.bind(this);
+    this.handleEligibilityChange = this.handleEligibilityChange.bind(this);
   }
 
   handleChange(service) {
@@ -83,7 +83,7 @@ class ProvidedService extends Component {
     this.handleChange(service);
   }
 
-  handleElgibilityChange(eligibilities) {
+  handleEligibilityChange(eligibilities) {
     const { service } = this.state;
     service.eligibilities = eligibilities;
     this.handleChange(service);
@@ -155,8 +155,8 @@ Service
           <li className="edit--section--list--item">
             <MultiSelectDropdown
               selectedItems={this.props.service.eligibilities}
-              handleSelectChange={this.handleElgibilityChange}
-              label="Elgibility"
+              handleSelectChange={this.handleEligibilityChange}
+              label="Eligibility"
               optionsRoute="eligibilities"
             />
           </li>

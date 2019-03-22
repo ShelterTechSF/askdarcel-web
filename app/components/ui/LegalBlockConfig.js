@@ -19,7 +19,7 @@ const LegalBlockConfig = {
     },
     {
       title: 'Family & Relationships',
-      content: 'Divorce, custory, guardianship, restraining order, T-Visas, etc.',
+      content: 'Divorce, custody, guardianship, restraining order, T-Visas, etc.',
       query: 'Family+Law',
       imgClass: 'legal-block-family',
     },

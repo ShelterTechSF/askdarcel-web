@@ -15,7 +15,8 @@ const searchResultsContainer = connectStateResults(
     } else if (searchResults && searchResults.nbHits === 0) {
       output = (
         <div className="no-results">
-No results have been found for
+          No results have been found for
+          {' '}
           {searchState.query}
         </div>
       );
