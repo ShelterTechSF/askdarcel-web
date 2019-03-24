@@ -47,7 +47,7 @@ class ServiceEntry extends Component {
             <h4 className="entry-headline"><Link to={{ pathname: `/services/${hit.service_id}` }}>{`${index + 1}.) ${hit.name}`}</Link></h4>
             <div className="entry-subhead">
               <p className="entry-affiliated-resource">
-a service offered by
+a service offered by&nbsp;
                 <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{hit.service_of}</Link>
               </p>
               <p>

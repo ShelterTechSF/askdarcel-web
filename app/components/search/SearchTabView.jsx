@@ -7,7 +7,7 @@ import { timeToString } from '../../utils/index';
 class SearchTabView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { active: this.props.applicationProcess ? 'How to Apply' : 'Description' };
+    this.state = { active: 'Description' };
     // this.getSchedule = this.getSchedule.bind(this);
   }
 
@@ -37,8 +37,8 @@ class SearchTabView extends React.Component {
   getTabList() {
     const { applicationProcess, description, schedule } = this.props;
     const tabs = [];
-    if (applicationProcess) { tabs.push({ title: 'How to Apply', content: <p>{applicationProcess}</p> }); }
     tabs.push({ title: 'Description', content: <ReactMarkdown className="rendered-markdown" source={description} /> });
+    if (applicationProcess) { tabs.push({ title: 'How to Apply', content: <p>{applicationProcess}</p> }); }
     // tabs.push({ title: 'Hours', content: this.getSchedule(schedule) });
     return tabs;
   }
