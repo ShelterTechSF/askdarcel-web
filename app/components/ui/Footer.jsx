@@ -16,9 +16,9 @@ function Footer() {
           <section className="site-footer__links">
             <ul>
               <h1>About Us</h1>
-              <li><a href="sheltertech.org">Our Story</a></li>
-              <li><a href="sheltertech.org/volunteer">Volunteer</a></li>
-              {/* <li><a href="sheltertech.org/donate">Donate</a></li> */}
+              <li><a href="https://www.sheltertech.org" target="_blank" rel="noopener noreferrer">Our Story</a></li>
+              <li><a href="https://www.sheltertech.org/volunteer" target="_blank" rel="noopener noreferrer">Volunteer</a></li>
+              <li><a href="https://www.sheltertech.org/donate" target="_blank" rel="noopener noreferrer">Donate</a></li>
             </ul>
             {/* <ul>
               <h1>Help</h1>
@@ -27,10 +27,10 @@ function Footer() {
             </ul> */}
             <ul>
               <h1>Connect</h1>
-              <li><a href="info@sheltertech.org">Email</a></li>
-              <li><a href="https://www.facebook.com/ShelterTechOrg/">Facebook</a></li>
-              <li><a href="https://twitter.com/sheltertechorg">Twitter</a></li>
-              <li><a href="https://www.instagram.com/shelter_tech/">Instagram</a></li>
+              <li><a href="mailto:info@sheltertech.org">Email</a></li>
+              <li><a href="https://www.facebook.com/ShelterTechOrg" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+              <li><a href="https://twitter.com/sheltertechorg" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+              <li><a href="https://www.instagram.com/shelter_tech" target="_blank" rel="noopener noreferrer">Instagram</a></li>
             </ul>
             <ul>
               <h1>Legal</h1>
