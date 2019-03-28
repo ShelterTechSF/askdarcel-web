@@ -8,3 +8,4 @@ npm-debug.log
 app/utils/config.js
 .env
 config.yml
+.DS_Store
