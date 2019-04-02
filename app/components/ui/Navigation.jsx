@@ -8,7 +8,6 @@ class Navigation extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: '',
       showSecondarySearch: false,
     };
     this.submitSearch = this.submitSearch.bind(this);
@@ -16,20 +15,21 @@ class Navigation extends React.Component {
     this.toggleSecondarySearch = this.toggleSecondarySearch.bind(this);
   }
 
+  onQueryChanged(e) {
+    this.setState({ query: e.target.value });
+  }
+
   submitSearch(e) {
     e.preventDefault();
-    if (this.state.query) {
+    const { query } = this.state;
+    if (query) {
       browserHistory.push({
         pathname: '/search',
-        query: { query: this.state.query },
+        query: { query },
       });
       window.location.reload();
     }
     return false;
-  }
-
-  onQueryChanged(e) {
-    this.setState({ query: e.target.value });
   }
 
   toggleSecondarySearch() {
@@ -37,6 +37,8 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const { showSearch, toggleHamburgerMenu } = this.props;
+    const { showSecondarySearch, query } = this.state;
     return (
       <nav className={styles.siteNav}>
         <div className={styles.primaryRow}>
@@ -44,7 +46,7 @@ class Navigation extends React.Component {
             <Link className={styles.navLogo} to="/">
               <img src={images.logoSmall} alt="Ask Darcel" />
             </Link>
-            {this.props.showSearch
+            {showSearch
               && (
                 <form
                   onSubmit={this.submitSearch}
@@ -53,7 +55,7 @@ class Navigation extends React.Component {
                 >
                   <input
                     onChange={this.onQueryChanged}
-                    value={this.state.query}
+                    value={query}
                     type="text"
                     className={styles.searchField}
                     placeholder="Search for a service or organization"
@@ -65,8 +67,8 @@ class Navigation extends React.Component {
             }
           </div>
           <div className={styles.mobileNavigation}>
-            <button className={styles.searchButton} onClick={this.toggleSecondarySearch} />
-            <button className={styles.hamburgerButton} onClick={this.props.toggleHamburgerMenu} />
+            <button type="button" className={styles.searchButton} onClick={this.toggleSecondarySearch} />
+            <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
           </div>
           <ul className={styles.navRight}>
             <li>
@@ -81,7 +83,7 @@ class Navigation extends React.Component {
             </li>
           </ul>
         </div>
-        <div className={`${styles.secondaryRowWrapper} ${this.state.showSecondarySearch ? '' : styles.hide}`}>
+        <div className={`${styles.secondaryRowWrapper} ${showSecondarySearch ? '' : styles.hide}`}>
           <div className={styles.secondaryRow}>
             <form
               onSubmit={this.submitSearch}
@@ -89,7 +91,7 @@ class Navigation extends React.Component {
             >
               <input
                 onChange={this.onQueryChanged}
-                value={this.state.query}
+                value={query}
                 className={styles.secondarySearchField}
                 type="text"
                 /* TODO: update placeholder text to include dynamic number of resources */

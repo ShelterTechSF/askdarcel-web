@@ -72,8 +72,7 @@ test('Edit resource phone number', async t => {
   await t
     .typeText(phone.number, newNumber, { replace: true })
     .typeText(phone.serviceType, newServiceType, { replace: true })
-    .click(editResourcePage.saveButton)
-  ;
+    .click(editResourcePage.saveButton);
 
   // Check visibility of edits on show page
   await t
@@ -98,8 +97,7 @@ test('Add resource phone number', async t => {
   await t
     .typeText(phone.number, newNumber, { replace: true })
     .typeText(phone.serviceType, newServiceType, { replace: true })
-    .click(editResourcePage.saveButton)
-  ;
+    .click(editResourcePage.saveButton);
 
   // Check visibility of edits on show page
   await t

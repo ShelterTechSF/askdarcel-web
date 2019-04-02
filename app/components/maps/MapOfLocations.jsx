@@ -11,8 +11,9 @@ class MapOfLocations extends React.Component {
   }
 
   componentWillMount() {
+    const { locations } = this.props;
     this.setState({
-      locations: this.props.locations.map(loc => {
+      locations: locations.map(loc => {
         const { address, name, schedule } = loc;
         return {
           name,
@@ -41,35 +42,37 @@ class MapOfLocations extends React.Component {
     };
 
     const map = new Map(this.refs.map, mapOptions);
+    const { userLocation } = this.props;
 
-    if (this.props.userLocation) {
+    if (userLocation) {
       const userMarker = new Marker({
-        map,
-        position: new LatLng(this.props.userLocation),
+        position: new LatLng(userLocation),
         icon: { path: SymbolPath.CIRCLE, scale: 5 },
       });
+      userMarker.setMap(map);
     }
 
     locations.forEach(loc => {
       const { address, name } = loc;
-      const locMarker = new google.maps.Marker({
-        map,
+      const locMarker = new Marker({
         icon: {
           title: name,
           label: name,
         },
         position: new LatLng(Number(address.latitude), Number(address.longitude)),
       });
+      locMarker.setMap(map);
     });
   }
 
   render() {
+    const { locationRenderer } = this.props;
     const { locations } = this.state;
 
     return (
       <div>
         <div ref="map" className="map" />
-        { this.props.locationRenderer
+        { locationRenderer
           && (
             <Accordion>
               { locations.map((loc, i) => (
@@ -86,7 +89,11 @@ class MapOfLocations extends React.Component {
 .
                             </td>
                             <td><strong>{title}</strong></td>
-                            {/* <td className="right"><RelativeOpeningTime schedule={loc.schedule} /></td> */}
+                            {/*
+                              <td className="right">
+                                <RelativeOpeningTime schedule={loc.schedule} />
+                              </td>
+                            */}
                             <td className="iconcell">
                               <div className="selector">
                                 <i className="material-icons">keyboard_arrow_down</i>
@@ -99,7 +106,7 @@ class MapOfLocations extends React.Component {
                     </div>
                   )}
                 >
-                  { this.props.locationRenderer(loc) }
+                  { locationRenderer(loc) }
                 </AccordionItem>
               ))
               }

@@ -1,5 +1,4 @@
 build
-app/components/App.jsx
 app/components/admin/ChangeRequest.jsx
 app/components/admin/ProposedService.jsx
 app/components/auth/RequireAuth.jsx
@@ -27,7 +26,6 @@ app/components/listing/ResourceMap.jsx
 app/components/listing/Services.jsx
 app/components/listing/__tests__/RelativeOpeningTimes.spec.jsx
 app/components/listing/index.js
-app/components/maps/MapOfLocations.jsx
 app/components/search/CustomSearchHits.jsx
 app/components/search/Filtering.jsx
 app/components/search/ResourceEntry.jsx
@@ -44,9 +42,7 @@ app/components/ui/Accordion/Accordion.jsx
 app/components/ui/Accordion/AccordionItem.jsx
 app/components/ui/LandingPageEligibilityBlock.jsx
 app/components/ui/LandingPageResourceBlock.jsx
-app/components/ui/Navigation.jsx
 app/components/ui/WhiteLabel.jsx
-app/pages/HomePage.jsx
 app/pages/OrganizationEditPage.jsx
 app/pages/OrganizationListingPage.jsx
 app/pages/SearchPage.jsx
@@ -58,5 +54,3 @@ app/pages/admin/Admin.jsx
 app/pages/admin/ChangeRequests.jsx
 app/pages/admin/Login.jsx
 app/pages/debug/ListingDemoPage.jsx
-testcafe/editResource.js
-testcafe/listings.js
