@@ -51,7 +51,13 @@ sleep 60
 # Print out container logs in case if an error occurs
 docker logs api
 
-npm run testcafe -- 'saucelabs:Chrome@beta:Windows 10' \
+# Note: The version number needs to be periodically updated as new versions come
+# out.
+# TODO: SauceLabs does seem to allow for the version string "latest" to be an
+# alias for the latest stable release, but it appears that the TestCafe
+# plugin doesn't seem to support it. See
+# https://github.com/DevExpress/testcafe-browser-provider-saucelabs/issues/42
+npm run testcafe -- 'saucelabs:Chrome@73.0:Windows 10' \
   --quarantine-mode \
   --skip-js-errors \
   --assertion-timeout 50000 \
