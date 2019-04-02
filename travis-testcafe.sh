@@ -51,7 +51,7 @@ sleep 60
 # Print out container logs in case if an error occurs
 docker logs api
 
-npm run testcafe -- 'saucelabs:chrome@latest:Windows 10' \
+npm run testcafe -- 'saucelabs:Chrome@latest:Windows 10' \
   --quarantine-mode \
   --skip-js-errors \
   --assertion-timeout 50000 \
