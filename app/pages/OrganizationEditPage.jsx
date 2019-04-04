@@ -347,35 +347,35 @@ export class OrganizationEditPage extends React.Component {
     // Resource
     const resourceChangeRequest = {};
     let resourceModified = false;
-    if (this.state.name && this.state.name !== resource.name) {
+    if (this.state.name !== resource.name) {
       resourceChangeRequest.name = this.state.name;
       resourceModified = true;
     }
-    if (this.state.long_description && this.state.long_description !== resource.long_description) {
+    if (this.state.long_description !== resource.long_description) {
       resourceChangeRequest.long_description = this.state.long_description;
       resourceModified = true;
     }
-    if (this.state.short_description && this.state.short_description !== resource.short_description) {
+    if (this.state.short_description !== resource.short_description) {
       resourceChangeRequest.short_description = this.state.short_description;
       resourceModified = true;
     }
-    if (this.state.website && this.state.website !== resource.website) {
+    if (this.state.website !== resource.website) {
       resourceChangeRequest.website = this.state.website;
       resourceModified = true;
     }
-    if (this.state.name && this.state.name !== resource.name) {
+    if (this.state.name !== resource.name) {
       resourceChangeRequest.name = this.state.name;
       resourceModified = true;
     }
-    if (this.state.email && this.state.email !== resource.email) {
+    if (this.state.email !== resource.email) {
       resourceChangeRequest.email = this.state.email;
       resourceModified = true;
     }
-    if (this.state.alternate_name && this.state.alternate_name !== resource.alternate_name) {
+    if (this.state.alternate_name !== resource.alternate_name) {
       resourceChangeRequest.alternate_name = this.state.alternate_name;
       resourceModified = true;
     }
-    if (this.state.legal_status && this.state.legal_status !== resource.legal_status) {
+    if (this.state.legal_status !== resource.legal_status) {
       resourceChangeRequest.legal_status = this.state.legal_status;
       resourceModified = true;
     }
