@@ -3,27 +3,14 @@ import ReactMarkdown from 'react-markdown';
 import DetailedHours from './DetailedHours';
 import Notes from './Notes';
 
-class Services extends Component {
-  constructor(props) {
-    super(props);
-    this.renderServicesSection.bind(this);
-  }
-
-  renderServicesSection() {
-    return this.props.services && this.props.services.length > 0
-      ? (
+const Services = ({ services }) => services && services.length > 0
+      && (
         <ul className="service--section--list">
-          {this.props.services.map((service, i) => (
-            <Service service={service} key={i} />
+          {services.map(service => (
+            <Service service={service} key={service.id} />
           ))}
         </ul>
-      ) : null;
-  }
-
-  render() {
-    return this.renderServicesSection();
-  }
-}
+      );
 
 /* eslint-disable react/no-multi-comp */
 class Service extends Component {
@@ -34,7 +21,7 @@ class Service extends Component {
   }
 
   toggleVisible() {
-    this.setState({ infoHidden: !this.state.infoHidden });
+    this.setState(({ infoHidden }) => ({ infoHidden: !infoHidden }));
   }
 
   render() {
@@ -63,121 +50,100 @@ updated
           tabIndex="0"
         >
           { infoHidden
-            ? (
+            && (
               <span>
-More Info
+                More Info
                 <i className="material-icons">keyboard_arrow_down</i>
               </span>
             )
-            : null
           }
         </div>
 
-        { infoHidden ? null
-          : (
-            <div className="service-application-process-container">
-              <ul className="service--details">
-                <ServiceContactDetails email={service.email} website={service.url} />
-                <ServiceEligibility
-                  subject="How to apply"
-                  result={service.application_process}
-                />
-                <ServiceEligibility
-                  subject="Eligibilities"
-                  result={service.eligibility}
-                />
-                <ServiceEligibility
-                  subject="Required documents"
-                  result={service.required_documents}
-                />
-                <ServiceEligibility
-                  subject="Fees"
-                  result={service.fee}
-                />
-                {service.notes.length ? <Notes notes={service.notes} /> : null }
-                <WeeklyHours schedule={service.schedule} />
-              </ul>
-              <div
-                role="button"
-                tabIndex={0}
-                className="service--details-toggle"
-                onClick={this.toggleVisible}
-              >
-                <span>
-                  {infoHidden
-                    ? null
-                    : (
-                      <span>
-Less Info
-                        <i className="material-icons">keyboard_arrow_up</i>
-                      </span>
-                    )}
-                </span>
-              </div>
+        { !infoHidden && (
+          <div className="service-application-process-container">
+            <ul className="service--details">
+              <ServiceContactDetails email={service.email} website={service.url} />
+              <ServiceEligibility
+                subject="How to apply"
+                result={service.application_process}
+              />
+              <ServiceEligibility
+                subject="Eligibilities"
+                result={service.eligibility}
+              />
+              <ServiceEligibility
+                subject="Required documents"
+                result={service.required_documents}
+              />
+              <ServiceEligibility
+                subject="Fees"
+                result={service.fee}
+              />
+              {service.notes.length ? <Notes notes={service.notes} /> : null }
+              <WeeklyHours schedule={service.schedule} />
+            </ul>
+            <div
+              role="button"
+              tabIndex={0}
+              className="service--details-toggle"
+              onClick={this.toggleVisible}
+            >
+              <span>
+                Less Info
+                <i className="material-icons">keyboard_arrow_up</i>
+              </span>
             </div>
-          )
+          </div>
+        )
         }
       </li>
     );
   }
 }
 
-class WeeklyHours extends Component {
-  render() {
-    return this.props.schedule.schedule_days.length > 0 ? (
-      <li className="service--details--item">
-        <header>Hours</header>
-        <div className="service--details--item--info">
-          <DetailedHours schedule={this.props.schedule.schedule_days} />
-        </div>
-      </li>
-    ) : null;
+const WeeklyHours = ({ schedule: { schedule_days } }) => schedule_days.length > 0 && (
+  <li className="service--details--item">
+    <header>Hours</header>
+    <div className="service--details--item--info">
+      <DetailedHours schedule={schedule_days} />
+    </div>
+  </li>
+);
+
+const ServiceCategory = ({ category }) => (
+  <span>{category}</span>
+);
+
+const ServiceContactDetails = ({ email, website }) => {
+  if (!(email || website)) {
+    return null;
   }
-}
-
-
-class ServiceCategory extends Component {
-  render() {
-    return (
-      <span>{this.props.category}</span>
-    );
-  }
-}
-
-class ServiceContactDetails extends Component {
-  render() {
-    const { email, website } = this.props;
-    return email || website ? (
-      <li className="service--details--item">
-        <header>Contact Info</header>
-        <div className="service--details--item--info">
-          {email && (
-            <p>
+  return (
+    <li className="service--details--item">
+      <header>Contact Info</header>
+      <div className="service--details--item--info">
+        {email && (
+          <p>
 Email:
-              <a href={`mailto:${email}`}>{email}</a>
-            </p>
-          )}
-          {website && (
-            <p>
+            <a href={`mailto:${email}`}>{email}</a>
+          </p>
+        )}
+        {website && (
+          <p>
 Website:
-              <a href={website}>{website}</a>
-            </p>
-          )}
-        </div>
-      </li>
-    ) : null;
-  }
-}
+            <a href={website}>{website}</a>
+          </p>
+        )}
+      </div>
+    </li>
+  );
+};
 
-class ServiceEligibility extends Component {
-  render() {
-    return this.props.result ? (
-      <li className="service--details--item">
-        <header>{this.props.subject}</header>
-        <div className="service--details--item--info">{this.props.result}</div>
-      </li>
-    ) : null;
-  }
-}
+const ServiceEligibility = ({ result, subject }) => result && (
+  <li className="service--details--item">
+    <header>{subject}</header>
+    <div className="service--details--item--info">{result}</div>
+  </li>
+);
 
 export default Services;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { images } from 'assets';
 import { connectHits } from 'react-instantsearch/connectors';
 import SearchRow from './SearchRow';
 

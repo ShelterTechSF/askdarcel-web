@@ -2,53 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import ReactMarkdown from 'react-markdown';
-import { getTimes } from '../../utils/index'; // timeToString
 import { images } from '../../assets';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 
 // TODO: create a shared component for Resource and Service entries
 class ResourceEntry extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-      openUntil: null,
-    };
-
-    this.getOpenInformation = this.getOpenInformation.bind(this);
-  }
-
-  componentDidMount() {
-    this.getOpenInformation(this.props.hit.schedule);
-  }
-
-  getOpenInformation(scheduleDays) {
-    const openInfo = getTimes(scheduleDays);
-    this.setState({
-      isOpen: openInfo.isOpen,
-      openUntil: openInfo.openUntil,
-      is24hour: openInfo.is24hour,
-    });
-  }
-
   render() {
     const { hit, index } = this.props;
-    // const { isOpen, openUntil, is24hour } = this.state;
     const description = hit.long_description || 'No description, yet...';
     // const schedule = hit.schedule ? { schedule_days: hit.schedule } : null;
     // let timeInfo = null;
 
-    // if (isOpen) {
-    //   if (is24hour) {
-    //     timeInfo = 'Open 24 hours';
-    //   } else {
-    //     timeInfo = `Open Until ${timeToString(openUntil)}`;
-    //   }
-    // } else {
-    //   timeInfo = 'Closed';
-    // }
-    // debugger;
     return (
       <li className="results-table-entry resource-entry">
         <header>

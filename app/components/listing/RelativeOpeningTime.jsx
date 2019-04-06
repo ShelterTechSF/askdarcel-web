@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-// TODO Until we use actual timestamps, this one constant converts everything to the correct timezone
+// TODO Until we use actual timestamps, this one constant converts everything to
+// the correct timezone
 const timezoneOffset = new Date().getTimezoneOffset() / 60;
 
 export class RelativeOpeningTime extends React.Component {
@@ -45,7 +46,8 @@ export class RelativeOpeningTime extends React.Component {
   static parseSchedule(schedule_days, currentDate = moment()) {
     if (!schedule_days) return { text: '', classes: '' };
 
-    const schedule = schedule_days.map(schedule_day => RelativeOpeningTime.convertScheduleDayToOpenCloseTimestamps(schedule_day, currentDate));
+    const schedule = schedule_days.map(schedule_day => (
+      RelativeOpeningTime.convertScheduleDayToOpenCloseTimestamps(schedule_day, currentDate)));
 
     const STATUS_CLOSED = 'status-red';
     const STATUS_OPEN = 'status-green';
@@ -55,15 +57,19 @@ export class RelativeOpeningTime extends React.Component {
 
     const todayHours = schedule.filter(hours => hours.opens_at.day() === currentDay);
     const tomorrowHours = schedule.filter(hours => hours.opens_at.day() === tomorrowDay);
-    const daysOpen24Hours = schedule_days.filter(hours => hours.opens_at === 0 && hours.closes_at === 2359);
+    const daysOpen24Hours = schedule_days.filter(hours => (
+      hours.opens_at === 0 && hours.closes_at === 2359));
     if (todayHours.length === 0) return { text: 'Closed Today', classes: STATUS_CLOSED };
     if (daysOpen24Hours.length === 7) return { text: 'Open 24/7', classes: STATUS_OPEN };
 
+    // eslint-disable-next-line no-restricted-syntax
     for (const hours of todayHours) {
       if (hours.opens_at.hours() === 0 && hours.opens_at.minutes() === 0 && hours.closes_at.hours() === 23 && hours.closes_at.minutes() === 59) return { text: 'Open 24h today', classes: STATUS_OPEN };
       if (currentDate.isAfter(hours.opens_at) && currentDate.isBefore(hours.closes_at)) {
         const minutesUntilClosing = Math.ceil(hours.closes_at.diff(currentDate) / 1000 / 60);
-        if (minutesUntilClosing <= 30) return { text: `Closes in ${minutesUntilClosing} mins`, classes: STATUS_CAUTION };
+        if (minutesUntilClosing <= 30) {
+          return { text: `Closes in ${minutesUntilClosing} mins`, classes: STATUS_CAUTION };
+        }
         return { text: 'Open Now', classes: STATUS_OPEN };
       }
 
@@ -88,7 +94,7 @@ export class RelativeOpeningTime extends React.Component {
   }
 
   componentWillMount() {
-    this.tick = setInterval(() => this.setState(this.state), 60000);
+    this.tick = setInterval(() => this.setState(({ state }) => state), 60000);
   }
 
   componentWillUnmount() {
@@ -97,7 +103,11 @@ export class RelativeOpeningTime extends React.Component {
 
 
   render() {
-    const { text, classes } = RelativeOpeningTime.parseSchedule(this.props.schedule.schedule_days, this.props.currentDate);
+    const { currentDate, schedule } = this.props;
+    const { text, classes } = RelativeOpeningTime.parseSchedule(
+      schedule.schedule_days,
+      currentDate,
+    );
     return (
       <span className={`relative-opening-time ${classes}`}>
         { text }

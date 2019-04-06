@@ -1,44 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { getTimes, timeToString } from '../../utils/index';
 import { images } from '../../assets';
 import SearchTabView from './SearchTabView';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 
 // TODO: create a shared component for Resource and Service entries
 class ServiceEntry extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-      openUntil: null,
-    };
-
-    this.getOpenInformation = this.getOpenInformation.bind(this);
-  }
-
-  componentDidMount() {
-    this.getOpenInformation(this.props.hit.schedule);
-  }
-
-  getOpenInformation(scheduleDays) {
-    const openInfo = getTimes(scheduleDays);
-    this.setState({
-      isOpen: openInfo.isOpen,
-      openUntil: openInfo.openUntil,
-      is24hour: openInfo.is24hour,
-    });
-  }
-
   render() {
     const { hit, index } = this.props;
     const description = hit.long_description || 'No description, yet...';
     const applicationProcess = hit.application_process;
-    const schedule = hit.schedule && hit.schedule.length ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
-
-    console.log({ schedule, hit })
+    const schedule = hit.schedule && hit.schedule.length
+      ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
 
     return (
       <li className="results-table-entry service-entry">
@@ -69,7 +43,11 @@ a service offered by&nbsp;
         </header>
         <div className="line-break" />
 
-        <SearchTabView applicationProcess={applicationProcess} description={description} schedule={hit.schedule} />
+        <SearchTabView
+          applicationProcess={applicationProcess}
+          description={description}
+          schedule={hit.schedule}
+        />
 
         <div className="entry-action-buttons">
           <ul className="action-buttons">
