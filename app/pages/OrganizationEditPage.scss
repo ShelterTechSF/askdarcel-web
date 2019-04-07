@@ -82,7 +82,11 @@
       display: flex;
     }
 
-		label {
+    // TODO: Do not style based on tag type. We previously had some elements
+    // that used the <label> tag but that were not valid label elements, so we
+    // had to change the tag type but added the .label class to preserve the
+    // styling.
+    label, .label {
 			color: #888888;
 			font-size: calc-em(16px);
 			margin-bottom: calc-em(15px);

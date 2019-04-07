@@ -8,7 +8,6 @@ function buildSchedule(schedule) {
   const scheduleId = schedule ? schedule.id : null;
   const currSchedule = {};
   let finalSchedule = {};
-  let currDay = '';
 
   const is24Hours = {
     Monday: false,
@@ -31,22 +30,24 @@ function buildSchedule(schedule) {
   };
 
   if (schedule) {
-    schedule.schedule_days.forEach(curr => {
-      const schedule = curr;
-      currDay = schedule.day;
+    schedule.schedule_days.forEach(day => {
+      const currDay = day.day;
       if (!is24Hours[currDay]) {
         // Check to see if any of the hour pairs for the day
         // indicate the resource/service is open 24 hours
-        // if there is a pair only have that in the schedule obj
-        if (schedule.opens_at === 0 && schedule.closes_at === 2359) {
+        // if there is a pair only have that in the day obj
+        if (day.opens_at === 0 && day.closes_at === 2359) {
           is24Hours[currDay] = true;
           // Since this record already exists in our DB, we only need the id
           // scheduleID is needed when creating no data
-          currSchedule[currDay] = [{ opens_at: 0, closes_at: 2359, id: curr.id }];
+          currSchedule[currDay] = [{ opens_at: 0, closes_at: 2359, id: day.id }];
         } else {
-          schedule.openChanged = false;
-          schedule.closeChanged = false;
-          currSchedule[currDay] ? currSchedule[schedule.day].unshift(curr) : currSchedule[schedule.day] = [schedule];
+          Object.assign(day, { openChanged: false, closeChanged: false });
+          if (currSchedule[currDay]) {
+            currSchedule[day.day].unshift(day);
+          } else {
+            currSchedule[day.day] = [day];
+          }
         }
       }
     });
@@ -60,10 +61,11 @@ class EditSchedule extends Component {
     super(props);
 
     this.state = {
-      schedule_days: {},
+      // ESLint can't detect that this field is actually beind used in the
+      // callbacks.
+      // eslint-disable-next-line react/no-unused-state
       scheduleId: props.schedule ? props.schedule.id : null,
       scheduleDays: buildSchedule(props.schedule),
-      uuid: -1,
     };
 
     this.getDayHours = this.getDayHours.bind(this);
@@ -73,52 +75,9 @@ class EditSchedule extends Component {
     this.toggle24Hours = this.toggle24Hours.bind(this);
   }
 
-  handleScheduleChange(day, index, field, value) {
-    const tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
-    tempDaySchedule[index][field] = stringToTime(value);
-    tempDaySchedule[index][field === 'opens_at' ? 'openChanged' : 'closeChanged'] = true;
-    if (!tempDaySchedule[index].id && tempDaySchedule[index].id !== null) {
-      tempDaySchedule.id = null;
-    }
-    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
-    this.setState({ scheduleDays: tempScheduleDays }, function () {
-      this.props.handleScheduleChange(tempScheduleDays);
-    });
-  }
-
-  removeTime(day, index) {
-    const tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
-    tempDaySchedule[index].opens_at = null;
-    tempDaySchedule[index].closes_at = null;
-    tempDaySchedule[index].openChanged = true;
-    tempDaySchedule[index].closeChanged = true;
-
-    if (!tempDaySchedule[index].id && tempDaySchedule[index].id !== null) {
-      tempDaySchedule.id = null;
-    }
-
-    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
-    this.setState({ scheduleDays: tempScheduleDays }, function () {
-      this.props.handleScheduleChange(tempScheduleDays);
-    });
-  }
-
-  addTime(day) {
-    const tempDaySchedule = this.state.scheduleDays[day].map(curr => Object.assign({}, curr));
-    tempDaySchedule.push({ opens_at: null, closes_at: null, scheduleId: this.state.scheduleId });
-    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: tempDaySchedule });
-    this.setState({ scheduleDays: tempScheduleDays }, function () {
-      this.props.handleScheduleChange(tempScheduleDays);
-    });
-  }
-
-  formatTime(time) {
-    // FIXME: Use full times once db holds such values.
-    return time.substring(0, 2);
-  }
-
   getDayHours(day, field, index) {
-    const dayRecord = this.state.scheduleDays[day] && this.state.scheduleDays[day][index];
+    const { scheduleDays } = this.state;
+    const dayRecord = scheduleDays[day] && scheduleDays[day][index];
     if (!dayRecord) {
       return null;
     }
@@ -126,30 +85,113 @@ class EditSchedule extends Component {
     return timeToTimeInputValue(time, true);
   }
 
+  addTime(day) {
+    const { handleScheduleChange } = this.props;
+    let tempScheduleDays;
+
+    this.setState(
+      ({ scheduleDays, scheduleId }) => {
+        const tempDaySchedule = scheduleDays[day].map(curr => Object.assign({}, curr));
+        tempDaySchedule.push({ opens_at: null, closes_at: null, scheduleId });
+        tempScheduleDays = Object.assign({}, scheduleDays, { [day]: tempDaySchedule });
+        return { scheduleDays: tempScheduleDays };
+      },
+      () => {
+        handleScheduleChange(tempScheduleDays);
+      },
+    );
+  }
+
+  removeTime(day, index) {
+    const { handleScheduleChange } = this.props;
+    let tempScheduleDays;
+
+    this.setState(
+      ({ scheduleDays }) => {
+        const tempDaySchedule = scheduleDays[day].map(curr => Object.assign({}, curr));
+        Object.assign(tempDaySchedule[index], {
+          opens_at: null,
+          closes_at: null,
+          openChanged: true,
+          closeChanged: true,
+        });
+
+        if (!tempDaySchedule[index].id && tempDaySchedule[index].id !== null) {
+          tempDaySchedule.id = null;
+        }
+
+        tempScheduleDays = Object.assign({}, scheduleDays, { [day]: tempDaySchedule });
+        return { scheduleDays: tempScheduleDays };
+      },
+      () => {
+        handleScheduleChange(tempScheduleDays);
+      },
+    );
+  }
+
+  handleScheduleChange(day, index, field, value) {
+    const { handleScheduleChange } = this.props;
+    let tempScheduleDays;
+
+    this.setState(
+      ({ scheduleDays }) => {
+        const tempDaySchedule = scheduleDays[day].map(curr => Object.assign({}, curr));
+        tempDaySchedule[index][field] = stringToTime(value);
+        const changedField = field === 'opens_at' ? 'openChanged' : 'closeChanged';
+        tempDaySchedule[index][changedField] = true;
+        if (!tempDaySchedule[index].id && tempDaySchedule[index].id !== null) {
+          tempDaySchedule.id = null;
+        }
+        tempScheduleDays = Object.assign({}, scheduleDays, { [day]: tempDaySchedule });
+        return { scheduleDays: tempScheduleDays };
+      },
+      () => {
+        handleScheduleChange(tempScheduleDays);
+      },
+    );
+  }
+
   // is24Hours: indicates if the current day schedule is open 24 hours
   toggle24Hours(day, is24Hours) {
-    const tempDaySchedule = Object.assign({}, this.state.scheduleDays[day][0]);
+    const { handleScheduleChange } = this.props;
+    let tempScheduleDays;
+    this.setState(
+      ({ scheduleDays, scheduleId }) => {
+        const tempDaySchedule = Object.assign({}, scheduleDays[day][0]);
 
-    if (!is24Hours) {
-      tempDaySchedule.opens_at = 0;
-      tempDaySchedule.closes_at = 2359;
-    } else {
-      tempDaySchedule.opens_at = null;
-      tempDaySchedule.closes_at = null;
-    }
+        if (is24Hours) {
+          Object.assign(tempDaySchedule, {
+            opens_at: null,
+            closes_at: null,
+          });
+        } else {
+          Object.assign(tempDaySchedule, {
+            opens_at: 0,
+            closes_at: 2359,
+          });
+        }
 
-    tempDaySchedule.openChanged = true;
-    tempDaySchedule.closeChanged = true;
-    tempDaySchedule.scheduleId = this.state.scheduleId;
+        Object.assign(tempDaySchedule, {
+          openChanged: true,
+          closeChanged: true,
+          scheduleId,
+        });
 
-    if (!tempDaySchedule.id && tempDaySchedule.id !== null) {
-      tempDaySchedule.id = null;
-    }
+        if (!tempDaySchedule.id && tempDaySchedule.id !== null) {
+          tempDaySchedule.id = null;
+        }
 
-    const tempScheduleDays = Object.assign({}, this.state.scheduleDays, { [day]: [tempDaySchedule] });
-    this.setState({ scheduleDays: tempScheduleDays }, function () {
-      this.props.handleScheduleChange(tempScheduleDays);
-    });
+        tempScheduleDays = Object.assign(
+          {},
+          scheduleDays,
+          { [day]: [tempDaySchedule] },
+        );
+        return { scheduleDays: tempScheduleDays };
+      },
+      () => {
+        handleScheduleChange(tempScheduleDays);
+      },
+    );
   }
 
   render() {
@@ -163,19 +205,19 @@ class EditSchedule extends Component {
       Sunday: 'Su',
     };
 
-    const schedule = this.state.scheduleDays;
+    const { scheduleDays: schedule } = this.state;
     return (
       <li key="hours" className="edit--section--list--item hours">
-        <label>Hours</label>
-        <label className="open-24-label">24 hrs?</label>
+        <span className="label">Hours</span>
+        <span className="label open-24-label">24 hrs?</span>
         <ul className="edit-hours-list">
           {
-            Object.keys(schedule).map((day, i) => (
+            Object.keys(schedule).map(day => (
               <EditScheduleDay
                 day={day}
                 dayAbbrev={daysOfWeek[day]}
                 dayHours={schedule[day]}
-                key={i}
+                key={day.id}
                 handleScheduleChange={this.handleScheduleChange}
                 toggle24Hours={this.toggle24Hours}
                 getDayHours={this.getDayHours}

@@ -7,7 +7,6 @@ app/components/edit/EditAddress.jsx
 app/components/edit/EditCollection.jsx
 app/components/edit/EditNotes.jsx
 app/components/edit/EditPhones.jsx
-app/components/edit/EditSchedule.jsx
 app/components/edit/EditScheduleDay.jsx
 app/components/edit/EditServices.jsx
 app/components/edit/EditSidebar.jsx
