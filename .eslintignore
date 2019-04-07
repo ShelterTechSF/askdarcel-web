@@ -36,7 +36,6 @@ app/components/ui/Accordion/AccordionItem.jsx
 app/components/ui/LandingPageEligibilityBlock.jsx
 app/components/ui/LandingPageResourceBlock.jsx
 app/components/ui/WhiteLabel.jsx
-app/pages/OrganizationEditPage.jsx
 app/pages/OrganizationListingPage.jsx
 app/pages/SearchPage.jsx
 app/pages/_unused/CreateAccount.jsx
