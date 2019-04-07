@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { timeToTimeInputValue } from '../../utils/index';
+
+const DAYS_OF_WEEK = Object.freeze({
+  Monday: 'M',
+  Tuesday: 'T',
+  Wednesday: 'W',
+  Thursday: 'Th',
+  Friday: 'F',
+  Saturday: 'S',
+  Sunday: 'Su',
+});
 
 class EditScheduleDay extends Component {
-  buildTimeInput(day, index, abbrev, curr, is24Hours) {
+  buildTimeInput(day, index, curr, is24Hours) {
     // This checks if a time for a day was deleted, and skips rendering if it was
     if (index > 0 && curr.opens_at === null
      && curr.closes_at === null
@@ -10,10 +21,11 @@ class EditScheduleDay extends Component {
      && curr.closeChanged === true) {
       return null;
     }
-    const { getDayHours, handleScheduleChange, removeTime } = this.props;
+    const { handleScheduleChange, removeTime } = this.props;
+    const abbrev = DAYS_OF_WEEK[day];
     return (
       <li key={index}>
-        <p>{ index === 0 ? abbrev : '' }</p>
+        <p>{ index === 0 && abbrev }</p>
         {is24Hours
           ? (
             <div>
@@ -24,16 +36,12 @@ class EditScheduleDay extends Component {
             <div>
               <input
                 type="time"
-                defaultValue={getDayHours(day, 'opens_at', index)}
-                data-key={day}
-                data-field="opens_at"
+                value={timeToTimeInputValue(curr.opens_at)}
                 onChange={e => handleScheduleChange(day, index, 'opens_at', e.target.value)}
               />
               <input
                 type="time"
-                defaultValue={getDayHours(day, 'closes_at', index)}
-                data-key={day}
-                data-field="closes_at"
+                value={timeToTimeInputValue(curr.closes_at)}
                 onChange={e => handleScheduleChange(day, index, 'closes_at', e.target.value)}
               />
               {index > 0 && (
@@ -54,9 +62,8 @@ class EditScheduleDay extends Component {
 
   render() {
     const {
-      addTime, dayHours, dayAbbrev, toggle24Hours,
+      day, addTime, dayHours, toggle24Hours,
     } = this.props;
-    const { day } = this.props;
     let is24Hours = false;
 
     if (dayHours[0].opens_at === 0 && dayHours[0].closes_at === 2359) {
@@ -68,7 +75,7 @@ class EditScheduleDay extends Component {
         <div className="hours">
           {
             dayHours.map((curr, i) => (
-              this.buildTimeInput(day, i, dayAbbrev, curr, is24Hours)
+              this.buildTimeInput(day, i, curr, is24Hours)
             ))
           }
         </div>
@@ -97,13 +104,10 @@ EditScheduleDay.propTypes = {
     opens_at: PropTypes.number,
   })).isRequired,
   addTime: PropTypes.func.isRequired,
-  getDayHours: PropTypes.func.isRequired,
   toggle24Hours: PropTypes.func.isRequired,
   removeTime: PropTypes.func.isRequired,
   handleScheduleChange: PropTypes.func.isRequired,
-  dayAbbrev: PropTypes.string.isRequired,
   day: PropTypes.string.isRequired,
-
 };
 
 export default EditScheduleDay;
