@@ -115,7 +115,7 @@ class ServicePage extends React.Component {
               |
             { isSFServiceGuideSite() ? 'SF Service Guide' : 'AskDarcel' }
           </title>
-          <meta name="description" content={ service.long_description } />
+          <meta name="description" content={service.long_description} />
         </Helmet>
         <div className="listing-container">
           <article className="listing" id="service">
