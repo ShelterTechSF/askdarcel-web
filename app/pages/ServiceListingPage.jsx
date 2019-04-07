@@ -14,8 +14,9 @@ import {
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
 import ReactMarkdown from 'react-markdown';
-
+import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
+import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 const getSidebarActions = resource => {
   const sidebarActions = [
@@ -107,100 +108,110 @@ class ServicePage extends React.Component {
     const locations = getServiceLocations(service, resource, schedule);
 
     return (
-      <div className="listing-container">
-        <article className="listing" id="service">
-          <div className="listing--main">
-            <div className="listing--main--left">
-              <header>
-                <h1>{service.name}</h1>
-                {service.alsoNamed ? <p>Also Known As</p> : null}
-                <p>
-                  A service
-                  {/* TODO Implement rendering/popover when programs exist */}
-                  {program ? (
+      <div>
+        <Helmet>
+          <title>
+            { service.name }
+              |
+            { isSFServiceGuideSite() ? 'SF Service Guide' : 'AskDarcel' }
+          </title>
+          <meta name="description" content={ service.long_description } />
+        </Helmet>
+        <div className="listing-container">
+          <article className="listing" id="service">
+            <div className="listing--main">
+              <div className="listing--main--left">
+                <header>
+                  <h1>{service.name}</h1>
+                  {service.alsoNamed ? <p>Also Known As</p> : null}
+                  <p>
+                    A service
+                    {/* TODO Implement rendering/popover when programs exist */}
+                    {program ? (
+                      <span>
+  in the
+                        {program.name}
+                        {' '}
+  program,
+                      </span>
+                    ) : null}
                     <span>
-in the
-                      {program.name}
                       {' '}
-program,
+                      offered by
+                      {' '}
+                      <ListingTitleLink type="org" listing={resource} />
                     </span>
-                  ) : null}
-                  <span>
-                    {' '}
-                    offered by
-                    {' '}
-                    <ListingTitleLink type="org" listing={resource} />
-                  </span>
-                </p>
-              </header>
+                  </p>
+                </header>
 
-              <section className="listing--main--left--about">
-                <h2>About This Service</h2>
-                <ReactMarkdown className="rendered-markdown" source={service.long_description} />
-              </section>
-
-              {details.length ? (
-                <section className="listing--main--left--details">
-                  <h2>Service Details</h2>
-                  <Datatable
-                    rowRenderer={d => (
-                      <tr key={d.title}>
-                        <th>{d.title}</th>
-                        <td>
-                          {Array.isArray(d.value)
-                            ? d.value.join('\n')
-                            : d.value}
-                        </td>
-                      </tr>
-                    )}
-                    rows={this.generateDetailsRows()}
-                  />
+                <section className="listing--main--left--about">
+                  <h2>About This Service</h2>
+                  <ReactMarkdown className="rendered-markdown" source={service.long_description} />
                 </section>
-              ) : null}
 
-              <section className="listing--main--left--contact">
-                <h2>Contact Info</h2>
-                <TableOfContactInfo item={service} />
-              </section>
-
-              <section className="listing--main--left--hours">
-                <h2>Locations and Hours</h2>
-                <MapOfLocations
-                  locations={locations}
-                  locationRenderer={location => (
-                    <TableOfOpeningTimes
-                      schedule={location.schedule}
-                      inherited={location.inherited}
+                {details.length ? (
+                  <section className="listing--main--left--details">
+                    <h2>Service Details</h2>
+                    <Datatable
+                      rowRenderer={d => (
+                        <tr key={d.title}>
+                          <th>{d.title}</th>
+                          <td>
+                            {Array.isArray(d.value)
+                              ? d.value.join('\n')
+                              : d.value}
+                          </td>
+                        </tr>
+                      )}
+                      rows={this.generateDetailsRows()}
                     />
-                  )}
-                />
-                {/* TODO Transport Options */}
-              </section>
+                  </section>
+                ) : null}
 
-              {resource.services.length > 1 ? (
-                <section>
-                  <h2>Other Services at this Location</h2>
-                  {resource.services
-                    .filter(srv => srv.id !== service.id)
-                    .map(srv => (
-                      <ServiceCard service={srv} key={srv.id} />
-                    ))}
+                <section className="listing--main--left--contact">
+                  <h2>Contact Info</h2>
+                  <TableOfContactInfo item={service} />
                 </section>
-              ) : null}
 
-              {/* TODO Need an API to get similar services, maybe same category for now? */}
-              {/* <section>
-                <h2>Similar Services Near You</h2>
-              </section> */}
+                <section className="listing--main--left--hours">
+                  <h2>Locations and Hours</h2>
+                  <MapOfLocations
+                    locations={locations}
+                    locationRenderer={location => (
+                      <TableOfOpeningTimes
+                        schedule={location.schedule}
+                        inherited={location.inherited}
+                      />
+                    )}
+                  />
+                  {/* TODO Transport Options */}
+                </section>
+
+                {resource.services.length > 1 ? (
+                  <section>
+                    <h2>Other Services at this Location</h2>
+                    {resource.services
+                      .filter(srv => srv.id !== service.id)
+                      .map(srv => (
+                        <ServiceCard service={srv} key={srv.id} />
+                      ))}
+                  </section>
+                ) : null}
+
+                {/* TODO Need an API to get similar services, maybe same category for now? */}
+                {/* <section>
+                  <h2>Similar Services Near You</h2>
+                </section> */}
+              </div>
+              <div className="listing--aside">
+                <ActionSidebar actions={sidebarActions} />
+                {service.categories.map(cat => (
+                  <CategoryTag key={cat.id} category={cat} />
+                ))}
+              </div>
             </div>
-            <div className="listing--aside">
-              <ActionSidebar actions={sidebarActions} />
-              {service.categories.map(cat => (
-                <CategoryTag key={cat.id} category={cat} />
-              ))}
-            </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
     );
   }
