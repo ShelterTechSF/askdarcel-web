@@ -10,6 +10,7 @@ class EditScheduleDay extends Component {
      && curr.closeChanged === true) {
       return null;
     }
+    const { getDayHours, handleScheduleChange, removeTime } = this.props;
     return (
       <li key={index}>
         <p>{ index === 0 ? abbrev : '' }</p>
@@ -21,9 +22,29 @@ class EditScheduleDay extends Component {
           )
           : (
             <div>
-              <input type="time" defaultValue={this.props.getDayHours(day, 'opens_at', index)} data-key={day} data-field="opens_at" onChange={e => this.props.handleScheduleChange(day, index, 'opens_at', e.target.value)} />
-              <input type="time" defaultValue={this.props.getDayHours(day, 'closes_at', index)} data-key={day} data-field="closes_at" onChange={e => this.props.handleScheduleChange(day, index, 'closes_at', e.target.value)} />
-              {index > 0 ? <button onClick={() => this.props.removeTime(day, index)} className="remove-time icon-button"><i className="material-icons">delete</i></button> : ''}
+              <input
+                type="time"
+                defaultValue={getDayHours(day, 'opens_at', index)}
+                data-key={day}
+                data-field="opens_at"
+                onChange={e => handleScheduleChange(day, index, 'opens_at', e.target.value)}
+              />
+              <input
+                type="time"
+                defaultValue={getDayHours(day, 'closes_at', index)}
+                data-key={day}
+                data-field="closes_at"
+                onChange={e => handleScheduleChange(day, index, 'closes_at', e.target.value)}
+              />
+              {index > 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeTime(day, index)}
+                  className="remove-time icon-button"
+                >
+                  <i className="material-icons">delete</i>
+                </button>
+              )}
             </div>
           )
         }
@@ -32,7 +53,9 @@ class EditScheduleDay extends Component {
   }
 
   render() {
-    const { dayHours } = this.props;
+    const {
+      addTime, dayHours, dayAbbrev, toggle24Hours,
+    } = this.props;
     const { day } = this.props;
     let is24Hours = false;
 
@@ -45,21 +68,22 @@ class EditScheduleDay extends Component {
         <div className="hours">
           {
             dayHours.map((curr, i) => (
-              this.buildTimeInput(day, i, this.props.dayAbbrev, curr, is24Hours)
+              this.buildTimeInput(day, i, dayAbbrev, curr, is24Hours)
             ))
           }
         </div>
         <div className="add-time">
-          {is24Hours
-            ? null
-            : <button className="icon-button" onClick={() => this.props.addTime(day)}><i className="material-icons">add</i></button>
-          }
+          {!is24Hours && (
+            <button type="button" className="icon-button" onClick={() => addTime(day)}>
+              <i className="material-icons">add</i>
+            </button>
+          )}
         </div>
         <div className="is-24-hours">
           <input
             type="checkbox"
             checked={is24Hours}
-            onChange={() => this.props.toggle24Hours(day, is24Hours)}
+            onChange={() => toggle24Hours(day, is24Hours)}
           />
         </div>
       </div>
