@@ -5,25 +5,6 @@ import PropTypes from 'prop-types';
 import { Accordion, AccordionItem } from '../ui/Accordion';
 
 class MapOfLocations extends React.Component {
-  constructor(...args) {
-    super(...args);
-    this.state = {};
-  }
-
-  componentWillMount() {
-    const { locations } = this.props;
-    this.setState({
-      locations: locations.map(loc => {
-        const { address, name, schedule } = loc;
-        return {
-          name,
-          address,
-          schedule,
-        };
-      }),
-    });
-  }
-
   componentDidMount() {
     // TODO We should probably not just have google on the global namespace
     if (google === undefined) { return; }
@@ -31,7 +12,7 @@ class MapOfLocations extends React.Component {
     const {
       Map, Marker, LatLng, SymbolPath,
     } = google.maps;
-    const { locations } = this.state;
+    const { locations } = this.props;
     const { latitude, longitude } = locations[0].address;
     // TODO Geocode from address if no lat/long
 
@@ -67,7 +48,7 @@ class MapOfLocations extends React.Component {
 
   render() {
     const { locationRenderer } = this.props;
-    const { locations } = this.state;
+    const { locations } = this.props;
 
     return (
       <div>

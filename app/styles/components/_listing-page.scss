@@ -47,40 +47,28 @@
       white-space: pre-line;
     }
   }
+
+  @include r_max($break-tablet-s) {
+    h2 {
+      padding-bottom: $padding-default;
+      font-size: calc-em(16px)
+    }
+    header {
+      padding: 0 0 calc-em(20px) 0;
+    }
+    section {
+      padding: calc-em(20px) 0;
+    }
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // MAP STYLES
 
-.listing--map {
-  background: $color-grey1;
-  height: calc-em(250px);
-  position: relative;
+.map {
   @include r_max($break-tablet-s) {
-    height: calc-em(200px);
+    margin-top: calc-em(10px);
   }
-
-  .map_canvas {
-    height: calc-em(250px);
-    @include r_max($break-tablet-s) {
-      height: calc-em(200px);
-    }
-  }
-
-  .listing-streetview {
-		width: 100%;
-		max-width: calc-em(1000px);
-		margin: 0 auto;
-		padding: 0 calc-em(20px);
-		transform: translateY(-96px);
-		// Prevent empty space to the right of image from covering other elements on page
-		pointer-events: none;
-		&--img {
-			@include aspect-ratio(1, 1);
-		  width: calc-em(130px);
-		  background: $color-grey2;
-		}
-	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -102,6 +90,12 @@
 		align-items: stretch;
 		align-content: stretch;
 	}
+  @include r_max($break-tablet-s) {
+    margin-top: 0;
+    	&--left {
+        border-right: none;
+      }
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -282,6 +276,28 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
+// ORG MOBILE ACTIONS MENU
+.listing-menu {
+  display: none;
+  @include r_max($break-tablet-s) {
+    display: flex;
+    justify-content: space-between;
+    padding: calc-em(16px) calc-em(4px);
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+  }
+  &--button {
+    &-content {
+      display: flex;
+      justify-content: center;
+    }
+    &-icon {
+      margin-right: calc-em(8px);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
 // ORG ASIDE
 
 .listing--aside {
@@ -341,6 +357,9 @@
 			}
 		}
 	}
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
 }
 
 .rendered-markdown {
