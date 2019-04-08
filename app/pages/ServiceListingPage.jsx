@@ -19,40 +19,38 @@ import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
-const getResourceActions = (resource) => {
-  return {
-    // TODO Edit should add service ID header
-    edit: {
-      name: 'Edit',
-      icon: 'edit',
-      to: `/resource/edit?resourceid=${resource.id}`,
-    }, // TODO Update with path to /resource/:id
-    print: {
-      name: 'Print',
-      icon: 'print',
-      handler: () => {
-        window.print();
-      },
+const getResourceActions = resource => ({
+  // TODO Edit should add service ID header
+  edit: {
+    name: 'Edit',
+    icon: 'edit',
+    to: `/resource/edit?resourceid=${resource.id}`,
+  }, // TODO Update with path to /resource/:id
+  print: {
+    name: 'Print',
+    icon: 'print',
+    handler: () => {
+      window.print();
     },
-    directions: {
-      name: 'Directions',
-      icon: 'directions',
-      link: `http://google.com/maps/dir/?api=1&destination=${
-        resource.address.latitude
-      },${resource.address.longitude}`,
-    },
-    phone: {
-      name: 'Call',
-      icon: 'call',
-      link: `tel:${resource.phones[0].number}`
-    },
-    // TODO Integrate with mobile share, how to handle shares
-    // { name: 'Share', icon: 'share' },
-    // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
-  };
-};
+  },
+  directions: {
+    name: 'Directions',
+    icon: 'directions',
+    link: `http://google.com/maps/dir/?api=1&destination=${
+      resource.address.latitude
+    },${resource.address.longitude}`,
+  },
+  phone: {
+    name: 'Call',
+    icon: 'call',
+    link: `tel:${resource.phones[0].number}`,
+  },
+  // TODO Integrate with mobile share, how to handle shares
+  // { name: 'Share', icon: 'share' },
+  // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
+});
 
-const getSidebarActions = (resource) => {
+const getSidebarActions = resource => {
   const resourceActions = getResourceActions(resource);
   const sidebarActions = [
     resourceActions.edit,
@@ -60,23 +58,23 @@ const getSidebarActions = (resource) => {
   ];
   if (resource.address) {
     sidebarActions.push(resourceActions.directions);
-   }
-   return sidebarActions;
- };
+  }
+  return sidebarActions;
+};
 
-const getMobileActions = (resource) => {
+const getMobileActions = resource => {
   const resourceActions = getResourceActions(resource);
   const mobileActions = [
-    {...resourceActions.edit, icon: 'edit-blue'},
+    { ...resourceActions.edit, icon: 'edit-blue' },
   ];
   if (resource.address) {
-    mobileActions.unshift({...resourceActions.directions, icon: 'directions-blue'});
+    mobileActions.unshift({ ...resourceActions.directions, icon: 'directions-blue' });
   }
   if (resource.phones && resource.phones.length > 0) {
-    mobileActions.unshift({...resourceActions.phone, icon: 'phone-blue'});
+    mobileActions.unshift({ ...resourceActions.phone, icon: 'phone-blue' });
   }
   return mobileActions;
-}
+};
 
 // TODO This should be serviceAtLocation
 const getServiceLocations = (service, resource, schedule) => (resource.address
@@ -170,7 +168,7 @@ class ServicePage extends React.Component {
                     </span>
                   </p>
                 </header>
-                <MobileActionBar actions={mobileActions}/>
+                <MobileActionBar actions={mobileActions} />
 
                 <section className="listing--main--left--about">
                   <h2>About This Service</h2>
