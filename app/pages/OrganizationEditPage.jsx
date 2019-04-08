@@ -170,42 +170,6 @@ function createFullSchedule(scheduleObj) {
   return { schedule_days: [] };
 }
 
-const postServices = (servicesObj, promises) => {
-  if (!servicesObj) return;
-  const newServices = [];
-  Object.entries(servicesObj).forEach(([key, value]) => {
-    const currentService = value;
-    if (key < 0) {
-      if (currentService.notesObj) {
-        const notes = Object.values(currentService.notesObj.notes);
-        delete currentService.notesObj;
-        currentService.notes = notes;
-      }
-
-      currentService.schedule = createFullSchedule(currentService.scheduleObj);
-      delete currentService.scheduleObj;
-
-      if (!_.isEmpty(currentService)) {
-        newServices.push(currentService);
-      }
-    } else {
-      const uri = `/api/services/${key}/change_requests`;
-      postNotes(currentService.notesObj, promises, { path: 'services', id: key });
-      delete currentService.notesObj;
-      postSchedule(currentService.scheduleObj, promises);
-      delete currentService.scheduleObj;
-      if (!_.isEmpty(currentService)) {
-        promises.push(dataService.post(uri, { change_request: currentService }));
-      }
-    }
-  });
-
-  if (newServices.length > 0) {
-    const uri = `/api/resources/${this.state.resource.id}/services`;
-    promises.push(dataService.post(uri, { services: newServices }));
-  }
-};
-
 const prepNotesData = notes => Object.values(notes).map(note => ({ note }));
 
 const prepSchedule = scheduleObj => {
@@ -288,6 +252,46 @@ export class OrganizationEditPage extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.keepOnPage);
+  }
+
+  postServices = (servicesObj, promises) => {
+    if (!servicesObj) return;
+    const { resource } = this.state;
+    const newServices = [];
+    Object.entries(servicesObj).forEach(([key, value]) => {
+      const currentService = value;
+      if (key < 0) {
+        if (currentService.notesObj) {
+          const notes = Object.values(currentService.notesObj.notes);
+          delete currentService.notesObj;
+          currentService.notes = notes;
+        }
+
+        currentService.schedule = createFullSchedule(currentService.scheduleObj);
+        delete currentService.scheduleObj;
+
+        if (!_.isEmpty(currentService)) {
+          newServices.push(currentService);
+        }
+      } else {
+        const uri = `/api/services/${key}/change_requests`;
+        postNotes(currentService.notesObj, promises, { path: 'services', id: key });
+        delete currentService.notesObj;
+        postSchedule(currentService.scheduleObj, promises);
+        delete currentService.scheduleObj;
+        if (!_.isEmpty(currentService)) {
+          promises.push(dataService.post(uri, { change_request: currentService }));
+        }
+      }
+    });
+
+    console.log('newServices');
+    console.log(newServices);
+
+    if (newServices.length > 0) {
+      const uri = `/api/resources/${resource.id}/services`;
+      promises.push(dataService.post(uri, { services: newServices }));
+    }
   }
 
   keepOnPage(e) {
@@ -423,7 +427,7 @@ export class OrganizationEditPage extends React.Component {
     }
 
     // Services
-    postServices(services.services, promises);
+    this.postServices(services.services, promises);
 
     // Notes
     postNotes(notes, promises, { path: 'resources', id: resource.id });
