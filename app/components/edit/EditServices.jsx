@@ -32,12 +32,13 @@ class EditServices extends Component {
    * @returns {void}
    */
   handleServiceChange(key, service) {
+    const { handleServiceChange } = this.props;
     const { services } = this.state;
     services[key] = service;
     this.setState({
       services,
     }, () => {
-      this.props.handleServiceChange(this.state);
+      handleServiceChange(this.state);
     });
   }
 
@@ -45,8 +46,8 @@ class EditServices extends Component {
    * @description Creates a brand new service
    */
   addService() {
-    const { existingServices } = this.state;
-    const newUUID = this.state.uuid - 1;
+    const { existingServices, uuid } = this.state;
+    const newUUID = uuid - 1;
 
     existingServices.push({
       id: newUUID,
@@ -63,22 +64,25 @@ class EditServices extends Component {
   }
 
   render() {
+    const { handleDeactivation } = this.props;
+    const { existingServices } = this.state;
     return (
       <li className="edit--section--list--item">
         <ul className="edit--section--list--item--sublist edit--service--list">
           {
-            this.state.existingServices.map((service, index) => (
+            existingServices.map((service, index) => (
               <ProvidedService
                 key={service.key}
                 index={index}
                 service={service}
                 handleChange={this.handleServiceChange}
-                handleDeactivation={this.props.handleDeactivation}
+                handleDeactivation={handleDeactivation}
               />
             ))
           }
         </ul>
         <button
+          type="button"
           className="edit--section--list--item--button new-service"
           id="new-service-button"
           onClick={this.addService}
