@@ -285,9 +285,6 @@ export class OrganizationEditPage extends React.Component {
       }
     });
 
-    console.log('newServices');
-    console.log(newServices);
-
     if (newServices.length > 0) {
       const uri = `/api/resources/${resource.id}/services`;
       promises.push(dataService.post(uri, { services: newServices }));
