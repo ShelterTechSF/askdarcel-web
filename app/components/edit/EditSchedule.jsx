@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { timeToTimeInputValue, stringToTime } from '../../utils/index';
+import { stringToTime } from '../../utils/index';
 import EditScheduleDay from './EditScheduleDay';
 
 import './EditSchedule.scss';
@@ -68,21 +68,10 @@ class EditSchedule extends Component {
       scheduleDays: buildSchedule(props.schedule),
     };
 
-    this.getDayHours = this.getDayHours.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.addTime = this.addTime.bind(this);
     this.removeTime = this.removeTime.bind(this);
     this.toggle24Hours = this.toggle24Hours.bind(this);
-  }
-
-  getDayHours(day, field, index) {
-    const { scheduleDays } = this.state;
-    const dayRecord = scheduleDays[day] && scheduleDays[day][index];
-    if (!dayRecord) {
-      return null;
-    }
-    const time = dayRecord[field];
-    return timeToTimeInputValue(time, true);
   }
 
   addTime(day) {
@@ -195,16 +184,6 @@ class EditSchedule extends Component {
   }
 
   render() {
-    const daysOfWeek = {
-      Monday: 'M',
-      Tuesday: 'T',
-      Wednesday: 'W',
-      Thursday: 'Th',
-      Friday: 'F',
-      Saturday: 'S',
-      Sunday: 'Su',
-    };
-
     const { scheduleDays: schedule } = this.state;
     return (
       <li key="hours" className="edit--section--list--item hours">
@@ -214,13 +193,11 @@ class EditSchedule extends Component {
           {
             Object.keys(schedule).map(day => (
               <EditScheduleDay
-                day={day}
-                dayAbbrev={daysOfWeek[day]}
-                dayHours={schedule[day]}
                 key={day.id}
+                day={day}
+                dayHours={schedule[day]}
                 handleScheduleChange={this.handleScheduleChange}
                 toggle24Hours={this.toggle24Hours}
-                getDayHours={this.getDayHours}
                 addTime={this.addTime}
                 removeTime={this.removeTime}
               />
