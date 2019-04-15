@@ -12,6 +12,7 @@
 
 .edit--main {
 	position: relative;
+  width: 100%;
 	display: flex;
 	flex-direction: column;
   overflow-y: scroll;
@@ -119,6 +120,13 @@
 			color: #333333;
 			margin-bottom: calc-em(10px);
 		}
+
+    .input-checkbox {
+      margin-bottom: calc-em(10px);
+      margin-right: calc-em(5px);
+      width: auto;
+      float: left;
+    }
 
 		input:not(last-of-type) {
 			margin-right: calc-em(10px);
