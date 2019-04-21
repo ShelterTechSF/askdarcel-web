@@ -23,7 +23,7 @@ Notes.defaultProps = {
 
 function renderNotes(notes) {
   return notes.map(noteObj => (
-    <li className="service">
+    <li key={noteObj.id} className="service">
       <div className="service--description"><ReactMarkdown className="rendered-markdown" source={noteObj.note} /></div>
     </li>
   ));
