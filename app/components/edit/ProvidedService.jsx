@@ -1,9 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
+
+
+const InputField = ({
+  type, label, placeholder, value, setValue,
+}) => (
+  <Fragment>
+    <label htmlFor="input">{label}</label>
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={evt => setValue(evt.target.value)}
+    />
+  </Fragment>
+);
+
+InputField.propTypes = {
+  type: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  setValue: PropTypes.func.isRequired, // A function to call when setting a new value
+};
+
+InputField.defaultProps = {
+  type: 'text',
+};
+
 
 class ProvidedService extends Component {
   constructor(props) {
@@ -21,26 +49,21 @@ class ProvidedService extends Component {
       service: {},
     };
 
-    const { service } = this.props;
-
     this.textAreas = [
       {
         label: 'Service Description',
         placeholder: "Describe what you'll receive from this service in a few sentences.",
         field: 'long_description',
-        defaultValue: service.long_description,
       },
       {
         label: 'Application Process',
         placeholder: 'How do you apply for this service?',
         field: 'application_process',
-        defaultValue: service.application_process,
       },
       {
         label: 'Required Documents',
         placeholder: 'What documents do you need to bring to apply?',
         field: 'required_documents',
-        defaultValue: service.required_documents,
       },
       {
         // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
@@ -48,11 +71,9 @@ class ProvidedService extends Component {
         label: 'Interpretation Services',
         placeholder: 'What interpretation services do they offer?',
         field: 'interpretation_services',
-        defaultValue: service.interpretation_services,
       },
     ];
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -72,12 +93,6 @@ class ProvidedService extends Component {
       const { service: { key }, handleChange } = this.props;
       handleChange(key, service);
     });
-  }
-
-  handleFieldChange(e) {
-    const { service } = this.state;
-    service[e.target.dataset.field] = e.target.value;
-    this.handleChange(service);
   }
 
   handleNotesChange(notesObj) {
@@ -107,6 +122,10 @@ class ProvidedService extends Component {
   render() {
     const { handleDeactivation, index, service } = this.props;
     const { service: stateService, submitting } = this.state;
+    const flattenedService = {
+      ...service,
+      ...stateService,
+    };
     return (
       <li id={`${service.id}`} className="edit--service edit--section">
         <header className="edit--section--header">
@@ -126,34 +145,30 @@ class ProvidedService extends Component {
 
         <ul className="edit--section--list">
           <li className="edit--section--list--item">
-            <label htmlFor="input">Name of the Service</label>
-            <input
-              type="text"
+            <InputField
+              label="Name of the Service"
               placeholder="What is this service called?"
-              data-field="name"
-              defaultValue={service.name}
-              onChange={this.handleFieldChange}
+              value={flattenedService.name}
+              setValue={value => this.handleServiceFieldChange('name', value)}
             />
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">Nickname</label>
-            <input
-              type="text"
+            <InputField
+              label="Nickname"
               placeholder="What it's known as in the community"
-              data-field="alternate_name"
-              defaultValue={service.alternate_name}
-              onChange={this.handleFieldChange}
+              value={flattenedService.alternate_name}
+              setValue={value => this.handleServiceFieldChange('alternate_name', value)}
             />
           </li>
 
           <li key="email" className="edit--section--list--item email">
-            <label htmlFor="email">Service E-Mail</label>
-            <input
+            <InputField
               type="email"
-              defaultValue={service.email}
-              data-field="email"
-              onChange={this.handleFieldChange}
+              label="Service E-Mail"
+              placeholder="Email address for this service"
+              value={flattenedService.email}
+              setValue={value => this.handleServiceFieldChange('email', value)}
             />
           </li>
 
@@ -162,7 +177,7 @@ class ProvidedService extends Component {
               <FormTextArea
                 label={textArea.label}
                 placeholder={textArea.placeholder}
-                value={stateService[textArea.field] || textArea.defaultValue || ''}
+                value={flattenedService[textArea.field] || ''}
                 setValue={value => this.handleServiceFieldChange(textArea.field, value)}
               />
             </li>
@@ -178,32 +193,29 @@ class ProvidedService extends Component {
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">Cost</label>
-            <input
+            <InputField
+              label="Cost"
               placeholder="How much does this service cost?"
-              data-field="fee"
-              defaultValue={service.fee}
-              onChange={this.handleFieldChange}
+              value={flattenedService.fee}
+              setValue={value => this.handleServiceFieldChange('fee', value)}
             />
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">Wait Time</label>
-            <input
+            <InputField
+              label="Wait Time"
               placeholder="Is there a waiting list or wait time?"
-              data-field="wait_time"
-              defaultValue={service.wait_time}
-              onChange={this.handleFieldChange}
+              value={flattenedService.wait_time}
+              setValue={value => this.handleServiceFieldChange('wait_time', value)}
             />
           </li>
 
           <li className="edit--section--list--item">
-            <label htmlFor="input">Service&#39;s Website</label>
-            <input
+            <InputField
+              label="Service&#39;s Website"
               placeholder="http://"
-              data-field="url"
-              defaultValue={service.url}
-              onChange={this.handleFieldChange}
+              value={flattenedService.url}
+              setValue={value => this.handleServiceFieldChange('url', value)}
             />
           </li>
 
