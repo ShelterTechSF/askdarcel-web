@@ -13,26 +13,28 @@ class ProvidedService extends Component {
       service: {},
     };
 
+    const { service } = this.props;
+
     this.textAreas = [
       {
         label: 'Service Description',
         placeholder: "Describe what you'll receive from this service in a few sentences.",
         field: 'long_description',
-        defaultValue: this.props.service.long_description,
+        defaultValue: service.long_description,
         onChange: this.handleFieldChange.bind(this),
       },
       {
         label: 'Application Process',
         placeholder: 'How do you apply for this service?',
         field: 'application_process',
-        defaultValue: this.props.service.application_process,
+        defaultValue: service.application_process,
         onChange: this.handleFieldChange.bind(this),
       },
       {
         label: 'Required Documents',
         placeholder: 'What documents do you need to bring to apply?',
         field: 'required_documents',
-        defaultValue: this.props.service.required_documents,
+        defaultValue: service.required_documents,
         onChange: this.handleFieldChange.bind(this),
       },
       {
@@ -41,7 +43,7 @@ class ProvidedService extends Component {
         label: 'Interpretation Services',
         placeholder: 'What interpretation services do they offer?',
         field: 'interpretation_services',
-        defaultValue: this.props.service.interpretation_services,
+        defaultValue: service.interpretation_services,
         onChange: this.handleFieldChange.bind(this),
       },
     ];
@@ -55,7 +57,8 @@ class ProvidedService extends Component {
 
   handleChange(service) {
     this.setState({ service }, () => {
-      this.props.handleChange(this.props.service.key, service);
+      const { service: { key }, handleChange } = this.props;
+      handleChange(key, service);
     });
   }
 
@@ -90,20 +93,20 @@ class ProvidedService extends Component {
   }
 
   render() {
+    const { handleDeactivation, index, service } = this.props;
+    const { submitting } = this.state;
     return (
-      <li id={`${this.props.service.id}`} className="edit--service edit--section">
+      <li id={`${service.id}`} className="edit--service edit--section">
         <header className="edit--section--header">
           <h4>
-Service
-            {this.props.index + 1}
-:
-            {this.props.service.name}
+            {`Service ${index + 1}: ${service.name}`}
           </h4>
           <button
             className="remove-item"
+            type="button"
             id="service--deactivation"
-            disabled={this.state.submitting}
-            onClick={() => this.props.handleDeactivation('service', this.props.service.id)}
+            disabled={submitting}
+            onClick={() => handleDeactivation('service', service.id)}
           >
             Remove Service
           </button>
@@ -116,7 +119,7 @@ Service
               type="text"
               placeholder="What is this service called?"
               data-field="name"
-              defaultValue={this.props.service.name}
+              defaultValue={service.name}
               onChange={this.handleFieldChange}
             />
           </li>
@@ -127,7 +130,7 @@ Service
               type="text"
               placeholder="What it's known as in the community"
               data-field="alternate_name"
-              defaultValue={this.props.service.alternate_name}
+              defaultValue={service.alternate_name}
               onChange={this.handleFieldChange}
             />
           </li>
@@ -136,7 +139,7 @@ Service
             <label htmlFor="email">Service E-Mail</label>
             <input
               type="email"
-              defaultValue={this.props.service.email}
+              defaultValue={service.email}
               data-field="email"
               onChange={this.handleFieldChange}
             />
@@ -154,7 +157,7 @@ Service
 
           <li className="edit--section--list--item">
             <MultiSelectDropdown
-              selectedItems={this.props.service.eligibilities}
+              selectedItems={service.eligibilities}
               handleSelectChange={this.handleEligibilityChange}
               label="Eligibility"
               optionsRoute="eligibilities"
@@ -166,7 +169,7 @@ Service
             <input
               placeholder="How much does this service cost?"
               data-field="fee"
-              defaultValue={this.props.service.fee}
+              defaultValue={service.fee}
               onChange={this.handleFieldChange}
             />
           </li>
@@ -176,7 +179,7 @@ Service
             <input
               placeholder="Is there a waiting list or wait time?"
               data-field="wait_time"
-              defaultValue={this.props.service.wait_time}
+              defaultValue={service.wait_time}
               onChange={this.handleFieldChange}
             />
           </li>
@@ -186,21 +189,21 @@ Service
             <input
               placeholder="http://"
               data-field="url"
-              defaultValue={this.props.service.url}
+              defaultValue={service.url}
               onChange={this.handleFieldChange}
             />
           </li>
 
           <EditSchedule
             canInheritFromParent
-            schedule={this.props.service.schedule}
+            schedule={service.schedule}
             handleScheduleChange={this.handleScheduleChange}
           />
 
-          <EditNotes notes={this.props.service.notes} handleNotesChange={this.handleNotesChange} />
+          <EditNotes notes={service.notes} handleNotesChange={this.handleNotesChange} />
 
           <MultiSelectDropdown
-            selectedItems={this.props.service.categories}
+            selectedItems={service.categories}
             handleSelectChange={this.handleCategoryChange}
             label="Categories"
             optionsRoute="categories"

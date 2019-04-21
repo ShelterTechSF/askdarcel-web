@@ -8,9 +8,7 @@ app/components/edit/EditCollection.jsx
 app/components/edit/EditNotes.jsx
 app/components/edit/EditPhones.jsx
 app/components/edit/EditSidebar.jsx
-app/components/edit/FormTextArea.jsx
 app/components/edit/MultiSelectDropdown.jsx
-app/components/edit/ProvidedService.jsx
 app/components/layout/CategoryItem.jsx
 app/components/layout/CategoryList.jsx
 app/components/layout/FindHeader.jsx
