@@ -158,12 +158,14 @@ class ProvidedService extends Component {
           </li>
 
           {this.textAreas.map(textArea => (
-            <FormTextArea
-              label={textArea.label}
-              placeholder={textArea.placeholder}
-              value={stateService[textArea.field] || textArea.defaultValue || ''}
-              setValue={value => this.handleServiceFieldChange(textArea.field, value)}
-            />
+            <li className="edit--section--list--item" key={textArea.field}>
+              <FormTextArea
+                label={textArea.label}
+                placeholder={textArea.placeholder}
+                value={stateService[textArea.field] || textArea.defaultValue || ''}
+                setValue={value => this.handleServiceFieldChange(textArea.field, value)}
+              />
+            </li>
           ))}
 
           <li className="edit--section--list--item">

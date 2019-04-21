@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 const FormTextArea = ({
   label, placeholder, value, setValue,
 }) => (
-  <li className="edit--section--list--item">
+  <Fragment>
     <label htmlFor="textarea">{label}</label>
     <textarea
       placeholder={placeholder}
       value={value}
       onChange={evt => setValue(evt.target.value)}
     />
-  </li>
+  </Fragment>
 );
 
 FormTextArea.propTypes = {
