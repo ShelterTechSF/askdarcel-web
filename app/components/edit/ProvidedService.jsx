@@ -9,6 +9,14 @@ class ProvidedService extends Component {
   constructor(props) {
     super(props);
 
+    // Notice
+    // It's really unclear when to use the version of the service in the state
+    // vs. when to use the version in the props.
+    // Currently, it looks like the one in state only keeps track of changes
+    // that have been made to the service, and a missing key implies that there
+    // is no change to that field. A longer-term refactoring should involve
+    // keeping track of the deltas in one location rather than having the logic
+    // distributed throughout the whole application.
     this.state = {
       service: {},
     };
@@ -94,7 +102,7 @@ class ProvidedService extends Component {
 
   render() {
     const { handleDeactivation, index, service } = this.props;
-    const { submitting } = this.state;
+    const { service: stateService, submitting } = this.state;
     return (
       <li id={`${service.id}`} className="edit--service edit--section">
         <header className="edit--section--header">
@@ -150,7 +158,7 @@ class ProvidedService extends Component {
               label={textArea.label}
               placeholder={textArea.placeholder}
               field={textArea.field}
-              defaultValue={textArea.defaultValue}
+              value={stateService[textArea.field] || textArea.defaultValue || ''}
               onChange={textArea.onChange}
             />
           ))}
