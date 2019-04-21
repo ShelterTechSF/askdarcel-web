@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FormTextArea = ({
-  label, placeholder, field, value, onChange,
+  label, placeholder, value, setValue,
 }) => (
   <li className="edit--section--list--item">
     <label htmlFor="textarea">{label}</label>
     <textarea
       placeholder={placeholder}
-      data-field={field}
       value={value}
-      onChange={onChange}
+      onChange={evt => setValue(evt.target.value)}
     />
   </li>
 );
@@ -18,9 +17,8 @@ const FormTextArea = ({
 FormTextArea.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  field: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  setValue: PropTypes.func.isRequired, // A function to call when setting a new value
 };
 
 export default FormTextArea;

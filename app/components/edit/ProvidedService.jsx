@@ -29,21 +29,18 @@ class ProvidedService extends Component {
         placeholder: "Describe what you'll receive from this service in a few sentences.",
         field: 'long_description',
         defaultValue: service.long_description,
-        onChange: this.handleFieldChange.bind(this),
       },
       {
         label: 'Application Process',
         placeholder: 'How do you apply for this service?',
         field: 'application_process',
         defaultValue: service.application_process,
-        onChange: this.handleFieldChange.bind(this),
       },
       {
         label: 'Required Documents',
         placeholder: 'What documents do you need to bring to apply?',
         field: 'required_documents',
         defaultValue: service.required_documents,
-        onChange: this.handleFieldChange.bind(this),
       },
       {
         // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
@@ -52,7 +49,6 @@ class ProvidedService extends Component {
         placeholder: 'What interpretation services do they offer?',
         field: 'interpretation_services',
         defaultValue: service.interpretation_services,
-        onChange: this.handleFieldChange.bind(this),
       },
     ];
 
@@ -61,6 +57,14 @@ class ProvidedService extends Component {
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleEligibilityChange = this.handleEligibilityChange.bind(this);
+  }
+
+  // This is meant to gradually replace handleFieldChange in a way that does not
+  // depend on the caller necessarily being a DOM event.
+  handleServiceFieldChange = (field, value) => {
+    const { service } = this.state;
+    service[field] = value;
+    this.handleChange(service);
   }
 
   handleChange(service) {
@@ -157,9 +161,8 @@ class ProvidedService extends Component {
             <FormTextArea
               label={textArea.label}
               placeholder={textArea.placeholder}
-              field={textArea.field}
               value={stateService[textArea.field] || textArea.defaultValue || ''}
-              onChange={textArea.onChange}
+              setValue={value => this.handleServiceFieldChange(textArea.field, value)}
             />
           ))}
 
