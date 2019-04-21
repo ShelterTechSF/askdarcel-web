@@ -73,11 +73,6 @@ class ProvidedService extends Component {
         field: 'interpretation_services',
       },
     ];
-
-    this.handleNotesChange = this.handleNotesChange.bind(this);
-    this.handleScheduleChange = this.handleScheduleChange.bind(this);
-    this.handleCategoryChange = this.handleCategoryChange.bind(this);
-    this.handleEligibilityChange = this.handleEligibilityChange.bind(this);
   }
 
   // This is meant to gradually replace handleFieldChange in a way that does not
@@ -93,30 +88,6 @@ class ProvidedService extends Component {
       const { service: { key }, handleChange } = this.props;
       handleChange(key, service);
     });
-  }
-
-  handleNotesChange(notesObj) {
-    const { service } = this.state;
-    service.notesObj = notesObj;
-    this.handleChange(service);
-  }
-
-  handleScheduleChange(scheduleObj) {
-    const { service } = this.state;
-    service.scheduleObj = scheduleObj;
-    this.handleChange(service);
-  }
-
-  handleCategoryChange(categories) {
-    const { service } = this.state;
-    service.categories = categories;
-    this.handleChange(service);
-  }
-
-  handleEligibilityChange(eligibilities) {
-    const { service } = this.state;
-    service.eligibilities = eligibilities;
-    this.handleChange(service);
   }
 
   render() {
@@ -186,7 +157,7 @@ class ProvidedService extends Component {
           <li className="edit--section--list--item">
             <MultiSelectDropdown
               selectedItems={service.eligibilities}
-              handleSelectChange={this.handleEligibilityChange}
+              handleSelectChange={value => this.handleServiceFieldChange('eligibilities', value)}
               label="Eligibility"
               optionsRoute="eligibilities"
             />
@@ -222,14 +193,17 @@ class ProvidedService extends Component {
           <EditSchedule
             canInheritFromParent
             schedule={service.schedule}
-            handleScheduleChange={this.handleScheduleChange}
+            handleScheduleChange={value => this.handleServiceFieldChange('scheduleObj', value)}
           />
 
-          <EditNotes notes={service.notes} handleNotesChange={this.handleNotesChange} />
+          <EditNotes
+            notes={service.notes}
+            handleNotesChange={value => this.handleServiceFieldChange('notesObj', value)}
+          />
 
           <MultiSelectDropdown
             selectedItems={service.categories}
-            handleSelectChange={this.handleCategoryChange}
+            handleSelectChange={value => this.handleServiceFieldChange('categories', value)}
             label="Categories"
             optionsRoute="categories"
           />
