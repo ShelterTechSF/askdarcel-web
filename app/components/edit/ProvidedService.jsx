@@ -33,6 +33,32 @@ InputField.defaultProps = {
 };
 
 
+const TEXT_AREAS = [
+  {
+    label: 'Service Description',
+    placeholder: "Describe what you'll receive from this service in a few sentences.",
+    field: 'long_description',
+  },
+  {
+    label: 'Application Process',
+    placeholder: 'How do you apply for this service?',
+    field: 'application_process',
+  },
+  {
+    label: 'Required Documents',
+    placeholder: 'What documents do you need to bring to apply?',
+    field: 'required_documents',
+  },
+  {
+    // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
+    //       and seed it with languages
+    label: 'Interpretation Services',
+    placeholder: 'What interpretation services do they offer?',
+    field: 'interpretation_services',
+  },
+];
+
+
 class ProvidedService extends Component {
   constructor(props) {
     super(props);
@@ -48,31 +74,6 @@ class ProvidedService extends Component {
     this.state = {
       service: {},
     };
-
-    this.textAreas = [
-      {
-        label: 'Service Description',
-        placeholder: "Describe what you'll receive from this service in a few sentences.",
-        field: 'long_description',
-      },
-      {
-        label: 'Application Process',
-        placeholder: 'How do you apply for this service?',
-        field: 'application_process',
-      },
-      {
-        label: 'Required Documents',
-        placeholder: 'What documents do you need to bring to apply?',
-        field: 'required_documents',
-      },
-      {
-        // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
-        //       and seed it with languages
-        label: 'Interpretation Services',
-        placeholder: 'What interpretation services do they offer?',
-        field: 'interpretation_services',
-      },
-    ];
   }
 
   handleChange = (field, value) => {
@@ -138,7 +139,7 @@ class ProvidedService extends Component {
             />
           </li>
 
-          {this.textAreas.map(textArea => (
+          {TEXT_AREAS.map(textArea => (
             <li className="edit--section--list--item" key={textArea.field}>
               <FormTextArea
                 label={textArea.label}
