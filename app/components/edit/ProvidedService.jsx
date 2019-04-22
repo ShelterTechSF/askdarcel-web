@@ -75,15 +75,10 @@ class ProvidedService extends Component {
     ];
   }
 
-  // This is meant to gradually replace handleFieldChange in a way that does not
-  // depend on the caller necessarily being a DOM event.
-  handleServiceFieldChange = (field, value) => {
+  handleChange = (field, value) => {
     const { service } = this.state;
+    // TODO: We shouldn't be mutating state, but this component currently depends on it
     service[field] = value;
-    this.handleChange(service);
-  }
-
-  handleChange(service) {
     this.setState({ service }, () => {
       const { service: { key }, handleChange } = this.props;
       handleChange(key, service);
@@ -120,7 +115,7 @@ class ProvidedService extends Component {
               label="Name of the Service"
               placeholder="What is this service called?"
               value={flattenedService.name}
-              setValue={value => this.handleServiceFieldChange('name', value)}
+              setValue={value => this.handleChange('name', value)}
             />
           </li>
 
@@ -129,7 +124,7 @@ class ProvidedService extends Component {
               label="Nickname"
               placeholder="What it's known as in the community"
               value={flattenedService.alternate_name}
-              setValue={value => this.handleServiceFieldChange('alternate_name', value)}
+              setValue={value => this.handleChange('alternate_name', value)}
             />
           </li>
 
@@ -139,7 +134,7 @@ class ProvidedService extends Component {
               label="Service E-Mail"
               placeholder="Email address for this service"
               value={flattenedService.email}
-              setValue={value => this.handleServiceFieldChange('email', value)}
+              setValue={value => this.handleChange('email', value)}
             />
           </li>
 
@@ -149,7 +144,7 @@ class ProvidedService extends Component {
                 label={textArea.label}
                 placeholder={textArea.placeholder}
                 value={flattenedService[textArea.field] || ''}
-                setValue={value => this.handleServiceFieldChange(textArea.field, value)}
+                setValue={value => this.handleChange(textArea.field, value)}
               />
             </li>
           ))}
@@ -157,7 +152,7 @@ class ProvidedService extends Component {
           <li className="edit--section--list--item">
             <MultiSelectDropdown
               selectedItems={service.eligibilities}
-              handleSelectChange={value => this.handleServiceFieldChange('eligibilities', value)}
+              handleSelectChange={value => this.handleChange('eligibilities', value)}
               label="Eligibility"
               optionsRoute="eligibilities"
             />
@@ -168,7 +163,7 @@ class ProvidedService extends Component {
               label="Cost"
               placeholder="How much does this service cost?"
               value={flattenedService.fee}
-              setValue={value => this.handleServiceFieldChange('fee', value)}
+              setValue={value => this.handleChange('fee', value)}
             />
           </li>
 
@@ -177,7 +172,7 @@ class ProvidedService extends Component {
               label="Wait Time"
               placeholder="Is there a waiting list or wait time?"
               value={flattenedService.wait_time}
-              setValue={value => this.handleServiceFieldChange('wait_time', value)}
+              setValue={value => this.handleChange('wait_time', value)}
             />
           </li>
 
@@ -186,24 +181,24 @@ class ProvidedService extends Component {
               label="Service&#39;s Website"
               placeholder="http://"
               value={flattenedService.url}
-              setValue={value => this.handleServiceFieldChange('url', value)}
+              setValue={value => this.handleChange('url', value)}
             />
           </li>
 
           <EditSchedule
             canInheritFromParent
             schedule={service.schedule}
-            handleScheduleChange={value => this.handleServiceFieldChange('scheduleObj', value)}
+            handleScheduleChange={value => this.handleChange('scheduleObj', value)}
           />
 
           <EditNotes
             notes={service.notes}
-            handleNotesChange={value => this.handleServiceFieldChange('notesObj', value)}
+            handleNotesChange={value => this.handleChange('notesObj', value)}
           />
 
           <MultiSelectDropdown
             selectedItems={service.categories}
-            handleSelectChange={value => this.handleServiceFieldChange('categories', value)}
+            handleSelectChange={value => this.handleChange('categories', value)}
             label="Categories"
             optionsRoute="categories"
           />
