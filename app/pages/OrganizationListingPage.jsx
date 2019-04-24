@@ -9,7 +9,6 @@ import {
   ResourceCategories,
   Website,
   Email,
-  StreetView,
 } from 'components/listing/ResourceInfos';
 import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
@@ -97,7 +96,6 @@ export class OrganizationListingPage extends React.Component {
       return <Loader />;
     }
 
-    const { userLocation } = this.props;
     const { notes } = resource;
     const isMOHCDFunded = this.isMOHCDFunded();
     return (
