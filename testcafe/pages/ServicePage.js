@@ -8,9 +8,9 @@ export default class ResourcePage {
     this.serviceName = baseSelector.find('header h1');
     this.description = baseSelector.find('.listing--main--left--about');
     this.details = baseSelector.find('.listing--main--left--details');
-    this.editButton = baseSelector.find('.listing--aside--edit');
-    this.printButton = baseSelector.find('.listing--aside--print');
-    this.directionsButton = baseSelector.find('.listing--aside--directions');
+    this.editButton = baseSelector.find('.action-sidebar--edit');
+    this.printButton = baseSelector.find('.action-sidebar--print');
+    this.directionsButton = baseSelector.find('.action-sidebar--directions');
     this.schedule = baseSelector.findReact('TableOfOpeningTimes tbody tr');
     this.url = serviceId => `${config.baseUrl}/services/${serviceId}`;
   }

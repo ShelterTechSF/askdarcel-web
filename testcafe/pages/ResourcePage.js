@@ -16,7 +16,7 @@ export default class ResourcePage {
     this.phones = baseSelector.find('.org--main--header--phone .phone p');
     this.website = baseSelector.findReact('Website');
     this.email = baseSelector.findReact('Email');
-    this.editButton = baseSelector.find('.edit-button');
+    this.editButton = baseSelector.find('.action-sidebar--edit');
     this.services = baseSelector.find('#services.service--section .service');
   }
 
