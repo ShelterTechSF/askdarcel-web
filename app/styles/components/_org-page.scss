@@ -11,40 +11,6 @@
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// MAP STYLES
-
-.org--map {
-  background: $color-grey1;
-  height: calc-em(250px);
-  position: relative;
-  @include r_max($break-tablet-s) {
-    height: calc-em(200px);
-  }
-
-  .map_canvas {
-    height: calc-em(250px);
-    @include r_max($break-tablet-s) {
-      height: calc-em(200px);
-    }
-  }
-
-  .org-streetview {
-		width: 100%;
-		max-width: calc-em(1000px);
-		margin: 0 auto;
-		padding: 0 calc-em(20px);
-		transform: translateY(-96px);
-		// Prevent empty space to the right of image from covering other elements on page
-		pointer-events: none;
-		&--img {
-			@include aspect-ratio(1, 1);
-		  width: calc-em(130px);
-		  background: $color-grey2;
-		}
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
 // ORG MAIN INFO
 
 .org--main {

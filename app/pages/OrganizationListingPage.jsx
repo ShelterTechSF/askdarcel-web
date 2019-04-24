@@ -15,7 +15,6 @@ import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
 import Notes from 'components/listing/Notes';
 import Loader from 'components/ui/Loader';
-import ResourceMap from 'components/listing/ResourceMap';
 import HAPcertified from '../assets/img/ic-hap.png';
 import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
 import * as dataService from '../utils/DataService';
@@ -118,19 +117,6 @@ export class OrganizationListingPage extends React.Component {
         </Helmet>
         <div className="org-container">
           <article className="org" id="resource">
-            {
-              resource.address && (
-                <div className="org--map">
-                  <ResourceMap
-                    name={resource.name}
-                    lat={resource.address.latitude}
-                    long={resource.address.longitude}
-                    userLocation={userLocation}
-                  />
-                  <StreetView address={resource.address} resourceName={resource.name} />
-                </div>
-              )
-            }
             <div className="org--main">
               <div className="org--main--left">
 

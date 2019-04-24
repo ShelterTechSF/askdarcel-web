@@ -19,7 +19,6 @@ app/components/layout/OrganizationCard.jsx
 app/components/listing/ActionSidebar.jsx
 app/components/listing/Notes.jsx
 app/components/listing/ResourceInfos.jsx
-app/components/listing/ResourceMap.jsx
 app/components/listing/__tests__/RelativeOpeningTimes.spec.jsx
 app/components/listing/index.js
 app/components/search/Filtering.jsx
