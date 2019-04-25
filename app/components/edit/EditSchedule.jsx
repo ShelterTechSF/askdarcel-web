@@ -60,6 +60,7 @@ function buildSchedule(schedule) {
 class EditSchedule extends Component {
   constructor(props) {
     super(props);
+    const { canInheritFromParent } = props;
 
     this.state = {
       // ESLint can't detect that this field is actually beind used in the
@@ -67,9 +68,9 @@ class EditSchedule extends Component {
       // eslint-disable-next-line react/no-unused-state
       scheduleId: props.schedule ? props.schedule.id : null,
       scheduleDays: buildSchedule(props.schedule),
-      // If the service doesn't had a schedule associated with it, inherit
-      // the parent resource's schedule.
-      shouldInheritSchedule: !(_.get(props, 'schedule.schedule_days.length', false)),
+      // If the service doesn't have a schedule associated with it, and can
+      // inherit its schedule from its parent, inherit the parent resource's schedule.
+      shouldInheritSchedule: canInheritFromParent && !(_.get(props, 'schedule.schedule_days.length', false)),
     };
 
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
@@ -230,6 +231,10 @@ class EditSchedule extends Component {
 
   render() {
     const { scheduleDays: schedule, shouldInheritSchedule } = this.state;
+    // This component is shared between organizations and services. Organizations
+    // are top level, and cannot inherit schedules. OTOH Services can inherit
+    // their schedule from their parent organization. This prop controls this
+    // difference in behavior.
     const { canInheritFromParent } = this.props;
     return (
       <li key="hours" className="edit--section--list--item hours">
