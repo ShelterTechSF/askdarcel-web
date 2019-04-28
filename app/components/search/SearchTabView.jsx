@@ -35,12 +35,16 @@ class SearchTabView extends React.Component {
   }
 
   getTabList() {
-    const { applicationProcess, description, schedule } = this.props;
-    const tabs = [];
-    tabs.push({ title: 'Description', content: <ReactMarkdown className="rendered-markdown" source={description} /> });
-    if (applicationProcess) { tabs.push({ title: 'How to Apply', content: <p>{applicationProcess}</p> }); }
-    // tabs.push({ title: 'Hours', content: this.getSchedule(schedule) });
-    return tabs;
+    const { applicationProcess, description } = this.props;
+
+    const tabs = [[ 'Description', description ], [ 'How To Apply', applicationProcess ]];
+
+    return tabs
+      .filter(([title, content]) => content)
+      .map(([title, content]) => ({
+        title: title,
+        content: <ReactMarkdown className="rendered-markdown" source={ content } />
+      }));
   }
 
   render() {

@@ -88,7 +88,6 @@ const getServiceLocations = (service, resource, schedule) => (resource.address
   }))
   : []);
 
-
 class ServicePage extends React.Component {
   componentWillMount() {
     const {
@@ -111,14 +110,15 @@ class ServicePage extends React.Component {
       // ['Funding Sources', ] // TODO Doesn't exist
       [
         'Notes',
-        <ReactMarkdown className="rendered-markdown">
-          {service.notes.map(d => d.note).join('\n')}
-        </ReactMarkdown>,
+        service.notes.map(d => d.note).join('\n')
       ],
     ];
     return rows
       .filter(row => row[1])
-      .map(row => ({ title: row[0], value: row[1] }));
+      .map(row => ({
+        title: row[0],
+        value: <ReactMarkdown className="rendered-markdown">{ row[1] }</ReactMarkdown>
+      }));
   }
 
 
@@ -189,7 +189,7 @@ class ServicePage extends React.Component {
                           </td>
                         </tr>
                       )}
-                      rows={this.generateDetailsRows()}
+                      rows={details}
                     />
                   </section>
                 ) : null}
