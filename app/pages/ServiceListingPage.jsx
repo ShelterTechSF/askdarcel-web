@@ -110,14 +110,14 @@ class ServicePage extends React.Component {
       // ['Funding Sources', ] // TODO Doesn't exist
       [
         'Notes',
-        service.notes.map(d => d.note).join('\n')
+        service.notes.map(d => d.note).join('\n'),
       ],
     ];
     return rows
       .filter(row => row[1])
       .map(row => ({
         title: row[0],
-        value: <ReactMarkdown className="rendered-markdown">{ row[1] }</ReactMarkdown>
+        value: <ReactMarkdown className="rendered-markdown">{ row[1] }</ReactMarkdown>,
       }));
   }
 
