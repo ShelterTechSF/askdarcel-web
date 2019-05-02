@@ -81,8 +81,8 @@ class ProvidedService extends Component {
     // TODO: We shouldn't be mutating state, but this component currently depends on it
     service[field] = value;
     this.setState({ service }, () => {
-      const { service: { key }, handleChange } = this.props;
-      handleChange(key, service);
+      const { service: { id }, handleChange } = this.props;
+      handleChange(id, service);
     });
   }
 
@@ -211,7 +211,7 @@ class ProvidedService extends Component {
 
 ProvidedService.propTypes = {
   service: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     fee: PropTypes.number,
     categories: PropTypes.array,
     notes: PropTypes.array,
@@ -223,7 +223,6 @@ ProvidedService.propTypes = {
     required_documents: PropTypes.string,
     application_process: PropTypes.string,
     long_description: PropTypes.string,
-    key: PropTypes.string,
   }).isRequired,
   handleDeactivation: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,

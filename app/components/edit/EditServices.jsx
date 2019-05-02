@@ -8,12 +8,7 @@ class EditServices extends Component {
     super(props);
 
     const { services } = props;
-    const existingServices = services
-      ? services.map(service => {
-        /* eslint-disable no-param-reassign */
-        service.key = service.id;
-        return service;
-      }) : [];
+    const existingServices = services || [];
 
     this.state = {
       services: {},
@@ -27,14 +22,14 @@ class EditServices extends Component {
 
   /* @method handleServiceChange
    * @description Updates the service with any changes made
-   * @param {string} key a unique identifier to find a service
+   * @param {number} id a unique identifier to find a service
    * @param {object} service the service to be updated
    * @returns {void}
    */
-  handleServiceChange(key, service) {
+  handleServiceChange(id, service) {
     const { handleServiceChange } = this.props;
     const { services } = this.state;
-    services[key] = service;
+    services[id] = service;
     this.setState({
       services,
     }, () => {
@@ -51,7 +46,6 @@ class EditServices extends Component {
 
     existingServices.push({
       id: newUUID,
-      key: newUUID,
       notes: [],
       schedule: {
         schedule_days: createTemplateSchedule(),
@@ -72,7 +66,7 @@ class EditServices extends Component {
           {
             existingServices.map((service, index) => (
               <ProvidedService
-                key={service.key}
+                key={`${service.id}`}
                 index={index}
                 service={service}
                 handleChange={this.handleServiceChange}
