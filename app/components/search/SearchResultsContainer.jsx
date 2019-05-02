@@ -24,14 +24,18 @@ const searchResultsContainer = connectStateResults(
       output = (
         <div className="results">
           <div className="results-table">
-            <SearchTable />
+            <SearchTable
+              hits={searchResults.hits}
+              page={searchResults.page}
+              hitsPerPage={searchResults.hitsPerPage}
+            />
             <div className="add-resource">
               <h4>Can&apos;t find the organization you&apos;re looking for? </h4>
               <h3 className="entry-headline">
                 <Link to="/resource/new">
                   <i className="material-icons">add_circle</i>
                   {' '}
-Add an organization to our database
+                  Add an organization to our database
                 </Link>
               </h3>
             </div>
