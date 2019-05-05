@@ -22,17 +22,18 @@ class EditNotes extends Component {
 
   handleNoteChange(key, note) {
     const { notes } = this.state;
+    const { handleNotesChange } = this.props;
     notes[key] = note;
     this.setState({
       notes,
-    }, function () {
-      this.props.handleNotesChange(this.state);
+    }, () => {
+      handleNotesChange(this.state);
     });
   }
 
   addNote() {
-    const { existingNotes } = this.state;
-    const newUUID = this.state.uuid - 1;
+    const { existingNotes, uuid } = this.state;
+    const newUUID = uuid - 1;
     existingNotes.push({
       key: newUUID,
     });
@@ -40,11 +41,11 @@ class EditNotes extends Component {
   }
 
   removeNote(index) {
-    const { existingNotes } = this.state;
+    const { handleNotesChange } = this.props;
+    const { existingNotes, notes } = this.state;
     const currentNote = existingNotes[index];
     currentNote.isRemoved = true;
     const { key } = currentNote;
-    const { notes } = this.state;
     // If we haven't created the note in our DB yet
     // just remove it from the object locally
     if (key < 0) {
@@ -57,15 +58,16 @@ class EditNotes extends Component {
       notes,
       existingNotes,
     }, () => {
-      this.props.handleNotesChange(this.state);
+      handleNotesChange(this.state);
     });
   }
 
   renderNotes() {
+    const { existingNotes } = this.state;
     const notesArray = [];
 
-    for (let i = 0; i < this.state.existingNotes.length; i++) {
-      const note = this.state.existingNotes[i];
+    for (let i = 0; i < existingNotes.length; i++) {
+      const note = existingNotes[i];
       notesArray.push(
         <EditNote
           key={note.key}
@@ -95,6 +97,7 @@ is also supported for notes.
           {this.renderNotes()}
         </ul>
         <button
+          type="button"
           className="edit--section--list--item--button"
           onClick={this.addNote}
         >
@@ -119,32 +122,34 @@ class EditNote extends Component {
 
   handleFieldChange(e) {
     const { note } = this.state;
+    const { handleChange, note: { key } } = this.props;
     note.note = e.target.value;
     this.setState({ note });
 
-    this.props.handleChange(this.props.note.key, note);
+    handleChange(key, note);
   }
 
   render() {
     let note = null;
-    const currentNote = this.props.note;
+    const { index, note: currentNote, removeNote } = this.props;
     if (!currentNote.isRemoved) {
       note = (
         <li>
-          <label htmlFor={`note-${this.props.index + 1}`}>
+          <label htmlFor={`note-${index + 1}`}>
 Note
-            {this.props.index + 1}
+            {index + 1}
           </label>
           <textarea
-            id={`note-${this.props.index + 1}`}
+            id={`note-${index + 1}`}
             className="large-input input"
             placeholder="Note"
             defaultValue={currentNote.note}
             onChange={this.handleFieldChange}
           />
           <button
+            type="button"
             className="delete-note"
-            onClick={() => this.props.removeNote(this.props.index)}
+            onClick={() => removeNote(index)}
           >
             <i className="material-icons">&#xE872;</i>
           </button>
