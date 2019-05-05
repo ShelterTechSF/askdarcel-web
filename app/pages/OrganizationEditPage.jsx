@@ -12,8 +12,46 @@ import EditSchedule from '../components/edit/EditSchedule';
 import EditPhones from '../components/edit/EditPhones';
 import EditSidebar from '../components/edit/EditSidebar';
 import * as dataService from '../utils/DataService';
+import { createTemplateSchedule } from '../utils/index';
 
 import './OrganizationEditPage.scss';
+
+/**
+ * Apply a set of changes to a base array of items.
+ *
+ * Constraints:
+ * - Original ordering of base array should be preserved
+ * - New items should be pushed to the end ordered by ID in descending order.
+ *   This assumes that the IDs for new items start with -1 and decrement for
+ *   each new item
+ *
+ * @param {object[]} baseItems - An array of items, each with an `id` field
+ * @param {object} changesById - An object mapping IDs to changes
+ *
+ * @return {object[]} An array of items with the changes applied
+ */
+const applyChanges = (baseItems, changesById) => {
+  const baseItemIds = new Set(baseItems.map(i => i.id));
+  // Order the new IDs in decreasing order, since that's the order they should
+  // appear on the page.
+  // We use lodash's sortBy because JavaScript's sort does a lexicographic sort,
+  // even on numbers.
+  const newIds = _.sortBy(
+    Object.keys(changesById)
+      .map(idStr => parseInt(idStr, 10))
+      .filter(id => !baseItemIds.has(id)),
+  ).reverse();
+  // Prepopulate an array with all the items, including the new ones in the
+  // right position.
+  const prechangedItems = [...baseItems, ...newIds.map(id => ({ id }))];
+  const transformedItems = prechangedItems.map(item => {
+    if (item.id in changesById) {
+      return { ...item, ...changesById[item.id] };
+    }
+    return item;
+  });
+  return transformedItems;
+};
 
 function getDiffObject(curr, orig) {
   return Object.entries(curr).reduce((acc, [key, value]) => {
@@ -204,6 +242,7 @@ export class OrganizationEditPage extends React.Component {
       submitting: false,
       newResource: false,
       inputsDirty: false,
+      latestServiceId: -1,
     };
 
     this.certifyHAP = this.certifyHAP.bind(this);
@@ -213,12 +252,11 @@ export class OrganizationEditPage extends React.Component {
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
-    this.handleServiceChange = this.handleServiceChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeactivation = this.handleDeactivation.bind(this);
     this.createResource = this.createResource.bind(this);
-    this.addService = this.addService.bind(this);
+    this.sidebarAddService = this.sidebarAddService.bind(this);
   }
 
   componentWillMount() {
@@ -289,6 +327,40 @@ export class OrganizationEditPage extends React.Component {
       const uri = `/api/resources/${resource.id}/services`;
       promises.push(dataService.post(uri, { services: newServices }));
     }
+  }
+
+  /** @method editServiceById
+   * @description Updates the service with any changes made
+   * @param {number} id a unique identifier to find a service
+   * @param {object} service the service to be updated
+   * @returns {void}
+   */
+  editServiceById = (id, changes) => {
+    const { services } = this.state;
+    this.setState({
+      services: { ...services, [id]: changes },
+      inputsDirty: true,
+    });
+  }
+
+  /** @method addService
+   * @description Creates a brand new service
+   */
+  addService = () => {
+    const { services, latestServiceId } = this.state;
+    const nextServiceId = latestServiceId - 1;
+
+    const newService = {
+      id: nextServiceId,
+      notes: [],
+      schedule: {
+        schedule_days: createTemplateSchedule(),
+      },
+    };
+    this.setState({
+      services: { ...services, [nextServiceId]: newService },
+      latestServiceId: nextServiceId,
+    });
   }
 
   keepOnPage(e) {
@@ -424,7 +496,7 @@ export class OrganizationEditPage extends React.Component {
     }
 
     // Services
-    this.postServices(services.services, promises);
+    this.postServices(services, promises);
 
     // Notes
     postNotes(notes, promises, { path: 'resources', id: resource.id });
@@ -480,10 +552,6 @@ export class OrganizationEditPage extends React.Component {
     this.setState({ address: addressObj, inputsDirty: true });
   }
 
-  handleServiceChange(servicesObj) {
-    this.setState({ services: servicesObj, inputsDirty: true });
-  }
-
   handleNotesChange(notesObj) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
@@ -504,8 +572,8 @@ export class OrganizationEditPage extends React.Component {
       });
   }
 
-  addService() {
-    this.serviceChild.addService();
+  sidebarAddService() {
+    this.addService();
     const newService = document.getElementById('new-service-button');
     // eslint-disable-next-line react/no-find-dom-node
     const domNode = ReactDOM.findDOMNode(newService);
@@ -625,12 +693,14 @@ If you&#39;d like to add formatting to descriptions, we support
   }
 
   renderServices() {
-    const { resource: { services } } = this.state;
+    const { resource: { services }, services: serviceChanges } = this.state;
+    const flattenedServices = applyChanges(services, serviceChanges);
     return (
       <ul className="edit--section--list">
         <EditServices
-          services={services}
-          handleServiceChange={this.handleServiceChange}
+          services={flattenedServices}
+          editServiceById={this.editServiceById}
+          addService={this.addService}
           handleDeactivation={this.handleDeactivation}
           ref={instance => { this.serviceChild = instance; }}
         />
@@ -657,9 +727,9 @@ If you&#39;d like to add formatting to descriptions, we support
             resource={resource}
             submitting={submitting}
             certifyHAP={this.certifyHAP}
-            newServices={services.services}
+            newServices={services}
             newResource={newResource}
-            addService={this.addService}
+            addService={this.sidebarAddService}
           />
           <div className="edit--main">
             <header className="edit--main--header">
