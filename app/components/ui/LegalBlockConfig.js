@@ -23,24 +23,6 @@ const LegalBlockConfig = {
       query: 'Family+Law',
       imgClass: 'legal-block-family',
     },
-    {
-      title: 'Criminal & Tickets',
-      content: 'Criminal process questions, quality of life, record expungement',
-      query: 'Criminal',
-      imgClass: 'legal-block-criminal',
-    },
-    {
-      title: 'Work, Credit, and Consumer',
-      content: 'Credit/consumer, worker\'s rights, work and family',
-      query: 'Workers',
-      imgClass: 'legal-block-work',
-    },
-    {
-      title: 'Benefits',
-      content: 'CAAP, CalWORKS, CalFresh, MediCal, SSI',
-      query: 'Government+Benefits',
-      imgClass: 'legal-block-benefits',
-    },
   ],
 };
 
