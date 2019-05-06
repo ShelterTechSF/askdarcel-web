@@ -88,13 +88,13 @@ const EditSidebar = ({
               <button type="button" className="service--action--button" onClick={addService}><i className="material-icons">add</i></button>
             </h3>
           </li>
-          { resource.services ? resource.services.map(service => (
-            <li className="sidebar--list--item">
+          { resource.services && resource.services.map(service => (
+            <li key={service.id} className="sidebar--list--item">
               <a href={`#${service.id}`}>{service.name}</a>
             </li>
-          )) : null }
+          )) }
           {Object.keys(newServices).map(service => (
-            <li className="sidebar--list--item">
+            <li key={service} className="sidebar--list--item">
               <a href={`#${service}`} style={{ display: 'block' }}>{newServices[service].name}</a>
             </li>
           ))}

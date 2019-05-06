@@ -702,7 +702,6 @@ If you&#39;d like to add formatting to descriptions, we support
           editServiceById={this.editServiceById}
           addService={this.addService}
           handleDeactivation={this.handleDeactivation}
-          ref={instance => { this.serviceChild = instance; }}
         />
       </ul>
     );

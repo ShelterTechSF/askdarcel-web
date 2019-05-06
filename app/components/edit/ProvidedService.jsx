@@ -14,7 +14,7 @@ const InputField = ({
     <input
       type={type}
       placeholder={placeholder}
-      value={value}
+      value={value || ''}
       onChange={evt => setValue(evt.target.value)}
     />
   </Fragment>
@@ -24,12 +24,13 @@ InputField.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   setValue: PropTypes.func.isRequired, // A function to call when setting a new value
 };
 
 InputField.defaultProps = {
   type: 'text',
+  value: '',
 };
 
 
@@ -197,12 +198,14 @@ class ProvidedService extends Component {
             handleNotesChange={value => this.handleChange('notesObj', value)}
           />
 
-          <MultiSelectDropdown
-            selectedItems={service.categories}
-            handleSelectChange={value => this.handleChange('categories', value)}
-            label="Categories"
-            optionsRoute="categories"
-          />
+          <li className="edit--section--list--item">
+            <MultiSelectDropdown
+              selectedItems={service.categories}
+              handleSelectChange={value => this.handleChange('categories', value)}
+              label="Categories"
+              optionsRoute="categories"
+            />
+          </li>
         </ul>
       </li>
     );
@@ -212,7 +215,7 @@ class ProvidedService extends Component {
 ProvidedService.propTypes = {
   service: PropTypes.shape({
     id: PropTypes.number,
-    fee: PropTypes.number,
+    fee: PropTypes.string,
     categories: PropTypes.array,
     notes: PropTypes.array,
     schedule: PropTypes.object,

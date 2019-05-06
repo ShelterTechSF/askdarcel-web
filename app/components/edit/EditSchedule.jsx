@@ -259,7 +259,7 @@ class EditSchedule extends Component {
               {
                 Object.keys(schedule).map(day => (
                   <EditScheduleDay
-                    key={day.id}
+                    key={day}
                     day={day}
                     dayHours={schedule[day]}
                     handleScheduleChange={this.handleScheduleChange}
