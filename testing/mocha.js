@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 require('babel-register')();
-require('babel-polyfill');
+require('@babel/polyfill');
 
 console.clear();
 

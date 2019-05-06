@@ -29,7 +29,7 @@ const buildDir = path.resolve(__dirname, 'build');
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
   context: __dirname,
-  entry: ['whatwg-fetch', 'babel-polyfill', path.resolve(appRoot, 'init.jsx')],
+  entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.jsx')],
   output: {
     path: buildDir,
     publicPath: '/dist/',
@@ -65,9 +65,6 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: {
-              presets: ['es2015', 'react', 'stage-0'],
-            },
           },
         ],
         exclude: [/node_modules/, /typings/],
