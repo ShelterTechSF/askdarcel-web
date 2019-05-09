@@ -27,10 +27,11 @@ import './OrganizationEditPage.scss';
  *
  * @param {object[]} baseItems - An array of items, each with an `id` field
  * @param {object} changesById - An object mapping IDs to changes
+ * @param {set} deletedIds - Optional. A set of IDs of items to delete
  *
  * @return {object[]} An array of items with the changes applied
  */
-const applyChanges = (baseItems, changesById) => {
+const applyChanges = (baseItems, changesById, deletedIds = undefined) => {
   const baseItemIds = new Set(baseItems.map(i => i.id));
   // Order the new IDs in decreasing order, since that's the order they should
   // appear on the page.
@@ -44,12 +45,15 @@ const applyChanges = (baseItems, changesById) => {
   // Prepopulate an array with all the items, including the new ones in the
   // right position.
   const prechangedItems = [...baseItems, ...newIds.map(id => ({ id }))];
-  const transformedItems = prechangedItems.map(item => {
+  let transformedItems = prechangedItems.map(item => {
     if (item.id in changesById) {
       return { ...item, ...changesById[item.id] };
     }
     return item;
   });
+  if (deletedIds) {
+    transformedItems = transformedItems.filter(item => !deletedIds.has(item.id));
+  }
   return transformedItems;
 };
 
@@ -237,6 +241,7 @@ export class OrganizationEditPage extends React.Component {
       scheduleObj: {},
       address: {},
       services: {},
+      deactivatedServiceIds: new Set(),
       notes: {},
       phones: [],
       submitting: false,
@@ -523,9 +528,14 @@ export class OrganizationEditPage extends React.Component {
         .then(() => {
           alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
           if (type === 'resource') {
+            // Resource successfully deactivated. Redirect to home.
             router.push({ pathname: '/' });
           } else {
-            window.location.reload();
+            // Service successfully deactivated. Mark deactivated in local state.
+            this.setState(state => {
+              state.deactivatedServiceIds.add(id);
+              return state;
+            });
           }
         });
     }
@@ -693,8 +703,12 @@ If you&#39;d like to add formatting to descriptions, we support
   }
 
   renderServices() {
-    const { resource: { services }, services: serviceChanges } = this.state;
-    const flattenedServices = applyChanges(services, serviceChanges);
+    const {
+      resource: { services },
+      services: serviceChanges,
+      deactivatedServiceIds: serviceDeletions,
+    } = this.state;
+    const flattenedServices = applyChanges(services, serviceChanges, serviceDeletions);
     return (
       <ul className="edit--section--list">
         <EditServices
