@@ -347,8 +347,10 @@ export class OrganizationEditPage extends React.Component {
    */
   editServiceById = (id, changes) => {
     const { services } = this.state;
+    const oldService = services[id] || {};
+    const newService = { ...oldService, ...changes };
     this.setState({
-      services: { ...services, [id]: changes },
+      services: { ...services, [id]: newService },
       inputsDirty: true,
     });
   }
