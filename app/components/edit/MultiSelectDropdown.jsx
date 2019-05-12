@@ -32,20 +32,23 @@ class MultiSelectDropdown extends Component {
   }
 
   handleChange(newValues) {
+    const { handleSelectChange } = this.props;
     this.setState({ selectedValues: newValues }, () => {
-      this.props.handleSelectChange(newValues.map(val => val.value));
+      handleSelectChange(newValues.map(val => val.value));
     });
   }
 
   render() {
+    const { options, selectedValues } = this.state;
+    const { label } = this.props;
     return (
       <li className="edit--section--list--item">
-        <label htmlFor="categoryDropdown">{this.props.label}</label>
+        <label htmlFor="categoryDropdown">{label}</label>
         <Select
           id="categoryDropdown"
           multi
-          value={this.state.selectedValues}
-          options={this.state.options}
+          value={selectedValues}
+          options={options}
           onChange={this.handleChange}
         />
       </li>
