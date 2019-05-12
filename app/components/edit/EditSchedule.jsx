@@ -2,60 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { stringToTime } from '../../utils/index';
 import EditScheduleDay from './EditScheduleDay';
+import { buildScheduleDays } from '../../pages/OrganizationEditPage';
 
 import './EditSchedule.scss';
-
-function buildSchedule(schedule) {
-  const scheduleId = schedule ? schedule.id : null;
-  const currSchedule = {};
-  let finalSchedule = {};
-
-  const is24Hours = {
-    Monday: false,
-    Tuesday: false,
-    Wednesday: false,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
-    Sunday: false,
-  };
-
-  const tempSchedule = {
-    Monday: [{ opens_at: null, closes_at: null, scheduleId }],
-    Tuesday: [{ opens_at: null, closes_at: null, scheduleId }],
-    Wednesday: [{ opens_at: null, closes_at: null, scheduleId }],
-    Thursday: [{ opens_at: null, closes_at: null, scheduleId }],
-    Friday: [{ opens_at: null, closes_at: null, scheduleId }],
-    Saturday: [{ opens_at: null, closes_at: null, scheduleId }],
-    Sunday: [{ opens_at: null, closes_at: null, scheduleId }],
-  };
-
-  if (schedule) {
-    schedule.schedule_days.forEach(day => {
-      const currDay = day.day;
-      if (!is24Hours[currDay]) {
-        // Check to see if any of the hour pairs for the day
-        // indicate the resource/service is open 24 hours
-        // if there is a pair only have that in the day obj
-        if (day.opens_at === 0 && day.closes_at === 2359) {
-          is24Hours[currDay] = true;
-          // Since this record already exists in our DB, we only need the id
-          // scheduleID is needed when creating no data
-          currSchedule[currDay] = [{ opens_at: 0, closes_at: 2359, id: day.id }];
-        } else {
-          Object.assign(day, { openChanged: false, closeChanged: false });
-          if (currSchedule[currDay]) {
-            currSchedule[day.day].unshift(day);
-          } else {
-            currSchedule[day.day] = [day];
-          }
-        }
-      }
-    });
-  }
-  finalSchedule = Object.assign({}, tempSchedule, currSchedule);
-  return finalSchedule;
-}
 
 class EditSchedule extends Component {
   constructor(props) {
@@ -67,7 +16,7 @@ class EditSchedule extends Component {
       // callbacks.
       // eslint-disable-next-line react/no-unused-state
       scheduleId: props.schedule ? props.schedule.id : null,
-      scheduleDays: buildSchedule(props.schedule),
+      scheduleDays: buildScheduleDays(props.schedule),
       // If the service doesn't have a schedule associated with it, and can
       // inherit its schedule from its parent, inherit the parent resource's schedule.
       shouldInheritSchedule: canInheritFromParent && !(_.get(props, 'schedule.schedule_days.length', false)),
@@ -109,7 +58,7 @@ class EditSchedule extends Component {
             tempScheduleDays[day] = tempDaySchedule;
           });
         } else {
-          tempScheduleDays = buildSchedule(schedule);
+          tempScheduleDays = buildScheduleDays(schedule);
         }
 
         return { scheduleDays: tempScheduleDays, shouldInheritSchedule };
