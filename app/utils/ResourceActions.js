@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const getResourceActions = resource => ({
   // TODO Edit should add service ID header
   edit: {
@@ -22,7 +24,7 @@ export const getResourceActions = resource => ({
   phone: {
     name: 'Call',
     icon: 'call',
-    link: `tel:${resource.phones[0].number}`,
+    link: `tel:${_.get(resource, 'phones[0].number')}`,
   },
   // TODO Integrate with mobile share, how to handle shares
   // { name: 'Share', icon: 'share' },
