@@ -136,7 +136,7 @@ const buildScheduleDays = schedule => {
   }
   finalSchedule = Object.assign({}, tempSchedule, currSchedule);
   return finalSchedule;
-}
+};
 export { buildScheduleDays };
 
 /**
@@ -354,16 +354,33 @@ export class OrganizationEditPage extends React.Component {
     if (resourceID) {
       const url = `/api/resources/${resourceID}`;
       fetch(url).then(r => r.json())
-        .then(data => {
-          this.setState({
-            resource: data.resource,
-          });
-        });
+        .then(data => this.handleAPIGetResource(data.resource));
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.keepOnPage);
+  }
+
+  handleAPIGetResource = resource => {
+    const services = (resource.services || []).reduce(
+      (acc, service) => ({
+        ...acc,
+        [service.id]: {
+          scheduleObj: buildScheduleDays(service.schedule),
+          // If the service doesn't have a schedule associated with it, and can
+          // inherit its schedule from its parent, inherit the parent resource's
+          // schedule.
+          shouldInheritScheduleFromParent: !(_.get(service.schedule, 'schedule_days.length', false)),
+        },
+      }),
+      {},
+    );
+    this.setState({
+      resource,
+      services,
+      scheduleObj: buildScheduleDays(resource.schedule),
+    });
   }
 
   postServices = (servicesObj, promises) => {
@@ -410,12 +427,13 @@ export class OrganizationEditPage extends React.Component {
    * @returns {void}
    */
   editServiceById = (id, changes) => {
-    const { services } = this.state;
-    const oldService = services[id] || {};
-    const newService = { ...oldService, ...changes };
-    this.setState({
-      services: { ...services, [id]: newService },
-      inputsDirty: true,
+    this.setState(({ services }) => {
+      const oldService = services[id] || {};
+      const newService = { ...oldService, ...changes };
+      return {
+        services: { ...services, [id]: newService },
+        inputsDirty: true,
+      };
     });
   }
 
@@ -662,7 +680,7 @@ export class OrganizationEditPage extends React.Component {
   }
 
   renderSectionFields() {
-    const { resource } = this.state;
+    const { resource, scheduleObj } = this.state;
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
@@ -759,7 +777,10 @@ If you&#39;d like to add formatting to descriptions, we support
           </li>
 
           <EditSchedule
-            schedule={resource.schedule}
+            scheduleDaysByDay={scheduleObj}
+            scheduleId={resource.schedule.id}
+            canInheritFromParent={false}
+            shouldInheritFromParent={false}
             handleScheduleChange={this.handleScheduleChange}
           />
 
