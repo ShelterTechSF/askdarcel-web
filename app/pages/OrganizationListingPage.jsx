@@ -14,6 +14,7 @@ import {
   TableOfOpeningTimes,
   MobileActionBar,
 } from 'components/listing';
+import { MapOfLocations } from 'components/maps';
 import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
 import Notes from 'components/listing/Notes';
@@ -22,6 +23,18 @@ import HAPcertified from '../assets/img/ic-hap.png';
 import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
 import * as dataService from '../utils/DataService';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
+
+const getResourceLocation = resource => {
+  const { address } = resource;
+  if (!address) return null;
+
+  return {
+    id: address.id,
+    address,
+    name: resource.name,
+    schedule: resource.schedule,
+  };
+};
 
 export class OrganizationListingPage extends React.Component {
   constructor(props) {
@@ -93,6 +106,7 @@ export class OrganizationListingPage extends React.Component {
 
     const { notes } = resource;
     const isMOHCDFunded = this.isMOHCDFunded();
+    const resourceLocation = getResourceLocation(resource);
     return (
       <div>
         <Helmet>
@@ -167,11 +181,25 @@ export class OrganizationListingPage extends React.Component {
                       <Website website={resource.website} />
                       <Email email={resource.email} />
                     </div>
-                    <div className="info--column">
-                      <TableOfOpeningTimes schedule={resource.schedule} />
-                    </div>
                   </ul>
                 </section>
+
+                {resourceLocation && (
+                  <section className="location--section">
+                    <header className="service--section--header">
+                      <h4>Location</h4>
+                    </header>
+                    <MapOfLocations
+                      locations={[resourceLocation]}
+                      locationRenderer={location => (
+                        <TableOfOpeningTimes
+                          schedule={location.schedule}
+                          inherited={location.inherited}
+                        />
+                      )}
+                    />
+                  </section>
+                )}
               </div>
 
               <div className="org--aside">
