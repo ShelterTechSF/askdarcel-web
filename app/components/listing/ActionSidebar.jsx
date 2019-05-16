@@ -12,7 +12,7 @@ const getSidebarActions = resource => {
     resourceActions.edit,
     resourceActions.print,
   ];
-  if (resource.address) {
+  if (resourceActions.directions) {
     sidebarActions.push(resourceActions.directions);
   }
   return sidebarActions;

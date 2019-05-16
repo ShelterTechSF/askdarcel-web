@@ -1,32 +1,44 @@
 import _ from 'lodash';
 
-export const getResourceActions = resource => ({
-  // TODO Edit should add service ID header
-  edit: {
-    name: 'Edit',
-    icon: 'edit',
-    to: `/resource/edit?resourceid=${resource.id}`,
-  }, // TODO Update with path to /resource/:id
-  print: {
-    name: 'Print',
-    icon: 'print',
-    handler: () => {
-      window.print();
+export const getResourceActions = resource => {
+  const phoneNumber = _.get(resource, 'phones[0].number');
+  const latitude = _.get(resource, 'address.latitude');
+  const longitude = _.get(resource, 'address.longitude');
+
+  let actions = {
+    edit: {
+      name: 'Edit',
+      icon: 'edit',
+      to: `/resource/edit?resourceid=${resource.id}`,
     },
-  },
-  directions: {
-    name: 'Directions',
-    icon: 'directions',
-    link: `http://google.com/maps/dir/?api=1&destination=${
-      resource.address.latitude
-    },${resource.address.longitude}`,
-  },
-  phone: {
-    name: 'Call',
-    icon: 'call',
-    link: `tel:${_.get(resource, 'phones[0].number')}`,
-  },
-  // TODO Integrate with mobile share, how to handle shares
-  // { name: 'Share', icon: 'share' },
-  // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
-});
+    print: {
+      name: 'Print',
+      icon: 'print',
+      handler: () => { window.print(); },
+    },
+  };
+
+  if (phoneNumber) {
+    actions = {
+      ...actions,
+      phone: {
+        name: 'Call',
+        icon: 'call',
+        link: `tel:${phoneNumber}`,
+      },
+    };
+  }
+
+  if (latitude && longitude) {
+    actions = {
+      ...actions,
+      directions: {
+        name: 'Directions',
+        icon: 'directions',
+        link: `http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+      },
+    };
+  }
+
+  return actions;
+};

@@ -9,13 +9,14 @@ import './MobileActionBar.scss';
 
 const getMobileActions = resource => {
   const resourceActions = getResourceActions(resource);
+
   const mobileActions = [
     { ...resourceActions.edit, icon: 'edit-blue' },
   ];
-  if (resource.address) {
+  if (resourceActions.directions) {
     mobileActions.unshift({ ...resourceActions.directions, icon: 'directions-blue' });
   }
-  if (resource.phones && resource.phones.length > 0) {
+  if (resourceActions.phone) {
     mobileActions.unshift({ ...resourceActions.phone, icon: 'phone-blue' });
   }
   return mobileActions;
@@ -36,7 +37,6 @@ export default class MobileActionBar extends React.Component {
   render() {
     const { resource } = this.props;
     const actions = getMobileActions(resource);
-
     return (
       <div className="mobile-action-bar">
         {actions.map(action => (
