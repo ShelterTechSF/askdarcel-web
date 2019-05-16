@@ -50,7 +50,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Ask Darcel',
       template: 'app/index.html',
-      favicon: 'app/favicon.ico',
     }),
     new ExtendedDefinePlugin({
       CONFIG: config,
@@ -135,7 +134,37 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.webmanifest$/,
+        include: /assets\//,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
+            }
+          },
+          {
+            loader: 'webmanifest-loader',
+            options: {
+              name: 'Foobar',
+              shortName: 'Foobar',
+              description: 'Just an example.'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(jpg|png)$/,
+        include: /assets\//,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg|ico)$/i,
         use: [
           {
             loader: 'file-loader',

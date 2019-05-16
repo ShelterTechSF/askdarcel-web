@@ -11,6 +11,13 @@ import 'react-select/dist/react-select.css';
 import userActions from '../actions/userActions';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
+import askDarcelFavicon from '../askdarcel-favicon.ico';
+import sfServiceGuideFavicon from '../sfserviceguide-favicon.ico';
+import sfgAppleTouchIcon from '../assets/img/sfserviceguidefavicon/apple-touch-icon.png';
+import sfgFavicon32x32 from '../assets/img/sfserviceguidefavicon/favicon-32x32.png';
+import sfgFavicon16x16 from '../assets/img/sfserviceguidefavicon/favicon-16x16.png';
+import sfgWebmanifest from '../assets/img/sfserviceguidefavicon//site.webmanifest';
+import sfgSafariPinnedTab from '../assets/img/sfserviceguidefavicon/safari-pinned-tab.svg';
 
 const coordsInSanFrancisco = coords => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -146,6 +153,28 @@ class App extends Component {
       <div id={outerContainerId}>
         <Helmet>
           <title>{ isSFServiceGuideSite() ? 'SF Service Guide' : 'AskDarcel' }</title>
+          {/* { isSFServiceGuideSite() && 
+            <link rel="apple-touch-icon" sizes="76x76" href={ sfgAppleTouchIcon }/>
+          }
+          { isSFServiceGuideSite() && 
+            <link rel="icon" type="image/png" sizes="32x32" href={ sfgFavicon32x32 }/>
+          }
+          { isSFServiceGuideSite() && 
+            <link rel="icon" type="image/png" sizes="16x16" href={ sfgFavicon16x16 }/>
+          }
+          { isSFServiceGuideSite() && 
+            <link rel="manifest" href={ sfgWebmanifest }/>
+          }
+          { isSFServiceGuideSite() && 
+            <link rel="mask-icon" href={ sfgSafariPinnedTab } color="#5bbad5"/>
+          } */}
+          <link 
+            rel="icon"
+            type="image/png"
+            href={ isSFServiceGuideSite() ? sfServiceGuideFavicon : askDarcelFavicon }
+          />
+          {/* <meta name="msapplication-TileColor" content="#da532c"></meta>
+          <meta name="theme-color" content="#ffffff"></meta> */}
         </Helmet>
         {config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
         <HamburgerMenu
