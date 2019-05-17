@@ -1,4 +1,4 @@
-import { eligibilityActions as type } from 'actions/actionTypes';
+import { resourceActions as type } from 'actions/actionTypes';
 import {
   getResource,
   getResources,
@@ -7,14 +7,14 @@ import {
   getResourcesByCategoryId,
   searchForResources,
   getResourcesByIdSortByLoc,
-  searchResourcesSortByLoc
+  searchResourcesSortByLoc,
   verifyResource,
   certifyResourceHAP,
-  deactivateResource
-} from '../api/eligibilityService';
+  deactivateResource,
+} from '../api/resourceService';
 
 
-export const getResourceAction = (id) => async dispatch => {
+export const getResourceAction = id => async dispatch => {
   try {
     dispatch({
       type: type.RESOURCE_LOAD_REQUEST,
@@ -86,7 +86,7 @@ export const getResoucesCountAction = () => async dispatch => {
   }
 };
 
-export const getResourcesByCategoryIdAction = (categoryId) => async dispatch => {
+export const getResourcesByCategoryIdAction = categoryId => async dispatch => {
   try {
     dispatch({
       type: type.RESOURCES_BY_CATEGORY_ID_REQUEST,
@@ -104,7 +104,7 @@ export const getResourcesByCategoryIdAction = (categoryId) => async dispatch => 
   }
 };
 
-export const searchForResourcesAction = (query) => async dispatch => {
+export const searchForResourcesAction = query => async dispatch => {
   try {
     dispatch({
       type: type.SEARCH_FOR_RESOURCES_REQUEST,
@@ -163,8 +163,7 @@ export const searchResourcesSortByLocAction = (query, lat, lon) => async dispatc
 // add note to resource
 
 
-
-export const verifyResourceAction = (id) => async dispatch => {
+export const verifyResourceAction = id => async dispatch => {
   try {
     dispatch({
       type: type.VERIFY_RESOURCE_REQUEST,
@@ -182,7 +181,7 @@ export const verifyResourceAction = (id) => async dispatch => {
   }
 };
 
-export const certifyResourceAction = (id) => async dispatch => {
+export const certifyResourceAction = id => async dispatch => {
   try {
     dispatch({
       type: type.CERTIFY_RESOURCE_REQUEST,
@@ -200,12 +199,12 @@ export const certifyResourceAction = (id) => async dispatch => {
   }
 };
 
-export const deactivateResourceAction = (id) => async dispatch => {
+export const deactivateResourceAction = id => async dispatch => {
   try {
     dispatch({
       type: type.DEACTIVATE_RESOURCE_REQUEST,
     });
-    const response = await deactivateResourceHAP(id);
+    const response = await deactivateResource(id);
     dispatch({
       type: type.DEACTIVATE_RESOURCE_SUCCESS,
       payload: response.data,

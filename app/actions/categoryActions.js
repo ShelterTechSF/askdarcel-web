@@ -1,7 +1,7 @@
 import { categoryActions as type } from 'actions/actionTypes';
 import {
   getCategories,
-  getFeaturedCategories
+  getFeaturedCategories,
 } from '../api/categoryService';
 
 
