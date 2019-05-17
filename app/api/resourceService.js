@@ -9,7 +9,6 @@ export const getFeaturedResources = () => api.get('/resources');
 
 export const getResourcesCount = () => api.get('/resources/count');
 
-
 export const getResourcesByCategoryId = categoryID => api.get(`/resources?category_id=${categoryID}`);
 
 export const searchForResources = query => api.get(`/resources/search?query=${query}`);
@@ -40,5 +39,5 @@ export const certifyResourceHAP = id => {
   api.post(`/resources/${id}/certify`);
 };
 
-export // let query = { change_request: { status: '2' }
-const deactivateResource = id => api.delete(`/resources/${id}`);
+export const deactivateResource = id => api.delete(`/resources/${id}`);
+// let query = { change_request: { status: '2' }
