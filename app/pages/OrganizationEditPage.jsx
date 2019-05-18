@@ -348,7 +348,7 @@ export class OrganizationEditPage extends React.Component {
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
       this.setState({
-        newResource: true, resource: {},
+        newResource: true, resource: { schedule: {}, scheduleObj: buildScheduleDays(undefined) },
       });
     }
     const resourceID = query.resourceid;
