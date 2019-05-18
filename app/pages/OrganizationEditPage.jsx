@@ -12,7 +12,6 @@ import EditSchedule from '../components/edit/EditSchedule';
 import EditPhones from '../components/edit/EditPhones';
 import EditSidebar from '../components/edit/EditSidebar';
 import * as dataService from '../utils/DataService';
-import { createTemplateSchedule } from '../utils/index';
 
 import './OrganizationEditPage.scss';
 
@@ -302,6 +301,8 @@ const handleCancel = () => {
   browserHistory.goBack();
 };
 
+const deepClone = obj => JSON.parse(JSON.stringify(obj));
+
 export class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
@@ -388,7 +389,7 @@ export class OrganizationEditPage extends React.Component {
     const { resource } = this.state;
     const newServices = [];
     Object.entries(servicesObj).forEach(([key, value]) => {
-      const currentService = value;
+      const currentService = deepClone(value);
       if (key < 0) {
         if (currentService.notesObj) {
           const notes = Object.values(currentService.notesObj.notes);
@@ -408,6 +409,7 @@ export class OrganizationEditPage extends React.Component {
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
+        delete currentService.shouldInheritScheduleFromParent;
         if (!_.isEmpty(currentService)) {
           promises.push(dataService.post(uri, { change_request: currentService }));
         }
@@ -448,8 +450,10 @@ export class OrganizationEditPage extends React.Component {
       id: nextServiceId,
       notes: [],
       schedule: {
-        schedule_days: createTemplateSchedule(),
+        schedule_days: [],
       },
+      scheduleObj: buildScheduleDays(undefined),
+      shouldInheritScheduleFromParent: true,
     };
     this.setState({
       services: { ...services, [nextServiceId]: newService },
