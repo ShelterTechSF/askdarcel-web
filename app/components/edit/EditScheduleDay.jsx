@@ -127,10 +127,19 @@ class EditScheduleDay extends Component {
         scheduleId,
       },
     };
+    const remainingScheduleDays = is24Hours
+      ? scheduleDays.slice(1).map(sd => ({
+        ...sd,
+        opens_at: null,
+        closes_at: null,
+        openChanged: true,
+        closeChanged: true,
+      }))
+      : [];
     if (!oldScheduleDay.id && oldScheduleDay.id !== null) {
       newScheduleDay.id = null;
     }
-    setScheduleDays([newScheduleDay]);
+    setScheduleDays([newScheduleDay, ...remainingScheduleDays]);
   }
 
   render() {
