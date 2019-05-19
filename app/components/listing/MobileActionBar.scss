@@ -1,0 +1,21 @@
+@import '../../styles/utils/helpers';
+
+.mobile-action-bar {
+  display: none;
+  @include r_max($break-tablet-s) {
+    display: flex;
+    justify-content: space-between;
+    padding: calc-em(16px) calc-em(4px);
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+  }
+  &--button {
+    &-content {
+      display: flex;
+      justify-content: center;
+    }
+    &-icon {
+      margin-right: calc-em(8px);
+    }
+  }
+}

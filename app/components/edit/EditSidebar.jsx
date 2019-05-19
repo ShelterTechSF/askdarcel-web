@@ -4,113 +4,123 @@ import { withRouter } from 'react-router';
 
 import './EditSidebar.scss';
 
-class EditSidebar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { resource } = this.props;
-    let actionButtons = [
+const EditSidebar = ({
+  addService,
+  certifyHAP,
+  createResource,
+  handleCancel,
+  handleDeactivation,
+  handleSubmit,
+  newResource,
+  newServices,
+  resource,
+  submitting,
+}) => {
+  let actionButtons = [
+    <button
+      type="button"
+      className="sidebar--actions--button"
+      key="submit"
+      disabled={submitting}
+      onClick={handleSubmit}
+    >
+      Save Changes
+    </button>,
+    <button
+      type="button"
+      className="sidebar--actions--button deactivate"
+      key="deactive"
+      disabled={submitting}
+      onClick={() => handleDeactivation('resource', resource.id)}
+    >
+      Deactivate
+    </button>,
+  ];
+  if (newResource) {
+    actionButtons = [
       <button
+        type="button"
         className="sidebar--actions--button"
         key="submit"
-        disabled={this.props.submitting}
-        onClick={this.props.handleSubmit}
+        disabled={submitting}
+        onClick={createResource}
       >
-Save Changes
+        Submit
       </button>,
       <button
-        className="sidebar--actions--button deactivate"
-        key="deactive"
-        disabled={this.props.submitting}
-        onClick={() => this.props.handleDeactivation('resource', resource.id)}
+        type="button"
+        className="sidebar--actions--button cancel"
+        key="cancel"
+        onClick={handleCancel}
       >
-Deactivate
+        Cancel
       </button>,
     ];
-    if (this.props.newResource) {
-      actionButtons = [
-        <button
-          className="sidebar--actions--button"
-          key="submit"
-          disabled={this.props.submitting}
-          onClick={this.props.createResource}
-        >
-Submit
-        </button>,
-        <button
-          className="sidebar--actions--button cancel"
-          key="cancel"
-          onClick={this.props.handleCancel}
-        >
-Cancel
-        </button>,
-      ];
-    }
-    if (!resource.certified) {
-      actionButtons.push(
-        <button
-          className="sidebar--actions--button hap--button"
-          key="hap"
-          onClick={this.props.certifyHAP}
-        >
-HAP Approve
-        </button>,
-      );
-    }
-    return (
-      <nav className="sidebar">
-        <div className="sidebar--content">
-          <ul className="sidebar--list">
-            <li className="sidebar--list--heading">
-              <h3>Organization</h3>
-            </li>
-            <li className="sidebar--list--item active">
-              <a href="#">{resource.name}</a>
-            </li>
-          </ul>
-          <ul className="sidebar--list">
-            <li className="sidebar--list--heading">
-              <h3>
-                <a href="#services">Services</a>
-                <button className="service--action--button" onClick={this.props.addService}><i className="material-icons">add</i></button>
-              </h3>
-            </li>
-            { resource.services ? resource.services.map(service => (
-              <li className="sidebar--list--item">
-                <a href={`#${service.id}`}>{service.name}</a>
-              </li>
-            )) : null }
-            {Object.keys(this.props.newServices).map(service => (
-              <li className="sidebar--list--item">
-                <a href={`#${service}`} style={{ display: 'block' }}>{this.props.newServices[service].name}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="sidebar--actions">
-          {actionButtons.map(button => button)}
-        </div>
-      </nav>
+  }
+  if (!resource.certified) {
+    actionButtons.push(
+      <button
+        type="button"
+        className="sidebar--actions--button hap--button"
+        key="hap"
+        onClick={certifyHAP}
+      >
+        HAP Approve
+      </button>,
     );
   }
-}
+  return (
+    <nav className="sidebar">
+      <div className="sidebar--content">
+        <ul className="sidebar--list">
+          <li className="sidebar--list--heading">
+            <h3>Organization</h3>
+          </li>
+          <li className="sidebar--list--item active">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a href="#">{resource.name}</a>
+          </li>
+        </ul>
+        <ul className="sidebar--list">
+          <li className="sidebar--list--heading">
+            <h3>
+              <a href="#services">Services</a>
+              <button type="button" className="service--action--button" onClick={addService}><i className="material-icons">add</i></button>
+            </h3>
+          </li>
+          { resource.services && resource.services.map(service => (
+            <li key={service.id} className="sidebar--list--item">
+              <a href={`#${service.id}`}>{service.name}</a>
+            </li>
+          )) }
+          {Object.keys(newServices).map(service => (
+            <li key={service} className="sidebar--list--item">
+              <a href={`#${service}`} style={{ display: 'block' }}>{newServices[service].name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="sidebar--actions">
+        {actionButtons.map(button => button)}
+      </div>
+    </nav>
+  );
+};
 
 EditSidebar.defaultProps = {
   newServices: {},
 };
 
 EditSidebar.propTypes = {
-  certifyHAP: PropTypes.func,
-  createResource: PropTypes.func,
-  handleDeactivation: PropTypes.func,
-  handleCancel: PropTypes.func,
-  handleSubmit: PropTypes.func,
-  newResource: PropTypes.bool,
+  certifyHAP: PropTypes.func.isRequired,
+  createResource: PropTypes.func.isRequired,
+  handleDeactivation: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  newResource: PropTypes.bool.isRequired,
   newServices: PropTypes.object,
-  resource: PropTypes.object,
-  submitting: PropTypes.bool,
+  resource: PropTypes.object.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default withRouter(EditSidebar);

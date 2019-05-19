@@ -2,32 +2,48 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router';
+import { getResourceActions } from 'utils/ResourceActions';
+
+import './ActionSidebar.scss';
+
+const getSidebarActions = resource => {
+  const resourceActions = getResourceActions(resource);
+  const sidebarActions = [
+    resourceActions.edit,
+    resourceActions.print,
+  ];
+  if (resourceActions.directions) {
+    sidebarActions.push(resourceActions.directions);
+  }
+  return sidebarActions;
+};
+
+const renderButtonContent = action => (
+  <span>
+    <i className="material-icons">{ action.icon }</i>
+    { action.name }
+  </span>
+);
 
 class ListPageSidebar extends React.Component {
-  renderButtonContent(action) {
-    return (
-      <span>
-        <i className="material-icons">{ action.icon }</i>
-        { action.name }
-      </span>
-    );
-  }
-
   render() {
+    const { resource } = this.props;
+    const actions = getSidebarActions(resource);
+
     return (
-      <ul className="actions">
-        {this.props.actions.map(action => (
+      <ul className="action-sidebar">
+        {actions.map(action => (
           <li key={action.name}>
             {
               action.to || action.handler
                 ? (
-                  <Link to={action.to} onClick={action.handler} className={`listing--aside--${action.name.toLowerCase()}`}>
-                    { this.renderButtonContent(action) }
+                  <Link to={action.to} onClick={action.handler} className={`action-sidebar--${action.name.toLowerCase()}`}>
+                    { renderButtonContent(action) }
                   </Link>
                 )
                 : (
-                  <a href={action.link} target="_blank" className={`listing--aside--${action.name.toLowerCase()}`}>
-                    { this.renderButtonContent(action) }
+                  <a href={action.link} rel="noopener noreferrer" target="_blank" className={`action-sidebar--${action.name.toLowerCase()}`}>
+                    { renderButtonContent(action) }
                   </a>
                 )
             }
@@ -39,13 +55,7 @@ class ListPageSidebar extends React.Component {
 }
 
 ListPageSidebar.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    link: PropTypes.string,
-    to: PropTypes.string,
-    handler: PropTypes.function,
-  })).isRequired,
+  resource: PropTypes.object.isRequired,
 };
 
 export default ListPageSidebar;

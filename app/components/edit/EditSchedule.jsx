@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { timeToTimeInputValue, stringToTime } from '../../utils/index';
+import _ from 'lodash';
+import { stringToTime } from '../../utils/index';
 import EditScheduleDay from './EditScheduleDay';
 
 import './EditSchedule.scss';
@@ -59,6 +60,7 @@ function buildSchedule(schedule) {
 class EditSchedule extends Component {
   constructor(props) {
     super(props);
+    const { canInheritFromParent } = props;
 
     this.state = {
       // ESLint can't detect that this field is actually beind used in the
@@ -66,23 +68,56 @@ class EditSchedule extends Component {
       // eslint-disable-next-line react/no-unused-state
       scheduleId: props.schedule ? props.schedule.id : null,
       scheduleDays: buildSchedule(props.schedule),
+      // If the service doesn't have a schedule associated with it, and can
+      // inherit its schedule from its parent, inherit the parent resource's schedule.
+      shouldInheritSchedule: canInheritFromParent && !(_.get(props, 'schedule.schedule_days.length', false)),
     };
 
-    this.getDayHours = this.getDayHours.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.addTime = this.addTime.bind(this);
     this.removeTime = this.removeTime.bind(this);
     this.toggle24Hours = this.toggle24Hours.bind(this);
+    this.toggleInheritSchedule = this.toggleInheritSchedule.bind(this);
   }
 
-  getDayHours(day, field, index) {
-    const { scheduleDays } = this.state;
-    const dayRecord = scheduleDays[day] && scheduleDays[day][index];
-    if (!dayRecord) {
-      return null;
-    }
-    const time = dayRecord[field];
-    return timeToTimeInputValue(time, true);
+  toggleInheritSchedule(e) {
+    const { handleScheduleChange, schedule } = this.props;
+    const shouldInheritSchedule = e.target.checked;
+
+    let tempScheduleDays = {};
+    this.setState(
+      ({ scheduleDays }) => {
+        tempScheduleDays = { ...scheduleDays };
+
+        // Services without explicit schedules automatically inherit their
+        // schedule from their parent resource. So, by completely wiping out
+        // the service schedule, the service will fall back to inheriting its
+        // parent's schedule.
+        //
+        // Go through each schedule day item and set the open/close times to null
+        // and the dirty state to true in order to completely wipe the schedule
+        // on save.
+        if (shouldInheritSchedule) {
+          Object.keys(scheduleDays).forEach(day => {
+            const tempDaySchedule = scheduleDays[day].map(curr => ({
+              ...curr,
+              opens_at: null,
+              closes_at: null,
+              openChanged: true,
+              closeChanged: true,
+            }));
+            tempScheduleDays[day] = tempDaySchedule;
+          });
+        } else {
+          tempScheduleDays = buildSchedule(schedule);
+        }
+
+        return { scheduleDays: tempScheduleDays, shouldInheritSchedule };
+      },
+      () => {
+        handleScheduleChange(tempScheduleDays);
+      },
+    );
   }
 
   addTime(day) {
@@ -195,38 +230,48 @@ class EditSchedule extends Component {
   }
 
   render() {
-    const daysOfWeek = {
-      Monday: 'M',
-      Tuesday: 'T',
-      Wednesday: 'W',
-      Thursday: 'Th',
-      Friday: 'F',
-      Saturday: 'S',
-      Sunday: 'Su',
-    };
-
-    const { scheduleDays: schedule } = this.state;
+    const { scheduleDays: schedule, shouldInheritSchedule } = this.state;
+    // This component is shared between organizations and services. Organizations
+    // are top level, and cannot inherit schedules. OTOH Services can inherit
+    // their schedule from their parent organization. This prop controls this
+    // difference in behavior.
+    const { canInheritFromParent } = this.props;
     return (
       <li key="hours" className="edit--section--list--item hours">
         <span className="label">Hours</span>
-        <span className="label open-24-label">24 hrs?</span>
-        <ul className="edit-hours-list">
-          {
-            Object.keys(schedule).map(day => (
-              <EditScheduleDay
-                day={day}
-                dayAbbrev={daysOfWeek[day]}
-                dayHours={schedule[day]}
-                key={day.id}
-                handleScheduleChange={this.handleScheduleChange}
-                toggle24Hours={this.toggle24Hours}
-                getDayHours={this.getDayHours}
-                addTime={this.addTime}
-                removeTime={this.removeTime}
+        { canInheritFromParent
+          && (
+            <div className="inherit-schedule">
+              <input
+                id="inherit"
+                type="checkbox"
+                checked={shouldInheritSchedule}
+                onChange={this.toggleInheritSchedule}
               />
-            ))
-          }
-        </ul>
+              <label htmlFor="inherit">Inherit schedule from parent organization</label>
+            </div>
+          )
+        }
+        {!shouldInheritSchedule && (
+          <div>
+            <span className="label open-24-label">24 hrs?</span>
+            <ul className="edit-hours-list">
+              {
+                Object.keys(schedule).map(day => (
+                  <EditScheduleDay
+                    key={day}
+                    day={day}
+                    dayHours={schedule[day]}
+                    handleScheduleChange={this.handleScheduleChange}
+                    toggle24Hours={this.toggle24Hours}
+                    addTime={this.addTime}
+                    removeTime={this.removeTime}
+                  />
+                ))
+              }
+            </ul>
+          </div>
+        )}
       </li>
     );
   }

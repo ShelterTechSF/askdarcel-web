@@ -14,8 +14,10 @@ export default function editCollectionHOC(ResourceObjectItem,
     constructor(props) {
       super(props);
 
+      const { collection = [] } = this.props;
+
       this.state = {
-        collection: this.props.collection ? this.props.collection.slice() : [],
+        collection: collection.slice(),
       };
 
       this.addItem = this.addItem.bind(this);
@@ -31,14 +33,16 @@ export default function editCollectionHOC(ResourceObjectItem,
     }
 
     handleChange(index, item) {
+      const { handleChange } = this.props;
       const { collection } = this.state;
       /* eslint-disable no-param-reassign */
       item.dirty = true;
       collection[index] = item;
-      this.setState(collection, () => this.props.handleChange(collection));
+      this.setState(collection, () => handleChange(collection));
     }
 
     removeItem(index, item) {
+      const { handleChange } = this.props;
       const { collection } = this.state;
       if (collection[index].id) {
         collection[index] = { ...item, isRemoved: true };
@@ -46,7 +50,7 @@ export default function editCollectionHOC(ResourceObjectItem,
         collection.splice(index, 1);
       }
 
-      this.setState(collection, () => this.props.handleChange(collection));
+      this.setState(collection, () => handleChange(collection));
     }
 
     createItemComponents() {
@@ -55,14 +59,14 @@ export default function editCollectionHOC(ResourceObjectItem,
       for (let i = 0; i < collection.length; i++) {
         if (!collection[i].isRemoved) {
           items.push(
-            <div className="edit--section--list--item--collection-container">
+            <div key={i} className="edit--section--list--item--collection-container">
               <ResourceObjectItem
-                key={i}
                 index={i}
                 item={collection[i]}
                 handleChange={this.handleChange}
               />
               <button
+                type="button"
                 className="trash-button icon-button"
                 onClick={() => this.removeItem(i, collection[i])}
               >
@@ -85,7 +89,7 @@ export default function editCollectionHOC(ResourceObjectItem,
           </ul>
           {showAdd
             && (
-              <button className="edit--section--list--item--button" onClick={this.addItem}>
+              <button type="button" className="edit--section--list--item--button" onClick={this.addItem}>
                 <i className="material-icons">add_box</i>
               Add
               </button>

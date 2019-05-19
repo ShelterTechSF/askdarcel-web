@@ -4,7 +4,9 @@ import moment from 'moment';
 
 // TODO Until we use actual timestamps, this one constant converts everything to
 // the correct timezone
-const timezoneOffset = new Date().getTimezoneOffset() / 60;
+// HACK: The extra + 1 makes it work during Daylight Savings because some other
+// part of the codebase assumes that Daylight Savings hasn't been accounted for.
+const timezoneOffset = new Date().getTimezoneOffset() / 60 + 1;
 
 export class RelativeOpeningTime extends React.Component {
   static parseAsDate(fourOrThreeDigitNumber) {

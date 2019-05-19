@@ -60,7 +60,7 @@ export function timeToString(hours) {
 export function timeToTimeInputValue(hours) {
   const date = timeToDate(hours);
   if (date === null) {
-    return null;
+    return '';
   }
   const hour = date.getHours();
   const strHour = (hour < 10) ? `0${hour.toString()}` : hour.toString();

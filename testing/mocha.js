@@ -1,8 +1,8 @@
 /* eslint-disable node/no-deprecated-api, no-unused-vars, no-console */
 process.env.NODE_ENV = 'test';
 
-require('babel-register')();
-require('babel-polyfill');
+require('@babel/register');
+require('@babel/polyfill');
 
 console.clear();
 
@@ -11,7 +11,7 @@ require.extensions['.scss'] = () => null;
 
 const { jsdom } = require('jsdom');
 const Enzyme = require('enzyme');
-const Adapter = require('enzyme-adapter-react-15');
+const Adapter = require('enzyme-adapter-react-16');
 
 Enzyme.configure({ adapter: new Adapter() });
 

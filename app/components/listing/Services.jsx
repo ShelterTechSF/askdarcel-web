@@ -142,7 +142,7 @@ Website:
 const ServiceEligibility = ({ result, subject }) => result && (
   <li className="service--details--item">
     <header>{subject}</header>
-    <div className="service--details--item--info">{result}</div>
+    <ReactMarkdown className="rendered-markdown service--details--item--info">{result}</ReactMarkdown>
   </li>
 );
 

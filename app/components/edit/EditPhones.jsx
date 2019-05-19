@@ -7,8 +7,10 @@ class EditPhone extends Component {
   constructor(props) {
     super(props);
 
+    const { item } = this.props;
+
     this.state = {
-      phone: _.clone(this.props.item),
+      phone: _.clone(item),
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -18,17 +20,18 @@ class EditPhone extends Component {
     const { value } = e.target;
     const { field } = e.target.dataset;
     const { phone } = this.state;
+    const { handleChange, index, item } = this.props;
 
-    if (phone[field] || value !== this.props.item[field]) {
+    if (phone[field] || value !== item[field]) {
       phone[field] = value;
       this.setState({ phone });
-      this.props.handleChange(this.props.index, phone);
+      handleChange(index, phone);
     }
   }
 
   render() {
-    const phone = this.props.item;
-    const htmlID = `phonenumber${this.props.index}`;
+    const { index, item: phone } = this.props;
+    const htmlID = `phonenumber${index}`;
     return (
       <li key="tel" className="edit--section--list--item tel">
         <label htmlFor={htmlID}>Telephone</label>

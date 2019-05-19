@@ -29,7 +29,7 @@ const buildDir = path.resolve(__dirname, 'build');
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
   context: __dirname,
-  entry: ['whatwg-fetch', 'babel-polyfill', path.resolve(appRoot, 'init.jsx')],
+  entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.jsx')],
   output: {
     path: buildDir,
     publicPath: '/dist/',
@@ -65,9 +65,6 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: {
-              presets: ['es2015', 'react', 'stage-0'],
-            },
           },
         ],
         exclude: [/node_modules/, /typings/],
@@ -78,6 +75,8 @@ module.exports = {
         exclude: [
           path.resolve(__dirname, 'app/components/ui/HamburgerMenu'),
           path.resolve(__dirname, 'app/components/ui/Navigation'),
+          path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
+          path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
         ],
         test: /\.s?css$/,
         use: [
@@ -87,6 +86,20 @@ module.exports = {
             options: {
               modules: false,
             },
+          },
+          'sass-loader',
+        ],
+      },
+      {
+        include: [
+          path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
+          path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
+        ],
+        test: /\.s?css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
           },
           'sass-loader',
         ],

@@ -1,29 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const FormTextArea = props => {
-  const {
-    label, placeholder, field, defaultValue, onChange,
-  } = props;
-  return (
-    <li className="edit--section--list--item">
-      <label htmlFor="textarea">{label}</label>
-      <textarea
-        placeholder={placeholder}
-        data-field={field}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      />
-    </li>
-  );
-};
+const FormTextArea = ({
+  label, placeholder, value, setValue,
+}) => (
+  <Fragment>
+    <label htmlFor="textarea">{label}</label>
+    <textarea
+      placeholder={placeholder}
+      value={value}
+      onChange={evt => setValue(evt.target.value)}
+    />
+  </Fragment>
+);
 
 FormTextArea.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  field: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired.isRequired,
+  value: PropTypes.string.isRequired,
+  setValue: PropTypes.func.isRequired, // A function to call when setting a new value
 };
 
 export default FormTextArea;

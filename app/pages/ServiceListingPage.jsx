@@ -20,63 +20,6 @@ import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
-const getResourceActions = resource => ({
-  // TODO Edit should add service ID header
-  edit: {
-    name: 'Edit',
-    icon: 'edit',
-    to: `/resource/edit?resourceid=${resource.id}`,
-  }, // TODO Update with path to /resource/:id
-  print: {
-    name: 'Print',
-    icon: 'print',
-    handler: () => {
-      window.print();
-    },
-  },
-  directions: {
-    name: 'Directions',
-    icon: 'directions',
-    link: `http://google.com/maps/dir/?api=1&destination=${
-      resource.address.latitude
-    },${resource.address.longitude}`,
-  },
-  phone: {
-    name: 'Call',
-    icon: 'call',
-    link: `tel:${resource.phones[0].number}`,
-  },
-  // TODO Integrate with mobile share, how to handle shares
-  // { name: 'Share', icon: 'share' },
-  // { name: 'Save', icon: 'save' }, TODO We have no save mechanism yet
-});
-
-const getSidebarActions = resource => {
-  const resourceActions = getResourceActions(resource);
-  const sidebarActions = [
-    resourceActions.edit,
-    resourceActions.print,
-  ];
-  if (resource.address) {
-    sidebarActions.push(resourceActions.directions);
-  }
-  return sidebarActions;
-};
-
-const getMobileActions = resource => {
-  const resourceActions = getResourceActions(resource);
-  const mobileActions = [
-    { ...resourceActions.edit, icon: 'edit-blue' },
-  ];
-  if (resource.address) {
-    mobileActions.unshift({ ...resourceActions.directions, icon: 'directions-blue' });
-  }
-  if (resource.phones && resource.phones.length > 0) {
-    mobileActions.unshift({ ...resourceActions.phone, icon: 'phone-blue' });
-  }
-  return mobileActions;
-};
-
 // TODO This should be serviceAtLocation
 const getServiceLocations = (service, resource, schedule) => (resource.address
   ? [resource.address].map(address => ({
@@ -88,7 +31,6 @@ const getServiceLocations = (service, resource, schedule) => (resource.address
     inherited: !schedule && resource.schedule,
   }))
   : []);
-
 
 class ServicePage extends React.Component {
   componentWillMount() {
@@ -112,14 +54,15 @@ class ServicePage extends React.Component {
       // ['Funding Sources', ] // TODO Doesn't exist
       [
         'Notes',
-        <ReactMarkdown className="rendered-markdown">
-          {service.notes.map(d => d.note).join('\n')}
-        </ReactMarkdown>,
+        service.notes.map(d => d.note).join('\n'),
       ],
     ];
     return rows
       .filter(row => row[1])
-      .map(row => ({ title: row[0], value: row[1] }));
+      .map(row => ({
+        title: row[0],
+        value: <ReactMarkdown className="rendered-markdown">{ row[1] }</ReactMarkdown>,
+      }));
   }
 
 
@@ -129,8 +72,6 @@ class ServicePage extends React.Component {
 
     const { resource, program, schedule } = service;
     const details = this.generateDetailsRows();
-    const sidebarActions = getSidebarActions(resource);
-    const mobileActions = getMobileActions(resource);
     const locations = getServiceLocations(service, resource, schedule);
 
     return (
@@ -169,7 +110,8 @@ class ServicePage extends React.Component {
                     </span>
                   </p>
                 </header>
-                <MobileActionBar actions={mobileActions} />
+
+                <MobileActionBar resource={resource} />
 
                 <section className="listing--main--left--about">
                   <h2>About This Service</h2>
@@ -191,7 +133,7 @@ class ServicePage extends React.Component {
                           </td>
                         </tr>
                       )}
-                      rows={this.generateDetailsRows()}
+                      rows={details}
                     />
                   </section>
                 ) : null}
@@ -232,7 +174,7 @@ class ServicePage extends React.Component {
                 </section> */}
               </div>
               <div className="listing--aside">
-                <ActionSidebar actions={sidebarActions} />
+                <ActionSidebar resource={resource} />
                 {service.categories.map(cat => (
                   <CategoryTag key={cat.id} category={cat} />
                 ))}
