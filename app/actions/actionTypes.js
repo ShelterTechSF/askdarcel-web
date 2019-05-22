@@ -26,7 +26,7 @@ export const adminActions = {
 }
 
 export const userActions = {
-    SET_USER_LOCATION = 'SET_USER_LOCATION'
+    SET_USER_LOCATION: 'SET_USER_LOCATION'
 }
 
 export const serviceActions = {
