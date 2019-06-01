@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import config from '../../config';
@@ -30,39 +30,48 @@ ResourceCategories.propTypes = {
 };
 
 
+// Given an address object, returns a React DOM element that displays the
+// address on up to three lines:
+//
+//   <name>
+//   <address_1>, <address_2>
+//   <city>, <state_province>, <postal_code>
+//
+// Example 1:
+//
+//   123 Fourth Street
+//   San Francisco, CA, 94115
+//
+// Example 2:
+//
+//   SF Headquarters
+//   567 Eighth Street, Suite 201
+//   San Francisco, CA, 94115
+//
 function buildLocation(address) {
-  let line1 = '';
-  let line2 = '';
+  if (!address) return;
 
-  if (address) {
-    if (address.address_1) {
-      line1 += address.address_1;
+  const fieldsOnEachLine = [
+    ['name'],
+    ['address_1', 'address_2'],
+    ['city', 'state_province', 'postal_code'],
+  ];
+
+  return fieldsOnEachLine.map(fields => {
+    const line = fields.map(field => address[field])
+                   .filter(Boolean)
+                   .join(', ');
+    if (line.length > 0) {
+      const key = fields.join('-');
+
+      return (
+        <Fragment key={key}>
+          <span>{line}</span>
+          <br />
+        </Fragment>
+      );
     }
-
-    if (address.address_2) {
-      line1 += `, ${address.address_2}`;
-    }
-
-    if (address.city) {
-      line2 += address.city;
-    }
-
-    if (address.state_province) {
-      line2 += `, ${address.state_province}`;
-    }
-
-    if (address.postal_code) {
-      line2 += `, ${address.postal_code}`;
-    }
-  }
-
-  return (
-    <span>
-      {line1}
-      <br />
-      {line2}
-    </span>
-  );
+  });
 }
 
 function AddressInfo(props) {
