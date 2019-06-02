@@ -7,7 +7,7 @@ import { RequireAuth } from './components/auth/RequireAuth';
 // import configureStore from './store/configureStore';
 
 import { HomePage } from './pages/HomePage';
-import { OrganizationEditPage } from './pages/OrganizationEditPage';
+import OrganizationEditPage from './pages/OrganizationEditPage';
 import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { SearchResultsPage } from './pages/SearchPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';

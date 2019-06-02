@@ -13,6 +13,8 @@ import EditPhones from '../components/edit/EditPhones';
 import EditSidebar from '../components/edit/EditSidebar';
 import * as dataService from '../utils/DataService';
 
+import { withPopUpMessages } from '../actions/popUpMessageActions';
+
 import './OrganizationEditPage.scss';
 
 /**
@@ -303,7 +305,7 @@ const handleCancel = () => {
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
-export class OrganizationEditPage extends React.Component {
+class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -522,6 +524,7 @@ export class OrganizationEditPage extends React.Component {
   }
 
   handleSubmit() {
+    const { showPopUpMessage } = this.props;
     this.setState({ submitting: true });
     const {
       address,
@@ -602,8 +605,16 @@ export class OrganizationEditPage extends React.Component {
     const that = this;
     Promise.all(promises).then(() => {
       that.props.router.push({ pathname: '/resource', query: { id: that.state.resource.id } });
+      showPopUpMessage({
+        type: 'success',
+        message: 'Successfully saved your changes.',
+      });
     }).catch(err => {
       console.log(err);
+      showPopUpMessage({
+        type: 'error',
+        message: 'Sorry! An error occurred.',
+      });
     });
   }
 
@@ -874,6 +885,7 @@ OrganizationEditPage.propTypes = {
   }).isRequired,
   // TODO: Figure out what type router actually is
   router: PropTypes.instanceOf(Object).isRequired,
+  showPopUpMessage: PropTypes.func.isRequired,
 };
 
-export default withRouter(OrganizationEditPage);
+export default withRouter(withPopUpMessages(OrganizationEditPage));

@@ -1,3 +1,5 @@
+@import '../utils/_helpers.scss';
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // GLOBAL MODAL STYLES
 
@@ -262,14 +264,14 @@ ul.actions {
   // padding: 0 6px;
 
   &.status-red {
-    color: #C4243A;
+    color: $color-status-red;
   }
 
   &.status-green {
-    color: #5BBA81
+    color: $color-status-green;
   }
 
   &.status-amber {
-    color: #FFB646;
+    color: $color-status-amber;
   }
 }

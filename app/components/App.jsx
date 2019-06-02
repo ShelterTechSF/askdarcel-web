@@ -11,6 +11,7 @@ import 'react-select/dist/react-select.css';
 import userActions from '../actions/userActions';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
+import PopUpMessage from './ui/PopUpMessage';
 
 const coordsInSanFrancisco = coords => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -161,6 +162,7 @@ class App extends Component {
           <div className="container">
             {childrenWithProps}
           </div>
+          <PopUpMessage />
         </div>
       </div>
     );
