@@ -1,0 +1,23 @@
+@import '../../styles/utils/_helpers.scss';
+
+.verified-resource-icon-container {
+    width: 17px;
+    margin-right: 4px;
+    display: inline-block;
+    text-align: center;
+}
+
+.listing-menu--button-icon {
+    height: 14px;
+    width: auto;
+}
+
+.verified-resource-text {
+    font-size: 13px;
+    color: $color-grey5;
+}
+
+.verified-resource-link {
+    font-size: 13px;
+    text-decoration: underline;
+}
