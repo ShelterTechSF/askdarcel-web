@@ -31,9 +31,16 @@ class CategoriesRefinementList extends Component {
 		const mapKeys = Object.keys(this.categoriesMapping);
 		const checks = [];
 		for (var i=0; i<mapKeys.length; i++) {
-			let allValuesRefined = this.categoriesMapping[mapKeys[i]].every((val) => currentRefinement.includes(val));
 			const key = mapKeys[i];
-			checks[key] = allValuesRefined;
+			let atLeastOneRefined = false;
+			for (var i_1=0; i_1<this.categoriesMapping[key].length; i_1++) {
+				let val = this.categoriesMapping[key][i_1];
+				if (currentRefinement.includes(val)) {
+					atLeastOneRefined = true;
+					break;
+				}
+			}
+			checks[key] = atLeastOneRefined;
 		}
 		return checks;
 	}

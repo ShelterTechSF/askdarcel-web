@@ -13,12 +13,15 @@ class EligibilitiesRefinementList extends Component {
 		this.changeRefinement = this.changeRefinement.bind(this);
 		this.setChecks = this.setChecks.bind(this);
 		this.eligibilitiesMapping = {
+			"Disability": ["Disability", "Developmental Disability", "Physical Disability", "Learning Disability", "Intellectual Disability"],
+			"Families": ["Families", "Families with Babies"],
+			"Homeless": ["Homeless"],
+			"Mental Health/Substance Use": ["Mental Illness", "Substance Dependency"],
+			"Re-Entry/Incarcerated": ["Re-Entry"],
 			"Seniors (55+ years old)": ["Seniors (55+ years old)"],
-			"Veterans": ["Veterans"],
-			"Families": ["Families"],
-			"Transitional Aged Youth": ["Transitional Aged Youth (18-25)"],
-			"Reentry": ["Reentry"],
-			"Immigrants": ["Immigrants"]
+			"Transitional Aged Youth": ["Transitional Aged Youth"],
+			"Trauma Survivors": ["Trauma Survivors"],
+			"Veterans": ["Veterans"]
 		};
 		const checks = this.setChecks();
 		this.state = {
@@ -31,9 +34,16 @@ class EligibilitiesRefinementList extends Component {
 		const mapKeys = Object.keys(this.eligibilitiesMapping);
 		const checks = [];
 		for (var i=0; i<mapKeys.length; i++) {
-			let allValuesRefined = this.eligibilitiesMapping[mapKeys[i]].every((val) => currentRefinement.includes(val));
 			const key = mapKeys[i];
-			checks[key] = allValuesRefined;
+			let atLeastOneRefined = false;
+			for (var i_1=0; i_1<this.eligibilitiesMapping[key].length; i_1++) {
+				let val = this.eligibilitiesMapping[key][i_1];
+				if (currentRefinement.includes(val)) {
+					atLeastOneRefined = true;
+					break;
+				}
+			}
+			checks[key] = atLeastOneRefined;
 		}
 		return checks;
 	}
@@ -51,7 +61,6 @@ class EligibilitiesRefinementList extends Component {
 	};
 
 	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
 		if (this.props.currentRefinement !== prevProps.currentRefinement) {
 			const checks = this.setChecks();
 			this.setState({isChecked:checks});
