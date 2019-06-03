@@ -1,6 +1,7 @@
 const YouthHomelessnessBlockConfig = {
   TITLE: {
     BLUE_WORD: 'Youth Homelessness Guide',
+    DESCRIPTION: 'Read our step-by-step guide unique to people age 18-24 to help you best navigate homelessness resources available to you',
   },
   CARDS: [
     {

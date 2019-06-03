@@ -14,6 +14,22 @@
   }
 }
 
+.landing-page-text-card {
+  margin: 5px;
+  height: 200px;
+  background-color: white;
+  display: flex;
+  flex: 0 0 200px;
+  flex-direction: column;
+  justify-content: space-around;
+  z-index: 1;
+
+  @include r_max($break-tablet-p) {
+    flex-basis: 200px;
+    height: 200px;
+  }
+}
+
 .landing-page-card__title {
   font-size: 18px;
   color: #000;
@@ -26,7 +42,7 @@
   }
 }
 
-.langing-page-card__image {
+.landing-page-card__image {
   background-repeat: no-repeat;
   max-width: 100%;
   flex: 0 0 150px;

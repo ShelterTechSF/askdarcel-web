@@ -28,6 +28,15 @@
   }
 }
 
+.landing-page-resource-block__resources-description {
+  display: inline-block;
+  padding: 0px 5px 15px 5px;
+  & h2 {
+    font-size: 18px;
+    z-index: 1;
+  }
+}
+
 .landing-page-resource-block__cards {
   display: flex;
   flex-wrap: wrap;
