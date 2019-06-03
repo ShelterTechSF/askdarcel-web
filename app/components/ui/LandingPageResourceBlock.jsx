@@ -22,7 +22,7 @@ class LandingPageResourceBlock extends Component {
           </div>
           {
             this.props.config.TITLE.DESCRIPTION &&
-              <div classname="landing-page-resource-block__resources-description">
+              <div className="landing-page-resource-block__resources-description">
                 { this.props.config.TITLE.DESCRIPTION }
               </div>
           }
@@ -83,7 +83,7 @@ const LandingPageTextCard = props => (
     href={props.query || props.resource}
     className="landing-page-text-card"
   >
-    <h2 className="landing-page-card__title">{props.title}</h2>
+    <h1 className="landing-page-text-card__title">{props.title}</h1>
   </a>
 );
 

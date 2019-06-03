@@ -16,18 +16,31 @@
 
 .landing-page-text-card {
   margin: 5px;
-  height: 200px;
+  height: 100px;
   background-color: white;
   display: flex;
-  flex: 0 0 200px;
+  flex: 0 0 230px;
   flex-direction: column;
   justify-content: space-around;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
   z-index: 1;
 
   @include r_max($break-tablet-p) {
-    flex-basis: 200px;
-    height: 200px;
+    flex-basis: 230px;
+    height: 100px;
   }
+}
+
+.landing-page-text-card__title {
+  font-size: 16px;
+  color: #000;
+  padding: 20px;
+  flex: 0 0 65px;
+  font-weight: 600;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
 }
 
 .landing-page-card__title {
