@@ -7,6 +7,7 @@ import FindHeader from 'components/layout/FindHeader';
 import { CategoryList } from 'components/layout/CategoryList';
 import BasicNeedsBlockConfig from 'components/ui/BasicNeedsBlockConfig';
 import LegalBlockConfig from 'components/ui/LegalBlockConfig';
+import YouthHomelessnessBlockConfig from 'components/ui/YouthHomelessnessBlockConfig';
 import * as ax from 'axios';
 
 import './HomePage.scss';
@@ -51,6 +52,7 @@ export class HomePage extends React.Component {
           <div className="legal-block__resources-hammer" />
         </LandingPageResourceBlock>
         <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
+        <LandingPageResourceBlock config={YouthHomelessnessBlockConfig} />
         <Partners />
         <Footer />
       </div>
