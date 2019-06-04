@@ -46,7 +46,7 @@ const searchResultsContainer = connectStateResults(
     }
 
     return (
-      <div>
+      <div className="results-wrapper">
         {output}
       </div>
     );
