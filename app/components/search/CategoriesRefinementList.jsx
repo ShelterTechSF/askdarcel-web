@@ -8,7 +8,7 @@ class CategoriesRefinementList extends Component {
     refine: PropTypes.func.isRequired,
     currentRefinement: PropTypes.array.isRequired,
   };
-  
+
   constructor(props) {
     super(props);
     this.changeRefinement = this.changeRefinement.bind(this);
@@ -17,9 +17,9 @@ class CategoriesRefinementList extends Component {
       'Basic Needs & Shelter': ['Basic Needs & Shelter'],
       'Eviction Prevention': ['Eviction Prevention'],
       'Health & Medical': ['Health & Medical'],
-      'Housing': ['Housing'],
-      'Legal': ['Legal'],
-      'Employment': ['Employment'],
+      Housing: ['Housing'],
+      Legal: ['Legal'],
+      Employment: ['Employment'],
     };
     const checks = this.setChecks();
     this.state = {
@@ -32,7 +32,8 @@ class CategoriesRefinementList extends Component {
     const { currentRefinement } = this.props;
     if (currentRefinement !== prevProps.currentRefinement) {
       const checks = this.setChecks();
-      this.setState({ isChecked:checks });
+      // setState is done in a condition so it won't create loop
+      this.setState({ isChecked: checks }); // eslint-disable-line react/no-did-update-set-state
     }
   }
 
@@ -55,7 +56,7 @@ class CategoriesRefinementList extends Component {
     return checks;
   }
 
-  changeRefinement(key, event) {
+  changeRefinement(key, event) { // eslint-disable-line no-unused-vars
     const { refine } = this.props;
     const { items } = this.props;
     for (let i = 0; i < items.length; i++) {
@@ -71,11 +72,12 @@ class CategoriesRefinementList extends Component {
     const mapKeys = Object.keys(this.categoriesMapping);
     return (
       <div className="refinement-wrapper">
-        <label className="refinement-title">Categories</label>
+        <p className="refinement-title">Categories</p>
         <ul className="refinement-ul">
           {mapKeys.map(key => (
             // for each map key, display it as a filtering option
             // for onClick of each option, call refine on the values of the key
+            // eslint-disable-next-line prefer-template
             <li key={key} className={'refine-li ' + (isChecked[key] ? 'active' : '')}>
               <label>
                 <input

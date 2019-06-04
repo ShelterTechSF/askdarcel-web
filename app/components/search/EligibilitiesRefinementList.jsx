@@ -14,20 +14,29 @@ class EligibilitiesRefinementList extends Component {
     this.changeRefinement = this.changeRefinement.bind(this);
     this.setChecks = this.setChecks.bind(this);
     this.eligibilitiesMapping = {
-      'Disability': ['Disability', 'Developmental Disability', 'Physical Disability', 'Learning Disability', 'Intellectual Disability'],
-      'Families': ['Families', 'Families with Babies'],
-      'Homeless': ['Homeless'],
+      Disability: ['Disability', 'Developmental Disability', 'Physical Disability', 'Learning Disability', 'Intellectual Disability'],
+      Families: ['Families', 'Families with Babies'],
+      Homeless: ['Homeless'],
       'Mental Health/Substance Use': ['Mental Illness', 'Substance Dependency'],
       'Re-Entry/Incarcerated': ['Re-Entry'],
       'Seniors (55+ years old)': ['Seniors (55+ years old)'],
       'Transitional Aged Youth': ['Transitional Aged Youth'],
       'Trauma Survivors': ['Trauma Survivors'],
-      'Veterans': ['Veterans'],
+      Veterans: ['Veterans'],
     };
     const checks = this.setChecks();
     this.state = {
       isChecked: checks,
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { currentRefinement } = this.props;
+    if (currentRefinement.sort().join(',') !== prevProps.currentRefinement.sort().join(',')) {
+      const checks = this.setChecks();
+      // setState is done in a condition so it won't create loop
+      this.setState({ isChecked: checks }); // eslint-disable-line react/no-did-update-set-state
+    }
   }
 
   setChecks() {
@@ -49,7 +58,7 @@ class EligibilitiesRefinementList extends Component {
     return checks;
   }
 
-  changeRefinement(key, event) {
+  changeRefinement(key, event) { // eslint-disable-line no-unused-vars
     const { refine } = this.props;
     const { items } = this.props;
     for (let i = 0; i < items.length; i++) {
@@ -60,24 +69,17 @@ class EligibilitiesRefinementList extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { currentRefinement } = this.props
-    if (currentRefinement.sort().join(',') !== prevProps.currentRefinement.sort().join(',')) {
-      const checks = this.setChecks();
-      this.setState({ isChecked:checks });
-    }
-  }
-
   render() {
     const { isChecked } = this.state;
     const mapKeys = Object.keys(this.eligibilitiesMapping);
     return (
       <div className="refinement-wrapper">
-        <label className="refinement-title">Eligibilities</label>
+        <p className="refinement-title">Eligibilities</p>
         <ul className="refinement-ul">
           {mapKeys.map(key => (
             // for each map key, display it as a filtering option
             // for onClick of each option, call refine on the values of the key
+            // eslint-disable-next-line prefer-template
             <li key={key} className={'refine-li ' + (isChecked[key] ? 'active' : '')}>
               <label>
                 <input
