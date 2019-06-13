@@ -23,6 +23,9 @@ class EligibilitiesRefinementList extends Component {
       'Transitional Aged Youth': ['Transitional Aged Youth'],
       'Trauma Survivors': ['Trauma Survivors'],
       Veterans: ['Veterans'],
+      Immigrants: ['Immigrants'],
+      LGBTQ: ['LGBTQ'],
+
     };
     const checks = this.setChecks();
     this.state = {
