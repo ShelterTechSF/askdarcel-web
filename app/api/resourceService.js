@@ -40,5 +40,4 @@ export const certifyResourceHAP = id => {
   api.post(`/resources/${id}/certify`);
 };
 
-export // let query = { change_request: { status: '2' }
-const deactivateResource = id => api.delete(`/resources/${id}`);
+export const deactivateResource = id => api.delete(`/resources/${id}`);
