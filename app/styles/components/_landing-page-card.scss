@@ -14,12 +14,14 @@
   }
 }
 
+$text-card-flex-basis: 230px;
+
 .landing-page-text-card {
   margin: 5px;
   height: 100px;
   background-color: white;
   display: flex;
-  flex: 0 0 230px;
+  flex: 0 0 $text-card-flex-basis;
   flex-direction: column;
   justify-content: space-around;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -27,7 +29,6 @@
   z-index: 1;
 
   @include r_max($break-tablet-p) {
-    flex-basis: 230px;
     height: 100px;
   }
 }
@@ -68,4 +69,12 @@
 .landing-page-card__content {
   flex: 0 0 95px;
   padding: 15px 20px;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
 }
