@@ -14,7 +14,7 @@ describe('<LandingPageCarousel />', () => {
     />
   };
 
-  const testCards = [
+  const twoCards = [
     {
       title: 'Test1',
       content: 'Test content',
@@ -28,24 +28,47 @@ describe('<LandingPageCarousel />', () => {
       imgClass: 'legal-block-housing',
     },
   ];
-  const validConfig = {
-    TITLE: {
-      BLUE_WORD: 'Test',
-      DESCRIPTION: 'Test description'
+  const fiveCards = [
+    ...twoCards,
+    {
+      title: 'Test3',
+      content: 'Test content 3',
+      query: 'Test+Query',
+      imgClass: 'legal-block-housing',
     },
-    CARDS: testCards,
+    {
+      title: 'Test4',
+      content: 'Test content 4',
+      resource: 'https://www.google.com',
+      imgClass: 'legal-block-housing',
+    },
+    {
+      title: 'Test5',
+      content: 'Test content 5',
+      query: 'Test+Query',
+      imgClass: 'legal-block-housing',
+    },
+  ];
+  const validConfig = (cards, numShownCards) => {
+    return {
+      TITLE: {
+        BLUE_WORD: 'Test',
+        DESCRIPTION: 'Test description'
+      },
+      CARDS: cards,
+      NUM_SHOWN_CARDS: numShownCards,
+    };
   };
 
   it('creates a carousel with the expected number of cards', () => {
-    const carousel = shallow(<LandingPageCarousel config={validConfig} />);
-    expect(carousel.find('LandingPageTextCard')).to.have.lengthOf(testCards.length);
+    const carousel = shallow(<LandingPageCarousel config={validConfig(twoCards, 4)} />);
+    expect(carousel.find('LandingPageTextCard')).to.have.lengthOf(twoCards.length);
   });
 
-  it('checks a valid user should render the appropriate fields in the right place', () => {
-    const carousel = shallow(<LandingPageCarousel config={validConfig} />);
-    expect(carousel.find('LandingPageTextCard')).first().prop('title').to.equal('Test1');
-    // expect(carousel.find('LandingPageTextCard').prop('query')).to.equal();
-    // expect(carousel.find('LandingPageTextCard').prop('key'));
-    
+  it('creates a navigation button when it has more cards than it can show at once', () => {
+    const carousel = shallow(<LandingPageCarousel config={validConfig(fiveCards, 4)} />);
+    expect(carousel.find('LandingPageTextCard')).to.have.lengthOf(fiveCards.length);
+    expect(carousel.find('CarouselNavButton')).to.have.lengthOf(1);
   });
+
 });

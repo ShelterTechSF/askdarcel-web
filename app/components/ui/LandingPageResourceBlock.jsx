@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
+import LandingPageCarousel from './LandingPageCarousel';
 
 const HOST_QUERY = '/search?query=';
 
@@ -28,27 +29,30 @@ class LandingPageResourceBlock extends Component {
               </div>
           }
           <div className="landing-page-resource-block__cards">
-            { this.props.config.CARDS.map(category => {
-              const key = category.query || category.resource;
-              const query = category.query ? HOST_QUERY + category.query : null;
-              if (category.imgClass) {
-                return <LandingPageCard
-                  title={category.title}
-                  content={category.content}
-                  query={query}
-                  imgClass={category.imgClass}
-                  key={key}
-                  resource={category.resource}
-                />
-              } else {
-                return <LandingPageTextCard
-                  title={category.title}
-                  query={query}
-                  key={key}
-                  resource={category.resource}
-                />
-              }
-            })}
+            { <LandingPageCarousel config={this.props.config} />
+            
+            //{ this.props.config.CARDS.map(category => {
+              // const key = category.query || category.resource;
+              // const query = category.query ? HOST_QUERY + category.query : null;
+              // if (category.imgClass) {
+              //   return <LandingPageCard
+              //     title={category.title}
+              //     content={category.content}
+              //     query={query}
+              //     imgClass={category.imgClass}
+              //     key={key}
+              //     resource={category.resource}
+              //   />
+              // } else {
+              //   return <LandingPageTextCard
+              //     title={category.title}
+              //     query={query}
+              //     key={key}
+              //     resource={category.resource}
+              //   />
+              // }
+            //})}
+          }
           </div>
         </div>
       </div>

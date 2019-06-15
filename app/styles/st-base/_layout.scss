@@ -87,6 +87,14 @@ pre {
   display: block;
 }
 
+.carousel-wrapper {
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // GLOBAL MODAL STYLES
 
