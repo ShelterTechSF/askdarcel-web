@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
 
 const HOST_QUERY = '/search?query=';
 
@@ -65,33 +66,6 @@ LandingPageResourceBlock.props = {
     }),
     CARDS: PropTypes.array,
   }),
-};
-
-const LandingPageCard = props => (
-  <a
-    href={props.query || props.resource}
-    className="landing-page-card"
-  >
-    <h1 className="landing-page-card__title">{props.title}</h1>
-    <div className={`landing-page-card__image ${props.imgClass}`} />
-    <h2 className="landing-page-card__content">{props.content}</h2>
-  </a>
-);
-
-const LandingPageTextCard = props => (
-  <a
-    href={props.query || props.resource}
-    className="landing-page-text-card"
-  >
-    <h1 className="landing-page-text-card__title">{props.title}</h1>
-  </a>
-);
-
-LandingPageResourceBlock.props = {
-  query: PropTypes.string,
-  title: PropTypes.string,
-  imgClass: PropTypes.string,
-  content: PropTypes.string,
 };
 
 export default LandingPageResourceBlock;
