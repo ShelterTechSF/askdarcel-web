@@ -18,9 +18,10 @@ import { MapOfLocations } from 'components/maps';
 import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
 import Notes from 'components/listing/Notes';
+import MOHCDBadge from 'components/listing/MOHCDBadge';
+import HAPBadge from 'components/listing/HAPBadge';
 import Loader from 'components/ui/Loader';
-import HAPcertified from '../assets/img/ic-hap.png';
-import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
+import * as dataService from '../utils/DataService';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 const getResourceLocation = resource => {
@@ -41,7 +42,7 @@ export class OrganizationListingPage extends React.Component {
     this.state = {
       resource: null,
     };
-    this.isMOHCDFunded = this.isMOHCDFunded.bind(this);
+    this.verifyResource = this.verifyResource.bind(this);
   }
 
   componentDidMount() {
@@ -63,19 +64,25 @@ export class OrganizationListingPage extends React.Component {
     });
   }
 
-  isMOHCDFunded() {
-    const { resource } = this.state;
-    let isMOHCDFunded = false;
-
-    // eslint-disable-next-line
-    resource && resource.categories.forEach(category => {
-      if (category.name === 'MOHCD Funded') {
-        isMOHCDFunded = true;
+  verifyResource() {
+    const {
+      resource: {
+        id,
+      },
+    } = this.state;
+    const changeRequest = {
+      verified_at: new Date().toISOString(),
+    };
+    dataService.post(`/api/resources/${id}/change_requests`, { change_request: changeRequest }).then(response => {
+      // TODO: Do not use alert() for user notifications.
+      if (response.ok) {
+        alert('Resource verified. Thanks!'); // eslint-disable-line no-alert
+      } else {
+        alert('Issue verifying resource. Please try again.'); // eslint-disable-line no-alert
       }
     });
-
-    return isMOHCDFunded;
   }
+
 
   render() {
     const { resource } = this.state;
@@ -84,7 +91,6 @@ export class OrganizationListingPage extends React.Component {
     }
 
     const { notes } = resource;
-    const isMOHCDFunded = this.isMOHCDFunded();
     const resourceLocation = getResourceLocation(resource);
     return (
       <div>
@@ -105,13 +111,11 @@ export class OrganizationListingPage extends React.Component {
           <article className="org" id="resource">
             <div className="org--main">
               <div className="org--main--left">
-
                 <header className="org--main--header">
-                  <div className="badges">
-                    {resource.certified && (<img className="certified" src={HAPcertified} alt="Verified by the Homeless Assistance Project" />)}
-                    {isMOHCDFunded && (<img className="mohcd-funded" src={MOHCDFunded} alt="Verified by MOHCD" />)}
+                  <div className="org--main--header--title-container">
+                    <h1 className="org--main--header--title">{resource.name}</h1>
+                    <MOHCDBadge resource={resource} />
                   </div>
-                  <h1 className="org--main--header--title">{resource.name}</h1>
                   <div className="org--main--header--hours">
                     <RelativeOpeningTime schedule={resource.schedule} />
                   </div>
@@ -127,6 +131,7 @@ export class OrganizationListingPage extends React.Component {
                 <div className="org--main--header--description">
                   <h2>About this Organization</h2>
                   <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
+                  <HAPBadge resource={resource} />
                 </div>
 
                 <section className="service--section" id="services">

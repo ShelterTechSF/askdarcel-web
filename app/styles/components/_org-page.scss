@@ -21,7 +21,6 @@
   display: flex;
 	&--left {
 		width: calc-em(660px);
-		border-right: 1px solid #ddd;
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -39,7 +38,6 @@
   @include r_max($break-tablet-s) {
     margin-top: 0;
       &--left {
-        border-right: none;
         width: 100%;
       }
       section {
@@ -64,6 +62,11 @@
 }
 
 .org--main--header {
+  &--title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 	&--title {
 		@extend %font-size-x-large;
 		color: #333333;
