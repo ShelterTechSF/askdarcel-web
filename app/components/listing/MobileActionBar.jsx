@@ -7,25 +7,24 @@ import { images } from '../../assets';
 
 import './MobileActionBar.scss';
 
-const getMobileActions = resource => {
-  const resourceActions = getResourceActions(resource);
+const getMobileActions = (resource, service) => {
+  const resourceActions = getResourceActions(resource, service);
 
-  const mobileActions = [
-    { ...resourceActions.edit, icon: 'edit-blue' },
-  ];
-  if (resourceActions.directions) {
-    mobileActions.unshift({ ...resourceActions.directions, icon: 'directions-blue' });
-  }
+  const mobileActions = [];
   if (resourceActions.phone) {
-    mobileActions.unshift({ ...resourceActions.phone, icon: 'phone-blue' });
+    mobileActions.push(resourceActions.phone);
   }
+  if (resourceActions.directions) {
+    mobileActions.push(resourceActions.directions);
+  }
+  mobileActions.push(resourceActions.edit);
   return mobileActions;
 };
 
 const renderButtonContent = action => (
   <div key={action.name} className="mobile-action-bar--button-content">
     <img
-      src={images.icon(action.icon)}
+      src={images.icon(`${action.icon}-blue`)}
       alt={action.icon}
       className="mobile-action-bar--button-icon"
     />
@@ -35,8 +34,8 @@ const renderButtonContent = action => (
 
 export default class MobileActionBar extends React.Component {
   render() {
-    const { resource } = this.props;
-    const actions = getMobileActions(resource);
+    const { resource, service } = this.props;
+    const actions = getMobileActions(resource, service);
     return (
       <div className="mobile-action-bar">
         {actions.map(action => (

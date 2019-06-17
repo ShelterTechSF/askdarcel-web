@@ -21,7 +21,6 @@ import Notes from 'components/listing/Notes';
 import Loader from 'components/ui/Loader';
 import HAPcertified from '../assets/img/ic-hap.png';
 import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
-import * as dataService from '../utils/DataService';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 const getResourceLocation = resource => {
@@ -42,7 +41,6 @@ export class OrganizationListingPage extends React.Component {
     this.state = {
       resource: null,
     };
-    this.verifyResource = this.verifyResource.bind(this);
     this.isMOHCDFunded = this.isMOHCDFunded.bind(this);
   }
 
@@ -62,25 +60,6 @@ export class OrganizationListingPage extends React.Component {
 
     fetch(url, { credentials: 'include' }).then(r => r.json()).then(data => {
       this.setState({ resource: data.resource });
-    });
-  }
-
-  verifyResource() {
-    const {
-      resource: {
-        id,
-      },
-    } = this.state;
-    const changeRequest = {
-      verified_at: new Date().toISOString(),
-    };
-    dataService.post(`/api/resources/${id}/change_requests`, { change_request: changeRequest }).then(response => {
-      // TODO: Do not use alert() for user notifications.
-      if (response.ok) {
-        alert('Resource verified. Thanks!'); // eslint-disable-line no-alert
-      } else {
-        alert('Issue verifying resource. Please try again.'); // eslint-disable-line no-alert
-      }
     });
   }
 

@@ -110,7 +110,7 @@ class ServicePage extends React.Component {
                   </p>
                 </header>
 
-                <MobileActionBar resource={resource} />
+                <MobileActionBar resource={resource} service={service} />
 
                 <section className="listing--main--left--about">
                   <h2>About This Service</h2>
@@ -172,7 +172,7 @@ class ServicePage extends React.Component {
                 </section> */}
               </div>
               <div className="listing--aside">
-                <ActionSidebar resource={resource} />
+                <ActionSidebar resource={resource} service={service} />
                 {service.categories.map(cat => (
                   <CategoryTag key={cat.id} category={cat} />
                 ))}
