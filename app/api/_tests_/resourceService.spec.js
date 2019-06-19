@@ -2,6 +2,7 @@ import { resourceResponse } from './_mocks_/resourceMock';
 
 const chai = require('chai');
 const chaihttp = require('chai-http');
+
 const { expect } = chai;
 chai.should();
 chai.use(chaihttp);
@@ -9,11 +10,6 @@ chai.use(chaihttp);
 const appEndpoint = 'http://0.0.0.0:3000';
 
 describe('API /resource', () => {
-  it('should take less than 500ms', done => {
-    this.timeout(500);
-    setTimeout(done, 300);
-  });
-
   it('should return all resources', done => {
     chai.request(appEndpoint).keepOpen()
       .get('/resources?category_id=all')
