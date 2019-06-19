@@ -1,12 +1,9 @@
 import { resourceResponse } from './_mocks_/resourceMock';
-import { getResource, getResources } from '../resourceService';
 
 const chai = require('chai');
 const chaihttp = require('chai-http');
-
 const { expect } = chai;
-const should = chai.should();
-
+chai.should();
 chai.use(chaihttp);
 
 const appEndpoint = 'http://0.0.0.0:3000';
