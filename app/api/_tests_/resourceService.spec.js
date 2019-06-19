@@ -9,7 +9,7 @@ chai.use(chaihttp);
 const appEndpoint = 'http://0.0.0.0:3000';
 
 describe('API /resource', () => {
-  it('should take less than 500ms', function (done) {
+  it('should take less than 500ms', done => {
     this.timeout(500);
     setTimeout(done, 300);
   });
