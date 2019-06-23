@@ -10,7 +10,7 @@ class ServiceAttribution extends React.Component {
   }
 
   render() {
-    const hapLink = 'https://medium.com/@Shelter_Tech/sheltertech-is-participating-'
+    const benetechLink = 'https://medium.com/@Shelter_Tech/sheltertech-is-participating-'
       + 'in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6';
 
     return this.isVerified() ? (
@@ -24,7 +24,7 @@ class ServiceAttribution extends React.Component {
             />
           </span>
           <span className="verified-resource-text">We&apos;ve updated this record thanks to a </span>
-          <a className="verified-resource-link" href={hapLink} target="_blank" rel="noopener noreferrer">
+          <a className="verified-resource-link" href={benetechLink} target="_blank" rel="noopener noreferrer">
             Service Net Partner
           </a>
         </p>
