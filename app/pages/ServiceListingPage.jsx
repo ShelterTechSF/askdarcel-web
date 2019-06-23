@@ -8,7 +8,7 @@ import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
 import {
   ActionSidebar,
-  Attribution,
+  ServiceAttribution,
   TableOfContactInfo,
   TableOfOpeningTimes,
   CategoryTag,
@@ -73,7 +73,6 @@ class ServicePage extends React.Component {
     const { resource, program, schedule } = service;
     const details = this.generateDetailsRows();
     const locations = getServiceLocations(service, resource, schedule);
-
     return (
       <div>
         <Helmet>
@@ -116,7 +115,10 @@ class ServicePage extends React.Component {
                 <section className="listing--main--left--about">
                   <h2>About This Service</h2>
                   <ReactMarkdown className="rendered-markdown" source={service.long_description} />
-                  <Attribution></Attribution>
+                  <ServiceAttribution
+                    attribution={resource.source_attribution}
+                    status={resource.status}
+                  />
                 </section>
 
                 {details.length ? (
