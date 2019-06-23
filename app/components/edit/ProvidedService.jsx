@@ -4,6 +4,7 @@ import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
+import { buildScheduleDays } from '../../pages/OrganizationEditPage';
 
 
 const InputField = ({
@@ -66,6 +67,34 @@ const ProvidedService = ({
   const handleChange = (field, value) => {
     const { id } = service;
     editServiceById(id, { id, [field]: value });
+  };
+
+  const setShouldInheritScheduleFromParent = shouldInherit => {
+    const { scheduleObj: scheduleDaysByDay } = service;
+
+    let tempScheduleDays = {};
+
+    if (shouldInherit) {
+      tempScheduleDays = Object.entries(scheduleDaysByDay).reduce(
+        (acc, [day, scheduleDays]) => (
+          {
+            ...acc,
+            [day]: scheduleDays.map(scheduleDay => ({
+              ...scheduleDay,
+              opens_at: null,
+              closes_at: null,
+              openChanged: true,
+              closeChanged: true,
+            })),
+          }
+        ),
+        {},
+      );
+    } else {
+      tempScheduleDays = buildScheduleDays(service.schedule);
+    }
+    handleChange('shouldInheritScheduleFromParent', shouldInherit);
+    handleChange('scheduleObj', tempScheduleDays);
   };
 
   return (
@@ -162,7 +191,10 @@ const ProvidedService = ({
 
         <EditSchedule
           canInheritFromParent
-          schedule={service.schedule}
+          shouldInheritFromParent={service.shouldInheritScheduleFromParent}
+          setShouldInheritFromParent={setShouldInheritScheduleFromParent}
+          scheduleId={service.schedule.id}
+          scheduleDaysByDay={service.scheduleObj}
           handleScheduleChange={value => handleChange('scheduleObj', value)}
         />
 
@@ -198,6 +230,7 @@ ProvidedService.propTypes = {
     required_documents: PropTypes.string,
     application_process: PropTypes.string,
     long_description: PropTypes.string,
+    shouldInheritScheduleFromParent: PropTypes.bool.isRequired,
   }).isRequired,
   handleDeactivation: PropTypes.func.isRequired,
   editServiceById: PropTypes.func.isRequired,

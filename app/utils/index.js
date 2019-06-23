@@ -85,21 +85,6 @@ export function daysOfTheWeek() {
   ];
 }
 
-export function createTemplateSchedule() {
-  const daysTemplate = [];
-  for (let i = 0; i < daysOfTheWeek().length; i += 1) {
-    const day = daysOfTheWeek()[i];
-    daysTemplate.push({
-      day,
-      opens_at: null,
-      closes_at: null,
-      id: i + 1,
-    });
-  }
-
-  return daysTemplate;
-}
-
 export function sortScheduleDays(scheduleDays) {
   const days = daysOfTheWeek();
   return scheduleDays.sort((a, b) => (

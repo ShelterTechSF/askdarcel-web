@@ -5,6 +5,7 @@ import LandingPageEligibilityBlock from 'components/ui/LandingPageEligibilityBlo
 import Partners from 'components/ui/Partners';
 import FindHeader from 'components/layout/FindHeader';
 import { CategoryList } from 'components/layout/CategoryList';
+import HousingBlockConfig from 'components/ui/HousingBlockConfig';
 import BasicNeedsBlockConfig from 'components/ui/BasicNeedsBlockConfig';
 import LegalBlockConfig from 'components/ui/LegalBlockConfig';
 import * as ax from 'axios';
@@ -47,6 +48,7 @@ export class HomePage extends React.Component {
           <CategoryList categories={categories} />
         </div>
         <LandingPageEligibilityBlock eligibilities={eligibilities} />
+        <LandingPageResourceBlock config={HousingBlockConfig} />
         <LandingPageResourceBlock config={LegalBlockConfig}>
           <div className="legal-block__resources-hammer" />
         </LandingPageResourceBlock>

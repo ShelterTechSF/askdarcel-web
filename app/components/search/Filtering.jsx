@@ -2,16 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { getCurrentDayTime } from '../../utils/index';
+import EligibilitiesRefinementList from './EligibilitiesRefinementList';
+import CategoriesRefinementList from './CategoriesRefinementList';
+import filters_icon from '../../assets/img/filters-icon.png';
 
 class Filtering extends Component {
   constructor(props) {
     super(props);
     this.state = {
       openNow: false,
+      filtersActive: false,
       oldPathname: '',
       oldSearch: '',
     };
     this.toggleOpenNow = this.toggleOpenNow.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
   }
 
   toggleOpenNow() {
@@ -42,17 +47,37 @@ class Filtering extends Component {
     this.setState({ openNow: !currentValue });
   }
 
+  toggleFilters() {
+    this.setState({filtersActive: !this.state.filtersActive});
+  }
+
   render() {
     const { openNow } = this.state;
+    const { filtersActive } = this.state;
     return (
-      <div className="filter-container">
-        <div className="search-filters">
-          <button
-            className={`filter-chip ${openNow ? 'active' : ''}`}
-            onClick={this.toggleOpenNow}
-          >
-            Open now
-          </button>
+      <div>
+        <div className="filter-container flex-height">
+          <div className="search-filters">
+            <img
+              src={filters_icon}
+              alt="filters icon"
+              className="filters-icon"
+            />
+            <a className={"refine-btn " + (filtersActive ? 'active' : '')}
+                onClick={this.toggleFilters}>
+                Filters
+              </a>
+            <button
+              className={`filter-chip ${openNow ? 'active' : ''}`}
+              onClick={this.toggleOpenNow}
+            >
+              Open now
+            </button>
+            <div className={"custom-refinement " + (filtersActive ? 'active' : '')}>
+              <EligibilitiesRefinementList attribute="eligibilities" />
+              <CategoriesRefinementList attribute="categories" />
+            </div>
+          </div>
         </div>
       </div>
     );
