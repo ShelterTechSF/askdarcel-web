@@ -1,12 +1,12 @@
 import React from 'react';
-import ServiceVerified from '../../assets/img/ic-updated-record.svg';
+import ServiceVerified from '../../assets/img/ic-verified-record.svg';
 
 import './ServiceAttribution.scss';
 
 class ServiceAttribution extends React.Component {
   isVerified() {
     const { attribution, status } = this.props;
-    return attribution !== 'service_net' && status === 'approved';
+    return attribution === 'service_net' && status === 'approved';
   }
 
   render() {
