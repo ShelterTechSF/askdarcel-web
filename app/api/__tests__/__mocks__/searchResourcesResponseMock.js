@@ -1,0 +1,7367 @@
+export const resourceQueryResponse = {
+    "resources": [
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 102,
+            "legal_status": null,
+            "long_description": "Free food pantry",
+            "name": "Bayview TLC Family Resource Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.ymcasf.org/bayview/facilities/tlc_family_resource_center",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 118,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Thursday) and emergency food box. ",
+                    "name": "Free food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 102,
+                        "schedule_days": [
+                            {
+                                "id": 590,
+                                "day": "Thursday",
+                                "opens_at": 1400,
+                                "closes_at": 1600,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 104,
+                            "note": "Apply in person on Thursday 2pm-4pm. Must live in 94124 zip code and ID required. Bring a bag. Call M-F 9am-4pm for one-time-only emergency food box for any SF resident.  "
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Families",
+                            "id": 1049,
+                            "feature_rank": 5
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 102,
+                "schedule_days": [
+                    {
+                        "id": 590,
+                        "day": "Thursday",
+                        "opens_at": 1400,
+                        "closes_at": 1600,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 102,
+                "attention": null,
+                "address_1": "1601 Lane St. ",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7317977",
+                "longitude": "-122.3897624"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 132,
+            "legal_status": null,
+            "long_description": "Free food pantry",
+            "name": "Booker T. Washington Community Svce Ctr.",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.btwcsc.org/btwcsc/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 154,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Thursday)",
+                    "name": "Free food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 132,
+                        "schedule_days": [
+                            {
+                                "id": 766,
+                                "day": "Thursday",
+                                "opens_at": 1130,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 137,
+                            "note": "Call Wed 9am-noon for appointment to get food Thursday 11:30am-1pm. Photo ID required. Produce, canned & dry goods. "
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Low-Income",
+                            "id": 1058,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Families",
+                            "id": 1049,
+                            "feature_rank": 5
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 132,
+                "schedule_days": [
+                    {
+                        "id": 766,
+                        "day": "Thursday",
+                        "opens_at": 1130,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 132,
+                "attention": null,
+                "address_1": "800 Presidio Ave. ",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.784109",
+                "longitude": "-122.445779"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 41,
+            "legal_status": null,
+            "long_description": "Senior focused community center",
+            "name": "Catholic Charities - 30th St. Senior Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.onlok.org/30thStreetSeniorCenter.aspx",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 48,
+                    "interpretation_services": null,
+                    "long_description": "hot food",
+                    "name": "food",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 41,
+                        "schedule_days": []
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 47,
+                    "interpretation_services": null,
+                    "long_description": "Hot meals served 2 times a day",
+                    "name": "Congregate Meals Program",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 42,
+                            "note": "Suggested donation of $2.  Meal tickets can be obtained on the 3rd floor."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 46,
+                    "interpretation_services": null,
+                    "long_description": "Free computer use, free computer classes. black and white printer. Seniors only",
+                    "name": "technology",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 41,
+                            "note": "http://www.onlok.org/30thStreetSeniorCenter.aspx"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Technology",
+                            "id": 5,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 41,
+                "schedule_days": []
+            },
+            "phones": [],
+            "address": {
+                "id": 41,
+                "attention": null,
+                "address_1": "225 30th St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.741863",
+                "longitude": "-122.425086"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Technology",
+                    "id": 5,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 71,
+            "legal_status": null,
+            "long_description": "Multipurpose senior center serving the Oceanview, Merced, and Ingleside districts of San Francisco.",
+            "name": "Catholic Charities - OMI Senior Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://community.cccyo.org/page.aspx?pid=355",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 84,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Thursday) for seniors (60+) & disabled adults.",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 71,
+                        "schedule_days": [
+                            {
+                                "id": 422,
+                                "day": "Friday",
+                                "opens_at": 830,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 421,
+                                "day": "Thursday",
+                                "opens_at": 1000,
+                                "closes_at": 1500,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 420,
+                                "day": "Wednesday",
+                                "opens_at": 830,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 419,
+                                "day": "Tuesday",
+                                "opens_at": 830,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 418,
+                                "day": "Monday",
+                                "opens_at": 830,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 74,
+                            "note": "For seniors (60+) & disabled adults. Sign up M-W 8:30am-2pm, Fri 8:30am-2pm for weekly appointment to pick up food Thurs 9am-noon. Photo ID, proof of income, & proof of current address required for both services. Must live in zip code 94112, 94132, or 94127. English, Cantonese, Mandarin, Spanish, Tagalog, Vietnamese."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 83,
+                    "interpretation_services": null,
+                    "long_description": "Black and white printer, scanner, wireless internet available.",
+                    "name": "Technology access and training",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 73,
+                            "note": "Assistive technology available. Wheelchair accessible."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Technology",
+                            "id": 5,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 82,
+                    "interpretation_services": null,
+                    "long_description": "Pastries served weekday mornings and a hot lunch served in the afternoon.",
+                    "name": "Meal service",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 72,
+                            "note": "For low-income seniors"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "All Disabilities",
+                            "id": 1017,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Low-Income",
+                            "id": 1058,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 71,
+                "schedule_days": [
+                    {
+                        "id": 422,
+                        "day": "Friday",
+                        "opens_at": 830,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 421,
+                        "day": "Thursday",
+                        "opens_at": 1000,
+                        "closes_at": 1500,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 420,
+                        "day": "Wednesday",
+                        "opens_at": 830,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 419,
+                        "day": "Tuesday",
+                        "opens_at": 830,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 418,
+                        "day": "Monday",
+                        "opens_at": 830,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 66,
+                    "number": "(415) 334-5550",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 71,
+                "attention": null,
+                "address_1": "65 Beverly St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7172859",
+                "longitude": "-122.471641"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Technology",
+                    "id": 5,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 147,
+            "legal_status": null,
+            "long_description": "Persons living in 94124. Apply on Wednesdays at 11:20 am",
+            "name": "Church of God Prophecy",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 169,
+                    "interpretation_services": null,
+                    "long_description": "Persons living in the 94124 area. Apply on Wednesday mornings at 11:20 am. If accepted a card will be mailed to you to bring when you pick up food, along with ID and proof of address",
+                    "name": "Pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 147,
+                        "schedule_days": []
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 147,
+                "schedule_days": []
+            },
+            "phones": [],
+            "address": {
+                "id": 147,
+                "attention": null,
+                "address_1": "6212 Third St",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7221654",
+                "longitude": "-122.3960677"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 11,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "City Team Ministries",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.cityteam.org/san-francisco/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 14,
+                    "interpretation_services": null,
+                    "long_description": "The Transitional Shelter program provides a stable and safe environment and case management for 10 chronically homeless men and graduates from our addiction recovery program.  For those needing additional job readiness skills and work placement assistance we offer entrance into our Homeless Job Empowerment Program (HJEP). HJEP is a soft skills/ job readiness training program. The HJEP program assists these individuals in achieving economic self-sufficiency and housing by addressing the barriers most homeless people face in obtaining employment and housing. We offer a bed with shower and laundry facilities and mail, phone, and internet access, nutritious meals, job preparation, search and placement, resume assistance, instruction in interview skills, computer skills classes, money management and financial education classes, legal services, and case management for each client.",
+                    "name": "Transitional Shelter & Homeless Job Empowerment Program",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 11,
+                        "schedule_days": [
+                            {
+                                "id": 82,
+                                "day": "Saturday",
+                                "opens_at": 1300,
+                                "closes_at": 1500,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 81,
+                                "day": "Friday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 80,
+                                "day": "Thursday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 79,
+                                "day": "Wednesday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 78,
+                                "day": "Tuesday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 77,
+                                "day": "Monday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 12,
+                            "note": "For entrance into the transitional shelter, these men must be enrolled in school, working, or looking for work."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Shelter",
+                            "id": 1,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 13,
+                    "interpretation_services": null,
+                    "long_description": "A hot meal served 5 days a week",
+                    "name": "Free hot meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 11,
+                            "note": "Dinner: Tues-Fri arrive 5:45pm for 6pm (optional church group). Those who come to church group are fed first. A hot meal. Lunch: Saturday 1pm-3pm. Saturday Laundry"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Men",
+                            "id": 1032,
+                            "feature_rank": null
+                        }
+                    ]
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 12,
+                    "interpretation_services": null,
+                    "long_description": "One-year residential drug recovery program.  Individual and group counseling, Alcoholics Anonymous meetings, sexual addiction classes, anger management meetings, Bible studies, life skills classes, education classes, career enhancement classes, and an after care program for graduates. Our recovery program is based on the Classic Alcoholics Anonymous Way Out Program that is client driven. To learn responsibility, leadership, and stewardship they also are required to work at the mission in all capacities, including dish washing, cooking, cleaning, etc.",
+                    "name": "Men's only residential recovery program",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 10,
+                            "note": "Call ahead if you can; apply clean & sober. Stay up to 9 months.  Ask about 10-12 month drug recovery program."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Shelter",
+                            "id": 1,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Men",
+                            "id": 1032,
+                            "feature_rank": null
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 11,
+                "schedule_days": [
+                    {
+                        "id": 82,
+                        "day": "Saturday",
+                        "opens_at": 1300,
+                        "closes_at": 1500,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 81,
+                        "day": "Friday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 80,
+                        "day": "Thursday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 79,
+                        "day": "Wednesday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 78,
+                        "day": "Tuesday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 77,
+                        "day": "Monday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 9,
+                    "number": "(415) 861-8688",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 11,
+                "attention": null,
+                "address_1": "164 6th St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7800103",
+                "longitude": "-122.4077217"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Shelter",
+                    "id": 1,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Shelter",
+                    "id": 1,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 189,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "Curry Senior Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://curryseniorcenter.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 215,
+                    "interpretation_services": null,
+                    "long_description": "Dining room serving seniors (60+). Breakfast and lunch served everyday",
+                    "name": "Hot meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 189,
+                        "schedule_days": [
+                            {
+                                "id": 1118,
+                                "day": "Saturday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1117,
+                                "day": "Saturday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1116,
+                                "day": "Friday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1115,
+                                "day": "Friday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1114,
+                                "day": "Thursday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1113,
+                                "day": "Thursday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1112,
+                                "day": "Wednesday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1111,
+                                "day": "Wednesday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1110,
+                                "day": "Tuesday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1109,
+                                "day": "Tuesday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1108,
+                                "day": "Monday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1107,
+                                "day": "Monday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1106,
+                                "day": "Sunday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 1105,
+                                "day": "Sunday",
+                                "opens_at": 800,
+                                "closes_at": 900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 197,
+                            "note": "For those age 60 & over. Must have ID. $2 suggested donation; no one turned away for lack of funds. Breakfast starts at 8am, Lunch at 11am. Sign up for lunch from 6:30am to 8am."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 214,
+                    "interpretation_services": null,
+                    "long_description": "Technology access and training for seniors (60+). Black & white printer, scanner, and wireless internet available. Classes offered in English, Chinese, Vietnamese, and Russian. Call for more info. ",
+                    "name": "Computer Lab",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 196,
+                            "note": "Assistive technology and wheelchair accessible"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Technology",
+                            "id": 5,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Women",
+                            "id": 1031,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Men",
+                            "id": 1032,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "San Francisco Residency",
+                            "id": 1072,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 213,
+                    "interpretation_services": null,
+                    "long_description": "Through a partnership with the San Francisco Department of Public Health, physicians and nurse practitioners provide care to senior patients (55+) by appointment from Monday through Friday (9 am to 5 pm), and on a drop-in basis for urgent care on Tuesdays (1 pm to 2 pm) and Fridays (9 am to 11 am). Podiatrist, women's clinic, and pharmacist also available.",
+                    "name": "Primary medical care for seniors",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 195,
+                            "note": "Accept insurance, Medicare, Medi-Cal and Healthy San Francisco. And no patient is turned away for lack of funds.  Must be over 55 years of age and have photo ID. English & Spanish. For Cantonese, Laotian, Mandarin, Russian, Tagalog & Vietnamese"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Medical",
+                            "id": 3,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 189,
+                "schedule_days": [
+                    {
+                        "id": 1118,
+                        "day": "Saturday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1117,
+                        "day": "Saturday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1116,
+                        "day": "Friday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1115,
+                        "day": "Friday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1114,
+                        "day": "Thursday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1113,
+                        "day": "Thursday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1112,
+                        "day": "Wednesday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1111,
+                        "day": "Wednesday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1110,
+                        "day": "Tuesday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1109,
+                        "day": "Tuesday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1108,
+                        "day": "Monday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1107,
+                        "day": "Monday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1106,
+                        "day": "Sunday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 1105,
+                        "day": "Sunday",
+                        "opens_at": 800,
+                        "closes_at": 900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 180,
+                    "number": "(415) 885-2274",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 189,
+                "attention": null,
+                "address_1": "333 Turk St. ",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7825816",
+                "longitude": "-122.4144424"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Medical",
+                    "id": 3,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Technology",
+                    "id": 5,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 78,
+            "legal_status": null,
+            "long_description": "Multi-service organization",
+            "name": "Economic Opportunity Council (EOC) - Commodity Food Program",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.eocsf.org",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 92,
+                    "interpretation_services": null,
+                    "long_description": "Provides nutritious supplemental foods, as available, for low-income women during pregnancy and for 12 months postpartum, for their infants and children up to age 6 years who are not WIC-eligible. Foods such as infant formula, nonfat dry milk, egg mix, cereal, peanut butter, canned meat, vegetables, fruit, and fruit juices are available monthly at five distribution sites throughout the city. Also serves eligible seniors, 60 years of age or over with the same types of commodity foods. Services are only for persons in the 94107 zip code. ",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 78,
+                        "schedule_days": [
+                            {
+                                "id": 454,
+                                "day": "Friday",
+                                "opens_at": 830,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 453,
+                                "day": "Thursday",
+                                "opens_at": 830,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 452,
+                                "day": "Wednesday",
+                                "opens_at": 830,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 451,
+                                "day": "Tuesday",
+                                "opens_at": 830,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 450,
+                                "day": "Monday",
+                                "opens_at": 830,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 81,
+                            "note": "Call for an appointment. Cantonese, Mandarin, Portuguese, Russian, Spanish, Tagalog are spoken. Bring proof of Income and PG&E bill."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 78,
+                "schedule_days": [
+                    {
+                        "id": 454,
+                        "day": "Friday",
+                        "opens_at": 830,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 453,
+                        "day": "Thursday",
+                        "opens_at": 830,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 452,
+                        "day": "Wednesday",
+                        "opens_at": 830,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 451,
+                        "day": "Tuesday",
+                        "opens_at": 830,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 450,
+                        "day": "Monday",
+                        "opens_at": 830,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 71,
+                    "number": "(415) 749-5600",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 78,
+                "attention": null,
+                "address_1": "1426 Fillmore St., Suite 301",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7828241",
+                "longitude": "-122.4323695"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 109,
+            "legal_status": null,
+            "long_description": "Senior multi-service center",
+            "name": "Episcopal Community Services - Canon Kip Senior Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://ecs-sf.org/programs/cksc.html",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 126,
+                    "interpretation_services": null,
+                    "long_description": "Hot meal served weekdays",
+                    "name": "Hot meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 109,
+                        "schedule_days": [
+                            {
+                                "id": 626,
+                                "day": "Friday",
+                                "opens_at": 1130,
+                                "closes_at": 1230,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 625,
+                                "day": "Thursday",
+                                "opens_at": 1130,
+                                "closes_at": 1230,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 624,
+                                "day": "Wednesday",
+                                "opens_at": 1130,
+                                "closes_at": 1230,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 623,
+                                "day": "Tuesday",
+                                "opens_at": 1130,
+                                "closes_at": 1230,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 622,
+                                "day": "Monday",
+                                "opens_at": 1130,
+                                "closes_at": 1230,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 112,
+                            "note": "Arrive early, meals are first come first serve.  Seniors welcome as well as limited meals available for disabled adults."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 125,
+                    "interpretation_services": null,
+                    "long_description": "Technology access and training for seniors and young adults with disabilities",
+                    "name": "Technology access for seniors and young adults with disabilities",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 111,
+                            "note": "Black and white printer, scanner, wireless internet, and assistive technology available.  Wheelchair accessible."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Technology",
+                            "id": 5,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "All Disabilities",
+                            "id": 1017,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 109,
+                "schedule_days": [
+                    {
+                        "id": 626,
+                        "day": "Friday",
+                        "opens_at": 1130,
+                        "closes_at": 1230,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 625,
+                        "day": "Thursday",
+                        "opens_at": 1130,
+                        "closes_at": 1230,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 624,
+                        "day": "Wednesday",
+                        "opens_at": 1130,
+                        "closes_at": 1230,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 623,
+                        "day": "Tuesday",
+                        "opens_at": 1130,
+                        "closes_at": 1230,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 622,
+                        "day": "Monday",
+                        "opens_at": 1130,
+                        "closes_at": 1230,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 96,
+                    "number": "(415) 487-3300",
+                    "extension": null,
+                    "service_type": "ext. 6211",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 109,
+                "attention": null,
+                "address_1": "705 Natoma St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7763202",
+                "longitude": "-122.4123417"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Technology",
+                    "id": 5,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 106,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Fill up America",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.fillupamerica.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 122,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Friday)",
+                    "name": "Free food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 106,
+                        "schedule_days": [
+                            {
+                                "id": 609,
+                                "day": "Friday",
+                                "opens_at": 930,
+                                "closes_at": 1130,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 108,
+                            "note": "Line up Fri 9:30am to get food 10:45-11:30am. Must have ID."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 106,
+                "schedule_days": [
+                    {
+                        "id": 609,
+                        "day": "Friday",
+                        "opens_at": 930,
+                        "closes_at": 1130,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 106,
+                "attention": null,
+                "address_1": "1050 S. Van Ness Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7562963",
+                "longitude": "-122.4169362"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 100,
+            "legal_status": null,
+            "long_description": null,
+            "name": "First Friendship Institutional Baptist Church",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.ffibc.com/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 116,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Friday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 100,
+                        "schedule_days": [
+                            {
+                                "id": 579,
+                                "day": "Friday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 102,
+                            "note": "Sign up 9am Friday for appointment to pick up food Friday morning. You must live in 94115 or 94117 zip code. Bring a bag. Photo ID required."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 100,
+                "schedule_days": [
+                    {
+                        "id": 579,
+                        "day": "Friday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 89,
+                    "number": "(415) 431-4775",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 100,
+                "attention": null,
+                "address_1": "501 Steiner St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.773933",
+                "longitude": "-122.432772"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 43,
+            "legal_status": null,
+            "long_description": "Lunch Mon. Tues. Wed 11:30am - 1:30pm",
+            "name": "Fraternite Notre Dame",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 50,
+                    "interpretation_services": null,
+                    "long_description": "Serves Lunch Monday thru Wednesday",
+                    "name": "Lunch",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 43,
+                        "schedule_days": [
+                            {
+                                "id": 258,
+                                "day": "Wednesday",
+                                "opens_at": 1130,
+                                "closes_at": 1330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 257,
+                                "day": "Tuesday",
+                                "opens_at": 1130,
+                                "closes_at": 1330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 256,
+                                "day": "Monday",
+                                "opens_at": 1130,
+                                "closes_at": 1330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 43,
+                "schedule_days": [
+                    {
+                        "id": 258,
+                        "day": "Wednesday",
+                        "opens_at": 1130,
+                        "closes_at": 1330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 257,
+                        "day": "Tuesday",
+                        "opens_at": 1130,
+                        "closes_at": 1330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 256,
+                        "day": "Monday",
+                        "opens_at": 1130,
+                        "closes_at": 1330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 42,
+                    "number": "(415) 793-5686",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 43,
+                "attention": null,
+                "address_1": "54 Turk St",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7834162",
+                "longitude": "-122.410086"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 149,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "Glide Memorial Church",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://glide.org/home",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 171,
+                    "interpretation_services": null,
+                    "long_description": "Serves three free, nutritious meals a day, 364 days a year (New Years Day Closed; on many holidays a bag meal is given out after breakfast & there is no lunch or dinner serving). ",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 149,
+                        "schedule_days": [
+                            {
+                                "id": 871,
+                                "day": "Saturday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 870,
+                                "day": "Saturday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 869,
+                                "day": "Friday",
+                                "opens_at": 1600,
+                                "closes_at": 1900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 868,
+                                "day": "Friday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 867,
+                                "day": "Friday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 866,
+                                "day": "Thursday",
+                                "opens_at": 1600,
+                                "closes_at": 1900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 865,
+                                "day": "Thursday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 864,
+                                "day": "Thursday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 863,
+                                "day": "Wednesday",
+                                "opens_at": 1600,
+                                "closes_at": 1900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 862,
+                                "day": "Wednesday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 861,
+                                "day": "Wednesday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 860,
+                                "day": "Tuesday",
+                                "opens_at": 1600,
+                                "closes_at": 1900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 859,
+                                "day": "Tuesday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 858,
+                                "day": "Tuesday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 857,
+                                "day": "Monday",
+                                "opens_at": 1600,
+                                "closes_at": 1900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 856,
+                                "day": "Monday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 855,
+                                "day": "Monday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 854,
+                                "day": "Sunday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 853,
+                                "day": "Sunday",
+                                "opens_at": 730,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 153,
+                            "note": "Walk-in to 1st floor of 330 Ellis St. (at Taylor), M-F during meal service hours for first come first serve meal tickets.  Seniors over 60, breakfast is at 7:30am-8am.  Bagged meals are given away at lunchtime on weekends."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 149,
+                "schedule_days": [
+                    {
+                        "id": 871,
+                        "day": "Saturday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 870,
+                        "day": "Saturday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 869,
+                        "day": "Friday",
+                        "opens_at": 1600,
+                        "closes_at": 1900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 868,
+                        "day": "Friday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 867,
+                        "day": "Friday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 866,
+                        "day": "Thursday",
+                        "opens_at": 1600,
+                        "closes_at": 1900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 865,
+                        "day": "Thursday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 864,
+                        "day": "Thursday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 863,
+                        "day": "Wednesday",
+                        "opens_at": 1600,
+                        "closes_at": 1900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 862,
+                        "day": "Wednesday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 861,
+                        "day": "Wednesday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 860,
+                        "day": "Tuesday",
+                        "opens_at": 1600,
+                        "closes_at": 1900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 859,
+                        "day": "Tuesday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 858,
+                        "day": "Tuesday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 857,
+                        "day": "Monday",
+                        "opens_at": 1600,
+                        "closes_at": 1900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 856,
+                        "day": "Monday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 855,
+                        "day": "Monday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 854,
+                        "day": "Sunday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 853,
+                        "day": "Sunday",
+                        "opens_at": 730,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 149,
+                "attention": null,
+                "address_1": "330 Ellis St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.785151",
+                "longitude": "-122.4114983"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 76,
+            "legal_status": null,
+            "long_description": "Weekly pantry program",
+            "name": "Haight Ashbury Food Program - Food Service Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.thefoodprogram.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 90,
+                    "interpretation_services": null,
+                    "long_description": "Weekly farmers´ market-style distribution allows clients to select the foods that best meet their families´ needs. From fresh fruits and vegetables to bread and rice, each client receives much-needed, nutritious foods that are otherwise not affordable.",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 76,
+                        "schedule_days": [
+                            {
+                                "id": 442,
+                                "day": "Saturday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 79,
+                            "note": "Arrive on Saturday 12pm-2pm and fill out an intake form.  You will then be given a time slot for the future."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Anyone in Need",
+                            "id": 1001,
+                            "feature_rank": null
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 76,
+                "schedule_days": [
+                    {
+                        "id": 442,
+                        "day": "Saturday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 76,
+                "attention": null,
+                "address_1": "1525 Waller St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.768532",
+                "longitude": "-122.449086"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 200,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Jones Memorial United Methodist Church",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 226,
+                    "interpretation_services": null,
+                    "long_description": "Apply in person Sat 10am. If accepted, you’ll be mailed a card to bring with you to pick up food weekly. You must live in zip code 94102, 94109, or 94115. Photo ID required. Bring a bag. Closed Mar 14. Wheelchair accessible. ",
+                    "name": "Pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 200,
+                        "schedule_days": []
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Homeless",
+                            "id": 1054,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Low-Income",
+                            "id": 1058,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "San Francisco Residency",
+                            "id": 1072,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Families",
+                            "id": 1049,
+                            "feature_rank": 5
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 200,
+                "schedule_days": []
+            },
+            "phones": [],
+            "address": {
+                "id": 200,
+                "attention": null,
+                "address_1": "1975 POST ",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.784805",
+                "longitude": "-122.434247"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 136,
+            "legal_status": null,
+            "long_description": "Japanese style hot lunches are prepared and served at Kimochi's nutrition program.",
+            "name": "Kimochi Nutrition and Hot Meals Program & Senior Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.kimochi-inc.org/programs/ki_cn.htm",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 158,
+                    "interpretation_services": null,
+                    "long_description": "All menu items are carefully planned and prepared by a nutritionist and staff. Regular nutrition education presentations and information are provided to assist participants in maintaining their health and well being. Meals are provided on a first come first served basis. Reservations are taken for senior groups.",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 136,
+                        "schedule_days": [
+                            {
+                                "id": 788,
+                                "day": "Friday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 787,
+                                "day": "Thursday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 786,
+                                "day": "Wednesday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 785,
+                                "day": "Tuesday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 784,
+                                "day": "Monday",
+                                "opens_at": 1100,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 141,
+                            "note": "Eligibility: Individual 60 years of age or older and their spouse, regardless of age. A handicapped non-elderly person who is a member of a household with an elderly person. Successfully complete a nutrition assessment with staff.   Suggested donation of $2.\r\n"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 136,
+                "schedule_days": [
+                    {
+                        "id": 788,
+                        "day": "Friday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 787,
+                        "day": "Thursday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 786,
+                        "day": "Wednesday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 785,
+                        "day": "Tuesday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 784,
+                        "day": "Monday",
+                        "opens_at": 1100,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 136,
+                "attention": null,
+                "address_1": "1804 Sutter St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7865012",
+                "longitude": "-122.4300477"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 26,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Korean American Senior Service",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 30,
+                    "interpretation_services": null,
+                    "long_description": "Apply in person Fri 9:30- 10:30am. If accepted, you’ll be mailed a card to bring with you to pick up food every Fri. You must live in zip code 94102, 94115, 94117, or 94118. ID required. Wheelchair accessible. ",
+                    "name": "Pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 26,
+                        "schedule_days": []
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "All Ages",
+                            "id": 1002,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Low-Income",
+                            "id": 1058,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Asian",
+                            "id": 1063,
+                            "feature_rank": null
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 26,
+                "schedule_days": []
+            },
+            "phones": [
+                {
+                    "id": 24,
+                    "number": "(415) 255-9371",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 26,
+                "attention": null,
+                "address_1": "745 BUCHANAN",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7768299",
+                "longitude": "-122.428296"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 124,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "Martin De Porres House of Hospitality",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.martindeporres.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 143,
+                    "interpretation_services": null,
+                    "long_description": "Dinning room serving at least one meal a day.Breakfast M,Tu, Th, Fr 5:30am-7:30am; Lunch Tue-Sat 12-2pm. Brunch Sun 9am - 10:30am",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 124,
+                        "schedule_days": [
+                            {
+                                "id": 717,
+                                "day": "Saturday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 716,
+                                "day": "Friday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 715,
+                                "day": "Friday",
+                                "opens_at": 530,
+                                "closes_at": 730,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 714,
+                                "day": "Thursday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 713,
+                                "day": "Thursday",
+                                "opens_at": 530,
+                                "closes_at": 730,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 712,
+                                "day": "Wednesday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 711,
+                                "day": "Tuesday",
+                                "opens_at": 1200,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 710,
+                                "day": "Tuesday",
+                                "opens_at": 530,
+                                "closes_at": 730,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 709,
+                                "day": "Monday",
+                                "opens_at": 530,
+                                "closes_at": 730,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 708,
+                                "day": "Sunday",
+                                "opens_at": 900,
+                                "closes_at": 1030,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 127,
+                            "note": "Doors open 1 hour before service"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 142,
+                    "interpretation_services": null,
+                    "long_description": "A place to shower on Tuesday through Saturday.",
+                    "name": "Showers",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 126,
+                            "note": "Hygiene products distriubuted Tuesday and Thursday from 6:30am-7:30am at breakfast. Towels for showers are provided. Limited showers."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Hygiene",
+                            "id": 4,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 141,
+                    "interpretation_services": null,
+                    "long_description": "Medical van on premises. Nurse available for minor medical problems. ",
+                    "name": "Medical van",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 125,
+                            "note": "Spanish/English"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Medical",
+                            "id": 3,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 124,
+                "schedule_days": [
+                    {
+                        "id": 717,
+                        "day": "Saturday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 716,
+                        "day": "Friday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 715,
+                        "day": "Friday",
+                        "opens_at": 530,
+                        "closes_at": 730,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 714,
+                        "day": "Thursday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 713,
+                        "day": "Thursday",
+                        "opens_at": 530,
+                        "closes_at": 730,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 712,
+                        "day": "Wednesday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 711,
+                        "day": "Tuesday",
+                        "opens_at": 1200,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 710,
+                        "day": "Tuesday",
+                        "opens_at": 530,
+                        "closes_at": 730,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 709,
+                        "day": "Monday",
+                        "opens_at": 530,
+                        "closes_at": 730,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 708,
+                        "day": "Sunday",
+                        "opens_at": 900,
+                        "closes_at": 1030,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 108,
+                    "number": "(415) 552-0240",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 124,
+                "attention": null,
+                "address_1": "225 Potrero Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7666742",
+                "longitude": "-122.4073561"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Medical",
+                    "id": 3,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Hygiene",
+                    "id": 4,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 62,
+            "legal_status": null,
+            "long_description": "Women's food services",
+            "name": "Mary Elizabeth Inn",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.meinn.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 73,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Wednesday). Low-income women only.",
+                    "name": "Free food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 62,
+                        "schedule_days": [
+                            {
+                                "id": 374,
+                                "day": "Wednesday",
+                                "opens_at": 900,
+                                "closes_at": 1000,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 63,
+                            "note": "Line up 9am Wed; food given out 9-10am; bring a bag."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 62,
+                "schedule_days": [
+                    {
+                        "id": 374,
+                        "day": "Wednesday",
+                        "opens_at": 900,
+                        "closes_at": 1000,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 62,
+                "attention": null,
+                "address_1": "1040 Bush St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.789722",
+                "longitude": "-122.414488"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 68,
+            "legal_status": null,
+            "long_description": "Senior meal delivery service",
+            "name": "Meals on Wheels of San Francisco, Inc.",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.mowsf.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 79,
+                    "interpretation_services": null,
+                    "long_description": "Lunch and dinner meal delivery (M-F) for home-bound seniors over 60 who live in San Francisco.  Diabetic, low sodium, and mechanically softened meal plans are available for clients with special nutritional needs. ",
+                    "name": "Meal delivery service",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 68,
+                        "schedule_days": [
+                            {
+                                "id": 405,
+                                "day": "Friday",
+                                "opens_at": 830,
+                                "closes_at": 1630,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 404,
+                                "day": "Thursday",
+                                "opens_at": 830,
+                                "closes_at": 1630,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 403,
+                                "day": "Wednesday",
+                                "opens_at": 830,
+                                "closes_at": 1630,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 402,
+                                "day": "Tuesday",
+                                "opens_at": 830,
+                                "closes_at": 1630,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 401,
+                                "day": "Monday",
+                                "opens_at": 830,
+                                "closes_at": 1630,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 69,
+                            "note": " A $5/day contribution is requested, however no one is denied meal delivery service if they are unable to contribute financially."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "All Disabilities",
+                            "id": 1017,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Low-Income",
+                            "id": 1058,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Seniors (55+ years old)",
+                            "id": 1008,
+                            "feature_rank": 1
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 68,
+                "schedule_days": [
+                    {
+                        "id": 405,
+                        "day": "Friday",
+                        "opens_at": 830,
+                        "closes_at": 1630,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 404,
+                        "day": "Thursday",
+                        "opens_at": 830,
+                        "closes_at": 1630,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 403,
+                        "day": "Wednesday",
+                        "opens_at": 830,
+                        "closes_at": 1630,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 402,
+                        "day": "Tuesday",
+                        "opens_at": 830,
+                        "closes_at": 1630,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 401,
+                        "day": "Monday",
+                        "opens_at": 830,
+                        "closes_at": 1630,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 68,
+                "attention": null,
+                "address_1": "1375 Fairfax Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7393897",
+                "longitude": "-122.3842768"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 53,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "Mission Neighborhood Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.mncsf.org",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 64,
+                    "interpretation_services": null,
+                    "long_description": "Open lab and trainings for seniors 60+ and disabled 55+.",
+                    "name": "Technology access and training for seniors",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 53,
+                        "schedule_days": [
+                            {
+                                "id": 319,
+                                "day": "Friday",
+                                "opens_at": 900,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 318,
+                                "day": "Thursday",
+                                "opens_at": 900,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 317,
+                                "day": "Wednesday",
+                                "opens_at": 900,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 316,
+                                "day": "Tuesday",
+                                "opens_at": 900,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 315,
+                                "day": "Monday",
+                                "opens_at": 900,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 54,
+                            "note": "Registration required for new guests - takes 10 minutes. Black and white printer, scanner, wireless internet, and assistive technology available.  Wheelchair accessible. "
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Technology",
+                            "id": 5,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 63,
+                    "interpretation_services": null,
+                    "long_description": "Hot meal for seniors over 60, their caretakers, or spouses.",
+                    "name": "Hot meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 53,
+                            "note": "Nutritionally balanced meal in a home-like atmosphere for up to 90 seniors a day."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 53,
+                "schedule_days": [
+                    {
+                        "id": 319,
+                        "day": "Friday",
+                        "opens_at": 900,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 318,
+                        "day": "Thursday",
+                        "opens_at": 900,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 317,
+                        "day": "Wednesday",
+                        "opens_at": 900,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 316,
+                        "day": "Tuesday",
+                        "opens_at": 900,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 315,
+                        "day": "Monday",
+                        "opens_at": 900,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 52,
+                    "number": "(415) 206-7752",
+                    "extension": null,
+                    "service_type": "EXT 2900",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 53,
+                "attention": null,
+                "address_1": "362 Capp St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7609564",
+                "longitude": "-122.4183264"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Technology",
+                    "id": 5,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 208,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Our Lady of Lourdes",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 234,
+                    "interpretation_services": null,
+                    "long_description": "Pantry",
+                    "name": "",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 208,
+                        "schedule_days": [
+                            {
+                                "id": 1223,
+                                "day": "Saturday",
+                                "opens_at": 830,
+                                "closes_at": 930,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 215,
+                            "note": "Apply on Saturdays 8:30am-9:30am except for 1st sat of the month. If accepted, a card will be mailed to you that you will bring along with ID and proof of residence in 94124 zip code. Bring your bag"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 208,
+                "schedule_days": [
+                    {
+                        "id": 1223,
+                        "day": "Saturday",
+                        "opens_at": 830,
+                        "closes_at": 930,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 200,
+                    "number": "(415) 235-7634",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 208,
+                "attention": null,
+                "address_1": "410 Hawes",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7336387",
+                "longitude": "-122.3771152"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 156,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Project Open Hand",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.openhand.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 178,
+                    "interpretation_services": null,
+                    "long_description": "Meals, groceries and nutrition education for people living with serious illnesses, including cancer, diabetes, heart disease, HIV/AIDS.",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 156,
+                        "schedule_days": [
+                            {
+                                "id": 919,
+                                "day": "Saturday",
+                                "opens_at": 1100,
+                                "closes_at": 1600,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 918,
+                                "day": "Friday",
+                                "opens_at": 1100,
+                                "closes_at": 1600,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 917,
+                                "day": "Thursday",
+                                "opens_at": 1100,
+                                "closes_at": 1600,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 916,
+                                "day": "Wednesday",
+                                "opens_at": 1100,
+                                "closes_at": 1600,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 915,
+                                "day": "Tuesday",
+                                "opens_at": 900,
+                                "closes_at": 1600,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 160,
+                            "note": "People with symptomatic, critical illnesses.  Call M-Sa 9am-4pm for interview appt. If accepted, you can pick up your foodTues 9am-4pm, Wed-Sat 11am-4pm. Proof of diagnosis, SF residency, and photo ID required."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 156,
+                "schedule_days": [
+                    {
+                        "id": 919,
+                        "day": "Saturday",
+                        "opens_at": 1100,
+                        "closes_at": 1600,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 918,
+                        "day": "Friday",
+                        "opens_at": 1100,
+                        "closes_at": 1600,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 917,
+                        "day": "Thursday",
+                        "opens_at": 1100,
+                        "closes_at": 1600,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 916,
+                        "day": "Wednesday",
+                        "opens_at": 1100,
+                        "closes_at": 1600,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 915,
+                        "day": "Tuesday",
+                        "opens_at": 900,
+                        "closes_at": 1600,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 140,
+                    "number": "(800) 551-6325",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 156,
+                "attention": null,
+                "address_1": "730 Polk St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7837216",
+                "longitude": "-122.4191438"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 167,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Providence Foundation of SF",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.providencefoundationsf.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 190,
+                    "interpretation_services": null,
+                    "long_description": "Hot lunch every Wednsday.",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 167,
+                        "schedule_days": [
+                            {
+                                "id": 973,
+                                "day": "Wednesday",
+                                "opens_at": 1245,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 172,
+                            "note": "Optional Bible study before a lunch."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 167,
+                "schedule_days": [
+                    {
+                        "id": 973,
+                        "day": "Wednesday",
+                        "opens_at": 1245,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 167,
+                "attention": null,
+                "address_1": "1601 McKinnon Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.735808",
+                "longitude": "-122.389619"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 130,
+            "legal_status": null,
+            "long_description": null,
+            "name": "SF Public Library - Sunset Branch",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://sfpl.org",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 150,
+                    "interpretation_services": null,
+                    "long_description": "Local branches have Internet access with varying policies. Computer use at branches is limited to 1 hour per session; 2 hours per day.",
+                    "name": "Technology access",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 130,
+                        "schedule_days": [
+                            {
+                                "id": 758,
+                                "day": "Saturday",
+                                "opens_at": 1000,
+                                "closes_at": 1800,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 757,
+                                "day": "Friday",
+                                "opens_at": 1300,
+                                "closes_at": 1800,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 756,
+                                "day": "Thursday",
+                                "opens_at": 1000,
+                                "closes_at": 1800,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 755,
+                                "day": "Wednesday",
+                                "opens_at": 1000,
+                                "closes_at": 2100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 754,
+                                "day": "Tuesday",
+                                "opens_at": 1000,
+                                "closes_at": 2100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 753,
+                                "day": "Monday",
+                                "opens_at": 1300,
+                                "closes_at": 2100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 752,
+                                "day": "Sunday",
+                                "opens_at": 1300,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 133,
+                            "note": "You must have a SF library card for computer use. WELCOME cards, for those who have no ID, are also provided - allows computer usage plus check out one book at a time.  Guests are limited to two hours of computer use per day. Black and White printing is 10 cents per page, Color printing is 40 cents per page."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 130,
+                "schedule_days": [
+                    {
+                        "id": 758,
+                        "day": "Saturday",
+                        "opens_at": 1000,
+                        "closes_at": 1800,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 757,
+                        "day": "Friday",
+                        "opens_at": 1300,
+                        "closes_at": 1800,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 756,
+                        "day": "Thursday",
+                        "opens_at": 1000,
+                        "closes_at": 1800,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 755,
+                        "day": "Wednesday",
+                        "opens_at": 1000,
+                        "closes_at": 2100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 754,
+                        "day": "Tuesday",
+                        "opens_at": 1000,
+                        "closes_at": 2100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 753,
+                        "day": "Monday",
+                        "opens_at": 1300,
+                        "closes_at": 2100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 752,
+                        "day": "Sunday",
+                        "opens_at": 1300,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 116,
+                    "number": "(415) 355-2808",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 130,
+                "attention": null,
+                "address_1": "1305 18th Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7633632",
+                "longitude": "-122.4762819"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 209,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Salvation Army Chinatown",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://salvationarmysfctc.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 235,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Friday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 209,
+                        "schedule_days": [
+                            {
+                                "id": 1224,
+                                "day": "Friday",
+                                "opens_at": 1430,
+                                "closes_at": 1530,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 216,
+                            "note": "Call MWF 9am-4pm for interview appt. If accepted, get food Fri 3pm. If not signed up, come Fri 2:30pm to see if there’s extra food. Must live in 94108, 94109, 94111, 94123, 94129, 94130, 94133, or 94158 zip code. English, Cantonese, Mandarin."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 209,
+                "schedule_days": [
+                    {
+                        "id": 1224,
+                        "day": "Friday",
+                        "opens_at": 1430,
+                        "closes_at": 1530,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 209,
+                "attention": null,
+                "address_1": "1450 Powell St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7980501",
+                "longitude": "-122.4100318"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 97,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Salvation Army, Mission",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.salvationarmyusa.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 113,
+                    "interpretation_services": null,
+                    "long_description": "Food pantry. Call for interview M–Th 9am-12pm.",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 97,
+                        "schedule_days": [
+                            {
+                                "id": 572,
+                                "day": "Friday",
+                                "opens_at": 900,
+                                "closes_at": 1100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 571,
+                                "day": "Thursday",
+                                "opens_at": 900,
+                                "closes_at": 1100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 570,
+                                "day": "Wednesday",
+                                "opens_at": 900,
+                                "closes_at": 1100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 569,
+                                "day": "Tuesday",
+                                "opens_at": 900,
+                                "closes_at": 1100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 568,
+                                "day": "Monday",
+                                "opens_at": 900,
+                                "closes_at": 1100,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 99,
+                            "note": " Must live in 94107, 94110, 94112, 94114, or 94131 zip code. English, Spanish. Must have ID."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 97,
+                "schedule_days": [
+                    {
+                        "id": 572,
+                        "day": "Friday",
+                        "opens_at": 900,
+                        "closes_at": 1100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 571,
+                        "day": "Thursday",
+                        "opens_at": 900,
+                        "closes_at": 1100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 570,
+                        "day": "Wednesday",
+                        "opens_at": 900,
+                        "closes_at": 1100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 569,
+                        "day": "Tuesday",
+                        "opens_at": 900,
+                        "closes_at": 1100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 568,
+                        "day": "Monday",
+                        "opens_at": 900,
+                        "closes_at": 1100,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 86,
+                    "number": "(415) 648-0260",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 97,
+                "attention": null,
+                "address_1": "1156 Valencia St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.754375",
+                "longitude": "-122.421193"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 89,
+            "legal_status": null,
+            "long_description": null,
+            "name": "San Francisco City Mission: S.F. Rescue Mission",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://sfcityimpact.com/rescue-mission/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 105,
+                    "interpretation_services": null,
+                    "long_description": "Breakfast and Dinner Monday through Friday.\r\n",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 89,
+                        "schedule_days": [
+                            {
+                                "id": 522,
+                                "day": "Friday",
+                                "opens_at": 1545,
+                                "closes_at": 1615,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 521,
+                                "day": "Friday",
+                                "opens_at": 1030,
+                                "closes_at": 1045,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 520,
+                                "day": "Thursday",
+                                "opens_at": 1545,
+                                "closes_at": 1615,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 519,
+                                "day": "Thursday",
+                                "opens_at": 1030,
+                                "closes_at": 1045,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 518,
+                                "day": "Wednesday",
+                                "opens_at": 1545,
+                                "closes_at": 1615,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 517,
+                                "day": "Wednesday",
+                                "opens_at": 1030,
+                                "closes_at": 1045,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 516,
+                                "day": "Tuesday",
+                                "opens_at": 1545,
+                                "closes_at": 1615,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 515,
+                                "day": "Tuesday",
+                                "opens_at": 1030,
+                                "closes_at": 1045,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 514,
+                                "day": "Monday",
+                                "opens_at": 1545,
+                                "closes_at": 1615,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 513,
+                                "day": "Monday",
+                                "opens_at": 1030,
+                                "closes_at": 1045,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 92,
+                            "note": "Light breakfast and full dinner. Mandatory church service at 4pm for dinner."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 89,
+                "schedule_days": [
+                    {
+                        "id": 522,
+                        "day": "Friday",
+                        "opens_at": 1545,
+                        "closes_at": 1615,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 521,
+                        "day": "Friday",
+                        "opens_at": 1030,
+                        "closes_at": 1045,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 520,
+                        "day": "Thursday",
+                        "opens_at": 1545,
+                        "closes_at": 1615,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 519,
+                        "day": "Thursday",
+                        "opens_at": 1030,
+                        "closes_at": 1045,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 518,
+                        "day": "Wednesday",
+                        "opens_at": 1545,
+                        "closes_at": 1615,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 517,
+                        "day": "Wednesday",
+                        "opens_at": 1030,
+                        "closes_at": 1045,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 516,
+                        "day": "Tuesday",
+                        "opens_at": 1545,
+                        "closes_at": 1615,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 515,
+                        "day": "Tuesday",
+                        "opens_at": 1030,
+                        "closes_at": 1045,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 514,
+                        "day": "Monday",
+                        "opens_at": 1545,
+                        "closes_at": 1615,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 513,
+                        "day": "Monday",
+                        "opens_at": 1030,
+                        "closes_at": 1045,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 89,
+                "attention": null,
+                "address_1": "140 Turk St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.783401",
+                "longitude": "-122.411551"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 57,
+            "legal_status": null,
+            "long_description": null,
+            "name": "St. Aidan's",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.saintaidan.org/food_pantry.htm",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 68,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Friday).",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 57,
+                        "schedule_days": [
+                            {
+                                "id": 341,
+                                "day": "Friday",
+                                "opens_at": 1300,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 58,
+                            "note": "Apply in person Fri. 1-2pm.  If accepted, you will be mailed a card which you must bring with you to pick up food every Fri. Must live in 94131 zip code. ID required"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 57,
+                "schedule_days": [
+                    {
+                        "id": 341,
+                        "day": "Friday",
+                        "opens_at": 1300,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 57,
+                "attention": null,
+                "address_1": "101 Goldmine Dr.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7432601",
+                "longitude": "-122.4376472"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 20,
+            "legal_status": null,
+            "long_description": null,
+            "name": "St. Andrew Missionary Baptist Church",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 23,
+                    "interpretation_services": null,
+                    "long_description": "Apply Wed 10:15am. If accepted, you’ll get a card in the mail to bring with you to pick up food weekly. You must live in zip code 94115 or 94117. ID required. Wheelchair accessible. ",
+                    "name": "Pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 20,
+                        "schedule_days": []
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Anyone in Need",
+                            "id": 1001,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "San Francisco Residency",
+                            "id": 1072,
+                            "feature_rank": null
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 20,
+                "schedule_days": []
+            },
+            "phones": [],
+            "address": {
+                "id": 20,
+                "attention": null,
+                "address_1": "2565 POST",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.783488",
+                "longitude": "-122.443948"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 12,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "St. Anthony Foundation Dining Room",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.stanthonysf.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 15,
+                    "interpretation_services": null,
+                    "long_description": "Dinning room that serves lunch everyday. All entrees served with fruit, vegetables, bread, beverage, and dessert",
+                    "name": "Lunch",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 12,
+                        "schedule_days": [
+                            {
+                                "id": 89,
+                                "day": "Saturday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 88,
+                                "day": "Friday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 87,
+                                "day": "Thursday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 86,
+                                "day": "Wednesday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 85,
+                                "day": "Tuesday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 84,
+                                "day": "Monday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 83,
+                                "day": "Sunday",
+                                "opens_at": 1000,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 13,
+                            "note": "Serves one hot meal a day.  Anyone willing to stand in line will be served.  Can return to line for more servings.  Separate dining section for families with children.  Families and seniors are served up to two trays at the table, without returning to the line.  Wheelchair accessible. Families & folks age 60+ or unable to carry a tray: 10-11:30am.  All others: 11:30am-1:30pm. When you arrive you will be given a number for a meal."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 12,
+                "schedule_days": [
+                    {
+                        "id": 89,
+                        "day": "Saturday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 88,
+                        "day": "Friday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 87,
+                        "day": "Thursday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 86,
+                        "day": "Wednesday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 85,
+                        "day": "Tuesday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 84,
+                        "day": "Monday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 83,
+                        "day": "Sunday",
+                        "opens_at": 1000,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 10,
+                    "number": "(415) 241-2690",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 12,
+                "attention": null,
+                "address_1": "121 Golden Gate Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7820559",
+                "longitude": "-122.4125895"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 51,
+            "legal_status": null,
+            "long_description": null,
+            "name": "St. Paul Tabernacle Baptist",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 60,
+                    "interpretation_services": null,
+                    "long_description": "Apply in person on Fri. 11:30am - 1:00pm. If accepted you will be mailed a card which you bring with you to pick up food every Fri. You must live in the 94124 Zip code",
+                    "name": "Pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 51,
+                        "schedule_days": [
+                            {
+                                "id": 303,
+                                "day": "Friday",
+                                "opens_at": 1130,
+                                "closes_at": 1300,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 51,
+                "schedule_days": [
+                    {
+                        "id": 303,
+                        "day": "Friday",
+                        "opens_at": 1130,
+                        "closes_at": 1300,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 50,
+                    "number": "(415) 642-4965",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 51,
+                "attention": null,
+                "address_1": "1789 Oakdale",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.73637",
+                "longitude": "-122.393996"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 92,
+            "legal_status": null,
+            "long_description": null,
+            "name": "St. Peter & Paul Catholic Church",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.sspeterpaulsf.org/church/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 108,
+                    "interpretation_services": null,
+                    "long_description": "Sandwich offered everyday.",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 92,
+                        "schedule_days": [
+                            {
+                                "id": 544,
+                                "day": "Saturday",
+                                "opens_at": 1600,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 543,
+                                "day": "Friday",
+                                "opens_at": 1800,
+                                "closes_at": 1830,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 542,
+                                "day": "Thursday",
+                                "opens_at": 1800,
+                                "closes_at": 1830,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 541,
+                                "day": "Wednesday",
+                                "opens_at": 1800,
+                                "closes_at": 1830,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 540,
+                                "day": "Tuesday",
+                                "opens_at": 1800,
+                                "closes_at": 1830,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 539,
+                                "day": "Monday",
+                                "opens_at": 1800,
+                                "closes_at": 1830,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 538,
+                                "day": "Sunday",
+                                "opens_at": 1600,
+                                "closes_at": 1700,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 92,
+                "schedule_days": [
+                    {
+                        "id": 544,
+                        "day": "Saturday",
+                        "opens_at": 1600,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 543,
+                        "day": "Friday",
+                        "opens_at": 1800,
+                        "closes_at": 1830,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 542,
+                        "day": "Thursday",
+                        "opens_at": 1800,
+                        "closes_at": 1830,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 541,
+                        "day": "Wednesday",
+                        "opens_at": 1800,
+                        "closes_at": 1830,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 540,
+                        "day": "Tuesday",
+                        "opens_at": 1800,
+                        "closes_at": 1830,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 539,
+                        "day": "Monday",
+                        "opens_at": 1800,
+                        "closes_at": 1830,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 538,
+                        "day": "Sunday",
+                        "opens_at": 1600,
+                        "closes_at": 1700,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 92,
+                "attention": null,
+                "address_1": "666 Filbert St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.8014107",
+                "longitude": "-122.4105065"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 127,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Supplemental Food Program",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 146,
+                    "interpretation_services": null,
+                    "long_description": "Any SF resident can get a referral to a food pantry in their zip code. Low-income SF seniors age 60+ can call 415-282-1900 ext. 370 to get on a 2-6 month waiting list for a monthly 35-lb box of dry & canned goods (must provide proof of age & income). Wheelchair accessible.",
+                    "name": "",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 127,
+                        "schedule_days": []
+                    },
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 127,
+                "schedule_days": []
+            },
+            "phones": [
+                {
+                    "id": 111,
+                    "number": "211",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                },
+                {
+                    "id": 112,
+                    "number": "(800) 273-6222",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                },
+                {
+                    "id": 113,
+                    "number": "(415) 282-1900",
+                    "extension": null,
+                    "service_type": " ext. 370 (for seniors age 60+)",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 127,
+                "attention": null,
+                "address_1": "San Francisco",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7749295",
+                "longitude": "-122.4194155"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 3,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Temple United Methodist Church",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.templeunitedmethodist.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 3,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Wednesday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 3,
+                        "schedule_days": [
+                            {
+                                "id": 13,
+                                "day": "Wednesday",
+                                "opens_at": 1600,
+                                "closes_at": 1900,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 2,
+                            "note": "Apply in person Wed 4-7pm.  If accepted, you will be mailed card which you must bring with you to pick up food every Wed.  You must live in zip code 94112, 94116, 94127, or 94132. Must bring ID."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 3,
+                "schedule_days": [
+                    {
+                        "id": 13,
+                        "day": "Wednesday",
+                        "opens_at": 1600,
+                        "closes_at": 1900,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 3,
+                "attention": null,
+                "address_1": "65 Beverly St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7172859",
+                "longitude": "-122.471641"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 23,
+            "legal_status": null,
+            "long_description": "The Self Help Center drop-in is a place where people can safely tend to their primary needs– escaping the cold, resting free of traffic, noise, or harassment, or just using the restroom. Beyond that, it is a meeting ground where homeless people can socialize comfortably, re-discovering the human experience that is often suppressed during daily survival on the streets. Groceries are distributed weekly to homeless people and residents of the Tenderloin district. ",
+            "name": "Tenderloin Self Help Center - Central City Hospitality House",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.hospitalityhouse.org",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 27,
+                    "interpretation_services": null,
+                    "long_description": "Free weekly food pantry.",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 23,
+                        "schedule_days": [
+                            {
+                                "id": 143,
+                                "day": "Wednesday",
+                                "opens_at": 1315,
+                                "closes_at": 1400,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 23,
+                            "note": "First-come, first-served basis. Wheelchair accessible."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 26,
+                    "interpretation_services": null,
+                    "long_description": "Toilets available when open.",
+                    "name": "Toilets",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 22,
+                            "note": "Restrooms available.  "
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Hygiene",
+                            "id": 4,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 23,
+                "schedule_days": [
+                    {
+                        "id": 143,
+                        "day": "Wednesday",
+                        "opens_at": 1315,
+                        "closes_at": 1400,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 22,
+                    "number": "(415) 749-2100",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 23,
+                "attention": null,
+                "address_1": "290 Turk St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7829867",
+                "longitude": "-122.4138241"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Hygiene",
+                    "id": 4,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 98,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Treasure Island Homeless Development Initiative",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.tihdi.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 114,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Tuesday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 98,
+                        "schedule_days": [
+                            {
+                                "id": 573,
+                                "day": "Tuesday",
+                                "opens_at": 1500,
+                                "closes_at": 1630,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 100,
+                            "note": "For Treasure Island residents only. Must have ID and lease. Apply on Tuesday's at 3:00 pm"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Anyone in Need",
+                            "id": 1001,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "All Ages",
+                            "id": 1002,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "All Disabilities",
+                            "id": 1017,
+                            "feature_rank": null
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 98,
+                "schedule_days": [
+                    {
+                        "id": 573,
+                        "day": "Tuesday",
+                        "opens_at": 1500,
+                        "closes_at": 1630,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 87,
+                    "number": "(415) 274-0311",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 98,
+                "attention": null,
+                "address_1": "850 Avenue I ",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.8273248",
+                "longitude": "-122.3686906"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 73,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "United Council of Human Services - Jennings",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.uchsmotherbrowns.org/index.html",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 87,
+                    "interpretation_services": null,
+                    "long_description": "A place to shower and do laundry. Open daily.",
+                    "name": "Showers and laundry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 73,
+                        "schedule_days": [
+                            {
+                                "id": 434,
+                                "day": "Saturday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 433,
+                                "day": "Friday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 432,
+                                "day": "Thursday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 431,
+                                "day": "Wednesday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 430,
+                                "day": "Tuesday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 429,
+                                "day": "Monday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            },
+                            {
+                                "id": 428,
+                                "day": "Sunday",
+                                "opens_at": 1930,
+                                "closes_at": 2330,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 76,
+                            "note": "Towels, soap, and shampoo are provided. Laundry cycle costs are .25 per cycle."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Hygiene",
+                            "id": 4,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 86,
+                    "interpretation_services": null,
+                    "long_description": "Hot breakfast. Hot dinner.",
+                    "name": "Free meal",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 73,
+                "schedule_days": [
+                    {
+                        "id": 434,
+                        "day": "Saturday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 433,
+                        "day": "Friday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 432,
+                        "day": "Thursday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 431,
+                        "day": "Wednesday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 430,
+                        "day": "Tuesday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 429,
+                        "day": "Monday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    },
+                    {
+                        "id": 428,
+                        "day": "Sunday",
+                        "opens_at": 1930,
+                        "closes_at": 2330,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 68,
+                    "number": "(415) 671-1100",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 73,
+                "attention": null,
+                "address_1": "2111 Jennings St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7268119",
+                "longitude": "-122.3886269"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Hygiene",
+                    "id": 4,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 80,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "United Council of Human Services - Oakdale",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.uchsmotherbrowns.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 94,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Wednesday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 80,
+                        "schedule_days": [
+                            {
+                                "id": 457,
+                                "day": "Wednesday",
+                                "opens_at": 800,
+                                "closes_at": 930,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 83,
+                            "note": "Apply in person Wed 8am.  If accepted you will be mailed a card which you must bring with you to pick up food every Wed morning.  You must live in zip code 94124.  ID required."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 80,
+                "schedule_days": [
+                    {
+                        "id": 457,
+                        "day": "Wednesday",
+                        "opens_at": 800,
+                        "closes_at": 930,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 80,
+                "attention": null,
+                "address_1": "1065 Oakdale Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7288826",
+                "longitude": "-122.3803392"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 159,
+            "legal_status": null,
+            "long_description": "Multi-service center",
+            "name": "Women's Building",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.womensbuilding.org/twb/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 182,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Monday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 159,
+                        "schedule_days": [
+                            {
+                                "id": 932,
+                                "day": "Monday",
+                                "opens_at": 1100,
+                                "closes_at": 1200,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 164,
+                            "note": "For immigrant SF residents only. If not signed up, come Mon 11am to see if there is extra and to get on the waiting list. Bring a bag. English, Cantonese, Spanish."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                },
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 181,
+                    "interpretation_services": null,
+                    "long_description": "Technology access",
+                    "name": "Community Technology Lab",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": null,
+                    "notes": [
+                        {
+                            "id": 163,
+                            "note": "Free and open access to computers and Internet, a printer, and copy machine (10c donation per page).  Computer training. Job search assistance."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Technology",
+                            "id": 5,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 159,
+                "schedule_days": [
+                    {
+                        "id": 932,
+                        "day": "Monday",
+                        "opens_at": 1100,
+                        "closes_at": 1200,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 144,
+                    "number": "(415) 431-1180",
+                    "extension": "11",
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 159,
+                "attention": null,
+                "address_1": "18th St. ",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7620384",
+                "longitude": "-122.41611"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Technology",
+                    "id": 5,
+                    "top_level": true,
+                    "featured": false
+                },
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 75,
+            "legal_status": null,
+            "long_description": null,
+            "name": "YMCA: OMI Family Resource Center",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.ymcasf.org/urban/programs/omi_family_resource_center",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 89,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Tuesday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 75,
+                        "schedule_days": [
+                            {
+                                "id": 441,
+                                "day": "Tuesday",
+                                "opens_at": 1000,
+                                "closes_at": 1200,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 78,
+                            "note": "Apply Tuesday 10am-12pm for weekly appointment to pick up food Tuesday 11am-noon. If accepted, you will be mailed a card which you must bring to pick up food. Must live in 94112, 94116, or 94132 zip code. Must bring photo ID and proof of residency."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": []
+                }
+            ],
+            "schedule": {
+                "id": 75,
+                "schedule_days": [
+                    {
+                        "id": 441,
+                        "day": "Tuesday",
+                        "opens_at": 1000,
+                        "closes_at": 1200,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [],
+            "address": {
+                "id": 75,
+                "attention": null,
+                "address_1": "650 Capitol Ave.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7157091",
+                "longitude": "-122.4588934"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        },
+        {
+            "alternate_name": null,
+            "certified": false,
+            "email": null,
+            "id": 82,
+            "legal_status": null,
+            "long_description": null,
+            "name": "Youth With A Mission",
+            "short_description": null,
+            "status": "approved",
+            "verified_at": null,
+            "website": "http://www.ywamsanfrancisco.org/",
+            "certified_at": null,
+            "services": [
+                {
+                    "alternate_name": null,
+                    "application_process": null,
+                    "certified": false,
+                    "eligibility": null,
+                    "email": null,
+                    "fee": null,
+                    "id": 96,
+                    "interpretation_services": null,
+                    "long_description": "Weekly food pantry (Thursday)",
+                    "name": "Food pantry",
+                    "required_documents": null,
+                    "url": null,
+                    "verified_at": null,
+                    "wait_time": null,
+                    "certified_at": null,
+                    "schedule": {
+                        "id": 82,
+                        "schedule_days": [
+                            {
+                                "id": 468,
+                                "day": "Thursday",
+                                "opens_at": 1330,
+                                "closes_at": 1430,
+                                "open_time": null,
+                                "open_day": null,
+                                "close_time": null,
+                                "close_day": null
+                            }
+                        ]
+                    },
+                    "notes": [
+                        {
+                            "id": 85,
+                            "note": "Apply in person Thurs 1:30pm.  If accepted, you will be mailed a card which you must bring with you to pick up food.  You must live in zip code 94102 and bring an ID."
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Food",
+                            "id": 2,
+                            "top_level": true,
+                            "featured": false
+                        }
+                    ],
+                    "eligibilities": [
+                        {
+                            "name": "Homeless",
+                            "id": 1054,
+                            "feature_rank": null
+                        },
+                        {
+                            "name": "Low-Income",
+                            "id": 1058,
+                            "feature_rank": null
+                        }
+                    ]
+                }
+            ],
+            "schedule": {
+                "id": 82,
+                "schedule_days": [
+                    {
+                        "id": 468,
+                        "day": "Thursday",
+                        "opens_at": 1330,
+                        "closes_at": 1430,
+                        "open_time": null,
+                        "open_day": null,
+                        "close_time": null,
+                        "close_day": null
+                    }
+                ]
+            },
+            "phones": [
+                {
+                    "id": 74,
+                    "number": "(415) 885-6543",
+                    "extension": null,
+                    "service_type": "",
+                    "country_code": "US"
+                }
+            ],
+            "address": {
+                "id": 82,
+                "attention": null,
+                "address_1": "357 Ellis St.",
+                "address_2": null,
+                "address_3": null,
+                "address_4": null,
+                "city": "San Francisco",
+                "state_province": "CA",
+                "postal_code": "",
+                "country": "USA",
+                "latitude": "37.7847575",
+                "longitude": "-122.4121144"
+            },
+            "notes": [],
+            "categories": [
+                {
+                    "name": "Food",
+                    "id": 2,
+                    "top_level": true,
+                    "featured": false
+                }
+            ],
+            "ratings": []
+        }
+    ]
+}
