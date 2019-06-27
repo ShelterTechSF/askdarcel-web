@@ -2,38 +2,7 @@
 // HELPERS
 
 @import '_mixins';
-
-////////////////////////////////////////////////////////////////////////////////////////
-// COLORS
-
-$color-brand: #276ce5;
-$color-brand-dark: #0856AD;
-$color-brand-light: #b3d4fc;
-$color-brand-verylight: #F1F5FA;
-
-$color-green: #01C270;
-$color-green-yellow: #AECA0D;
-$color-orange: #F3AE00;
-$color-red: #E34646;
-
-$color-status-red: #C4243A;
-$color-status-green: #5BBA81;
-$color-status-amber: #FFB646;
-
-$color-white: #fff;
-$color-grey1: #f9f9f9;
-$color-grey2: #f3f5f7;
-$color-grey3: #f4f4f4;
-$color-grey4: #cecece;
-$color-grey5: #888;
-$color-grey6: #666;
-$color-grey7: #484848;
-$color-grey8: #30383A;
-$color-grey9: #242C2E;
-
-$color-title: $color-grey9;
-$color-textfade: $color-grey6;
-$color-btn-primary: $color-brand;
+@import '_colors';
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // LAYOUT
