@@ -620,17 +620,26 @@ class OrganizationEditPage extends React.Component {
 
   handleDeactivation(type, id) {
     const { router } = this.props;
+    let confirmMessage = null;
+    let path = null;
+    if (type === 'resource') {
+      confirmMessage = 'Are you sure you want to deactive this resource?';
+      path = `/api/resources/${id}`;
+    } else if (type === 'service') {
+      confirmMessage = 'Are you sure you want to remove this service?';
+      path = `/api/services/${id}`;
+    }
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Are you sure you want to deactive this resource?') === true) {
-      let path = null;
-      if (type === 'resource') {
-        path = `/api/resources/${id}`;
-      } else if (type === 'service') {
-        path = `/api/services/${id}`;
-      }
-      dataService.APIDelete(path, { change_request: { status: '2' } })
+    if (confirm(confirmMessage) === true) {
+      if (id < 0) {
+        this.setState(state => {
+          state.deactivatedServiceIds.add(id);
+          return state;
+        });
+      } else {
+        dataService.APIDelete(path, { change_request: { status: '2' } })
         .then(() => {
-          alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
+          alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
           if (type === 'resource') {
             // Resource successfully deactivated. Redirect to home.
             router.push({ pathname: '/' });
@@ -642,6 +651,8 @@ class OrganizationEditPage extends React.Component {
             });
           }
         });
+      }
+      
     }
   }
 
