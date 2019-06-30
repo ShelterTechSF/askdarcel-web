@@ -47,6 +47,7 @@ export function get(url, headers) {
     method: 'GET',
     mode: 'cors',
     headers: queryHeaders,
+    credentials: 'include',
   }).then(resp => {
     if (!resp.ok) { throw resp; }
     setAuthHeaders(resp);
@@ -70,3 +71,7 @@ export function APIDelete(url, headers) {
     setAuthHeaders(resp);
   });
 }
+
+/** Return a Promise with the fetched Resource. */
+export const getResource = id => get(`/api/resources/${id}`)
+  .then(({ resource }) => resource);

@@ -57,10 +57,8 @@ export class OrganizationListingPage extends React.Component {
         },
       },
     } = this.props;
-    const url = `/api/resources/${id}`;
-
-    fetch(url, { credentials: 'include' }).then(r => r.json()).then(data => {
-      this.setState({ resource: data.resource });
+    dataService.getResource(id).then(resource => {
+      this.setState({ resource });
     });
   }
 
