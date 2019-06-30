@@ -1,5 +1,7 @@
 import * as _ from 'lodash/fp/object';
 
+import { parseAPISchedule } from './transformSchedule';
+
 function setAuthHeaders(resp) {
   const { headers } = resp;
   if (headers.get('access-token') && headers.get('client')) {
@@ -72,10 +74,51 @@ export function APIDelete(url, headers) {
   });
 }
 
-/** Return a Promise with the fetched Resource. */
-export const getResource = id => get(`/api/resources/${id}`)
-  .then(({ resource }) => resource);
 
-/** Return a Promise with the fetched Service. */
+const shouldInheritSchedule = service => (
+  service.schedule && service.schedule.schedule_days.length > 0
+);
+
+/**
+ * Return a Promise with the fetched Resource.
+ *
+ * Also perform a transformation from the raw API representation of schedules
+ * into a nicer-to-use data model of RecurringSchedules.
+ */
+export const getResource = id => get(`/api/resources/${id}`)
+  .then(({ resource }) => {
+    const recurringSchedule = parseAPISchedule(resource.schedule);
+    const services = resource.services.map(service => {
+      const scheduleRecurringSchedule = shouldInheritSchedule(service)
+        ? parseAPISchedule(service.schedule)
+        : recurringSchedule;
+      return {
+        ...service,
+        recurringSchedule: scheduleRecurringSchedule,
+      };
+    });
+    return {
+      ...resource,
+      recurringSchedule,
+      services,
+    };
+  });
+
+/**
+ * Return a Promise with the fetched Service.
+ *
+ * Also perform a transformation from the raw API representation of schedules
+ * into a nicer-to-use data model of RecurringSchedules.
+ */
 export const getService = id => get(`/api/services/${id}`)
-  .then(({ service }) => service);
+  .then(({ service }) => {
+    const recurringSchedule = shouldInheritSchedule(service)
+      ? parseAPISchedule(service.schedule)
+      : parseAPISchedule(service.resource.schedule);
+    return (
+      {
+        ...service,
+        recurringSchedule,
+      }
+    );
+  });
