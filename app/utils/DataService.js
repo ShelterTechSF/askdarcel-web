@@ -75,3 +75,7 @@ export function APIDelete(url, headers) {
 /** Return a Promise with the fetched Resource. */
 export const getResource = id => get(`/api/resources/${id}`)
   .then(({ resource }) => resource);
+
+/** Return a Promise with the fetched Service. */
+export const getService = id => get(`/api/services/${id}`)
+  .then(({ service }) => service);
