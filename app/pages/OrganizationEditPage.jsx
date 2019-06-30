@@ -638,21 +638,20 @@ class OrganizationEditPage extends React.Component {
         });
       } else {
         dataService.APIDelete(path, { change_request: { status: '2' } })
-        .then(() => {
-          alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
-          if (type === 'resource') {
-            // Resource successfully deactivated. Redirect to home.
-            router.push({ pathname: '/' });
-          } else {
-            // Service successfully deactivated. Mark deactivated in local state.
-            this.setState(state => {
-              state.deactivatedServiceIds.add(id);
-              return state;
-            });
-          }
-        });
+          .then(() => {
+            alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
+            if (type === 'resource') {
+              // Resource successfully deactivated. Redirect to home.
+              router.push({ pathname: '/' });
+            } else {
+              // Service successfully deactivated. Mark deactivated in local state.
+              this.setState(state => {
+                state.deactivatedServiceIds.add(id);
+                return state;
+              });
+            }
+          });
       }
-      
     }
   }
 
