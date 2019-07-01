@@ -34,6 +34,7 @@ class FindHeader extends React.Component {
   }
 
   render() {
+    const { resourceCount } = this.state;
     return (
       <header className="hero header-large" role="banner">
         <div className="header-container">
@@ -62,7 +63,7 @@ in San Francisco
             ref={c => { this.searchComponent = c; }}
             type="text"
             className="search-field"
-            placeholder={`Search ${this.state.resourceCount} resources in San Francisco`}
+            placeholder={`Search ${resourceCount} resources in San Francisco`}
             name="srch-term"
             id="srch-term"
           />

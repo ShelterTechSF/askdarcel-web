@@ -2,10 +2,6 @@ build
 app/components/admin/ChangeRequest.jsx
 app/components/admin/ProposedService.jsx
 app/components/auth/RequireAuth.jsx
-app/components/layout/CategoryItem.jsx
-app/components/layout/CategoryList.jsx
-app/components/layout/FindHeader.jsx
-app/components/layout/OrganizationCard.jsx
 app/components/search/Filtering.jsx
 app/components/search/ResourcesList.jsx
 app/components/search/ResourcesMap.jsx

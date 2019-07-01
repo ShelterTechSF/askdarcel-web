@@ -8,7 +8,8 @@ import StreetViewImage from 'components/maps/StreetViewImage';
 class OrganizationCard extends React.Component {
   calculateShortDescription() {
     const { org } = this.props;
-    // TODO This should be done better, so that we can ellipsis the text and enforce height based on maxHeight
+    // TODO This should be done better, so that we can ellipsis the text and
+    // enforce height based on maxHeight
     return org.short_description || org.long_description.split('\n')[0];
   }
 
