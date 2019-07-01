@@ -9,7 +9,6 @@ export const getFeaturedResources = () => api.get('/resources');
 
 export const getResourcesCount = () => api.get('/resources/count');
 
-
 export const getResourcesByCategoryId = categoryID => api.get(`/resources?category_id=${categoryID}`);
 
 export const searchForResources = query => api.get(`/resources/search?query=${query}`);
