@@ -115,9 +115,13 @@ export class OrganizationListingPage extends React.Component {
                   <div className="org--main--header--hours">
                     <RelativeOpeningTime schedule={resource.schedule} />
                   </div>
-                  <div className="org--main--header--phone">
-                    <PhoneNumber phones={resource.phones} />
-                  </div>
+                  { resource.phones.length > 0
+                    && (
+                      <div className="org--main--header--phone">
+                        <PhoneNumber phones={resource.phones} />
+                      </div>
+                    )
+                  }
                 </header>
                 <MobileActionBar resource={resource} />
                 <div className="org--main--header--description">
@@ -143,12 +147,12 @@ export class OrganizationListingPage extends React.Component {
                   </header>
                   <ul className="info">
                     <div className="info--column">
-                      <ResourceCategories categories={resource.categories} />
-                      {' '}
+                      {resource.categories.length > 0
+                        && <ResourceCategories categories={resource.categories} />}
                       {resource.address && <AddressInfo address={resource.address} />}
-                      <PhoneNumber phones={resource.phones} />
-                      <Website website={resource.website} />
-                      <Email email={resource.email} />
+                      {resource.phones.length > 0 && <PhoneNumber phones={resource.phones} />}
+                      {resource.website && <Website website={resource.website} />}
+                      {resource.email && <Email email={resource.email} />}
                     </div>
                   </ul>
                 </section>

@@ -1,26 +1,22 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import config from '../../config';
-import { RelativeOpeningTime } from './RelativeOpeningTime';
 
-function Cat(props) {
-  return <p>{props.category}</p>;
-}
+const Category = ({ category }) => <p>{category}</p>;
 
-Cat.propTypes = {
+Category.propTypes = {
   category: PropTypes.string.isRequired,
 };
 
 
-function ResourceCategories(props) {
-  if (props.categories.length) {
-    const categories = _.uniqBy(props.categories, 'id');
-    const cats = categories.map(cat => <Cat category={cat.name} key={cat.id} />);
-    return <span className="categories">{cats}</span>;
-  }
-  return null;
-}
+const ResourceCategories = ({ categories }) => {
+  const uniqueCategories = _.uniqBy(categories, 'id');
+  return (
+    <span className="categories">
+      {uniqueCategories.map(cat => <Category key={cat.id} category={cat.name} />)}
+    </span>
+  );
+};
 
 ResourceCategories.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.shape({
@@ -48,9 +44,7 @@ ResourceCategories.propTypes = {
 //   567 Eighth Street, Suite 201
 //   San Francisco, CA, 94115
 //
-function buildLocation(address) {
-  if (!address) return;
-
+const buildLocation = address => {
   const fieldsOnEachLine = [
     ['name'],
     ['address_1', 'address_2'],
@@ -59,8 +53,8 @@ function buildLocation(address) {
 
   return fieldsOnEachLine.map(fields => {
     const line = fields.map(field => address[field])
-                   .filter(Boolean)
-                   .join(', ');
+      .filter(Boolean)
+      .join(', ');
     if (line.length > 0) {
       const key = fields.join('-');
 
@@ -71,16 +65,15 @@ function buildLocation(address) {
         </Fragment>
       );
     }
+    return null;
   });
-}
+};
 
-function AddressInfo(props) {
-  return (
-    <span className="address">
-      {buildLocation(props.address)}
-    </span>
-  );
-}
+const AddressInfo = ({ address }) => (
+  <span className="address">
+    {buildLocation(address)}
+  </span>
+);
 
 const AddressType = PropTypes.shape({
   address_1: PropTypes.string,
@@ -91,34 +84,14 @@ const AddressType = PropTypes.shape({
 });
 
 AddressInfo.propTypes = {
-  address: AddressType,
+  address: AddressType.isRequired,
 };
 
-AddressInfo.defaultProps = {
-  address: null,
-};
-
-function buildPhoneNumber(phones) {
-  if (!phones) {
-    return null;
-  }
-
-  return phones.map(phone => (
-    <p key={phone.id}>
-      {phone.number}
-      {' '}
-      {phone.service_type}
-    </p>
-  ));
-}
-
-function PhoneNumber(props) {
-  return (
-    <span className="phone">
-      {buildPhoneNumber(props.phones)}
-    </span>
-  );
-}
+const PhoneNumber = ({ phones }) => (
+  <span className="phone">
+    { phones.map(phone => <p key={phone.id}>{`${phone.number} ${phone.service_type}`}</p>) }
+  </span>
+);
 
 PhoneNumber.propTypes = {
   phones: PropTypes.arrayOf(PropTypes.shape({
@@ -131,96 +104,40 @@ PhoneNumber.propTypes = {
 };
 
 
-function ExternalLink(props) {
-  return <a href={props.to} target="_blank" rel="noopener noreferrer">{props.children}</a>;
-}
+const ExternalLink = ({ children, to }) => (
+  <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>
+);
 
 ExternalLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
 
-function Website(props) {
-  if (!props.website) {
-    return null;
-  }
-  return (
-    <span className="website">
-      <ExternalLink to={props.website}>{props.website}</ExternalLink>
-    </span>
-  );
-}
+const Website = ({ website }) => (
+  <span className="website">
+    <ExternalLink to={website}>{website}</ExternalLink>
+  </span>
+);
 
 Website.propTypes = {
-  website: PropTypes.string,
-};
-
-Website.defaultProps = {
-  website: null,
+  website: PropTypes.string.isRequired,
 };
 
 
-function Email(props) {
-  if (!props.email) {
-    return null;
-  }
-  return (
-    <span className="email">
-      <ExternalLink to={`mailto:${props.email}`}>{props.email}</ExternalLink>
-    </span>
-  );
-}
+const Email = ({ email }) => (
+  <span className="email">
+    <ExternalLink to={`mailto:${email}`}>{email}</ExternalLink>
+  </span>
+);
 
 Email.propTypes = {
-  email: PropTypes.string,
-};
-
-Email.defaultProps = {
-  email: null,
-};
-
-
-function buildImgURL(address) {
-  if (address) {
-    let url = `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${address.latitude},${address.longitude}&fov=90&heading=235&pitch=10`;
-    if (config.GOOGLE_API_KEY) {
-      url += `&key=${config.GOOGLE_API_KEY}`;
-    }
-    return url;
-  }
-  return 'http://lorempixel.com/200/200/city/';
-}
-
-function StreetView(props) {
-  if (!props.address) {
-    return null;
-  }
-  return (
-    <div className="org-streetview">
-      <img
-        className="org-streetview--img"
-        src={buildImgURL(props.address)}
-        alt={`Street view of ${props.resourceName}`}
-      />
-    </div>
-  );
-}
-
-StreetView.propTypes = {
-  address: AddressType,
-  resourceName: PropTypes.string.isRequired,
-};
-
-StreetView.defaultProps = {
-  address: null,
+  email: PropTypes.string.isRequired,
 };
 
 export {
-  Cat,
+  ResourceCategories,
   AddressInfo,
   PhoneNumber,
-  ResourceCategories,
   Website,
   Email,
-  StreetView,
 };
