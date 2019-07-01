@@ -3,12 +3,10 @@ import MockAdapter from 'axios-mock-adapter';
 import axInstance from '../httpClient';
 import { resourceResponse } from './__mocks__/resourceResponseMock';
 import { resourceQueryResponse } from './__mocks__/resourceQueryResultsMock';
-import { newResource } from './__mocks__/newResourceMock';
 import {
   getResource,
   getResources,
   searchForResources,
-  submitNewResource,
 } from '../resourceService';
 
 describe('Resources', () => {
@@ -19,7 +17,7 @@ describe('Resources', () => {
       resourceResponse,
     });
     const response = await getResource(5);
-    const resources = response.data.resourceResponse.resources
+    const { resources } = response.data.resourceResponse;
     expect(resources[0].name).to.be.equal('Test new');
     expect(response).to.be.an('object');
     expect(resources).to.be.an('array');
@@ -40,26 +38,13 @@ describe('Resources', () => {
       resourceQueryResponse,
     });
     const response = await searchForResources(query);
-    const resources = response.data.resourceQueryResponse.resources
-    const checkQueryResults = resources.every((r) => {
-        return r.categories.some((c) => {
-            return c.name.toLowerCase() == query.toLowerCase()
-        })
-    })
-    expect(checkQueryResults).to.be.true
+    const { resources } = response.data.resourceQueryResponse;
+
+    const queryCheck = c => c.name.toLowerCase() === query.toLowerCase();
+    const checkQueryResults = resources.every(r => r.categories.some(queryCheck));
+
+    expect(checkQueryResults).to.equal(true);
     expect(response).to.be.an('object');
     expect(resources).to.be.an('array');
-  });
-
-
-  it('Should create a resource', async () => {
-    mockAdapter.onPost('/resources', newResource).reply(200, {
-      resourceResponse,
-    });
-    // const response = await submitNewResource(newResource);
-  //
-  //    expect(response.data.resourceResponse.resources[0].name).to.be.equal('Test new');
-  //    expect(response).to.be.an('object');
-  //    expect(response.data.resourceResponse.resources).to.be.an('array');
   });
 });
