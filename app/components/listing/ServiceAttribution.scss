@@ -1,6 +1,6 @@
 @import '../../styles/utils/_helpers.scss';
 
-.verified-resource-icon-container {
+.attributed-service-icon-container {
     width: 17px;
     margin-right: 4px;
     display: inline-block;
@@ -12,12 +12,12 @@
     width: auto;
 }
 
-.verified-resource-text {
+.attributed-service-text {
     font-size: 13px;
     color: $color-grey5;
 }
 
-.verified-resource-link {
+.attributed-service-link {
     font-size: 13px;
     text-decoration: underline;
 }
