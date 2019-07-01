@@ -2,10 +2,6 @@ build
 app/components/admin/ChangeRequest.jsx
 app/components/admin/ProposedService.jsx
 app/components/auth/RequireAuth.jsx
-app/components/ui/Accordion/Accordion.jsx
-app/components/ui/Accordion/AccordionItem.jsx
-app/components/ui/LandingPageEligibilityBlock.jsx
-app/components/ui/WhiteLabel.jsx
 app/pages/_unused/CreateAccount.jsx
 app/pages/_unused/Splash.jsx
 app/pages/_unused/TestAuth.jsx

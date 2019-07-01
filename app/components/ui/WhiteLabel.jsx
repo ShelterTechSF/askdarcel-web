@@ -10,7 +10,7 @@ function WhiteLabel() {
       <div className="white-label-content">
         <div className="mohcd-info">
           <p>help.sfgov.org is a project of the</p>
-          <a href="https://sfmohcd.org/" target="_blank" rel="noopener noreferrer">Mayor's Office of Housing and Community Development</a>
+          <a href="https://sfmohcd.org/" target="_blank" rel="noopener noreferrer">Mayor&apos;s Office of Housing and Community Development</a>
         </div>
         <div className="shelter-tech-info">
           <p>in partnership with</p>

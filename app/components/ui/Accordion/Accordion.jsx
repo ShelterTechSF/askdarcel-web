@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import './accordion.scss';
 
 class Accordion extends React.Component {
-  constructor(...args) {
-    super(...args);
+  constructor(props) {
+    super(props);
     this.state = {
-      activeTab: 0,
+      activeTab: props.children[0].key,
     };
   }
 
@@ -16,16 +15,17 @@ class Accordion extends React.Component {
   }
 
   render() {
+    const { children } = this.props;
     const { activeTab } = this.state;
 
     return (
       <ul className="accordion">
         {
-          this.props.children.map((ch, i) => (
-            <li
-              className={activeTab === i ? 'open' : 'closed'}
-              onClick={() => this.setTab(i)}
-              key={i}
+          children.map(ch => (
+            <li // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
+              className={activeTab === ch.key ? 'open' : 'closed'}
+              onClick={() => this.setTab(ch.key)}
+              key={ch.key}
             >
               { ch }
             </li>
