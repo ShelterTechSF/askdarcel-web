@@ -80,7 +80,8 @@ updated
                 result={service.fee}
               />
               {service.notes.length ? <Notes notes={service.notes} /> : null }
-              <WeeklyHours schedule={service.schedule} />
+              {service.recurringSchedule.intervals.length > 0
+                && <WeeklyHours recurringSchedule={service.recurringSchedule} />}
             </ul>
             <div
               role="button"
@@ -101,11 +102,11 @@ updated
   }
 }
 
-const WeeklyHours = ({ schedule: { schedule_days } }) => schedule_days.length > 0 && (
+const WeeklyHours = ({ recurringSchedule }) => (
   <li className="service--details--item">
     <header>Hours</header>
     <div className="service--details--item--info">
-      <DetailedHours schedule={schedule_days} />
+      <DetailedHours recurringSchedule={recurringSchedule} />
     </div>
   </li>
 );
