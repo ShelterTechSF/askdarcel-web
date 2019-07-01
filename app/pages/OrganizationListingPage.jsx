@@ -32,7 +32,7 @@ const getResourceLocation = resource => {
     id: address.id,
     address,
     name: resource.name,
-    schedule: resource.schedule,
+    recurringSchedule: resource.recurringSchedule,
   };
 };
 
@@ -169,8 +169,7 @@ export class OrganizationListingPage extends React.Component {
                       locations={[resourceLocation]}
                       locationRenderer={location => (
                         <TableOfOpeningTimes
-                          schedule={location.schedule}
-                          inherited={location.inherited}
+                          recurringSchedule={location.recurringSchedule}
                         />
                       )}
                     />
