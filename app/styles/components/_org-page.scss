@@ -28,11 +28,25 @@
 		align-items: stretch;
 		align-content: stretch;
 	}
+  section {
+    margin-top: calc-em(50px);
+  }
+
+  h2 {
+    font-size: 1.2em;
+    color: $color-grey7;
+  }
   @include r_max($break-tablet-s) {
     margin-top: 0;
       &--left {
         border-right: none;
         width: 100%;
+      }
+      section {
+        margin-top: calc-em(20px);
+      }
+      h2 {
+        font-size: 1em;
       }
   }
 }
@@ -81,7 +95,9 @@
 			margin-top: calc-em(10px);
 		}
     @include r_max($break-tablet-s) {
-      padding-bottom: calc-em(20px);
+      margin-top: 0;
+      padding-bottom: 0;
+      border-top: none;
     }
 	}
 	.badges {
@@ -94,13 +110,15 @@
     	margin: 10px auto;
     }
 	}
+  @include r_max($break-tablet-s) {
+    padding: 0 0 calc-em(20px) 0;
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG SERVICES
 
 .service--section {
-  margin-top: calc-em(50px);
   &--header {
   	border-bottom: 1px solid #DDDDDD;
   	h4 {
@@ -183,7 +201,6 @@
 // ORG INFO
 
 .info--section {
-	margin-top: calc-em(50px);
 	.info {
 		margin-top: calc-em(30px);
 		display: flex;
@@ -219,7 +236,6 @@
 // ORG Location
 
 .location--section {
-	margin-top: calc-em(50px);
   .map {
     margin-top: calc-em(30px);
   }

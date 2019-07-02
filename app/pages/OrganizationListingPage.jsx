@@ -112,28 +112,18 @@ export class OrganizationListingPage extends React.Component {
                     {isMOHCDFunded && (<img className="mohcd-funded" src={MOHCDFunded} alt="Verified by MOHCD" />)}
                   </div>
                   <h1 className="org--main--header--title">{resource.name}</h1>
-                  <div className="org--main--header--rating disabled-feature">
-                    <p className="excellent">
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                    </p>
-                  </div>
                   <div className="org--main--header--hours">
                     <RelativeOpeningTime schedule={resource.schedule} />
                   </div>
                   <div className="org--main--header--phone">
                     <PhoneNumber phones={resource.phones} />
                   </div>
-                  <div className="org--main--header--description">
-                    <header>About this resource</header>
-                    <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
-                  </div>
                 </header>
-
                 <MobileActionBar resource={resource} />
+                <div className="org--main--header--description">
+                  <h2>About this Organization</h2>
+                  <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
+                </div>
 
                 <section className="service--section" id="services">
                   <header className="service--section--header">
