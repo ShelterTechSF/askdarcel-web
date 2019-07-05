@@ -71,4 +71,9 @@ describe('<LandingPageCarousel />', () => {
     expect(carousel.find('CarouselNavButton')).to.have.lengthOf(1);
   });
 
+  it('should not have a navigation button when it can fit all its cards at once', () => {
+    const carousel = shallow(<LandingPageCarousel config={validConfig(twoCards, 4)} />);
+    expect(carousel.find('CarouselNavButton')).to.have.lengthOf(0);
+  });
+
 });
