@@ -21,8 +21,9 @@ $text-card-flex-basis: 230px;
   height: 100px;
   background-color: white;
   display: flex;
-  flex: 0 0 $text-card-flex-basis;
+  flex: 0 0 22%;
   flex-direction: column;
+  width: calc(100% * (1/4));
   justify-content: space-around;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
@@ -90,10 +91,13 @@ $text-card-flex-basis: 230px;
   border-radius: 50%;
 
   background-repeat: no-repeat;
-  background-image: url(../assets/img/nav/navCarousel.svg);
   background-position: center;
 
   z-index: 10;
+
+  &.btn-right {
+    background-image: url(../assets/img/nav/navCarousel.svg);
+  }
 }
 
 .carousel-wrapper {
