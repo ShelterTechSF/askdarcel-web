@@ -2,15 +2,14 @@ import { expect } from 'chai';
 import MockAdapter from 'axios-mock-adapter';
 import axInstance from '../httpClient';
 
-import resource from './__mocks__/resourceResponse.json'
-import resources from './__mocks__/resourcesResponse.json'
+import resource from './__mocks__/resourceResponse.json';
+import resources from './__mocks__/resourcesResponse.json';
 import {
   getResource,
   getResources,
   searchForResources,
-  getResourcesCount,
   submitNewResource,
-  submitEdits
+  submitEdits,
 } from '../resourceService';
 
 
@@ -18,9 +17,7 @@ describe('Resources', () => {
   const mockAdapter = new MockAdapter(axInstance);
 
   it('Should return single resource', async () => {
-    mockAdapter.onGet('/resources/1').reply(200, {
-      resource,
-    });
+    mockAdapter.onGet('/resources/1').reply(200, { resource });
     const response = await getResource(1);
     expect(response.data).to.be.an('object');
     expect(response.data.resource).to.be.an('object');
@@ -56,19 +53,20 @@ describe('Resources', () => {
 
   it('Should create a resource', async () => {
     mockAdapter.onPost('/resources')
-      .reply(201, {resources:[{resource:resource}]});
+      .reply(201, { resources: [{ resource }] });
     const response = await submitNewResource(resource);
-    const resourceId = response.data.resources[0].resource.id
-    expect(resourceId).to.equal(1)
+    const resourceId = response.data.resources[0].resource.id;
+    expect(resourceId).to.equal(1);
     expect(response.status).to.equal(201);
   });
 
-  it('Should submit array of edit promises', async () => {
-    const promises = []
-    mockAdapter.onAny(`/resources`)
+  it('Should submit an array of edit promises', async () => {
+    const promises = [];
+    mockAdapter.onAny('/resources')
       .reply(() => Promise.all(promises).then(
-        sources => [200, sources.reduce((agg,source) => agg.concat(source))]
-      ))
-  }
-
+        sources => [200, sources.reduce((agg, source) => agg.concat(source))],
+      ));
+    const response = await submitEdits(promises);
+    expect(response.status).to.equal(201);
+  });
 });
