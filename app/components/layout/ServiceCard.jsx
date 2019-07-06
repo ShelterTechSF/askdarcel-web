@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router';
 // import StreetViewImage from 'components/maps/StreetViewImage';
-// import RelativeOpeningTime from 'components/listing/RelativeOpeningTime';
 
 class ServiceCard extends React.Component {
   render() {
