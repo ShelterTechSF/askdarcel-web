@@ -4,6 +4,24 @@ import { connectStateResults } from 'react-instantsearch/connectors';
 import { Loader } from 'components/ui';
 import SearchTable from './SearchTable';
 import SearchMap from './SearchMap';
+import { parseAlgoliaSchedule } from '../../utils/transformSchedule';
+
+
+/**
+ * Transform Algolia search hits such that each hit has a recurringSchedule that
+ * uses the time helper classes.
+ */
+const transformHits = hits => hits.map(hit => {
+  const inheritedSchedule = (
+    hit.schedule && hit.schedule.length ? hit.schedule : hit.resource_schedule
+  );
+  const recurringSchedule = (
+    inheritedSchedule && inheritedSchedule.length
+      ? parseAlgoliaSchedule(inheritedSchedule)
+      : null
+  );
+  return { ...hit, recurringSchedule };
+});
 
 
 const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
@@ -19,11 +37,12 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
       </div>
     );
   } else if (searchResults) {
+    const hits = transformHits(searchResults.hits);
     output = (
       <div className="results">
         <div className="results-table">
           <SearchTable
-            hits={searchResults.hits}
+            hits={hits}
             page={searchResults.page}
             hitsPerPage={searchResults.hitsPerPage}
           />
@@ -38,7 +57,7 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
             </h3>
           </div>
         </div>
-        <SearchMap hits={searchResults.hits} />
+        <SearchMap hits={hits} />
       </div>
     );
   }
