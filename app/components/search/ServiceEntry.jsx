@@ -12,9 +12,8 @@ class ServiceEntry extends Component {
       hit, index, page, hitsPerPage,
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
-    const schedule = hit.schedule && hit.schedule.length
-      ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
     const hitNumber = page * hitsPerPage + index + 1;
+    const { recurringSchedule } = hit;
     return (
       <li className="results-table-entry service-entry">
         <header>
@@ -27,8 +26,13 @@ class ServiceEntry extends Component {
               </p>
               <p>
                 {hit.addresses && hit.addresses.address_1 ? hit.addresses.address_1 : 'No address found'}
-                {/* { schedule ? ' • ' : null } */}
-                {schedule ? <span className="float-right"><RelativeOpeningTime schedule={schedule} /></span> : null}
+                {recurringSchedule
+                    && (
+                      <span className="float-right">
+                        <RelativeOpeningTime recurringSchedule={recurringSchedule} />
+                      </span>
+                    )
+                }
               </p>
             </div>
           </div>

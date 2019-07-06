@@ -13,8 +13,7 @@ class ResourceEntry extends Component {
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
     const hitNumber = page * hitsPerPage + index + 1;
-    // const schedule = hit.schedule ? { schedule_days: hit.schedule } : null;
-    // let timeInfo = null;
+    const { recurringSchedule } = hit;
     return (
       <li className="results-table-entry resource-entry">
         <header>
@@ -23,8 +22,13 @@ class ResourceEntry extends Component {
             <div className="entry-subhead">
               <p>
                 {hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found'}
-                {/* { schedule ? ' • ' : null } */}
-                {hit.schedule ? <span className="float-right"><RelativeOpeningTime schedule={{ schedule_days: hit.schedule }} /></span> : null}
+                {recurringSchedule
+                    && (
+                      <span className="float-right">
+                        <RelativeOpeningTime recurringSchedule={recurringSchedule} />
+                      </span>
+                    )
+                }
               </p>
             </div>
           </div>

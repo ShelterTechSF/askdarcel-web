@@ -115,7 +115,7 @@ export class OrganizationListingPage extends React.Component {
                     <MOHCDBadge resource={resource} />
                   </div>
                   <div className="org--main--header--hours">
-                    <RelativeOpeningTime schedule={resource.schedule} />
+                    <RelativeOpeningTime recurringSchedule={resource.recurringSchedule} />
                   </div>
                   { resource.phones.length > 0
                     && (
