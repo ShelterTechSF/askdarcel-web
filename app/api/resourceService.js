@@ -17,11 +17,23 @@ export const getResourcesByIdSortByLoc = (id, lat, lon) => api.get(`/resources?c
 
 export const searchResourcesSortByLoc = (query, lat, lon) => api.get(`/resources/search?query=${query}&lat=${lat}&long=${lon}`);
 
-export const submitNewResource = resource => api.post('/resources',
-  { resources: resource });
+export const submitEdits = promises => {
+  return axios.all(promises).then((response) => {
+    return response.reduce((acc,cur) => {
+      acc.push(cur.data)
+      return acc
+    },[])
+  })
+}
 
-export const submitNewService = (resourceId, service) => api.post(`/resources/${resourceId}/services`,
+export const submitNewResource = resource => {
+  return api.post('/resources', { resources: [resource] })
+}
+
+export const submitNewService = (resourceId, service) => {
+  api.post(`/resources/${resourceId}/services`,
   { services: service });
+}
 
 export const submitResourceChangeRequest = (id, changeRequestObj) => api.post(`/resources/${id}/change_requests`,
   { change_request: changeRequestObj });

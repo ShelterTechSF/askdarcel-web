@@ -1,0 +1,451 @@
+[
+  {
+      "alternate_name": null,
+      "certified": false,
+      "email": null,
+      "id": 119,
+      "legal_status": null,
+      "long_description": "Warm Line chat online: http://www.mentalhealthsf.org/ (24-hour Mental Health Triage/Peer-Counseling LIVE CHAT)",
+      "name": "24-hour Mental Health /Peer-Counseling LIVE CHAT",
+      "short_description": null,
+      "status": "approved",
+      "verified_at": null,
+      "website": "http://www.mentalhealthsf.org/",
+      "certified_at": null,
+      "services": [
+          {
+              "alternate_name": null,
+              "application_process": null,
+              "certified": false,
+              "eligibility": null,
+              "email": null,
+              "fee": null,
+              "id": 136,
+              "interpretation_services": null,
+              "long_description": "24-hour Mental Health Triage/Peer-Counseling LIVE ONLINE CHAT at: http://www.mentalhealthsf.org/",
+              "name": "Mental Health Services",
+              "required_documents": null,
+              "url": null,
+              "verified_at": null,
+              "wait_time": null,
+              "certified_at": null,
+              "schedule": {
+                  "id": 119,
+                  "schedule_days": [
+                      {
+                          "id": 687,
+                          "day": "Saturday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 686,
+                          "day": "Friday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 685,
+                          "day": "Thursday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 684,
+                          "day": "Wednesday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 683,
+                          "day": "Tuesday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 682,
+                          "day": "Monday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 681,
+                          "day": "Sunday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      }
+                  ]
+              },
+              "notes": [],
+              "categories": [
+                  {
+                      "name": "Medical",
+                      "id": 3,
+                      "top_level": true,
+                      "featured": false
+                  }
+              ],
+              "eligibilities": []
+          }
+      ],
+      "schedule": {
+          "id": 119,
+          "schedule_days": [
+              {
+                  "id": 687,
+                  "day": "Saturday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 686,
+                  "day": "Friday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 685,
+                  "day": "Thursday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 684,
+                  "day": "Wednesday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 683,
+                  "day": "Tuesday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 682,
+                  "day": "Monday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 681,
+                  "day": "Sunday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              }
+          ]
+      },
+      "phones": [],
+      "address": {
+          "id": 119,
+          "attention": null,
+          "address_1": "San Francisco",
+          "address_2": null,
+          "address_3": null,
+          "address_4": null,
+          "city": "San Francisco",
+          "state_province": "CA",
+          "postal_code": "",
+          "country": "USA",
+          "latitude": "37.7749295",
+          "longitude": "-122.4194155"
+      },
+      "notes": [],
+      "categories": [
+          {
+              "name": "Medical",
+              "id": 3,
+              "top_level": true,
+              "featured": false
+          }
+      ],
+      "ratings": []
+  },
+  {
+      "alternate_name": null,
+      "certified": false,
+      "email": null,
+      "id": 34,
+      "legal_status": null,
+      "long_description": null,
+      "name": "24-hour Mental Health /Peer-Counseling Phone Support",
+      "short_description": null,
+      "status": "approved",
+      "verified_at": null,
+      "website": "",
+      "certified_at": null,
+      "services": [
+          {
+              "alternate_name": null,
+              "application_process": null,
+              "certified": false,
+              "eligibility": null,
+              "email": null,
+              "fee": null,
+              "id": 39,
+              "interpretation_services": null,
+              "long_description": "Mental Health Triage/Peer-Counseling. Counseling and support for those who need help. Service provided by peer counselors who have experienced and overcome mental health issues themselves.",
+              "name": "Mental Health Services",
+              "required_documents": null,
+              "url": null,
+              "verified_at": null,
+              "wait_time": null,
+              "certified_at": null,
+              "schedule": {
+                  "id": 34,
+                  "schedule_days": [
+                      {
+                          "id": 208,
+                          "day": "Saturday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 207,
+                          "day": "Friday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 206,
+                          "day": "Thursday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 205,
+                          "day": "Wednesday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 204,
+                          "day": "Tuesday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 203,
+                          "day": "Monday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      },
+                      {
+                          "id": 202,
+                          "day": "Sunday",
+                          "opens_at": 0,
+                          "closes_at": 2359,
+                          "open_time": null,
+                          "open_day": null,
+                          "close_time": null,
+                          "close_day": null
+                      }
+                  ]
+              },
+              "notes": [
+                  {
+                      "id": 34,
+                      "note": "Accessible 24 hrs. Operated by WOMAN, Inc."
+                  }
+              ],
+              "categories": [
+                  {
+                      "name": "Medical",
+                      "id": 3,
+                      "top_level": true,
+                      "featured": false
+                  }
+              ],
+              "eligibilities": []
+          }
+      ],
+      "schedule": {
+          "id": 34,
+          "schedule_days": [
+              {
+                  "id": 208,
+                  "day": "Saturday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 207,
+                  "day": "Friday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 206,
+                  "day": "Thursday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 205,
+                  "day": "Wednesday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 204,
+                  "day": "Tuesday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 203,
+                  "day": "Monday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              },
+              {
+                  "id": 202,
+                  "day": "Sunday",
+                  "opens_at": 0,
+                  "closes_at": 2359,
+                  "open_time": null,
+                  "open_day": null,
+                  "close_time": null,
+                  "close_day": null
+              }
+          ]
+      },
+      "phones": [
+          {
+              "id": 36,
+              "number": "(855) 845-7415",
+              "extension": null,
+              "service_type": "24-hour",
+              "country_code": "US"
+          }
+      ],
+      "address": {
+          "id": 34,
+          "attention": null,
+          "address_1": "San Francisco",
+          "address_2": null,
+          "address_3": null,
+          "address_4": null,
+          "city": "San Francisco",
+          "state_province": "CA",
+          "postal_code": "",
+          "country": "USA",
+          "latitude": "37.7749295",
+          "longitude": "-122.4194155"
+      },
+      "notes": [],
+      "categories": [
+          {
+              "name": "Medical",
+              "id": 3,
+              "top_level": true,
+              "featured": false
+          }
+      ],
+      "ratings": []
+  }
+]
