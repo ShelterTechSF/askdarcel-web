@@ -56,6 +56,11 @@ export class Duration {
   valueOf() {
     return this.asMinutes();
   }
+
+  /** String representation when using console.log() */
+  inspect() {
+    return `${this.asMinutes()} minutes`;
+  }
 }
 
 
@@ -134,6 +139,11 @@ export class RecurringTime {
 
   dayString() {
     return INT_TO_DAY[this.day];
+  }
+
+  /** String representation when using console.log() */
+  inspect() {
+    return `${this.dayString()}-${this.timeString()}`;
   }
 }
 
