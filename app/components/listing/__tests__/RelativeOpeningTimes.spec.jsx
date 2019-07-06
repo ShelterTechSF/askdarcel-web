@@ -21,7 +21,7 @@ describe('<RelativeOpeningTimes />', () => {
     expect(comp.find('.relative-opening-time').hasClass('status-green')).to.be.true;
   });
 
-  it.skip('should display "Open 24h today" for a schedule with 0-2359 today and less than 7 days open 24/7', () => {
+  it('should display "Open 24h today" for a schedule with 0-2359 today and less than 7 days open 24/7', () => {
     const recurringSchedule = getNamedSchedule('twenty_four_hours_today');
     const comp = shallow(<RelativeOpeningTime recurringSchedule={recurringSchedule} />);
     expect(comp.find('.relative-opening-time').text()).to.equal('Open 24h today');
@@ -35,7 +35,7 @@ describe('<RelativeOpeningTimes />', () => {
     expect(comp.find('.relative-opening-time').hasClass('status-red')).to.be.true;
   });
 
-  it.skip('should display "Closed until tomorrow" for a schedule that is closed until tomorrow', () => {
+  it('should display "Closed until tomorrow" for a schedule that is closed until tomorrow', () => {
     const date = moment().startOf('day').add(18, 'hours').add(15, 'minutes');
     const recurringSchedule = getNamedSchedule('nine_to_six');
     const comp = shallow(<RelativeOpeningTime
@@ -46,7 +46,7 @@ describe('<RelativeOpeningTimes />', () => {
     expect(comp.find('.relative-opening-time').hasClass('status-red')).to.be.true;
   });
 
-  it.skip('should display "Opens in 5 minutes" for a schedule that is just about to open', () => {
+  it('should display "Opens in 5 minutes" for a schedule that is just about to open', () => {
     const date = moment().startOf('day').add(8, 'hours').add(55, 'minutes');
     const recurringSchedule = getNamedSchedule('nine_to_six');
     const comp = shallow(<RelativeOpeningTime
@@ -57,7 +57,7 @@ describe('<RelativeOpeningTimes />', () => {
     expect(comp.find('.relative-opening-time').hasClass('status-amber')).to.be.true;
   });
 
-  it.skip('should display "Closes in 10 minutes" for a schedule that is just about to close', () => {
+  it('should display "Closes in 10 minutes" for a schedule that is just about to close', () => {
     const date = moment().startOf('day').add(17, 'hours').add(50, 'minutes');
     const recurringSchedule = getNamedSchedule('nine_to_six');
     const comp = shallow(<RelativeOpeningTime
@@ -68,7 +68,7 @@ describe('<RelativeOpeningTimes />', () => {
     expect(comp.find('.relative-opening-time').hasClass('status-amber')).to.be.true;
   });
 
-  it.skip('should display "Closed until tomorrow" for a schedule that was open today, but has closed until tomorrow', () => {
+  it('should display "Closed until tomorrow" for a schedule that was open today, but has closed until tomorrow', () => {
     const date = moment().startOf('day').add(18, 'hours').add(30, 'minutes');
     const recurringSchedule = getNamedSchedule('nine_to_six');
     const comp = shallow(<RelativeOpeningTime
@@ -79,7 +79,7 @@ describe('<RelativeOpeningTimes />', () => {
     expect(comp.find('.relative-opening-time').hasClass('status-red')).to.be.true;
   });
 
-  it.skip('should display "Open now" for a schedule is open now, and has a closing time before open (tomorrow)', () => {
+  it('should display "Open now" for a schedule is open now, and has a closing time before open (tomorrow)', () => {
     const date = moment().startOf('day').add(18, 'hours').add(30, 'minutes');
     const recurringSchedule = getNamedSchedule('closes_tomorrow');
     const comp = shallow(<RelativeOpeningTime
