@@ -4,12 +4,15 @@ import axInstance from '../httpClient';
 
 import resource from './__mocks__/resourceResponse.json';
 import resources from './__mocks__/resourcesResponse.json';
+import resourceChangeRequest from './__mocks__/resourceChangeRequest.json';
+import resourceChangeRequestResponse from './__mocks__/resourceChangeRequestResponse.json';
 import {
   getResource,
   getResources,
   searchForResources,
   submitNewResource,
   submitEdits,
+  submitResourceChangeRequest
 } from '../resourceService';
 
 
@@ -59,6 +62,25 @@ describe('Resources', () => {
     expect(resourceId).to.equal(1);
     expect(response.status).to.equal(201);
   });
+
+  it('Should submit changeRequest', async () => {
+    const id = 1
+    mockAdapter.onPost(`/resources/${id}/change_requests`)
+      .reply(201, {
+        "change_request_response":
+          resourceChangeRequestResponse
+      });
+    const response = await submitResourceChangeRequest(id, resourceChangeRequest);
+    const responseChangeRequest = response.data.change_request_response.resource_change_request
+    const fieldChanges = responseChangeRequest.field_changes[0]
+
+    expect(responseChangeRequest.status).to.equal('pending');
+    expect(responseChangeRequest.type).to.equal('ResourceChangeRequest');
+    expect(fieldChanges.field_name).to.equal('website');
+    expect(fieldChanges.field_value).to.equal('www.google.com');
+    expect(response.status).to.equal(201);
+  });
+
 
   it('Should submit an array of edit promises', async () => {
     const promises = [];
