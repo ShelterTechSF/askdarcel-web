@@ -18,9 +18,9 @@ import { MapOfLocations } from 'components/maps';
 import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
 import Notes from 'components/listing/Notes';
+import MOHCDBadge from 'components/listing/MOHCDBadge';
+import HAPBadge from 'components/listing/HAPBadge';
 import Loader from 'components/ui/Loader';
-import HAPcertified from '../assets/img/ic-hap.png';
-import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
 import * as dataService from '../utils/DataService';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
@@ -43,7 +43,6 @@ export class OrganizationListingPage extends React.Component {
       resource: null,
     };
     this.verifyResource = this.verifyResource.bind(this);
-    this.isMOHCDFunded = this.isMOHCDFunded.bind(this);
   }
 
   componentDidMount() {
@@ -84,19 +83,6 @@ export class OrganizationListingPage extends React.Component {
     });
   }
 
-  isMOHCDFunded() {
-    const { resource } = this.state;
-    let isMOHCDFunded = false;
-
-    // eslint-disable-next-line
-    resource && resource.categories.forEach(category => {
-      if (category.name === 'MOHCD Funded') {
-        isMOHCDFunded = true;
-      }
-    });
-
-    return isMOHCDFunded;
-  }
 
   render() {
     const { resource } = this.state;
@@ -105,7 +91,6 @@ export class OrganizationListingPage extends React.Component {
     }
 
     const { notes } = resource;
-    const isMOHCDFunded = this.isMOHCDFunded();
     const resourceLocation = getResourceLocation(resource);
     return (
       <div>
@@ -126,35 +111,28 @@ export class OrganizationListingPage extends React.Component {
           <article className="org" id="resource">
             <div className="org--main">
               <div className="org--main--left">
-
                 <header className="org--main--header">
-                  <div className="badges">
-                    {resource.certified && (<img className="certified" src={HAPcertified} alt="Verified by the Homeless Assistance Project" />)}
-                    {isMOHCDFunded && (<img className="mohcd-funded" src={MOHCDFunded} alt="Verified by MOHCD" />)}
-                  </div>
-                  <h1 className="org--main--header--title">{resource.name}</h1>
-                  <div className="org--main--header--rating disabled-feature">
-                    <p className="excellent">
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                    </p>
+                  <div className="org--main--header--title-container">
+                    <h1 className="org--main--header--title">{resource.name}</h1>
+                    <MOHCDBadge resource={resource} />
                   </div>
                   <div className="org--main--header--hours">
                     <RelativeOpeningTime schedule={resource.schedule} />
                   </div>
-                  <div className="org--main--header--phone">
-                    <PhoneNumber phones={resource.phones} />
-                  </div>
-                  <div className="org--main--header--description">
-                    <header>About this resource</header>
-                    <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
-                  </div>
+                  { resource.phones.length > 0
+                    && (
+                      <div className="org--main--header--phone">
+                        <PhoneNumber phones={resource.phones} />
+                      </div>
+                    )
+                  }
                 </header>
-
                 <MobileActionBar resource={resource} />
+                <div className="org--main--header--description">
+                  <h2>About this Organization</h2>
+                  <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
+                  <HAPBadge resource={resource} />
+                </div>
 
                 <section className="service--section" id="services">
                   <header className="service--section--header">
@@ -174,12 +152,12 @@ export class OrganizationListingPage extends React.Component {
                   </header>
                   <ul className="info">
                     <div className="info--column">
-                      <ResourceCategories categories={resource.categories} />
-                      {' '}
+                      {resource.categories.length > 0
+                        && <ResourceCategories categories={resource.categories} />}
                       {resource.address && <AddressInfo address={resource.address} />}
-                      <PhoneNumber phones={resource.phones} />
-                      <Website website={resource.website} />
-                      <Email email={resource.email} />
+                      {resource.phones.length > 0 && <PhoneNumber phones={resource.phones} />}
+                      {resource.website && <Website website={resource.website} />}
+                      {resource.email && <Email email={resource.email} />}
                     </div>
                   </ul>
                 </section>

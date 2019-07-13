@@ -1,6 +1,21 @@
 import _ from 'lodash';
+import * as dataService from './DataService';
 
-export const getResourceActions = resource => {
+const verifyItem = (item, itemType) => {
+  const { id } = item;
+  const changeRequest = { verified_at: new Date().toISOString() };
+  return dataService.post(`/api/${itemType}s/${id}/change_requests`, { change_request: changeRequest })
+    .then(response => {
+      // TODO: Do not use alert() for user notifications.
+      if (response.ok) {
+        alert(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} verified. Thanks!`); // eslint-disable-line no-alert
+      } else {
+        alert(`Issue verifying ${itemType}. Please try again.`); // eslint-disable-line no-alert
+      }
+    });
+};
+
+export const getResourceActions = (resource, service) => {
   const phoneNumber = _.get(resource, 'phones[0].number');
   const latitude = _.get(resource, 'address.latitude');
   const longitude = _.get(resource, 'address.longitude');
@@ -16,6 +31,11 @@ export const getResourceActions = resource => {
       icon: 'print',
       handler: () => { window.print(); },
     },
+    verify: {
+      name: 'Mark Correct',
+      icon: 'verify',
+      handler: () => (service ? verifyItem(service, 'service') : verifyItem(resource, 'resource')),
+    },
   };
 
   if (phoneNumber) {
@@ -23,7 +43,7 @@ export const getResourceActions = resource => {
       ...actions,
       phone: {
         name: 'Call',
-        icon: 'call',
+        icon: 'phone',
         link: `tel:${phoneNumber}`,
       },
     };

@@ -11,15 +11,19 @@
 
     a {
       color: $color-textfade;
-      padding: $padding-xlarge;
-      display: block;
+      padding: $padding-xlarge 0;
+      display: flex;
+      flex-direction: column;
       width: 128px;
       height: 128px;
 
-      .material-icons {
+      img {
         display: block;
         margin: $padding-default $padding-default $padding-large;
         font-size: $padding-xxlarge;
+      }
+      span {
+        font-size: $padding-large;
       }
     }
 

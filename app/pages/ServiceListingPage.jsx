@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,6 +19,8 @@ import { MapOfLocations } from 'components/maps';
 import ReactMarkdown from 'react-markdown';
 import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
+import MOHCDBadge from 'components/listing/MOHCDBadge';
+import HAPBadge from 'components/listing/HAPBadge';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
@@ -88,7 +91,10 @@ class ServicePage extends React.Component {
             <div className="listing--main">
               <div className="listing--main--left">
                 <header>
-                  <h1>{service.name}</h1>
+                  <div className="org--main--header--title-container">
+                    <h1>{service.name}</h1>
+                    <MOHCDBadge resource={resource} />
+                  </div>
                   {service.alsoNamed ? <p>Also Known As</p> : null}
                   <p>
                     A service
@@ -110,7 +116,7 @@ class ServicePage extends React.Component {
                   </p>
                 </header>
 
-                <MobileActionBar resource={resource} />
+                <MobileActionBar resource={resource} service={service} />
 
                 <section className="listing--main--left--about">
                   <h2>About This Service</h2>
@@ -119,6 +125,7 @@ class ServicePage extends React.Component {
                     attribution={resource.source_attribution}
                     status={resource.status}
                   />
+                  <HAPBadge resource={service} />
                 </section>
 
                 {details.length ? (
@@ -176,7 +183,7 @@ class ServicePage extends React.Component {
                 </section> */}
               </div>
               <div className="listing--aside">
-                <ActionSidebar resource={resource} />
+                <ActionSidebar resource={resource} service={service} />
                 {service.categories.map(cat => (
                   <CategoryTag key={cat.id} category={cat} />
                 ))}

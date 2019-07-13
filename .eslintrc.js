@@ -20,6 +20,15 @@ module.exports = {
   "env": {
     "browser": true,
   },
+  "overrides": [
+    {
+      "files": ["**/__tests__/*.js*"],
+      "rules": {
+        // Chai assertions may appear like unused expressions
+        "no-unused-expressions": ["off"],
+      },
+    },
+  ],
   "rules": {
     "arrow-parens": [1, "as-needed"],
     "camelcase": 0,

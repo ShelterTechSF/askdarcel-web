@@ -3,7 +3,6 @@ import { Route, IndexRoute } from 'react-router';
 import './utils/google';
 
 import App from './components/App';
-import { RequireAuth } from './components/auth/RequireAuth';
 // import configureStore from './store/configureStore';
 
 import { HomePage } from './pages/HomePage';
@@ -14,7 +13,6 @@ import { ServiceListingPage } from './pages/ServiceListingPage';
 
 import { AdminPage } from './pages/admin/Admin';
 import { ChangeRequestsPage } from './pages/admin/ChangeRequests';
-import { LoginPage } from './pages/admin/Login';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
@@ -38,10 +36,9 @@ function scrollToTop(prevState, nextState) {
 export default (
   <Route path="/" component={App} onChange={scrollToTop}>
     <IndexRoute component={HomePage} />
-    <Route name="admin" path="/admin" component={RequireAuth(AdminPage)} />
-    <Route name="changeRequests" path="/admin/changes" component={RequireAuth(ChangeRequestsPage)} />
+    <Route name="admin" path="/admin" component={AdminPage} />
+    <Route name="changeRequests" path="/admin/changes" component={ChangeRequestsPage} />
     <Route name="editResource" path="/resource/edit" component={OrganizationEditPage} />
-    <Route name="login" path="/login" component={LoginPage} />
     <Route name="newResource" path="/resource/new" component={OrganizationEditPage} />
     <Route name="privacyPolicy" path="/privacy-policy" component={PrivacyPolicyPage} />
     <Route name="resource" path="/resource" component={OrganizationListingPage} />

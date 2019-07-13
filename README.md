@@ -5,7 +5,10 @@
 
 
 ## Onboarding Instructions
-https://sheltertech.quip.com/oSdpAVfvDbPq/ST-AskDarcel-DeveloperEngineer
+
+[Dev Role Description](https://www.notion.so/sheltertech/Developer-Engineer-Role-Description-ShelterTech-AskDarcel-SFServiceGuide-Tech-Team-7fd992a20f864698a43e3882a66338bb)
+
+[Technical Onboarding & Team Guidelines](https://www.notion.so/sheltertech/Technical-Onboarding-and-Team-Guidelines-a06d5543495248bfb6f17e233330249e)
 
 
 ## Docker-based Development Environment (Recommended)
@@ -16,6 +19,7 @@ Docker Community Edition (CE) >= 17.06
 Docker Compose >= 1.18
 
 Follow the [Docker installation instructions](https://www.docker.com/community-edition#/download) for your OS.
+
 
 ### Set up the project
 
@@ -36,10 +40,12 @@ $ cp config.example.yml config.yml
 # Open it in your preferred text editor
 ```
 
+
 ##### Algolia
 [Algolia](https://www.algolia.com/doc/guides/getting-started/what-is-algolia/) is used as our search engine and in order for it to operate properly for everyone, we each need our own [index](https://www.algolia.com/doc/guides/indexing/indexing-overview/).
 
 - in `config.yml` set _your_ github username as the value for `ALGOLIA_INDEX_PREFIX`. This will point to the search index matching your local environment.
+
 
 #### Building and running the application
 
@@ -61,6 +67,7 @@ the Docker setup instructions and that the API server is running. If you want to
 target a different instance of askdarcel-api, you can modify the `API_URL`
 environment variable in docker-compose.yml.
 
+
 ## Non-Docker Development Environment
 
 ### Installing Node.js and npm
@@ -74,6 +81,7 @@ git repo:
 ```sh
 $ nvm install  # Reads from .nvmrc
 ```
+
 
 ### Installing npm dependencies
 To install the dependencies, from the top directory run
@@ -89,12 +97,15 @@ And to run the dev server, run
 npm run dev
 ```
 
+
 ## End to end testing
+
 #### Quick summary of what TestCafe is and how it works
 
 It's a framework for running end-to-end tests (read: real browser tests) that injects your tests onto an existing web page. Architecturally, they spin up a lightweight proxy server that wraps your web page, and when you connect a browser to the proxy server, it serves the requested page with the test driver injected into it.
 
 It's essentially an alternative to writing Selenium tests, and I've found it nice to use because it mimics many of the common HTML5 DOM APIs and because they've added a lot of reasonable default behavior that Selenium lacks, such as properly waiting for events to finish running and for elements to appear before running your assertions.
+
 
 #### How to run
 
@@ -118,3 +129,4 @@ This will spin up a web server at http://localhost:1337/ and print out a URL to 
 Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
 
 [<img src="powered-by-sauce-labs-badges-red.svg" alt="Powered By Sauce Labs" width="200" />](https://saucelabs.com/)
+

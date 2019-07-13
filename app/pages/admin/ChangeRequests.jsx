@@ -73,10 +73,6 @@ export class ChangeRequestsPage extends React.Component {
 
         this.setState(parsedChanges);
       })
-      .catch(err => {
-        console.log(err);
-        browserHistory.push('/login?next=/admin/changes');
-      });
   }
 
   /**
