@@ -13,7 +13,7 @@ class ServiceAttribution extends React.Component {
     const benetechLink = 'https://medium.com/@Shelter_Tech/sheltertech-is-participating-'
       + 'in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6';
 
-    return this.isServiceNetAttribution() ? (
+    return this.isServiceNetAttribution() && (
       <div className="attributed-service">
         <p className="attributed-service-resource-text">
           <span className="attributed-service-icon-container">
@@ -29,7 +29,7 @@ class ServiceAttribution extends React.Component {
           </a>
         </p>
       </div>
-    ) : null;
+    );
   }
 }
 
