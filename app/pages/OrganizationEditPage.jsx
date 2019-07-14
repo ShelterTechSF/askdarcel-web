@@ -632,9 +632,10 @@ class OrganizationEditPage extends React.Component {
     // eslint-disable-next-line no-restricted-globals
     if (confirm(confirmMessage) === true) {
       if (id < 0) {
-        this.setState(state => {
-          state.deactivatedServiceIds.add(id);
-          return state;
+        this.setState(({ deactivatedServiceIds }) => {
+          const newDeactivatedServiceIds = new Set(deactivatedServiceIds);
+          newDeactivatedServiceIds.add(id);
+          return { deactivatedServiceIds: newDeactivatedServiceIds };
         });
       } else {
         dataService.APIDelete(path, { change_request: { status: '2' } })
