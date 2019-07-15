@@ -25,10 +25,6 @@ $text-card-flex-basis: 230px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   z-index: 1;
-
-  @include r_max($break-tablet-p) {
-    height: 100px;
-  }
 }
 
 .landing-page-text-card__title {
@@ -39,6 +35,7 @@ $text-card-flex-basis: 230px;
   line-height: 23px;
   display: flex;
   align-items: center;
+  hyphens: manual;
 }
 
 .landing-page-card__title {
@@ -68,6 +65,7 @@ $text-card-flex-basis: 230px;
   padding: 15px 20px;
 }
 
+$carousel-slot-margin: 10px;
 .carousel-nav {
   position: absolute;
 
@@ -77,7 +75,6 @@ $text-card-flex-basis: 230px;
 
   top: 50%;
   transform: translateY(-50%);
-  right: -($carousel-nav-button-size / 2);
 
   background-color: #FFFFFF;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
@@ -93,6 +90,11 @@ $text-card-flex-basis: 230px;
 
   &.btn-right {
     background-image: url(../assets/img/nav/navCarousel.svg);
+    right: -($carousel-slot-margin);
+  }
+  &.btn-left {
+    background-image: url(../assets/img/nav/navCarouselLeft.svg);
+    left: -($carousel-slot-margin * 2);
   }
 }
 

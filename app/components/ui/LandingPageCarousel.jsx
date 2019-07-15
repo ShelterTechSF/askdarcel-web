@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
 
 const CarouselOuter = styled.div`
+  position: relative;
   overflow: visible;
   width: 100%;
 `;
@@ -28,8 +29,8 @@ CarouselNavButton.props = {
 };
 
 const CarouselSlot = styled.div`
-  flex: 1 0 calc(${props => props.width}% - 20px);
-  margin-right: 20px;
+  flex: 1 0 calc(${props => props.width}% - 10px);
+  margin-right: 10px;
 `;
 
 class LandingPageCarousel extends Component {
