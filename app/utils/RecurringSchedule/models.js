@@ -1,9 +1,14 @@
 /**
  * Data structures used for consistently representing time throughout the app.
  */
-import { sortBy } from 'lodash';
+import { minBy, sortBy } from 'lodash';
 
-import { INT_TO_DAY } from './constants';
+import {
+  DAYS_IN_WEEK, HOURS_IN_DAY, INT_TO_DAY, MINUTES_IN_HOUR,
+} from './constants';
+
+
+const MINUTES_IN_WEEK = MINUTES_IN_HOUR * HOURS_IN_DAY * DAYS_IN_WEEK;
 
 
 /**
@@ -22,6 +27,38 @@ const sortIntervals = intervals => (
 );
 
 
+/**
+ * Models a time duration, such as 2 days, 1 hour, 30 minutes.
+ */
+export class Duration {
+  /**
+   * Constructor for Duration. This is not meant to be used as a public method.
+   * Use one of the static method constructors instead.
+   */
+  constructor(minutes) {
+    this.minutes = minutes;
+  }
+
+  /**
+   * Create duration from minutes.
+   */
+  static fromMinutes(minutes) {
+    return new Duration(minutes);
+  }
+
+  asMinutes() {
+    return this.minutes;
+  }
+
+  /**
+   * Return primitive value of Duration so that comparison operators work.
+   */
+  valueOf() {
+    return this.asMinutes();
+  }
+}
+
+
 export class RecurringTime {
   /**
    * Create a weekly recurring time object, which consists of a day of week, an
@@ -36,6 +73,41 @@ export class RecurringTime {
     this.day = day;
     this.hour = hour;
     this.minute = minute;
+  }
+
+  /**
+   * Take the difference of two RecurringTimes as a Duration.
+   *
+   * @param {RecurringTime} otherTime
+   * @returns {Duration}
+   */
+  difference(otherTime) {
+    /**
+     * Compute the modulus of a divided by n, forcing the result into a nonnegative
+     * number. The builtin JavaScript operator % will return a negative number if a
+     * is negative, so here we force the result into a number between 0 and n;
+     *
+     * @param {number} a - The dividend.
+     * @param {number} n - The divisor.
+     * @returns {number} - The remainder.
+     */
+    const modulo = (a, n) => ((a % n) + n) % n;
+
+    /**
+     * Normalize RecurringTime into a number of minutes since Sunday midnight.
+     *
+     * @param {RecurringTime} time
+     * @returns {int}
+     */
+    const asMinutes = time => {
+      const hours = (time.day * HOURS_IN_DAY) + time.hour;
+      return hours * MINUTES_IN_HOUR + time.minute;
+    };
+
+    return Duration.fromMinutes(modulo(
+      asMinutes(this) - asMinutes(otherTime),
+      MINUTES_IN_WEEK,
+    ));
   }
 
   /**
@@ -82,6 +154,44 @@ export class RecurringInterval {
     this.closesAt = closesAt;
   }
 
+  is24Hours() {
+    return (
+      this.opensAt.hour === 0
+      && this.opensAt.minute === 0
+      && this.closesAt.hour === 23
+      && this.closesAt.minute === 59
+    );
+  }
+
+  /**
+   * Check if interval overlaps with target time.
+   *
+   * This interval overlaps with a target time if opensAt <= targetTime <
+   * closesAt. The one exception is when the interval represents an "open 24
+   * hours" interval, in which case the `closesAt` time is treated as an
+   * inclusive upper bound. This exception is only implemented for consistency
+   * with the API representation of a 24-hour schedule.
+   *
+   * Note that time is cyclical here; i.e. the week wraps after Saturday 23:59
+   * to Sunday 00:00. The overlap check should correctly handle intervals that
+   * span the wrapover point.
+   *
+   * https://fgiesen.wordpress.com/2015/09/24/intervals-in-modular-arithmetic/
+   *
+   * @param {RecurringTime} targetTime - A RecurringTime representing the time
+   *  to check for an overlap with.
+   * @returns {boolean}
+   */
+  overlapsTime(targetTime) {
+    if (this.is24Hours() && this.opensAt.day === targetTime.day) {
+      return true;
+    }
+
+    // Given a modular interval [a, b) mod n, x is within the interval iff
+    // (x - a) mod n < (b - a) mod n.
+    return targetTime.difference(this.opensAt) < this.closesAt.difference(this.opensAt);
+  }
+
   /**
    * Key that is suitable for React array.
    */
@@ -100,5 +210,44 @@ export class RecurringSchedule {
    */
   constructor({ intervals }) {
     this.intervals = sortIntervals(intervals);
+  }
+
+  /**
+   * True if and only if schedule is open 24 hours, 7 days a week.
+   */
+  isOpen24_7() {
+    // HACK: This assumes that there are no overlapping days of the week and
+    // that schedule days don't span more than one day.
+    const daysOpen24 = this.intervals.filter(i => i.is24Hours());
+    return daysOpen24.length === 7;
+  }
+
+  /**
+   * Find the nearest interval to the target time.
+   *
+   * If an interval overlaps target time, then return the overlapping interval.
+   * Otherwise, return the interval that will start the soonest after the target
+   * time.
+   *
+   * @param {RecurringTime} targetTime - The target time.
+   */
+  findNearestInterval(targetTime) {
+    if (!this.intervals.length) {
+      return undefined;
+    }
+
+    const overlappingInterval = this.intervals.find(
+      interval => interval.overlapsTime(targetTime),
+    );
+    if (overlappingInterval) {
+      return overlappingInterval;
+    }
+
+    // If we don't overlap anything, find the nearest schedule by opensAt time.
+    const nextByOpensAt = minBy(
+      this.intervals,
+      interval => interval.opensAt.difference(targetTime),
+    );
+    return nextByOpensAt;
   }
 }
