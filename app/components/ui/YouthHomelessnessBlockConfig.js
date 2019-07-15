@@ -24,7 +24,13 @@ const YouthHomelessnessBlockConfig = {
       query: null,
       resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
     },
+    {
+      title: 'Step 5: Apply for Jobs or Vocational Training',
+      query: null,
+      resource: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
+    }
   ],
+  NUM_SHOWN_CARDS: 4,
 };
 
 export default YouthHomelessnessBlockConfig;

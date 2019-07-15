@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
 
-const CarouselWrapper = props => {
-  return <div className="carousel-wrapper">{ props.children }</div>
-};
+const CarouselOuter = styled.div`
+  overflow: visible;
+  width: 100%;
+`;
 
-const CarouselContainer = props => {
-  return <div className="carousel">{ props.children }</div>;
-};
+const CarouselContainer = styled.div`
+  overflow: hidden;
+`;
+
+const CarouselSlider = styled.div`
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  transform: translateX(${props => props.activeIndex * props.slotWidth}%);
+`;
 
 const CarouselNavButton = props => {
   return <button className={`carousel-nav btn-${props.dir}`} />
@@ -16,6 +25,11 @@ const CarouselNavButton = props => {
 CarouselNavButton.props = {
   dir: PropTypes.string.isRequired,
 };
+
+const CarouselSlot = styled.div`
+  flex: 1 0 calc(${props => props.width}% - 20px);
+  margin-right: 20px;
+`;
 
 class LandingPageCarousel extends Component {
   constructor(props) {
@@ -37,34 +51,38 @@ class LandingPageCarousel extends Component {
       this.setState({ activeIndex: Math.max(0, decIndex) });
     }
 
+    const slotWidth = 100 / this.props.config.NUM_SHOWN_CARDS;
+
     return (
-      <div>
-      {
-        <CarouselWrapper>
-          <CarouselContainer>
+      <CarouselOuter>
+        <CarouselContainer>
+          <CarouselSlider slotWidth={ slotWidth } activeIndex={ this.state.activeIndex }>
           {
-            this.props.config.CARDS.map(category => {
-              return <LandingPageTextCard
-                key={ category.query || category.resource }
-                title={ category.title }
-                query={ category.query }
-                resource={ category.resource }
-                content={ category.content }
-              />
+            this.props.config.CARDS.map((category, index) => {
+              return (
+                <CarouselSlot key={ index } width={ slotWidth } >
+                  <LandingPageTextCard
+                    key={ category.query || category.resource }
+                    title={ category.title }
+                    query={ category.query }
+                    resource={ category.resource }
+                    content={ category.content }
+                  />
+                </CarouselSlot>
+              )
             })
           }
-          </CarouselContainer>
-          {
-            this.state.activeIndex > 0 &&
-              <CarouselNavButton dir="left" onClick={ advanceLeft } />
-          }
-          {
-            this.props.config.CARDS.length > this.props.config.NUM_SHOWN_CARDS + this.state.activeIndex && 
-              <CarouselNavButton dir="right" onClick={ advanceRight } />
-          }
-        </CarouselWrapper>
-      }
-      </div>
+          </CarouselSlider>
+        </CarouselContainer>
+        {
+          this.state.activeIndex > 0 &&
+            <CarouselNavButton dir="left" onClick={ advanceLeft } />
+        }
+        {
+          this.props.config.CARDS.length > this.props.config.NUM_SHOWN_CARDS + this.state.activeIndex && 
+            <CarouselNavButton dir="right" onClick={ advanceRight } />
+        }
+      </CarouselOuter>
     );
   }
 

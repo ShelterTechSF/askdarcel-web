@@ -21,9 +21,6 @@ $text-card-flex-basis: 230px;
   height: 100px;
   background-color: white;
   display: flex;
-  flex: 0 0 22%;
-  flex-direction: column;
-  width: calc(100% * (1/4));
   justify-content: space-around;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
@@ -38,7 +35,6 @@ $text-card-flex-basis: 230px;
   font-size: 16px;
   color: #000;
   padding: 20px;
-  flex: 0 0 65px;
   font-weight: 600;
   line-height: 23px;
   display: flex;
@@ -100,12 +96,3 @@ $text-card-flex-basis: 230px;
   }
 }
 
-.carousel-wrapper {
-  position: relative;
-  overflow: visible;
-}
-
-.carousel {
-  display: flex;
-  overflow: hidden;
-}
