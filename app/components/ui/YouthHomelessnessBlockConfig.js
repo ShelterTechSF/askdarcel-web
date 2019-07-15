@@ -3,6 +3,9 @@ const YouthHomelessnessBlockConfig = {
     BLUE_WORD: 'Youth Homelessness Guide',
     DESCRIPTION: 'Read our step-by-step guide unique to people age 18-24 to help you best navigate homelessness resources available to you',
   },
+  CAROUSEL: {
+    NUM_SLOTS: 4,
+  },
   CARDS: [
     {
       title: 'Step 1: Find Temporary Housing',
@@ -28,7 +31,27 @@ const YouthHomelessnessBlockConfig = {
       title: 'Step 5: Apply for Jobs or Vocational Training',
       query: null,
       resource: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
-    }
+    },
+    {
+      title: 'Step 4: Apply for Government Benefits',
+      query: null,
+      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
+    },
+    {
+      title: 'Step 4: Apply for Government Benefits',
+      query: null,
+      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
+    },
+    {
+      title: 'Step 4: Apply for Government Benefits',
+      query: null,
+      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
+    },
+    {
+      title: 'Step 4: Apply for Government Benefits',
+      query: null,
+      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
+    },
   ],
   NUM_SHOWN_CARDS: 4,
 };

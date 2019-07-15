@@ -33,7 +33,7 @@ const CarouselSlot = styled.div`
   margin-right: 10px;
 `;
 
-class LandingPageCarousel extends Component {
+class Carousel extends Component {
   constructor(props) {
     super(props);
 
@@ -45,7 +45,7 @@ class LandingPageCarousel extends Component {
   render() {
     const advanceRight = () => {
       const incIndex = this.state.activeIndex + 1;
-      this.setState({ activeIndex: Math.min(incIndex, this.props.config.CARDS.length - this.props.config.NUM_SHOWN_CARDS) });
+      this.setState({ activeIndex: Math.min(incIndex, this.props.children.length - this.props.numSlots) });
     };
 
     const advanceLeft = () => {
@@ -53,23 +53,17 @@ class LandingPageCarousel extends Component {
       this.setState({ activeIndex: Math.max(0, decIndex) });
     }
 
-    const slotWidth = 100 / this.props.config.NUM_SHOWN_CARDS;
+    const slotWidth = 100 / this.props.numSlots;
 
     return (
       <CarouselOuter>
         <CarouselContainer>
           <CarouselSlider slotWidth={ slotWidth } activeIndex={ this.state.activeIndex }>
           {
-            this.props.config.CARDS.map((category, index) => {
+            this.props.children.map((child, index) => {
               return (
                 <CarouselSlot key={ index } width={ slotWidth } >
-                  <LandingPageTextCard
-                    key={ category.query || category.resource }
-                    title={ category.title }
-                    query={ category.query }
-                    resource={ category.resource }
-                    content={ category.content }
-                  />
+                  { child }
                 </CarouselSlot>
               )
             })
@@ -81,7 +75,7 @@ class LandingPageCarousel extends Component {
             <CarouselNavButton dir="left" onClick={ advanceLeft } />
         }
         {
-          this.props.config.CARDS.length > this.props.config.NUM_SHOWN_CARDS + this.state.activeIndex && 
+          this.props.children.length > this.props.numSlots + this.state.activeIndex && 
             <CarouselNavButton dir="right" onClick={ advanceRight } />
         }
       </CarouselOuter>
@@ -90,13 +84,8 @@ class LandingPageCarousel extends Component {
 
 }
 
-LandingPageCarousel.props = {
-  config: PropTypes.shape({
-    TITLE: PropTypes.shape({
-    }),
-    CARDS: PropTypes.array,
-    NUM_SHOWN_CARDS: PropTypes.number,
-  }),
+Carousel.props = {
+  numSlots: PropTypes.number,
 };
 
-export default LandingPageCarousel;
+export default Carousel;

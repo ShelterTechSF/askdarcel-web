@@ -1,12 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
-import LandingPageCarousel from './LandingPageCarousel';
+import Carousel from './Carousel';
 
 const HOST_QUERY = '/search?query=';
 
 class LandingPageResourceBlock extends Component {
   render() {
+    const cards = this.props.config.CARDS.map(category => {
+      const key = category.query || category.resource;
+      const query = category.query ? HOST_QUERY + category.query : null;
+      if (category.imgClass) {
+        return <LandingPageCard
+          title={category.title}
+          content={category.content}
+          query={query}
+          imgClass={category.imgClass}
+          key={key}
+          resource={category.resource}
+        />
+      } else {
+        return <LandingPageTextCard
+          key={ key }
+          title={ category.title }
+          query={ category.query }
+          resource={ category.resource }
+          content={ category.content }
+        />
+      }
+    });
+
     return (
       <div className="landing-page-resource-block">
         <div className="landing-page-resource-block__resources">
@@ -29,29 +52,12 @@ class LandingPageResourceBlock extends Component {
               </div>
           }
           <div className="landing-page-resource-block__cards">
-            { <LandingPageCarousel config={this.props.config} />
-            
-            //{ this.props.config.CARDS.map(category => {
-              // const key = category.query || category.resource;
-              // const query = category.query ? HOST_QUERY + category.query : null;
-              // if (category.imgClass) {
-              //   return <LandingPageCard
-              //     title={category.title}
-              //     content={category.content}
-              //     query={query}
-              //     imgClass={category.imgClass}
-              //     key={key}
-              //     resource={category.resource}
-              //   />
-              // } else {
-              //   return <LandingPageTextCard
-              //     title={category.title}
-              //     query={query}
-              //     key={key}
-              //     resource={category.resource}
-              //   />
-              // }
-            //})}
+          {
+            this.props.config.CAROUSEL &&
+              (<Carousel numSlots={ this.props.config.CAROUSEL.NUM_SLOTS || 4 }>
+                { cards }
+              </Carousel>) ||
+              cards
           }
           </div>
         </div>
@@ -69,6 +75,9 @@ LandingPageResourceBlock.props = {
       DESCRIPTION: PropTypes.string,
     }),
     CARDS: PropTypes.array,
+    CAROUSEL: PropTypes.shape({
+      NUM_SLOTS: PropTypes.number,
+    }),
   }),
 };
 
