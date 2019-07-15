@@ -16,7 +16,7 @@ const CarouselSlider = styled.div`
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  transition:
+  transition: transform 1s ease;
   transform: translateX(${props => -props.activeIndex * props.slotWidth}%);
 `;
 
