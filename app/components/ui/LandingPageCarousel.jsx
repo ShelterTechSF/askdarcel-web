@@ -16,11 +16,12 @@ const CarouselSlider = styled.div`
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  transform: translateX(${props => props.activeIndex * props.slotWidth}%);
+  transition:
+  transform: translateX(${props => -props.activeIndex * props.slotWidth}%);
 `;
 
 const CarouselNavButton = props => {
-  return <button className={`carousel-nav btn-${props.dir}`} />
+  return <button className={`carousel-nav btn-${props.dir}`} onClick={ props.onClick } />
 };
 CarouselNavButton.props = {
   dir: PropTypes.string.isRequired,
