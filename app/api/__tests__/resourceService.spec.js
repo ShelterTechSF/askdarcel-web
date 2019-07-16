@@ -9,10 +9,10 @@ import resourceChangeRequestResponse from './__mocks__/resourceChangeRequestResp
 import {
   getResource,
   getResources,
-  searchForResources,
+  searchResources,
   submitNewResource,
-  submitEdits,
-  submitResourceChangeRequest
+  submitResourceChangeRequest,
+  submitChangeRequests
 } from '../resourceService';
 
 
@@ -43,7 +43,7 @@ describe('Resources', () => {
     mockAdapter.onGet(`/resources/search?query=${query}`).reply(200, {
       resources,
     });
-    const response = await searchForResources(query);
+    const response = await searchResources(query);
     const queriedResources = response.data.resources;
     const queryCheck = c => c.name.toLowerCase() === query.toLowerCase();
     const checkQueryResults = queriedResources.every(r => r.categories.some(queryCheck));
@@ -55,8 +55,9 @@ describe('Resources', () => {
   });
 
   it('Should create a resource', async () => {
-    mockAdapter.onPost('/resources')
-      .reply(201, { resources: [{ resource }] });
+    mockAdapter.onPost('/resources').reply(201, {
+      resources: [{ resource }]
+    });
     const response = await submitNewResource(resource);
     const resourceId = response.data.resources[0].resource.id;
     expect(resourceId).to.equal(1);
@@ -65,11 +66,10 @@ describe('Resources', () => {
 
   it('Should submit changeRequest', async () => {
     const id = 1
-    mockAdapter.onPost(`/resources/${id}/change_requests`)
-      .reply(201, {
-        "change_request_response":
-          resourceChangeRequestResponse
-      });
+    mockAdapter.onPost(`/resources/${id}/change_requests`).reply(201, {
+      "change_request_response":
+        resourceChangeRequestResponse
+    });
     const response = await submitResourceChangeRequest(id, resourceChangeRequest);
     const responseChangeRequest = response.data.change_request_response.resource_change_request
     const fieldChanges = responseChangeRequest.field_changes[0]
@@ -81,14 +81,16 @@ describe('Resources', () => {
     expect(response.status).to.equal(201);
   });
 
-
-  it('Should submit an array of edit promises', async () => {
+  it('Should submit an array of change request promises', async () => {
     const promises = [];
-    mockAdapter.onAny('/resources')
-      .reply(() => Promise.all(promises).then(
+    promises.push(submitResourceChangeRequest(1, resourceChangeRequest))
+    mockAdapter.onAny('/resources').reply(() => Promise.all(promises).then(
         sources => [200, sources.reduce((agg, source) => agg.concat(source))],
       ));
-    const response = await submitEdits(promises);
-    expect(response.status).to.equal(201);
+    const responses = await submitChangeRequests(promises);
+
+    expect(responses).to.be.an('array');
+    expect(responses[0].status).to.equal(201);
+    expect(responses[0].data).to.be.an('object');
   });
 });
