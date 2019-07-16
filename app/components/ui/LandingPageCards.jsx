@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LandingPageCard = props => (
+const LandingPageCard = ({
+  query, resource, title, imgClass, content,
+}) => (
   <a
-    href={props.query || props.resource}
+    href={query || resource}
     className="landing-page-card"
   >
-    <h1 className="landing-page-card__title">{props.title}</h1>
-    <div className={`landing-page-card__image ${props.imgClass}`} />
-    <h2 className="landing-page-card__content">{props.content}</h2>
+    <h1 className="landing-page-card__title">{title}</h1>
+    <div className={`landing-page-card__image ${imgClass}`} />
+    <h2 className="landing-page-card__content">{content}</h2>
   </a>
 );
 
@@ -20,12 +22,12 @@ LandingPageCard.props = {
   imgClass: PropTypes.string,
 };
 
-const LandingPageTextCard = props => (
+const LandingPageTextCard = (query, resource, title) => (
   <a
-    href={props.query || props.resource}
+    href={query || resource}
     className="landing-page-text-card"
   >
-    <h1 className="landing-page-text-card__title">{props.title}</h1>
+    <h1 className="landing-page-text-card__title">{title}</h1>
   </a>
 );
 

@@ -6,16 +6,15 @@ import Carousel from '../Carousel';
 import { LandingPageTextCard } from '../LandingPageCards';
 
 describe('<Carousel />', () => {
-  const createCategoryCards = (categories) => {
-    return categories.map((category) => {
-      return <LandingPageTextCard
+  const createCategoryCards = categories => (
+    categories.map(category => (
+      <LandingPageTextCard
         title={category.title}
         query={category.query}
         key={category.key}
         resource={category.resource}
-      />;
-    });
-  }
+      />
+    )));
 
   const twoCards = [
     {
@@ -67,16 +66,14 @@ describe('<Carousel />', () => {
       imgClass: 'legal-block-housing',
     },
   ];
-  const createCarousel = (cards, numSlots) => {
-    return shallow(
-      <Carousel numSlots={ numSlots }>
-        { createCategoryCards(cards) }
-      </Carousel>
-    );
-  }
+  const createCarousel = (cards, numSlots) => shallow((
+    <Carousel numSlots={numSlots}>
+      {createCategoryCards(cards)}
+    </Carousel>
+  ));
 
   it('creates a carousel with the expected number of cards', () => {
-    const carousel = createCarousel(twoCards, 4); 
+    const carousel = createCarousel(twoCards, 4);
     expect(carousel.find('LandingPageTextCard')).to.have.lengthOf(twoCards.length);
   });
 
@@ -92,13 +89,11 @@ describe('<Carousel />', () => {
     expect(carousel.find('CarouselNavButton')).to.have.lengthOf(0);
   });
 
-  const getNavBtn = (carousel, direction) => {
-    return carousel.findWhere(wrapper => wrapper.is('CarouselNavButton') && wrapper.prop('dir') === direction);
-  }
+  const getNavBtn = (carousel, direction) => carousel.findWhere((
+    wrapper => wrapper.is('CarouselNavButton') && wrapper.prop('dir') === direction
+  ));
 
-  const getRightNavBtn = (carousel) => {
-    return getNavBtn(carousel, 'right');
-  };
+  const getRightNavBtn = carousel => getNavBtn(carousel, 'right');
 
   it('advances to the next active index on clicking the right nav button', () => {
     const carousel = createCarousel(sevenCards, 4);
@@ -115,9 +110,7 @@ describe('<Carousel />', () => {
     expect(getRightNavBtn(carousel)).to.have.lengthOf(0);
   });
 
-  const getLeftNavBtn = (carousel) => {
-    return getNavBtn(carousel, 'left');
-  };
+  const getLeftNavBtn = carousel => getNavBtn(carousel, 'left');
 
   it('does not show a leftward nav button when the carousel is at the start', () => {
     const carousel = createCarousel(fiveCards, 4);
@@ -137,5 +130,4 @@ describe('<Carousel />', () => {
     getLeftNavBtn(carousel).simulate('click');
     expect(carousel.state('activeIndex')).to.equal(startIdx);
   });
-
 });

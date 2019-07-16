@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
 
 const CarouselOuter = styled.div`
   position: relative;
@@ -21,9 +20,9 @@ const CarouselSlider = styled.div`
   transform: translateX(${props => -props.activeIndex * props.slotWidth}%);
 `;
 
-const CarouselNavButton = props => {
-  return <button className={`carousel-nav btn-${props.dir}`} onClick={ props.onClick } />
-};
+const CarouselNavButton = ({ dir, onClick }) => (
+  <button type="button" className={`carousel-nav btn-${dir}`} onClick={onClick} />
+);
 CarouselNavButton.props = {
   dir: PropTypes.string.isRequired,
 };
@@ -38,50 +37,52 @@ class Carousel extends Component {
     super(props);
 
     this.state = {
-      activeIndex: 0
+      activeIndex: 0,
     };
   }
 
   render() {
     const advanceRight = () => {
-      const incIndex = this.state.activeIndex + 1;
-      this.setState({ activeIndex: Math.min(incIndex, this.props.children.length - this.props.numSlots) });
+      const { activeIndex } = this.state;
+      const { children, numSlots } = this.props;
+      this.setState({
+        activeIndex: Math.min(activeIndex + 1, children.length - numSlots),
+      });
     };
 
     const advanceLeft = () => {
-      const decIndex = this.state.activeIndex - 1;
-      this.setState({ activeIndex: Math.max(0, decIndex) });
-    }
+      const { activeIndex } = this.state;
+      this.setState({ activeIndex: Math.max(0, activeIndex - 1) });
+    };
 
-    const slotWidth = 100 / this.props.numSlots;
+    const { activeIndex } = this.state;
+    const { children, numSlots } = this.props;
+    const slotWidth = 100 / numSlots;
 
     return (
       <CarouselOuter>
         <CarouselContainer>
-          <CarouselSlider slotWidth={ slotWidth } activeIndex={ this.state.activeIndex }>
-          {
-            this.props.children.map((child, index) => {
-              return (
-                <CarouselSlot key={ index } width={ slotWidth } >
-                  { child }
+          <CarouselSlider slotWidth={slotWidth} activeIndex={activeIndex}>
+            {
+              children.map(child => ((
+                <CarouselSlot width={slotWidth}>
+                  {child}
                 </CarouselSlot>
-              )
-            })
-          }
+              )))
+            }
           </CarouselSlider>
         </CarouselContainer>
         {
-          this.state.activeIndex > 0 &&
-            <CarouselNavButton dir="left" onClick={ advanceLeft } />
+          activeIndex > 0
+            && <CarouselNavButton dir="left" onClick={advanceLeft} />
         }
         {
-          this.props.children.length > this.props.numSlots + this.state.activeIndex && 
-            <CarouselNavButton dir="right" onClick={ advanceRight } />
+          children.length > numSlots + activeIndex
+            && <CarouselNavButton dir="right" onClick={advanceRight} />
         }
       </CarouselOuter>
     );
   }
-
 }
 
 Carousel.props = {

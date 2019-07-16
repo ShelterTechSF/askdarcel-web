@@ -51,6 +51,12 @@ class LandingPageResourceBlock extends Component {
                 { this.props.config.TITLE.DESCRIPTION }
               </div>
           }
+          {
+            this.props.config.LINK &&
+              <div className="landing-page-resource-block__resources-link">
+                { <a href={this.props.config.LINK.URL}>{this.props.config.LINK.TEXT}</a> }
+              </div>
+          }
           <div className="landing-page-resource-block__cards">
           {
             this.props.config.CAROUSEL &&
@@ -73,6 +79,10 @@ LandingPageResourceBlock.props = {
       BLUE_WORD: PropTypes.string,
       AFTER_BLUE_WORD: PropTypes.string,
       DESCRIPTION: PropTypes.string,
+    }),
+    LINK: PropTypes.shape({
+      URL: PropTypes.string,
+      TEXT: PropTypes.string,
     }),
     CARDS: PropTypes.array,
     CAROUSEL: PropTypes.shape({
