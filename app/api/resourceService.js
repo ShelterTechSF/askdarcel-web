@@ -1,5 +1,5 @@
+import axios from 'axios';
 import api from './httpClient';
-import axios from 'axios'
 
 
 export const getResource = id => api.get(`/resources/${id}`);
@@ -47,4 +47,4 @@ export const verifyResource = id => {
   const changeRequest = { verified_at: new Date().toISOString() };
   return api.post(`/resources/${id}/change_requests`,
     { change_request: changeRequest });
-  };
+};

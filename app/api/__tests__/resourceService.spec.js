@@ -12,7 +12,7 @@ import {
   searchResources,
   submitNewResource,
   submitResourceChangeRequest,
-  submitChangeRequests
+  submitChangeRequests,
 } from '../resourceService';
 
 
@@ -56,7 +56,7 @@ describe('Resources', () => {
 
   it('Should create a resource', async () => {
     mockAdapter.onPost('/resources').reply(201, {
-      resources: [{ resource }]
+      resources: [{ resource }],
     });
     const response = await submitNewResource(resource);
     const resourceId = response.data.resources[0].resource.id;
@@ -65,14 +65,14 @@ describe('Resources', () => {
   });
 
   it('Should submit changeRequest', async () => {
-    const id = 1
+    const id = 1;
     mockAdapter.onPost(`/resources/${id}/change_requests`).reply(201, {
-      "change_request_response":
-        resourceChangeRequestResponse
+      change_request_response:
+        resourceChangeRequestResponse,
     });
     const response = await submitResourceChangeRequest(id, resourceChangeRequest);
-    const responseChangeRequest = response.data.change_request_response.resource_change_request
-    const fieldChanges = responseChangeRequest.field_changes[0]
+    const responseChangeRequest = response.data.change_request_response.resource_change_request;
+    const fieldChanges = responseChangeRequest.field_changes[0];
 
     expect(responseChangeRequest.status).to.equal('pending');
     expect(responseChangeRequest.type).to.equal('ResourceChangeRequest');
@@ -83,10 +83,10 @@ describe('Resources', () => {
 
   it('Should submit an array of change request promises', async () => {
     const promises = [];
-    promises.push(submitResourceChangeRequest(1, resourceChangeRequest))
+    promises.push(submitResourceChangeRequest(1, resourceChangeRequest));
     mockAdapter.onAny('/resources').reply(() => Promise.all(promises).then(
-        sources => [200, sources.reduce((agg, source) => agg.concat(source))],
-      ));
+      sources => [200, sources.reduce((agg, source) => agg.concat(source))],
+    ));
     const responses = await submitChangeRequests(promises);
 
     expect(responses).to.be.an('array');
