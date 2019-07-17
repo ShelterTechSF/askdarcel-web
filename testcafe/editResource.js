@@ -24,6 +24,7 @@ test('Edit resource name', async t => {
 
 test('Edit resource address', async t => {
   const newProps = {
+    name: 'Main HQ',
     address1: '123 Fake St.',
     address2: 'Suite 456',
     address3: 'Room 789',

@@ -26,28 +26,11 @@ const BasicNeedsBlockConfig = {
       imgClass: 'basic-block-meals',
     },
     {
-      title: 'Find secure storage lockers',
-      content: 'Get on the waitlist for secure storage lockers',
-      query: 'storage',
-      imgClass: 'basic-block-lockers',
-    },
-    {
+      // Add Pit Stop locations to search
       title: 'Public toilets and showers',
       content: 'Toilets, showers, sharps disposal, and pet waste collection',
       query: 'showers',
       imgClass: 'basic-block-showers',
-    },
-    {
-      title: 'Get medical care',
-      content: 'Get non-urgent medical care at these neighborhood clinics',
-      query: 'free+clinics',
-      imgClass: 'basic-block-medical',
-    },
-    {
-      title: 'Apply for benefits',
-      content: 'Make sure you’re receiving all the benefits you’re eligible for',
-      query: 'government+benefits',
-      imgClass: 'basic-block-benefits',
     },
   ],
 };

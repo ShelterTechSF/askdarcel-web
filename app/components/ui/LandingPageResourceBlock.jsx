@@ -9,6 +9,7 @@ const HOST_QUERY = '/search?query=';
 class LandingPageResourceBlock extends Component {
   render() {
     const { children, config } = this.props;
+    const url = `/search?refinementList[categories][0]=${encodeURIComponent(config.TITLE.BLUE_WORD)}`
     const cards = config.CARDS.map(category => {
       const key = category.query || category.resource;
       const query = category.query ? HOST_QUERY + category.query : null;

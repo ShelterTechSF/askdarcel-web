@@ -17,7 +17,10 @@ class SearchPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { searchState: { ...qs.parse(props.router.location.query) } };
+    this.state = { 
+      searchState: { ...qs.parse(props.router.location.query) },
+      filtersOpen: false
+    };
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
 
@@ -59,7 +62,7 @@ class SearchPage extends Component {
     /* eslint-disable no-undef */
     return (
       <div className="search-page-container">
-        <Filtering />
+        
         <InstantSearch
           appId={config.ALGOLIA_APPLICATION_ID}
           apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
@@ -68,6 +71,7 @@ class SearchPage extends Component {
           onSearchStateChange={this.onSearchStateChange}
           createURL={this.createURL}
         >
+          <Filtering />
           {configuration}
           <div className="search-box">
             <SearchBox />
@@ -77,9 +81,7 @@ class SearchPage extends Component {
             <RefinementList attribute="open_times" />
             <RefinementList attribute="eligibilities" />
           </div>
-          <div>
-            <SearchResultsContainer />
-          </div>
+          <SearchResultsContainer />
         </InstantSearch>
       </div>
     );

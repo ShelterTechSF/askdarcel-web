@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 const hasNoLocation = address => {
-  const someFieldExistsOrNewAddress = typeof address === 'undefined' || address.address_1 !== ''
-    || address.address_2 !== '' || address.address_1 !== '' || address.address_3 !== ''
+  const someFieldExistsOrNewAddress = typeof address === 'undefined'
+    || address.name !== '' || address.address_1 !== ''
+    || address.address_2 !== '' || address.address_3 !== ''
     || address.address_4 !== '' || address.city !== '' || address.postal_code !== ''
     || address.state_province !== '' || address.country !== '';
   if (someFieldExistsOrNewAddress) {
@@ -39,6 +40,7 @@ class EditAddress extends Component {
         newAddr = address;
       } else {
         newAddr = {
+          name: '',
           address_1: '',
           address_2: '',
           address_3: '',
@@ -87,6 +89,14 @@ const AddressForm = ({
     {!noLocation
         && (
           <div>
+            <input
+              type="text"
+              className="input"
+              placeholder="Name"
+              data-field="name"
+              defaultValue={address.name}
+              onChange={handleAddressChange}
+            />
             <input
               type="text"
               className="input"

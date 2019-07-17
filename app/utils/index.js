@@ -1,13 +1,9 @@
 import moment from 'moment';
 
 export function getAuthRequestHeaders() {
-  const authHeaders = JSON.parse(localStorage.authHeaders);
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'access-token': authHeaders['access-token'],
-    client: authHeaders.client,
-    uid: authHeaders.uid,
   };
 }
 
@@ -83,21 +79,6 @@ export function daysOfTheWeek() {
     'Friday',
     'Saturday',
   ];
-}
-
-export function createTemplateSchedule() {
-  const daysTemplate = [];
-  for (let i = 0; i < daysOfTheWeek().length; i += 1) {
-    const day = daysOfTheWeek()[i];
-    daysTemplate.push({
-      day,
-      opens_at: null,
-      closes_at: null,
-      id: i + 1,
-    });
-  }
-
-  return daysTemplate;
 }
 
 export function sortScheduleDays(scheduleDays) {

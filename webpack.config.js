@@ -77,6 +77,9 @@ module.exports = {
           path.resolve(__dirname, 'app/components/ui/Navigation'),
           path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
           path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
+          path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
+          path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
+          path.resolve(__dirname, 'app/components/listing/HAPBadge'),
         ],
         test: /\.s?css$/,
         use: [
@@ -94,6 +97,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
           path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
+          path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
         ],
         test: /\.s?css$/,
         use: [
@@ -109,6 +113,8 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'app/components/ui/HamburgerMenu'),
           path.resolve(__dirname, 'app/components/ui/Navigation'),
+          path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
+          path.resolve(__dirname, 'app/components/listing/HAPBadge'),
         ],
         test: /\.s?css$/,
         use: [
