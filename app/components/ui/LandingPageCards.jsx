@@ -22,7 +22,7 @@ LandingPageCard.props = {
   imgClass: PropTypes.string,
 };
 
-const LandingPageTextCard = (query, resource, title) => (
+const LandingPageTextCard = ({ query, resource, title }) => (
   <a
     href={query || resource}
     className="landing-page-text-card"
@@ -35,7 +35,6 @@ LandingPageTextCard.props = {
   title: PropTypes.string,
   query: PropTypes.string,
   resource: PropTypes.string,
-  content: PropTypes.string,
 };
 
 export { LandingPageCard, LandingPageTextCard };

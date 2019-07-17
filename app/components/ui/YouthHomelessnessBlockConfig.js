@@ -6,6 +6,10 @@ const YouthHomelessnessBlockConfig = {
   CAROUSEL: {
     NUM_SLOTS: 4,
   },
+  LINK: {
+    URL: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
+    TEXT: 'View Guide',
+  },
   CARDS: [
     {
       title: 'Step 1: Find Temporary Housing',
@@ -33,24 +37,9 @@ const YouthHomelessnessBlockConfig = {
       resource: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
     },
     {
-      title: 'Step 4: Apply for Government Benefits',
+      title: 'Other Helpful Services',
       query: null,
-      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
-    },
-    {
-      title: 'Step 4: Apply for Government Benefits',
-      query: null,
-      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
-    },
-    {
-      title: 'Step 4: Apply for Government Benefits',
-      query: null,
-      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
-    },
-    {
-      title: 'Step 4: Apply for Government Benefits',
-      query: null,
-      resource: 'https://help.sfserviceguide.org/youth-homelessness-guide/step-4-apply-for-government-benefits',
+      resource: 'https://help.sfserviceguide.org/en/articles/2868666-other-helpful-services',
     },
   ],
   NUM_SHOWN_CARDS: 4,

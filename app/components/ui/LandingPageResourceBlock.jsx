@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
 import Carousel from './Carousel';
@@ -25,7 +26,6 @@ class LandingPageResourceBlock extends Component {
           title={ category.title }
           query={ category.query }
           resource={ category.resource }
-          content={ category.content }
         />
       }
     });
@@ -34,27 +34,38 @@ class LandingPageResourceBlock extends Component {
       <div className="landing-page-resource-block">
         <div className="landing-page-resource-block__resources">
           {this.props.children}
-          <div className="landing-page-resource-block__resources-title">
-            <h1>
-              {this.props.config.TITLE.BEFORE_BLUE_WORD
-                && this.props.config.TITLE.BEFORE_BLUE_WORD + ' '}
-              <span className="blue-word">
-                {this.props.config.TITLE.BLUE_WORD}
-              </span>
-              {this.props.config.TITLE.AFTER_BLUE_WORD
-                && ' ' + this.props.config.TITLE.AFTER_BLUE_WORD}
-            </h1>
+          <div className="landing-page-resource-block__resources-title-container">
+            <div className="landing-page-resource-block__resources-title">
+              <h1>
+                {this.props.config.TITLE.BEFORE_BLUE_WORD
+                  && this.props.config.TITLE.BEFORE_BLUE_WORD + ' '}
+                <span className="blue-word">
+                  {this.props.config.TITLE.BLUE_WORD}
+                </span>
+                {this.props.config.TITLE.AFTER_BLUE_WORD
+                  && ' ' + this.props.config.TITLE.AFTER_BLUE_WORD}
+              </h1>
+            </div>
+            {
+              this.props.config.LINK &&
+                <div className="landing-page-resource-block__resources-link">
+                  {
+                    this.props.config.LINK.QUERY_CATEGORY && (
+                      <Link to={`/search?refinementList[categories][0]=${encodeURIComponent(this.props.config.LINK.QUERY_CATEGORY)}`}>
+                        <span>{this.props.config.LINK.TEXT}</span>
+                      </Link>)
+                  }
+                  {
+                    this.props.config.LINK.URL && (
+                      <a href={this.props.config.LINK.URL}>{this.props.config.LINK.TEXT}</a>)
+                  }
+                </div>
+            }
           </div>
           {
             this.props.config.TITLE.DESCRIPTION &&
               <div className="landing-page-resource-block__resources-description">
                 { this.props.config.TITLE.DESCRIPTION }
-              </div>
-          }
-          {
-            this.props.config.LINK &&
-              <div className="landing-page-resource-block__resources-link">
-                { <a href={this.props.config.LINK.URL}>{this.props.config.LINK.TEXT}</a> }
               </div>
           }
           <div className="landing-page-resource-block__cards">
@@ -82,6 +93,7 @@ LandingPageResourceBlock.props = {
     }),
     LINK: PropTypes.shape({
       URL: PropTypes.string,
+      QUERY_ELIGIBILITY: PropTypes.string,
       TEXT: PropTypes.string,
     }),
     CARDS: PropTypes.array,
