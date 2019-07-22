@@ -13,7 +13,8 @@ const SearchTable = ({ hits, page, hitsPerPage }) => {
       hitsPerPage={hitsPerPage}
       page={page}
       index={index}
-      key={hit.objectID} />
+      key={hit.objectID}
+    />
   ));
   return (
     <div>
@@ -28,8 +29,8 @@ const SearchTable = ({ hits, page, hitsPerPage }) => {
           showLast={false}
           showFirst={false}
           translations={{
-            previous:'Prev',
-            next:'Next',
+            previous: 'Prev',
+            next: 'Next',
           }}
         />
       </div>
@@ -37,7 +38,7 @@ const SearchTable = ({ hits, page, hitsPerPage }) => {
         <img src={images.algolia} alt="Search by Algolia" />
       </div>
     </div>
-  )
+  );
 };
 
 export default SearchTable;

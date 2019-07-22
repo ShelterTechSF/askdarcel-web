@@ -19,29 +19,32 @@ class SearchPage extends Component {
 
     this.state = {
       searchState: { ...qs.parse(props.router.location.query) },
-      filtersOpen: false
     };
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
 
   componentWillReceiveProps() {
-    this.setState({ searchState: qs.parse(this.props.router.location.query) });
+    const { router: { location: { query } } } = this.props;
+    this.setState({ searchState: qs.parse(query) });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !isEqual(this.state.searchState, nextState.searchState);
+    const { searchState } = this.state;
+    return !isEqual(searchState, nextState.searchState);
   }
 
   onSearchStateChange(nextSearchState) {
     const THRESHOLD = 700;
     const newPush = Date.now();
+    const { router } = this.props;
+    const { lastPush } = this.state;
     this.setState({ lastPush: newPush, searchState: nextSearchState });
-    if (this.state.lastPush && newPush - this.state.lastPush <= THRESHOLD) {
-      this.props.router.replace(
+    if (lastPush && newPush - lastPush <= THRESHOLD) {
+      router.replace(
         nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
       );
     } else {
-      this.props.router.push(
+      router.push(
         nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
       );
     }
@@ -54,7 +57,8 @@ class SearchPage extends Component {
 
   render() {
     const { userLocation } = this.props;
-    const configuration = this.state.aroundLatLng ? (
+    const { aroundLatLng, searchState } = this.state;
+    const configuration = aroundLatLng ? (
       <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} />
     ) : (
       <Configure aroundLatLngViaIP aroundRadius="all" />
@@ -67,7 +71,7 @@ class SearchPage extends Component {
           appId={config.ALGOLIA_APPLICATION_ID}
           apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
           indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
-          searchState={this.state.searchState}
+          searchState={searchState}
           onSearchStateChange={this.onSearchStateChange}
           createURL={this.createURL}
         >

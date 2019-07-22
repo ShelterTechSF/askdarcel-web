@@ -16,17 +16,14 @@ class Filtering extends Component {
       oldPathname: '',
       oldSearch: '',
     };
-    this.toggleOpenNow = this.toggleOpenNow.bind(this);
-    this.toggleFilters = this.toggleFilters.bind(this);
   }
 
-  toggleOpenNow() {
-    const currentValue = this.state.openNow;
+  toggleOpenNow = () => {
     const currentDayTime = getCurrentDayTime();
     const currentLocation = browserHistory.getCurrentLocation();
     const { pathname } = currentLocation;
     const { search } = currentLocation;
-    const { oldPathname, oldSearch } = this.state;
+    const { oldPathname, oldSearch, openNow: currentValue } = this.state;
 
 
     if (currentValue === true) {
@@ -48,9 +45,7 @@ class Filtering extends Component {
     this.setState({ openNow: !currentValue });
   }
 
-  toggleFilters() {
-    this.setState({filtersActive: !this.state.filtersActive});
-  }
+  setFiltersActive = filtersActive => this.setState({ filtersActive })
 
   render() {
     const { openNow } = this.state;
@@ -64,23 +59,28 @@ class Filtering extends Component {
               alt="filters icon"
               className="filters-icon"
             />
-            <a className={"refine-btn " + (filtersActive ? 'active' : '')}
-                onClick={this.toggleFilters}>
+            <button
+              className={`refine-btn ${filtersActive ? 'active' : ''}`}
+              onClick={() => this.setFiltersActive(!filtersActive)}
+              type="button"
+            >
                 Filters
-              </a>
+            </button>
             <button
               className={`filter-chip ${openNow ? 'active' : ''}`}
               onClick={this.toggleOpenNow}
+              type="button"
             >
               Open now
             </button>
-            <div className={"custom-refinement " + (filtersActive ? 'active' : '')}>
+            <div className={`custom-refinement ${filtersActive ? 'active' : ''}`}>
               {/* FacetRefinementList is a generalized refinement list for filtering
                   limit={100} indicates the limit of facet values Algolia returns. default is 10
-                  mapping={...} indicates the filter mappings to use; it maps {key: list of facet values}
+                  mapping={...} indicates the filter mappings to use; it maps
+                  {key: list of facet values}
                */}
-              <FacetRefinementList attribute="eligibilities" limit={100} mapping={eligibilitiesMapping}/>
-              <FacetRefinementList attribute="categories" limit={100} mapping={categoriesMapping}/>
+              <FacetRefinementList attribute="eligibilities" limit={100} mapping={eligibilitiesMapping} />
+              <FacetRefinementList attribute="categories" limit={100} mapping={categoriesMapping} />
             </div>
           </div>
         </div>
