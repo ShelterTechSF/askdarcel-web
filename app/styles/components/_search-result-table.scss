@@ -6,6 +6,15 @@
   }
 }
 
+.marker {
+  @include transform(translateY(-50%));
+  position: absolute;
+  height: 55px;
+  width: 30px;
+  top: -27px;
+  left: -15px;
+}
+
 .map-wrapper {
   width: 50vw;
   height: 90%;
@@ -22,7 +31,7 @@
 }
 .filters-icon {
   height: calc-em(15px);
-  padding: 0px 3px 3px 0px ; 
+  padding: 0px 3px 3px 0px;
 }
 .refine-btn {
   border: none;
