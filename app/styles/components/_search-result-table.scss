@@ -22,7 +22,7 @@
 }
 .filters-icon {
   height: calc-em(15px);
-  padding: 0px 3px 3px 0px ; 
+  padding: 0px 3px 3px 0px;
 }
 .refine-btn {
   border: none;
@@ -67,9 +67,14 @@
   padding: 5px 0px;
   color: #666666;
 }
-.refine-li.active {
-  color: #276ce5;
-  font-weight: 500;
+.refine-li {
+  &.refine-li-disabled {
+    color: $color-grey4;
+  }
+  &.active {
+    color: #276ce5;
+    font-weight: 500;
+  }
 }
 .refine-checkbox {
   margin-bottom: calc-em(10px);
