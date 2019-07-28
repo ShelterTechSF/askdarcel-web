@@ -2,16 +2,11 @@ build
 app/components/admin/ChangeRequest.jsx
 app/components/admin/ProposedService.jsx
 app/components/auth/RequireAuth.jsx
-app/components/layout/CategoryItem.jsx
-app/components/layout/CategoryList.jsx
-app/components/layout/FindHeader.jsx
-app/components/layout/OrganizationCard.jsx
 app/components/search/Filtering.jsx
 app/components/search/ResourcesList.jsx
 app/components/search/ResourcesMap.jsx
 app/components/search/ResourcesRow.jsx
 app/components/search/ResourcesTable.jsx
-app/components/search/SearchMap.jsx
 app/components/search/SearchTabHelper.jsx
 app/components/search/SearchTable.jsx
 app/components/ui/Accordion/Accordion.jsx

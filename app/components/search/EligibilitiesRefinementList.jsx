@@ -72,6 +72,11 @@ class EligibilitiesRefinementList extends Component {
     }
   }
 
+  refinementHasResults(key) {
+    const { items } = this.props;
+    return items.find(item => item.label === key);
+  }
+
   render() {
     const { isChecked } = this.state;
     const mapKeys = Object.keys(this.eligibilitiesMapping);
@@ -79,22 +84,30 @@ class EligibilitiesRefinementList extends Component {
       <div className="refinement-wrapper">
         <p className="refinement-title">Eligibilities</p>
         <ul className="refinement-ul">
-          {mapKeys.map(key => (
+          {mapKeys.map(key => {
+            const refinementHasResults = this.refinementHasResults(key);
             // for each map key, display it as a filtering option
             // for onClick of each option, call refine on the values of the key
             // eslint-disable-next-line prefer-template
-            <li key={key} className={'refine-li ' + (isChecked[key] ? 'active' : '')}>
-              <label>
-                <input
-                  type="checkbox"
-                  className="refine-checkbox"
-                  onChange={this.changeRefinement.bind(this, key)}
-                  checked={isChecked[key]}
-                />
-                {key}
-              </label>
-            </li>
-          ))}
+            return (
+              <li
+                key={key}
+                className={`refine-li ${isChecked[key] ? 'active' : ''
+                }${!refinementHasResults ? 'refine-li-disabled' : ''}`}
+              >
+                <label>
+                  <input
+                    type="checkbox"
+                    className="refine-checkbox"
+                    onChange={this.changeRefinement.bind(this, key)}
+                    checked={isChecked[key]}
+                    disabled={!refinementHasResults}
+                  />
+                  {key}
+                </label>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
