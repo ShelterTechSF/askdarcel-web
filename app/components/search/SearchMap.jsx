@@ -48,8 +48,6 @@ function CustomMarker({ index }) {
   /*  eslint-enable max-len */
 }
 
-// const SearchMap = connectHits(HitsMap);
-
 const SearchMap = ({ hits, userLocation }) => {
   if (!hits || !hits.length) {
     return null;
@@ -65,7 +63,6 @@ const SearchMap = ({ hits, userLocation }) => {
   ));
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
-  /* eslint-disable no-undef */
   return (
     <div className="results-map">
       <div className="map-wrapper">
@@ -82,7 +79,6 @@ const SearchMap = ({ hits, userLocation }) => {
       </div>
     </div>
   );
-  /* eslint-enable no-undef */
 };
 
 function mapStateToProps(state) {

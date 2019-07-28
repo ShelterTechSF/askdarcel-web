@@ -11,7 +11,6 @@ app/components/search/ResourcesList.jsx
 app/components/search/ResourcesMap.jsx
 app/components/search/ResourcesRow.jsx
 app/components/search/ResourcesTable.jsx
-app/components/search/SearchMap.jsx
 app/components/search/SearchTabHelper.jsx
 app/components/search/SearchTabView.jsx
 app/components/search/SearchTable.jsx
