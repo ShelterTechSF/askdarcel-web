@@ -7,8 +7,12 @@
 	width: calc-em(250px);
 	background-color: $color-grey1;
   display: flex;
-	justify-content: space-between;
 	flex-direction: column;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 5rem;
+  height: 100vh;
+  
 }
 
 .sidebar--content {

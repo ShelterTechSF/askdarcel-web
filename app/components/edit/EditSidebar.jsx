@@ -69,6 +69,11 @@ const EditSidebar = ({
       </button>,
     );
   }
+  // populate existing services so they show up on the sidebar
+  for (let i=0; i<resource.services.length; i++) {
+    let resourceService = resource.services[i];
+    newServices[resourceService.id].name = resourceService.name
+  }
   return (
     <nav className="sidebar">
       <div className="sidebar--content">
@@ -88,11 +93,6 @@ const EditSidebar = ({
               <button type="button" className="service--action--button" onClick={addService}><i className="material-icons">add</i></button>
             </h3>
           </li>
-          { resource.services && resource.services.map(service => (
-            <li key={service.id} className="sidebar--list--item">
-              <a href={`#${service.id}`}>{service.name}</a>
-            </li>
-          )) }
           {Object.keys(newServices).map(service => (
             <li key={service} className="sidebar--list--item">
               <a href={`#${service}`} style={{ display: 'block' }}>{newServices[service].name}</a>
