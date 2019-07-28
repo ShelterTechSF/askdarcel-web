@@ -19,7 +19,7 @@ class ResourceEntry extends Component {
       <li className="results-table-entry resource-entry">
         <header>
           <div className="entry-details">
-            <h4 className="entry-headline"><Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{`${hitNumber}.) ${hit.name}`}</Link></h4>
+            <h4 className="entry-headline"><Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{`${hitNumber}) ${hit.name}`}</Link></h4>
             <div className="entry-subhead">
               <p>
                 {hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found'}
@@ -38,11 +38,7 @@ class ResourceEntry extends Component {
             : null
           }
         </header>
-        <div className="line-break" />
         <div className="entry-additional-info">
-          <div className="entry-tabs">
-            <p>Description</p>
-          </div>
           <div className="entry-body">
             <ReactMarkdown className="rendered-markdown" source={description} />
           </div>

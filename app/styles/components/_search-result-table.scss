@@ -185,9 +185,11 @@
 }
 
 .results-table-entry {
+  display: flex;
+  flex-direction: column;
 
   &.service-entry {
-    min-height: calc-em(265px);
+    min-height: calc-em(205px);
     background-color: #fff;
   }
 
@@ -223,7 +225,6 @@
     width: 100%;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: calc-em(20px);
   }
 }
 
@@ -372,8 +373,8 @@
 }
 
 .service-entry-additional-info {
-  height: calc-em(102px);
-  margin: calc-em(20px) 0 0 calc-em(28px);
+  height: 4rem;
+  margin: .6rem 1.75rem;
 
   .service-entry-tabs {
     margin-bottom: calc-em(10px);
