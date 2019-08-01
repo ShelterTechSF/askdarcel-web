@@ -12,7 +12,8 @@ class ServiceEntry extends Component {
       hit, index, page, hitsPerPage,
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
-    const schedule = hit.schedule && hit.schedule.length ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
+    const schedule = hit.schedule && hit.schedule.length
+      ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
     const hitNumber = page * hitsPerPage + index + 1;
     return (
       <li className="results-table-entry service-entry">
