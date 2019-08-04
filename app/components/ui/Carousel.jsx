@@ -1,43 +1,42 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-const CarouselOuter = styled.div`
-  position: relative;
-  overflow: visible;
-  width: 100%;
-`;
-
-const CarouselContainer = styled.div`
-  overflow: hidden;
-`;
-
-const CarouselSlider = styled.div`
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  transition: transform 1s ease;
-  transform: translateX(${props => -props.activeIndex * props.slotWidth}%);
-`;
-
-const CarouselNavButton = ({ dir, onClick }) => (
-  <button type="button" className={`carousel-nav btn-${dir}`} onClick={onClick} />
-);
-CarouselNavButton.props = {
-  dir: PropTypes.string.isRequired,
+const CarouselSlider = ({ activeIndex, slotWidth, className, style, children }) => {
+  const sliderStyle = {
+    transform: "translateX(" + (-activeIndex * slotWidth) + "%)",
+    ...style,
+  };
+  return (
+    <div className={className} style={sliderStyle}>
+      {children}
+    </div>
+  );
 };
 
-const CarouselSlot = styled.div`
-  flex: 1 0 calc(${props => props.width}% - 10px);
-  margin-right: 10px;
-`;
+const CarouselNavButton = ({ className, onClick }) => (
+  <button type="button" className={className} onClick={onClick} />
+);
+
+const CarouselSlot = ({ width, className, style, children }) => {
+  const slotStyle = {
+    ...style,
+    flex: "1 0 calc(" + width + "% - 10px)",
+  };
+  return (
+    <div className={className} style={slotStyle}>
+      {children}
+    </div>
+  );
+};
 
 class Carousel extends Component {
   constructor(props) {
     super(props);
+    const { numSlots } = this.props;
 
     this.state = {
       activeIndex: 0,
+      numActualSlots: numSlots,
     };
   }
 
@@ -60,27 +59,27 @@ class Carousel extends Component {
     const slotWidth = 100 / numSlots;
 
     return (
-      <CarouselOuter>
-        <CarouselContainer>
-          <CarouselSlider slotWidth={slotWidth} activeIndex={activeIndex}>
+      <div className="carousel-outer">
+        <div className="carousel-container">
+          <CarouselSlider className="carousel-slider" slotWidth={slotWidth} activeIndex={activeIndex}>
             {
               children.map(child => ((
-                <CarouselSlot width={slotWidth}>
+                <CarouselSlot className="carousel-slot" key={"slot" + child.key} width={slotWidth}>
                   {child}
                 </CarouselSlot>
               )))
             }
           </CarouselSlider>
-        </CarouselContainer>
+        </div>
         {
           activeIndex > 0
-            && <CarouselNavButton dir="left" onClick={advanceLeft} />
+            && <CarouselNavButton className="carousel-nav btn-left" onClick={advanceLeft} />
         }
         {
-          children.length > numSlots + activeIndex
-            && <CarouselNavButton dir="right" onClick={advanceRight} />
+          children.length > numSlots + activeIndex 
+            && <CarouselNavButton className="carousel-nav btn-right" onClick={advanceRight} />
         }
-      </CarouselOuter>
+      </div>
     );
   }
 }

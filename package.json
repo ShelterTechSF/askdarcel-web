@@ -41,7 +41,6 @@
     "redux": "^3.6.0",
     "redux-immutable-state-invariant": "^1.2.4",
     "redux-thunk": "^2.1.0",
-    "styled-components": "^4.3.2",
     "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {

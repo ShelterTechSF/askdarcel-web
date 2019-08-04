@@ -65,36 +65,3 @@ $text-card-flex-basis: 230px;
   padding: 15px 20px;
 }
 
-$carousel-slot-margin: 10px;
-.carousel-nav {
-  position: absolute;
-
-  $carousel-nav-button-size: 44px;
-  width: $carousel-nav-button-size;
-  height: $carousel-nav-button-size;
-
-  top: 50%;
-  transform: translateY(-50%);
-
-  background-color: #FFFFFF;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
-
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-
-  background-repeat: no-repeat;
-  background-position: center;
-
-  z-index: 10;
-
-  &.btn-right {
-    background-image: url(../assets/img/nav/navCarousel.svg);
-    right: -($carousel-slot-margin);
-  }
-  &.btn-left {
-    background-image: url(../assets/img/nav/navCarouselLeft.svg);
-    left: -($carousel-slot-margin * 2);
-  }
-}
-
