@@ -69,11 +69,16 @@ const EditSidebar = ({
       </button>,
     );
   }
-  // populate existing services so they show up on the sidebar
-  const allServices = newServices;
-  for (let i = 0; i < resource.services.length; i++) {
-    const resourceService = resource.services[i];
-    allServices[resourceService.id].name = resourceService.name;
+  // Populate existing services so they show up on the sidebar
+  // Do a 2-level-deep clone of the newServices object
+  const allServices = Object.entries(newServices).reduce(
+    (acc, [id, service]) => ({...acc, [id]: {...service}}),
+    {},
+  );
+  if (resource.services) {
+    resource.services.forEach(service => {
+      allServices[service.id].name = service.name;
+    });
   }
   return (
     <nav className="sidebar">
