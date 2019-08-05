@@ -72,7 +72,7 @@ const EditSidebar = ({
   // Populate existing services so they show up on the sidebar
   // Do a 2-level-deep clone of the newServices object
   const allServices = Object.entries(newServices).reduce(
-    (acc, [id, service]) => ({...acc, [id]: {...service}}),
+    (acc, [id, service]) => ({ ...acc, [id]: { ...service } }),
     {},
   );
   if (resource.services) {
