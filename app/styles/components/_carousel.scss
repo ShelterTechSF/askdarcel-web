@@ -1,4 +1,3 @@
-$carousel-slot-margin: 10px;
 
 .carousel-nav {
   position: absolute;
@@ -22,13 +21,14 @@ $carousel-slot-margin: 10px;
 
   z-index: 10;
 
+  $carousel-slot-margin: 20px;
   &.btn-right {
     background-image: url(../assets/img/nav/navCarousel.svg);
     right: -($carousel-slot-margin);
   }
   &.btn-left {
     background-image: url(../assets/img/nav/navCarouselLeft.svg);
-    left: -($carousel-slot-margin * 2);
+    left: -($carousel-slot-margin);
   }
 }
 
@@ -49,6 +49,3 @@ $carousel-slot-margin: 10px;
   transition: transform 1s ease;
 }
 
-.carousel-slot {
-  margin-right: 10px;
-}

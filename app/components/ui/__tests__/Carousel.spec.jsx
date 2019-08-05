@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Carousel from '../Carousel';
 import { LandingPageTextCard } from '../LandingPageCards';
@@ -72,11 +72,6 @@ describe('<Carousel />', () => {
       {createCategoryCards(cards)}
     </Carousel>
   ));
-  const mountCarousel = (cards, numSlots) => mount((
-    <Carousel numSlots={numSlots}>
-      {createCategoryCards(cards)}
-    </Carousel>
-  ));
 
   const getNavBtn = (carousel, classname) => carousel.findWhere((
     wrapper => wrapper.is('CarouselNavButton') && wrapper.hasClass(classname)
@@ -135,9 +130,5 @@ describe('<Carousel />', () => {
     getRightNavBtn(carousel).simulate('click');
     getLeftNavBtn(carousel).simulate('click');
     expect(carousel.state('activeIndex')).to.equal(startIdx);
-  });
-
-  it('limits the number of cards to the maximum width of the carousel', () => {
-    const carousel = mountCarousel(fiveCards, 4);
   });
 });

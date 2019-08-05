@@ -80,17 +80,21 @@ class LandingPageResourceBlock extends Component {
                 </div>
               )
           }
-          <div className="landing-page-resource-block__cards">
-            {
-              (config.CAROUSEL
-                && (
+          {
+            (config.CAROUSEL
+              && (
+                <div className="landing-page-resource-block__carousel">
                   <Carousel numSlots={config.CAROUSEL.NUM_SLOTS || 4}>
                     {cards}
                   </Carousel>
-                ))
-                || cards
-            }
-          </div>
+                </div>
+              ))
+              || (
+                <div className="landing-page-resource-block__cards">
+                  {cards}
+                </div>
+              )
+          }
         </div>
       </div>
     );
