@@ -20,6 +20,9 @@ input, textarea {
   &:active, &:hover, &:focus {
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.1);
   }
+  &:disabled {
+    box-shadow: none;
+  }
 }
 
 textarea {

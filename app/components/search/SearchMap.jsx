@@ -48,17 +48,21 @@ function CustomMarker({ index }) {
   /*  eslint-enable max-len */
 }
 
-// const SearchMap = connectHits(HitsMap);
-
 const SearchMap = ({ hits, userLocation }) => {
   if (!hits || !hits.length) {
     return null;
   }
 
-  const markers = hits.map((hit, index) => <CustomMarker lat={hit._geoloc ? hit._geoloc.lat : 0} lng={hit._geoloc ? hit._geoloc.lng : 0} key={hit.objectID} index={index} />);
+  const markers = hits.map((hit, index) => (
+    <CustomMarker
+      lat={hit._geoloc ? hit._geoloc.lat : 0}
+      lng={hit._geoloc ? hit._geoloc.lng : 0}
+      key={hit.objectID}
+      index={index}
+    />
+  ));
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
-  /* eslint-disable no-undef */
   return (
     <div className="results-map">
       <div className="map-wrapper">
@@ -75,7 +79,6 @@ const SearchMap = ({ hits, userLocation }) => {
       </div>
     </div>
   );
-  /* eslint-enable no-undef */
 };
 
 function mapStateToProps(state) {
