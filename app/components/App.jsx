@@ -9,10 +9,10 @@ import Navigation from './ui/Navigation';
 import { round } from '../utils/index';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
-import userActions from '../actions/userActions';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
 import PopUpMessage from './ui/PopUpMessage';
+import { User } from '../models';
 
 const coordsInSanFrancisco = coords => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -178,7 +178,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setUserLocation: location => dispatch(userActions.setUserLocation(location)),
+    setUserLocation: location => dispatch(User.setUserLocation(location)),
   };
 }
 

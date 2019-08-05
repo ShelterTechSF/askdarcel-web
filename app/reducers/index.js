@@ -6,8 +6,9 @@ import services from './serviceReducer';
 import auth from './authReducer';
 import changeRequestReducer from './changeRequestReducer';
 import popUpMessageReducer from './popUpMessageReducer';
-import userReducer from './userReducer';
 import forms from './formConfig';
+
+import { User } from '../models';
 
 const rootReducer = combineReducers({
   auth,
@@ -17,7 +18,7 @@ const rootReducer = combineReducers({
   resource,
   routing: routerReducer,
   services,
-  user: userReducer,
+  user: User.REDUCER,
 });
 
 export default rootReducer;

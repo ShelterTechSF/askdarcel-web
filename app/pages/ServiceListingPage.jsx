@@ -24,14 +24,14 @@ import HAPBadge from 'components/listing/HAPBadge';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
-const getServiceLocations = (service, resource, schedule) => (resource.address
+const getServiceLocations = (service, resource, recurringSchedule) => (resource.address
   ? [resource.address].map(address => ({
     id: address.id,
     address,
     name: service.name,
-    schedule: schedule && schedule.schedule_days.length ? schedule : resource.schedule,
+    recurringSchedule,
     // Just to make it clear this is inherited from the resource
-    inherited: !schedule && resource.schedule,
+    inherited: !recurringSchedule && resource.schedule,
   }))
   : []);
 
@@ -73,9 +73,9 @@ class ServicePage extends React.Component {
     const { activeService: service } = this.props;
     if (!service) { return <Loader />; }
 
-    const { resource, program, schedule } = service;
+    const { resource, program, recurringSchedule } = service;
     const details = this.generateDetailsRows();
-    const locations = getServiceLocations(service, resource, schedule);
+    const locations = getServiceLocations(service, resource, recurringSchedule);
     return (
       <div>
         <Helmet>
@@ -158,8 +158,7 @@ class ServicePage extends React.Component {
                     locations={locations}
                     locationRenderer={location => (
                       <TableOfOpeningTimes
-                        schedule={location.schedule}
-                        inherited={location.inherited}
+                        recurringSchedule={location.recurringSchedule}
                       />
                     )}
                   />

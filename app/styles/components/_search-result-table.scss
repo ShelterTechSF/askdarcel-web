@@ -6,6 +6,15 @@
   }
 }
 
+.marker {
+  @include transform(translateY(-50%));
+  position: absolute;
+  height: 55px;
+  width: 30px;
+  top: -27px;
+  left: -15px;
+}
+
 .map-wrapper {
   width: 50vw;
   height: 90%;
@@ -22,7 +31,7 @@
 }
 .filters-icon {
   height: calc-em(15px);
-  padding: 0px 3px 3px 0px ; 
+  padding: 0px 3px 3px 0px;
 }
 .refine-btn {
   border: none;
@@ -67,9 +76,14 @@
   padding: 5px 0px;
   color: #666666;
 }
-.refine-li.active {
-  color: #276ce5;
-  font-weight: 500;
+.refine-li {
+  &.refine-li-disabled {
+    color: $color-grey4;
+  }
+  &.active {
+    color: #276ce5;
+    font-weight: 500;
+  }
 }
 .refine-checkbox {
   margin-bottom: calc-em(10px);
@@ -185,9 +199,11 @@
 }
 
 .results-table-entry {
+  display: flex;
+  flex-direction: column;
 
   &.service-entry {
-    min-height: calc-em(265px);
+    min-height: calc-em(205px);
     background-color: #fff;
   }
 
@@ -223,7 +239,6 @@
     width: 100%;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: calc-em(20px);
   }
 }
 
@@ -372,8 +387,8 @@
 }
 
 .service-entry-additional-info {
-  height: calc-em(102px);
-  margin: calc-em(20px) 0 0 calc-em(28px);
+  height: 4rem;
+  margin: .6rem 1.75rem;
 
   .service-entry-tabs {
     margin-bottom: calc-em(10px);

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import ReactMarkdown from 'react-markdown';
 import { images } from '../../assets';
-import SearchTabView from './SearchTabView';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 
 // TODO: create a shared component for Resource and Service entries
@@ -12,7 +12,6 @@ class ServiceEntry extends Component {
       hit, index, page, hitsPerPage,
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
-    const applicationProcess = hit.application_process;
     const schedule = hit.schedule && hit.schedule.length
       ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
     const hitNumber = page * hitsPerPage + index + 1;
@@ -20,7 +19,7 @@ class ServiceEntry extends Component {
       <li className="results-table-entry service-entry">
         <header>
           <div className="entry-details">
-            <h4 className="entry-headline"><Link to={{ pathname: `/services/${hit.service_id}` }}>{`${hitNumber}.) ${hit.name}`}</Link></h4>
+            <h4 className="entry-headline"><Link to={{ pathname: `/services/${hit.service_id}` }}>{`${hitNumber}) ${hit.name}`}</Link></h4>
             <div className="entry-subhead">
               <p className="entry-affiliated-resource">
                 a service offered by&nbsp;
@@ -43,13 +42,11 @@ class ServiceEntry extends Component {
             : null
           }
         </header>
-        <div className="line-break" />
 
-        <SearchTabView
-          applicationProcess={applicationProcess}
-          description={description}
-          schedule={hit.schedule}
-        />
+        <div className="service-entry-additional-info">
+          <ReactMarkdown className="rendered-markdown service-entry-body" source={description} />
+        </div>
+
         <div className="entry-action-buttons">
           <ul className="action-buttons">
             <li className="action-button"><Link to={{ pathname: `/services/${hit.service_id}` }}>Details</Link></li>
