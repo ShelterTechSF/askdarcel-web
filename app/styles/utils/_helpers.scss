@@ -80,10 +80,10 @@ table {
 // TYPEFACES
 
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic,900);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i&display=swap');
 
 
-$font-family-base: 'Lato', 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+$font-family-base: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // FONT SIZES
