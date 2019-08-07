@@ -40,7 +40,7 @@
 }
 
 .listing-container.about .row {
-  margin: 30px 0 30px;
+  margin: 30px 0;
   display: flex;
   @media screen and (max-width: 800px) {
     display: block;
@@ -55,7 +55,7 @@
   p {
     margin-left: 20px;
     @media screen and (max-width: 800px) {
-      margin: 25px 0 0 0;
+      margin: 25px 0 0;
     }
   }
 }
