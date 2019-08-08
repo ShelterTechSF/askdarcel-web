@@ -1,66 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG TABLE STYLES
 
-.results {
-  @extend %flex-row;
-  width: 100%;
-  align-items: flex-start;
-  @include r_max($break-tablet-s) {
-    margin-top: 0;
-    flex-direction: column;
-  }
-}
-
-.results-map {
-  flex: 1 1 auto;
-  position: relative;
-  z-index: 1;
-  @include r_max($break-tablet-s) {
-    order: 1;
-    height: calc-em(180px);
-    width: 100%;
-  }
-}
-
-.results-map-inner {
-  position: fixed;
-  width: 100%;
-}
-
-.results-table {
-  @extend %flex-column;
-  max-width: calc-em(650px);
-  width: 100%;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 2;
-  background: $color-white;
-  height: 100%;
-  @include r_max($break-tablet-s) {
-    order: 2;
-  }
-
-  > header {
-    @include flex(0 0 auto);
-    padding: calc-em(20px);
-    display: table;
-    width: 100%;
-    @include r_max($break-tablet-s) {
-      padding: calc-em(10px) calc-em(20px);
-    }
-    .results-title {
-      @include r_max($break-tablet-s) {
-        font-size: calc-em(20px);
-      }
-    }
-    .results-count {
-      display: table-cell;
-      vertical-align: middle;
-      text-align: right;
-    }
-  }
-}
-
 .results-filters {
   @extend %font-size-tiny;
   background: $color-grey1;

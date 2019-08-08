@@ -1,30 +1,3 @@
-// Map styles
-.results-map {
-  flex: 1 1 auto;
-  @include r_max($break-tablet-s) {
-    display: none;
-  }
-}
-
-.marker {
-  @include transform(translateY(-50%));
-  position: absolute;
-  height: 55px;
-  width: 30px;
-  top: -27px;
-  left: -15px;
-}
-
-.map-wrapper {
-  width: 50vw;
-  height: 90%;
-  position: fixed;
-}
-
-.refinement-list {
-  display: none;
-}
-
 // Filtering styles //
 .filter-container.flex-height {
   height: auto;
@@ -114,33 +87,6 @@
   display: none;
 }
 
-.results-wrapper {
-  height: 0px;
-}
-
-.results {
-  @extend %flex-row;
-  width: 100%;
-  max-width: calc-em(2280px);
-  margin-right: auto;
-  margin-left: auto;
-  align-items: flex-start;
-  @include r_max($break-tablet-s) {
-    margin-top: 0;
-    flex-direction: column;
-  }
-
-  .add-resource {
-    padding: $padding-large;
-    background-color: #F3F5F7;
-    text-align: center;
-
-    .entry-headline {
-      padding: $padding-large;
-    }
-  }
-}
-
 @mixin result-body {
   p {
     font-size: calc-em(15px);
@@ -156,40 +102,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   //overflow-x: hidden;
-}
-
-.results-table {
-  @extend %flex-column;
-  width: 50%;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 2;
-  background: #F3F5F7;
-  height: 100%;
-  @include r_max($break-tablet-s) {
-    order: 2;
-    width: 100%;
-  }
-
-  > header {
-    @include flex(0 0 auto);
-    padding: calc-em(20px);
-    display: table;
-    width: 100%;
-    @include r_max($break-tablet-s) {
-      padding: calc-em(10px) calc-em(20px);
-    }
-    .results-title {
-      @include r_max($break-tablet-s) {
-        font-size: calc-em(20px);
-      }
-    }
-    .results-count {
-      display: table-cell;
-      vertical-align: middle;
-      text-align: right;
-    }
-  }
 }
 
 .results-table-body {

@@ -1,0 +1,44 @@
+.results-map {
+  flex: 1 1 auto;
+  position: relative;
+  z-index: 1;
+  width: 45vw;
+  @media screen and ( min-width: 1440px ){
+    width: 60vw;
+  }
+  @media screen and ( max-width: 767px ) {
+    order: 1;
+    height: 180px;
+    width: 100vw;
+  }
+}
+
+.results-map-inner {
+  position: fixed;
+  width: 100%;
+}
+
+.marker {
+  transform:translateY(-50%);
+  position: absolute;
+  height: 55px;
+  width: 30px;
+  top: -27px;
+  left: -15px;
+}
+
+.map-wrapper {
+  width: 45vw;
+  height: 90%;
+  position: fixed;
+  @media screen and ( min-width: 1440px ){
+    width: 60vw;
+  }
+  @media screen and ( max-width: 767px ) {
+    width: 100vw;
+  }
+}
+
+.refinement-list {
+  display: none;
+}
