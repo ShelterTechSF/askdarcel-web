@@ -74,8 +74,8 @@ class Filtering extends Component {
               Open now
             </button>
             <div className={"custom-refinement " + (filtersActive ? 'active' : '')}>
-              <EligibilitiesRefinementList attribute="eligibilities" />
-              <CategoriesRefinementList attribute="categories" />
+              <EligibilitiesRefinementList attribute="eligibilities" limit={100} />
+              <CategoriesRefinementList attribute="categories" limit={110} />
             </div>
           </div>
         </div>

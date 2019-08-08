@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
+import { categoriesMapping } from '../../utils/refinementMappings';
 
 class CategoriesRefinementList extends Component {
   static propTypes = {
@@ -13,14 +14,6 @@ class CategoriesRefinementList extends Component {
     super(props);
     this.changeRefinement = this.changeRefinement.bind(this);
     this.setChecks = this.setChecks.bind(this);
-    this.categoriesMapping = {
-      'Basic Needs & Shelter': ['Basic Needs & Shelter'],
-      'Eviction Prevention': ['Eviction Prevention'],
-      'Health & Medical': ['Health & Medical'],
-      Housing: ['Housing'],
-      Legal: ['Legal'],
-      Employment: ['Employment'],
-    };
     const checks = this.setChecks();
     this.state = {
       isChecked: checks,
@@ -28,9 +21,8 @@ class CategoriesRefinementList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Typical usage (don't forget to compare props):
     const { currentRefinement } = this.props;
-    if (currentRefinement !== prevProps.currentRefinement) {
+    if (currentRefinement.sort().join(',') !== prevProps.currentRefinement.sort().join(',')) {
       const checks = this.setChecks();
       // setState is done in a condition so it won't create loop
       this.setState({ isChecked: checks }); // eslint-disable-line react/no-did-update-set-state
@@ -38,43 +30,45 @@ class CategoriesRefinementList extends Component {
   }
 
   setChecks() {
-    const { currentRefinement } = this.props;
-    const mapKeys = Object.keys(this.categoriesMapping);
+    const mapKeys = Object.keys(categoriesMapping);
     const checks = [];
-    for (let i = 0; i < mapKeys.length; i++) {
-      const key = mapKeys[i];
-      let atLeastOneRefined = false;
-      for (let i_1 = 0; i_1 < this.categoriesMapping[key].length; i_1++) {
-        const val = this.categoriesMapping[key][i_1];
-        if (currentRefinement.includes(val)) {
-          atLeastOneRefined = true;
-          break;
-        }
-      }
-      checks[key] = atLeastOneRefined;
-    }
+    mapKeys.forEach(key => {
+      checks[key] = this.keyHasAtLeastOneRefined(key);
+    });
     return checks;
   }
 
   changeRefinement(key, event) { // eslint-disable-line no-unused-vars
     const { refine } = this.props;
-    const { items } = this.props;
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (this.categoriesMapping[key].includes(item.label)) {
-        refine(item.value);
-      }
+    const { currentRefinement } = this.props;
+    const { isChecked } = this.state;
+    let newRefinement;
+    if (isChecked[key]) {
+      // If key currently checked, unrefine every sub-element (filter through current refinement)
+      newRefinement = currentRefinement.filter(value => !categoriesMapping[key].includes(value));
+    } else {
+      // If key currently unchecked, refine all sub-elements
+      newRefinement = currentRefinement.concat(categoriesMapping[key]);
     }
+    refine(newRefinement);
+  }
+
+  keyHasAtLeastOneRefined(key) {
+    const { currentRefinement } = this.props;
+    return categoriesMapping[key].some(value => currentRefinement.includes(value));
   }
 
   refinementHasResults(key) {
+    // this check that a key (checkbox) has at least one sub-elements that is refined
+    // e.g if Learning Disabilities is can be refined but not Visual Impairment,
+    // Disability is still enabled as a checkbox
     const { items } = this.props;
-    return items.find(item => item.label === key);
+    return items.some(item => categoriesMapping[key].includes(item.label));
   }
 
   render() {
     const { isChecked } = this.state;
-    const mapKeys = Object.keys(this.categoriesMapping);
+    const mapKeys = Object.keys(categoriesMapping);
     return (
       <div className="refinement-wrapper">
         <p className="refinement-title">Categories</p>
