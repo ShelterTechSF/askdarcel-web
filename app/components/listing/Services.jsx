@@ -124,13 +124,13 @@ const ServiceContactDetails = ({ email, website }) => {
       <div className="service--details--item--info">
         {email && (
           <p>
-Email:
+            {'Email: '}
             <a href={`mailto:${email}`}>{email}</a>
           </p>
         )}
         {website && (
           <p>
-Website:
+            {'Website: '}
             <a href={website}>{website}</a>
           </p>
         )}
