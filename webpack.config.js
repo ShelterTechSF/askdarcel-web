@@ -163,6 +163,18 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.pdf$/,
+        include: [
+          path.resolve(__dirname, 'app/assets'),
+        ],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        }],
+      },
     ],
   },
   devServer: {

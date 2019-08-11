@@ -4,10 +4,10 @@ const LegalBlockConfig = {
     BLUE_WORD: 'Legal',
     AFTER_BLUE_WORD: 'resources',
   },
-  LINK: {
+  LINKS: [{
     QUERY_CATEGORY: 'Legal',
     TEXT: 'Browse resources',
-  },
+  }],
   CARDS: [
     {
       title: 'Housing Advocacy',

@@ -37,11 +37,17 @@
   }
 }
 
-.landing-page-resource-block__resources-link {
+.landing-page-resource-block__resources-links {
   display: inline-block;
+  z-index: 1;
+}
+
+.landing-page-resource-block__resources-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: right;
   font-size: 16px;
-  z-index: 1;
   color: $color-brand;
 }
 
