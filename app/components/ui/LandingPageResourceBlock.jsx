@@ -54,26 +54,26 @@ class LandingPageResourceBlock extends Component {
               config.LINKS
                 && (
                   <div className="landing-page-resource-block__resources-links">
-                  {
-                    config.LINKS.map(link => (
-                      <div key={`link_${link.QUERY_CATEGORY || link.URL}`} className="landing-page-resource-block__resources-link">
-                        {
-                          link.QUERY_CATEGORY
-                            && (
-                              <Link to={`/search?refinementList[categories][0]=${encodeURIComponent(link.QUERY_CATEGORY)}`}>
-                                <span>{link.TEXT}</span>
-                              </Link>
-                            )
-                        }
-                        {
-                          link.URL
-                            && (
-                              <a href={link.URL}>{link.TEXT}</a>
-                            )
-                        }
-                      </div>
-                    ))
-                  }
+                    {
+                      config.LINKS.map(link => (
+                        <div key={`link_${link.QUERY_CATEGORY || link.URL}`} className="landing-page-resource-block__resources-link">
+                          {
+                            link.QUERY_CATEGORY
+                              && (
+                                <Link to={`/search?refinementList[categories][0]=${encodeURIComponent(link.QUERY_CATEGORY)}`}>
+                                  <span>{link.TEXT}</span>
+                                </Link>
+                              )
+                          }
+                          {
+                            link.URL
+                              && (
+                                <a href={link.URL}>{link.TEXT}</a>
+                              )
+                          }
+                        </div>
+                      ))
+                    }
                   </div>
                 )
             }
@@ -121,7 +121,7 @@ LandingPageResourceBlock.props = {
         PATH: PropTypes.string,
         QUERY_ELIGIBILITY: PropTypes.string,
         TEXT: PropTypes.string,
-      })
+      }),
     ),
     CARDS: PropTypes.array,
     CAROUSEL: PropTypes.shape({
