@@ -218,7 +218,7 @@ export class RecurringSchedule {
    * @param intervals {Array<RecurringInterval>} - The list of
    *  RecurringIntervals comprising the schedule.
    */
-  constructor({ intervals }) {
+  constructor({ intervals = [] }) {
     this.intervals = sortIntervals(intervals);
   }
 
