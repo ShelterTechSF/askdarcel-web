@@ -1,4 +1,4 @@
-import YouthCaseyPdf from '../../assets/casey-youth-poster.pdf';
+import YouthCaseyPdf from '../../assets/youthguide.pdf';
 
 const YouthHomelessnessBlockConfig = {
   TITLE: {
@@ -11,11 +11,11 @@ const YouthHomelessnessBlockConfig = {
   LINKS: [
     {
       URL: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
-      TEXT: 'View Guide',
+      TEXT: 'View Full Guide',
     },
     {
       URL: `${YouthCaseyPdf}`,
-      TEXT: 'Youth Guide',
+      TEXT: 'Download',
     },
   ],
   CARDS: [
