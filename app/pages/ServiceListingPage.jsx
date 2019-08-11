@@ -20,7 +20,6 @@ import ReactMarkdown from 'react-markdown';
 import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
-import HAPBadge from 'components/listing/HAPBadge';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
@@ -125,7 +124,6 @@ class ServicePage extends React.Component {
                     attribution={resource.source_attribution}
                     status={resource.status}
                   />
-                  <HAPBadge resource={service} />
                 </section>
 
                 {details.length ? (
