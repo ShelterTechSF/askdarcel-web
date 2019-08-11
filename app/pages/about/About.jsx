@@ -10,6 +10,10 @@ import WeworkLogo from './assets/WeworkLogo.png';
 import Footer from '../../components/ui/Footer/Footer';
 import './About.scss';
 
+// Disable max line length rule, since this file is mostly just text-heavy HTML
+// content.
+/* eslint-disable max-len */
+
 export class AboutPage extends React.Component {
   render() {
     return (
@@ -21,7 +25,7 @@ export class AboutPage extends React.Component {
               <br />
               SF Service Guide
             </h1>
-            <p>The SF Service Guide is an online directory of human services in San Francisco. Our goal is to help anyone with access to a smartphone, tablet, or computer find the services they need. The guide's focus is on homelessness and housing services, but also covers a variety of other services, from education and legal aid to senior services and re-entry programs. </p>
+            <p>The SF Service Guide is an online directory of human services in San Francisco. Our goal is to help anyone with access to a smartphone, tablet, or computer find the services they need. The guide&apos;s focus is on homelessness and housing services, but also covers a variety of other services, from education and legal aid to senior services and re-entry programs. </p>
           </header>
           <section>
             <h3>Powered by:</h3>
@@ -43,7 +47,7 @@ export class AboutPage extends React.Component {
                 <img src={MOHCDLogo} alt="MOHCD" />
               </a>
               <p>
-                The SF Service Guide is supported by a grant from the SF Mayor's Office of Housing and Community Development.
+                The SF Service Guide is supported by a grant from the SF Mayor&apos;s Office of Housing and Community Development.
               </p>
             </div>
             <div className="row">
