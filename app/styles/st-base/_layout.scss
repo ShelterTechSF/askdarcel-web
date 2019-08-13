@@ -258,21 +258,3 @@ ul.actions {
 .float-right {
   float: right;
 }
-
-.relative-opening-time {
-  font-weight: bold;
-  // text-transform: uppercase;
-  // padding: 0 6px;
-
-  &.status-red {
-    color: $color-status-red;
-  }
-
-  &.status-green {
-    color: $color-status-green;
-  }
-
-  &.status-amber {
-    color: $color-status-amber;
-  }
-}

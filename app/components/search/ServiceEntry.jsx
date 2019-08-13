@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import { images } from '../../assets';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
+import './SearchEntry.scss';
 
 // TODO: create a shared component for Resource and Service entries
 class ServiceEntry extends Component {
@@ -16,40 +17,37 @@ class ServiceEntry extends Component {
       ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
     const hitNumber = page * hitsPerPage + index + 1;
     return (
-      <li className="results-table-entry service-entry">
-        <header>
+      <Link to={{ pathname: `/services/${hit.service_id}` }}>
+        <li className="results-table-entry service-entry">
           <div className="entry-details">
-            <h4 className="entry-headline"><Link to={{ pathname: `/services/${hit.service_id}` }}>{`${hitNumber}) ${hit.name}`}</Link></h4>
-            <div className="entry-subhead">
-              <p className="entry-affiliated-resource">
-                a service offered by&nbsp;
-                <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{hit.service_of}</Link>
-              </p>
-              <p>
-                {hit.addresses && hit.addresses.address_1 ? hit.addresses.address_1 : 'No address found'}
-                {/* { schedule ? ' • ' : null } */}
-                {schedule ? <span className="float-right"><RelativeOpeningTime schedule={schedule} /></span> : null}
-              </p>
+            <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
+            <p className="entry-meta">
+              <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{hit.service_of}</Link>
+            </p>
+            <p className="entry-meta">
+              <span>{hit.addresses && hit.addresses.address_1 ? hit.addresses.address_1 : 'No address found'}</span>
+              {schedule ? (
+                <span className="entry-schedule">
+                  <RelativeOpeningTime schedule={schedule} />
+                </span>
+              ) : null}
+            </p>
+
+            {hit.is_mohcd_funded
+              ? (
+                <div className="mohcd-funded">
+                  <img src={images.mohcdSeal} alt="MOHCD seal" />
+                  <p>Funded by MOHCD</p>
+                </div>
+              )
+              : null
+            }
+            <div className="entry-body">
+              <ReactMarkdown className="rendered-markdown service-entry-body" source={description} />
             </div>
           </div>
-          {hit.is_mohcd_funded
-            ? (
-              <div className="mohcd-funded">
-                <img src={images.mohcdSeal} alt="MOHCD seal" />
-                <p>Funded by MOHCD</p>
-              </div>
-            )
-            : null
-          }
-        </header>
 
-        <div className="service-entry-additional-info">
-          <ReactMarkdown className="rendered-markdown service-entry-body" source={description} />
-        </div>
-
-        <div className="entry-action-buttons">
           <ul className="action-buttons">
-            <li className="action-button"><Link to={{ pathname: `/services/${hit.service_id}` }}>Details</Link></li>
             {hit._geoloc && (
               <li className="action-button">
                 <a
@@ -57,14 +55,15 @@ class ServiceEntry extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Directions
+                  <i className="material-icons">directions_outlined</i>
+                  Go
                 </a>
               </li>
             )}
           </ul>
-        </div>
 
-      </li>
+        </li>
+      </Link>
     );
   }
 }

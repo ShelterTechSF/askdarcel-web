@@ -5,6 +5,7 @@ import { getCurrentDayTime } from '../../utils/index';
 import EligibilitiesRefinementList from './EligibilitiesRefinementList';
 import CategoriesRefinementList from './CategoriesRefinementList';
 import filters_icon from '../../assets/img/filters-icon.png';
+import './Filtering.scss';
 
 class Filtering extends Component {
   constructor(props) {

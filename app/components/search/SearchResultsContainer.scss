@@ -1,7 +1,16 @@
+.results-table-body {
+  flex: 1 1 auto;
+  padding: 20px 30px 20px 30px;
+  background-color: #F3F5F7;
+  @media screen and (max-width: 767px) {
+    padding: 0 0 25px 0;
+  }
+}
+
 .results {
   display: flex;
-  width: 100vw;
   align-items: stretch;
+  width: 100%;
   margin: 0 auto;
   @media screen and ( max-width: 767px ) {
     margin-top: 0;
@@ -9,13 +18,12 @@
   }
 }
 
-.results .add-resource {
-  padding: 16px;
-  background-color: #F3F5F7;
-  text-align: center;
-
-  .entry-headline {
-    padding: 16px;
+.results-header {
+  background: #fff;
+  h1 {
+    padding: 20px 30px 5px;
+    font-size: 1.75rem;
+    font-weight: bold;
   }
 }
 
@@ -36,7 +44,7 @@
   }
   @media screen and ( max-width: 767px ) {
     order: 2;
-    width: 100vw;
+    width: 100%;
   }
 
   > header {
@@ -57,5 +65,28 @@
       vertical-align: middle;
       text-align: right;
     }
+  }
+}
+
+.add-resource {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  margin: 20px 0 30px;
+  font-size: 0.87rem;
+}
+
+.add-resource-button {
+  display: block;
+  padding: 11px 14px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  color: #666;
+  margin-top: 15px;
+  &:hover, &:active {
+    border: 1px solid #276ce5;
+    color: #276ce5;
   }
 }

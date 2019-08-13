@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { Loader } from 'components/ui';
+import Filtering from './Filtering';
 import SearchTable from './SearchTable';
 import SearchMap from './SearchMap';
 import './SearchResultsContainer.scss';
@@ -25,20 +26,24 @@ const searchResultsContainer = connectStateResults(
       output = (
         <div className="results">
           <div className="results-table">
+            <div className="results-header">
+              {searchResults.query.length > 0
+                && <h1>{searchResults.query}</h1>
+              }
+              <Filtering />
+            </div>
             <SearchTable
               hits={searchResults.hits}
               page={searchResults.page}
               hitsPerPage={searchResults.hitsPerPage}
             />
             <div className="add-resource">
-              <h4>Can&apos;t find the organization you&apos;re looking for? </h4>
-              <h3 className="entry-headline">
-                <Link to="/resource/new">
-                  <i className="material-icons">add_circle</i>
-                  {' '}
-                  Add an organization to our database
-                </Link>
-              </h3>
+              Can&apos;t find the organization you&apos;re looking for?
+              <Link to="/resource/new" className="add-resource-button">
+                <i className="material-icons">add_circle</i>
+                {' '}
+                Add an organization
+              </Link>
             </div>
           </div>
           <SearchMap hits={searchResults.hits} />

@@ -1,0 +1,46 @@
+.results-pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ais-Pagination-item {
+  padding: 10px;
+}
+.ais-Pagination-item--selected {
+  font-weight: 900;
+  font-size: 20px;
+}
+.ais-Pagination-item--nextPage, .ais-Pagination-item--previousPage {
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  padding: 13px 15px;
+  margin: 0 15px;
+  font-size: 0.87rem;
+  &:hover, &:active {
+    border: 1px solid #276ce5;
+  }
+}
+
+.ais-Pagination-item--disabled {
+  opacity: 0.5;
+}
+
+.algolia-img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+
+  & > img {
+    height: 16px;
+  }
+}
+
+.no-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+}
