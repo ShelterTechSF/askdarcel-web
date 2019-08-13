@@ -29,7 +29,8 @@ class FacetRefinementList extends Component {
   }
 
   setChecks() {
-    const mapKeys = Object.keys(this.props.mapping);
+    const { mapping } = this.props;
+    const mapKeys = Object.keys(mapping);
     const checks = {};
     mapKeys.forEach(key => {
       checks[key] = this.keyHasAtLeastOneRefined(key);
@@ -40,21 +41,23 @@ class FacetRefinementList extends Component {
   changeRefinement(key, event) { // eslint-disable-line no-unused-vars
     const { refine } = this.props;
     const { currentRefinement } = this.props;
+    const { mapping } = this.props;
     const { isChecked } = this.state;
     let newRefinement;
     if (isChecked[key]) {
       // If key currently checked, unrefine every sub-element (filter through current refinement)
-      newRefinement = currentRefinement.filter(value => !this.props.mapping[key].includes(value));
+      newRefinement = currentRefinement.filter(value => !mapping[key].includes(value));
     } else {
       // If key currently unchecked, refine all sub-elements
-      newRefinement = currentRefinement.concat(this.props.mapping[key]);
+      newRefinement = currentRefinement.concat(mapping[key]);
     }
     refine(newRefinement);
   }
 
   keyHasAtLeastOneRefined(key) {
     const { currentRefinement } = this.props;
-    return this.props.mapping[key].some(value => currentRefinement.includes(value));
+    const { mapping } = this.props;
+    return mapping[key].some(value => currentRefinement.includes(value));
   }
 
   refinementHasResults(key) {
@@ -62,13 +65,16 @@ class FacetRefinementList extends Component {
     // e.g if Learning Disabilities is can be refined but not Visual Impairment,
     // Disability is still enabled as a checkbox
     const { items } = this.props;
-    return items.some(item => this.props.mapping[key].includes(item.label));
+    const { mapping } = this.props;
+    return items.some(item => mapping[key].includes(item.label));
   }
 
   render() {
     const { isChecked } = this.state;
-    const mapKeys = Object.keys(this.props.mapping);
-    const title = this.props.attribute=="eligibilities" ? "Eligibilities" : "Categories";
+    const { mapping } = this.props;
+    const { attribute } = this.props;
+    const mapKeys = Object.keys(mapping);
+    const title = attribute === 'eligibilities' ? 'Eligibilities' : 'Categories';
     return (
       <div className="refinement-wrapper">
         <p className="refinement-title">{title}</p>
