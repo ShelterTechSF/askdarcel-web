@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
-import { categoriesMapping } from '../../utils/refinementMappings';
 
-class CategoriesRefinementList extends Component {
+class FacetRefinementList extends Component {
   static propTypes = {
     items: PropTypes.array.isRequired,
     refine: PropTypes.func.isRequired,
@@ -30,8 +29,8 @@ class CategoriesRefinementList extends Component {
   }
 
   setChecks() {
-    const mapKeys = Object.keys(categoriesMapping);
-    const checks = [];
+    const mapKeys = Object.keys(this.props.mapping);
+    const checks = {};
     mapKeys.forEach(key => {
       checks[key] = this.keyHasAtLeastOneRefined(key);
     });
@@ -45,17 +44,17 @@ class CategoriesRefinementList extends Component {
     let newRefinement;
     if (isChecked[key]) {
       // If key currently checked, unrefine every sub-element (filter through current refinement)
-      newRefinement = currentRefinement.filter(value => !categoriesMapping[key].includes(value));
+      newRefinement = currentRefinement.filter(value => !this.props.mapping[key].includes(value));
     } else {
       // If key currently unchecked, refine all sub-elements
-      newRefinement = currentRefinement.concat(categoriesMapping[key]);
+      newRefinement = currentRefinement.concat(this.props.mapping[key]);
     }
     refine(newRefinement);
   }
 
   keyHasAtLeastOneRefined(key) {
     const { currentRefinement } = this.props;
-    return categoriesMapping[key].some(value => currentRefinement.includes(value));
+    return this.props.mapping[key].some(value => currentRefinement.includes(value));
   }
 
   refinementHasResults(key) {
@@ -63,15 +62,16 @@ class CategoriesRefinementList extends Component {
     // e.g if Learning Disabilities is can be refined but not Visual Impairment,
     // Disability is still enabled as a checkbox
     const { items } = this.props;
-    return items.some(item => categoriesMapping[key].includes(item.label));
+    return items.some(item => this.props.mapping[key].includes(item.label));
   }
 
   render() {
     const { isChecked } = this.state;
-    const mapKeys = Object.keys(categoriesMapping);
+    const mapKeys = Object.keys(this.props.mapping);
+    const title = this.props.attribute=="eligibilities" ? "Eligibilities" : "Categories";
     return (
       <div className="refinement-wrapper">
-        <p className="refinement-title">Categories</p>
+        <p className="refinement-title">{title}</p>
         <ul className="refinement-ul">
           {mapKeys.map(key => {
             const refinementHasResults = this.refinementHasResults(key);
@@ -103,4 +103,4 @@ class CategoriesRefinementList extends Component {
   }
 }
 
-export default connectRefinementList(CategoriesRefinementList);
+export default connectRefinementList(FacetRefinementList);

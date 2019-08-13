@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { eligibilitiesMapping } from '../../utils/refinementMappings'
+import { eligibilitiesMapping } from '../../utils/refinementMappings';
+import 'url-search-params-polyfill';
 
 class LandingPageEligibilityBlock extends Component {
 
   buildBlockUrl(eligibility) {
-    let url = '/search?'
+    var search_params = new URLSearchParams();
     const eligibilityElements = eligibilitiesMapping[eligibility];
     eligibilityElements.forEach((element, index) => {
-      url += `refinementList[eligibilities][${index}]=${encodeURIComponent(element)}&`;
+      search_params.append(`refinementList[eligibilities][${index}]`, element);
     });
-    return url;
+    return '/search?'+search_params.toString();
   }
 
   render() {

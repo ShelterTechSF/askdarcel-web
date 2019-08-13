@@ -41,7 +41,8 @@
     "redux": "^3.6.0",
     "redux-immutable-state-invariant": "^1.2.4",
     "redux-thunk": "^2.1.0",
-    "whatwg-fetch": "^2.0.1"
+    "whatwg-fetch": "^2.0.1",
+    "url-search-params-polyfill": "^7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
