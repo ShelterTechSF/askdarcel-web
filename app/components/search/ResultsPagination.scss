@@ -5,14 +5,14 @@
   justify-content: center;
 }
 
-.ais-Pagination-item {
-  padding: 10px;
+.ais-Pagination-item a {
+  padding: 15px;
 }
 .ais-Pagination-item--selected {
   font-weight: 900;
   font-size: 20px;
 }
-.ais-Pagination-item--nextPage, .ais-Pagination-item--previousPage {
+.ais-Pagination-item--nextPage, .ais-Pagination-item--previousPage a {
   border: 1px solid rgba(0,0,0,0.2);
   border-radius: 3px;
   padding: 13px 15px;

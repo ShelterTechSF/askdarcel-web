@@ -27,21 +27,6 @@ export function timeToDate(hours) {
 }
 
 /**
- * Convert time from concatenated hours-minutes format to HH:MM P
- *
- * E.g.
- * '700' to '7:00 AM'
- * '1330' to '1:30 PM'
- */
-export function timeToString(hours) {
-  const date = timeToDate(hours);
-  if (date === null) {
-    return null;
-  }
-  return date.toLocaleTimeString().replace(/:\d+ /, ' ');
-}
-
-/**
  * Convert time from concatenated hours-minutes format to <input type="time">
  * format.
  *
@@ -69,25 +54,6 @@ export function stringToTime(timeString) {
   return parseInt(timeString.replace(':', ''), 10);
 }
 
-export function daysOfTheWeek() {
-  return [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-}
-
-export function sortScheduleDays(scheduleDays) {
-  const days = daysOfTheWeek();
-  return scheduleDays.sort((a, b) => (
-    a.day !== b.day ? days.indexOf(a.day) - days.indexOf(b.day) : a.opens_at - b.opens_at
-  ));
-}
-
 /**
  * Round numbers to a specified decimal place.
  *
@@ -98,63 +64,6 @@ export function sortScheduleDays(scheduleDays) {
 export function round(value, decimals) {
   return Number(`${Math.round(`${value}e${decimals}`)}e-${decimals}`);
 }
-
-export function getWalkTime(currLocation, dest, cb) {
-  const directionsService = new google.maps.DirectionsService();
-  const myLatLng = new google.maps.LatLng(currLocation.lat, currLocation.lng);
-  const destLatLang = new google.maps.LatLng(dest.lat, dest.lng);
-  const preferences = {
-    origin: myLatLng,
-    destination: destLatLang,
-    travelMode: google.maps.TravelMode.WALKING,
-  };
-  directionsService.route(preferences, (result, status) => {
-    if (status === google.maps.DirectionsStatus.OK) {
-      cb(result.routes[0].legs[0].duration.text);
-    }
-  });
-}
-
-export function getTimes(scheduleDays) {
-  const currentDate = new Date();
-  const yesterday = new Date(currentDate);
-  yesterday.setDate(currentDate.getDate() - 1);
-
-  const currentTime = parseInt(moment().format('hhmm'), 10);
-  let openUntil = null;
-  // Logic to determine if the current resource is open
-  // includes special logic for when a resource is open past midnight
-  // on the previous day
-  // eslint-disable-next-line
-  scheduleDays && scheduleDays.forEach((scheduleDay) => {
-    const day = scheduleDay ? scheduleDay.day.replace(/,/g, '') : null;
-    const opensAt = scheduleDay.opens_at;
-    const closesAt = scheduleDay.closes_at;
-
-    if (day) {
-      if (day === daysOfTheWeek()[currentDate.getDay()]) {
-        if (currentTime > opensAt && currentTime < closesAt) {
-          openUntil = closesAt;
-        }
-      }
-
-      if (day === daysOfTheWeek()[yesterday.getDay()] && closesAt < opensAt) {
-        if (currentTime < closesAt) {
-          openUntil = closesAt;
-        }
-      }
-    }
-  });
-
-  if (openUntil) {
-    if (openUntil === 2359) {
-      return { openUntil, isOpen: true, is24hour: true };
-    }
-    return { openUntil, isOpen: true };
-  }
-  return { openUntil, isOpen: false };
-}
-
 
 export function getCurrentDayTime() {
   const mmt = moment();

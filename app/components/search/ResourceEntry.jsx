@@ -14,8 +14,7 @@ class ResourceEntry extends Component {
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
     const hitNumber = page * hitsPerPage + index + 1;
-    // const schedule = hit.schedule ? { schedule_days: hit.schedule } : null;
-    // let timeInfo = null;
+    const { recurringSchedule } = hit;
     return (
       <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>
         <li className="results-table-entry resource-entry">
@@ -23,11 +22,13 @@ class ResourceEntry extends Component {
             <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
             <p className="entry-meta">
               <span>{hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found'}</span>
-              {hit.schedule ? (
-                <span className="entry-schedule">
-                  <RelativeOpeningTime schedule={{ schedule_days: hit.schedule }} />
-                </span>
-              ) : null}
+              {recurringSchedule
+                  && (
+                    <span className="entry-schedule">
+                      <RelativeOpeningTime recurringSchedule={recurringSchedule} />
+                    </span>
+                  )
+              }
             </p>
             {hit.is_mohcd_funded
               ? (

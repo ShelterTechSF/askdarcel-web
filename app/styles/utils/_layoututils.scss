@@ -68,10 +68,6 @@ body {
   @extend %flex-column;
 }
 
-.container {
-  overflow-x: hidden;
-}
-
 .disabled-feature {
   display: none !important;
 }

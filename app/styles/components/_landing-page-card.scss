@@ -14,6 +14,28 @@
   }
 }
 
+.landing-page-text-card {
+  margin: 5px;
+  height: 100px;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.landing-page-text-card__title {
+  font-size: 16px;
+  color: #000;
+  padding: 20px;
+  font-weight: 600;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  hyphens: manual;
+}
+
 .landing-page-card__title {
   font-size: 18px;
   color: #000;
@@ -26,7 +48,7 @@
   }
 }
 
-.langing-page-card__image {
+.landing-page-card__image {
   background-repeat: no-repeat;
   max-width: 100%;
   flex: 0 0 150px;
@@ -40,3 +62,4 @@
   flex: 0 0 95px;
   padding: 15px 20px;
 }
+

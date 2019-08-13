@@ -19,7 +19,6 @@ import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
 import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
-import HAPBadge from 'components/listing/HAPBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
@@ -115,7 +114,7 @@ export class OrganizationListingPage extends React.Component {
                     <MOHCDBadge resource={resource} />
                   </div>
                   <div className="org--main--header--hours">
-                    <RelativeOpeningTime schedule={resource.schedule} />
+                    <RelativeOpeningTime recurringSchedule={resource.recurringSchedule} />
                   </div>
                   { resource.phones.length > 0
                     && (
@@ -129,7 +128,6 @@ export class OrganizationListingPage extends React.Component {
                 <div className="org--main--header--description">
                   <h2>About this Organization</h2>
                   <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
-                  <HAPBadge resource={resource} />
                 </div>
 
                 <section className="service--section" id="services">

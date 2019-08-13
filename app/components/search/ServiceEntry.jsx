@@ -13,9 +13,8 @@ class ServiceEntry extends Component {
       hit, index, page, hitsPerPage,
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
-    const schedule = hit.schedule && hit.schedule.length
-      ? { schedule_days: hit.schedule } : { schedule_days: hit.resource_schedule };
     const hitNumber = page * hitsPerPage + index + 1;
+    const { recurringSchedule } = hit;
     return (
       <Link to={{ pathname: `/services/${hit.service_id}` }}>
         <li className="results-table-entry service-entry">
@@ -26,11 +25,13 @@ class ServiceEntry extends Component {
             </p>
             <p className="entry-meta">
               <span>{hit.addresses && hit.addresses.address_1 ? hit.addresses.address_1 : 'No address found'}</span>
-              {schedule ? (
-                <span className="entry-schedule">
-                  <RelativeOpeningTime schedule={schedule} />
-                </span>
-              ) : null}
+              {recurringSchedule
+                  && (
+                    <span className="entry-schedule">
+                      <RelativeOpeningTime recurringSchedule={recurringSchedule} />
+                    </span>
+                  )
+              }
             </p>
 
             {hit.is_mohcd_funded

@@ -93,7 +93,7 @@
     "testcafe-react-selectors": "^2.0.0",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.7.2"
   },
   "scripts": {
     "testserver": "cross-env NODE_ENV=test karma start testing/karma.conf.js",
