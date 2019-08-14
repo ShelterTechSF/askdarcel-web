@@ -24,6 +24,7 @@ const burgerStyles = {
 
 const links = [
   { to: '/', text: 'Home' },
+  { to: '/about', text: 'About' },
   { to: 'https://sheltertech.org/volunteer', text: 'Volunteer' },
   { to: 'mailto:info@sheltertech.org', text: 'Email Us' },
   { to: 'https://www.facebook.com/ShelterTechOrg/', text: 'Facebook' },

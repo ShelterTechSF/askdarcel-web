@@ -1,0 +1,72 @@
+.listing-container.about {
+  background: #fff;
+
+  .text-page {
+    max-width: 1000px;
+    padding: 0 25px;
+    margin: 0 auto;
+    min-height: 100vh;
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.5;
+    }
+  }
+
+}
+
+.listing-container.about header {
+  padding-top: 100px;
+  @media screen and (max-width: 800px) {
+    padding-top: 50px;
+  }
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  p {
+    max-width: 600px;
+    width: 90%;
+    margin-top: 30px;
+  }
+}
+
+.listing-container.about section {
+  margin-top: 80px;
+  h3 {
+    font-size: 21px;
+    font-weight: bold;
+  }
+}
+
+.listing-container.about .row {
+  margin: 30px 0;
+  display: flex;
+  @media screen and (max-width: 800px) {
+    display: block;
+  }
+
+  .image-container {
+    width: 310px;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  p {
+    margin-left: 20px;
+    @media screen and (max-width: 800px) {
+      margin: 25px 0 0;
+    }
+  }
+}
+
+.partners-list {
+  margin: 30px -20px 60px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+   li {
+     flex-shrink: 0;
+     margin: 20px;
+   }
+}
