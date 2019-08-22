@@ -14,6 +14,10 @@ require('./styles/main.scss');
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({ dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}` });
+} else {
+  // If Sentry is not enabled, use console instead.
+  Sentry.captureException = e => console.error(e);
+  Sentry.captureMessage = m => console.error(m);
 }
 
 const store = configureStore();
