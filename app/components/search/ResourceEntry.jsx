@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import { images } from '../../assets';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
+import './SearchEntry.scss';
 
 // TODO: create a shared component for Resource and Service entries
 class ResourceEntry extends Component {
@@ -13,39 +14,41 @@ class ResourceEntry extends Component {
     } = this.props;
     const description = hit.long_description || 'No description, yet...';
     const hitNumber = page * hitsPerPage + index + 1;
-    // const schedule = hit.schedule ? { schedule_days: hit.schedule } : null;
-    // let timeInfo = null;
+    const { recurringSchedule } = hit;
     return (
-      <li className="results-table-entry resource-entry">
-        <header>
+      <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>
+        <li className="results-table-entry resource-entry">
           <div className="entry-details">
-            <h4 className="entry-headline"><Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{`${hitNumber}) ${hit.name}`}</Link></h4>
-            <div className="entry-subhead">
-              <p>
-                {hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found'}
-                {/* { schedule ? ' • ' : null } */}
-                {hit.schedule ? <span className="float-right"><RelativeOpeningTime schedule={{ schedule_days: hit.schedule }} /></span> : null}
-              </p>
+            <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
+            <p className="entry-meta">
+              <span>{hit.address && hit.address.address_1 ? hit.address.address_1 : 'No address found'}</span>
+              {recurringSchedule
+                  && (
+                    <span className="entry-schedule">
+                      <RelativeOpeningTime recurringSchedule={recurringSchedule} />
+                    </span>
+                  )
+              }
+            </p>
+            {hit.is_mohcd_funded
+              ? (
+                <div className="mohcd-funded">
+                  <img src={images.mohcdSeal} alt="MOHCD seal" />
+                  <p>Funded by MOHCD</p>
+                </div>
+              )
+              : (
+                <div className="mohcd-funded">
+                  <img src={images.mohcdSeal} alt="MOHCD seal" />
+                  <p>Funded by MOHCD</p>
+                </div>
+              )
+            }
+            <div className="entry-body">
+              <ReactMarkdown className="rendered-markdown" source={description} />
             </div>
           </div>
-          {hit.is_mohcd_funded
-            ? (
-              <div className="mohcd-funded">
-                <img src={images.mohcdSeal} alt="MOHCD seal" />
-                <p>Funded by MOHCD</p>
-              </div>
-            )
-            : null
-          }
-        </header>
-        <div className="entry-additional-info">
-          <div className="entry-body">
-            <ReactMarkdown className="rendered-markdown" source={description} />
-          </div>
-        </div>
-        <div className="entry-action-buttons">
           <ul className="action-buttons">
-            <li className="action-button"><Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>Details</Link></li>
             {hit._geoloc && (
               <li className="action-button">
                 <a
@@ -53,14 +56,15 @@ class ResourceEntry extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Directions
+                  <i className="material-icons">directions_outlined</i>
+                Go
                 </a>
               </li>
             )}
           </ul>
-        </div>
 
-      </li>
+        </li>
+      </Link>
     );
   }
 }

@@ -8,7 +8,7 @@ import {
 } from 'react-instantsearch/dom';
 import { isEqual } from 'lodash';
 import qs from 'qs';
-import Filtering from '../components/search/Filtering';
+
 import SearchResultsContainer from '../components/search/SearchResultsContainer';
 import config from '../config';
 
@@ -17,7 +17,7 @@ class SearchPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       searchState: { ...qs.parse(props.router.location.query) },
       filtersOpen: false
     };
@@ -62,7 +62,7 @@ class SearchPage extends Component {
     /* eslint-disable no-undef */
     return (
       <div className="search-page-container">
-        
+
         <InstantSearch
           appId={config.ALGOLIA_APPLICATION_ID}
           apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
@@ -71,7 +71,6 @@ class SearchPage extends Component {
           onSearchStateChange={this.onSearchStateChange}
           createURL={this.createURL}
         >
-          <Filtering />
           {configuration}
           <div className="search-box">
             <SearchBox />

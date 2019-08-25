@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { isSFServiceGuideSite } from '../../utils/whitelabel';
+import { isSFServiceGuideSite } from '../../../utils/whitelabel';
+import './Footer.scss';
 
 function Footer() {
   return (
@@ -10,21 +11,21 @@ function Footer() {
           <section className="service-guide">
             <div className="service-guide__icon" />
             <h1 className="service-guide__text">
-              {isSFServiceGuideSite() ? 'SF Service Guide' : 'Ask Darcel'}
+              <Link to="/">{isSFServiceGuideSite() ? 'SF Service Guide' : 'Ask Darcel'}</Link>
             </h1>
           </section>
           <section className="site-footer__links">
             <ul>
               <h1>About Us</h1>
-              <li><a href="https://www.sheltertech.org" target="_blank" rel="noopener noreferrer">Our Story</a></li>
+              <li><Link to="/about">About SFSG</Link></li>
+              <li>
+                <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
+                  FAQ
+                </a>
+              </li>
               <li><a href="https://www.sheltertech.org/get-involved" target="_blank" rel="noopener noreferrer">Volunteer</a></li>
               <li><a href="https://www.sheltertech.org/donate" target="_blank" rel="noopener noreferrer">Donate</a></li>
             </ul>
-            {/* <ul>
-              <h1>Help</h1>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Digital Literacy</a></li>
-            </ul> */}
             <ul>
               <h1>Connect</h1>
               <li><a href="mailto:info@sheltertech.org">Email</a></li>

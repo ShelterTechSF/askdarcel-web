@@ -1,0 +1,144 @@
+.results-table-entry {
+  display: flex;
+  position: relative;
+  margin-bottom: 20px;
+  list-style-type: none;
+  transition: all 200ms ease;
+  background: #fff;
+  &:active, &:hover, &:focus {
+    z-index: 1;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.2);
+  }
+  @media screen and (max-width: 767px) {
+    margin-bottom: 0;
+    border-bottom: 1px solid #f4f4f4;
+  }
+}
+
+.entry-details {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 25px 30px 30px;
+  width: 100%;
+  flex: 1 1 80%;
+}
+
+.entry-headline {
+  color: rgba(0,0,0,0.87);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+  letter-spacing: -.25px;
+  &:hover {
+    color: #276ce5;
+  }
+}
+
+.entry-meta {
+  display: flex;
+  color: #666;
+  font-size: 0.87rem;
+  margin-bottom: 2px;
+  @media screen and (max-width:767px) {
+  flex-direction: column;
+  }
+}
+
+.entry-schedule {
+  @media screen and (min-width: 767px) {
+    &:before {
+      content: ' • ';
+      margin-left: 4px;
+    }
+  }
+}
+
+.entry-body {
+  margin: 10px 0 0 0;
+  max-height: 40px;
+  padding-bottom: 6px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  @media screen and (max-width:767px) {
+    display: none;
+  }
+  p {
+    font-size: 14px;
+    line-height: 19px;
+    color: #666;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.mohcd-funded {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  & > img {
+    width: 35px;
+    padding-right: 5px;
+  }
+  & > p {
+    font-size: 12px;
+    color: #666;
+  }
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.action-buttons {
+  flex: 1 0 auto;
+  width: 20%;
+  display: flex;
+  @media screen and (min-width: 767px) {
+    display: none;
+  }
+}
+
+.action-button {
+  position: relative;
+  padding-top: 100%;
+  width: 100%;
+}
+
+.action-button a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.87rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 5px;
+  i {
+    width: 32px;
+    font-size: 32px;
+  }
+}
+
+.relative-opening-time {
+  &.status-red {
+    color: #E34646;
+  }
+
+  &.status-green {
+    color: #01C270;
+  }
+
+  &.status-amber {
+    color: #F3AE00;
+  }
+}

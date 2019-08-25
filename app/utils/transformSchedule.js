@@ -20,7 +20,7 @@ import {
  * @returns {object} - An object with an `hour` property and a `minute`
  *  property, both represented as integers.
  */
-const parseConcatenatedIntegerTime = integerTime => {
+export const parseConcatenatedIntegerTime = integerTime => {
   // This algorithm is super hacky and slow, as it uses strings to separate the
   // hours digits from the minutes digits.
   const timeString = integerTime.toString();
@@ -64,4 +64,8 @@ export const parseAPISchedule = apiSchedule => new RecurringSchedule({
     .map(apiScheduleDay => parseAPIScheduleDay(apiScheduleDay))
     .filter(interval => interval),
   hoursKnown: apiSchedule.hours_known,
+});
+
+export const parseAlgoliaSchedule = algoliaSchedule => new RecurringSchedule({
+  intervals: algoliaSchedule.map(parseAPIScheduleDay).filter(interval => interval),
 });

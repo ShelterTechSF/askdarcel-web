@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
+import { eligibilitiesMapping } from '../../utils/refinementMappings';
+import 'url-search-params-polyfill';
 
 class LandingPageEligibilityBlock extends Component {
+
+  buildBlockUrl(eligibility) {
+    var search_params = new URLSearchParams();
+    const eligibilityElements = eligibilitiesMapping[eligibility];
+    eligibilityElements.forEach((element, index) => {
+      search_params.append(`refinementList[eligibilities][${index}]`, element);
+    });
+    return '/search?'+search_params.toString();
+  }
+
   render() {
     // TODO Properly implement horizontal scroll buttons if we ever get > 6 eligibilities
     return (
@@ -18,6 +30,7 @@ class LandingPageEligibilityBlock extends Component {
                 key={eligibility.id}
                 name={eligibility.name}
                 count={eligibility.service_count}
+                url={this.buildBlockUrl(eligibility.name)}
               />
             ))
             }
@@ -40,7 +53,7 @@ LandingPageEligibilityBlock.props = {
 
 const LandingPageCard = props => (
   <Link
-    to={`/search?refinementList[eligibilities][0]=${encodeURIComponent(props.name)}`}
+    to={props.url}
     className="landing-page-eligibility-card"
   >
     <h2 className="landing-page-eligibility-card__title">{props.name}</h2>

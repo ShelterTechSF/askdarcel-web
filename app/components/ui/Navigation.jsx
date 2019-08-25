@@ -72,6 +72,11 @@ class Navigation extends React.Component {
           </div>
           <ul className={styles.navRight}>
             <li>
+              <Link to="/about">
+                About
+              </Link>
+            </li>
+            <li>
               <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
                 FAQ
               </a>

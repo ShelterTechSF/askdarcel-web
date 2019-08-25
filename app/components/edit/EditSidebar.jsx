@@ -69,6 +69,17 @@ const EditSidebar = ({
       </button>,
     );
   }
+  // Populate existing services so they show up on the sidebar
+  // Do a 2-level-deep clone of the newServices object
+  const allServices = Object.entries(newServices).reduce(
+    (acc, [id, service]) => ({ ...acc, [id]: { ...service } }),
+    {},
+  );
+  if (resource.services) {
+    resource.services.forEach(service => {
+      allServices[service.id].name = service.name;
+    });
+  }
   return (
     <nav className="sidebar">
       <div className="sidebar--content">
@@ -88,14 +99,9 @@ const EditSidebar = ({
               <button type="button" className="service--action--button" onClick={addService}><i className="material-icons">add</i></button>
             </h3>
           </li>
-          { resource.services && resource.services.map(service => (
-            <li key={service.id} className="sidebar--list--item">
-              <a href={`#${service.id}`}>{service.name}</a>
-            </li>
-          )) }
-          {Object.keys(newServices).map(service => (
+          {Object.keys(allServices).map(service => (
             <li key={service} className="sidebar--list--item">
-              <a href={`#${service}`} style={{ display: 'block' }}>{newServices[service].name}</a>
+              <a href={`#${service}`} style={{ display: 'block' }}>{allServices[service].name}</a>
             </li>
           ))}
         </ul>
