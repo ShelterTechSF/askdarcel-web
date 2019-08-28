@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { LandingPageCard, LandingPageTextCard } from './LandingPageCards';
-import Carousel from './Carousel';
+import Carousel from '../Carousel/Carousel';
+import './landing-page-resource-block.scss';
 
 const HOST_QUERY = '/search?query=';
 

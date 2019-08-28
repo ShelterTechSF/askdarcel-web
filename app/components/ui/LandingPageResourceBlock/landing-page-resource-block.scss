@@ -10,7 +10,7 @@
   padding-bottom: 50px;
   position: relative;
   max-width: 945px;
-  @include r_max($break-tablet-p) {
+  @media screen and (max-width: 960px) {
     padding: 50px 20px;
   }
 }
@@ -24,15 +24,15 @@
   & h1 {
     display: inline-block;
     font-size: 21px;
-    padding: 0px 5px 15px 5px;
+    padding: 0px 5px 5px 5px;
     z-index: 1;
   }
 
   & .blue-word {
-    color: $color-brand;
+    color: #276ce5;
   }
   & .see-more {
-    color: $color-brand;
+    color: #276ce5;
     float: right;
   }
 }
@@ -42,7 +42,7 @@
   text-align: right;
   font-size: 16px;
   z-index: 1;
-  color: $color-brand;
+  color: #276ce5;
 }
 
 .landing-page-resource-block__resources-description {
@@ -55,13 +55,16 @@
   align-items: center;
   padding: 0 5px 15px;
   z-index: 1;
-  width: 62%;
+  max-width: 600px;
+  @media screen and (max-width: 600px)  {
+    width: 100%;
+  }
 }
 
 .landing-page-resource-block__cards {
   display: flex;
   flex-wrap: wrap;
-  @include r_max($break-tablet-p) {
+  @media screen and (max-width: 960px)  {
     flex-wrap: nowrap;
     overflow-x: scroll;
   }
