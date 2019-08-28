@@ -50,7 +50,7 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
             <Filtering />
           </div>
           <SearchTable
-            hits={searchResults.hits}
+            hits={hits}
             page={searchResults.page}
             hitsPerPage={searchResults.hitsPerPage}
           />
