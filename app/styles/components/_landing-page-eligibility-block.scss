@@ -63,14 +63,16 @@
   align-content: flex-start;
   display: flex;
   flex-direction: column;
-  flex-flow: column wrap;
-  max-height: 200px;
+  flex-flow: wrap;
   overflow-x: auto;
   overflow-y: hidden;
   overflow: -moz-scrollbars-none;
   position: relative;
   margin: 0 -5px;  // Set negative margin to allow for box-shadow to be visible
-
+  @include r_max($break-tablet-p) {
+    flex-flow: column wrap;
+    max-height: 200px;
+  }
   &::-webkit-scrollbar {
     width: 0 !important
   }
