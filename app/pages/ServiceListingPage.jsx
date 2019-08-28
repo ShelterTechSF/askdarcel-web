@@ -182,6 +182,9 @@ class ServicePage extends React.Component {
               </div>
               <div className="listing--aside">
                 <ActionSidebar resource={resource} service={service} />
+                {service.categories ? (
+                  <p className="related-searches">Related Searches</p>
+                ) : null}    
                 {service.categories.map(cat => (
                   <CategoryTag key={cat.id} category={cat} />
                 ))}
