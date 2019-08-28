@@ -7,7 +7,7 @@ const HomelessnessBlockConfig = {
     NUM_SLOTS: 4,
   },
   LINK: {
-    URL: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
+    URL: 'https://help.sfserviceguide.org/en/collections/1778514-government-programs-homelessness-resources-guide',
     TEXT: 'View Guide',
   },
   CARDS: [
