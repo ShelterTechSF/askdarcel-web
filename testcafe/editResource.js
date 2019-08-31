@@ -148,6 +148,61 @@ test('Edit resource description', async t => {
   );
 });
 
+test('Add Resource Note', async t => {
+  const newNote = 'A new note has been added';
+
+  // Wait for page to load before counting phone Notes by using hover action.
+  await t.hover(resourcePage.noteContainer);
+  const originalCount = await resourcePage.notes.with({ boundTestRun: t }).count;
+
+  // Make edits
+  await resourcePage.clickEditButton(t);
+  await t.click(editResourcePage.addNoteButton);
+  // create
+  const note = EditResourcePage.getResourceNote(-1);
+  await t
+    .typeText(note.content, newNote, { replace: true })
+    .click(editResourcePage.saveButton);
+
+  // Check visibility of edits on show page
+  await t
+    .expect(resourcePage.notes.parent().textContent).contains(newNote)
+    .expect(resourcePage.notes.count)
+    .eql(originalCount + 1);
+});
+
+test('Edit Resource Note', async t => {
+  const newNote = 'Modified Note Text';
+
+  // Wait for page to load before counting phone Notes by using hover action.
+  await t.hover(resourcePage.notes);
+
+  // Make edits
+  await resourcePage.clickEditButton(t);
+  const note = EditResourcePage.getResourceNote(0);
+  await t
+    .typeText(note.content, newNote, { replace: true })
+    .click(editResourcePage.saveButton);
+
+  // Check visibility of edits on show page
+  await t
+    .expect(resourcePage.notes.parent().textContent).contains(newNote);
+});
+
+test('Delete Resource Note', async t => {
+  // Wait for page to load before counting phone Notes by using hover action.
+  await t.hover(resourcePage.notes);
+  const originalCount = await resourcePage.notes.with({ boundTestRun: t }).count;
+
+  await resourcePage.clickEditButton(t);
+  await t
+    .click(editResourcePage.deleteNoteButton)
+    .click(editResourcePage.saveButton);
+  await t
+    .expect(resourcePage.notes.count)
+    .eql(originalCount - 1);
+});
+
 test('Add new service', async t => {
   // Navigate to edit page
   await resourcePage.clickEditButton(t);

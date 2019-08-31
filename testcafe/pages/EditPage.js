@@ -23,6 +23,13 @@ class EditPhone {
   }
 }
 
+class EditResourceNote {
+  constructor(index) {
+    const baseSelector = ReactSelector('EditNotes').nth(0);
+    this.content = baseSelector.findReact('EditNote').nth(index).find('textarea');
+  }
+}
+
 class EditScheduleDay {
   constructor(parentSelector, index) {
     const baseSelector = parentSelector.find(`.day-group:nth-child(${index})`);
@@ -68,10 +75,12 @@ export default class EditPage {
     const baseSelector = ReactSelector(baseSelectorName);
     this.name = baseSelector.find('#edit-name-input');
     this.address = new EditAddress();
+    this.addNoteButton = ReactSelector('EditNotes').find('.edit--section--list--item--button');
     this.addPhoneButton = ReactSelector('EditPhones').find('.edit--section--list--item--button');
     this.website = baseSelector.find('#edit-website-input');
     this.email = baseSelector.find('#edit-email-input');
     this.description = baseSelector.find('#edit-description-input');
+    this.deleteNoteButton = ReactSelector('EditNotes').find('.delete-note');
     this.deletePhoneButton = ReactSelector('EditPhones').find('.trash-button');
     this.saveButton = baseSelector.find('.sidebar--actions--button');
     this.addServiceButton = baseSelector.find('.new-service');
@@ -82,6 +91,10 @@ export default class EditPage {
 
   static getPhone(index) {
     return new EditPhone(index);
+  }
+
+  static getResourceNote(index) {
+    return new EditResourceNote(index);
   }
 
   static getService(serviceId) {
