@@ -15,6 +15,7 @@ import { AdminPage } from './pages/admin/Admin';
 import { ChangeRequestsPage } from './pages/admin/ChangeRequests';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
+import { AboutPage } from './pages/about/About';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 
 function redirectToRoot(nextState, replace) {
@@ -45,6 +46,7 @@ export default (
     <Route name="search" path="/search" component={SearchResultsPage} />
     <Route name="ServicePage" path="/services/:service" component={ServiceListingPage} />
     <Route name="termsOfService" path="/terms-of-service" component={TermsOfServicePage} />
+    <Route name="AboutPage" path="/about" component={AboutPage} />
     <Route name="listingDemo" path="/demo/listing" component={ListingDebugPage} />
     <Route path="*" onEnter={redirectToRoot} />
   </Route>

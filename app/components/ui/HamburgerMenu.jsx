@@ -24,7 +24,9 @@ const burgerStyles = {
 
 const links = [
   { to: '/', text: 'Home' },
-  { to: 'https://sheltertech.org/volunteer', text: 'Volunteer' },
+  { to: '/about', text: 'About' },
+  { to: 'https://help.sfserviceguide.org', text: 'FAQ' },
+  { to: 'https://forms.gle/vNqBDd6X3dAn2M4PA', text: 'Feedback' },
   { to: 'mailto:info@sheltertech.org', text: 'Email Us' },
   { to: 'https://www.facebook.com/ShelterTechOrg/', text: 'Facebook' },
   { to: 'https://twitter.com/sheltertechorg', text: 'Twitter' },

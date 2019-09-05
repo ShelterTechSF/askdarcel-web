@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
 
-class EligibilitiesRefinementList extends Component {
+class FacetRefinementList extends Component {
   static propTypes = {
     items: PropTypes.array.isRequired,
     refine: PropTypes.func.isRequired,
@@ -13,20 +13,6 @@ class EligibilitiesRefinementList extends Component {
     super(props);
     this.changeRefinement = this.changeRefinement.bind(this);
     this.setChecks = this.setChecks.bind(this);
-    this.eligibilitiesMapping = {
-      Disability: ['Disability', 'Developmental Disability', 'Physical Disability', 'Learning Disability', 'Intellectual Disability'],
-      Families: ['Families', 'Families with Babies'],
-      Homeless: ['Homeless'],
-      'Mental Health/Substance Use': ['Mental Illness', 'Substance Dependency'],
-      'Re-Entry/Incarcerated': ['Re-Entry'],
-      'Seniors (55+ years old)': ['Seniors (55+ years old)'],
-      'Transitional Aged Youth': ['Transitional Aged Youth'],
-      'Trauma Survivors': ['Trauma Survivors'],
-      Veterans: ['Veterans'],
-      Immigrants: ['Immigrants'],
-      LGBTQ: ['LGBTQ'],
-
-    };
     const checks = this.setChecks();
     this.state = {
       isChecked: checks,
@@ -43,46 +29,55 @@ class EligibilitiesRefinementList extends Component {
   }
 
   setChecks() {
-    const { currentRefinement } = this.props;
-    const mapKeys = Object.keys(this.eligibilitiesMapping);
-    const checks = [];
-    for (let i = 0; i < mapKeys.length; i++) {
-      const key = mapKeys[i];
-      let atLeastOneRefined = false;
-      for (let i_1 = 0; i_1 < this.eligibilitiesMapping[key].length; i_1++) {
-        const val = this.eligibilitiesMapping[key][i_1];
-        if (currentRefinement.includes(val)) {
-          atLeastOneRefined = true;
-          break;
-        }
-      }
-      checks[key] = atLeastOneRefined;
-    }
+    const { mapping } = this.props;
+    const mapKeys = Object.keys(mapping);
+    const checks = {};
+    mapKeys.forEach(key => {
+      checks[key] = this.keyHasAtLeastOneRefined(key);
+    });
     return checks;
   }
 
   changeRefinement(key, event) { // eslint-disable-line no-unused-vars
     const { refine } = this.props;
-    const { items } = this.props;
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (this.eligibilitiesMapping[key].includes(item.label)) {
-        refine(item.value);
-      }
+    const { currentRefinement } = this.props;
+    const { mapping } = this.props;
+    const { isChecked } = this.state;
+    let newRefinement;
+    if (isChecked[key]) {
+      // If key currently checked, unrefine every sub-element (filter through current refinement)
+      newRefinement = currentRefinement.filter(value => !mapping[key].includes(value));
+    } else {
+      // If key currently unchecked, refine all sub-elements
+      newRefinement = currentRefinement.concat(mapping[key]);
     }
+    refine(newRefinement);
+  }
+
+  keyHasAtLeastOneRefined(key) {
+    const { currentRefinement } = this.props;
+    const { mapping } = this.props;
+    return mapping[key].some(value => currentRefinement.includes(value));
   }
 
   refinementHasResults(key) {
+    // this check that a key (checkbox) has at least one sub-elements that is refined
+    // e.g if Learning Disabilities is can be refined but not Visual Impairment,
+    // Disability is still enabled as a checkbox
     const { items } = this.props;
-    return items.find(item => item.label === key);
+    const { mapping } = this.props;
+    return items.some(item => mapping[key].includes(item.label));
   }
 
   render() {
     const { isChecked } = this.state;
-    const mapKeys = Object.keys(this.eligibilitiesMapping);
+    const { mapping } = this.props;
+    const { attribute } = this.props;
+    const mapKeys = Object.keys(mapping);
+    const title = attribute === 'eligibilities' ? 'Eligibilities' : 'Categories';
     return (
       <div className="refinement-wrapper">
-        <p className="refinement-title">Eligibilities</p>
+        <p className="refinement-title">{title}</p>
         <ul className="refinement-ul">
           {mapKeys.map(key => {
             const refinementHasResults = this.refinementHasResults(key);
@@ -114,4 +109,4 @@ class EligibilitiesRefinementList extends Component {
   }
 }
 
-export default connectRefinementList(EligibilitiesRefinementList);
+export default connectRefinementList(FacetRefinementList);

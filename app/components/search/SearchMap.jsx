@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import GoogleMap from 'google-map-react';
 import config from '../../config';
+import './SearchMap.scss';
 
 function createMapOptions(maps) {
   return {
@@ -63,6 +64,7 @@ const SearchMap = ({ hits, userLocation }) => {
   ));
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
+
   return (
     <div className="results-map">
       <div className="map-wrapper">
@@ -70,8 +72,8 @@ const SearchMap = ({ hits, userLocation }) => {
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
           }}
-          center={{ lat: userLocation.lat, lng: userLocation.lng }}
-          defaultZoom={14}
+          defaultCenter={[userLocation.lat, userLocation.lng]}
+          defaultZoom={15}
           options={createMapOptions}
         >
           {markers}

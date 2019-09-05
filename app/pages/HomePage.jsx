@@ -1,8 +1,8 @@
 import React from 'react';
-import Footer from 'components/ui/Footer';
+import Footer from 'components/ui/Footer/Footer';
 import LandingPageResourceBlock from 'components/ui/LandingPageResourceBlock';
 import LandingPageEligibilityBlock from 'components/ui/LandingPageEligibilityBlock';
-import Partners from 'components/ui/Partners';
+import Partners from 'components/ui/Partners/Partners';
 import FindHeader from 'components/layout/FindHeader';
 import { CategoryList } from 'components/layout/CategoryList';
 import HousingBlockConfig from 'components/ui/HousingBlockConfig';
@@ -50,9 +50,7 @@ export class HomePage extends React.Component {
         </div>
         <LandingPageEligibilityBlock eligibilities={eligibilities} />
         <LandingPageResourceBlock config={HousingBlockConfig} />
-        <LandingPageResourceBlock config={LegalBlockConfig}>
-          <div className="legal-block__resources-hammer" />
-        </LandingPageResourceBlock>
+        <LandingPageResourceBlock config={LegalBlockConfig} />
         <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
         <LandingPageResourceBlock config={YouthHomelessnessBlockConfig} />
         <Partners />

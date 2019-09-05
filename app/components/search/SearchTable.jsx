@@ -4,6 +4,7 @@ import {
 } from 'react-instantsearch/dom';
 import { images } from 'assets';
 import SearchRow from './SearchRow';
+import './ResultsPagination.scss';
 
 const SearchTable = ({ hits, page, hitsPerPage }) => {
   const rows = hits.map((hit, index) => (
@@ -24,7 +25,12 @@ const SearchTable = ({ hits, page, hitsPerPage }) => {
       <div className="results-pagination">
         <Pagination
           padding={2}
-          showLast
+          showLast={false}
+          showFirst={false}
+          translations={{
+            previous:'Prev',
+            next:'Next',
+          }}
         />
       </div>
       <div className="algolia-img-wrapper">

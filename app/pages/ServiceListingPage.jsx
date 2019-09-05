@@ -12,7 +12,6 @@ import {
   ServiceAttribution,
   TableOfContactInfo,
   TableOfOpeningTimes,
-  CategoryTag,
   MobileActionBar,
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
@@ -20,7 +19,6 @@ import ReactMarkdown from 'react-markdown';
 import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
-import HAPBadge from 'components/listing/HAPBadge';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
@@ -76,6 +74,7 @@ class ServicePage extends React.Component {
     const { resource, program, recurringSchedule } = service;
     const details = this.generateDetailsRows();
     const locations = getServiceLocations(service, resource, recurringSchedule);
+    console.log(locations);
     return (
       <div>
         <Helmet>
@@ -125,7 +124,6 @@ class ServicePage extends React.Component {
                     attribution={resource.source_attribution}
                     status={resource.status}
                   />
-                  <HAPBadge resource={service} />
                 </section>
 
                 {details.length ? (
@@ -183,9 +181,6 @@ class ServicePage extends React.Component {
               </div>
               <div className="listing--aside">
                 <ActionSidebar resource={resource} service={service} />
-                {service.categories.map(cat => (
-                  <CategoryTag key={cat.id} category={cat} />
-                ))}
               </div>
             </div>
           </article>

@@ -10,16 +10,20 @@ import { RecurringSchedule } from '../../utils/RecurringSchedule';
 export const TableOfOpeningTimes = ({ recurringSchedule }) => (
   <table className="compact">
     <tbody>
-      { recurringSchedule.intervals.map(interval => {
-        const opensAt = interval.opensAt.timeString();
-        const closesAt = interval.closesAt.timeString();
-        return (
-          <tr key={interval.key()}>
-            <th>{ interval.opensAt.dayString() }</th>
-            <td>{ `${opensAt} - ${closesAt}` }</td>
-          </tr>
-        );
-      }) }
+      {
+        (recurringSchedule.hoursKnown
+          && recurringSchedule.intervals.map(interval => {
+            const opensAt = interval.opensAt.timeString();
+            const closesAt = interval.closesAt.timeString();
+            return (
+              <tr key={interval.key()}>
+                <th>{ interval.opensAt.dayString() }</th>
+                <td>{ `${opensAt} - ${closesAt}` }</td>
+              </tr>
+            );
+          }))
+        || <tr><th>Call for Hours</th></tr>
+      }
     </tbody>
   </table>
 );

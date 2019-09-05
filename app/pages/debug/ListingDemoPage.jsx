@@ -1,12 +1,14 @@
 import React from 'react';
 import { RelativeOpeningTime } from '../../components/listing/RelativeOpeningTime';
+import { RecurringInterval, RecurringSchedule, RecurringTime } from '../../utils/RecurringSchedule';
+import { parseConcatenatedIntegerTime } from '../../utils/transformSchedule';
 import './ListingDemoPage.scss';
 
 // Is sorted so that the first day is today
 export const simpleScheduleLookup = {
   twenty_four_seven: [[0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359]],
   twenty_four_hours_today: [[0, 2359], null, null, null, null, null, null],
-  closed_today: [null, [900, 1800], [900, 1800]],
+  closed_today: [null, null, [900, 1800], [900, 1800]],
   nine_to_six: [[900, 1800], [900, 1800], [900, 1800], [900, 1800], [900, 1800], [900, 1200]],
   random1: [[[915, 1130], [1300, 1800]], [900, 1800], [900, 1800], [900, 1800], [900, 1800], [900, 1200], [900, 1200]],
   random2: [[0, 2359], [900, 1800], [900, 1800], [900, 1800], [900, 1800], [900, 1200], [0, 2359]],
@@ -21,41 +23,42 @@ export const simpleScheduleLookup = {
 
 export const simpleSchedules = Object.values(simpleScheduleLookup);
 
-export class ListingDebugPage extends React.Component {
-  static createScheduleFromShorthand(shedule_shorthand) {
-    const today = new Date().getDay();
-    const daysOfWeek = RelativeOpeningTime.daysOfWeek.slice();
-    const todayAndAfter = daysOfWeek.splice(today);
-    const orderedDaysOfTheWeek = todayAndAfter.concat(daysOfWeek);
-    // console.log('putting today first', today, orderedDaysOfTheWeek, { daysOfWeek, todayAndAfter });
-    const schedules = shedule_shorthand.map(sched => {
-      const days = [];
-      sched.forEach((day, i) => {
-        if (day === null) { return; }
-        const instancesOfToday = Array.isArray(day[0]) ? day : [day];
-        instancesOfToday.forEach(times => {
-          days.push({
-            day: orderedDaysOfTheWeek[i],
-            opens_at: times[0],
-            closes_at: times[1],
-          });
+export const createScheduleFromShorthand = (shedule_shorthand) => {
+  const today = new Date().getDay();
+  const schedules = shedule_shorthand.map((shorthandSchedule, scheduleId) => {
+    const intervals = shorthandSchedule.flatMap((day, i) => {
+      if (day === null) { return []; }
+
+      const instancesOfToday = Array.isArray(day[0]) ? day : [day];
+      // Shift days such that 0 maps to the current day.
+      const adjustedDay = (i + today) % 7;
+      return instancesOfToday.map(([opensAt, closesAt]) => {
+        const { hour: opensAtHour, minute: opensAtMinute } = parseConcatenatedIntegerTime(opensAt);
+        const { hour: closesAtHour, minute: closesAtMinute } = parseConcatenatedIntegerTime(closesAt);
+        const adjustedClosesAtDay = closesAt < opensAt ? (adjustedDay + 1) % 7 : adjustedDay;
+        return new RecurringInterval({
+          opensAt: new RecurringTime({ day: adjustedDay, hour: opensAtHour, minute: opensAtMinute }),
+          closesAt: new RecurringTime({ day: adjustedClosesAtDay, hour: closesAtHour, minute: closesAtMinute }),
         });
       });
-      return days;
-    }).map((schedule_days, i) => ({ schedule_days, id: i }));
+    });
+    return new RecurringSchedule({ intervals });
+  });
 
-    return schedules;
-  }
+  return schedules;
+}
+
+export class ListingDebugPage extends React.Component {
 
   render() {
-    const schedules = ListingDebugPage.createScheduleFromShorthand(simpleSchedules);
+    const recurringSchedules = createScheduleFromShorthand(simpleSchedules);
     return (
       <div className="demo-page">
         <h1>RelativeOpeningTime</h1>
-        { schedules.map(schedule => (
+        { recurringSchedules.map(recurringSchedule => (
           <p>
-            <RelativeOpeningTime key={schedule.id} schedule={schedule} />
-            {/* <pre>{ JSON.stringify(schedule, null, 2) }</pre> */}
+            <RelativeOpeningTime key={recurringSchedule} recurringSchedule={recurringSchedule} />
+            {/* <pre>{ JSON.stringify(recurringSchedule, null, 2) }</pre> */}
           </p>
         )) }
       </div>

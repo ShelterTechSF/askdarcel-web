@@ -26,7 +26,6 @@ class OrganizationCard extends React.Component {
             {/* TODO Walking distance */}
           </h4>
           {/* TODO Add Rating */}
-          {/* TODO HAP Certification */}
           <p>{ this.calculateShortDescription(org) }</p>
         </header>
       </Link>

@@ -2,6 +2,7 @@
  * Helper functions for transforming data from the API into easier to use data
  * structures.
  */
+import * as Sentry from '@sentry/browser';
 import {
   DAY_TO_INT, DAYS_IN_WEEK, MINUTES_IN_HOUR, RecurringTime, RecurringSchedule, RecurringInterval,
 } from './RecurringSchedule';
@@ -20,15 +21,20 @@ import {
  * @returns {object} - An object with an `hour` property and a `minute`
  *  property, both represented as integers.
  */
-const parseConcatenatedIntegerTime = integerTime => {
-  // This algorithm is super hacky and slow, as it uses strings to separate the
-  // hours digits from the minutes digits.
-  const timeString = integerTime.toString();
-  const hourString = timeString.substring(0, timeString.length - 2);
-  const minuteString = timeString.substring(timeString.length - 2, timeString.length);
-  const hour = hourString.length ? parseInt(hourString, 10) : 0;
-  const minute = parseInt(minuteString, 10);
-  return { hour, minute };
+export const parseConcatenatedIntegerTime = integerTime => {
+  try {
+    // This algorithm is super hacky and slow, as it uses strings to separate the
+    // hours digits from the minutes digits.
+    const timeString = integerTime.toString();
+    const hourString = timeString.substring(0, timeString.length - 2);
+    const minuteString = timeString.substring(timeString.length - 2, timeString.length);
+    const hour = hourString.length ? parseInt(hourString, 10) : 0;
+    const minute = parseInt(minuteString, 10);
+    return { hour, minute };
+  } catch (e) {
+    Sentry.captureException(e);
+    return null;
+  }
 };
 
 /** Transform API ScheduleDay into a RecurringInterval. */
@@ -36,7 +42,7 @@ const parseAPIScheduleDay = apiScheduleDay => {
   const opensAtTime = parseConcatenatedIntegerTime(apiScheduleDay.opens_at);
   const closesAtTime = parseConcatenatedIntegerTime(apiScheduleDay.closes_at);
   if (opensAtTime === null || closesAtTime === null) {
-    console.log(`ScheduleDay has null times: ${apiScheduleDay}`);
+    Sentry.captureMessage(`ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`);
     return null;
   }
 
@@ -63,4 +69,9 @@ export const parseAPISchedule = apiSchedule => new RecurringSchedule({
   intervals: apiSchedule.schedule_days
     .map(apiScheduleDay => parseAPIScheduleDay(apiScheduleDay))
     .filter(interval => interval),
+  hoursKnown: apiSchedule.hours_known,
+});
+
+export const parseAlgoliaSchedule = algoliaSchedule => new RecurringSchedule({
+  intervals: algoliaSchedule.map(parseAPIScheduleDay).filter(interval => interval),
 });

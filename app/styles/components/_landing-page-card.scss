@@ -50,6 +50,8 @@
 
 .landing-page-card__image {
   background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   max-width: 100%;
   flex: 0 0 150px;
 
@@ -62,4 +64,3 @@
   flex: 0 0 95px;
   padding: 15px 20px;
 }
-
