@@ -5,19 +5,19 @@ export default class ResourcePage {
   constructor() {
     const baseSelectorName = 'OrganizationListingPage';
     const baseSelector = ReactSelector(baseSelectorName);
-    this.resourceName = baseSelector.find('.org--main--header--title');
-    this.description = baseSelector.find('.org--main--header--description');
     this.address = ReactSelector(`${baseSelectorName} AddressInfo`);
+    this.description = baseSelector.find('.org--main--header--description');
+    this.editButton = baseSelector.find('.action-sidebar--edit');
+    this.email = baseSelector.findReact('Email');
     // TODO: Can't use nested React component name PhoneNumber because it is
     // instantiated in both the header and the body of the page and because the
     // testcafe-react-selectors plugin is currently unable to mix CSS selectors
     // in between React component names.
     // https://github.com/DevExpress/testcafe-react-selectors/issues/51
     this.phones = baseSelector.find('.org--main--header--phone .phone p');
-    this.website = baseSelector.findReact('Website');
-    this.email = baseSelector.findReact('Email');
-    this.editButton = baseSelector.find('.action-sidebar--edit');
+    this.resourceName = baseSelector.find('.org--main--header--title');
     this.services = baseSelector.find('#services.service--section .service');
+    this.website = baseSelector.findReact('Website');
   }
 
   // There's a bug in TestCafe where if you are partially scrolled down the
