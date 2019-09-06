@@ -1,14 +1,15 @@
 import React from 'react';
 import Footer from 'components/ui/Footer/Footer';
-import LandingPageResourceBlock from 'components/ui/LandingPageResourceBlock';
+import LandingPageResourceBlock from 'components/ui/LandingPageResourceBlock/LandingPageResourceBlock';
 import LandingPageEligibilityBlock from 'components/ui/LandingPageEligibilityBlock';
 import Partners from 'components/ui/Partners/Partners';
 import FindHeader from 'components/layout/FindHeader';
 import { CategoryList } from 'components/layout/CategoryList';
-import HousingBlockConfig from 'components/ui/HousingBlockConfig';
-import BasicNeedsBlockConfig from 'components/ui/BasicNeedsBlockConfig';
-import LegalBlockConfig from 'components/ui/LegalBlockConfig';
-import YouthHomelessnessBlockConfig from 'components/ui/YouthHomelessnessBlockConfig';
+import HousingBlockConfig from 'components/ui/LandingPageResourceBlock/HousingBlockConfig';
+import BasicNeedsBlockConfig from 'components/ui/LandingPageResourceBlock/BasicNeedsBlockConfig';
+import LegalBlockConfig from 'components/ui/LandingPageResourceBlock/LegalBlockConfig';
+import YouthHomelessnessBlockConfig from 'components/ui/LandingPageResourceBlock/YouthHomelessnessBlockConfig';
+import HomelessnessBlockConfig from 'components/ui/LandingPageResourceBlock/HomelessnessBlockConfig';
 import * as ax from 'axios';
 
 import './HomePage.scss';
@@ -53,6 +54,7 @@ export class HomePage extends React.Component {
         <LandingPageResourceBlock config={LegalBlockConfig} />
         <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
         <LandingPageResourceBlock config={YouthHomelessnessBlockConfig} />
+        <LandingPageResourceBlock config={HomelessnessBlockConfig} />
         <Partners />
         <Footer />
       </div>

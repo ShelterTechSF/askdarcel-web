@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import Carousel from '../Carousel';
-import { LandingPageTextCard } from '../LandingPageCards';
+import Carousel from '../Carousel/Carousel';
+import { LandingPageTextCard } from '../LandingPageResourceBlock/LandingPageCards';
 
 describe('<Carousel />', () => {
   const createCategoryCards = categories => (

@@ -4,6 +4,10 @@ const HousingBlockConfig = {
     BLUE_WORD: 'Housing',
     AFTER_BLUE_WORD: 'resources',
   },
+  LINKS: [{
+    QUERY_CATEGORY: 'Housing',
+    TEXT: 'Browse resources',
+  }],
   CARDS: [
     {
       title: 'Housing Counseling',

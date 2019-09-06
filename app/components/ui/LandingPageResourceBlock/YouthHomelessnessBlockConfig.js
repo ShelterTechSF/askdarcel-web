@@ -1,3 +1,5 @@
+import YouthCaseyPdf from '../../../assets/youthguide.pdf';
+
 const YouthHomelessnessBlockConfig = {
   TITLE: {
     BLUE_WORD: 'Youth Homelessness Guide',
@@ -6,10 +8,16 @@ const YouthHomelessnessBlockConfig = {
   CAROUSEL: {
     NUM_SLOTS: 4,
   },
-  LINK: {
-    URL: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
-    TEXT: 'View Guide',
-  },
+  LINKS: [
+    {
+      URL: 'https://help.sfserviceguide.org/en/collections/1669738-youth-homelessness-guide',
+      TEXT: 'View Full Guide',
+    },
+    {
+      URL: `${YouthCaseyPdf}`,
+      TEXT: 'Download',
+    },
+  ],
   CARDS: [
     {
       title: 'Step 1: Find Temporary Housing',

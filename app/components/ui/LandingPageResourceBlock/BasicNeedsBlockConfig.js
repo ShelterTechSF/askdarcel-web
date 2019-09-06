@@ -4,10 +4,10 @@ const BasicNeedsBlockConfig = {
     BLUE_WORD: 'Basic Needs & Shelter',
     AFTER_BLUE_WORD: 'resources',
   },
-  LINK: {
+  LINKS: [{
     QUERY_CATEGORY: 'Basic Needs & Shelter',
     TEXT: 'Browse resources',
-  },
+  }],
   CARDS: [
     {
       title: 'Apply for the shelter system',

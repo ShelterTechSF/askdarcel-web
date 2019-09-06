@@ -16,6 +16,8 @@ export default class ResourcePage {
     // https://github.com/DevExpress/testcafe-react-selectors/issues/51
     this.phones = baseSelector.find('.org--main--header--phone .phone p');
     this.resourceName = baseSelector.find('.org--main--header--title');
+    this.noteContainer = baseSelector.findReact('Notes');
+    this.notes = baseSelector.find('#notes .service--section--list li');
     this.services = baseSelector.find('#services.service--section .service');
     this.website = baseSelector.findReact('Website');
   }
