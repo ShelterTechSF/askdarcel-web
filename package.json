@@ -24,7 +24,6 @@
     "react-helmet": "^5.2.0",
     "react-instantsearch": "^5.0.1",
     "react-intercom": "^1.0.15",
-    "react-link": "^1.0.3",
     "react-markdown": "^3.3.2",
     "react-redux": "^5.0.1",
     "react-redux-form": "^1.12.1",
