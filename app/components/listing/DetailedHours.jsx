@@ -4,17 +4,23 @@ import { RecurringSchedule } from '../../utils/RecurringSchedule';
 
 const DetailedHours = ({ recurringSchedule }) => (
   <span className="weekly-hours-list">
-    {recurringSchedule.intervals.map(interval => (
-      <div key={interval.key()} className="weekly-hours-list--item">
-        <span className="weekly-hours-list--item--day">{interval.opensAt.dayString()}</span>
-        <span className="weekly-hours-list--item--hours">
-          { interval.is24Hours()
-            ? '24 Hours'
-            : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`
-          }
-        </span>
-      </div>
-    ))}
+    {
+      (
+        recurringSchedule.hoursKnown
+          ? (recurringSchedule.intervals.map(interval => (
+            <div key={interval.key()} className="weekly-hours-list--item">
+              <span className="weekly-hours-list--item--day">{interval.opensAt.dayString()}</span>
+              <span className="weekly-hours-list--item--hours">
+                { interval.is24Hours()
+                  ? '24 Hours'
+                  : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`
+                }
+              </span>
+            </div>
+          )))
+          : (<div className="weekly-hours-list--item">Call for Hours</div>)
+      )
+    }
   </span>
 );
 

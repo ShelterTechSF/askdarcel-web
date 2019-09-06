@@ -52,22 +52,28 @@ class LandingPageResourceBlock extends Component {
               </h1>
             </div>
             {
-              config.LINK
+              config.LINKS
                 && (
-                  <div className="landing-page-resource-block__resources-link">
+                  <div className="landing-page-resource-block__resources-links">
                     {
-                      config.LINK.QUERY_CATEGORY
-                        && (
-                          <Link to={`/search?refinementList[categories][0]=${encodeURIComponent(config.LINK.QUERY_CATEGORY)}`}>
-                            <span>{config.LINK.TEXT}</span>
-                          </Link>
-                        )
-                    }
-                    {
-                      config.LINK.URL
-                        && (
-                          <a href={config.LINK.URL}>{config.LINK.TEXT}</a>
-                        )
+                      config.LINKS.map(link => (
+                        <div key={`link_${link.QUERY_CATEGORY || link.URL}`} className="landing-page-resource-block__resources-link">
+                          {
+                            link.QUERY_CATEGORY
+                              && (
+                                <Link to={`/search?refinementList[categories][0]=${encodeURIComponent(link.QUERY_CATEGORY)}`}>
+                                  <span>{link.TEXT}</span>
+                                </Link>
+                              )
+                          }
+                          {
+                            link.URL
+                              && (
+                                <a href={link.URL}>{link.TEXT}</a>
+                              )
+                          }
+                        </div>
+                      ))
                     }
                   </div>
                 )
@@ -110,11 +116,14 @@ LandingPageResourceBlock.props = {
       AFTER_BLUE_WORD: PropTypes.string,
       DESCRIPTION: PropTypes.string,
     }),
-    LINK: PropTypes.shape({
-      URL: PropTypes.string,
-      QUERY_ELIGIBILITY: PropTypes.string,
-      TEXT: PropTypes.string,
-    }),
+    LINKS: PropTypes.arrayOf(
+      PropTypes.shape({
+        URL: PropTypes.string,
+        PATH: PropTypes.string,
+        QUERY_ELIGIBILITY: PropTypes.string,
+        TEXT: PropTypes.string,
+      }),
+    ),
     CARDS: PropTypes.array,
     CAROUSEL: PropTypes.shape({
       NUM_SLOTS: PropTypes.number,

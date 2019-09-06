@@ -12,7 +12,6 @@ import {
   ServiceAttribution,
   TableOfContactInfo,
   TableOfOpeningTimes,
-  CategoryTag,
   MobileActionBar,
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
@@ -182,9 +181,6 @@ class ServicePage extends React.Component {
               </div>
               <div className="listing--aside">
                 <ActionSidebar resource={resource} service={service} />
-                {service.categories.map(cat => (
-                  <CategoryTag key={cat.id} category={cat} />
-                ))}
               </div>
             </div>
           </article>

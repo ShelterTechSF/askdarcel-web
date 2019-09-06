@@ -32,7 +32,7 @@ module.exports = {
   entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.jsx')],
   output: {
     path: buildDir,
-    publicPath: '/dist/',
+    publicPath: '/',
     filename: 'bundle.js',
   },
   resolve: {
@@ -162,6 +162,18 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.pdf$/,
+        include: [
+          path.resolve(__dirname, 'app/assets'),
+        ],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        }],
       },
     ],
   },

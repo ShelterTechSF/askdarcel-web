@@ -4,6 +4,10 @@ import './Partners.scss';
 import STLogo from './assets/STLogo.png';
 import MOHCDLogo from './assets/MOHCDLogo.png';
 import JDCLogo from './assets/JDCLogo.png';
+import BenetechLogo from './assets/BenetechLogo.png';
+import SFFamiliesLogo from './assets/SFFamiliesLogo.png';
+import BridgeLogo from './assets/BridgeLogo.png';
+import LarkinLogo from './assets/LarkinLogo.png';
 
 const Partners = () => (
   <div className="partners">
@@ -24,6 +28,28 @@ const Partners = () => (
         <header />
         <a href="http://www.sfbar.org/jdc/legal-services/hap/" rel="noopener norefferer" className="image-container">
           <img src={JDCLogo} alt="JDC" />
+        </a>
+      </li>
+      <li>
+        <header />
+        <a href="https://benetech.org/" rel="noopener norefferer">
+          <img src={BenetechLogo} alt="Benetech" />
+        </a>
+      </li>
+      <li>
+        <header />
+        <a href="https://www.sffamilies.org/" rel="noopener norefferer">
+          <img src={SFFamiliesLogo} alt="SF Families" />
+        </a>
+      </li>
+      <li>
+        <header />
+        <img src={BridgeLogo} alt="Bridge" />
+      </li>
+      <li>
+        <header />
+        <a href="https://larkinstreetyouth.org/" rel="noopener norefferer">
+          <img src={LarkinLogo} alt="Larkin Street Youth Services" />
         </a>
       </li>
     </ul>

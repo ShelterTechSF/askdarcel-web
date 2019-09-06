@@ -33,9 +33,19 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
   } else if (searchResults && searchResults.nbHits === 0) {
     output = (
       <div className="no-results">
-          No results have been found for
-        {' '}
-        {searchState.query}
+        <p className="no-results-text">
+No results have been found for
+          {' '}
+          {searchState.query}
+        </p>
+        <div className="add-resource">
+            Can&apos;t find the organization you&apos;re looking for?
+          <Link to="/resource/new" className="add-resource-button">
+            <i className="material-icons">add_circle</i>
+            {' '}
+              Add an organization
+          </Link>
+        </div>
       </div>
     );
   } else if (searchResults) {

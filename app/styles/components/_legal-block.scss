@@ -1,17 +1,3 @@
-.legal-block__resources-hammer {
-  background-image: url(../assets/img/legal-block-hammer.png);
-  height: 180px;
-  width: 180px;
-  background-repeat: no-repeat;
-  left: -90px;
-  top: 27px;
-  opacity: 0.2;
-  position: absolute;
-  @include r_max($break-tablet-l) {
-    display: none;
-  }
-}
-
 .legal-block-housing {
   background-image: url(../assets/img/legal-block-housing.png);
 }
