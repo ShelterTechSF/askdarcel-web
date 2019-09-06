@@ -1,4 +1,4 @@
-import YouthCaseyPdf from '../../assets/youthguide.pdf';
+import YouthCaseyPdf from '../../../assets/youthguide.pdf';
 
 const YouthHomelessnessBlockConfig = {
   TITLE: {
