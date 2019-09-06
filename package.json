@@ -71,7 +71,6 @@
     "nyc": "^11.8.0",
     "react-hot-loader": "^4.11.1",
     "react-icons": "^2.0.1",
-    "react-test-renderer": "^15.6.2",
     "sass-loader": "^7.1.0",
     "sinon": "^5.0.10",
     "style-loader": "^0.13.1",
