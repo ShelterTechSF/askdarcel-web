@@ -10,7 +10,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@sentry/browser": "^4.0.6",
-    "es6-promise": "^3.0.2",
     "express": "^4.17.1",
     "google-map-react": "^1.1.4",
     "history": "3.2.1",
@@ -41,8 +40,8 @@
     "redux": "^3.6.0",
     "redux-immutable-state-invariant": "^1.2.4",
     "redux-thunk": "^2.1.0",
-    "whatwg-fetch": "^2.0.1",
-    "url-search-params-polyfill": "^7.0.0"
+    "url-search-params-polyfill": "^7.0.0",
+    "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
