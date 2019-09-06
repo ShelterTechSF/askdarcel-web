@@ -64,13 +64,8 @@
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.3.1",
-    "jasmine-core": "^2.4.1",
     "js-yaml": "^3.13.1",
     "jsdom": "^9.12.0",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-jasmine": "^1.0.2",
-    "karma-webpack": "^1.7.0",
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "nyc": "^11.8.0",
@@ -88,7 +83,6 @@
     "webpack-dev-server": "^3.7.2"
   },
   "scripts": {
-    "testserver": "cross-env NODE_ENV=test karma start testing/karma.conf.js",
     "test": "cross-env NODE_ENV=test mocha --exit --reporter spec testing/mocha.js app/**/*.spec.js*",
     "test:coverage": "nyc --extension .jsx --reporter=text npm test -- --exit",
     "test:watch": "npm run test -- --watch --watch-extensions jsx --inspect",
