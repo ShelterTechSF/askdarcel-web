@@ -16,7 +16,6 @@
     "moment": "^2.24.0",
     "prop-types": "^15.5.10",
     "qs": "^6.5.1",
-    "query-string": "^4.3.4",
     "react": "^16.8.6",
     "react-autosize-textarea": "^0.4.3",
     "react-autosuggest": "^9.3.4",
