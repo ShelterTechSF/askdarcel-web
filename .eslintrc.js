@@ -28,6 +28,15 @@ module.exports = {
         "no-unused-expressions": ["off"],
       },
     },
+    {
+      "files": ["testcafe/**"],
+      "rules": {
+        // TestCafe uses tagged template literals for DSL reasons, so they are
+        // expressions that actually have a stateful effect. This is
+        // specifically used in the `fixture` syntax.
+        "no-unused-expressions": ["error", {"allowTaggedTemplates": true}],
+      },
+    },
   ],
   "rules": {
     "arrow-parens": [1, "as-needed"],
@@ -42,7 +51,6 @@ module.exports = {
     "no-plusplus": 0,
     "no-prototype-builtins": 0,
     "no-underscore-dangle": 0,
-    "no-unused-expressions": [2, { "allowTaggedTemplates": true }],
     "react/forbid-prop-types": 0,
     "react/prefer-stateless-function": 0,
     "react/prop-types": 0,
