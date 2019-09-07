@@ -21,7 +21,7 @@ class MapOfLocations extends React.Component {
       disableDefaultUI: true,
     };
 
-    const map = new Map(this.refs.map, mapOptions);
+    const map = new Map(this.map, mapOptions);
     const { userLocation } = this.props;
 
     if (userLocation) {
@@ -51,7 +51,7 @@ class MapOfLocations extends React.Component {
 
     return (
       <div>
-        <div ref="map" className="map" />
+        <div ref={m => { this.map = m; }} className="map" />
         { locationRenderer
           && (
             <Accordion>
