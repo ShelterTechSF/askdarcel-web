@@ -45,7 +45,6 @@ module.exports = {
     "no-unused-expressions": [2, { "allowTaggedTemplates": true }],
     "no-unused-vars": 2,
     "react/forbid-prop-types": 0,
-    "react/jsx-filename-extension": 2,
     "react/no-string-refs": 0,
     "react/prefer-stateless-function": 0,
     "react/prop-types": 0,
