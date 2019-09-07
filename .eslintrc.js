@@ -41,7 +41,6 @@ module.exports = {
   "rules": {
     "arrow-parens": [1, "as-needed"],
     "camelcase": 0,
-    "import/default": 0,
     "import/no-extraneous-dependencies": [
       "error",
       {
