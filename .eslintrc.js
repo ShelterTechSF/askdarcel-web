@@ -49,7 +49,6 @@ module.exports = {
     "jsx-a11y/label-has-for": ["error", { required: { some: ["nesting", "id"] } }],
     "no-console": 1,
     "no-plusplus": 0,
-    "no-prototype-builtins": 0,
     "no-underscore-dangle": 0,
     "react/forbid-prop-types": 0,
     "react/prefer-stateless-function": 0,
