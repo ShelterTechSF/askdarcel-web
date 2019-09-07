@@ -35,7 +35,6 @@ module.exports = {
     "import/default": 0,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,
-    "indent": ["error", 2],
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/label-has-associated-control": ["error", { assert: "either" }],
     "jsx-a11y/label-has-for": ["error", { required: { some: ["nesting", "id"] } }],

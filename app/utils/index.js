@@ -77,29 +77,29 @@ export function getCurrentDayTime() {
   let dayText = '';
 
   switch (day) {
-  case 0:
-    dayText = 'Su';
-    break;
-  case 1:
-    dayText = 'M';
-    break;
-  case 2:
-    dayText = 'Tu';
-    break;
-  case 3:
-    dayText = 'W';
-    break;
-  case 4:
-    dayText = 'Th';
-    break;
-  case 5:
-    dayText = 'F';
-    break;
-  case 6:
-    dayText = 'Sa';
-    break;
-  default:
-    dayText = 'Su';
+    case 0:
+      dayText = 'Su';
+      break;
+    case 1:
+      dayText = 'M';
+      break;
+    case 2:
+      dayText = 'Tu';
+      break;
+    case 3:
+      dayText = 'W';
+      break;
+    case 4:
+      dayText = 'Th';
+      break;
+    case 5:
+      dayText = 'F';
+      break;
+    case 6:
+      dayText = 'Sa';
+      break;
+    default:
+      dayText = 'Su';
   }
 
   const dayTime = `${dayText}-${finalTime}`;

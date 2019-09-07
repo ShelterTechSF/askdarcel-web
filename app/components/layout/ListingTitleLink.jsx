@@ -10,18 +10,18 @@ class ListingTitleLink extends React.Component {
   getTooltipContent() {
     const { type, listing } = this.props;
     switch (type) {
-    case 'org': return (<OrganizationCard org={listing} />);
-    case 'service': return (<ServiceCard service={listing} />);
-    default: throw new Error('unknown listing type');
+      case 'org': return (<OrganizationCard org={listing} />);
+      case 'service': return (<ServiceCard service={listing} />);
+      default: throw new Error('unknown listing type');
     }
   }
 
   getListingLink() {
     const { type, listing } = this.props;
     switch (type) {
-    case 'org': return `/resource?id=${listing.id}`;
-    case 'service': return `/services/${listing.id}`;
-    default: throw new Error('unknown listing type');
+      case 'org': return `/resource?id=${listing.id}`;
+      case 'service': return `/services/${listing.id}`;
+      default: throw new Error('unknown listing type');
     }
   }
 

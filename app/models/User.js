@@ -12,18 +12,18 @@ const initialState = {
 
 export function REDUCER(state = initialState, action) {
   switch (action.type) {
-  case ACTIONS.SET_USER_LOCATION:
-    return {
-      ...state,
-      location: {
-        ...state.location,
-        lat: action.location.lat,
-        lng: action.location.lng,
-      },
-    };
+    case ACTIONS.SET_USER_LOCATION:
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          lat: action.location.lat,
+          lng: action.location.lng,
+        },
+      };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }
 
