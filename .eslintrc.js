@@ -42,7 +42,19 @@ module.exports = {
     "arrow-parens": [1, "as-needed"],
     "camelcase": 0,
     "import/default": 0,
-    "import/no-extraneous-dependencies": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/__tests__/**",
+          "app/assets/tests/**",
+          "testcafe/**",
+          "testing/**",
+          "tools/**",
+          "webpack.config.js",
+        ]
+      },
+    ],
     "import/prefer-default-export": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/label-has-associated-control": ["error", { assert: "either" }],
