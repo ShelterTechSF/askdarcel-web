@@ -19,6 +19,7 @@ const LandingPageEligibilityBlock = ({ eligibilities }) => (
       <h2 className="landing-page-eligibility-block__resources__title">
             Discover resources by eligibility
       </h2>
+      {/* TODO Properly implement horizontal scroll buttons if we ever get > 6 eligibilities */}
       {/* <a className="scroll-button scroll-button-left">&lt;</a> */}
       <div className="landing-page-eligibility-block__resources-scroller">
         { eligibilities.map(eligibility => (
