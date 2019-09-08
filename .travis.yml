@@ -13,6 +13,15 @@ addons:
     - g++-4.8
 env:
   - ALGOLIA_INDEX_PREFIX=travisci
+
+branches:
+  only:
+    - master
+    # Build any branch or tag whose name matches the format consisting of any
+    # number of digits separated by periods, since that matches our release tag
+    # format.
+    - /^(\d+)(\.\d+)*$/
+
 before_install:
 - cp config.example.yml config.yml
 - export CHROME_BIN=chromium-browser
