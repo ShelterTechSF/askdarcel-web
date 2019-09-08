@@ -7,6 +7,7 @@ import * as Sentry from '@sentry/browser';
 import configureStore, { history } from './store/configureStore';
 import config from './config';
 import App from './components/App';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 require('instantsearch.css/themes/reset.css');
 require('./styles/main.scss');
@@ -32,7 +33,9 @@ history.listen(loc => {
 ReactDOM.render((
   <Provider store={store} key="provider">
     <ConnectedRouter history={history}>
-      <App />
+      <ScrollToTop>
+        <App />
+      </ScrollToTop>
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));

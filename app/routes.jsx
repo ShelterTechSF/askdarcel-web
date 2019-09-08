@@ -26,16 +26,6 @@ const RedirectToOrganizationsEdit = ({ location: { search } }) => {
   return <Redirect to={`/organizations/${id}/edit`} />;
 };
 
-// Adapted from
-// https://github.com/ReactTraining/react-router/issues/2019#issuecomment-256591800
-// Note: When we upgrade to react-router 4.x, we should use
-// https://github.com/ReactTraining/react-router/blob/v4.1.1/packages/react-router-dom/docs/guides/scroll-restoration.md
-function scrollToTop(prevState, nextState) {
-  if (nextState.location.action !== 'POP') {
-    window.scrollTo(0, 0);
-  }
-}
-
 export default () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
