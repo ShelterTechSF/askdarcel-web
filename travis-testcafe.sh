@@ -57,7 +57,7 @@ docker logs api
 # alias for the latest stable release, but it appears that the TestCafe
 # plugin doesn't seem to support it. See
 # https://github.com/DevExpress/testcafe-browser-provider-saucelabs/issues/42
-npm run testcafe -- 'saucelabs:Chrome@73.0:Windows 10' \
+npm run testcafe -- 'saucelabs:Chrome@76.0:Windows 10' \
   --quarantine-mode \
   --skip-js-errors \
   --assertion-timeout 50000 \
