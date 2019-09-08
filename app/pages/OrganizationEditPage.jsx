@@ -783,8 +783,8 @@ class OrganizationEditPage extends React.Component {
               onChange={this.handleResourceFieldChange}
             />
             <p>
-If you&#39;d like to add formatting to descriptions, we support
-              <a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer"> Github Flavored Markdown</a>
+If you&#39;d like to add formatting to descriptions, we support&nbsp;
+              <a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Github Flavored Markdown</a>
 .
             </p>
           </li>
