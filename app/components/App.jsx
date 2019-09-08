@@ -105,7 +105,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userLocation: null,
       hamburgerMenuIsOpen: false,
     };
     this.toggleHamburgerMenu = this.toggleHamburgerMenu.bind(this);
@@ -116,13 +115,11 @@ class App extends Component {
     const { setUserLocation } = this.props;
     getLocation().then(coords => {
       setUserLocation(coords);
-      this.setState({ userLocation: coords });
     }).catch(e => {
       console.log('Could not obtain location, defaulting to San Francisco.', e);
       // HACK: Hardcode middle of San Francisco
       const userLocation = { lat: 37.7749, lng: -122.4194 };
       setUserLocation(userLocation);
-      this.setState({ userLocation });
     });
   }
 
@@ -136,11 +133,7 @@ class App extends Component {
 
   render() {
     const { children, location } = this.props;
-    const { hamburgerMenuIsOpen, userLocation } = this.state;
-    const childrenWithProps = React.Children.map(
-      children,
-      child => React.cloneElement(child, { userLocation }),
-    );
+    const { hamburgerMenuIsOpen } = this.state;
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
@@ -161,7 +154,7 @@ class App extends Component {
         <div id={pageWrapId}>
           <Navigation showSearch={location.pathname !== '/'} toggleHamburgerMenu={this.toggleHamburgerMenu} />
           <div className="container">
-            {childrenWithProps}
+            {children}
           </div>
           <PopUpMessage />
         </div>

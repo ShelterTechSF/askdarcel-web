@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   AddressInfo,
@@ -35,7 +36,7 @@ const getResourceLocation = resource => {
   };
 };
 
-export class OrganizationListingPage extends React.Component {
+class BaseOrganizationListingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -186,11 +187,11 @@ export class OrganizationListingPage extends React.Component {
   }
 }
 
-OrganizationListingPage.defaultProps = {
+BaseOrganizationListingPage.defaultProps = {
   userLocation: null,
 };
 
-OrganizationListingPage.propTypes = {
+BaseOrganizationListingPage.propTypes = {
   location: PropTypes.shape({
     query: PropTypes.shape({ resourceid: PropTypes.string }).isRequired,
   }).isRequired,
@@ -200,3 +201,7 @@ OrganizationListingPage.propTypes = {
     lng: PropTypes.number.isRequired,
   }),
 };
+
+const mapStateToProps = state => ({ userLocation: state.user.location });
+
+export const OrganizationListingPage = connect(mapStateToProps)(BaseOrganizationListingPage);
