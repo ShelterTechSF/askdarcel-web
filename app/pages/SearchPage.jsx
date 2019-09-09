@@ -50,11 +50,6 @@ class SearchPage extends Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  createURL(state) {
-    return `search?${qs.stringify(state)}`;
-  }
-
   render() {
     const { userLocation } = this.props;
     const { aroundLatLng, searchState } = this.state;
@@ -63,7 +58,6 @@ class SearchPage extends Component {
     ) : (
       <Configure aroundLatLngViaIP aroundRadius="all" />
     );
-    /* eslint-disable no-undef */
     return (
       <div className="search-page-container">
 
@@ -73,7 +67,7 @@ class SearchPage extends Component {
           indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
           searchState={searchState}
           onSearchStateChange={this.onSearchStateChange}
-          createURL={this.createURL}
+          createURL={state => `search?${qs.stringify(state)}`}
         >
           {configuration}
           <div className="search-box">
@@ -89,7 +83,6 @@ class SearchPage extends Component {
       </div>
     );
   }
-  /* eslint-enable no-undef */
 }
 
 function mapStateToProps(state) {
