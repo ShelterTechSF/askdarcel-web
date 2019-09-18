@@ -46,8 +46,8 @@ const parseAPIScheduleDay = apiScheduleDay => {
     return null;
   }
 
-  const opensAtMinutes = opensAtTime.hours * MINUTES_IN_HOUR + opensAtTime.minute;
-  const closesAtMinutes = closesAtTime.hours * MINUTES_IN_HOUR + closesAtTime.minute;
+  const opensAtMinutes = opensAtTime.hour * MINUTES_IN_HOUR + opensAtTime.minute;
+  const closesAtMinutes = closesAtTime.hour * MINUTES_IN_HOUR + closesAtTime.minute;
   const opensAt = new RecurringTime({
     day: DAY_TO_INT[apiScheduleDay.day],
     hour: opensAtTime.hour,
