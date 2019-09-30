@@ -37,7 +37,7 @@ class ServicePage extends React.Component {
   componentWillMount() {
     const {
       fetchService: propsFetchService,
-      routeParams: { service },
+      match: { params: { service } },
     } = this.props;
     propsFetchService(service);
   }
@@ -191,7 +191,7 @@ class ServicePage extends React.Component {
 }
 
 ServicePage.propTypes = {
-  routeParams: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export const ServiceListingPage = connect(
