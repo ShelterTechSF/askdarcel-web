@@ -50,7 +50,7 @@ class BaseOrganizationListingPage extends React.Component {
   }
 
   loadResourceFromServer() {
-    const { params: { id } } = this.props;
+    const { match: { params: { id } } } = this.props;
     dataService.getResource(id).then(resource => {
       this.setState({ resource });
     });
@@ -186,8 +186,10 @@ BaseOrganizationListingPage.defaultProps = {
 };
 
 BaseOrganizationListingPage.propTypes = {
-  location: PropTypes.shape({
-    query: PropTypes.shape({ resourceid: PropTypes.string }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   // userLocation is not required because will be lazy-loaded after initial render.
   userLocation: PropTypes.shape({
