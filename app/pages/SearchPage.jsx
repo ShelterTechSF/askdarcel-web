@@ -23,14 +23,22 @@ class SearchPage extends Component {
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
 
-  componentWillReceiveProps() {
-    const { location: { search } } = this.props;
-    this.setState({ searchState: qs.parse(search.slice(1)) });
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     const { searchState } = this.state;
     return !isEqual(searchState, nextState.searchState);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Keep searchState synced with actual URL query parameters
+    const { location } = this.props;
+    const { location: prevLocation } = prevProps;
+    if (location !== prevLocation) {
+      // This lint rule is disabled because the React documentation says it is
+      // safe to call setState() in componentDidUpdate as long as it's wrapped
+      // in a conditional.
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ searchState: qs.parse(location.search.slice(1)) });
+    }
   }
 
   onSearchStateChange(nextSearchState) {
