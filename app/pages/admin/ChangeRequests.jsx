@@ -213,7 +213,7 @@ export class ChangeRequestsPage extends React.Component {
     return (
       <div className="titlebox">
         <h2>
-          <Link to={{ pathname: '/resource', query: { id: resource.id } }} target="_blank">
+          <Link to={`/organizations/${resource.id}`} target="_blank">
             <i className="material-icons">link</i>
           </Link>
           {resource.name}

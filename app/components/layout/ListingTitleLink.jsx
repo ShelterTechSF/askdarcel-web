@@ -19,7 +19,7 @@ class ListingTitleLink extends React.Component {
   getListingLink() {
     const { type, listing } = this.props;
     switch (type) {
-      case 'org': return `/resource?id=${listing.id}`;
+      case 'org': return `/organizations/${listing.id}`;
       case 'service': return `/services/${listing.id}`;
       default: throw new Error('unknown listing type');
     }
