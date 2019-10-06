@@ -50,13 +50,7 @@ class BaseOrganizationListingPage extends React.Component {
   }
 
   loadResourceFromServer() {
-    const {
-      location: {
-        query: {
-          id,
-        },
-      },
-    } = this.props;
+    const { params: { id } } = this.props;
     dataService.getResource(id).then(resource => {
       this.setState({ resource });
     });
