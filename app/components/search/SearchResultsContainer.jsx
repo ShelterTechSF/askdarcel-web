@@ -73,7 +73,11 @@ No results have been found for
             </Link>
           </div>
         </div>
-        <SearchMap hits={hits} />
+        <SearchMap
+          hits={hits}
+          page={searchResults.page}
+          hitsPerPage={searchResults.hitsPerPage}
+        />
       </div>
     );
   }

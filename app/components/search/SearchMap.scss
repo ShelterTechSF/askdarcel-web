@@ -23,6 +23,16 @@
   width: 30px;
   top: -27px;
   left: -15px;
+  cursor: pointer;
+}
+
+.tippy-tooltip-content {
+  .entry-details {
+    text-align: start;
+  }
+  .entry-headline {
+    max-width: 100%;
+  }
 }
 
 .map-wrapper {
