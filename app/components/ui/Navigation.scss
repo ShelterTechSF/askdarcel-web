@@ -18,7 +18,7 @@
 .primaryRow {
   @extend %flex-row;
   @include navRow;
-  height: calc-em(80px);
+  height: calc-em(70px);
   justify-content: space-between;
   padding: calc-em(10px) calc-em(30px);
   @include r_max($break-tablet-s) {
@@ -60,15 +60,22 @@
     display: none !important;  // !important is needed to override .form-row
   }
   .searchField {
+    $font-size: calc-em(15px);
     background-repeat: no-repeat;
     background-image: url(../../assets/img/ic-search.png);
     background-size: 18px 18px;
     background-position: calc-em(15px) center;
+    font-size: $font-size;
     padding-left: calc-em(45px);
     width: calc-em(400px);
     height: calc-em(40px);
     border: 0;
     background-color: $color-grey1;
+
+    &::placeholder {
+      font-size: $font-size;
+      font-style: normal;
+    }
   }
 }
 

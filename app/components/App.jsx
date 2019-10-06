@@ -152,7 +152,7 @@ class App extends Component {
           toggleHamburgerMenu={this.toggleHamburgerMenu}
         />
         <div id={pageWrapId}>
-          <Navigation showSearch={location.pathname !== '/'} toggleHamburgerMenu={this.toggleHamburgerMenu} />
+          <Navigation showSearch toggleHamburgerMenu={this.toggleHamburgerMenu} />
           <div className="container">
             {children}
           </div>
