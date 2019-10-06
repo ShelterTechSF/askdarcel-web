@@ -80,6 +80,7 @@ module.exports = {
           path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
           path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
           path.resolve(__dirname, 'app/components/listing/HAPBadge'),
+          path.resolve(__dirname, 'app/pages/HomePage/components'),
         ],
         test: /\.s?css$/,
         use: [
@@ -115,6 +116,7 @@ module.exports = {
           path.resolve(__dirname, 'app/components/ui/Navigation'),
           path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
           path.resolve(__dirname, 'app/components/listing/HAPBadge'),
+          path.resolve(__dirname, 'app/pages/HomePage/components'),
         ],
         test: /\.s?css$/,
         use: [
