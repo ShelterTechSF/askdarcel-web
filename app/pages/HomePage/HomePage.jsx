@@ -14,7 +14,7 @@ import * as ax from 'axios';
 
 import './HomePage.scss';
 
-export class HomePage extends React.Component {
+export default class HomePage extends React.Component {
   constructor() {
     super();
     this.state = {

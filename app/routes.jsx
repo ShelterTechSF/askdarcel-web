@@ -5,7 +5,7 @@ import './utils/google';
 import App from './components/App';
 // import configureStore from './store/configureStore';
 
-import { HomePage } from './pages/HomePage';
+import HomePage from './pages/HomePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
 import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { SearchResultsPage } from './pages/SearchPage';
