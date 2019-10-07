@@ -13,9 +13,6 @@ import SearchBar from './components/SearchBar';
 import Section from './components/Section';
 
 
-import './HomePage.scss';
-
-
 const VerticalSpacing = ({ spacing }) => (
   <div style={{ height: spacing }} />
 );
