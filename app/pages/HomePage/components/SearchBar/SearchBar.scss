@@ -1,0 +1,40 @@
+@import 'app/styles/utils/_colors.scss';
+
+$row-height: 60px;
+
+.form {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.textInputWrapper {
+  flex: 1 1 0;
+  margin-right: 20px;
+}
+
+.textInput {
+  background:
+    url("../../../../assets/img/ic-search-blue.svg") center left 15px no-repeat,
+    $color-white;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  height: $row-height;
+  padding-left: 45px;
+
+  &::placeholder {
+    font-style: normal;
+  }
+}
+
+.submitWrapper {
+  flex: 0 0 auto;
+}
+
+.submit {
+  background-color: $color-brand;
+  border-radius: 3px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  height: $row-height;
+  width: 180px;
+}
