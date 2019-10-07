@@ -1,31 +1,50 @@
 import React from 'react';
-import Footer from 'components/ui/Footer/Footer';
-import LandingPageResourceBlock from 'components/ui/LandingPageResourceBlock/LandingPageResourceBlock';
-import LandingPageEligibilityBlock from 'components/ui/LandingPageEligibilityBlock';
-import Partners from 'components/ui/Partners/Partners';
-import FindHeader from 'components/layout/FindHeader';
-import { CategoryList } from 'components/layout/CategoryList';
-import HousingBlockConfig from 'components/ui/LandingPageResourceBlock/HousingBlockConfig';
-import BasicNeedsBlockConfig from 'components/ui/LandingPageResourceBlock/BasicNeedsBlockConfig';
-import LegalBlockConfig from 'components/ui/LandingPageResourceBlock/LegalBlockConfig';
-import YouthHomelessnessBlockConfig from 'components/ui/LandingPageResourceBlock/YouthHomelessnessBlockConfig';
-import HomelessnessBlockConfig from 'components/ui/LandingPageResourceBlock/HomelessnessBlockConfig';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import * as ax from 'axios';
+
+import Footer from 'components/ui/Footer/Footer';
+import Partners from 'components/ui/Partners/Partners';
+import heroBackground from 'assets/img/HomePage/hero-background.svg';
+
+import CategoryList from './components/CategoryList';
+import HomePageHero from './components/HomePageHero';
+import SearchBar from './components/SearchBar';
+import Section from './components/Section';
+
 
 import './HomePage.scss';
 
+
+const VerticalSpacing = ({ spacing }) => (
+  <div style={{ height: spacing }} />
+);
+
+VerticalSpacing.propTypes = {
+  spacing: PropTypes.string.isRequired,
+};
+
+
 export default class HomePage extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      categories: [],
-      eligibilities: [],
-    };
-  }
+  state = {
+    categories: [],
+    resourceCount: undefined,
+    searchValue: '',
+  };
 
   componentDidMount() {
     this.loadCategoriesFromServer();
-    this.loadEligibilitiesFromServer();
+    this.loadResourceCountFromServer();
+  }
+
+  submitSearch = () => {
+    const { searchValue } = this.state;
+    if (searchValue) {
+      browserHistory.push({
+        pathname: '/search',
+        query: { query: searchValue },
+      });
+    }
   }
 
   loadCategoriesFromServer() {
@@ -34,27 +53,42 @@ export default class HomePage extends React.Component {
     });
   }
 
-  loadEligibilitiesFromServer() {
-    // TODO Should probably move this and above into redux
-    ax.get('/api/eligibilities/featured').then(resp => {
-      this.setState({ eligibilities: resp.data.eligibilities });
+  loadResourceCountFromServer() {
+    ax.get('/api/resources/count').then(resp => {
+      this.setState({ resourceCount: resp.data });
     });
   }
 
   render() {
-    const { categories, eligibilities } = this.state;
+    const {
+      categories, resourceCount, searchValue,
+    } = this.state;
     return (
       <div className="find-page">
-        <div className="find-content-container">
-          <FindHeader />
+        <HomePageHero
+          title="Find social services in San Francisco"
+          description="Discover housing, homelessness, legal, and many more free and reduced cost social services near you"
+          imageURL={heroBackground}
+        />
+        <Section
+          title="Guided Pathways"
+          description="Need help but not sure where to start? Try one of our guided pathways."
+        >
+          {/* TODO: Insert Guided Pathways component here */}
+        </Section>
+        <Section
+          title="Browse Directory"
+          description="Looking for a specific organization? Search the directory or browse by category."
+        >
+          <SearchBar
+            placeholder={`Search ${resourceCount || ''} resources in San Francisco`}
+            onSubmit={this.submitSearch}
+            onChange={newSearchValue => this.setState({ searchValue: newSearchValue })}
+            value={searchValue}
+          />
+          <VerticalSpacing spacing="40px" />
           <CategoryList categories={categories} />
-        </div>
-        <LandingPageEligibilityBlock eligibilities={eligibilities} />
-        <LandingPageResourceBlock config={HousingBlockConfig} />
-        <LandingPageResourceBlock config={LegalBlockConfig} />
-        <LandingPageResourceBlock config={BasicNeedsBlockConfig} />
-        <LandingPageResourceBlock config={YouthHomelessnessBlockConfig} />
-        <LandingPageResourceBlock config={HomelessnessBlockConfig} />
+        </Section>
         <Partners />
         <Footer />
       </div>
