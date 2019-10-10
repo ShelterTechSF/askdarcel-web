@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as typeformEmbed from '@typeform/embed';
 
 import styles from './GuideList.scss';
 
@@ -12,33 +13,57 @@ import ImgYouthHomelessnessPartner from './assets/logos/larkin.png';
 import ImgAdultHomelessness from './assets/AdultHomelessness.jpg';
 import ImgAdultHomelessnessPartner from './assets/logos/JDC.png';
 
-const GuideCard = props => (
-  <a className={styles.cardLink} href={props.link}>
-    <div className={styles.card}>
-      <img
-        className={styles.cardImage}
-        src={props.img}
-        alt={props.name}
-      />
-      <div className={styles.cardTextWrapper}>
-        <div className={styles.cardText}>
-          {props.name}
-          <a className={styles.cardLinkText} href={props.link}>
-          Explore Guide →
-          </a>
-        </div>
-        <div className={styles.cardPartner}>
-          <small>In partnership with</small>
-          <img
-            className={styles.cardPartnerImage}
-            src={props.partnerImg}
-            alt={props.partner}
-          />
+function typeform(event, link) {
+  const typeformReference = typeformEmbed.makePopup(
+    link,
+    {
+      mode: 'popup',
+      hideFooters: true,
+    },
+  );
+  typeformReference.open();
+}
+
+const GuideCard = props => {
+  const { name } = props;
+  const { img } = props;
+  const { link } = props;
+  const { partner } = props;
+  const { partnerImg } = props;
+
+  return (
+    <a className={styles.cardLink} role="button" onClick={(e) => { typeform(e, props.link); }} href>
+      <div className={styles.card}>
+        <img
+          className={styles.cardImage}
+          src={img}
+          alt={name}
+        />
+        <div className={styles.cardTextWrapper}>
+          <div className={styles.cardText}>
+            {name}
+            <a className={styles.cardLinkText} role="button" onClick={(e) => { typeform(e, link); }} href>
+            Explore Guide →
+            </a>
+          </div>
+          <div className={styles.cardPartner}>
+            <small>In partnership with</small>
+            <img
+              className={styles.cardPartnerImage}
+              src={partnerImg}
+              alt={partner}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  </a>
-);
+    </a>
+  );
+};
+
+GuideCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+};
 
 const GuideList = () => (
   <div className={styles.wrapper}>
@@ -82,6 +107,5 @@ const GuideList = () => (
     </ul>
   </div>
 );
-
 
 export default GuideList;
