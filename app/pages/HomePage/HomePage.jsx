@@ -10,6 +10,7 @@ import heroBackground from 'assets/img/HomePage/hero-background.svg';
 import CategoryList from './components/CategoryList';
 import HomePageHero from './components/HomePageHero';
 import SearchBar from './components/SearchBar';
+import Guidelist from './components/GuideList';
 import Section from './components/Section';
 
 
@@ -71,7 +72,7 @@ export default class HomePage extends React.Component {
           title="Guided Pathways"
           description="Need help but not sure where to start? Try one of our guided pathways."
         >
-          {/* TODO: Insert Guided Pathways component here */}
+          <Guidelist />
         </Section>
         <Section
           title="Browse Directory"
@@ -83,7 +84,6 @@ export default class HomePage extends React.Component {
             onChange={newSearchValue => this.setState({ searchValue: newSearchValue })}
             value={searchValue}
           />
-          <VerticalSpacing spacing="40px" />
           <CategoryList categories={categories} />
         </Section>
         <Partners />

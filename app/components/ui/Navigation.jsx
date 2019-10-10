@@ -58,7 +58,7 @@ class Navigation extends React.Component {
                     value={query}
                     type="text"
                     className={styles.searchField}
-                    placeholder="search guides and resources"
+                    placeholder="Search for a service or organization"
                     name="srch-term"
                     id="srch-term"
                   />
