@@ -35,6 +35,6 @@ export default class ResourcePage {
   }
 
   static url(resourceId) {
-    return `${config.baseUrl}/resource?id=${resourceId}`;
+    return `${config.baseUrl}/organizations/${resourceId}`;
   }
 }

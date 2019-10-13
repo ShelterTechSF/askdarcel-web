@@ -21,7 +21,7 @@ class ServiceEntry extends Component {
           <div className="entry-details">
             <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
             <p className="entry-meta">
-              <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>{hit.service_of}</Link>
+              <Link to={`/organizations/${hit.resource_id}`}>{hit.service_of}</Link>
             </p>
             <p className="entry-meta">
               <span>{hit.addresses && hit.addresses.address_1 ? hit.addresses.address_1 : 'No address found'}</span>

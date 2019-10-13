@@ -511,7 +511,7 @@ class OrganizationEditPage extends React.Component {
       .then(response => {
         if (response.ok) {
           alert('Resource successfuly created. Thanks!');
-          response.json().then(res => browserHistory.push(`/resource?id=${res.resources[0].resource.id}`));
+          response.json().then(res => browserHistory.push(`/organizations/${res.resources[0].resource.id}`));
         } else {
           Promise.reject(response);
         }
@@ -604,7 +604,7 @@ class OrganizationEditPage extends React.Component {
 
     const that = this;
     Promise.all(promises).then(() => {
-      that.props.router.push({ pathname: '/resource', query: { id: that.state.resource.id } });
+      that.props.router.push(`/organizations/${that.state.resource.id}`);
       showPopUpMessage({
         type: 'success',
         message: 'Successfully saved your changes.',

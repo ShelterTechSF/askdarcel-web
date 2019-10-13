@@ -16,7 +16,7 @@ class ResourceEntry extends Component {
     const hitNumber = page * hitsPerPage + index + 1;
     const { recurringSchedule } = hit;
     return (
-      <Link to={{ pathname: '/resource', query: { id: hit.resource_id } }}>
+      <Link to={`/organizations/${hit.resource_id}`}>
         <li className="results-table-entry resource-entry">
           <div className="entry-details">
             <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>

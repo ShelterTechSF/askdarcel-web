@@ -24,6 +24,11 @@ function redirectToRoot(nextState, replace) {
   });
 }
 
+const redirectToOrganizations = (nextState, replace) => {
+  const { location: { query: { id } } } = nextState;
+  replace(`/organizations/${id}`);
+};
+
 // Adapted from
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-256591800
 // Note: When we upgrade to react-router 4.x, we should use
@@ -39,15 +44,19 @@ export default (
     <IndexRoute component={HomePage} />
     <Route name="admin" path="/admin" component={AdminPage} />
     <Route name="changeRequests" path="/admin/changes" component={ChangeRequestsPage} />
+    <Route path="/organizations/:id" component={OrganizationListingPage} />
     <Route name="editResource" path="/resource/edit" component={OrganizationEditPage} />
     <Route name="newResource" path="/resource/new" component={OrganizationEditPage} />
     <Route name="privacyPolicy" path="/privacy-policy" component={PrivacyPolicyPage} />
-    <Route name="resource" path="/resource" component={OrganizationListingPage} />
     <Route name="search" path="/search" component={SearchResultsPage} />
     <Route name="ServicePage" path="/services/:service" component={ServiceListingPage} />
     <Route name="termsOfService" path="/terms-of-service" component={TermsOfServicePage} />
     <Route name="AboutPage" path="/about" component={AboutPage} />
     <Route name="listingDemo" path="/demo/listing" component={ListingDebugPage} />
+
+    {/* Legacy redirects */}
+    <Route path="/resource" onEnter={redirectToOrganizations} />
+
     <Route path="*" onEnter={redirectToRoot} />
   </Route>
 );

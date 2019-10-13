@@ -17,7 +17,7 @@ class OrganizationCard extends React.Component {
     const maxHeight = '106px';
 
     return (
-      <Link to={{ pathname: '/resource', query: { id } }} className="card" style={{ maxHeight }}>
+      <Link to={`/organizations/${id}`} className="card" style={{ maxHeight }}>
         <StreetViewImage address={address} size={maxHeight} />
         <header className="content">
           <h3>{ name }</h3>
