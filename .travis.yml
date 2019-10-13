@@ -5,12 +5,6 @@ cache:
   - node_modules
 services:
 - docker
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.8
 env:
   - ALGOLIA_INDEX_PREFIX=travisci
 
