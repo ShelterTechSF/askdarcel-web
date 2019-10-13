@@ -24,41 +24,35 @@ function typeform(event, link) {
   typeformReference.open();
 }
 
-const GuideCard = props => {
-  const { name } = props;
-  const { img } = props;
-  const { link } = props;
-  const { partner } = props;
-  const { partnerImg } = props;
-
-  return (
-    <a className={styles.cardLink} role="button" onClick={(e) => { typeform(e, props.link); }} href>
-      <div className={styles.card}>
-        <img
-          className={styles.cardImage}
-          src={img}
-          alt={name}
-        />
-        <div className={styles.cardTextWrapper}>
-          <div className={styles.cardText}>
-            {name}
-            <a className={styles.cardLinkText} role="button" onClick={(e) => { typeform(e, link); }} href>
-            Explore Guide →
-            </a>
-          </div>
-          <div className={styles.cardPartner}>
-            <small>In partnership with</small>
-            <img
-              className={styles.cardPartnerImage}
-              src={partnerImg}
-              alt={partner}
-            />
-          </div>
+const GuideCard = ({
+  img, link, name, partner, partnerImg,
+}) => (
+  <a className={styles.cardLink} role="button" onClick={e => { typeform(e, link); }} href>
+    <div className={styles.card}>
+      <img
+        className={styles.cardImage}
+        src={img}
+        alt={name}
+      />
+      <div className={styles.cardTextWrapper}>
+        <div className={styles.cardText}>
+          {name}
+          <a className={styles.cardLinkText} role="button" onClick={e => { typeform(e, link); }} href>
+          Explore Guide →
+          </a>
+        </div>
+        <div className={styles.cardPartner}>
+          <small>In partnership with</small>
+          <img
+            className={styles.cardPartnerImage}
+            src={partnerImg}
+            alt={partner}
+          />
         </div>
       </div>
-    </a>
-  );
-};
+    </div>
+  </a>
+);
 
 GuideCard.propTypes = {
   name: PropTypes.string.isRequired,
