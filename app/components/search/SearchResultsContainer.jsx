@@ -40,7 +40,7 @@ No results have been found for
         </p>
         <div className="add-resource">
             Can&apos;t find the organization you&apos;re looking for?
-          <Link to="/resource/new" className="add-resource-button">
+          <Link to="/organizations/new" className="add-resource-button">
             <i className="material-icons">add_circle</i>
             {' '}
               Add an organization
@@ -66,7 +66,7 @@ No results have been found for
           />
           <div className="add-resource">
               Can&apos;t find the organization you&apos;re looking for?
-            <Link to="/resource/new" className="add-resource-button">
+            <Link to="/organizations/new" className="add-resource-button">
               <i className="material-icons">add_circle</i>
               {' '}
                 Add an organization

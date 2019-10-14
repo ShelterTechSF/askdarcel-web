@@ -24,7 +24,7 @@ export const getResourceActions = (resource, service) => {
     edit: {
       name: 'Edit',
       icon: 'edit',
-      to: `/resource/edit?resourceid=${resource.id}`,
+      to: `/organizations/${resource.id}/edit`,
     },
     print: {
       name: 'Print',

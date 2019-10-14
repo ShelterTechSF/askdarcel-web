@@ -40,9 +40,9 @@ function scrollToTop(prevState, nextState) {
 export default (
   <Route path="/" component={App} onChange={scrollToTop}>
     <IndexRoute component={HomePage} />
+    <Route path="/organizations/new" component={OrganizationEditPage} />
     <Route path="/organizations/:id" component={OrganizationListingPage} />
-    <Route path="/resource/edit" component={OrganizationEditPage} />
-    <Route path="/resource/new" component={OrganizationEditPage} />
+    <Route path="/organizations/:id/edit" component={OrganizationEditPage} />
     <Route path="/privacy-policy" component={PrivacyPolicyPage} />
     <Route path="/search" component={SearchResultsPage} />
     <Route path="/services/:service" component={ServiceListingPage} />

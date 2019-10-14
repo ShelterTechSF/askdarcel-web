@@ -345,7 +345,7 @@ class OrganizationEditPage extends React.Component {
   }
 
   componentDidMount() {
-    const { location: { query, pathname } } = this.props;
+    const { location: { pathname }, params } = this.props;
     const splitPath = pathname.split('/');
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
@@ -353,7 +353,7 @@ class OrganizationEditPage extends React.Component {
         newResource: true, resource: { schedule: {}, scheduleObj: buildScheduleDays(undefined) },
       });
     }
-    const resourceID = query.resourceid;
+    const resourceID = params.id;
     if (resourceID) {
       const url = `/api/resources/${resourceID}`;
       fetch(url).then(r => r.json())
@@ -890,9 +890,10 @@ OrganizationEditPage.propTypes = {
   // TODO: location is only ever used to get the resourceid; we should just pass
   // in the resourceid directly as a prop
   location: PropTypes.shape({
-    query: PropTypes.shape({
-      resourceid: PropTypes.string,
-    }).isRequired,
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string,
   }).isRequired,
   // TODO: Figure out what type router actually is
   router: PropTypes.instanceOf(Object).isRequired,

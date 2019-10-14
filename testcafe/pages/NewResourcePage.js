@@ -4,6 +4,6 @@ import EditPage from './EditPage';
 
 export default class NewResourcePage extends EditPage {
   static url() {
-    return `${config.baseUrl}/resource/new`;
+    return `${config.baseUrl}/organizations/new`;
   }
 }
