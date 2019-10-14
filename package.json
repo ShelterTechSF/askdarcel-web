@@ -20,7 +20,6 @@
     "prop-types": "^15.5.10",
     "qs": "^6.5.1",
     "react": "^16.8.6",
-    "react-autosize-textarea": "^0.4.3",
     "react-burger-menu": "^2.6.0",
     "react-dom": "^16.8.6",
     "react-ga": "^2.4.1",
