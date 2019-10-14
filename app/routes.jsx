@@ -11,8 +11,6 @@ import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { SearchResultsPage } from './pages/SearchPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 
-import { AdminPage } from './pages/admin/Admin';
-import { ChangeRequestsPage } from './pages/admin/ChangeRequests';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { AboutPage } from './pages/about/About';
@@ -42,8 +40,6 @@ function scrollToTop(prevState, nextState) {
 export default (
   <Route path="/" component={App} onChange={scrollToTop}>
     <IndexRoute component={HomePage} />
-    <Route path="/admin" component={AdminPage} />
-    <Route path="/admin/changes" component={ChangeRequestsPage} />
     <Route path="/organizations/:id" component={OrganizationListingPage} />
     <Route path="/resource/edit" component={OrganizationEditPage} />
     <Route path="/resource/new" component={OrganizationEditPage} />

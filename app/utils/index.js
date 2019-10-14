@@ -1,12 +1,5 @@
 import moment from 'moment';
 
-export function getAuthRequestHeaders() {
-  return {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
-}
-
 /**
  * Convert time from concatenated hours-minutes format to a Date object.
  *

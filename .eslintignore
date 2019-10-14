@@ -1,11 +1,5 @@
 build
-app/components/admin/ChangeRequest.jsx
-app/components/admin/ProposedService.jsx
-app/components/auth/RequireAuth.jsx
 app/pages/_unused/CreateAccount.jsx
 app/pages/_unused/Splash.jsx
 app/pages/_unused/TestAuth.jsx
-app/pages/admin/Admin.jsx
-app/pages/admin/ChangeRequests.jsx
-app/pages/admin/Login.jsx
 app/pages/debug/ListingDemoPage.jsx
