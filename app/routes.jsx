@@ -42,17 +42,17 @@ function scrollToTop(prevState, nextState) {
 export default (
   <Route path="/" component={App} onChange={scrollToTop}>
     <IndexRoute component={HomePage} />
-    <Route name="admin" path="/admin" component={AdminPage} />
-    <Route name="changeRequests" path="/admin/changes" component={ChangeRequestsPage} />
+    <Route path="/admin" component={AdminPage} />
+    <Route path="/admin/changes" component={ChangeRequestsPage} />
     <Route path="/organizations/:id" component={OrganizationListingPage} />
-    <Route name="editResource" path="/resource/edit" component={OrganizationEditPage} />
-    <Route name="newResource" path="/resource/new" component={OrganizationEditPage} />
-    <Route name="privacyPolicy" path="/privacy-policy" component={PrivacyPolicyPage} />
-    <Route name="search" path="/search" component={SearchResultsPage} />
-    <Route name="ServicePage" path="/services/:service" component={ServiceListingPage} />
-    <Route name="termsOfService" path="/terms-of-service" component={TermsOfServicePage} />
-    <Route name="AboutPage" path="/about" component={AboutPage} />
-    <Route name="listingDemo" path="/demo/listing" component={ListingDebugPage} />
+    <Route path="/resource/edit" component={OrganizationEditPage} />
+    <Route path="/resource/new" component={OrganizationEditPage} />
+    <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+    <Route path="/search" component={SearchResultsPage} />
+    <Route path="/services/:service" component={ServiceListingPage} />
+    <Route path="/terms-of-service" component={TermsOfServicePage} />
+    <Route path="/about" component={AboutPage} />
+    <Route path="/demo/listing" component={ListingDebugPage} />
 
     {/* Legacy redirects */}
     <Route path="/resource" onEnter={redirectToOrganizations} />
