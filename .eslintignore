@@ -1,5 +1,2 @@
 build
-app/pages/_unused/CreateAccount.jsx
-app/pages/_unused/Splash.jsx
-app/pages/_unused/TestAuth.jsx
 app/pages/debug/ListingDemoPage.jsx
