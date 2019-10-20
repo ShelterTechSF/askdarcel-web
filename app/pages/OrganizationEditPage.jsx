@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { withRouter, browserHistory } from 'react-router-dom';
+import { Prompt, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import { Loader } from 'components/ui';
@@ -299,10 +299,6 @@ const prepSchedule = scheduleObj => {
   return newSchedule;
 };
 
-const handleCancel = () => {
-  browserHistory.goBack();
-};
-
 const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
 class OrganizationEditPage extends React.Component {
@@ -323,7 +319,6 @@ class OrganizationEditPage extends React.Component {
     };
 
     this.certifyHAP = this.certifyHAP.bind(this);
-    this.routerWillLeave = this.routerWillLeave.bind(this);
     this.keepOnPage = this.keepOnPage.bind(this);
     this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
@@ -336,16 +331,8 @@ class OrganizationEditPage extends React.Component {
     this.sidebarAddService = this.sidebarAddService.bind(this);
   }
 
-  componentWillMount() {
-    const { route, router } = this.props;
-    router.setRouteLeaveHook(
-      route,
-      this.routerWillLeave,
-    );
-  }
-
   componentDidMount() {
-    const { location: { pathname }, params } = this.props;
+    const { location: { pathname }, match: { params } } = this.props;
     const splitPath = pathname.split('/');
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
@@ -471,14 +458,6 @@ class OrganizationEditPage extends React.Component {
     }
   }
 
-  routerWillLeave() {
-    const { inputsDirty, submitting } = this.state;
-    if (inputsDirty && !submitting) {
-      return 'Are you sure you want to leave? Any changes you have made will be lost.';
-    }
-    return null;
-  }
-
   createResource() {
     const {
       scheduleObj,
@@ -490,6 +469,7 @@ class OrganizationEditPage extends React.Component {
       email,
       address,
     } = this.state;
+    const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
     const newResource = {
       name,
@@ -511,7 +491,7 @@ class OrganizationEditPage extends React.Component {
       .then(response => {
         if (response.ok) {
           alert('Resource successfuly created. Thanks!');
-          response.json().then(res => browserHistory.push(`/organizations/${res.resources[0].resource.id}`));
+          response.json().then(res => history.push(`/organizations/${res.resources[0].resource.id}`));
         } else {
           Promise.reject(response);
         }
@@ -524,7 +504,7 @@ class OrganizationEditPage extends React.Component {
   }
 
   handleSubmit() {
-    const { showPopUpMessage } = this.props;
+    const { history, showPopUpMessage } = this.props;
     this.setState({ submitting: true });
     const {
       address,
@@ -604,7 +584,7 @@ class OrganizationEditPage extends React.Component {
 
     const that = this;
     Promise.all(promises).then(() => {
-      that.props.router.push(`/organizations/${that.state.resource.id}`);
+      history.push(`/organizations/${that.state.resource.id}`);
       showPopUpMessage({
         type: 'success',
         message: 'Successfully saved your changes.',
@@ -619,7 +599,7 @@ class OrganizationEditPage extends React.Component {
   }
 
   handleDeactivation(type, id) {
-    const { router } = this.props;
+    const { history } = this.props;
     let confirmMessage = null;
     let path = null;
     if (type === 'resource') {
@@ -643,7 +623,7 @@ class OrganizationEditPage extends React.Component {
             alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
             if (type === 'resource') {
               // Resource successfully deactivated. Redirect to home.
-              router.push({ pathname: '/' });
+              history.push({ pathname: '/' });
             } else {
               // Service successfully deactivated. Mark deactivated in local state.
               this.setState(state => {
@@ -841,11 +821,15 @@ If you&#39;d like to add formatting to descriptions, we support&nbsp;
 
   render() {
     const {
+      inputsDirty,
       newResource,
       resource,
       services,
       submitting,
     } = this.state;
+    const { history } = this.props;
+
+    const showPrompt = inputsDirty && !submitting;
 
     return (!resource && !newResource ? <Loader />
       : (
@@ -853,7 +837,7 @@ If you&#39;d like to add formatting to descriptions, we support&nbsp;
           <EditSidebar
             createResource={this.createResource}
             handleSubmit={this.handleSubmit}
-            handleCancel={handleCancel}
+            handleCancel={() => history.goBack()}
             handleDeactivation={this.handleDeactivation}
             resource={resource}
             submitting={submitting}
@@ -880,6 +864,10 @@ If you&#39;d like to add formatting to descriptions, we support&nbsp;
               </div>
             )}
           </div>
+          <Prompt
+            message="Are you sure you want to leave? Any changes you have made will be lost."
+            when={showPrompt}
+          />
         </div>
       )
     );
@@ -887,16 +875,15 @@ If you&#39;d like to add formatting to descriptions, we support&nbsp;
 }
 
 OrganizationEditPage.propTypes = {
-  // TODO: location is only ever used to get the resourceid; we should just pass
-  // in the resourceid directly as a prop
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
   }).isRequired,
-  // TODO: Figure out what type router actually is
-  router: PropTypes.instanceOf(Object).isRequired,
+  history: PropTypes.object.isRequired,
   showPopUpMessage: PropTypes.func.isRequired,
 };
 
