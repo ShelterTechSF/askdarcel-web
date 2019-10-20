@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   InstantSearch,
   Configure,
@@ -17,14 +18,14 @@ class SearchPage extends Component {
     super(props);
 
     this.state = {
-      searchState: { ...qs.parse(props.router.location.query) },
+      searchState: qs.parse(props.location.search.slice(1)),
     };
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
 
   componentWillReceiveProps() {
-    const { router: { location: { query } } } = this.props;
-    this.setState({ searchState: qs.parse(query) });
+    const { location: { search } } = this.props;
+    this.setState({ searchState: qs.parse(search.slice(1)) });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -35,15 +36,15 @@ class SearchPage extends Component {
   onSearchStateChange(nextSearchState) {
     const THRESHOLD = 700;
     const newPush = Date.now();
-    const { router } = this.props;
+    const { history } = this.props;
     const { lastPush } = this.state;
     this.setState({ lastPush: newPush, searchState: nextSearchState });
     if (lastPush && newPush - lastPush <= THRESHOLD) {
-      router.replace(
+      history.replace(
         nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
       );
     } else {
-      router.push(
+      history.push(
         nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
       );
     }
@@ -85,4 +86,4 @@ function mapStateToProps(state) {
   };
 }
 
-export const SearchResultsPage = connect(mapStateToProps)(SearchPage);
+export const SearchResultsPage = withRouter(connect(mapStateToProps)(SearchPage));
