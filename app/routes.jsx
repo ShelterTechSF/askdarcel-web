@@ -32,17 +32,17 @@ export default () => (
     <Route path="/about" component={About} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
-    <Route path="/organizations/:id" component={OrganizationListingPage} />
     <Route path="/organizations/:id/edit" component={OrganizationEditPage} />
+    <Route path="/organizations/:id" component={OrganizationListingPage} />
     <Route path="/privacy-policy" component={PrivacyPolicyPage} />
     <Route path="/search" component={SearchResultsPage} />
     <Route path="/services/:service" component={ServiceListingPage} />
     <Route path="/terms-of-service" component={TermsOfServicePage} />
 
     {/* Legacy redirects */}
-    <Route path="/resource" component={RedirectToOrganizations} />
-    <Route path="/resource/edit" component={RedirectToOrganizationsEdit} />
     <Redirect path="/resource/new" to="/organizations/new" />
+    <Route path="/resource/edit" component={RedirectToOrganizationsEdit} />
+    <Route path="/resource" component={RedirectToOrganizations} />
 
     <Redirect to="/" />
   </Switch>
