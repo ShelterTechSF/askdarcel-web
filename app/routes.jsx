@@ -1,8 +1,8 @@
 import React from 'react';
-import { Redirect, Route, IndexRoute } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import qs from 'qs';
 import './utils/google';
 
-import App from './components/App';
 // import configureStore from './store/configureStore';
 
 import HomePage from './pages/HomePage';
@@ -16,20 +16,14 @@ import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 
-function redirectToRoot(nextState, replace) {
-  replace({
-    pathname: '/',
-  });
-}
-
-const redirectToOrganizations = (nextState, replace) => {
-  const { location: { query: { id } } } = nextState;
-  replace(`/organizations/${id}`);
+const RedirectToOrganizations = ({ location: { search } }) => {
+  const { id } = qs.parse(search.slice(1));
+  return <Redirect to={`/organizations/${id}`} />;
 };
 
-const redirectToOrganizationsEdit = (nextState, replace) => {
-  const { location: { query: { resourceid: id } } } = nextState;
-  replace(`/organizations/${id}/edit`);
+const RedirectToOrganizationsEdit = ({ location: { search } }) => {
+  const { resourceid: id } = qs.parse(search.slice(1));
+  return <Redirect to={`/organizations/${id}/edit`} />;
 };
 
 // Adapted from
@@ -42,9 +36,9 @@ function scrollToTop(prevState, nextState) {
   }
 }
 
-export default (
-  <Route path="/" component={App} onChange={scrollToTop}>
-    <IndexRoute component={HomePage} />
+export default () => (
+  <Switch>
+    <Route exact path="/" component={HomePage} />
     <Route path="/about" component={About} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
@@ -56,10 +50,10 @@ export default (
     <Route path="/terms-of-service" component={TermsOfServicePage} />
 
     {/* Legacy redirects */}
-    <Route path="/resource" onEnter={redirectToOrganizations} />
-    <Route path="/resource/edit" onEnter={redirectToOrganizationsEdit} />
+    <Route path="/resource" component={RedirectToOrganizations} />
+    <Route path="/resource/edit" component={RedirectToOrganizationsEdit} />
     <Redirect path="/resource/new" to="/organizations/new" />
 
-    <Route path="*" onEnter={redirectToRoot} />
-  </Route>
+    <Redirect to="/" />
+  </Switch>
 );

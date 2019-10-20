@@ -13,6 +13,7 @@ import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
 import PopUpMessage from './ui/PopUpMessage';
 import { User } from '../models';
+import Routes from '../routes';
 
 const coordsInSanFrancisco = coords => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -132,7 +133,7 @@ class App extends Component {
   }
 
   render() {
-    const { children, location } = this.props;
+    const { location } = this.state;
     const { hamburgerMenuIsOpen } = this.state;
 
     const outerContainerId = 'outer-container';
@@ -154,7 +155,7 @@ class App extends Component {
         <div id={pageWrapId}>
           <Navigation showSearch toggleHamburgerMenu={this.toggleHamburgerMenu} />
           <div className="container">
-            {children}
+            <Routes />
           </div>
           <PopUpMessage />
         </div>

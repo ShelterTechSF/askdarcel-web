@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { combineForms } from 'react-redux-form';
-import { routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
 import resource from './resourceReducer';
 import services from './serviceReducer';
 import auth from './authReducer';
@@ -10,15 +10,15 @@ import forms from './formConfig';
 
 import { User } from '../models';
 
-const rootReducer = combineReducers({
+const createRootReducer = history => combineReducers({
   auth,
   changeRequestReducer,
   forms: combineForms(forms, 'forms'),
   popUpMessage: popUpMessageReducer,
   resource,
-  routing: routerReducer,
+  router: connectRouter(history),
   services,
   user: User.REDUCER,
 });
 
-export default rootReducer;
+export default createRootReducer;
