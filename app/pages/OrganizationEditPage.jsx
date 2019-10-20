@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { withRouter, browserHistory } from 'react-router';
+import { withRouter, browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 
 import { Loader } from 'components/ui';

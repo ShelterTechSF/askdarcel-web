@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory, Link } from 'react-router-dom';
 import { images } from 'assets';
 import styles from './Navigation.scss';
 

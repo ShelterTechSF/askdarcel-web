@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { Loader } from 'components/ui';
 import Filtering from './Filtering';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, IndexRoute } from 'react-router';
+import { Redirect, Route, IndexRoute } from 'react-router-dom';
 import './utils/google';
 
 import App from './components/App';

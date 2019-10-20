@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { push as Menu } from 'react-burger-menu';
 
 import styles from './HamburgerMenu.scss';
