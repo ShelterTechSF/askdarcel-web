@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Redirect, Route, IndexRoute } from 'react-router';
 import './utils/google';
 
 import App from './components/App';
@@ -27,6 +27,11 @@ const redirectToOrganizations = (nextState, replace) => {
   replace(`/organizations/${id}`);
 };
 
+const redirectToOrganizationsEdit = (nextState, replace) => {
+  const { location: { query: { resourceid: id } } } = nextState;
+  replace(`/organizations/${id}/edit`);
+};
+
 // Adapted from
 // https://github.com/ReactTraining/react-router/issues/2019#issuecomment-256591800
 // Note: When we upgrade to react-router 4.x, we should use
@@ -52,6 +57,8 @@ export default (
 
     {/* Legacy redirects */}
     <Route path="/resource" onEnter={redirectToOrganizations} />
+    <Route path="/resource/edit" onEnter={redirectToOrganizationsEdit} />
+    <Redirect path="/resource/new" to="/organizations/new" />
 
     <Route path="*" onEnter={redirectToRoot} />
   </Route>
