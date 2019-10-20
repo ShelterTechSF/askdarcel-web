@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory, Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import qs from 'qs';
 import { images } from 'assets';
 import styles from './Navigation.scss';
 
@@ -21,12 +22,11 @@ class Navigation extends React.Component {
 
   submitSearch(e) {
     e.preventDefault();
+    const { history } = this.props;
     const { query } = this.state;
     if (query) {
-      browserHistory.push({
-        pathname: '/search',
-        query: { query },
-      });
+      const queryString = qs.stringify({ query });
+      history.push(`/search?${queryString}`);
       window.location.reload();
     }
     return false;
@@ -115,4 +115,4 @@ Navigation.propTypes = {
   toggleHamburgerMenu: PropTypes.func.isRequired,
 };
 
-export default Navigation;
+export default withRouter(Navigation);
