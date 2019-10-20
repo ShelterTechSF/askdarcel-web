@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import * as ax from 'axios';
+import qs from 'qs';
 
 import Footer from 'components/ui/Footer/Footer';
 import Partners from 'components/ui/Partners/Partners';
@@ -21,7 +22,7 @@ VerticalSpacing.propTypes = {
 };
 
 
-export default class HomePage extends React.Component {
+class HomePage extends React.Component {
   state = {
     categories: [],
     resourceCount: undefined,
@@ -35,11 +36,10 @@ export default class HomePage extends React.Component {
 
   submitSearch = () => {
     const { searchValue } = this.state;
+    const { history } = this.props;
     if (searchValue) {
-      browserHistory.push({
-        pathname: '/search',
-        query: { query: searchValue },
-      });
+      const query = qs.stringify({ query: searchValue });
+      history.push(`/search?${query}`);
     }
   }
 
@@ -89,3 +89,5 @@ export default class HomePage extends React.Component {
     );
   }
 }
+
+export default withRouter(HomePage);
