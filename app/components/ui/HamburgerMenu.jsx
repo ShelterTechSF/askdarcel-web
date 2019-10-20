@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { push as Menu } from 'react-burger-menu';
 
 import styles from './HamburgerMenu.scss';
@@ -23,7 +23,7 @@ const burgerStyles = {
 };
 
 const links = [
-  { to: '/', text: 'Home' },
+  { to: '/', text: 'Home', exact: true },
   { to: '/about', text: 'About' },
   { to: 'https://help.sfserviceguide.org', text: 'FAQ' },
   { to: 'https://help.sfserviceguide.org/en/collections/1719243-contact-us', text: 'Contact Us' },
@@ -35,7 +35,6 @@ const links = [
 
 const HamburgerMenu = ({
   isOpen,
-  location,
   onStateChange,
   outerContainerId,
   pageWrapId,
@@ -50,12 +49,12 @@ const HamburgerMenu = ({
     styles={burgerStyles}
     width="275px"
   >
-    {links.map(({ to, text }) => (
+    {links.map(({ to, text, exact = false }) => (
       <MenuItem
         key={to}
         to={to}
-        isActive={location.pathname === to}
         onClick={toggleHamburgerMenu}
+        exact={exact}
       >
         {text}
       </MenuItem>
@@ -65,9 +64,6 @@ const HamburgerMenu = ({
 
 HamburgerMenu.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
   onStateChange: PropTypes.func.isRequired,
   outerContainerId: PropTypes.string.isRequired,
   pageWrapId: PropTypes.string.isRequired,
@@ -75,18 +71,28 @@ HamburgerMenu.propTypes = {
 };
 
 const MenuItem = ({
-  children, isActive, onClick, to,
+  children, onClick, to, exact,
 }) => (
   (to.startsWith('http') || to.startsWith('mailto:'))
     ? <a className={styles.menuItem} href={to}>{children}</a>
-    : <Link className={`${styles.menuItem} ${isActive ? styles.active : ''}`} to={to} onClick={onClick}>{children}</Link>
+    : (
+      <NavLink
+        className={styles.menuItem}
+        activeClassName={styles.active}
+        to={to}
+        onClick={onClick}
+        exact={exact}
+      >
+        {children}
+      </NavLink>
+    )
 );
 
 MenuItem.propTypes = {
   children: PropTypes.node.isRequired,
-  isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
+  exact: PropTypes.bool.isRequired,
 };
 
 MenuItem.defaultProps = {

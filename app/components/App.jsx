@@ -133,7 +133,6 @@ class App extends Component {
   }
 
   render() {
-    const { location } = this.state;
     const { hamburgerMenuIsOpen } = this.state;
 
     const outerContainerId = 'outer-container';
@@ -146,7 +145,6 @@ class App extends Component {
         {config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
-          location={location}
           outerContainerId={outerContainerId}
           onStateChange={this.onHamburgerMenuStateChange}
           pageWrapId={pageWrapId}
