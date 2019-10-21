@@ -12,7 +12,7 @@ describe('<ServiceCard />', () => {
   };
 
   it('checks a valid user should render the appropriate fields in the right place', () => {
-    const card = shallow(<ServiceCard service={validService} />).dive();
+    const card = shallow(<ServiceCard service={validService} />);
     expect(card.find('h3').text()).to.equal('Test Service');
     expect(card.find('p').text()).to.equal(validService.long_description);
   });
