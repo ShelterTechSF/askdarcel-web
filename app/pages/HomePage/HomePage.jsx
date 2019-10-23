@@ -7,7 +7,6 @@ import Footer from 'components/ui/Footer/Footer';
 import Partners from 'components/ui/Partners/Partners';
 import CategoryList from './components/CategoryList';
 import HomePageHero from './components/HomePageHero';
-import HomePageBackground from './components/HomePageBackground';
 import SearchBar from './components/SearchBar';
 import Guidelist from './components/GuideList';
 import Section from './components/Section';
@@ -62,7 +61,6 @@ export default class HomePage extends React.Component {
     } = this.state;
     return (
       <div className="find-page">
-        <HomePageBackground />
         <HomePageHero
           title="Find social services in San Francisco"
           description="The SF Service Guide works to educate and equip low-income individuals, families, and their advocates with the information and tools to navigate the social services system in San Francisco."
