@@ -14,7 +14,7 @@ const EditServices = ({
             key={`${service.id}`}
             index={index}
             service={service}
-            handleChange={editServiceById}
+            editServiceById={editServiceById}
             handleDeactivation={handleDeactivation}
           />
         ))

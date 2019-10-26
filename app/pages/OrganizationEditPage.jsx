@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withRouter, browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+
 import _ from 'lodash';
 
 import { Loader } from 'components/ui';
@@ -12,7 +14,9 @@ import EditSchedule from '../components/edit/EditSchedule';
 import EditPhones from '../components/edit/EditPhones';
 import EditSidebar from '../components/edit/EditSidebar';
 import * as dataService from '../utils/DataService';
-import { createTemplateSchedule } from '../utils/index';
+import { Resource } from '../models';
+
+import { withPopUpMessages } from '../actions/popUpMessageActions';
 
 import './OrganizationEditPage.scss';
 
@@ -75,6 +79,73 @@ function updateCollectionObject(object, id, path, promises) {
   );
 }
 
+/** Build UI state schedule from API schedule.
+ *
+ * The difference between the schedule that comes from the API and the schedule
+ * that is saved as React UI state is that the UI state schedule's schema groups
+ * ScheduleDays by day of week. This allows us to represent blank ScheduleDays
+ * when a new, blank time is added but before an open time or a close time is
+ * set. The API schedule schema does not support having a ScheduleDay that has
+ * no open and close time but that is attached to a day of week. This feature is
+ * required for the UI because the blank time needs to appear under a day of
+ * week before an open and close time is set.
+ */
+
+
+const buildScheduleDays = schedule => {
+  const scheduleId = schedule ? schedule.id : null;
+  const currSchedule = {};
+  let finalSchedule = {};
+
+  const is24Hours = {
+    Monday: false,
+    Tuesday: false,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Saturday: false,
+    Sunday: false,
+  };
+
+  const tempSchedule = {
+    Monday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Tuesday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Wednesday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Thursday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Friday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Saturday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Sunday: [{ opens_at: null, closes_at: null, scheduleId }],
+  };
+
+  if (schedule) {
+    schedule.schedule_days.forEach(day => {
+      const currDay = day.day;
+      if (!is24Hours[currDay]) {
+        // Check to see if any of the hour pairs for the day
+        // indicate the resource/service is open 24 hours
+        // if there is a pair only have that in the day obj
+        if (day.opens_at === 0 && day.closes_at === 2359) {
+          is24Hours[currDay] = true;
+          // Since this record already exists in our DB, we only need the id
+          // scheduleID is needed when creating no data
+          currSchedule[currDay] = [{ opens_at: 0, closes_at: 2359, id: day.id }];
+        } else {
+          const newDay = Object.assign(day, { openChanged: false, closeChanged: false });
+          if (currSchedule[currDay]) {
+            currSchedule[newDay.day].unshift(newDay);
+          } else {
+            currSchedule[newDay.day] = [newDay];
+          }
+        }
+      }
+    });
+  }
+  finalSchedule = Object.assign({}, tempSchedule, currSchedule);
+  return finalSchedule;
+};
+export { buildScheduleDays };
+
+
 /**
  * Create a change request for a new object.
  */
@@ -100,7 +171,7 @@ function createNewPhoneNumber(item, resourceID, promises) {
   );
 }
 
-function deletCollectionObject(item, path, promises) {
+function deleteCollectionObject(item, path, promises) {
   if (path === 'phones') {
     promises.push(
       dataService.APIDelete(`/api/phones/${item.id}`),
@@ -112,7 +183,7 @@ function postCollection(collection, originalCollection, path, promises, resource
   for (let i = 0; i < collection.length; i += 1) {
     const item = collection[i];
     if (item.isRemoved) {
-      deletCollectionObject(item, path, promises);
+      deleteCollectionObject(item, path, promises);
     } else if (i < originalCollection.length && item.dirty) {
       const diffObj = getDiffObject(item, originalCollection[i]);
       if (!_.isEmpty(diffObj)) {
@@ -193,12 +264,17 @@ function postNotes(notesObj, promises, uriObj) {
   }
 }
 
+// THis is only called for schedules for new services, not for resources nor for
+// existing services.
 function createFullSchedule(scheduleObj) {
   if (scheduleObj) {
     const newSchedule = [];
     let tempDay = {};
     Object.keys(scheduleObj).forEach(day => {
       scheduleObj[day].forEach(curr => {
+        if (curr.opens_at === null || curr.closes_at === null) {
+          return;
+        }
         tempDay = {};
         tempDay.day = day;
         tempDay.opens_at = curr.opens_at;
@@ -233,7 +309,9 @@ const handleCancel = () => {
   browserHistory.goBack();
 };
 
-export class OrganizationEditPage extends React.Component {
+const deepClone = obj => JSON.parse(JSON.stringify(obj));
+
+class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -273,28 +351,53 @@ export class OrganizationEditPage extends React.Component {
   }
 
   componentDidMount() {
+    const { setResource } = this.props;
     const { location: { query, pathname } } = this.props;
     const splitPath = pathname.split('/');
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
       this.setState({
-        newResource: true, resource: {},
+        newResource: true,
+        resource: { schedule: {}, scheduleObj: buildScheduleDays(undefined) },
+        resource: {
+          schedule: {},
+          scheduleObj: buildScheduleDays(undefined),
+        },
       });
     }
+
     const resourceID = query.resourceid;
     if (resourceID) {
-      const url = `/api/resources/${resourceID}`;
-      fetch(url).then(r => r.json())
-        .then(data => {
-          this.setState({
-            resource: data.resource,
-          });
-        });
+      setResource(resourceID)
+        .then(() => this.handleAPIGetResource());
     }
   }
 
+
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.keepOnPage);
+  }
+
+  handleAPIGetResource = () => {
+    const { resource } = this.props;
+    const services = (resource.services || []).reduce(
+      (acc, service) => ({
+        ...acc,
+        [service.id]: {
+          scheduleObj: buildScheduleDays(service.schedule),
+          // If the service doesn't have a schedule associated with it, and can
+          // inherit its schedule from its parent, inherit the parent resource's
+          // schedule.
+          shouldInheritScheduleFromParent: !(_.get(service.schedule, 'schedule_days.length', false)),
+        },
+      }),
+      {},
+    );
+    this.setState({
+      resource,
+      services,
+      scheduleObj: buildScheduleDays(resource.schedule),
+    });
   }
 
   postServices = (servicesObj, promises) => {
@@ -302,7 +405,7 @@ export class OrganizationEditPage extends React.Component {
     const { resource } = this.state;
     const newServices = [];
     Object.entries(servicesObj).forEach(([key, value]) => {
-      const currentService = value;
+      const currentService = deepClone(value);
       if (key < 0) {
         if (currentService.notesObj) {
           const notes = Object.values(currentService.notesObj.notes);
@@ -322,6 +425,7 @@ export class OrganizationEditPage extends React.Component {
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
+        delete currentService.shouldInheritScheduleFromParent;
         if (!_.isEmpty(currentService)) {
           promises.push(dataService.post(uri, { change_request: currentService }));
         }
@@ -341,10 +445,13 @@ export class OrganizationEditPage extends React.Component {
    * @returns {void}
    */
   editServiceById = (id, changes) => {
-    const { services } = this.state;
-    this.setState({
-      services: { ...services, [id]: changes },
-      inputsDirty: true,
+    this.setState(({ services }) => {
+      const oldService = services[id] || {};
+      const newService = { ...oldService, ...changes };
+      return {
+        services: { ...services, [id]: newService },
+        inputsDirty: true,
+      };
     });
   }
 
@@ -359,8 +466,10 @@ export class OrganizationEditPage extends React.Component {
       id: nextServiceId,
       notes: [],
       schedule: {
-        schedule_days: createTemplateSchedule(),
+        schedule_days: [],
       },
+      scheduleObj: buildScheduleDays(undefined),
+      shouldInheritScheduleFromParent: true,
     };
     this.setState({
       services: { ...services, [nextServiceId]: newService },
@@ -429,6 +538,7 @@ export class OrganizationEditPage extends React.Component {
   }
 
   handleSubmit() {
+    const { showPopUpMessage } = this.props;
     this.setState({ submitting: true });
     const {
       address,
@@ -507,37 +617,56 @@ export class OrganizationEditPage extends React.Component {
     postNotes(notes, promises, { path: 'resources', id: resource.id });
 
     const that = this;
-    Promise.all(promises).then(() => {
+    this.props.updateResource(promises).then(() => {
       that.props.router.push({ pathname: '/resource', query: { id: that.state.resource.id } });
-    }).catch(err => {
-      console.log(err);
-    });
+      showPopUpMessage({
+        type: 'success',
+        message: 'Successfully saved your changes.',
+      });
+    });// .catch(err => {//FIXME: handle err
+    // console.log(err);
+    // showPopUpMessage({
+    //   type: 'error',
+    //   message: 'Sorry! An error occurred.',
+    // });
+    // });
   }
 
   handleDeactivation(type, id) {
     const { router } = this.props;
+    let confirmMessage = null;
+    let path = null;
+    if (type === 'resource') {
+      confirmMessage = 'Are you sure you want to deactive this resource?';
+      path = `/api/resources/${id}`;
+    } else if (type === 'service') {
+      confirmMessage = 'Are you sure you want to remove this service?';
+      path = `/api/services/${id}`;
+    }
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Are you sure you want to deactive this resource?') === true) {
-      let path = null;
-      if (type === 'resource') {
-        path = `/api/resources/${id}`;
-      } else if (type === 'service') {
-        path = `/api/services/${id}`;
-      }
-      dataService.APIDelete(path, { change_request: { status: '2' } })
-        .then(() => {
-          alert('Successfully deactivated! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
-          if (type === 'resource') {
-            // Resource successfully deactivated. Redirect to home.
-            router.push({ pathname: '/' });
-          } else {
-            // Service successfully deactivated. Mark deactivated in local state.
-            this.setState(state => {
-              state.deactivatedServiceIds.add(id);
-              return state;
-            });
-          }
+    if (confirm(confirmMessage) === true) {
+      if (id < 0) {
+        this.setState(({ deactivatedServiceIds }) => {
+          const newDeactivatedServiceIds = new Set(deactivatedServiceIds);
+          newDeactivatedServiceIds.add(id);
+          return { deactivatedServiceIds: newDeactivatedServiceIds };
         });
+      } else {
+        dataService.APIDelete(path, { change_request: { status: '2' } })
+          .then(() => {
+            alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
+            if (type === 'resource') {
+              // Resource successfully deactivated. Redirect to home.
+              router.push({ pathname: '/' });
+            } else {
+              // Service successfully deactivated. Mark deactivated in local state.
+              this.setState(state => {
+                state.deactivatedServiceIds.add(id);
+                return state;
+              });
+            }
+          });
+      }
     }
   }
 
@@ -591,7 +720,8 @@ export class OrganizationEditPage extends React.Component {
   }
 
   renderSectionFields() {
-    const { resource } = this.state;
+    const { scheduleObj } = this.state;
+    const { resource } = this.props;
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
@@ -688,7 +818,10 @@ If you&#39;d like to add formatting to descriptions, we support
           </li>
 
           <EditSchedule
-            schedule={resource.schedule}
+            scheduleDaysByDay={scheduleObj}
+            scheduleId={resource.schedule.id}
+            canInheritFromParent={false}
+            shouldInheritFromParent={false}
             handleScheduleChange={this.handleScheduleChange}
           />
 
@@ -716,7 +849,6 @@ If you&#39;d like to add formatting to descriptions, we support
           editServiceById={this.editServiceById}
           addService={this.addService}
           handleDeactivation={this.handleDeactivation}
-          ref={instance => { this.serviceChild = instance; }}
         />
       </ul>
     );
@@ -750,6 +882,7 @@ If you&#39;d like to add formatting to descriptions, we support
               <h1 className="edit--main--header--title">Let&apos;s start with the basics</h1>
             </header>
             <div className="edit--sections">
+              "
               {this.renderSectionFields()}
             </div>
             {!newResource && (
@@ -779,6 +912,24 @@ OrganizationEditPage.propTypes = {
   }).isRequired,
   // TODO: Figure out what type router actually is
   router: PropTypes.instanceOf(Object).isRequired,
+  showPopUpMessage: PropTypes.func.isRequired,
 };
 
-export default withRouter(OrganizationEditPage);
+
+function mapStateToProps({ resource }) {
+  return {
+    resource: resource.resource,
+  };
+}
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setResource: id => dispatch(Resource.getResourceAction(id)),
+    updateResource: sched => dispatch(Resource.updateResourceAction(sched)),
+  };
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(withPopUpMessages(OrganizationEditPage)),
+);

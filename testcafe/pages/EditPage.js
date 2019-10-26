@@ -3,6 +3,7 @@ import { ReactSelector } from 'testcafe-react-selectors';
 class EditAddress {
   constructor() {
     const baseSelector = ReactSelector('EditAddress');
+    this.name = baseSelector.find('input').withAttribute('data-field', 'name');
     this.address1 = baseSelector.find('input').withAttribute('data-field', 'address_1');
     this.address2 = baseSelector.find('input').withAttribute('data-field', 'address_2');
     this.address3 = baseSelector.find('input').withAttribute('data-field', 'address_3');

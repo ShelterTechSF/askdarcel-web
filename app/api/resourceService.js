@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import api from './httpClient';
 
 
@@ -21,11 +21,15 @@ export const searchResourcesSortByLoc = (query, lat, lon) => api.get(`/resources
 export const submitResourceChangeRequest = (id, changeRequestObj) => api.post(`/resources/${id}/change_requests`,
   { change_request: changeRequestObj });
 
-export const submitChangeRequests = promises => axios.all(promises)
-  .then(response => response.reduce((acc, cur) => {
-    acc.push(cur);
-    return acc;
-  }, []));
+
+// FIXME: NEEDS NEW TEST
+export const submitChangeRequests = promises => {
+  debugger;
+  return Promise.all(promises).then(res => res).catch(err => {
+    console.log(err);
+    return err;
+  });
+};
 
 export const submitNewResource = resource => api.post('/resources', { resources: [resource] });
 

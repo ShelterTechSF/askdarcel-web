@@ -59,9 +59,8 @@ export default function editCollectionHOC(ResourceObjectItem,
       for (let i = 0; i < collection.length; i++) {
         if (!collection[i].isRemoved) {
           items.push(
-            <div className="edit--section--list--item--collection-container">
+            <div key={i} className="edit--section--list--item--collection-container">
               <ResourceObjectItem
-                key={i}
                 index={i}
                 item={collection[i]}
                 handleChange={this.handleChange}

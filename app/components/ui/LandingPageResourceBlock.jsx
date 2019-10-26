@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const HOST_QUERY = '/search?query=';
 
 class LandingPageResourceBlock extends Component {
-  render() {
+    render() {
+    const url = `/search?refinementList[categories][0]=${encodeURIComponent(this.props.config.TITLE.BLUE_WORD)}`
     return (
       <div className="landing-page-resource-block">
         <div className="landing-page-resource-block__resources">
@@ -19,6 +20,9 @@ class LandingPageResourceBlock extends Component {
               </span>
               {this.props.config.TITLE.AFTER_BLUE_WORD}
             </h1>
+            <span className="see-more">
+                <a href={url}>See More</a>
+            </span>
           </div>
           <div className="landing-page-resource-block__cards">
             { this.props.config.CARDS.map(category => (

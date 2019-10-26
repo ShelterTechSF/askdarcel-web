@@ -1,8 +1,8 @@
 /* eslint-disable node/no-deprecated-api, no-unused-vars, no-console */
 process.env.NODE_ENV = 'test';
 
-require('babel-register')();
-require('babel-polyfill');
+require('@babel/register');
+require('@babel/polyfill');
 
 console.clear();
 

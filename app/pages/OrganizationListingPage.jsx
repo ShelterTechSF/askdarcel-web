@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   AddressInfo,
@@ -14,30 +15,41 @@ import {
   TableOfOpeningTimes,
   MobileActionBar,
 } from 'components/listing';
+import { MapOfLocations } from 'components/maps';
 import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import Services from 'components/listing/Services';
 import Notes from 'components/listing/Notes';
+import MOHCDBadge from 'components/listing/MOHCDBadge';
+import HAPBadge from 'components/listing/HAPBadge';
 import Loader from 'components/ui/Loader';
-import HAPcertified from '../assets/img/ic-hap.png';
-import MOHCDFunded from '../assets/img/ic-mohcd-funded-services.png';
 import * as dataService from '../utils/DataService';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
+
+import { Resource } from '../models';
+
+const getResourceLocation = resource => {
+  const { address } = resource;
+  if (!address) return null;
+
+  return {
+    id: address.id,
+    address,
+    name: resource.name,
+    recurringSchedule: resource.recurringSchedule,
+  };
+};
 
 export class OrganizationListingPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      resource: null,
-    };
     this.verifyResource = this.verifyResource.bind(this);
-    this.isMOHCDFunded = this.isMOHCDFunded.bind(this);
   }
 
   componentDidMount() {
     this.loadResourceFromServer();
   }
 
-  loadResourceFromServer() {
+  loadResourceFromServer = async () => {
     const {
       location: {
         query: {
@@ -45,11 +57,7 @@ export class OrganizationListingPage extends React.Component {
         },
       },
     } = this.props;
-    const url = `/api/resources/${id}`;
-
-    fetch(url, { credentials: 'include' }).then(r => r.json()).then(data => {
-      this.setState({ resource: data.resource });
-    });
+    await this.props.setResource(id);
   }
 
   verifyResource() {
@@ -57,7 +65,8 @@ export class OrganizationListingPage extends React.Component {
       resource: {
         id,
       },
-    } = this.state;
+    } = this.props;
+
     const changeRequest = {
       verified_at: new Date().toISOString(),
     };
@@ -71,28 +80,15 @@ export class OrganizationListingPage extends React.Component {
     });
   }
 
-  isMOHCDFunded() {
-    const { resource } = this.state;
-    let isMOHCDFunded = false;
-
-    // eslint-disable-next-line
-    resource && resource.categories.forEach(category => {
-      if (category.name === 'MOHCD Funded') {
-        isMOHCDFunded = true;
-      }
-    });
-
-    return isMOHCDFunded;
-  }
-
   render() {
-    const { resource } = this.state;
+    const { resource } = this.props;
+
     if (!resource || !window.google) {
       return <Loader />;
     }
 
     const { notes } = resource;
-    const isMOHCDFunded = this.isMOHCDFunded();
+    const resourceLocation = getResourceLocation(resource);
     return (
       <div>
         <Helmet>
@@ -112,35 +108,28 @@ export class OrganizationListingPage extends React.Component {
           <article className="org" id="resource">
             <div className="org--main">
               <div className="org--main--left">
-
                 <header className="org--main--header">
-                  <div className="badges">
-                    {resource.certified && (<img className="certified" src={HAPcertified} alt="Verified by the Homeless Assistance Project" />)}
-                    {isMOHCDFunded && (<img className="mohcd-funded" src={MOHCDFunded} alt="Verified by MOHCD" />)}
-                  </div>
-                  <h1 className="org--main--header--title">{resource.name}</h1>
-                  <div className="org--main--header--rating disabled-feature">
-                    <p className="excellent">
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                      <i className="material-icons">sentiment_very_satisfied</i>
-                    </p>
+                  <div className="org--main--header--title-container">
+                    <h1 className="org--main--header--title">{resource.name}</h1>
+                    <MOHCDBadge resource={resource} />
                   </div>
                   <div className="org--main--header--hours">
                     <RelativeOpeningTime schedule={resource.schedule} />
                   </div>
-                  <div className="org--main--header--phone">
-                    <PhoneNumber phones={resource.phones} />
-                  </div>
-                  <div className="org--main--header--description">
-                    <header>About this resource</header>
-                    <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
-                  </div>
+                  { resource.phones.length > 0
+                    && (
+                      <div className="org--main--header--phone">
+                        <PhoneNumber phones={resource.phones} />
+                      </div>
+                    )
+                  }
                 </header>
-
                 <MobileActionBar resource={resource} />
+                <div className="org--main--header--description">
+                  <h2>About this Organization</h2>
+                  <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
+                  <HAPBadge resource={resource} />
+                </div>
 
                 <section className="service--section" id="services">
                   <header className="service--section--header">
@@ -160,18 +149,31 @@ export class OrganizationListingPage extends React.Component {
                   </header>
                   <ul className="info">
                     <div className="info--column">
-                      <ResourceCategories categories={resource.categories} />
-                      {' '}
+                      {resource.categories.length > 0
+                        && <ResourceCategories categories={resource.categories} />}
                       {resource.address && <AddressInfo address={resource.address} />}
-                      <PhoneNumber phones={resource.phones} />
-                      <Website website={resource.website} />
-                      <Email email={resource.email} />
-                    </div>
-                    <div className="info--column">
-                      <TableOfOpeningTimes schedule={resource.schedule} />
+                      {resource.phones.length > 0 && <PhoneNumber phones={resource.phones} />}
+                      {resource.website && <Website website={resource.website} />}
+                      {resource.email && <Email email={resource.email} />}
                     </div>
                   </ul>
                 </section>
+
+                {resourceLocation && (
+                  <section className="location--section">
+                    <header className="service--section--header">
+                      <h4>Location</h4>
+                    </header>
+                    <MapOfLocations
+                      locations={[resourceLocation]}
+                      locationRenderer={location => (
+                        <TableOfOpeningTimes
+                          recurringSchedule={location.recurringSchedule}
+                        />
+                      )}
+                    />
+                  </section>
+                )}
               </div>
 
               <div className="org--aside">
@@ -184,6 +186,7 @@ export class OrganizationListingPage extends React.Component {
     );
   }
 }
+
 
 OrganizationListingPage.defaultProps = {
   userLocation: null,
@@ -199,3 +202,18 @@ OrganizationListingPage.propTypes = {
     lng: PropTypes.number.isRequired,
   }),
 };
+
+
+function mapStateToProps({ resource }) {
+  return {
+    resource: resource.resource || {},
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setResource: id => dispatch(Resource.getResourceAction(id)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationListingPage);

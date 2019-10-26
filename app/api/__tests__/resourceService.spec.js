@@ -16,8 +16,12 @@ import {
 } from '../resourceService';
 
 
-describe('Resources', () => {
-  const mockAdapter = new MockAdapter(axInstance);
+describe('Resource Services', () => {
+  let mockAdapter;
+
+  before(() => {
+    mockAdapter = new MockAdapter(axInstance);
+  });
 
   it('Should return single resource', async () => {
     mockAdapter.onGet('/resources/1').reply(200, { resource });

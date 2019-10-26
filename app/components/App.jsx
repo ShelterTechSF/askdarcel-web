@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import Intercom from 'react-intercom';
@@ -8,9 +9,10 @@ import Navigation from './ui/Navigation';
 import { round } from '../utils/index';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
-import userActions from '../actions/userActions';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
+import PopUpMessage from './ui/PopUpMessage';
+import { User } from '../models';
 
 const coordsInSanFrancisco = coords => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -161,6 +163,7 @@ class App extends Component {
           <div className="container">
             {childrenWithProps}
           </div>
+          <PopUpMessage />
         </div>
       </div>
     );
@@ -175,8 +178,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setUserLocation: location => dispatch(userActions.setUserLocation(location)),
+    setUserLocation: location => dispatch(User.setUserLocation(location)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(hot(App));

@@ -6,6 +6,15 @@
   }
 }
 
+.marker {
+  @include transform(translateY(-50%));
+  position: absolute;
+  height: 55px;
+  width: 30px;
+  top: -27px;
+  left: -15px;
+}
+
 .map-wrapper {
   width: 50vw;
   height: 90%;
@@ -15,6 +24,74 @@
 .refinement-list {
   display: none;
 }
+
+// Filtering styles //
+.filter-container.flex-height {
+  height: auto;
+}
+.filters-icon {
+  height: calc-em(15px);
+  padding: 0px 3px 3px 0px;
+}
+.refine-btn {
+  border: none;
+  padding: 5px 10px 5px 0px;
+  color: #276ce5;
+  font-weight: 400;
+  font-size: 15px;
+}
+.refine-btn.active {
+  font-weight: 500;
+}
+.custom-refinement {
+  height: 0px;
+  display: block;
+  margin: 0px;
+  opacity: 0;
+}
+.custom-refinement.active {
+  height: auto;
+  margin: 20px 5px;
+  opacity: 1;
+}
+.refinement-wrapper {
+  border-top: 1px solid $color-grey1;
+  border-bottom: 1px solid $color-grey1;
+  width: 50%;
+  padding: 5px;
+}
+.refinement-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #666666;
+}
+.refinement-ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: calc-em(150px);
+  padding: 5px;
+}
+.refinement-li {
+  padding: 5px 0px;
+  color: #666666;
+}
+.refine-li {
+  &.refine-li-disabled {
+    color: $color-grey4;
+  }
+  &.active {
+    color: #276ce5;
+    font-weight: 500;
+  }
+}
+.refine-checkbox {
+  margin-bottom: calc-em(10px);
+  margin-right: calc-em(5px);
+  width: auto;
+}
+
+
 // TODO: Make the map responsive and sticky
 // .results-map {
 //   flex: 1 1 auto;
@@ -35,6 +112,10 @@
 // search result table styles
 .search-box {
   display: none;
+}
+
+.results-wrapper {
+  height: 0px;
 }
 
 .results {
@@ -118,9 +199,11 @@
 }
 
 .results-table-entry {
+  display: flex;
+  flex-direction: column;
 
   &.service-entry {
-    min-height: calc-em(265px);
+    min-height: calc-em(205px);
     background-color: #fff;
   }
 
@@ -156,7 +239,6 @@
     width: 100%;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: calc-em(20px);
   }
 }
 
@@ -305,8 +387,8 @@
 }
 
 .service-entry-additional-info {
-  height: calc-em(102px);
-  margin: calc-em(20px) 0 0 calc-em(28px);
+  height: 4rem;
+  margin: .6rem 1.75rem;
 
   .service-entry-tabs {
     margin-bottom: calc-em(10px);

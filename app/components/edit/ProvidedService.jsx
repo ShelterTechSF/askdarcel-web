@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
+import { buildScheduleDays } from '../../pages/OrganizationEditPage';
 
 
 const InputField = ({
@@ -14,7 +15,7 @@ const InputField = ({
     <input
       type={type}
       placeholder={placeholder}
-      value={value}
+      value={value || ''}
       onChange={evt => setValue(evt.target.value)}
     />
   </Fragment>
@@ -24,12 +25,13 @@ InputField.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   setValue: PropTypes.func.isRequired, // A function to call when setting a new value
 };
 
 InputField.defaultProps = {
   type: 'text',
+  value: '',
 };
 
 
@@ -59,160 +61,165 @@ const TEXT_AREAS = [
 ];
 
 
-class ProvidedService extends Component {
-  constructor(props) {
-    super(props);
+const ProvidedService = ({
+  editServiceById, handleDeactivation, index, service,
+}) => {
+  const handleChange = (field, value) => {
+    const { id } = service;
+    editServiceById(id, { id, [field]: value });
+  };
 
-    // Notice
-    // It's really unclear when to use the version of the service in the state
-    // vs. when to use the version in the props.
-    // Currently, it looks like the one in state only keeps track of changes
-    // that have been made to the service, and a missing key implies that there
-    // is no change to that field. A longer-term refactoring should involve
-    // keeping track of the deltas in one location rather than having the logic
-    // distributed throughout the whole application.
-    this.state = {
-      service: {},
-    };
-  }
+  const setShouldInheritScheduleFromParent = shouldInherit => {
+    const { scheduleObj: scheduleDaysByDay } = service;
 
-  handleChange = (field, value) => {
-    const { service } = this.state;
-    // TODO: We shouldn't be mutating state, but this component currently depends on it
-    service[field] = value;
-    this.setState({ service }, () => {
-      const { service: { id }, handleChange } = this.props;
-      handleChange(id, service);
-    });
-  }
+    let tempScheduleDays = {};
 
-  render() {
-    const { handleDeactivation, index, service } = this.props;
-    const { service: stateService, submitting } = this.state;
-    const flattenedService = {
-      ...service,
-      ...stateService,
-    };
-    return (
-      <li id={`${service.id}`} className="edit--service edit--section">
-        <header className="edit--section--header">
-          <h4>
-            {`Service ${index + 1}: ${service.name}`}
-          </h4>
-          <button
-            className="remove-item"
-            type="button"
-            id="service--deactivation"
-            disabled={submitting}
-            onClick={() => handleDeactivation('service', service.id)}
-          >
+    if (shouldInherit) {
+      tempScheduleDays = Object.entries(scheduleDaysByDay).reduce(
+        (acc, [day, scheduleDays]) => (
+          {
+            ...acc,
+            [day]: scheduleDays.map(scheduleDay => ({
+              ...scheduleDay,
+              opens_at: null,
+              closes_at: null,
+              openChanged: true,
+              closeChanged: true,
+            })),
+          }
+        ),
+        {},
+      );
+    } else {
+      tempScheduleDays = buildScheduleDays(service.schedule);
+    }
+    handleChange('shouldInheritScheduleFromParent', shouldInherit);
+    handleChange('scheduleObj', tempScheduleDays);
+  };
+
+  return (
+    <li id={`${service.id}`} className="edit--service edit--section">
+      <header className="edit--section--header">
+        <h4>
+          {`Service ${index + 1}: ${service.name}`}
+        </h4>
+        <button
+          className="remove-item"
+          type="button"
+          id="service--deactivation"
+          onClick={() => handleDeactivation('service', service.id)}
+        >
             Remove Service
-          </button>
-        </header>
+        </button>
+      </header>
 
-        <ul className="edit--section--list">
-          <li className="edit--section--list--item">
-            <InputField
-              label="Name of the Service"
-              placeholder="What is this service called?"
-              value={flattenedService.name}
-              setValue={value => this.handleChange('name', value)}
-            />
-          </li>
-
-          <li className="edit--section--list--item">
-            <InputField
-              label="Nickname"
-              placeholder="What it's known as in the community"
-              value={flattenedService.alternate_name}
-              setValue={value => this.handleChange('alternate_name', value)}
-            />
-          </li>
-
-          <li key="email" className="edit--section--list--item email">
-            <InputField
-              type="email"
-              label="Service E-Mail"
-              placeholder="Email address for this service"
-              value={flattenedService.email}
-              setValue={value => this.handleChange('email', value)}
-            />
-          </li>
-
-          {TEXT_AREAS.map(textArea => (
-            <li className="edit--section--list--item" key={textArea.field}>
-              <FormTextArea
-                label={textArea.label}
-                placeholder={textArea.placeholder}
-                value={flattenedService[textArea.field] || ''}
-                setValue={value => this.handleChange(textArea.field, value)}
-              />
-            </li>
-          ))}
-
-          <li className="edit--section--list--item">
-            <MultiSelectDropdown
-              selectedItems={service.eligibilities}
-              handleSelectChange={value => this.handleChange('eligibilities', value)}
-              label="Eligibility"
-              optionsRoute="eligibilities"
-            />
-          </li>
-
-          <li className="edit--section--list--item">
-            <InputField
-              label="Cost"
-              placeholder="How much does this service cost?"
-              value={flattenedService.fee}
-              setValue={value => this.handleChange('fee', value)}
-            />
-          </li>
-
-          <li className="edit--section--list--item">
-            <InputField
-              label="Wait Time"
-              placeholder="Is there a waiting list or wait time?"
-              value={flattenedService.wait_time}
-              setValue={value => this.handleChange('wait_time', value)}
-            />
-          </li>
-
-          <li className="edit--section--list--item">
-            <InputField
-              label="Service&#39;s Website"
-              placeholder="http://"
-              value={flattenedService.url}
-              setValue={value => this.handleChange('url', value)}
-            />
-          </li>
-
-          <EditSchedule
-            canInheritFromParent
-            schedule={service.schedule}
-            handleScheduleChange={value => this.handleChange('scheduleObj', value)}
+      <ul className="edit--section--list">
+        <li className="edit--section--list--item">
+          <InputField
+            label="Name of the Service"
+            placeholder="What is this service called?"
+            value={service.name}
+            setValue={value => handleChange('name', value)}
           />
+        </li>
 
-          <EditNotes
-            notes={service.notes}
-            handleNotesChange={value => this.handleChange('notesObj', value)}
+        <li className="edit--section--list--item">
+          <InputField
+            label="Nickname"
+            placeholder="What it's known as in the community"
+            value={service.alternate_name}
+            setValue={value => handleChange('alternate_name', value)}
           />
+        </li>
 
+        <li key="email" className="edit--section--list--item email">
+          <InputField
+            type="email"
+            label="Service E-Mail"
+            placeholder="Email address for this service"
+            value={service.email}
+            setValue={value => handleChange('email', value)}
+          />
+        </li>
+
+        {TEXT_AREAS.map(textArea => (
+          <li className="edit--section--list--item" key={textArea.field}>
+            <FormTextArea
+              label={textArea.label}
+              placeholder={textArea.placeholder}
+              value={service[textArea.field] || ''}
+              setValue={value => handleChange(textArea.field, value)}
+            />
+          </li>
+        ))}
+
+        <li className="edit--section--list--item">
+          <MultiSelectDropdown
+            selectedItems={service.eligibilities}
+            handleSelectChange={value => handleChange('eligibilities', value)}
+            label="Eligibility"
+            optionsRoute="eligibilities"
+          />
+        </li>
+
+        <li className="edit--section--list--item">
+          <InputField
+            label="Cost"
+            placeholder="How much does this service cost?"
+            value={service.fee}
+            setValue={value => handleChange('fee', value)}
+          />
+        </li>
+
+        <li className="edit--section--list--item">
+          <InputField
+            label="Wait Time"
+            placeholder="Is there a waiting list or wait time?"
+            value={service.wait_time}
+            setValue={value => handleChange('wait_time', value)}
+          />
+        </li>
+
+        <li className="edit--section--list--item">
+          <InputField
+            label="Service&#39;s Website"
+            placeholder="http://"
+            value={service.url}
+            setValue={value => handleChange('url', value)}
+          />
+        </li>
+
+        <EditSchedule
+          canInheritFromParent
+          shouldInheritFromParent={service.shouldInheritScheduleFromParent}
+          setShouldInheritFromParent={setShouldInheritScheduleFromParent}
+          scheduleId={service.schedule.id}
+          scheduleDaysByDay={service.scheduleObj}
+          handleScheduleChange={value => handleChange('scheduleObj', value)}
+        />
+
+        <EditNotes
+          notes={service.notes}
+          handleNotesChange={value => handleChange('notesObj', value)}
+        />
+
+        <li className="edit--section--list--item">
           <MultiSelectDropdown
             selectedItems={service.categories}
-            handleSelectChange={value => this.handleChange('categories', value)}
+            handleSelectChange={value => handleChange('categories', value)}
             label="Categories"
             optionsRoute="categories"
           />
-        </ul>
-      </li>
-    );
-  }
-}
+        </li>
+      </ul>
+    </li>
+  );
+};
 
 ProvidedService.propTypes = {
   service: PropTypes.shape({
     id: PropTypes.number,
-    fee: PropTypes.number,
+    fee: PropTypes.string,
     categories: PropTypes.array,
     notes: PropTypes.array,
     schedule: PropTypes.object,
@@ -223,9 +230,10 @@ ProvidedService.propTypes = {
     required_documents: PropTypes.string,
     application_process: PropTypes.string,
     long_description: PropTypes.string,
+    shouldInheritScheduleFromParent: PropTypes.bool.isRequired,
   }).isRequired,
   handleDeactivation: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  editServiceById: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };
 

@@ -6,8 +6,8 @@
 # - Maps JavaScript API
 # - Street View API
 # Note that the settings for this key are in Google Cloud Platform under the
-# AskDarcel Staging project
-GOOGLE_API_KEY: 'AIzaSyBeryKXoJ8TRlRCC4NLM5tBi0vZWB-Ft5c'
+# AskDarcel project
+GOOGLE_API_KEY: 'AIzaSyAz2oiKYp048xbbjXH54PrNDdQO38I6-pc'
 
 ALGOLIA_INDEX_PREFIX: '<ENTER_YOUR_GITHUB_USERNAME_HERE>'
 ALGOLIA_APPLICATION_ID: 'J8TVT53HPZ'

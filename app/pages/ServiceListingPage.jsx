@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,6 +9,7 @@ import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
 import {
   ActionSidebar,
+  ServiceAttribution,
   TableOfContactInfo,
   TableOfOpeningTimes,
   CategoryTag,
@@ -17,17 +19,19 @@ import { MapOfLocations } from 'components/maps';
 import ReactMarkdown from 'react-markdown';
 import Helmet from 'react-helmet';
 import 'react-tippy/dist/tippy.css';
+import MOHCDBadge from 'components/listing/MOHCDBadge';
+import HAPBadge from 'components/listing/HAPBadge';
 import { isSFServiceGuideSite } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
-const getServiceLocations = (service, resource, schedule) => (resource.address
+const getServiceLocations = (service, resource, recurringSchedule) => (resource.address
   ? [resource.address].map(address => ({
     id: address.id,
     address,
     name: service.name,
-    schedule: schedule && schedule.schedule_days.length ? schedule : resource.schedule,
+    recurringSchedule,
     // Just to make it clear this is inherited from the resource
-    inherited: !schedule && resource.schedule,
+    inherited: !recurringSchedule && resource.schedule,
   }))
   : []);
 
@@ -69,10 +73,9 @@ class ServicePage extends React.Component {
     const { activeService: service } = this.props;
     if (!service) { return <Loader />; }
 
-    const { resource, program, schedule } = service;
+    const { resource, program, recurringSchedule } = service;
     const details = this.generateDetailsRows();
-    const locations = getServiceLocations(service, resource, schedule);
-
+    const locations = getServiceLocations(service, resource, recurringSchedule);
     return (
       <div>
         <Helmet>
@@ -88,7 +91,10 @@ class ServicePage extends React.Component {
             <div className="listing--main">
               <div className="listing--main--left">
                 <header>
-                  <h1>{service.name}</h1>
+                  <div className="org--main--header--title-container">
+                    <h1>{service.name}</h1>
+                    <MOHCDBadge resource={resource} />
+                  </div>
                   {service.alsoNamed ? <p>Also Known As</p> : null}
                   <p>
                     A service
@@ -110,11 +116,16 @@ class ServicePage extends React.Component {
                   </p>
                 </header>
 
-                <MobileActionBar resource={resource} />
+                <MobileActionBar resource={resource} service={service} />
 
                 <section className="listing--main--left--about">
                   <h2>About This Service</h2>
                   <ReactMarkdown className="rendered-markdown" source={service.long_description} />
+                  <ServiceAttribution
+                    attribution={resource.source_attribution}
+                    status={resource.status}
+                  />
+                  <HAPBadge resource={service} />
                 </section>
 
                 {details.length ? (
@@ -147,8 +158,7 @@ class ServicePage extends React.Component {
                     locations={locations}
                     locationRenderer={location => (
                       <TableOfOpeningTimes
-                        schedule={location.schedule}
-                        inherited={location.inherited}
+                        recurringSchedule={location.recurringSchedule}
                       />
                     )}
                   />
@@ -172,7 +182,7 @@ class ServicePage extends React.Component {
                 </section> */}
               </div>
               <div className="listing--aside">
-                <ActionSidebar resource={resource} />
+                <ActionSidebar resource={resource} service={service} />
                 {service.categories.map(cat => (
                   <CategoryTag key={cat.id} category={cat} />
                 ))}

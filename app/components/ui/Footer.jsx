@@ -17,7 +17,7 @@ function Footer() {
             <ul>
               <h1>About Us</h1>
               <li><a href="https://www.sheltertech.org" target="_blank" rel="noopener noreferrer">Our Story</a></li>
-              <li><a href="https://www.sheltertech.org/volunteer" target="_blank" rel="noopener noreferrer">Volunteer</a></li>
+              <li><a href="https://www.sheltertech.org/get-involved" target="_blank" rel="noopener noreferrer">Volunteer</a></li>
               <li><a href="https://www.sheltertech.org/donate" target="_blank" rel="noopener noreferrer">Donate</a></li>
             </ul>
             {/* <ul>
