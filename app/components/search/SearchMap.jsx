@@ -84,17 +84,17 @@ const SearchMap = ({
     return null;
   }
 
-  const markers = hits.map((hit, index) => (
+  const markers = hits.map((hit, index) => hit.addresses.map(address => (
     <CustomMarker
       hit={hit}
       page={page}
       hitsPerPage={hitsPerPage}
-      lat={hit._geoloc ? hit._geoloc.lat : 0}
-      lng={hit._geoloc ? hit._geoloc.lng : 0}
-      key={hit.objectID}
+      lat={address ? address.latitude : 0}
+      lng={address ? address.longitude : 0}
+      key={address.id}
       index={index}
     />
-  ));
+  )));
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
 
