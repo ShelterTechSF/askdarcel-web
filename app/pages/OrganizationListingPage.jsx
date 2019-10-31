@@ -78,6 +78,7 @@ class BaseOrganizationListingPage extends React.Component {
 
   render() {
     const { resource } = this.state;
+    const { addresses = [] } = resource;
     if (!resource || !window.google) {
       return <Loader />;
     }
@@ -138,7 +139,7 @@ class BaseOrganizationListingPage extends React.Component {
                     <div className="info--column">
                       {resource.categories.length > 0
                         && <ResourceCategories categories={resource.categories} />}
-                      {resource.addresses.map(address => (
+                      {addresses.map(address => (
                         <AddressInfo address={address} key={address.id} />
                       ))}
                       {resource.phones.length > 0 && <PhoneNumber phones={resource.phones} />}

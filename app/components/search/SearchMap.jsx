@@ -84,17 +84,20 @@ const SearchMap = ({
     return null;
   }
 
-  const markers = hits.map((hit, index) => hit.addresses.map(address => (
-    <CustomMarker
-      hit={hit}
-      page={page}
-      hitsPerPage={hitsPerPage}
-      lat={address ? address.latitude : 0}
-      lng={address ? address.longitude : 0}
-      key={address.id}
-      index={index}
-    />
-  )));
+  const markers = hits.map((hit, index) => {
+    const { addresses = [] } = hit;
+    return addresses.length ? addresses.map(address => (
+      <CustomMarker
+        hit={hit}
+        page={page}
+        hitsPerPage={hitsPerPage}
+        lat={address ? address.latitude : 0}
+        lng={address ? address.longitude : 0}
+        key={address.id}
+        index={index}
+      />
+    )) : [];
+  });
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
 

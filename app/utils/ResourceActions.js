@@ -17,8 +17,8 @@ const verifyItem = (item, itemType) => {
 
 export const getResourceActions = (resource, service) => {
   const phoneNumber = _.get(resource, 'phones[0].number');
-  const latitude = _.get(resource, 'address.latitude');
-  const longitude = _.get(resource, 'address.longitude');
+  const latitude = _.get(resource, 'addresses[0].latitude');
+  const longitude = _.get(resource, 'addresses[0].longitude');
 
   let actions = {
     edit: {
