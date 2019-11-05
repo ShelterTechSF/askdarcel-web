@@ -82,8 +82,8 @@ class Navigation extends React.Component {
               </a>
             </li>
             <li>
-              <a href="https://forms.gle/vNqBDd6X3dAn2M4PA" target="_blank" rel="noopener noreferrer">
-                Feedback
+              <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
+                Contact Us
               </a>
             </li>
           </ul>
