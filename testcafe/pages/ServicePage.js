@@ -20,4 +20,17 @@ export default class ServicePage {
     this.schedule = baseSelector.findReact('TableOfOpeningTimes tbody tr');
     this.url = serviceId => `${config.baseUrl}/services/${serviceId}`;
   }
+
+  /**
+   * Wait until the page is fully loaded.
+   *
+   * Some TestCafe actions may attempt to run before a page is fully loaded, so
+   * this method can be called to force us to wait until the page is loaded
+   * first.
+   *
+   * @param t - A TestCafe test Promise.
+   */
+  async waitUntilPageLoaded(t) {
+    await t.hover(this.name);
+  }
 }

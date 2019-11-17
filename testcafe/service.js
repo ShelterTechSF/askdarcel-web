@@ -57,9 +57,8 @@ test('Confirm Page Loads with Information', async t => {
     .ok();
 });
 
-test.skip('Confirm Service Schedule Day Can Be Added', async t => {
-  // Wait for page to load before counting services by using hover action.
-  await t.hover(servicePage.schedule);
+test('Confirm Service Schedule Day Can Be Added', async t => {
+  await servicePage.waitUntilPageLoaded(t);
 
   // Count the number of schedule days
   const originalScheduleDayCount = await servicePage.schedule.with({ boundTestRun: t }).count;
@@ -68,29 +67,30 @@ test.skip('Confirm Service Schedule Day Can Be Added', async t => {
 
   await modifySheduleTime(t, 'add');
 
+  await t.navigateTo(servicePage.url(serviceId));
+  await servicePage.waitUntilPageLoaded(t);
   await t
-    .navigateTo(editResourcePage.url(1))
     .expect(servicePage.schedule.count)
     .eql(originalScheduleDayCount + 1);
 });
 
 // TODO: Uncomment with the completion of ISSUE #594
 test.skip('Confirm Service Schedule Day Can Be Deleted', async t => {
-  // Wait for page to load before counting services by using hover action.
-  await t.hover(servicePage.schedule);
+  await servicePage.waitUntilPageLoaded(t);
 
   // Count the number of schedule days
   const originalScheduleDayCount = await servicePage.schedule.with({ boundTestRun: t }).count;
 
   await modifySheduleTime(t);
 
-  await t
-    .navigateTo(servicePage.url(serviceId));
+  await t.navigateTo(servicePage.url(serviceId));
+  await servicePage.waitUntilPageLoaded(t);
 
   await modifySheduleTime(t, 'remove');
 
+  await t.navigateTo(servicePage.url(serviceId));
+  await servicePage.waitUntilPageLoaded(t);
   await t
-    .navigateTo(editResourcePage.url(1))
     .expect(servicePage.schedule.count)
     .eql(originalScheduleDayCount - 1);
 });
