@@ -3,73 +3,22 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import Carousel from '../Carousel/Carousel';
-import { LandingPageTextCard } from '../LandingPageResourceBlock/LandingPageCards';
+
+const DemoComponent = ({ content }) => <p>{content}</p>;
 
 describe('<Carousel />', () => {
-  const createCategoryCards = categories => (
-    categories.map(category => (
-      <LandingPageTextCard
-        title={category.title}
-        query={category.query}
-        key={category.query || category.resource}
-        resource={category.resource}
-      />
-    )));
+  const createCarouselItems = numItems => (
+    // eslint-disable-next-line react/no-array-index-key
+    Array(numItems).fill().map((_, i) => <DemoComponent key={i} content={`Item ${i}`} />)
+  );
 
-  const twoCards = [
-    {
-      title: 'Test1',
-      content: 'Test content',
-      query: 'Test+Query1',
-      imgClass: 'legal-block-housing',
-    },
-    {
-      title: 'Test2',
-      content: 'Test content 2',
-      resource: 'https://www.google.com',
-      imgClass: 'legal-block-housing',
-    },
-  ];
-  const fiveCards = [
-    ...twoCards,
-    {
-      title: 'Test3',
-      content: 'Test content 3',
-      query: 'Test+Query3',
-      imgClass: 'legal-block-housing',
-    },
-    {
-      title: 'Test4',
-      content: 'Test content 4',
-      resource: 'https://www.bing.com',
-      imgClass: 'legal-block-housing',
-    },
-    {
-      title: 'Test5',
-      content: 'Test content 5',
-      query: 'Test+Query 5',
-      imgClass: 'legal-block-housing',
-    },
-  ];
-  const sevenCards = [
-    ...fiveCards,
-    {
-      title: 'Test6',
-      content: 'Test content 6',
-      query: 'Test+Query 6',
-      imgClass: 'legal-block-housing',
-    },
-    {
-      title: 'Test7',
-      content: 'Test content 7',
-      resource: 'https://www.yelp.com',
-      imgClass: 'legal-block-housing',
-    },
-  ];
+  const twoCards = createCarouselItems(2);
+  const fiveCards = createCarouselItems(5);
+  const sevenCards = createCarouselItems(7);
 
   const shallowCarousel = (cards, numSlots) => shallow((
     <Carousel numSlots={numSlots}>
-      {createCategoryCards(cards)}
+      {cards}
     </Carousel>
   ));
 
@@ -83,12 +32,12 @@ describe('<Carousel />', () => {
 
   it('creates a carousel with the expected number of cards', () => {
     const carousel = shallowCarousel(twoCards, 4);
-    expect(carousel.find('LandingPageTextCard')).to.have.lengthOf(twoCards.length);
+    expect(carousel.find('DemoComponent')).to.have.lengthOf(twoCards.length);
   });
 
   it('creates a rightward navigation button when it has more cards than it can show at once', () => {
     const carousel = shallowCarousel(fiveCards, 4);
-    expect(carousel.find('LandingPageTextCard')).to.have.lengthOf(fiveCards.length);
+    expect(carousel.find('DemoComponent')).to.have.lengthOf(fiveCards.length);
     expect(carousel.find('CarouselNavButton')).to.have.lengthOf(1);
     expect(getRightNavBtn(carousel)).to.have.lengthOf(1);
   });
