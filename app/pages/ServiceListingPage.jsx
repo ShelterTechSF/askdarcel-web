@@ -19,7 +19,7 @@ import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import 'react-tippy/dist/tippy.css';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
-import { isSFServiceGuideSite } from '../utils/whitelabel';
+import { getSiteTitle } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
 const getServiceLocations = (service, resource, recurringSchedule) => (resource.address
@@ -79,9 +79,7 @@ class ServicePage extends React.Component {
       <div>
         <Helmet>
           <title>
-            { service.name }
-              |
-            { isSFServiceGuideSite() ? 'SF Service Guide' : 'AskDarcel' }
+            {`${service.name} | ${getSiteTitle()}`}
           </title>
           <meta name="description" content={service.long_description} />
         </Helmet>

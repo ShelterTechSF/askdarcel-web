@@ -22,7 +22,7 @@ import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
-import { isSFServiceGuideSite } from '../utils/whitelabel';
+import { getSiteTitle } from '../utils/whitelabel';
 
 const getResourceLocation = resource => {
   const { address } = resource;
@@ -88,14 +88,7 @@ class BaseOrganizationListingPage extends React.Component {
       <div>
         <Helmet>
           <title>
-            {resource.name}
-              |
-            {' '}
-            {
-              isSFServiceGuideSite()
-                ? 'SF Service Guide'
-                : 'AskDarcel'
-            }
+            {`${resource.name} | ${getSiteTitle()}`}
           </title>
           <meta name="description" content={resource.long_description} />
         </Helmet>
