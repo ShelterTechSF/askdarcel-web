@@ -25,7 +25,7 @@
     "react-burger-menu": "^2.6.0",
     "react-dom": "^16.8.6",
     "react-ga": "^2.4.1",
-    "react-helmet": "^5.2.0",
+    "react-helmet-async": "^1.0.4",
     "react-hot-loader": "^4.12.12",
     "react-icons": "^2.2.7",
     "react-instantsearch": "^5.0.1",

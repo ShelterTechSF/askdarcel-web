@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import Intercom from 'react-intercom';
 import { connect } from 'react-redux';
 import Navigation from './ui/Navigation/Navigation';

@@ -16,7 +16,7 @@ import {
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
 import ReactMarkdown from 'react-markdown';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import 'react-tippy/dist/tippy.css';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import { isSFServiceGuideSite } from '../utils/whitelabel';

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDOM from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import * as Sentry from '@sentry/browser';
@@ -34,7 +35,9 @@ ReactDOM.render((
   <Provider store={store} key="provider">
     <ConnectedRouter history={history}>
       <ScrollToTop>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </ScrollToTop>
     </ConnectedRouter>
   </Provider>
