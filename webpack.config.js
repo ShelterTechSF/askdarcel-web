@@ -48,8 +48,21 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Ask Darcel',
+      title: 'SF Service Guide',
       template: 'app/index.html',
+      meta: {
+        'og:url': 'https://sfserviceguide.org',
+        'og:title': 'SF Service Guide',
+        'twitter:card': 'summary_large_image',
+        'twitter:site': '@sheltertechorg',
+        'og:description': 'Get guided help finding food, housing, health resources and more in San Francisco',
+        'og:type': 'website',
+        // Note: The image is specified in the HTML itself because it needs to
+        // reference an image file.
+        'og:image:type': 'image/png',
+        'og:image:width': '1200',
+        'og:image:height': '630',
+      },
       favicon: 'app/favicon.ico',
     }),
     new ExtendedDefinePlugin({
