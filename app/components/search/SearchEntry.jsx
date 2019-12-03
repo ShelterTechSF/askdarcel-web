@@ -9,15 +9,14 @@ import './SearchEntry.scss';
 class SearchEntry extends Component {
   renderAddressMetadata() {
     const { hit } = this.props;
-    const { addresses } = hit;
-    if (addresses && addresses.length) {
-      if (addresses.length > 1) {
+    const { addresses = [] } = hit;
+      if (addresses.length === 0) {
+        return <span>No address found</span>;
+      } else if (addresses.length > 1) {
         return <span>Multiple locations</span>;
-      } if (addresses[0].address_1) {
+      } else if (addresses[0].address_1) {
         return <span>{addresses[0].address_1}</span>;
       }
-    }
-    return <span>No address found</span>;
   }
 
   render() {
