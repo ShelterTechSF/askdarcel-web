@@ -4,7 +4,70 @@ import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
-import { buildScheduleDays } from '../../pages/OrganizationEditPage';
+
+/** Build UI state schedule from API schedule.
+ *
+ * The difference between the schedule that comes from the API and the schedule
+ * that is saved as React UI state is that the UI state schedule's schema groups
+ * ScheduleDays by day of week. This allows us to represent blank ScheduleDays
+ * when a new, blank time is added but before an open time or a close time is
+ * set. The API schedule schema does not support having a ScheduleDay that has
+ * no open and close time but that is attached to a day of week. This feature is
+ * required for the UI because the blank time needs to appear under a day of
+ * week before an open and close time is set.
+ */
+const buildScheduleDays = schedule => {
+  const scheduleId = schedule ? schedule.id : null;
+  const currSchedule = {};
+  let finalSchedule = {};
+
+  const is24Hours = {
+    Monday: false,
+    Tuesday: false,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Saturday: false,
+    Sunday: false,
+  };
+
+  const tempSchedule = {
+    Monday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Tuesday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Wednesday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Thursday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Friday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Saturday: [{ opens_at: null, closes_at: null, scheduleId }],
+    Sunday: [{ opens_at: null, closes_at: null, scheduleId }],
+  };
+
+  if (schedule) {
+    schedule.schedule_days.forEach(day => {
+      const currDay = day.day;
+      if (!is24Hours[currDay]) {
+        // Check to see if any of the hour pairs for the day
+        // indicate the resource/service is open 24 hours
+        // if there is a pair only have that in the day obj
+        if (day.opens_at === 0 && day.closes_at === 2359) {
+          is24Hours[currDay] = true;
+          // Since this record already exists in our DB, we only need the id
+          // scheduleID is needed when creating no data
+          currSchedule[currDay] = [{ opens_at: 0, closes_at: 2359, id: day.id }];
+        } else {
+          Object.assign(day, { openChanged: false, closeChanged: false });
+          if (currSchedule[currDay]) {
+            currSchedule[day.day].unshift(day);
+          } else {
+            currSchedule[day.day] = [day];
+          }
+        }
+      }
+    });
+  }
+  finalSchedule = Object.assign({}, tempSchedule, currSchedule);
+  return finalSchedule;
+};
+export { buildScheduleDays };
 
 
 const InputField = ({
