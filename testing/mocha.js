@@ -1,4 +1,4 @@
-/* eslint-disable node/no-deprecated-api, no-unused-vars, no-console */
+/* eslint-disable no-unused-vars, no-console */
 process.env.NODE_ENV = 'test';
 
 require('@babel/register');

@@ -37,6 +37,18 @@ module.exports = {
         "no-unused-expressions": ["error", {"allowTaggedTemplates": true}],
       },
     },
+    {
+      "files": [
+        "tools/**",
+        "webpack.config.js",
+      ],
+      "rules": {
+        "no-console": 1,
+      },
+      "settings": {
+        "import/resolver": "node",
+      },
+    },
   ],
   "rules": {
     "arrow-parens": [1, "as-needed"],
