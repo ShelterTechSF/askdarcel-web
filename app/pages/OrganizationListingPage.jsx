@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
@@ -78,7 +79,11 @@ class BaseOrganizationListingPage extends React.Component {
 
   render() {
     const { resource } = this.state;
-    const { addresses = [] } = resource;
+
+    // Use getter here because resource is undefined on first render because componentDidMount runs
+    // after it (https://reactjs.org/docs/react-component.html#the-component-lifecycle)
+    const addresses = _.get(resource, 'addresses', []);
+
     if (!resource || !window.google) {
       return <Loader />;
     }
