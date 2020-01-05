@@ -157,7 +157,7 @@ test('Add Resource Note', async t => {
   const newNote = 'A new note has been added';
 
   // Wait for page to load before counting phone Notes by using hover action.
-  await t.hover(resourcePage.notes);
+  await t.hover(resourcePage.noteContainer);
 
   const originalCount = await resourcePage.notes.with({ boundTestRun: t }).count;
 
@@ -178,6 +178,10 @@ test('Add Resource Note', async t => {
     .eql(originalCount + 1);
 });
 
+// NOTE: If the `Add Resource Note` test fails, this test will fail
+// because it depends on the above test to create a note
+// TODO: Update seeded data to include a note initially to decouple
+// tests
 test('Edit Resource Note', async t => {
   const newNote = 'Modified Note Text';
 
@@ -195,6 +199,10 @@ test('Edit Resource Note', async t => {
     .expect(resourcePage.notes.parent().textContent).contains(newNote);
 });
 
+// NOTE: If the `Add Resource Note` test fails, this test will fail
+// because it depends on the above test to create a note
+// TODO: Update seeded data to include a note initially to decouple
+// tests
 test('Delete Resource Note', async t => {
   // Wait for page to load before counting phone Notes by using hover action.
   await t.hover(resourcePage.notes);
