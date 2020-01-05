@@ -570,8 +570,11 @@ class OrganizationEditPage extends React.Component {
     postSchedule(scheduleObj, promises);
 
     // address
-    if (!_.isEmpty(address) && resource.address) {
-      promises.push(dataService.post(`/api/addresses/${resource.address.id}/change_requests`, {
+    if (!_.isEmpty(address) && resource.addresses) {
+      // TODO: Allow for change of multiple addresses
+      // Temporary solution until the full implementaion for editing multiple addresses goes in
+      // All organizations only have one address right now anyways
+      promises.push(dataService.post(`/api/addresses/${resource.addresses[0].id}/change_requests`, {
         change_request: address,
       }));
     }
@@ -687,6 +690,11 @@ class OrganizationEditPage extends React.Component {
 
   renderSectionFields() {
     const { resource, scheduleObj } = this.state;
+
+    // TODO: Do not just show the first address
+    // Temporary solution until the full implementaion for editing multiple addresses goes in
+    // All organizations only have one address right now anyways
+    const address = resource.addresses[0];
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
@@ -718,7 +726,7 @@ class OrganizationEditPage extends React.Component {
           </li>
 
           <EditAddress
-            address={resource.address}
+            address={address}
             updateAddress={this.handleAddressChange}
           />
 
