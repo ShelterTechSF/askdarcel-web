@@ -1,92 +1,45 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const hasNoLocation = address => {
-  const someFieldExistsOrNewAddress = typeof address === 'undefined'
-    || address.name !== '' || address.address_1 !== ''
-    || address.address_2 !== '' || address.address_3 !== ''
-    || address.address_4 !== '' || address.city !== '' || address.postal_code !== ''
-    || address.state_province !== '' || address.country !== '';
-  if (someFieldExistsOrNewAddress) {
-    return false;
-  }
-  return true;
+const EditAddress = ({ address, setAddress, setHasLocation }) => (
+  <AddressForm
+    setAddress={setAddress}
+    setHasLocation={setHasLocation}
+    address={address}
+  />
+);
+
+EditAddress.propTypes = {
+  address: PropTypes.object,
+  setAddress: PropTypes.func.isRequired,
+  setHasLocation: PropTypes.func.isRequired,
 };
 
-class EditAddress extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { address: {}, noLocation: hasNoLocation(props.address) };
-    this.handleAddressChange = this.handleAddressChange.bind(this);
-    this.handleNoLocationChange = this.handleNoLocationChange.bind(this);
-  }
-
-  handleAddressChange(e) {
-    const { field } = e.target.dataset;
-    const { value } = e.target;
-    const { address } = this.state;
-    const { updateAddress } = this.props;
-    address[field] = value;
-    this.setState(address, () => {
-      updateAddress(address);
-    });
-  }
-
-  handleNoLocationChange() {
-    const { updateAddress } = this.props;
-    this.setState(state => {
-      const { address } = this.props;
-      let newAddr;
-      if (state.noLocation) {
-        newAddr = address;
-      } else {
-        newAddr = {
-          name: '',
-          address_1: '',
-          address_2: '',
-          address_3: '',
-          address_4: '',
-          city: '',
-          country: '',
-          postal_code: '',
-          state_province: '',
-        };
-      }
-      return { noLocation: !state.noLocation, address: newAddr };
-    }, () => {
-      const { address } = this.state;
-      updateAddress(address);
-    });
-  }
-
-  render() {
-    const { address = {} } = this.props;
-    const { noLocation } = this.state;
-    return (
-      <AddressForm
-        handleAddressChange={this.handleAddressChange}
-        handleNoLocationChange={this.handleNoLocationChange}
-        noLocation={noLocation}
-        address={address}
-      />
-    );
-  }
-}
+EditAddress.defaultProps = {
+  address: null,
+};
 
 const AddressForm = ({
-  noLocation, handleNoLocationChange, handleAddressChange, address,
-}) => (
-  <li key="address" className="edit--section--list--item">
-    <label htmlFor="address">Address</label>
-    <label className="inline-checkbox">
-      <input
-        type="checkbox"
-        className="input-checkbox"
-        checked={noLocation}
-        onChange={handleNoLocationChange}
-      />
+  setHasLocation, setAddress, address,
+}) => {
+  const handleFieldChange = event => {
+    const { target } = event;
+    const { value, dataset: { field } } = target;
+    setAddress({ ...address, [field]: value });
+  };
+  return (
+    <li key="address" className="edit--section--list--item">
+      <label htmlFor="address">Address</label>
+      <label className="inline-checkbox">
+        <input
+          type="checkbox"
+          className="input-checkbox"
+          checked={!address}
+          onChange={e => setHasLocation(!e.target.checked)}
+        />
         No Physical Location
-    </label>
-    {!noLocation
+      </label>
+      {address
         && (
           <div>
             <input
@@ -94,77 +47,78 @@ const AddressForm = ({
               className="input"
               placeholder="Name"
               data-field="name"
-              defaultValue={address.name}
-              onChange={handleAddressChange}
+              value={address.name}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="Address 1"
               data-field="address_1"
-              defaultValue={address.address_1}
-              onChange={handleAddressChange}
+              value={address.address_1}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="Address 2"
               data-field="address_2"
-              defaultValue={address.address_2}
-              onChange={handleAddressChange}
+              value={address.address_2}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="Address 3"
               data-field="address_3"
-              defaultValue={address.address_3}
-              onChange={handleAddressChange}
+              value={address.address_3}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="Address 4"
               data-field="address_4"
-              defaultValue={address.address_4}
-              onChange={handleAddressChange}
+              value={address.address_4}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="City"
               data-field="city"
-              defaultValue={address.city}
-              onChange={handleAddressChange}
+              value={address.city}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="State/Province"
               data-field="state_province"
-              defaultValue={address.state_province}
-              onChange={handleAddressChange}
+              value={address.state_province}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="Country"
               data-field="country"
-              defaultValue={address.country}
-              onChange={handleAddressChange}
+              value={address.country}
+              onChange={handleFieldChange}
             />
             <input
               type="text"
               className="input"
               placeholder="Postal/Zip Code"
               data-field="postal_code"
-              defaultValue={address.postal_code}
-              onChange={handleAddressChange}
+              value={address.postal_code}
+              onChange={handleFieldChange}
             />
           </div>
         )
     }
-  </li>
-);
+    </li>
+  );
+};
 
 export default EditAddress;

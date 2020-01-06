@@ -241,12 +241,41 @@ const prepSchedule = scheduleObj => {
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
+const addressIsBlank = address => {
+  if (_.isEmpty(address)) {
+    return true;
+  }
+  const someFieldExists = address.name !== ''
+    || address.address_1 !== ''
+    || address.address_2 !== ''
+    || address.address_3 !== ''
+    || address.address_4 !== ''
+    || address.city !== ''
+    || address.postal_code !== ''
+    || address.state_province !== ''
+    || address.country !== '';
+  return !someFieldExists;
+};
+
+const blankAddress = Object.freeze({
+  name: '',
+  address_1: '',
+  address_2: '',
+  address_3: '',
+  address_4: '',
+  city: '',
+  country: '',
+  postal_code: '',
+  state_province: '',
+});
+
 class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       scheduleObj: {},
+      hasLocation: false,
       address: {},
       services: {},
       deactivatedServiceIds: new Set(),
@@ -263,7 +292,6 @@ class OrganizationEditPage extends React.Component {
     this.handleResourceFieldChange = this.handleResourceFieldChange.bind(this);
     this.handleScheduleChange = this.handleScheduleChange.bind(this);
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
-    this.handleAddressChange = this.handleAddressChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeactivation = this.handleDeactivation.bind(this);
@@ -277,7 +305,10 @@ class OrganizationEditPage extends React.Component {
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
       this.setState({
-        newResource: true, resource: { schedule: {} }, scheduleObj: buildScheduleDays(undefined),
+        hasLocation: true,
+        newResource: true,
+        resource: { schedule: {} },
+        scheduleObj: buildScheduleDays(undefined),
       });
     }
     const resourceID = params.id;
@@ -306,9 +337,11 @@ class OrganizationEditPage extends React.Component {
       }),
       {},
     );
+
     this.setState({
       resource,
       services,
+      hasLocation: !addressIsBlank(resource.addresses[0]),
       scheduleObj: buildScheduleDays(resource.schedule),
     });
   }
@@ -390,6 +423,39 @@ class OrganizationEditPage extends React.Component {
     });
   }
 
+  // Combine several sources of data to provide a view of an address appropriate
+  // both for the UI and for sending API requests.
+  //
+  // this.state.resource.address always contains the original, unmodified
+  // address that came from the initial API load. (Note, it might be the case
+  // that this field is being modified without going through this.setState().
+  // Whoops!)
+  //
+  // this.state.address only contains modifications to the address
+  //
+  // this.state.hasLocation = false will always force the flattened address to
+  // be "null/empty". This reason this exists as a separate flag instead of
+  // actually just nullifying this.state.address is so that when toggling back
+  // and forth between having and not having a location, the previous values are
+  // restored.
+  getFlattenedAddress = () => {
+    const { resource, address, hasLocation } = this.state;
+    if (!hasLocation) {
+      return null;
+    }
+    // TODO: Update this to handle multiple addresses
+    const { addresses: resourceAddresses = [] } = resource;
+    return { ...blankAddress, ...resourceAddresses[0], ...address };
+  }
+
+  setAddress = address => {
+    this.setState({ address, inputsDirty: true });
+  }
+
+  setHasLocation = hasLocation => {
+    this.setState({ hasLocation, inputsDirty: true });
+  }
+
   keepOnPage(e) {
     const { inputsDirty } = this.state;
     if (inputsDirty) {
@@ -450,6 +516,7 @@ class OrganizationEditPage extends React.Component {
       address,
       alternate_name,
       email,
+      hasLocation,
       legal_status,
       long_description,
       name,
@@ -510,12 +577,100 @@ class OrganizationEditPage extends React.Component {
     postSchedule(scheduleObj, promises);
 
     // address
-    if (!_.isEmpty(address) && resource.addresses) {
-      // TODO: Allow for change of multiple addresses
-      // Temporary solution until the full implementaion for editing multiple addresses goes in
-      // All organizations only have one address right now anyways
-      promises.push(dataService.post(`/api/addresses/${resource.addresses[0].id}/change_requests`, {
-        change_request: address,
+    //
+    // There are many possible scenarios here, some of which we just cannot
+    // support right now and we should just fail loudly if they happen.
+    //
+    // In terms of starting states, we have the following:
+    //
+    //   No addresses associated with the resource:
+    //     We can't really handle this case today so just abort.
+    //
+    //   Multiple addresses asociated with the resource:
+    //     We can't really handle this case today so just abort.
+    //
+    //   Exactly one address associated with the resource:
+    //     Two cases:
+    //     1. Every single field on the address is the blank string. This is
+    //        equivalent to "No Physical Location", since previously (and
+    //        currently) we had no way of deleting an address.
+    //     2. The address is not blank.
+    //
+    //  If we ignore the 0 and > 1 address cases, then we only have to handle
+    //  stating states 1) and 2).
+    //
+    //  Drilling down deeper into each of these starting states, we list out the
+    //  possible user actions:
+    //    1. Started with "No Physical Location"/blank address.
+    //      a) User does not touch anything related to the address field.
+    //         => Don't submit anything related to the address.
+    //      b) User unchecks the "No Physical Location" box.
+    //         => Submit all of the field changes as a change request. Note that
+    //            because the id field is _not_ blank, we still have an ID that
+    //            we can target.
+    //
+    //    2. Started with a non-blank address.
+    //      a) User does not touch anything related to the address field.
+    //         => Don't submit anything related to the address.
+    //      b) User modifies a field on the address.
+    //         => Submit all of the field changes as a change request.
+    //      c) User checks the "No Physical Location" box.
+    //         => Blank out all of the fields and then submit a change request
+    //         with the fields blanked out.
+    //
+    // Just to reiterate the actual representation of these states within the
+    // React this.state property:
+    //
+    //   this.state.resource.addresses[0]
+    //     Represents the original, unmodified address from the API load.
+    //
+    //   this.state.address
+    //     Represents any diffs to the address field, and should generally be
+    //     combined with this.state.resource.addresses[0] to get the full
+    //     representation of the resource.
+    //
+    //   this.state.hasLocation
+    //     Represents whether the user has (un)checked the "No Physical
+    //     Location") checkbox, and should be consulted before directly reading
+    //     from this.state.address. For UI purposes, we don't want to
+    //     immediately blank out this.state.address in case if the user unchecks
+    //     the "No Physical Location" checkbox, since we would want to restore
+    //     the previous values.
+
+    // Abort on the unhandled cases
+    if (_.isEmpty(resource.addresses) || resource.addresses.length !== 1) {
+      alert('Issue saving changes.');
+      throw new Error(`Cannot handle resource with 0 or more than 1 address. Resource id: ${resource.id}.`);
+    }
+
+    const originalAddress = resource.addresses[0];
+
+    // Scenario 1)
+    if (addressIsBlank(originalAddress)) {
+      if (!hasLocation) {
+        // 1a)
+        // Do nothing
+      } else {
+        // 1b)
+        promises.push(dataService.post(`/api/addresses/${originalAddress.id}/change_requests`, {
+          change_request: address,
+        }));
+      }
+    // Scenario 2)
+    } else if (hasLocation) {
+      if (_.isEmpty(address)) {
+        // 2a)
+        // Do nothing
+      } else {
+        // 2b)
+        promises.push(dataService.post(`/api/addresses/${originalAddress.id}/change_requests`, {
+          change_request: address,
+        }));
+      }
+    } else {
+      // 2c)
+      promises.push(dataService.post(`/api/addresses/${originalAddress.id}/change_requests`, {
+        change_request: blankAddress,
       }));
     }
 
@@ -596,10 +751,6 @@ class OrganizationEditPage extends React.Component {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
-  handleAddressChange(addressObj) {
-    this.setState({ address: addressObj, inputsDirty: true });
-  }
-
   handleNotesChange(notesObj) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
@@ -630,12 +781,6 @@ class OrganizationEditPage extends React.Component {
 
   renderSectionFields() {
     const { resource, scheduleObj } = this.state;
-
-    // TODO: Do not just show the first address
-    // Temporary solution until the full implementaion for editing multiple addresses goes in
-    // All organizations only have one address right now anyways
-    const { addresses = [] } = resource;
-    const address = addresses[0];
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
@@ -667,8 +812,9 @@ class OrganizationEditPage extends React.Component {
           </li>
 
           <EditAddress
-            address={address}
-            updateAddress={this.handleAddressChange}
+            address={this.getFlattenedAddress()}
+            setAddress={this.setAddress}
+            setHasLocation={this.setHasLocation}
           />
 
           <EditPhones
