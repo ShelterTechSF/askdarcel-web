@@ -62,9 +62,11 @@ class ContactInfoTable extends React.Component {
                     {
                       phones.map(phone => (
                         <li key={phone.number}>
-                          {phone.number}
-                          {' '}
-                          {phone.service_type && `(${phone.service_type})`}
+                          <a href={`tel:${phone.number}`}>
+                            {phone.number}
+                            {' '}
+                            {phone.service_type && `(${phone.service_type})`}
+                          </a>  
                         </li>
                       ))
                     }
