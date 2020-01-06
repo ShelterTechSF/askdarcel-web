@@ -64,9 +64,9 @@ class ContactInfoTable extends React.Component {
                         <li key={phone.number}>
                           <a href={`tel:${phone.number}`}>
                             {phone.number}
-                          </a>  
-                            {' '}
-                            {phone.service_type && `(${phone.service_type})`}
+                          </a>
+                          {' '}
+                          {phone.service_type && `(${phone.service_type})`}
                         </li>
                       ))
                     }
