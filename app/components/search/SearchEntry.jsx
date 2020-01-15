@@ -7,16 +7,19 @@ import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 import './SearchEntry.scss';
 
 class SearchEntry extends Component {
+  // eslint-disable-next-line consistent-return
   renderAddressMetadata() {
     const { hit } = this.props;
     const { addresses = [] } = hit;
-      if (addresses.length === 0) {
-        return <span>No address found</span>;
-      } else if (addresses.length > 1) {
-        return <span>Multiple locations</span>;
-      } else if (addresses[0].address_1) {
-        return <span>{addresses[0].address_1}</span>;
-      }
+    if (addresses.length === 0) {
+      return <span>No address found</span>;
+    }
+    if (addresses.length > 1) {
+      return <span>Multiple locations</span>;
+    }
+    if (addresses[0].address_1) {
+      return <span>{addresses[0].address_1}</span>;
+    }
   }
 
   render() {
