@@ -120,7 +120,7 @@ class BaseOrganizationListingPage extends React.Component {
                 </header>
                 <MobileActionBar resource={resource} />
                 <div className="org--main--header--description">
-                  <h2>About this Organization</h2>
+                  <h2>About This Organization</h2>
                   <ReactMarkdown className="rendered-markdown" source={resource.long_description || resource.short_description || 'No Description available'} />
                 </div>
 

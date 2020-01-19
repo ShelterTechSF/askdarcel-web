@@ -89,7 +89,12 @@ AddressInfo.propTypes = {
 
 const PhoneNumber = ({ phones }) => (
   <span className="phone">
-    { phones.map(phone => <p key={phone.id}>{`${phone.number} ${phone.service_type}`}</p>) }
+    { phones.map(phone => (
+      <p key={phone.id}>
+        <a href={`tel:${phone.number}`}>{phone.number}</a>
+        {` ${phone.service_type}`}
+      </p>
+    )) }
   </span>
 );
 

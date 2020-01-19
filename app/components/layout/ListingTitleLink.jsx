@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-import { OrganizationCard, ServiceCard } from './index';
+import OrganizationCard from './OrganizationCard';
+import ServiceCard from './ServiceCard';
 
 class ListingTitleLink extends React.Component {
   getTooltipContent() {
