@@ -86,7 +86,7 @@ const SearchMap = ({
 
   const markers = hits.map((hit, index) => {
     const { addresses = [] } = hit;
-    return addresses.length ? addresses.map(address => (
+    return addresses.map(address => (
       <CustomMarker
         hit={hit}
         page={page}
@@ -96,7 +96,7 @@ const SearchMap = ({
         key={address.id}
         index={index}
       />
-    )) : [];
+    ));
   });
 
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);

@@ -24,14 +24,14 @@ import { getSiteTitle } from '../utils/whitelabel';
 // TODO This should be serviceAtLocation
 const getServiceLocations = (service, resource, recurringSchedule) => {
   const { addresses = [] } = resource;
-  return addresses.length ? addresses.map(address => ({
+  return addresses.map(address => ({
     id: address.id,
     address,
     name: service.name,
     recurringSchedule,
     // Just to make it clear this is inherited from the resource
     inherited: !recurringSchedule && resource.schedule,
-  })) : [];
+  }));
 };
 
 class ServicePage extends React.Component {
