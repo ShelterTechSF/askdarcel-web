@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 import { Accordion, AccordionItem } from '../ui/Accordion';
 
+// TODO We should probably not just have google on the global namespace
+/* global google */
+
 class MapOfLocations extends React.Component {
   componentDidMount() {
-    // TODO We should probably not just have google on the global namespace
     if (google === undefined) { return; }
 
     const {
