@@ -14,12 +14,17 @@ module.exports = {
     browser: true,
   },
   settings: {
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
     'import/resolver': 'webpack',
   },
   rules: {
     'arrow-parens': ['warn', 'as-needed'],
     'camelcase': 'off',
     'import/no-extraneous-dependencies': 'error',
+    'import/no-unused-modules': ['error', {
+      missingExports: true,
+      unusedExports: true,
+    }],
     'import/prefer-default-export': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
@@ -37,6 +42,8 @@ module.exports = {
       env: { mocha: true },
       rules: {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        // This file is an entrypoints, so it does not require exports.
+        'import/no-unused-modules': 'off',
         // Chai assertions may appear like unused expressions
         'no-unused-expressions': 'off',
       },
@@ -50,6 +57,9 @@ module.exports = {
         // expressions that actually have a stateful effect. This is
         // specifically used in the `fixture` syntax.
         'no-unused-expressions': ['error', { allowTaggedTemplates: true }],
+        // The TestCafe test files are entrypoints, so they do not require
+        // exports.
+        'import/no-unused-modules': 'off',
       },
     },
     // Node.js scripts
@@ -60,6 +70,9 @@ module.exports = {
       ],
       rules: {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        // The tools and webpack.config.js are entrypoints and don't require
+        // exports.
+        'import/no-unused-modules': 'off',
         'no-console': 'warn',
       },
       settings: {
@@ -72,6 +85,10 @@ module.exports = {
         '.eslintrc.js',
       ],
       rules: {
+        // import/no-unused-modules only detects ES6 exports, so ignore
+        // CJS-style imports.
+        // https://github.com/benmosher/eslint-plugin-import/issues/1469
+        'import/no-unused-modules': 'off',
         // Most ESLint rules names have characters which must be quoted, such as
         // '-' or '/', so it's easier to read if all things under "rules" are
         // consistently quoted.
