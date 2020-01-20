@@ -410,7 +410,7 @@ class OrganizationEditPage extends React.Component {
     const schedule = prepSchedule(scheduleObj);
     const newResource = {
       name,
-      address,
+      addresses: [address],
       long_description,
       email,
       website,
@@ -631,7 +631,8 @@ class OrganizationEditPage extends React.Component {
     // TODO: Do not just show the first address
     // Temporary solution until the full implementaion for editing multiple addresses goes in
     // All organizations only have one address right now anyways
-    const address = resource.addresses[0];
+    const { addresses = [] } = resource;
+    const address = addresses[0];
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
