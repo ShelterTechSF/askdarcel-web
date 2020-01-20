@@ -7,7 +7,6 @@ import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 import './SearchEntry.scss';
 
 class SearchEntry extends Component {
-  // eslint-disable-next-line consistent-return
   renderAddressMetadata() {
     const { hit } = this.props;
     const { addresses = [] } = hit;
@@ -20,6 +19,7 @@ class SearchEntry extends Component {
     if (addresses[0].address_1) {
       return <span>{addresses[0].address_1}</span>;
     }
+    return <span>No address found</span>;
   }
 
   render() {
