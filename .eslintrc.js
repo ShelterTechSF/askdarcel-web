@@ -25,7 +25,6 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
     'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
     'no-console': 'warn',
-    'no-plusplus': 'off',
     'no-underscore-dangle': 'off',
     'react/forbid-prop-types': 'off',
     'react/prefer-stateless-function': 'off',

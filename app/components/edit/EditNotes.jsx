@@ -64,22 +64,15 @@ class EditNotes extends Component {
 
   renderNotes() {
     const { existingNotes } = this.state;
-    const notesArray = [];
-
-    for (let i = 0; i < existingNotes.length; i++) {
-      const note = existingNotes[i];
-      notesArray.push(
-        <EditNote
-          key={note.key}
-          index={i}
-          note={note}
-          handleChange={this.handleNoteChange}
-          removeNote={this.removeNote}
-        />,
-      );
-    }
-
-    return notesArray;
+    return existingNotes.map((note, i) => (
+      <EditNote
+        key={note.key}
+        index={i}
+        note={note}
+        handleChange={this.handleNoteChange}
+        removeNote={this.removeNote}
+      />
+    ));
   }
 
   render() {

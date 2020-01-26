@@ -49,12 +49,12 @@ function approveChangeRequests() {
       return data.change_requests.reduce((action, changeRequest) => action
         .catch(err => {
           console.log(err);
-          stats.errors++;
+          stats.errors += 1;
         })
         .then(() => {
           // If this changeRequest was not marked duplicate
           if (!duplicates[changeRequest.id]) {
-            stats.approved++;
+            stats.approved += 1;
             const body = {};
             changeRequest.field_changes.forEach(fieldChange => {
               const { field_name, field_value } = fieldChange;
@@ -68,7 +68,7 @@ function approveChangeRequests() {
             }).then(() => console.log('approved', changeRequest.id));
           }
           console.log('not applying duplicate', changeRequest.id);
-          stats.duplicates++;
+          stats.duplicates += 1;
           return Promise.resolve();
         }), Promise.resolve('first'));
     })

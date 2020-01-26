@@ -55,29 +55,25 @@ export default function editCollectionHOC(ResourceObjectItem,
 
     createItemComponents() {
       const { collection } = this.state;
-      const items = [];
-      for (let i = 0; i < collection.length; i++) {
-        if (!collection[i].isRemoved) {
-          items.push(
-            <div key={i} className="edit--section--list--item--collection-container">
-              <ResourceObjectItem
-                index={i}
-                item={collection[i]}
-                handleChange={this.handleChange}
-              />
-              <button
-                type="button"
-                className="trash-button icon-button"
-                onClick={() => this.removeItem(i, collection[i])}
-              >
-                <i className="material-icons">&#xE872;</i>
-              </button>
-            </div>,
-          );
-        }
-      }
-
-      return items;
+      return collection
+        .map((item, index) => [item, index])
+        .filter(([item]) => !item.isRemoved)
+        .map(([item, index]) => (
+          <div key={index} className="edit--section--list--item--collection-container">
+            <ResourceObjectItem
+              index={index}
+              item={item}
+              handleChange={this.handleChange}
+            />
+            <button
+              type="button"
+              className="trash-button icon-button"
+              onClick={() => this.removeItem(index, item)}
+            >
+              <i className="material-icons">&#xE872;</i>
+            </button>
+          </div>
+        ));
     }
 
     render() {
