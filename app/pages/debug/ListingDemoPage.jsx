@@ -5,6 +5,7 @@ import { parseConcatenatedIntegerTime } from '../../utils/transformSchedule';
 import './ListingDemoPage.scss';
 
 // Is sorted so that the first day is today
+/* eslint-disable max-len */
 export const simpleScheduleLookup = {
   twenty_four_seven: [[0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359]],
   twenty_four_hours_today: [[0, 2359], null, null, null, null, null, null],
@@ -20,12 +21,13 @@ export const simpleScheduleLookup = {
   random8: [[[2330, 1200], [1800, 2000], [2200, 2359]], null, [0, 2359], [0, 2359], [0, 2359], [0, 2359], [900, 2200]],
   closes_tomorrow: [[1800, 900], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [[0, 900], [1100, 1800], [1900, 2300]]],
 };
+/* eslint-enable max-len */
 
 export const simpleSchedules = Object.values(simpleScheduleLookup);
 
-export const createScheduleFromShorthand = (shedule_shorthand) => {
+export const createScheduleFromShorthand = shedule_shorthand => {
   const today = new Date().getDay();
-  const schedules = shedule_shorthand.map((shorthandSchedule, scheduleId) => {
+  const schedules = shedule_shorthand.map(shorthandSchedule => {
     const intervals = shorthandSchedule.flatMap((day, i) => {
       if (day === null) { return []; }
 
@@ -33,12 +35,26 @@ export const createScheduleFromShorthand = (shedule_shorthand) => {
       // Shift days such that 0 maps to the current day.
       const adjustedDay = (i + today) % 7;
       return instancesOfToday.map(([opensAt, closesAt]) => {
-        const { hour: opensAtHour, minute: opensAtMinute } = parseConcatenatedIntegerTime(opensAt);
-        const { hour: closesAtHour, minute: closesAtMinute } = parseConcatenatedIntegerTime(closesAt);
+        const {
+          hour: opensAtHour,
+          minute: opensAtMinute,
+        } = parseConcatenatedIntegerTime(opensAt);
+        const {
+          hour: closesAtHour,
+          minute: closesAtMinute,
+        } = parseConcatenatedIntegerTime(closesAt);
         const adjustedClosesAtDay = closesAt < opensAt ? (adjustedDay + 1) % 7 : adjustedDay;
         return new RecurringInterval({
-          opensAt: new RecurringTime({ day: adjustedDay, hour: opensAtHour, minute: opensAtMinute }),
-          closesAt: new RecurringTime({ day: adjustedClosesAtDay, hour: closesAtHour, minute: closesAtMinute }),
+          opensAt: new RecurringTime({
+            day: adjustedDay,
+            hour: opensAtHour,
+            minute: opensAtMinute,
+          }),
+          closesAt: new RecurringTime({
+            day: adjustedClosesAtDay,
+            hour: closesAtHour,
+            minute: closesAtMinute,
+          }),
         });
       });
     });
@@ -46,10 +62,9 @@ export const createScheduleFromShorthand = (shedule_shorthand) => {
   });
 
   return schedules;
-}
+};
 
 export class ListingDebugPage extends React.Component {
-
   render() {
     const recurringSchedules = createScheduleFromShorthand(simpleSchedules);
     return (
