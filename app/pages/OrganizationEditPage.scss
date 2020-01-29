@@ -135,10 +135,13 @@
     }
 
     .input-checkbox {
-      margin-bottom: calc-em(10px);
       margin-right: calc-em(5px);
       width: auto;
-      float: left;
+    }
+
+    .inline-checkbox {
+      display: flex;
+      align-items: center;
     }
 
     input:not(last-of-type) {

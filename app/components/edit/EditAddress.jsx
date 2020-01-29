@@ -77,7 +77,7 @@ const AddressForm = ({
 }) => (
   <li key="address" className="edit--section--list--item">
     <label htmlFor="address">Address</label>
-    <label>
+    <label className="inline-checkbox">
       <input
         type="checkbox"
         className="input-checkbox"

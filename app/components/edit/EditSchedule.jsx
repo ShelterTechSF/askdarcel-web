@@ -31,13 +31,16 @@ class EditSchedule extends Component {
         { canInheritFromParent
           && (
             <div className="inherit-schedule">
-              <input
-                id="inherit"
-                type="checkbox"
-                checked={shouldInheritFromParent}
-                onChange={() => setShouldInheritFromParent(!shouldInheritFromParent)}
-              />
-              <label htmlFor="inherit">Inherit schedule from parent organization</label>
+              <label htmlFor="inherit" className="inline-checkbox">
+                <input
+                  id="inherit"
+                  className="input-checkbox"
+                  type="checkbox"
+                  checked={shouldInheritFromParent}
+                  onChange={() => setShouldInheritFromParent(!shouldInheritFromParent)}
+                />
+                Inherit schedule from parent organization
+              </label>
             </div>
           )
         }

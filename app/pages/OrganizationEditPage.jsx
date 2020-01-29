@@ -226,6 +226,9 @@ const prepSchedule = scheduleObj => {
   let tempDay = {};
   Object.keys(scheduleObj).forEach(day => {
     scheduleObj[day].forEach(curr => {
+      if (curr.opens_at === null || curr.closes_at === null) {
+        return;
+      }
       tempDay = {};
       tempDay.day = day;
       tempDay.opens_at = curr.opens_at;
@@ -274,7 +277,7 @@ class OrganizationEditPage extends React.Component {
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
       this.setState({
-        newResource: true, resource: { schedule: {}, scheduleObj: buildScheduleDays(undefined) },
+        newResource: true, resource: { schedule: {} }, scheduleObj: buildScheduleDays(undefined),
       });
     }
     const resourceID = params.id;
