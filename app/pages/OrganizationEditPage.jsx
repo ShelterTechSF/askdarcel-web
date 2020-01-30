@@ -413,7 +413,7 @@ class OrganizationEditPage extends React.Component {
     const schedule = prepSchedule(scheduleObj);
     const newResource = {
       name,
-      address,
+      addresses: [address],
       long_description,
       email,
       website,
