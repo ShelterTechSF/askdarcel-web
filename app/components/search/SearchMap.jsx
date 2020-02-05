@@ -85,7 +85,8 @@ const SearchMap = ({
   }
 
   const markers = hits.map((hit, index) => {
-    const { addresses = [] } = hit;
+    const { addresses: rawAddresses } = hit;
+    const addresses = rawAddresses || [];
     return addresses.map(address => (
       <CustomMarker
         hit={hit}

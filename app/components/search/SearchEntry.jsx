@@ -9,7 +9,9 @@ import './SearchEntry.scss';
 class SearchEntry extends Component {
   renderAddressMetadata() {
     const { hit } = this.props;
-    const { addresses = [] } = hit;
+    const { addresses: rawAddresses } = hit;
+    const addresses = rawAddresses || [];
+
     if (addresses.length === 0) {
       return <span>No address found</span>;
     }
