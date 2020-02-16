@@ -22,15 +22,15 @@ export SAUCE_JOB="all"
 export SAUCE_BUILD="build-$TRAVIS_JOB_NUMBER"
 
 docker network create --driver bridge askdarcel
-docker run -d --network=askdarcel --name=db postgres:9.5
+docker run -d -e POSTGRES_PASSWORD=password --network=askdarcel --name=db postgres:9.5
 # 1) rake db:populate refuses to run in the production environment, so we
 #    override RAILS_ENV to development.
 # 2) rake will fail to run on the development environment unless if the
 #    development gems are installed, so we install the development gems into the
 #    production image.
 docker run -d \
-  -e DATABASE_URL=postgres://postgres@db/askdarcel_development \
-  -e TEST_DATABASE_URL=postgres://postgres@db/askdarcel_test \
+  -e DATABASE_URL=postgres://postgres:password@db/askdarcel_development \
+  -e TEST_DATABASE_URL=postgres://postgres:password@db/askdarcel_test \
   -e SECRET_KEY_BASE=notasecret \
   -e ALGOLIA_APPLICATION_ID=$ALGOLIA_APPLICATION_ID \
   -e ALGOLIA_API_KEY=$ALGOLIA_API_KEY \
