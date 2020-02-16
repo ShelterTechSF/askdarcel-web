@@ -48,8 +48,20 @@ WEB_PID=$!
 # running.
 sleep 60
 
-# Print out container logs in case if an error occurs
-docker logs api
+# Check that containers did exit unexpectedly
+if [[ $(docker inspect -f '{{.State.Running}}' api) == false ]]; then
+  # Print out container logs
+  docker logs api
+  echo "askdarcel-api API container unexpectedly failed; Aborting tests."
+  exit 1
+fi
+
+if [[ $(docker inspect -f '{{.State.Running}}' db) == false ]]; then
+  # Print out container logs
+  docker logs db
+  echo "askdarcel-api DB container unexpectedly failed; Aborting tests."
+  exit 1
+fi
 
 # Note: The version number needs to be periodically updated as new versions come
 # out.
