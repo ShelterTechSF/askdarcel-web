@@ -3,8 +3,8 @@
 .bannerContainer {
   width: 100%;
   padding: calc-em(20px) calc-em(30px);
-  color: $color-white;
-  background-color: $color-red;
+  color: black;
+  background-color: $color-yellow;
   font-size: calc-em(24px);
   strong {
     font-weight: bold;
@@ -12,6 +12,7 @@
 }
 
 .bannerLink {
+  font-weight: bold;
   text-decoration: underline;
-  color: $color-white;
+  color: black;
 }
