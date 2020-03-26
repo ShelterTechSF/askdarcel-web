@@ -96,6 +96,7 @@ module.exports = {
           path.resolve(__dirname, 'app/components/listing/HAPBadge'),
           path.resolve(__dirname, 'app/pages/HomePage'),
           path.resolve(__dirname, 'app/pages/About'),
+          path.resolve(__dirname, 'app/pages/Covid'),
         ],
         test: /\.s?css$/,
         use: [
@@ -134,6 +135,7 @@ module.exports = {
           path.resolve(__dirname, 'app/components/listing/HAPBadge'),
           path.resolve(__dirname, 'app/pages/HomePage'),
           path.resolve(__dirname, 'app/pages/About'),
+          path.resolve(__dirname, 'app/pages/Covid'),
         ],
         test: /\.s?css$/,
         use: [

@@ -71,6 +71,11 @@ class Navigation extends React.Component {
             <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
           </div>
           <ul className={styles.navRight}>
+          <li>
+              <Link to="/covid">
+                COVID-19
+              </Link>
+            </li>
             <li>
               <Link to="/about">
                 About
