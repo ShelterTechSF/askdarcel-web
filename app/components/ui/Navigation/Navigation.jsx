@@ -73,7 +73,7 @@ class Navigation extends React.Component {
           <ul className={styles.navRight}>
           <li>
               <Link to="/covid">
-                COVID-19
+                Coronavirus
               </Link>
             </li>
             <li>

@@ -31,7 +31,7 @@ export default class Covid extends React.Component {
               width="100%"
               height="100%"
               id="myId"
-              className="myClassname"
+              className={styles.covidDocEmbed}
               display="initial"
               position="absolute" />
           </section>

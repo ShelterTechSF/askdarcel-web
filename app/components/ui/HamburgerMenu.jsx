@@ -25,7 +25,7 @@ const burgerStyles = {
 const links = [
   { to: '/', text: 'Home', exact: true },
   { to: '/about', text: 'About' },
-  { to: '/covid', text: 'COVID-19' },
+  { to: '/covid', text: 'Coronavirus' },
   { to: 'https://help.sfserviceguide.org', text: 'FAQ' },
   { to: 'https://help.sfserviceguide.org/en/collections/1719243-contact-us', text: 'Contact Us' },
   { to: 'https://www.facebook.com/ShelterTechOrg/', text: 'Facebook' },
