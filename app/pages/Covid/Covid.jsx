@@ -21,19 +21,28 @@ export default class Covid extends React.Component {
               COVID-19 resource guide
             </h1>
             <p>
-              This is living document from <a href="ShelterTech.org">ShelterTech</a> of resources for individuals experiencing homelessness. We will be updating the list continuously, when services change, to ensure you have the most up to date information.
-              Please email <a href="contact@sheltertech.org">contact@sheltertech.org</a> to suggest edits.
-              See what types of places are open or closed at <a href="sf.gov/stay-home-except-essential-needs">sf.gov/stay-home-except-essential-needs</a>
+              This is living document from
+              {' '}
+              <a href="ShelterTech.org">ShelterTech</a>
+              {' '}
+of resources for individuals experiencing homelessness. We will be updating the list continuously, when services change, to ensure you have the most up to date information.
+              Please email
+              {' '}
+              <a href="contact@sheltertech.org">contact@sheltertech.org</a>
+              {' '}
+to suggest edits.
+              See what types of places are open or closed at
+              {' '}
+              <a href="sf.gov/stay-home-except-essential-needs">sf.gov/stay-home-except-essential-needs</a>
             </p>
           </header>
           <section className={styles.aboutSection}>
-            <Iframe url="https://docs.google.com/document/d/e/2PACX-1vRhUk0r7xAFbcb-XnMbLXXK64rv_KXsoQElDmDxyP1GwpuveNsxHOo2CiVDHf-956Njom83Xd7VkJXn/pub?embedded=true"
+            <Iframe
+              url="https://docs.google.com/document/d/e/2PACX-1vRhUk0r7xAFbcb-XnMbLXXK64rv_KXsoQElDmDxyP1GwpuveNsxHOo2CiVDHf-956Njom83Xd7VkJXn/pub?embedded=true"
               width="100%"
               height="100%"
-              id="myId"
               className={styles.covidDocEmbed}
-              display="initial"
-              position="absolute" />
+            />
           </section>
         </article>
         <Footer />
