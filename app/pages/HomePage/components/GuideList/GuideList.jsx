@@ -11,11 +11,6 @@ import ImgFamilyHomelessness from './assets/FamilyHomelessness.jpg';
 import ImgYouthHomelessness from './assets/YouthHomelessness.jpg';
 import ImgAdultHomelessness from './assets/AdultHomelessness.jpg';
 
-const isTypeformLink = url => {
-  const typeformRegex = new RegExp(/sheltertech.typeform.com/);
-  return typeformRegex.test(url.toLowerCase());
-};
-
 function typeform(event, link) {
   const typeformReference = typeformEmbed.makePopup(
     link,
@@ -33,8 +28,8 @@ const GuideCard = ({
   <a
     className={styles.cardLink}
     role="button"
-    onClick={e => { if (isTypeformLink(link)) { typeform(e, link); } }}
-    href={isTypeformLink(link) ? null : link}
+    onClick={e => { typeform(e, link); }}
+    href
   >
     <div className={styles.card}>
       <img
@@ -65,7 +60,7 @@ const GuideList = () => (
       <li className={styles.item}>
         <GuideCard
           name="Coronavirus COVID-19"
-          link="/covid"
+          link="https://docs.google.com/document/d/e/2PACX-1vRhUk0r7xAFbcb-XnMbLXXK64rv_KXsoQElDmDxyP1GwpuveNsxHOo2CiVDHf-956Njom83Xd7VkJXn/pub?embedded=true"
           img={ImgCovid}
         />
       </li>
