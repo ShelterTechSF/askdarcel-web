@@ -40,7 +40,7 @@ const GuideCard = ({
       <div className={styles.cardTextWrapper}>
         <div className={styles.cardText}>
           {name}
-          <a className={styles.cardLinkText} role="button" onClick={e => { typeform(e, link); }} href>
+          <a className={styles.cardLinkText} role="button" href>
           Explore Guide →
           </a>
         </div>
