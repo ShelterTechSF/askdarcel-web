@@ -6,15 +6,10 @@ import styles from './GuideList.scss';
 
 import ImgCovid from './assets/Covid19.jpg';
 import ImgEviction from './assets/EvictionPrevention.jpg';
-import ImgEvictionPartner from './assets/logos/EDC.png';
 import ImgAffordableHousing from './assets/AffordableHousing.jpg';
-import ImgAffordableHousingPartner from './assets/logos/homeownershipsf.png';
 import ImgFamilyHomelessness from './assets/FamilyHomelessness.jpg';
 import ImgYouthHomelessness from './assets/YouthHomelessness.jpg';
-import ImgYouthHomelessnessPartner from './assets/logos/larkin.png';
 import ImgAdultHomelessness from './assets/AdultHomelessness.jpg';
-import ImgAdultHomelessnessPartner from './assets/logos/JDC.png';
-import ImgFamilyHomelessnessPartner from './assets/logos/compass.png';
 
 function typeform(event, link) {
   const typeformReference = typeformEmbed.makePopup(
@@ -28,7 +23,7 @@ function typeform(event, link) {
 }
 
 const GuideCard = ({
-  img, link, name, partner, partnerImg,
+  img, link, name,
 }) => (
   <a className={styles.cardLink} role="button" onClick={e => { typeform(e, link); }} href>
     <div className={styles.card}>
@@ -44,16 +39,6 @@ const GuideCard = ({
           Explore Guide →
           </a>
         </div>
-        {partner && (
-        <div className={styles.cardPartner}>
-          <small>In partnership with</small>
-          <img
-            className={styles.cardPartnerImage}
-            src={partnerImg}
-            alt={partner}
-          />
-        </div>
-        )}
       </div>
     </div>
   </a>
@@ -79,8 +64,6 @@ const GuideList = () => (
           name="Eviction Prevention"
           link="https://sheltertech.typeform.com/to/AuWYAN"
           img={ImgEviction}
-          partner="Eviction Defense Collaborative"
-          partnerImg={ImgEvictionPartner}
         />
       </li>
       <li className={styles.item}>
@@ -88,8 +71,6 @@ const GuideList = () => (
           name="Affordable Housing"
           link="https://sheltertech.typeform.com/to/w8R0b8"
           img={ImgAffordableHousing}
-          partner="Homeownership SF"
-          partnerImg={ImgAffordableHousingPartner}
         />
       </li>
       <li className={styles.item}>
@@ -97,8 +78,6 @@ const GuideList = () => (
           name="Family Homelessness"
           link="https://sheltertech.typeform.com/to/GFEzl2"
           img={ImgFamilyHomelessness}
-          partner="Compass Family Services"
-          partnerImg={ImgFamilyHomelessnessPartner}
         />
       </li>
       <li className={styles.item}>
@@ -106,8 +85,6 @@ const GuideList = () => (
           name="Youth Homelessness"
           link="https://sheltertech.typeform.com/to/mXv584"
           img={ImgYouthHomelessness}
-          partner="Larkin Street Youth Services"
-          partnerImg={ImgYouthHomelessnessPartner}
         />
       </li>
       <li className={styles.item}>
@@ -115,8 +92,6 @@ const GuideList = () => (
           name="Adult Homelessness"
           link="https://sheltertech.typeform.com/to/KXi3Pp"
           img={ImgAdultHomelessness}
-          partner="Homeless Advocacy Project"
-          partnerImg={ImgAdultHomelessnessPartner}
         />
       </li>
     </ul>
