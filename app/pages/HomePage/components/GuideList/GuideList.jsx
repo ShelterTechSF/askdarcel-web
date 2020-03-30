@@ -4,6 +4,7 @@ import * as typeformEmbed from '@typeform/embed';
 
 import styles from './GuideList.scss';
 
+import ImgCovid from './assets/Covid19.jpg';
 import ImgEviction from './assets/EvictionPrevention.jpg';
 import ImgEvictionPartner from './assets/logos/EDC.png';
 import ImgAffordableHousing from './assets/AffordableHousing.jpg';
@@ -43,6 +44,7 @@ const GuideCard = ({
           Explore Guide →
           </a>
         </div>
+        {partner && (
         <div className={styles.cardPartner}>
           <small>In partnership with</small>
           <img
@@ -51,6 +53,7 @@ const GuideCard = ({
             alt={partner}
           />
         </div>
+        )}
       </div>
     </div>
   </a>
@@ -64,6 +67,13 @@ GuideCard.propTypes = {
 const GuideList = () => (
   <div className={styles.wrapper}>
     <ul className={styles.list}>
+      <li className={styles.item}>
+        <GuideCard
+          name="Coronavirus COVID-19"
+          link="/covid"
+          img={ImgCovid}
+        />
+      </li>
       <li className={styles.item}>
         <GuideCard
           name="Eviction Prevention"
