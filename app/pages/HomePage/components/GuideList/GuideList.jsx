@@ -11,6 +11,11 @@ import ImgFamilyHomelessness from './assets/FamilyHomelessness.jpg';
 import ImgYouthHomelessness from './assets/YouthHomelessness.jpg';
 import ImgAdultHomelessness from './assets/AdultHomelessness.jpg';
 
+const isTypeformLink = url => {
+  const typeformRegex = new RegExp(/sheltertech.typeform.com/);
+  return typeformRegex.test(url.toLowerCase());
+};
+
 function typeform(event, link) {
   const typeformReference = typeformEmbed.makePopup(
     link,
@@ -25,7 +30,12 @@ function typeform(event, link) {
 const GuideCard = ({
   img, link, name,
 }) => (
-  <a className={styles.cardLink} role="button" onClick={e => { typeform(e, link); }} href>
+  <a
+    className={styles.cardLink}
+    role="button"
+    onClick={e => { if (isTypeformLink(link)) { typeform(e, link); } }}
+    href={isTypeformLink(link) ? null : link}
+  >
     <div className={styles.card}>
       <img
         className={styles.cardImage}
