@@ -619,7 +619,7 @@ class OrganizationEditPage extends React.Component {
     const postedAddresses = hasLocation
       ? addresses
       : addresses.filter(a => a.id).map(a => ({ ...a, isRemoved: true }));
-    promises.concat(postAddresses(postedAddresses, { path: 'resources', id: resource.id }));
+    promises.push(...postAddresses(postedAddresses, { path: 'resources', id: resource.id }));
 
     // Services
     this.postServices(services, promises);
