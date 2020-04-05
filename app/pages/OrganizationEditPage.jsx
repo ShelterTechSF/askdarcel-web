@@ -478,9 +478,7 @@ class OrganizationEditPage extends React.Component {
     if (!hasLocation) {
       return [];
     }
-    // TODO: Update this to handle multiple addresses
     const { addresses: resourceAddresses = [] } = resource;
-    // return { ...blankAddress, ...resourceAddresses[0], ...address };
     if (!_.isEmpty(addresses)) {
       return addresses;
     } if (!_.isEmpty(resourceAddresses)) {
