@@ -213,16 +213,17 @@ function postNotes(notesObj, promises, uriObj) {
 const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
   const { id, isRemoved, dirty } = address;
   const { id: parent_resource_id } = uriObj;
+  const postableAddress = _.omit(address, ['dirty', 'isRemoved']);
   if (!id) {
     return [dataService.post('/api/change_requests', {
-      ...address, type: 'addresses', parent_resource_id, action: 'insert',
+      ...postableAddress, type: 'addresses', parent_resource_id, action: 'insert',
     })];
   } if (isRemoved) {
     return [dataService.post(`/api/addresses/${id}/change_requests`, { action: 'remove' })];
   } if (dirty) {
     return [dataService.post(
       `/api/addresses/${id}/change_requests`,
-      { change_request: _.omit(address, ['dirty', 'isRemoved']) },
+      { change_request: postableAddress },
     )];
   }
   // Skip any unmodified addresses.
