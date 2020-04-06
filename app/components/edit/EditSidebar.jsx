@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import './EditSidebar.scss';
+import styles from './EditSidebar.scss';
 
 const EditSidebar = ({
   addService,
@@ -19,7 +19,7 @@ const EditSidebar = ({
   let actionButtons = [
     <button
       type="button"
-      className="sidebar--actions--button"
+      className={styles['sidebar--actions--button']}
       key="submit"
       disabled={submitting}
       onClick={handleSubmit}
@@ -28,7 +28,7 @@ const EditSidebar = ({
     </button>,
     <button
       type="button"
-      className="sidebar--actions--button deactivate"
+      className={`${styles['sidebar--actions--button']} ${styles.deactivate}`}
       key="deactive"
       disabled={submitting}
       onClick={() => handleDeactivation('resource', resource.id)}
@@ -40,7 +40,7 @@ const EditSidebar = ({
     actionButtons = [
       <button
         type="button"
-        className="sidebar--actions--button"
+        className={styles['sidebar--actions--button']}
         key="submit"
         disabled={submitting}
         onClick={createResource}
@@ -49,7 +49,7 @@ const EditSidebar = ({
       </button>,
       <button
         type="button"
-        className="sidebar--actions--button cancel"
+        className={`${styles['sidebar--actions--button']} ${styles.cancel}`}
         key="cancel"
         onClick={handleCancel}
       >
@@ -61,7 +61,7 @@ const EditSidebar = ({
     actionButtons.push(
       <button
         type="button"
-        className="sidebar--actions--button hap--button"
+        className={`${styles['sidebar--actions--button']} ${styles['hap--button']}`}
         key="hap"
         onClick={certifyHAP}
       >
@@ -81,32 +81,32 @@ const EditSidebar = ({
     });
   }
   return (
-    <nav className="sidebar">
-      <div className="sidebar--content">
-        <ul className="sidebar--list">
-          <li className="sidebar--list--heading">
+    <nav className={styles.sidebar}>
+      <div className={styles['sidebar--content']}>
+        <ul className={styles['sidebar--list']}>
+          <li className={styles['sidebar--list--heading']}>
             <h3>Organization</h3>
           </li>
-          <li className="sidebar--list--item active">
+          <li className={`${styles['sidebar--list--item']} ${styles.active}`}>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#">{resource.name}</a>
           </li>
         </ul>
-        <ul className="sidebar--list">
-          <li className="sidebar--list--heading">
+        <ul className={styles['sidebar--list']}>
+          <li className={styles['sidebar--list--heading']}>
             <h3>
               <a href="#services">Services</a>
-              <button type="button" className="service--action--button" onClick={addService}><i className="material-icons">add</i></button>
+              <button type="button" className={styles['service--action--button']} onClick={addService}><i className="material-icons">add</i></button>
             </h3>
           </li>
           {Object.keys(allServices).map(service => (
-            <li key={service} className="sidebar--list--item">
+            <li key={service} className={styles['sidebar--list--item']}>
               <a href={`#${service}`} style={{ display: 'block' }}>{allServices[service].name}</a>
             </li>
           ))}
         </ul>
       </div>
-      <div className="sidebar--actions">
+      <div className={styles['sidebar--actions']}>
         {actionButtons.map(button => button)}
       </div>
     </nav>
