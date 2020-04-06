@@ -19,7 +19,7 @@ const EditSidebar = ({
   let actionButtons = [
     <button
       type="button"
-      className={styles['sidebar--actions--button']}
+      className={styles.actionButton}
       key="submit"
       disabled={submitting}
       onClick={handleSubmit}
@@ -28,7 +28,7 @@ const EditSidebar = ({
     </button>,
     <button
       type="button"
-      className={`${styles['sidebar--actions--button']} ${styles.deactivate}`}
+      className={`${styles.actionButton} ${styles.deactivate}`}
       key="deactive"
       disabled={submitting}
       onClick={() => handleDeactivation('resource', resource.id)}
@@ -40,7 +40,7 @@ const EditSidebar = ({
     actionButtons = [
       <button
         type="button"
-        className={styles['sidebar--actions--button']}
+        className={styles.actionButton}
         key="submit"
         disabled={submitting}
         onClick={createResource}
@@ -49,7 +49,7 @@ const EditSidebar = ({
       </button>,
       <button
         type="button"
-        className={`${styles['sidebar--actions--button']} ${styles.cancel}`}
+        className={`${styles.actionButton} ${styles.cancel}`}
         key="cancel"
         onClick={handleCancel}
       >
@@ -61,7 +61,7 @@ const EditSidebar = ({
     actionButtons.push(
       <button
         type="button"
-        className={`${styles['sidebar--actions--button']} ${styles['hap--button']}`}
+        className={styles.actionButton}
         key="hap"
         onClick={certifyHAP}
       >
@@ -82,31 +82,31 @@ const EditSidebar = ({
   }
   return (
     <nav className={styles.sidebar}>
-      <div className={styles['sidebar--content']}>
-        <ul className={styles['sidebar--list']}>
-          <li className={styles['sidebar--list--heading']}>
+      <div className={styles.sidebarContent}>
+        <ul className={styles.list}>
+          <li className={styles.listHeading}>
             <h3>Organization</h3>
           </li>
-          <li className={`${styles['sidebar--list--item']} ${styles.active}`}>
+          <li className={`${styles.listItem} ${styles.active}`}>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#">{resource.name}</a>
           </li>
         </ul>
-        <ul className={styles['sidebar--list']}>
-          <li className={styles['sidebar--list--heading']}>
+        <ul className={styles.list}>
+          <li className={styles.listHeading}>
             <h3>
               <a href="#services">Services</a>
-              <button type="button" className={styles['service--action--button']} onClick={addService}><i className="material-icons">add</i></button>
+              <button type="button" className={styles.serviceActionButton} onClick={addService}><i className="material-icons">add</i></button>
             </h3>
           </li>
           {Object.keys(allServices).map(service => (
-            <li key={service} className={styles['sidebar--list--item']}>
+            <li key={service} className={styles.listItem}>
               <a href={`#${service}`} style={{ display: 'block' }}>{allServices[service].name}</a>
             </li>
           ))}
         </ul>
       </div>
-      <div className={styles['sidebar--actions']}>
+      <div className={styles.actions}>
         {actionButtons.map(button => button)}
       </div>
     </nav>

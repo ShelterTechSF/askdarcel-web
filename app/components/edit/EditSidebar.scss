@@ -21,12 +21,12 @@
   }
 }
 
-.sidebar--content {
+.sidebarContent {
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.sidebar--list {
+.list {
   border-bottom: 1px solid $color-grey3;
   padding-bottom: 20px;
   &:last-of-type() {
@@ -37,13 +37,13 @@
   }
 }
 
-.sidebar--list--heading h3{
+.listHeading h3 {
   padding: 20px 25px 10px;
   text-transform: uppercase;
   font-size: calc-em(13px);
   font-weight: 700;
   color: $color-grey7;
-  .service--action--button {
+  .serviceActionButton {
     color: $color-grey5;
     background: none;
     padding: 0;
@@ -67,7 +67,7 @@
   }
 }
 
-.sidebar--list--item {
+.listItem {
   a {
     color: $color-grey5;
     border-left: 2px solid transparent;
@@ -91,7 +91,7 @@
   }
 }
 
-.sidebar--actions {
+.actions {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -108,7 +108,7 @@
   }
 }
 
-.sidebar--actions--button {
+.actionButton {
     color: #FFFFFF;
     font-size: calc-em(15px);
     padding: calc-em(7px) calc-em(15px);
