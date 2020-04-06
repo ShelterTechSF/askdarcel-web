@@ -4,6 +4,17 @@ import { withRouter } from 'react-router-dom';
 
 import styles from './EditSidebar.scss';
 
+const SaveButton = ({ children, disabled, onClick }) => (
+  <button
+    type="button"
+    className={styles.actionButton}
+    disabled={disabled}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
+
 const EditSidebar = ({
   addService,
   certifyHAP,
@@ -17,15 +28,13 @@ const EditSidebar = ({
   submitting,
 }) => {
   let actionButtons = [
-    <button
-      type="button"
-      className={styles.actionButton}
+    <SaveButton
       key="submit"
       disabled={submitting}
       onClick={handleSubmit}
     >
       Save Changes
-    </button>,
+    </SaveButton>,
     <button
       type="button"
       className={`${styles.actionButton} ${styles.deactivate}`}
@@ -38,15 +47,13 @@ const EditSidebar = ({
   ];
   if (newResource) {
     actionButtons = [
-      <button
-        type="button"
-        className={styles.actionButton}
+      <SaveButton
         key="submit"
         disabled={submitting}
         onClick={createResource}
       >
         Submit
-      </button>,
+      </SaveButton>,
       <button
         type="button"
         className={`${styles.actionButton} ${styles.cancel}`}
