@@ -96,15 +96,16 @@ const EditSidebar = ({
           <button type="button" className={styles.serviceActionButton} onClick={addService}><i className="material-icons">add</i></button>
         </h3>
         <ul className={styles.list}>
-          {Object.keys(allServices).map(service => (
-            <li key={service} className={styles.listItem}>
-              <a href={`#${service}`} style={{ display: 'block' }}>{allServices[service].name}</a>
+          {Object.entries(allServices).map(([key, service]) => (
+            <li key={key} className={styles.listItem}>
+              <a href={`#${service}`} style={{ display: 'block' }}>{service.name}</a>
             </li>
           ))}
         </ul>
       </div>
+
       <div className={styles.actions}>
-        {actionButtons.map(button => button)}
+        {actionButtons}
       </div>
     </nav>
   );
