@@ -37,12 +37,13 @@
   }
 }
 
-.listHeading h3 {
+.listHeading {
   padding: 20px 25px 10px;
   text-transform: uppercase;
   font-size: calc-em(13px);
   font-weight: 700;
   color: $color-grey7;
+
   .serviceActionButton {
     color: $color-grey5;
     background: none;

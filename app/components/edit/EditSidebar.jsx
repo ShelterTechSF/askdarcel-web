@@ -83,22 +83,19 @@ const EditSidebar = ({
   return (
     <nav className={styles.sidebar}>
       <div className={styles.sidebarContent}>
+        <h3 className={styles.listHeading}>Organization</h3>
         <ul className={styles.list}>
-          <li className={styles.listHeading}>
-            <h3>Organization</h3>
-          </li>
           <li className={`${styles.listItem} ${styles.active}`}>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#">{resource.name}</a>
           </li>
         </ul>
+
+        <h3 className={styles.listHeading}>
+          <a href="#services">Services</a>
+          <button type="button" className={styles.serviceActionButton} onClick={addService}><i className="material-icons">add</i></button>
+        </h3>
         <ul className={styles.list}>
-          <li className={styles.listHeading}>
-            <h3>
-              <a href="#services">Services</a>
-              <button type="button" className={styles.serviceActionButton} onClick={addService}><i className="material-icons">add</i></button>
-            </h3>
-          </li>
           {Object.keys(allServices).map(service => (
             <li key={service} className={styles.listItem}>
               <a href={`#${service}`} style={{ display: 'block' }}>{allServices[service].name}</a>
