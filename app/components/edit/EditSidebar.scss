@@ -11,11 +11,13 @@
   position: sticky;
   top: 5rem;
   height: 94vh;
+
   @media screen and (max-width: 900px ) {
     width: 100%;
     height: 80px;
     z-index: 1000;
   }
+
   @media screen and (max-width: 767px ) {
     top: 50px;
   }
@@ -44,27 +46,28 @@
   font-weight: 700;
   color: $color-grey7;
 
-  .serviceActionButton {
-    color: $color-grey5;
-    background: none;
-    padding: 0;
-    height: 100%;
-    float: right;
-
-    &:hover {
-      box-shadow: none;
-      color: $color-brand;
-    }
-
-    &:focus {
-      box-shadow: none;
-    }
-  }
-  & a {
+  a {
     color: $color-grey7;
     &:hover {
       color: $color-brand;
     }
+  }
+}
+
+.serviceActionButton {
+  color: $color-grey5;
+  background: none;
+  padding: 0;
+  height: 100%;
+  float: right;
+
+  &:hover {
+    box-shadow: none;
+    color: $color-brand;
+  }
+
+  &:focus {
+    box-shadow: none;
   }
 }
 
@@ -101,6 +104,7 @@
   width: 250px;
   background: $color-grey1;
   z-index: 2;
+
   @media screen and (max-width: 900px ) {
     flex-direction: row;
     align-items: center;
@@ -110,42 +114,43 @@
 }
 
 .actionButton {
-    color: #FFFFFF;
-    font-size: calc-em(15px);
-    padding: calc-em(7px) calc-em(15px);
-    border: 1px solid $color-brand;
-    background: transparent;
-    color: $color-brand;
-    border-radius: 3px;
-    width: 100%;
-    flex: 0 0 auto;
-    margin: 5px 0;
-    @media screen and (max-width: 900px ) {
-      width: 30%;
-      font-size: 14px;
-      padding: 5px 10px;
-    }
+  color: #FFFFFF;
+  font-size: calc-em(15px);
+  padding: calc-em(7px) calc-em(15px);
+  border: 1px solid $color-brand;
+  background: transparent;
+  color: $color-brand;
+  border-radius: 3px;
+  width: 100%;
+  flex: 0 0 auto;
+  margin: 5px 0;
 
+  @media screen and (max-width: 900px ) {
+    width: 30%;
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  &:hover {
+    background: $color-brand;
+    color: $color-white;
+  }
+
+  &.cancel {
+    border: 1px solid $color-grey5;
+    color: $color-red;
     &:hover {
-      background: $color-brand;
+      background: $color-red;
       color: $color-white;
     }
+  }
 
-    &.cancel {
-      border: 1px solid $color-grey5;
-      color: $color-red;
-      &:hover {
-        background: $color-red;
-        color: $color-white;
-      }
+  &.deactivate {
+    border: 1px solid $color-red;
+    color: $color-red;
+    &:hover {
+      background: $color-red;
+      color: $color-white;
     }
-
-    &.deactivate {
-      border: 1px solid $color-red;
-      color: $color-red;
-      &:hover {
-        background: $color-red;
-        color: $color-white;
-      }
-    }
+  }
 }
