@@ -31,9 +31,11 @@
 .list {
   border-bottom: 1px solid $color-grey3;
   padding-bottom: 20px;
+
   &:last-of-type() {
     border-bottom: 0;
   }
+
   @media screen and (max-width: 900px ) {
     display: none;
   }
@@ -43,7 +45,7 @@
   padding: 20px 25px 10px;
   text-transform: uppercase;
   font-size: calc-em(13px);
-  font-weight: 700;
+  font-weight: 600;
   color: $color-grey7;
 
   a {
@@ -55,7 +57,7 @@
 }
 
 .serviceActionButton {
-  color: $color-grey5;
+  color: $color-grey4;
   background: none;
   padding: 0;
   height: 100%;
@@ -72,6 +74,8 @@
 }
 
 .listItem {
+  font-size: 15px;
+
   a {
     color: $color-grey5;
     border-left: 2px solid transparent;
@@ -91,7 +95,6 @@
   &.active a {
     border-left: 2px solid $color-brand !important;
     color: $color-brand;
-    font-weight: 700;
   }
 }
 
@@ -115,10 +118,10 @@
 
 .actionButton {
   color: #FFFFFF;
-  font-size: calc-em(15px);
+  font-size: calc-em(16px);
   padding: calc-em(7px) calc-em(15px);
   border: 1px solid $color-brand;
-  background: transparent;
+  background: $color-white;
   color: $color-brand;
   border-radius: 3px;
   width: 100%;

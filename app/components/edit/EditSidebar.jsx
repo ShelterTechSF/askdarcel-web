@@ -93,7 +93,9 @@ const EditSidebar = ({
 
         <h3 className={styles.listHeading}>
           <a href="#services">Services</a>
-          <button type="button" className={styles.serviceActionButton} onClick={addService}><i className="material-icons">add</i></button>
+          <button type="button" className={styles.serviceActionButton} onClick={addService}>
+            <i className="material-icons">add_circle_outline</i>
+          </button>
         </h3>
         <ul className={styles.list}>
           {Object.entries(allServices).map(([key, service]) => (
