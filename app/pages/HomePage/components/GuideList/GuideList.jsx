@@ -41,7 +41,7 @@ const GuideCard = ({
         <div className={styles.cardText}>
           {name}
           <a className={styles.cardLinkText} role="button" href>
-          Explore Guide →
+            Explore Guide →
           </a>
         </div>
       </div>
@@ -58,7 +58,10 @@ const GuideList = () => (
   <div className={styles.wrapper}>
     <ul className={styles.list}>
       <li className={styles.item}>
-        <a href="/covid">
+        <a
+          href="/covid"
+          target="_blank"
+        >
           <GuideCard
             name="Coronavirus COVID-19"
             img={ImgCovid}
