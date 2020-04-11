@@ -16,7 +16,7 @@ export default class Covid extends React.Component {
         <article className={styles.covidPage} id="covid">
           <header className={styles.covidHeader}>
             <h1>
-            Coronavirus resources for Individuals-In-Need
+              Coronavirus resources for Individuals-In-Need
             </h1>
             <p>
               This list is compiled to link individuals experiencing homelessness to resources.
@@ -28,7 +28,7 @@ export default class Covid extends React.Component {
                 contact@sheltertech.org
               </a>
               {' '}
-                to suggest edits.
+              to suggest edits.
             </p>
           </header>
           <section>
