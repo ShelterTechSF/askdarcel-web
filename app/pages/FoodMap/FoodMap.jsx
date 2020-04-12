@@ -14,24 +14,24 @@ export default class FoodMap extends React.Component {
             View highlighted resources in SFServiceGuide
           </a>
         </div>
-        <div className={styles.foodMapBannerCredit}>
-          <img
-            className={styles.SFGovLogo}
-            src={ImgSFGovLogo}
-            alt="SF Gov logo"
-          />
-          <span>
+        <article className={styles.mapContainer}>
+          <div className={styles.foodMapBannerCredit}>
+            <img
+              className={styles.SFGovLogo}
+              src={ImgSFGovLogo}
+              alt="SF Gov logo"
+            />
+            <span>
             San Francisco EOC Food Resource Map
-          </span>
-        </div>
-        <article className={styles.Page}>
+            </span>
+          </div>
           <section>
             <Iframe
               title="Covid-19 Food Guide"
               url="https://sfgov.maps.arcgis.com/apps/webappviewer/index.html?id=bb080a525416426c9f96057a00367b4d"
               allowFullScreen="yes"
               padding="0pt"
-              className={styles.DocEmbed}
+              className={styles.embedMap}
             />
           </section>
         </article>
