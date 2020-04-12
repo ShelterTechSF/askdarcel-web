@@ -5,8 +5,8 @@ import * as typeformEmbed from '@typeform/embed';
 import styles from './GuideList.scss';
 
 import ImgCovid from './assets/Covid19.jpg';
-import ImgEviction from './assets/EvictionPrevention.jpg';
-import ImgAffordableHousing from './assets/AffordableHousing.jpg';
+// import ImgEviction from './assets/EvictionPrevention.jpg';
+// import ImgAffordableHousing from './assets/AffordableHousing.jpg';
 import ImgFamilyHomelessness from './assets/FamilyHomelessness.jpg';
 import ImgYouthHomelessness from './assets/YouthHomelessness.jpg';
 import ImgAdultHomelessness from './assets/AdultHomelessness.jpg';
@@ -60,7 +60,7 @@ const GuideList = () => (
       <li className={styles.item}>
         <a
           href="/covid"
-          target="_blank"
+          // target="_blank"
         >
           <GuideCard
             name="Coronavirus COVID-19"
@@ -69,19 +69,30 @@ const GuideList = () => (
         </a>
       </li>
       <li className={styles.item}>
+        <a
+          href="/FoodMap"
+          // target="_blank"
+        >
+          <GuideCard
+            name="San Francisco EOC Food Resources"
+            img={ImgCovid}
+          />
+        </a>
+      </li>
+      {/* <li className={styles.item}>
         <GuideCard
           name="Eviction Prevention"
           link="https://sheltertech.typeform.com/to/AuWYAN"
           img={ImgEviction}
         />
-      </li>
-      <li className={styles.item}>
+      </li> */}
+      {/* <li className={styles.item}>
         <GuideCard
           name="Affordable Housing"
           link="https://sheltertech.typeform.com/to/w8R0b8"
           img={ImgAffordableHousing}
         />
-      </li>
+      </li> */}
       <li className={styles.item}>
         <GuideCard
           name="Family Homelessness"
