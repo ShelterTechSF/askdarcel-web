@@ -1,4 +1,4 @@
-.FoodMap__Page {
+.Page {
   // position: fixed;
   p {
     font-size: 1.2em;
@@ -6,7 +6,7 @@
   }
 }
 
-.FoodMap__DocEmbed {
+.DocEmbed {
   @media screen and (max-width: 600px) {
     width: 100vw;
     top: 135px;
@@ -18,7 +18,7 @@
 }
 
 @media screen and (min-width: 600px) {
-  .FoodMap__DocEmbed {
+  .DocEmbed {
     width: 100vw;
     max-width: 800px;
     height: 65vh;
@@ -64,7 +64,7 @@
   padding: 4px 0;
 }
 
-.FoodMap__foodMapBannerCredit {
+.foodMapBannerCredit {
   background-color: #267030;
   text-align: left;
   color: white;
