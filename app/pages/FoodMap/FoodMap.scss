@@ -48,8 +48,8 @@
   height: 65vh;
   margin: auto;
   @media screen and (max-width: 600px) {
-    width: 100%;
-    height: calc((100vh) - 254px);
+    width: auto;
+    height: calc((100vh) - 240px);
   }
 }
 
