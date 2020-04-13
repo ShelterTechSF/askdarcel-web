@@ -103,7 +103,7 @@ const GuideList = () => (
       </li>
       <li className={styles.item}>
         <GuideCard
-          name="Food resources"
+          name="Food"
           link="/foodmap"
           img={ImgFood}
           isTypeform={false}
