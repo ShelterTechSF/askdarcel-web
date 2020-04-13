@@ -16,11 +16,13 @@
   flex: 1 1 33.32%;
   min-width: 275px;
   max-width: 33.32%;
-  @media screen and ( max-width: 920px ) {
+
+  @media screen and (max-width: 920px) {
     flex: 1 1 50%;
     max-width: 50%;
   }
-  @media screen and ( max-width: 600px ) {
+
+  @media screen and (max-width: 600px) {
     max-width: 100%;
   }
 }
@@ -29,7 +31,9 @@
   color: #202020;
   display: block;
 
-  &:active, &:focus, &:hover {
+  &:active,
+  &:focus,
+  &:hover {
     color: #202020; // Reset global link style
   }
 }
@@ -46,16 +50,19 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
   min-height: 220px;
-  @media screen and ( max-width: 920px ) {
+
+  @media screen and (max-width: 920px) {
     min-height: 190px;
     border: 2px solid #e0e0e0;
     border-radius: 3px;
   }
-  @media screen and ( max-width: 600px ) {
+
+  @media screen and (max-width: 600px) {
     min-height: 165px;
   }
 
-  .cardLink:focus &, .cardLink:hover & {
+  .cardLink:focus &,
+  .cardLink:hover & {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
@@ -70,7 +77,8 @@
   max-height: 150px;
   min-height: 75px;
   border-radius: 3px 3px 0 0;
-  @media screen and ( max-width: 600px ) {
+
+  @media screen and (max-width: 600px) {
     height: 75px
   }
 }
@@ -89,10 +97,12 @@
   color: #202020;
   display: flex;
   flex-direction: column;
-  @media screen and ( max-width: 767px ) {
+
+  @media screen and (max-width: 767px) {
     font-size: 20px;
   }
-  @media screen and ( max-width: 600px ) {
+
+  @media screen and (max-width: 600px) {
     font-size: 17px;
   }
 }
@@ -110,28 +120,30 @@
   font-weight: 600;
   box-shadow: none;
   width: 154px;
-}
-.cardLinkText:hover {
-  color: $color-white;
+
+  &:hover {
+    color: $color-white;
+  }
+
 }
 
-.cardPartner {
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  align-items: flex-start;
-}
+  .cardPartner {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    align-items: flex-start;
+  }
 
-.cardPartner small {
-  font-size: 12px;
-  color: #888;
-}
+  .cardPartner small {
+    font-size: 12px;
+    color: #888;
+  }
 
-.cardPartnerImage {
-  height: 50px;
-  width: auto;
-  max-width: 100%;
-  display: block;
-  object-fit: contain;
-  margin-top: 7px;
-}
+  .cardPartnerImage {
+    height: 50px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+    margin-top: 7px;
+  }
