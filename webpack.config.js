@@ -99,7 +99,6 @@ module.exports = {
           path.resolve(__dirname, 'app/pages/About'),
           path.resolve(__dirname, 'app/pages/Covid'),
           path.resolve(__dirname, 'app/pages/FoodMap'),
-          path.resolve(__dirname, 'app/pages/FoodList'),
         ],
         test: /\.s?css$/,
         use: [
@@ -141,7 +140,6 @@ module.exports = {
           path.resolve(__dirname, 'app/pages/About'),
           path.resolve(__dirname, 'app/pages/Covid'),
           path.resolve(__dirname, 'app/pages/FoodMap'),
-          path.resolve(__dirname, 'app/pages/FoodList'),
         ],
         test: /\.s?css$/,
         use: [

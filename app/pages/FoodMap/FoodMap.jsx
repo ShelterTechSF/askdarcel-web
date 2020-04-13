@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Iframe from 'react-iframe';
 
 import styles from './FoodMap.scss';
@@ -31,9 +32,9 @@ export default class FoodMap extends React.Component {
           </section>
         </article>
         <div className={styles.foodBannerContainer}>
-          <a href="./FoodList">
+          <Link to="/covid/foodlist">
             View additional food resources in SFServiceGuide
-          </a>
+          </Link>
         </div>
       </div>
     );

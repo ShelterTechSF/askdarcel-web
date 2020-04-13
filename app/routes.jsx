@@ -16,7 +16,6 @@ import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
 import CovidPages from './pages/Covid';
 import FoodMap from './pages/FoodMap';
-import FoodList from './pages/FoodList';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 
 const RedirectToOrganizations = ({ location: { search } }) => {
@@ -33,7 +32,6 @@ export default () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
     <Route path="/about" component={About} />
-    <Route path="/foodlist" component={FoodList} />
     <Route path="/foodmap" component={FoodMap} />
     <Route path="/covid" component={CovidPages} />
     <Route path="/demo/listing" component={ListingDebugPage} />

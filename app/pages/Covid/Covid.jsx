@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Footer from '../../components/ui/Footer/Footer';
 
+import FoodList from './components/FoodList';
 import SimpleGuide from './components/SimpleGuide';
 import styles from './Covid.scss';
 
@@ -28,6 +29,9 @@ const CovidRoutes = () => {
           pageHeader="Financial and Job Assistance for the COVID-19 Emergency"
           googleDocURL="https://docs.google.com/document/d/e/2PACX-1vQ76IDYnl7rpCdyCf1Jk6cbxO240gzaVmUAWUMNi8nAyTgqrbJKxDK0bv1QWHNcNBQ79cUHq_NvBJko/pub?embedded=false"
         />
+      </Route>
+      <Route path={`${path}/foodlist`}>
+        <FoodList />
       </Route>
       <Route path={`${path}/hygiene`}>
         <SimpleGuide
