@@ -6,7 +6,7 @@ import Footer from '../../components/ui/Footer/Footer';
 import SimpleGuide from './components/SimpleGuide';
 
 
-const CovidGuides = () => {
+const CovidPages = () => {
   const { path } = useRouteMatch();
   return (
     <div className="covid-guide-page">
@@ -71,4 +71,4 @@ const CovidGuides = () => {
   );
 };
 
-export default CovidGuides;
+export default CovidPages;

@@ -14,7 +14,7 @@ import { ServiceListingPage } from './pages/ServiceListingPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
-import CovidGuides from './pages/CovidGuides';
+import CovidPages from './pages/Covid';
 import FoodMap from './pages/FoodMap';
 import FoodList from './pages/FoodList';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
@@ -35,7 +35,7 @@ export default () => (
     <Route path="/about" component={About} />
     <Route path="/foodlist" component={FoodList} />
     <Route path="/foodmap" component={FoodMap} />
-    <Route path="/covid" component={CovidGuides} />
+    <Route path="/covid" component={CovidPages} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
     <Route path="/organizations/:id/edit" component={OrganizationEditPage} />
