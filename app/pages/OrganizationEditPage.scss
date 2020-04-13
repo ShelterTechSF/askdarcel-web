@@ -28,15 +28,15 @@
 
 .edit--main--header {
   background: #fff;
-  padding: calc-em(35px) calc-em(30px) calc-em(30px) 0;
+  margin: calc-em(35px) calc-em(30px) calc-em(40px) 0;
   width: 100%;
   z-index: 999;
   text-align: center;
   &--title {
     color: #333333;
-    font-size: calc-em(30px);
-    font-weight: bold;
-    line-height: calc-em(36px);
+    font-size: calc-em(42px);
+    font-weight: 600;
+    line-height: 1.35;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -53,14 +53,17 @@
 // EDIT SECTION FORMS
 
 .edit--section {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: calc-em(60px);
   background: #fff;
   border-radius: 8px;
   padding: calc-em(40px);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  border: 1px solid $color-grey3;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
   @media screen and (max-width: 900px ) {
     padding: 20px;
+    width: 95%;
   }
 }
 
@@ -83,7 +86,7 @@
   padding: 0;
 
   &--item {
-    margin: 0 calc-em(30px) calc-em(20px) 0;
+    margin: 0 calc-em(20px) calc-em(40px);
     @media screen and (max-width: 900px ) {
       margin: 0 0 20px;
     }
@@ -124,13 +127,13 @@
     }
 
     .input {
-      padding: calc-em(15px);
+      padding: calc-em(15px) calc-em(20px);
       width: 100%;
       border: 1px solid #DDDDDD;
-      border-radius: 2px;
-      background-color: #F2F2F2;
+      border-radius: 3px;
+      background-color: $color-white;
       font-size: calc-em(17px);
-      color: #333333;
+      color: $color-grey9;
       margin-bottom: calc-em(10px);
     }
 
@@ -187,6 +190,17 @@
   &:hover {
     background: $color-brand;
     color: #fff;
+  }
+}
+
+.edit--section--list--item button.solid-brand {
+  background: $color-brand;
+  color: $color-white;
+
+  &:hover {
+    border: 1px solid $color-brand;
+    background: transparent;
+    color: $color-brand;
   }
 }
 

@@ -45,7 +45,7 @@ function Footer() {
           Created and maintained by ©
           { new Date().getFullYear() }
           {' '}
-ShelterTech, a 501(c)(3) nonprofit | Made with love in San Francisco
+          ShelterTech, a 501(c)(3) nonprofit | Made with love in San Francisco
         </div>
       </div>
     </footer>
