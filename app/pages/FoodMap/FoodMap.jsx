@@ -11,7 +11,7 @@ export default class FoodMap extends React.Component {
       <div>
         <div className={styles.foodBannerContainer}>
           <a href="./FoodList">
-            View highlighted resources in SFServiceGuide
+            View additional food resources in SFServiceGuide
           </a>
         </div>
         <article className={styles.mapContainer}>
