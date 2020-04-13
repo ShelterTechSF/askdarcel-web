@@ -49,16 +49,16 @@
   transition: all 200ms ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
-  min-height: 260px;
+  min-height: 220px;
 
   @media screen and (max-width: 920px) {
-    min-height: 260px;
+    min-height: 190px;
     border: 2px solid #e0e0e0;
     border-radius: 3px;
   }
 
   @media screen and (max-width: 600px) {
-    min-height: 240px;
+    min-height: 165px;
   }
 
   .cardLink:focus &,
@@ -73,11 +73,13 @@
 
 .cardImage {
   object-fit: cover;
-  height: 120px;
+  height: 8vw;
+  max-height: 150px;
+  min-height: 75px;
   border-radius: 3px 3px 0 0;
 
   @media screen and (max-width: 600px) {
-    height: 130px;
+    height: 75px
   }
 }
 
@@ -120,27 +122,27 @@
   width: 154px;
 
   &:hover {
-    color: #fff;
+    color: $color-white;
   }
 }
 
-.cardPartner {
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  align-items: flex-start;
-}
+  .cardPartner {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    align-items: flex-start;
+  }
 
-.cardPartner small {
-  font-size: 12px;
-  color: #888;
-}
+  .cardPartner small {
+    font-size: 12px;
+    color: #888;
+  }
 
-.cardPartnerImage {
-  height: 50px;
-  width: auto;
-  max-width: 100%;
-  display: block;
-  object-fit: contain;
-  margin-top: 7px;
-}
+  .cardPartnerImage {
+    height: 50px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
+    margin-top: 7px;
+  }
