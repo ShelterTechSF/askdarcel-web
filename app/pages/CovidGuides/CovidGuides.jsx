@@ -11,6 +11,12 @@ const CovidGuides = () => {
   return (
     <div className="covid-guide-page">
       <Switch>
+        <Route exact path={path}>
+          <SimpleGuide
+            pageHeader="Coronavirus resources for Individuals-In-Need"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vTGpgLJDTg3sm2XhyBoNUTNUhqJjTt5lEp8IXSP_yBNrxVgZ_zkmdKPo7JcKJTbduoTRt_dYnRV9xTB/pub?embedded=false"
+          />
+        </Route>
         <Route path={`${path}/domesticviolence`}>
           <SimpleGuide
             pageHeader="Domestic Violence help for the COVID-19 Emergency"
