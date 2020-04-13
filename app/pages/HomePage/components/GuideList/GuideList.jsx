@@ -41,7 +41,7 @@ const GuideCard = ({
     role: 'button',
     onClick: e => { typeform(e, link); },
   } : {
-    href: link.toString(),
+    href: link,
     target: '_blank',
   };
 
@@ -59,9 +59,9 @@ const GuideCard = ({
         <div className={styles.cardTextWrapper}>
           <div className={styles.cardText}>
             {name}
-            <a className={styles.cardLinkText} role="button" href>
+            <button className={styles.cardLinkText} type="button">
               Explore Guide →
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -106,7 +106,6 @@ const GuideList = () => (
           name="Food resources"
           link="/foodmap"
           img={ImgFood}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -114,7 +113,6 @@ const GuideList = () => (
           name="Hygiene"
           link="/covid/hygiene"
           img={Imghygiene}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -122,7 +120,6 @@ const GuideList = () => (
           name="Shelter Access Points"
           link="/covid/shelteraccess"
           img={Imgshelteraccess}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -130,7 +127,6 @@ const GuideList = () => (
           name="Medical Services"
           link="/covid/medicalservices"
           img={Imgmedicalservices}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -138,7 +134,6 @@ const GuideList = () => (
           name="Domestic Violence"
           link="/covid/domesticviolence"
           img={Imgdomesticviolence}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -146,7 +141,6 @@ const GuideList = () => (
           name="Internet Access"
           link="/covid/internet"
           img={Imginternet}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -154,7 +148,6 @@ const GuideList = () => (
           name="Financial and Job Assistance"
           link="/covid/financialassistance"
           img={Imgfinancialassistance}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -162,7 +155,6 @@ const GuideList = () => (
           name="Rental Assistance"
           link="/covid/rentalassistance"
           img={Imgrentalassistance}
-          isTypeform={false}
         />
       </li>
       <li className={styles.item}>
@@ -170,7 +162,6 @@ const GuideList = () => (
           name="LGBTQ Resources"
           link="/covid/lgbtq"
           img={Imglgbtq}
-          isTypeform={false}
         />
       </li>
       {/* Note: these resource guides have temporarily been disabled due to covid.
