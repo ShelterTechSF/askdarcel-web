@@ -101,7 +101,7 @@ export default class EditPage {
     this.description = baseSelector.find('#edit-description-input');
     this.deleteNoteButton = ReactSelector('EditNotes').find('.delete-note');
     this.deletePhoneButton = ReactSelector('EditPhones').find('.trash-button');
-    this.saveButton = baseSelector.find('.sidebar--actions--button');
+    this.saveButton = baseSelector.findReact('EditSidebar').findReact('SaveButton');
     this.addServiceButton = baseSelector.find('.new-service');
     this.removeFirstServiceButton = baseSelector.find('.remove-item:nth-last-of-type(1)');
     this.services = baseSelector.find('.edit--service');

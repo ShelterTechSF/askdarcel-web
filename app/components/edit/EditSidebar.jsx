@@ -2,7 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import './EditSidebar.scss';
+import styles from './EditSidebar.scss';
+
+const SaveButton = ({ children, disabled, onClick }) => (
+  <button
+    type="button"
+    className={styles.actionButton}
+    disabled={disabled}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
 
 const EditSidebar = ({
   addService,
@@ -17,18 +28,16 @@ const EditSidebar = ({
   submitting,
 }) => {
   let actionButtons = [
-    <button
-      type="button"
-      className="sidebar--actions--button"
+    <SaveButton
       key="submit"
       disabled={submitting}
       onClick={handleSubmit}
     >
       Save Changes
-    </button>,
+    </SaveButton>,
     <button
       type="button"
-      className="sidebar--actions--button deactivate"
+      className={`${styles.actionButton} ${styles.deactivate}`}
       key="deactive"
       disabled={submitting}
       onClick={() => handleDeactivation('resource', resource.id)}
@@ -38,18 +47,16 @@ const EditSidebar = ({
   ];
   if (newResource) {
     actionButtons = [
-      <button
-        type="button"
-        className="sidebar--actions--button"
+      <SaveButton
         key="submit"
         disabled={submitting}
         onClick={createResource}
       >
         Submit
-      </button>,
+      </SaveButton>,
       <button
         type="button"
-        className="sidebar--actions--button cancel"
+        className={`${styles.actionButton} ${styles.cancel}`}
         key="cancel"
         onClick={handleCancel}
       >
@@ -61,7 +68,7 @@ const EditSidebar = ({
     actionButtons.push(
       <button
         type="button"
-        className="sidebar--actions--button hap--button"
+        className={styles.actionButton}
         key="hap"
         onClick={certifyHAP}
       >
@@ -81,33 +88,33 @@ const EditSidebar = ({
     });
   }
   return (
-    <nav className="sidebar">
-      <div className="sidebar--content">
-        <ul className="sidebar--list">
-          <li className="sidebar--list--heading">
-            <h3>Organization</h3>
-          </li>
-          <li className="sidebar--list--item active">
+    <nav className={styles.sidebar}>
+      <div className={styles.sidebarContent}>
+        <h3 className={styles.listHeading}>Organization</h3>
+        <ul className={styles.list}>
+          <li className={`${styles.listItem} ${styles.active}`}>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#">{resource.name}</a>
           </li>
         </ul>
-        <ul className="sidebar--list">
-          <li className="sidebar--list--heading">
-            <h3>
-              <a href="#services">Services</a>
-              <button type="button" className="service--action--button" onClick={addService}><i className="material-icons">add</i></button>
-            </h3>
-          </li>
-          {Object.keys(allServices).map(service => (
-            <li key={service} className="sidebar--list--item">
-              <a href={`#${service}`} style={{ display: 'block' }}>{allServices[service].name}</a>
+
+        <h3 className={styles.listHeading}>
+          <a href="#services">Services</a>
+          <button type="button" className={styles.serviceActionButton} onClick={addService}>
+            <i className="material-icons">add_circle_outline</i>
+          </button>
+        </h3>
+        <ul className={styles.list}>
+          {Object.entries(allServices).map(([key, service]) => (
+            <li key={key} className={styles.listItem}>
+              <a href={`#${service}`} style={{ display: 'block' }}>{service.name}</a>
             </li>
           ))}
         </ul>
       </div>
-      <div className="sidebar--actions">
-        {actionButtons.map(button => button)}
+
+      <div className={styles.actions}>
+        {actionButtons}
       </div>
     </nav>
   );

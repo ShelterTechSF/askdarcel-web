@@ -115,6 +115,10 @@
   color: $color-white;
 }
 
+.cardLinkText:hover {
+  color: #fff;
+}
+
 .cardPartner {
   display: flex;
   flex-direction: column;

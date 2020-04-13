@@ -4,62 +4,51 @@
 // SIDEBAR
 
 .sidebar {
-	width: calc-em(250px);
-	background-color: $color-grey1;
+  width: calc-em(250px);
+  background-color: $color-grey1;
   display: flex;
-	flex-direction: column;
+  flex-direction: column;
   position: sticky;
   top: 5rem;
   height: 94vh;
+
   @media screen and (max-width: 900px ) {
     width: 100%;
     height: 80px;
     z-index: 1000;
   }
+
   @media screen and (max-width: 767px ) {
     top: 50px;
   }
 }
 
-.sidebar--content {
+.sidebarContent {
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.sidebar--list {
+.list {
   border-bottom: 1px solid $color-grey3;
   padding-bottom: 20px;
+
   &:last-of-type() {
     border-bottom: 0;
   }
+
   @media screen and (max-width: 900px ) {
     display: none;
   }
 }
 
-.sidebar--list--heading h3{
-	padding: 20px 25px 10px;
-	text-transform: uppercase;
+.listHeading {
+  padding: 20px 25px 10px;
+  text-transform: uppercase;
   font-size: calc-em(13px);
-  font-weight: 700;
+  font-weight: 600;
   color: $color-grey7;
-  .service--action--button {
-    color: $color-grey5;
-    background: none;
-    padding: 0;
-    height: 100%;
-    float: right;
 
-    &:hover {
-      box-shadow: none;
-      color: $color-brand;
-    }
-
-    &:focus {
-      box-shadow: none;
-    }
-  }
-  & a {
+  a {
     color: $color-grey7;
     &:hover {
       color: $color-brand;
@@ -67,9 +56,28 @@
   }
 }
 
-.sidebar--list--item {
+.serviceActionButton {
+  color: $color-grey4;
+  background: none;
+  padding: 0;
+  height: 100%;
+  float: right;
+
+  &:hover {
+    box-shadow: none;
+    color: $color-brand;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.listItem {
+  font-size: 15px;
+
   a {
-		color: $color-grey5;
+    color: $color-grey5;
     border-left: 2px solid transparent;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -78,28 +86,28 @@
     padding: 11px 25px 11px 23px;
     height: calc-em(40px);
     display: block;
-		&:hover {
-			text-decoration: none;
+    &:hover {
+      text-decoration: none;
       color: $color-brand;
-		}
-	}
+    }
+  }
 
   &.active a {
     border-left: 2px solid $color-brand !important;
     color: $color-brand;
-    font-weight: 700;
   }
 }
 
-.sidebar--actions {
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   border-top: 1px solid $color-grey3;
   padding: 15px 25px;
   width: 250px;
   background: $color-grey1;
   z-index: 2;
+
   @media screen and (max-width: 900px ) {
     flex-direction: row;
     align-items: center;
@@ -108,43 +116,44 @@
   }
 }
 
-.sidebar--actions--button {
-		color: #FFFFFF;
-		font-size: calc-em(15px);
-		padding: calc-em(7px) calc-em(15px);
-		border: 1px solid $color-brand;
-    background: transparent;
-    color: $color-brand;
-		border-radius: 3px;
-		width: 100%;
-    flex: 0 0 auto;
-    margin: 5px 0;
-    @media screen and (max-width: 900px ) {
-      width: 30%;
-      font-size: 14px;
-      padding: 5px 10px;
-    }
+.actionButton {
+  color: #FFFFFF;
+  font-size: calc-em(16px);
+  padding: calc-em(7px) calc-em(15px);
+  border: 1px solid $color-brand;
+  background: $color-white;
+  color: $color-brand;
+  border-radius: 3px;
+  width: 100%;
+  flex: 0 0 auto;
+  margin: 5px 0;
 
+  @media screen and (max-width: 900px ) {
+    width: 30%;
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  &:hover {
+    background: $color-brand;
+    color: $color-white;
+  }
+
+  &.cancel {
+    border: 1px solid $color-grey5;
+    color: $color-red;
     &:hover {
-      background: $color-brand;
+      background: $color-red;
       color: $color-white;
     }
+  }
 
-    &.cancel {
-      border: 1px solid $color-grey5;
-      color: $color-red;
-      &:hover {
-        background: $color-red;
-        color: $color-white;
-      }
+  &.deactivate {
+    border: 1px solid $color-red;
+    color: $color-red;
+    &:hover {
+      background: $color-red;
+      color: $color-white;
     }
-
-    &.deactivate {
-      border: 1px solid $color-red;
-      color: $color-red;
-      &:hover {
-        background: $color-red;
-        color: $color-white;
-      }
-    }
+  }
 }
