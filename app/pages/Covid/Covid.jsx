@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Footer from '../../components/ui/Footer/Footer';
 
 import FoodList from './components/FoodList';
+import FoodMap from './components/FoodMap';
 import SimpleGuide from './components/SimpleGuide';
 import styles from './Covid.scss';
 
@@ -32,6 +33,9 @@ const CovidRoutes = () => {
       </Route>
       <Route path={`${path}/foodlist`}>
         <FoodList />
+      </Route>
+      <Route path={`${path}/foodmap`}>
+        <FoodMap />
       </Route>
       <Route path={`${path}/hygiene`}>
         <SimpleGuide

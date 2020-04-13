@@ -10,7 +10,7 @@ const FoodList = () => (
   <article>
     <CovidHeader headerText="Food resources for Individuals-In-Need" />
     <div className={styles.foodBannerContainer}>
-      <Link to="/foodmap">
+      <Link to="/covid/foodmap">
         View the San Francisco Food Resource Map
       </Link>
     </div>
