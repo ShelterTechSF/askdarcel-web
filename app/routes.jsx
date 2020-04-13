@@ -11,14 +11,6 @@ import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { SearchResultsPage } from './pages/SearchPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 
-import Hygiene from './pages/Hygiene';
-import ShelterAccess from './pages/ShelterAccess';
-import MedicalServices from './pages/MedicalServices';
-import DomesticViolence from './pages/DomesticViolence';
-import InternetAccess from './pages/InternetAccess';
-import FinancialAssistance from './pages/FinancialAssistance';
-import RentalAssistance from './pages/RentalAssistance';
-import LGBTQResources from './pages/LGBTQResources';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
@@ -46,14 +38,6 @@ export default () => (
     <Route path="/foodmap" component={FoodMap} />
     <Route exact path="/covid" component={Covid} />
     <Route path="/covid" component={CovidGuides} />
-    <Route path="/hygiene" component={Hygiene} />
-    <Route path="/shelteraccess" component={ShelterAccess} />
-    <Route path="/medicalservices" component={MedicalServices} />
-    <Route path="/domesticviolence" component={DomesticViolence} />
-    <Route path="/internet" component={InternetAccess} />
-    <Route path="/financialassistance" component={FinancialAssistance} />
-    <Route path="/rentalassistance" component={RentalAssistance} />
-    <Route path="/lgbtq" component={LGBTQResources} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
     <Route path="/organizations/:id/edit" component={OrganizationEditPage} />

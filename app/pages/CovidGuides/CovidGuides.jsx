@@ -23,6 +23,42 @@ const CovidGuides = () => {
             googleDocURL="https://docs.google.com/document/d/e/2PACX-1vQ76IDYnl7rpCdyCf1Jk6cbxO240gzaVmUAWUMNi8nAyTgqrbJKxDK0bv1QWHNcNBQ79cUHq_NvBJko/pub?embedded=false"
           />
         </Route>
+        <Route path={`${path}/hygiene`}>
+          <SimpleGuide
+            pageHeader="Hygiene resources for the COVID-19 Emergency"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vSsqCdzEf9ulqX64cSvWiq-T877DLvhNZ9jXjepMT51M6qYqqKbGg1pObo2GnuWELTv5_jzfYi2ZbEH/pub?embedded=false"
+          />
+        </Route>
+        <Route path={`${path}/internet`}>
+          <SimpleGuide
+            pageHeader="Internet Access during the COVID-19 Emergency"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vTmf5Z0RiprdHr5r0Xw-1JMHF-YgOcDCSYxKaVtgqbKbSfnOmUG8140FIMwBtI4BgpqYjQ2SivnBLku/pub?embedded=false"
+          />
+        </Route>
+        <Route path={`${path}/lgbtq`}>
+          <SimpleGuide
+            pageHeader="LGBTQ Youth resouces for the COVID-19 Emergency"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vRW7qcXDy9f9djBeESvo9vRMLGJ0ff9r2a9BzKFBr_rGgQwmgj9bRFfjB_w83Ly92k4ddAVHZGZ33TB/pub?embedded=false"
+          />
+        </Route>
+        <Route path={`${path}/medicalservices`}>
+          <SimpleGuide
+            pageHeader="Medical Services for the COVID-19 Emergency"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vSqkfARenUcIZRff8NHBtIhIdyWoqEcdtMyN1KvsCFoTlgFoQ_zj_tSBesQWxqoAsBP4iqCcbACN8-j/pub?embedded=false"
+          />
+        </Route>
+        <Route path={`${path}/rentalassistance`}>
+          <SimpleGuide
+            pageHeader="Rental Assistance for the COVID-19 Emergency"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vQrdPtbc6EKPs8X81xu2X8bu8LC-ke2jBEiENImAoLUiSWoOMIRqa1hlneiiCoGDBBOwyR9RHVKlrJe/pub?embedded=false"
+          />
+        </Route>
+        <Route path={`${path}/shelteraccess`}>
+          <SimpleGuide
+            pageHeader="Shelter Access Points for the COVID-19 Emergency"
+            googleDocURL="https://docs.google.com/document/d/e/2PACX-1vTFNbKZUYxKBW9qX-gDWOTKHrO7enuIK4OuymWGJxQ1ypELhqo6BvQV8Gg4E_QtpuEMvHlzY6e058so/pub?embedded=false"
+          />
+        </Route>
       </Switch>
       <Footer />
     </div>
