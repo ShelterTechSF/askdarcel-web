@@ -23,6 +23,7 @@ import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
 import Covid from './pages/Covid';
+import CovidGuides from './pages/CovidGuides';
 import FoodMap from './pages/FoodMap';
 import FoodList from './pages/FoodList';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
@@ -43,7 +44,8 @@ export default () => (
     <Route path="/about" component={About} />
     <Route path="/foodlist" component={FoodList} />
     <Route path="/foodmap" component={FoodMap} />
-    <Route path="/covid" component={Covid} />
+    <Route exact path="/covid" component={Covid} />
+    <Route path="/covid" component={CovidGuides} />
     <Route path="/hygiene" component={Hygiene} />
     <Route path="/shelteraccess" component={ShelterAccess} />
     <Route path="/medicalservices" component={MedicalServices} />
