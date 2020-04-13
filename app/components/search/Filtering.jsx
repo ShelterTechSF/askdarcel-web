@@ -32,7 +32,7 @@ class Filtering extends Component {
               onClick={() => this.setFiltersActive(!filtersActive)}
               type="button"
             >
-                Filters
+              Filters
             </button>
             <OpenNowRefinementList attribute="open_times" />
             <div className={`custom-refinement ${filtersActive ? 'active' : ''}`}>

@@ -98,10 +98,10 @@ class ServicePage extends React.Component {
                     {/* TODO Implement rendering/popover when programs exist */}
                     {program ? (
                       <span>
-  in the
+                        in the
                         {program.name}
                         {' '}
-  program,
+                        program,
                       </span>
                     ) : null}
                     <span>

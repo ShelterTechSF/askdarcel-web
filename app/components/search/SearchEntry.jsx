@@ -81,7 +81,7 @@ class SearchEntry extends Component {
                   rel="noopener noreferrer"
                 >
                   <i className="material-icons">directions_outlined</i>
-                Go
+                  Go
                 </a>
               </li>
             )}

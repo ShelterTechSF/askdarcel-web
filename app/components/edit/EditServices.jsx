@@ -27,7 +27,7 @@ const EditServices = ({
       onClick={addService}
     >
       <i className="material-icons">add_box</i>
-          Add New Service
+      Add New Service
     </button>
   </li>
 );

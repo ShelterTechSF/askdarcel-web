@@ -33,7 +33,7 @@ class Service extends Component {
         <div className="service--meta disabled-feature">
           <p><ServiceCategory category={service.category} /></p>
           <p>
-updated
+            updated
             {service.updated_date}
           </p>
         </div>

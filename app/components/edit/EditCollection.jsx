@@ -86,7 +86,7 @@ export default function editCollectionHOC(ResourceObjectItem,
           {showAdd
             && (
               <button type="button" className="edit--section--list--item--button solid-brand" onClick={this.addItem}>
-              Add phone
+                Add phone
               </button>
             )
           }

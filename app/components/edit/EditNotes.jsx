@@ -84,7 +84,7 @@ class EditNotes extends Component {
         <p>
           <a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Markdown</a>
           {' '}
-is also supported for notes.
+          is also supported for notes.
         </p>
         <ul className="edit--section--list--item--sublist">
           {this.renderNotes()}
@@ -96,7 +96,7 @@ is also supported for notes.
         >
           <i className="material-icons">add_box</i>
           {' '}
-Add Note
+          Add Note
         </button>
       </li>
     );
@@ -129,7 +129,7 @@ class EditNote extends Component {
       note = (
         <li>
           <label htmlFor={`note-${index + 1}`}>
-Note
+            Note
             {index + 1}
           </label>
           <textarea

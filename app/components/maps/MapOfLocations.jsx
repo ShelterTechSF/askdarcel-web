@@ -68,7 +68,7 @@ class MapOfLocations extends React.Component {
                           <tr>
                             <td className="iconcell">
                               {i + 1}
-.
+                              .
                             </td>
                             <td><strong>{title}</strong></td>
                             <td className="iconcell">

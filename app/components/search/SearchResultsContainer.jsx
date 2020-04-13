@@ -34,7 +34,7 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
     output = (
       <div className="no-results">
         <p className="no-results-text">
-No results have been found for
+          No results have been found for
           {' '}
           {searchState.query}
         </p>
@@ -57,11 +57,11 @@ No results have been found for
             hitsPerPage={searchResults.hitsPerPage}
           />
           <div className="add-resource">
-              Can&apos;t find the organization you&apos;re looking for?
+            Can&apos;t find the organization you&apos;re looking for?
             <Link to="/organizations/new" className="add-resource-button">
               <i className="material-icons">add_circle</i>
               {' '}
-                Add an organization
+              Add an organization
             </Link>
           </div>
         </div>

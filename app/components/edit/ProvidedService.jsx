@@ -172,7 +172,7 @@ const ProvidedService = ({
           id="service--deactivation"
           onClick={() => handleDeactivation('service', service.id)}
         >
-            Remove Service
+          Remove Service
         </button>
       </header>
 
