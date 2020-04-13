@@ -22,7 +22,7 @@ export default class FoodMap extends React.Component {
               alt="SF Gov logo"
             />
             <span>
-            San Francisco EOC Food Resource Map
+              San Francisco EOC Food Resource Map
             </span>
           </div>
           <section>

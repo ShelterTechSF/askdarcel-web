@@ -67,7 +67,7 @@ class HomePage extends React.Component {
         />
         <Section
           title="Resource Guides"
-          description="Get guided help with many of the most common issues people are facing in San Francisco."
+          description="Get guided help with many of the most common issues people are facing in San Francisco. Updated April 12, 2020."
         >
           <Guidelist />
         </Section>

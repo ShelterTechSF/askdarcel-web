@@ -45,14 +45,14 @@
   transition: all 200ms ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
-  min-height: 280px;
+  min-height: 220px;
   @media screen and ( max-width: 920px ) {
-    min-height: 260px;
+    min-height: 190px;
     border: 2px solid #e0e0e0;
     border-radius: 3px;
   }
   @media screen and ( max-width: 600px ) {
-    min-height: 240px;
+    min-height: 165px;
   }
 
   .cardLink:focus &, .cardLink:hover & {
@@ -66,8 +66,13 @@
 
 .cardImage {
   object-fit: cover;
-  height: 150px;
+  height: 8vw;
+  max-height: 150px;
+  min-height: 75px;
   border-radius: 3px 3px 0 0;
+  @media screen and ( max-width: 600px ) {
+    height: 75px
+  }
 }
 
 .cardTextWrapper {
