@@ -79,6 +79,14 @@ const GuideList = () => (
     <ul className={styles.list}>
       <li className={styles.item}>
         <GuideCard
+          name="Shelter &#38; Quarantine Updates"
+          link="/covid/shelteraccess"
+          img={Imgshelteraccess}
+          isTypeform={false}
+        />
+      </li>
+      <li className={styles.item}>
+        <GuideCard
           name="Family Homelessness"
           link="https://sheltertech.typeform.com/to/GFEzl2"
           img={ImgFamilyHomelessness}
@@ -113,13 +121,6 @@ const GuideList = () => (
           name="Hygiene"
           link="/covid/hygiene"
           img={Imghygiene}
-        />
-      </li>
-      <li className={styles.item}>
-        <GuideCard
-          name="Shelter Access Points"
-          link="/covid/shelteraccess"
-          img={Imgshelteraccess}
         />
       </li>
       <li className={styles.item}>

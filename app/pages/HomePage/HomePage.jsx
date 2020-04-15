@@ -63,11 +63,11 @@ class HomePage extends React.Component {
       <div className="find-page">
         <HomePageHero
           title="Welcome to the SF Service Guide"
-          description="Find food, housing, health resources and more in San Francisco."
+          description="Find food, housing, health, and coronavirus resources in San Francisco."
         />
         <Section
           title="Resource Guides"
-          description="Get guided help with many of the most common issues people are facing in San Francisco. Updated April 12, 2020."
+          description="Get guided help with many of the most common issues people are facing in San Francisco. Updated regularly."
         >
           <Guidelist />
         </Section>
