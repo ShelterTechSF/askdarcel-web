@@ -36,4 +36,4 @@ if (isSFServiceGuideSite()) {
 
 const images = appImages;
 
-export { images, images as default };
+export { images };
