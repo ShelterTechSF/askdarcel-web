@@ -4,7 +4,7 @@ import * as types from './actionTypes';
 
 // == Actions ==
 
-export const showPopUpMessage = ({ message, type = 'success' }) => (
+const showPopUpMessage = ({ message, type = 'success' }) => (
   {
     type: types.SHOW_POP_UP_MESSAGE,
     popUpMessage: {
@@ -14,7 +14,7 @@ export const showPopUpMessage = ({ message, type = 'success' }) => (
   }
 );
 
-export const hidePopUpMessage = () => (
+const hidePopUpMessage = () => (
   { type: types.HIDE_POP_UP_MESSAGE }
 );
 
