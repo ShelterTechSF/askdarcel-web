@@ -7,7 +7,7 @@ import moment from 'moment';
  * '700' to new Date(..., ..., ..., 7, 0)
  * '1330' to new Date(..., ..., ..., 13, 30)
  */
-export function timeToDate(hours) {
+function timeToDate(hours) {
   if (hours === null) {
     return null;
   }

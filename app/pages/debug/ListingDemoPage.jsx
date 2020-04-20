@@ -23,7 +23,7 @@ export const simpleScheduleLookup = {
 };
 /* eslint-enable max-len */
 
-export const simpleSchedules = Object.values(simpleScheduleLookup);
+const simpleSchedules = Object.values(simpleScheduleLookup);
 
 export const createScheduleFromShorthand = shedule_shorthand => {
   const today = new Date().getDay();
