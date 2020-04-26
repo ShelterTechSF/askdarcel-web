@@ -24,6 +24,7 @@ module.exports = {
     'import/no-unused-modules': ['error', {
       missingExports: true,
       unusedExports: true,
+      ignoreExports: ['app/init.jsx'],
     }],
     'import/prefer-default-export': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
