@@ -6,7 +6,7 @@
     "node": ">=4.2.4",
     "npm": ">=3.3 <4"
   },
-  "main": "app.js",
+  "browser": "app/init.jsx",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@sentry/browser": "^4.0.6",
