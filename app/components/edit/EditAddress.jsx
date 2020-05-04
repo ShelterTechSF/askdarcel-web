@@ -107,7 +107,7 @@ EditAddress.propTypes = {
 };
 
 
-const EditAddressCollection = editCollectionHOC(EditAddress, 'Addresses', {}, true);
+const EditAddressCollection = editCollectionHOC(EditAddress, 'Addresses', {}, 'Add Address');
 EditAddressCollection.displayName = 'EditAddressCollection';
 
 
