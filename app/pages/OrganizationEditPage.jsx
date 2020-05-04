@@ -214,18 +214,34 @@ const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
   const { id, isRemoved, dirty } = address;
   const { id: parent_resource_id } = uriObj;
   const postableAddress = _.omit(address, ['dirty', 'isRemoved']);
+
   if (!id) {
+    // Create new address
+
+    // Skip any addresses that only have blank fields
+    if (_.every(Object.values(postableAddress), _.isEmpty)) {
+      return [];
+    }
+
     return [dataService.post('/api/change_requests', {
-      ...postableAddress, type: 'addresses', parent_resource_id, action: 'insert',
+      change_request: {
+        resource_id: parent_resource_id,
+        type: 'addresses',
+        action: '0',
+        field_changes: postableAddress,
+      },
     })];
   } if (isRemoved) {
+    // Delete existing address
     return [dataService.post(`/api/addresses/${id}/change_requests`, { action: 'remove' })];
   } if (dirty) {
+    // Update existing address
     return [dataService.post(
       `/api/addresses/${id}/change_requests`,
       { change_request: postableAddress },
     )];
   }
+
   // Skip any unmodified addresses.
   return [];
 });
