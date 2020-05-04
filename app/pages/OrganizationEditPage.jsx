@@ -18,6 +18,12 @@ import { withPopUpMessages } from '../actions/popUpMessageActions';
 
 import './OrganizationEditPage.scss';
 
+// These correspond to the ChangeRequest.action enum on the askdarcel-api side,
+// which are apparently strings that contain numbers, rather than numbers.
+const ACTION_INSERT = '0';
+const ACTION_EDIT = '1';
+const ACTION_REMOVE = '2';
+
 /**
  * Apply a set of changes to a base array of items.
  *
@@ -72,7 +78,7 @@ function updateCollectionObject(object, id, path, promises) {
   promises.push(
     dataService.post(
       `/api/${path}/${id}/change_requests`,
-      { change_request: object },
+      { change_request: { action: ACTION_EDIT, field_changes: object } },
     ),
   );
 }
@@ -94,9 +100,12 @@ function createNewPhoneNumber(item, resourceID, promises) {
     dataService.post(
       '/api/change_requests',
       {
-        change_request: item,
-        type: 'phones',
+        change_request: {
+          action: ACTION_INSERT,
+          field_changes: item,
+        },
         parent_resource_id: resourceID,
+        type: 'phones',
       },
     ),
   );
@@ -225,15 +234,17 @@ const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
 
     return [dataService.post('/api/change_requests', {
       change_request: {
-        resource_id: parent_resource_id,
-        type: 'addresses',
-        action: '0',
+        action: ACTION_INSERT,
         field_changes: postableAddress,
       },
+      parent_resource_id,
+      type: 'addresses',
     })];
   } if (isRemoved) {
     // Delete existing address
-    return [dataService.post(`/api/addresses/${id}/change_requests`, { action: 'remove' })];
+    return [dataService.post(`/api/addresses/${id}/change_requests`, {
+      change_request: { action: ACTION_REMOVE },
+    })];
   } if (dirty) {
     // Update existing address
     return [dataService.post(
