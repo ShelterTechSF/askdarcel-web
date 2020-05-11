@@ -107,7 +107,17 @@ const EditSidebar = ({
         <ul className={styles.list}>
           {Object.entries(allServices).map(([key, service]) => (
             <li key={key} className={styles.listItem}>
-              <a href={`#${service}`} style={{ display: 'block' }}>{service.name}</a>
+              <a
+                href={`#${key}`}
+                style={{ display: 'block' }}
+                onClick={e => {
+                  e.preventDefault();
+                  const topOfElement = document.getElementById(key).offsetTop;
+                  window.scroll({ top: topOfElement, behavior: 'smooth' });
+                }}
+              >
+                {service.name}
+              </a>
             </li>
           ))}
         </ul>
