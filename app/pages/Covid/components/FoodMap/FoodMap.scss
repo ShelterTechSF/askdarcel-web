@@ -1,58 +1,128 @@
-.foodBannerContainer {
+.foodResourcesContainer {
+  display: flex;
+  flex-direction: column;
+  border-top:1px solid #F4F4F4;
+}
+
+.foodResourcesTitle {
+  position: absolute;
+  left: 30px;
+  top: 15px;
+  font-family: Open Sans, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 35px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 21px;
+    line-height: 29px;
+  }
+}
+
+.searchResultsAmount {
+  position: absolute;
+  top: 62px;
+  left: 30px;
+  font-family: Open Sans, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  color: #828282;
+
+  @media screen and (max-width: 767px) {
+    top: 17px;
+    right: 12px;
+    left: initial;
+  }
+}
+
+.borderLine {
+  position: absolute;
   width: 100%;
-  color: black;
+  top: 96px;
+  left: 0;
+  height: 0;
+  border: 0.5px solid #F4F4F4;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.filterAndResults {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 97px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.filterResources {
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  background: #FFFFFF;
+  padding-left: 30px;
+  height: 0;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+.filterResourcesTitle {
+  margin-top: 19px;
+  position: absolute;
+  font-family: Open Sans, serif;
+  font-style: normal;
+  font-weight: bold;
   font-size: 18px;
-  text-align: center;
-  position: sticky;
-  text-decoration: underline;
-  padding: 2em 0;
-
-  @media screen and (max-width: 600px) {
-    font-size: 14px;
-    padding: 0;
-    height: 60px;
-    line-height: 60px;
-  }
+  line-height: 142.99%;
 }
 
-.mapContainer {
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
+.clearAll {
+  margin-top: 53px;
+  position: absolute;
+  font-family: Open Sans, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #276CE5;
 }
 
-.foodMapBannerCredit {
-  background-color: #267030;
-  color: white;
-  height: 32px;
-
-  @media screen and (max-width: 600px) {
-    padding: 4px;
-    width: 300px;
-    margin: 32px auto 0;
-  }
-
-  .SFGovLogo {
-    height: 90%;
-    margin-left: 14px;
-    padding: 4px 0;
-  }
-
-  span {
-    margin-left: .5em;
-    font-size: 14px;
-    display: inline-block;
-    vertical-align: middle;
-  }
+.checkBoxCategories {
+  margin-top: 84px;
+  font-family: Open Sans, serif;
+  height: 26px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 142.99%;
 }
 
-.embedMap {
-  width: 100%;
-  height: 65vh;
-  margin: auto;
+.checkBoxCategory {
+  margin-top: 27px;
+}
 
-  @media screen and (max-width: 600px) {
-    width: auto;
-    height: calc((100vh) - 240px);
-  }
+.checkBox {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-top: 16px;
+  font-family: Open Sans, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 23px;
+  color: #888888;
+}
+
+.checkBox input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 0;
 }
