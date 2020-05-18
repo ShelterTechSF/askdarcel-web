@@ -87,6 +87,12 @@ const EditSidebar = ({
       allServices[service.id].name = service.name;
     });
   }
+
+  const sortedServices = Object.entries(allServices).sort((a, b) => {
+    if (+a[0] < 0) return 0;
+    if (+b[0] < 0) return 1;
+    return a[1].name.localeCompare(b[1].name);
+  });
   return (
     <nav className={styles.sidebar}>
       <div className={styles.sidebarContent}>
@@ -105,27 +111,26 @@ const EditSidebar = ({
           </button>
         </h3>
         <ul className={styles.list}>
-          {Object.entries(allServices).map(([key, service]) => (
-            <li key={key} className={styles.listItem}>
-              <a
-                href={`#${key}`}
-                style={{ display: 'block' }}
-                onClick={e => {
-                  e.preventDefault();
-                  const topOfElement = document.getElementById(key).offsetTop;
-                  window.scroll({ top: topOfElement, behavior: 'smooth' });
-                }}
-              >
-                {service.name}
-              </a>
-            </li>
-          ))}
+          {sortedServices
+            .map(([key, service]) => (
+              <li key={key} className={styles.listItem}>
+                <a
+                  href={`#${key}`}
+                  style={{ display: 'block' }}
+                  onClick={e => {
+                    e.preventDefault();
+                    const topOfElement = document.getElementById(key).offsetTop;
+                    window.scroll({ top: topOfElement, behavior: 'smooth' });
+                  }}
+                >
+                  {service.name}
+                </a>
+              </li>
+            ))}
         </ul>
       </div>
 
-      <div className={styles.actions}>
-        {actionButtons}
-      </div>
+      <div className={styles.actions}>{actionButtons}</div>
     </nav>
   );
 };

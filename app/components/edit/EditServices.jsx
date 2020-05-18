@@ -8,8 +8,9 @@ const EditServices = ({
 }) => (
   <li className="edit--section--list--item">
     <ul className="edit--section--list--item--sublist edit--service--list">
-      {
-        services.map((service, index) => (
+      {services
+        .sort((a, b) => a.name - b.name)
+        .map((service, index) => (
           <ProvidedService
             key={`${service.id}`}
             index={index}
