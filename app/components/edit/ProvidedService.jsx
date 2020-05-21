@@ -164,7 +164,7 @@ const ProvidedService = ({
     <li id={`${service.id}`} className="edit--service edit--section">
       <header className="edit--section--header">
         <h4>
-          {`Service ${index + 1}: ${service.name}`}
+          {`Service ${index + 1}: ${service.name || 'New Service'}`}
         </h4>
         <button
           className="remove-item"
