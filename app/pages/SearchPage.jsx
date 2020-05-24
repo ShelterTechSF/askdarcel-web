@@ -59,6 +59,8 @@ class SearchPage extends Component {
   }
 
   render() {
+    console.log('inside render');
+
     const { userLocation } = this.props;
     const { aroundLatLng, searchState } = this.state;
     const configuration = aroundLatLng ? (
@@ -66,6 +68,8 @@ class SearchPage extends Component {
     ) : (
       <Configure aroundLatLngViaIP aroundRadius="all" />
     );
+
+    console.log(`searchState is ${searchState}`);
     return (
       <div className="search-page-container">
 

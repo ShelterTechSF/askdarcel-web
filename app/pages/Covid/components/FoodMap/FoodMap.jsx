@@ -1,8 +1,59 @@
+// import React from 'react';
+// import { Link } from 'react-router-dom';
+// import Iframe from 'react-iframe';
+//
+// import styles from './FoodMap.scss';
+//
+// import ImgSFGovLogo from './assets/SFGovLogo.png';
+//
+// const FoodResources = () => (
+//   <div>
+//     <article className={styles.mapContainer}>
+//       <div className={styles.foodMapBannerCredit}>
+//         <img
+//           className={styles.SFGovLogo}
+//           src={ImgSFGovLogo}
+//           alt="SF Gov logo"
+//         />
+//         <span>
+//           San Francisco EOC Food Resource Map
+//         </span>
+//       </div>
+//       <section>
+//         <Iframe
+//           title="Covid-19 Food Guide"
+//           url="https://sfgov.maps.arcgis.com/apps/webappviewer/index.html?id=bb080a525416426c9f96057a00367b4d"
+//           allowFullScreen="yes"
+//           padding="0pt"
+//           className={styles.embedMap}
+//         />
+//       </section>
+//     </article>
+//     <div className={styles.foodBannerContainer}>
+//       <Link to="/covid/foodlist">
+//         View additional food resources in SFServiceGuide
+//       </Link>
+//     </div>
+//   </div>
+// );
+//
+// export default FoodResources;
+
+
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import {
+  InstantSearch,
+  Configure,
+  SearchBox,
+} from 'react-instantsearch/dom';
 import styles from './FoodMap.scss';
 import FoodResourcesSearchResults from '../FoodResourcesSearchResults/FoodResourcesSearchResults';
 import { exampleJSON } from './StaticSearchResultsDebug';
+import qs from 'qs';
+import config from '../../../../config';
+import { connect } from 'react-redux';
+// import SearchResultsContainer from 'components/search/SearchResultsContainer';
 
 export default class FoodMap extends Component {
   constructor(props) {
@@ -13,7 +64,10 @@ export default class FoodMap extends Component {
       childrenYouthOrFamily: false,
       seniorOrPersonsWithDisabilities: false,
       lowIncome: false,
+      searchState: { query: 'food' },
     };
+
+    this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
 
   // componentDidMount() {
@@ -35,6 +89,23 @@ export default class FoodMap extends Component {
   //   // some api call
   // }
 
+  onSearchStateChange(nextSearchState) {
+    const THRESHOLD = 700;
+    const newPush = Date.now();
+    const { history } = this.props;
+    const { lastPush } = this.state;
+    this.setState({ lastPush: newPush, searchState: nextSearchState });
+    if (lastPush && newPush - lastPush <= THRESHOLD) {
+      history.replace(
+        nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
+      );
+    } else {
+      history.push(
+        nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '',
+      );
+    }
+  }
+
   render() {
     const {
       openNow,
@@ -42,13 +113,23 @@ export default class FoodMap extends Component {
       childrenYouthOrFamily,
       seniorOrPersonsWithDisabilities,
       lowIncome,
+      searchState,
+      aroundLatLng,
     } = this.state;
     let resultLength;
-    if (exampleJSON) {
-      resultLength = Object.keys(exampleJSON).length;
-    } else {
-      resultLength = 0;
-    }
+    // if (exampleJSON) {
+    //   resultLength = Object.keys(exampleJSON).length;
+    // } else {
+    //   resultLength = 0;
+    // }
+
+    const { userLocation } = this.props;
+    const configuration = aroundLatLng ? (
+      <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} />
+    ) : (
+      <Configure aroundLatLngViaIP aroundRadius="all" />
+    );
+
     return (
       <div className={styles.foodResourcesContainer}>
         <div className={styles.foodResourcesTitle}>Food resources</div>
@@ -85,9 +166,36 @@ export default class FoodMap extends Component {
               </label>
             </div>
           </div>
-          <FoodResourcesSearchResults searchResults={exampleJSON} />
+          <div className={styles.instantSearchOverride}>
+            <InstantSearch
+              appId={config.ALGOLIA_APPLICATION_ID}
+              apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
+              indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
+              searchState={searchState}
+              // onSearchStateChange={this.onSearchStateChange}
+            >
+              {/*{configuration}*/}
+              <FoodResourcesSearchResults />
+            </InstantSearch>
+          </div>
+          {/*<div className={styles.instantSearchOverride}>*/}
+          {/*  <InstantSearch*/}
+          {/*    appId={config.ALGOLIA_APPLICATION_ID}*/}
+          {/*    apiKey={config.ALGOLIA_READ_ONLY_API_KEY}*/}
+          {/*    indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}>*/}
+          {/*    <FoodResourcesSearchResults searchResults={exampleJSON} />*/}
+          {/*  </InstantSearch>*/}
+          {/*</div>*/}
         </div>
       </div>
     );
   }
 }
+
+// function mapStateToProps(state) {
+//   return {
+//     userLocation: state.user.location,
+//   };
+// }
+
+// export const FoodMap = withRouter(connect(mapStateToProps)(FoodMap));
