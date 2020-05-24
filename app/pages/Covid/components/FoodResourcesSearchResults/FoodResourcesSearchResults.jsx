@@ -1,13 +1,7 @@
 import React from 'react';
 import { connectStateResults } from 'react-instantsearch/connectors';
-import styles from './FoodResourcesSearchResults.scss';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
-import { Loader } from 'components/ui';
-import Filtering from 'components/search/Filtering';
-import SearchTable from 'components/search/SearchTable';
-import { Link } from 'react-router-dom';
-import SearchMap from 'components/search/SearchMap';
-import * as dataService from '../../../../utils/DataService';
+import styles from './FoodResourcesSearchResults.scss';
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -25,10 +19,8 @@ const transformHits = hits => hits.map(hit => {
   return { ...hit, recurringSchedule };
 });
 
-const FoodResourcesSearchResults = ({ searchState, searchResults, searching }) => {
-  // console.log(dataService.getResource(38));
+const FoodResourcesSearchResults = ({ searchResults }) => {
   const renderAddressMetadata = (hit) => {
-    console.log(hit);
     if (hit.addresses.length === 0) {
       return <span>No address found</span>;
     }
@@ -40,33 +32,21 @@ const FoodResourcesSearchResults = ({ searchState, searchResults, searching }) =
     }
     return <span>No address found</span>;
   };
-  // console.log(renderAddressMetadata());
-  // console.log('inside Food Resources Search Results');
-  let output = null;
-  // if (!searchResults && searching) {
-  //   output = <Loader />;
-  // } else if (searchResults && searchResults.nbHits === 0) {
-  //   output = (
-  //     <div>
-  //       <p>
-  //         No results have been found for
-  //         {' '}
-  //         {searchState.query}
-  //       </p>
-  //     </div>
-  //   );
-  // } else if (searchResults)
+
+  let resultLength = 0;
+  let output;
   if (searchResults) {
     const hits = transformHits(searchResults.hits);
+    resultLength = searchResults.hits.length;
     output = (
       <div>
         { hits.map((hit, index) => (
-          <div className={styles.searchResult}>
+          <div className={styles.searchResult} key={hit.id}>
             <div className={styles.searchText}>
               <div className={styles.title}>{ `${index + 1}. ${hit.name}`}</div>
               <div className={styles.address}>{renderAddressMetadata(hit)}</div>
               <div className={styles.description}>{hit.long_description}</div>
-              <div className={styles.location}>{hit.location}</div>
+              <div className={styles.location}>{hit.service_of}</div>
             </div>
             <div className={styles.sideLinks}>
               {
@@ -111,56 +91,15 @@ const FoodResourcesSearchResults = ({ searchState, searchResults, searching }) =
   }
 
   return (
-    <div className={styles.FoodResourcesSearchResultsContainer}>
-      {output}
+    <div>
+      <div className={styles.searchResultsAmount}>{`${resultLength} RESULTS`}</div>
+      <div className={styles.FoodResourcesSearchResultsContainer}>
+        {output}
+      </div>
     </div>
   );
 };
 
-// const FoodResourcesSearchResults = (props) => (
-//   <div className={styles.FoodResourcesSearchResultsContainer}>
-//     { props.searchResults.map((result, index) => (
-//       <div className={styles.searchResult}>
-//         <div className={styles.searchText}>
-//           <div className={styles.title}>{ `${index + 1} ${result.title}`}</div>
-//           <div className={styles.address}>{result.address}</div>
-//           <div className={styles.description}>{result.description}</div>
-//           <div className={styles.location}>{result.location}</div>
-//         </div>
-//         <div className={styles.sideLinks}>
-//           {
-//             result.call
-//            && <div className={styles.sideLinkText}>{`Call ${result.call}`}</div>
-//           }
-//           {
-//             (result.directions && result.address)
-//            && (
-//              <div className={styles.sideLinkText}>
-//                <a href={result.directions}>Get directions</a>
-//              </div>
-//            )
-//           }
-//           <div />
-//           {
-//             result.website
-//             && (
-//               <div className={styles.sideLinkText}>
-//                 <a href={result.website} className={styles.sideLinkText}>Go to Website</a>
-//               </div>
-//             )
-//           }
-//           {
-//             (result.call || result.directions || result.website)
-//            && <div className={styles.borderLine} />
-//           }
-//           <a href="http://localhost:8081/" className={styles.sideLinkText}>Report Error</a>
-//         </div>
-//       </div>
-//     ))}
-//   </div>
-// );
-
 // Connects the Algolia searchState and searchResults to this component
 // Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html
 export default connectStateResults(FoodResourcesSearchResults);
-// export default FoodResourcesSearchResults;

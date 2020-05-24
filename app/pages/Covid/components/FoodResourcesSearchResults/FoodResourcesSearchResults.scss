@@ -170,3 +170,24 @@
     line-height: 19px;
   }
 }
+
+.searchResultsAmount {
+  all: unset;
+  position: absolute;
+  top: -43px;
+  left: 30px;
+  font-family: Open Sans, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 27px;
+  color: #828282;
+
+  @media screen and (max-width: 767px) {
+    font-size: 16px;
+    line-height: 22px;
+    top: -87px;
+    right: 12px;
+    left: initial;
+  }
+}

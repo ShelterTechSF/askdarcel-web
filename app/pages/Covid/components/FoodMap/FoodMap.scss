@@ -79,28 +79,10 @@
   }
 }
 
-.searchResultsAmount {
-  position: absolute;
-  top: 62px;
-  left: 30px;
-  font-family: Open Sans, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 22px;
-  color: #828282;
-
-  @media screen and (max-width: 767px) {
-    top: 17px;
-    right: 12px;
-    left: initial;
-  }
-}
-
 .borderLine {
   position: absolute;
   width: 100%;
-  top: 96px;
+  top: 105px;
   left: 0;
   height: 0;
   border: 0.5px solid #F4F4F4;
@@ -112,7 +94,7 @@
   display: flex;
   flex-direction: row;
   position: absolute;
-  top: 97px;
+  top: 106px;
   box-sizing: border-box;
   width: 100%;
 }
@@ -186,8 +168,66 @@
   margin-left: 0;
 }
 
+.checkBoxResponsive {
+  display: none;
+  @media screen and (max-width: 767px) {
+    all: unset;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 23px;
+    color: #888888;
+    display: flex;
+    margin-top: -20px;
+    margin-left: 160px;
+  }
+}
+
+.checkBoxResponsive input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 0;
+}
+
 .instantSearchOverride {
   all:unset;
   width: 100%;
 }
 
+.filterIcon {
+  display: none;
+  width: 20.24px;
+  height: 13.49px;
+  @media screen and (max-width: 767px) {
+    display: unset;
+  }
+}
+
+.filterButton {
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: unset;
+    border: unset;
+    height: unset;
+    padding: 0 0 0 4.38px;
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 19px;
+    color: #276CE5;
+    background: none;
+  }
+}
+
+.filterButton:hover {
+  box-shadow: unset;
+}
+
+.searchFilters {
+  margin-top: 61.83px;
+  margin-left: 30.38px;
+}
