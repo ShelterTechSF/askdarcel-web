@@ -36,6 +36,7 @@ const FoodResourcesSearchResults = ({ searchResults }) => {
   let resultLength = 0;
   let output;
   if (searchResults) {
+    console.log(searchResults);
     const hits = transformHits(searchResults.hits);
     resultLength = searchResults.hits.length;
     output = (
@@ -50,37 +51,33 @@ const FoodResourcesSearchResults = ({ searchResults }) => {
             </div>
             <div className={styles.sideLinks}>
               {
-                // hit.call
-                // && <div className={styles.sideLinkText}>{`Call ${hit.call}`}</div>
-                <div className={styles.sideLinkText}>Call 211</div>
+                hit.phones[0].number
+                && (
+                  <div className={styles.sideLinkText}>
+                    <a href={`tel${hit.phones[0].number}`}>{`Call ${hit.phones[0].number}`}</a>
+                  </div>
+                )
               }
               {
-                // (hit.directions && hit.address)
-                // && (
-                //   <div className={styles.sideLinkText}>
-                //     <a href={hit.directions}>Get directions</a>
-                //   </div>
-                // )
-                <div className={styles.sideLinkText}>
-                  <a href="http://localhost:8081/">Get directions</a>
-                </div>
+                (hit._geoloc && hit.addresses[0].address_1)
+                && (
+                  <div className={styles.sideLinkText}>
+                    <a href={`http://google.com/maps/dir/?api=1&destination=${hit._geoloc}`}>Get directions</a>
+                  </div>
+                )
               }
               <div />
               {
-                // hit.website
-                // && (
-                //   <div className={styles.sideLinkText}>
-                //     <a href={hit.website} className={styles.sideLinkText}>Go to Website</a>
-                //   </div>
-                // )
-                <div className={styles.sideLinkText}>
-                  <a href="http://localhost:8081/"> Go to Website</a>
-                </div>
+                hit.url
+                && (
+                  <div className={styles.sideLinkText}>
+                    <a href={hit.url} className={styles.sideLinkText}>Go to Website</a>
+                  </div>
+                )
               }
               {
-                // (hit.call || hit.directions || hit.website)
-                // && <div className={styles.borderLine} />
-                <div className={styles.borderLine} />
+                (hit.phones[0].number || hit._geoloc || hit.url)
+                && <div className={styles.borderLine} />
               }
               <a href="http://localhost:8081/" className={styles.sideLinkText}>Report Error</a>
             </div>
