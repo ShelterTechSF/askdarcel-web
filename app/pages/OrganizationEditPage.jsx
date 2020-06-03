@@ -474,12 +474,13 @@ class OrganizationEditPage extends React.Component {
       website,
       email,
       address,
+      hasLocation,
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
     const newResource = {
       name,
-      addresses: [address],
+      addresses: hasLocation ? [address] : [],
       long_description,
       email,
       website,
@@ -547,10 +548,6 @@ class OrganizationEditPage extends React.Component {
     }
     if (website !== resource.website) {
       resourceChangeRequest.website = website;
-      resourceModified = true;
-    }
-    if (name !== resource.name) {
-      resourceChangeRequest.name = name;
       resourceModified = true;
     }
     if (email !== resource.email) {
