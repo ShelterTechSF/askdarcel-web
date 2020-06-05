@@ -47,13 +47,8 @@ class ServicePage extends React.Component {
     const { activeService: service } = this.props;
     const rows = [
       ['How to Apply', service.application_process],
-      ['Who Can Use This', service.eligibility],
       ['Required Documents', service.required_documents],
       ['Fees', service.fee],
-      // ['Waitlist', ] // TODO This doesn't exist in any services
-      // ['Accessibility', ] // TODO Doesn't exist
-      // ['Languages'] // TODO Doesn't exist
-      // ['Funding Sources', ] // TODO Doesn't exist
       [
         'Notes',
         service.notes.map(d => d.note).join('\n'),
