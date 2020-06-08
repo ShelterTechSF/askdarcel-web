@@ -136,6 +136,7 @@ const GuideList = () => (
           name="Food resources"
           link="/covid/foodmap"
           img={ImgFood}
+          categoryId="1000001"
         />
       </li>
       <li className={styles.item}>

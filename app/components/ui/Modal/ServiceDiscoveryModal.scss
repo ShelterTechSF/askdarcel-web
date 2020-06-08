@@ -34,3 +34,27 @@
         font-weight: 600;
     }
 }
+
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid $color-grey3;
+    background-color: $color-white;
+    button {
+        margin: 18px;
+        border: 1px solid $color-brand;
+    }
+    .actionBack {
+        background-color: transparent;
+        color: $color-brand;
+    }
+    .actionSubmit {
+        background-color: $color-brand;
+        margin-right: 80px;
+    }
+}

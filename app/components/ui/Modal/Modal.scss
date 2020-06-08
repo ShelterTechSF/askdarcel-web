@@ -47,9 +47,13 @@
     }
 }
 
-.fullscreenModalBody{
+.fullscreenModalBody, .fullscreenModalBodyWithFooter {
     display: flex;
     width: 100%;
     justify-content: center;
     padding: 48px;
+}
+
+.fullscreenModalBodyWithFooter {
+    padding-bottom: 80px;
 }

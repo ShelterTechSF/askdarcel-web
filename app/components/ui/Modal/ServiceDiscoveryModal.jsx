@@ -40,7 +40,7 @@ class ServiceDiscoveryModal extends Component {
   }
 
   render() {
-    const { isEligibility } = this.props;
+    const { isEligibility, closeModal } = this.props;
     const { eligibilities, subcategories, checkedItems } = this.state;
 
     const options = isEligibility ? eligibilities : subcategories;
@@ -48,7 +48,7 @@ class ServiceDiscoveryModal extends Component {
     const modalContent = (
       <div className={styles.contentContainer}>
         <h1>Tell us more about you</h1>
-        <h2>{isEligibility ? 'Please select the best that apply to your situation.' : 'What are you currently looking for? Select all that apply.'}</h2>
+        <h2>{isEligibility ? 'What statement do you best identify with?' : 'What are you currently looking for? Select all that apply.'}</h2>
         <ul>
           {options.map(option => (
             <li className={styles.listOption} key={option.id}>
@@ -66,11 +66,19 @@ class ServiceDiscoveryModal extends Component {
       </div>
     );
 
+    const modalFooter = (
+      <div className={styles.footer}>
+        <button type="button" className={styles.actionBack} onClick={e => { e.stopPropagation(); closeModal(); }}>Back</button>
+        <button type="button" className={styles.actionSubmit}>Submit</button>
+      </div>
+    );
+
     return (
       <BaseModal
         isFullScreen
         backButtonText="All resource guides"
         modalContent={modalContent}
+        modalFooter={modalFooter}
         {...this.props}
       />
     );

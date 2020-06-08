@@ -7,7 +7,7 @@ import styles from './Modal.scss';
 
 export const BaseModal = props => {
   const {
-    backButtonText, closeModal, modalContent, isFullScreen,
+    backButtonText, closeModal, modalContent, modalFooter, isFullScreen,
   } = props;
 
   const modalBody = isFullScreen ? (
@@ -18,9 +18,12 @@ export const BaseModal = props => {
           {backButtonText}
         </div>
       </div>
-      <div className={styles.fullscreenModalBody}>
+      <div className={
+        modalFooter ? styles.fullscreenModalBodyWithFooter : styles.fullscreenModalBody}
+      >
         {modalContent}
       </div>
+      {modalFooter}
     </Fragment>
   ) : null;
 
