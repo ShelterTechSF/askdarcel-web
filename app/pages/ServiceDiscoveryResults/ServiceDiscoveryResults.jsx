@@ -103,18 +103,6 @@ export default class ServiceDiscoveryResults extends Component {
                   availableEligibilities={eligibilities}
                   selectedEligibilities={selectedEligibilities}
                 />
-                {/* {eligibilities.map(eligibility => (
-                  <label key={eligibility.id} className={styles.checkBox}>
-                    {eligibility.name}
-                    <input
-                      type="checkbox"
-                      name={eligibility.name}
-                      id={eligibility.id}
-                      checked={selectedEligibilities[eligibility.id]}
-                      onChange={() => this.handleEligibilityClick(eligibility.id)}
-                    />
-                  </label>
-                ))} */}
               </div>
 
             </div>
