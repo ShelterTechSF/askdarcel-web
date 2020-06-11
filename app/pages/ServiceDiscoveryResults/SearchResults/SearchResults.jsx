@@ -1,7 +1,7 @@
 import React from 'react';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
-import styles from './FoodResourcesSearchResults.scss';
+import styles from './SearchResults.scss';
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -19,8 +19,8 @@ const transformHits = hits => hits.map(hit => {
   return { ...hit, recurringSchedule };
 });
 
-const FoodResourcesSearchResults = ({ searchResults }) => {
-  const renderAddressMetadata = (hit) => {
+const SearchResults = ({ searchResults }) => {
+  const renderAddressMetadata = hit => {
     if (hit.addresses.length === 0) {
       return <span>No address found</span>;
     }
@@ -89,7 +89,7 @@ const FoodResourcesSearchResults = ({ searchResults }) => {
   return (
     <div>
       <div className={styles.searchResultsAmount}>{`${resultLength} RESULTS`}</div>
-      <div className={styles.FoodResourcesSearchResultsContainer}>
+      <div className={styles.searchResultsContainer}>
         {output}
       </div>
     </div>
@@ -98,4 +98,4 @@ const FoodResourcesSearchResults = ({ searchResults }) => {
 
 // Connects the Algolia searchState and searchResults to this component
 // Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html
-export default connectStateResults(FoodResourcesSearchResults);
+export default connectStateResults(SearchResults);

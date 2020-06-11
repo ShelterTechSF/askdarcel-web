@@ -1,0 +1,174 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border-top:1px solid #F4F4F4;
+}
+
+.title {
+  position: absolute;
+  left: 30px;
+  top: 15px;
+  font-family: Open Sans, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 35px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 21px;
+    line-height: 29px;
+  }
+}
+
+.borderLine {
+  position: absolute;
+  width: 100%;
+  top: 105px;
+  left: 0;
+  height: 0;
+  border: 0.5px solid #F4F4F4;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.filterAndResults {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 106px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.filterResources {
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  background: #FFFFFF;
+  padding-left: 30px;
+  height: 0;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+.filterResourcesTitle {
+  margin-top: 19px;
+  position: absolute;
+  font-family: Open Sans, serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 142.99%;
+}
+
+.clearAll {
+  margin-top: 53px;
+  position: absolute;
+  font-family: Open Sans, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  color: #276CE5;
+}
+
+.checkBoxCategories {
+  margin-top: 84px;
+  font-family: Open Sans, serif;
+  height: 26px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 142.99%;
+}
+
+.checkBoxCategory {
+  margin-top: 27px;
+}
+
+.checkBox {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-top: 16px;
+  font-family: Open Sans, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 23px;
+  color: #888888;
+}
+
+.checkBox input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+.checkBoxResponsive {
+  display: none;
+  @media screen and (max-width: 767px) {
+    all: unset;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 23px;
+    color: #888888;
+    display: flex;
+    margin-top: -20px;
+    margin-left: 160px;
+  }
+}
+
+.checkBoxResponsive input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+.instantSearchOverride {
+  all:unset;
+  width: 100%;
+}
+
+.filterIcon {
+  display: none;
+  width: 20.24px;
+  height: 13.49px;
+  @media screen and (max-width: 767px) {
+    display: unset;
+  }
+}
+
+.filterButton {
+  display: none;
+  @media screen and (max-width: 767px) {
+    display: unset;
+    border: unset;
+    height: unset;
+    padding: 0 0 0 4.38px;
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 19px;
+    color: #276CE5;
+    background: none;
+  }
+}
+
+.filterButton:hover {
+  box-shadow: unset;
+}
+
+.searchFilters {
+  margin-top: 61.83px;
+  margin-left: 30.38px;
+}

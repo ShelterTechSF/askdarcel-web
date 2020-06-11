@@ -16,6 +16,7 @@ import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
 import CovidPages from './pages/Covid';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
+import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults/ServiceDiscoveryResults';
 
 const RedirectToOrganizations = ({ location: { search } }) => {
   const { id } = qs.parse(search.slice(1));
@@ -40,6 +41,7 @@ export default () => (
     <Route path="/search" component={SearchResultsPage} />
     <Route path="/services/:service" component={ServiceListingPage} />
     <Route path="/terms-of-service" component={TermsOfServicePage} />
+    <Route path="/service-discovery" component={ServiceDiscoveryResults} />
 
     {/* Legacy redirects */}
     <Redirect path="/resource/new" to="/organizations/new" />
