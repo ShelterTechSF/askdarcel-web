@@ -9,23 +9,55 @@ import styles from './ServiceDiscoveryResults.scss';
 export default class ServiceDiscoveryResults extends Component {
   constructor(props) {
     super(props);
+
+    const {
+      selectedEligibilities,
+      // selectedSubcategories,
+    } = props;
+
     this.state = {
       openNow: false,
-      experiencingHomelessness: false,
-      childrenYouthOrFamily: false,
-      seniorOrPersonsWithDisabilities: false,
-      lowIncome: false,
+      selectedEligibilities,
+      // TODO: will we have a subcategory filter too?
+      // selectedSubcategories,
       searchState: { query: 'food' },
     };
+
+    this.handleClearAllClick = this.handleClearAllClick.bind(this);
+    this.handleEligibilityClick = this.handleEligibilityClick.bind(this);
+    this.handleOpenNowClick = this.handleOpenNowClick.bind(this);
+  }
+
+  handleClearAllClick() {
+    this.setState({
+      openNow: false,
+      selectedEligibilities: {},
+    });
+  }
+
+  handleOpenNowClick() {
+    const { openNow } = this.state;
+    this.setState({
+      openNow: !openNow,
+    });
+  }
+
+  handleEligibilityClick(optionId) {
+    const { selectedEligibilities } = this.state;
+    this.setState({
+      selectedEligibilities: {
+        ...selectedEligibilities,
+        [optionId]: !selectedEligibilities[optionId],
+      },
+    });
   }
 
   render() {
+    const { eligibilities } = this.props;
+
     const {
       openNow,
-      experiencingHomelessness,
-      childrenYouthOrFamily,
-      seniorOrPersonsWithDisabilities,
-      lowIncome,
+      selectedEligibilities,
       searchState,
     } = this.state;
 
@@ -37,36 +69,36 @@ export default class ServiceDiscoveryResults extends Component {
         <div className={styles.flexContainer}>
           <div className={styles.sidebar}>
             <div className={styles.filterResourcesTitle}>Filter Resources</div>
-            <div className={styles.clearAll}>Clear all</div>
-
+            <div
+              role="button"
+              tabIndex="0"
+              className={styles.clearAll}
+              onClick={this.handleClearAllClick}
+            >
+              Clear all
+            </div>
             <div className={styles.filterGroup}>
               <div className={styles.filterTitle}>Availability</div>
               <label key="openNow" className={styles.checkBox}>
                 Open Now
-                <input type="checkbox" name="openNow" id="openNow" checked={openNow} />
+                <input type="checkbox" name="openNow" id="openNow" checked={openNow} onChange={this.handleOpenNowClick} />
               </label>
             </div>
 
             <div className={styles.filterGroup}>
               <div className={styles.filterTitle}>Eligibilities</div>
-              <label key="experiencingHomelessness" className={styles.checkBox}>
-               Experiencing homelessness
-                <input type="checkbox" name="experiencingHomelessness" id="experiencingHomelessness" checked={experiencingHomelessness} />
-              </label>
-              <label key="childrenYouthOrFamily" className={styles.checkBox}>
-            Children, youth, or family
-                <input type="checkbox" name="childrenYouthOrFamily" id="childrenYouthOrFamily" checked={childrenYouthOrFamily} />
-              </label>
-              <label key="seniorOrPersonsWithDisabilities" className={styles.checkBox}>
-                <div>
-                  {"Senior or person's with disabilities"}
-                </div>
-                <input type="checkbox" name="seniorOrPersonsWithDisabilities" id="seniorOrPersonsWithDisabilities" checked={seniorOrPersonsWithDisabilities} />
-              </label>
-              <label key="lowIncome" className={styles.checkBox}>
-                Low-income
-                <input type="checkbox" name="lowIncome" id="lowIncome" checked={lowIncome} />
-              </label>
+              {eligibilities.map(eligibility => (
+                <label key={eligibility.id} className={styles.checkBox}>
+                  {eligibility.name}
+                  <input
+                    type="checkbox"
+                    name={eligibility.name}
+                    id={eligibility.id}
+                    checked={selectedEligibilities[eligibility.id]}
+                    onChange={() => this.handleEligibilityClick(eligibility.id)}
+                  />
+                </label>
+              ))}
             </div>
 
           </div>

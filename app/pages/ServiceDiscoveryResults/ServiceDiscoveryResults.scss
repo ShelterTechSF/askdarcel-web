@@ -35,6 +35,7 @@
     font-size: 16px;
     padding: 8px 0;
     color: $color-brand;
+    cursor: pointer;
   }
 
   .filterGroup {
@@ -53,12 +54,14 @@
     justify-content: flex-end;
     color: $color-grey5;
     padding: 8px 0;
+    cursor: pointer;
   }
 
   .checkBox input[type="checkbox"] {
     width: auto;
     margin-right: 10px;
     margin-left: 0;
+    cursor: pointer;
   }
 }
 

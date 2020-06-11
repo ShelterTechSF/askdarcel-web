@@ -15,7 +15,8 @@ class ServiceDiscoveryModal extends Component {
       currentStep: 0,
       eligibilities: [],
       subcategories: [],
-      checkedItems: {},
+      selectedEligibilities: {},
+      selectedSubcategories: {},
     };
 
     this.goToNextStep = this.goToNextStep.bind(this);
@@ -44,15 +45,30 @@ class ServiceDiscoveryModal extends Component {
     this.setState({ currentStep: currentStep + 1 });
   }
 
-  handleCheckboxClick(optionId) {
-    const { checkedItems } = this.state;
-    checkedItems[optionId] = !checkedItems[optionId];
+  handleEligibilityClick(optionId) {
+    const { selectedEligibilities } = this.state;
+    this.setState({
+      selectedEligibilities: {
+        ...selectedEligibilities,
+        [optionId]: !selectedEligibilities[optionId],
+      },
+    });
+  }
+
+  handleSubcategoryClick(optionId) {
+    const { selectedSubcategories } = this.state;
+    this.setState({
+      selectedSubcategories: {
+        ...selectedSubcategories,
+        [optionId]: !selectedSubcategories[optionId],
+      },
+    });
   }
 
   render() {
     const { closeModal, steps } = this.props;
     const {
-      eligibilities, subcategories, checkedItems, currentStep,
+      eligibilities, subcategories, selectedEligibilities, selectedSubcategories, currentStep,
     } = this.state;
 
     const getModalContent = () => {
@@ -68,8 +84,8 @@ class ServiceDiscoveryModal extends Component {
                     <label>
                       <input
                         type="checkbox"
-                        checked={checkedItems[option.id]}
-                        onChange={() => this.handleCheckboxClick(option.id)}
+                        checked={selectedEligibilities[option.id]}
+                        onChange={() => this.handleEligibilityClick(option.id)}
                       />
                       <span>{option.name}</span>
                     </label>
@@ -89,8 +105,8 @@ class ServiceDiscoveryModal extends Component {
                     <label>
                       <input
                         type="checkbox"
-                        checked={checkedItems[option.id]}
-                        onChange={() => this.handleCheckboxClick(option.id)}
+                        checked={selectedSubcategories[option.id]}
+                        onChange={() => this.handleSubcategoryClick(option.id)}
                       />
                       <span>{option.name}</span>
                     </label>
@@ -102,7 +118,12 @@ class ServiceDiscoveryModal extends Component {
         case STEPS.RESULTS:
         default:
           return (
-            <ServiceDiscoveryResults />
+            <ServiceDiscoveryResults
+              eligibilities={eligibilities}
+              subcategories={subcategories}
+              selectedEligibilities={selectedEligibilities}
+              selectedSubcategories={selectedSubcategories}
+            />
           );
       }
     };
