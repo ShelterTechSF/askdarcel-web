@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as typeformEmbed from '@typeform/embed';
 
-import ServiceDiscoveryModal from 'components/ui/Modal/ServiceDiscoveryModal';
+import ServiceDiscoveryModal from 'components/ui/Modal/ServiceDiscoveryModal/ServiceDiscoveryModal';
+import { STEPS } from 'components/ui/Modal/ServiceDiscoveryModal/constants';
 import styles from './GuideList.scss';
 
 import ImgFamilyHomelessness from './assets/FamilyHomelessness.jpg';
@@ -78,7 +79,8 @@ const GuideCard = ({
           categoryId={categoryId}
           isOpen={modalOpen}
           closeModal={() => setModalOpen(false)}
-          isEligibility
+          // TODO: allow the steps to be dynamic based on the category
+          steps={[STEPS.ELIGIBILITIES, STEPS.RESULTS]}
         />
       )}
     </a>
