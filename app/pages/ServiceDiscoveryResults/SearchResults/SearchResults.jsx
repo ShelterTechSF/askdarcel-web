@@ -20,6 +20,8 @@ const transformHits = hits => hits.map(hit => {
 });
 
 const SearchResults = ({ searchResults }) => {
+  if (!searchResults) return null;
+
   const renderAddressMetadata = hit => {
     if (hit.addresses.length === 0) {
       return <span>No address found</span>;
@@ -33,12 +35,10 @@ const SearchResults = ({ searchResults }) => {
     return <span>No address found</span>;
   };
 
-  let resultLength = 0;
-  let output;
-  if (searchResults) {
-    const hits = transformHits(searchResults.hits);
-    resultLength = searchResults.hits.length;
-    output = (
+  const hits = transformHits(searchResults.hits);
+
+  return (
+    <div className={styles.searchResultsContainer}>
       <div>
         { hits.map((hit, index) => (
           <div className={styles.searchResult} key={hit.id}>
@@ -46,7 +46,7 @@ const SearchResults = ({ searchResults }) => {
               <div className={styles.title}>{ `${index + 1}. ${hit.name}`}</div>
               <div className={styles.address}>{renderAddressMetadata(hit)}</div>
               <div className={styles.description}>{hit.long_description}</div>
-              <div className={styles.location}>{hit.service_of}</div>
+              <div className={styles.serviceOf}>{hit.service_of}</div>
             </div>
             <div className={styles.sideLinks}>
               {
@@ -76,21 +76,12 @@ const SearchResults = ({ searchResults }) => {
               }
               {
                 (hit.phones[0].number || hit._geoloc || hit.url)
-                && <div className={styles.borderLine} />
+                && <div className={styles.divider} />
               }
               <a href="http://localhost:8081/" className={styles.sideLinkText}>Report Error</a>
             </div>
           </div>
         ))}
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <div className={styles.searchResultsAmount}>{`${resultLength} RESULTS`}</div>
-      <div className={styles.searchResultsContainer}>
-        {output}
       </div>
     </div>
   );

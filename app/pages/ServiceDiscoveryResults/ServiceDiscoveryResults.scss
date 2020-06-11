@@ -1,174 +1,68 @@
+@import '../../styles/utils/_helpers.scss';
+
 .container {
-  display: flex;
-  flex-direction: column;
-  border-top:1px solid #F4F4F4;
-}
-
-.title {
-  position: absolute;
-  left: 30px;
-  top: 15px;
-  font-family: Open Sans, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 35px;
-
-  @media screen and (max-width: 600px) {
-    font-size: 21px;
-    line-height: 29px;
-  }
-}
-
-.borderLine {
-  position: absolute;
-  width: 100%;
-  top: 105px;
-  left: 0;
-  height: 0;
-  border: 0.5px solid #F4F4F4;
-  box-sizing: border-box;
-  z-index: 100;
-}
-
-.filterAndResults {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  top: 106px;
-  box-sizing: border-box;
   width: 100%;
 }
 
-.filterResources {
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-  background: #FFFFFF;
-  padding-left: 30px;
-  height: 0;
-
-  @media screen and (max-width: 767px) {
-    display: none;
+.header {
+  padding: 15px 35px;
+  border-bottom: 1px solid $color-grey3;
+  .title {
+    text-align: left;
+    font-weight: bold;
+    font-size: 26px;
   }
 }
 
-.filterResourcesTitle {
-  margin-top: 19px;
-  position: absolute;
-  font-family: Open Sans, serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 142.99%;
-}
-
-.clearAll {
-  margin-top: 53px;
-  position: absolute;
-  font-family: Open Sans, serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 22px;
-  letter-spacing: 0.5px;
-  color: #276CE5;
-}
-
-.checkBoxCategories {
-  margin-top: 84px;
-  font-family: Open Sans, serif;
-  height: 26px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 142.99%;
-}
-
-.checkBoxCategory {
-  margin-top: 27px;
-}
-
-.checkBox {
+.flexContainer {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  margin-top: 16px;
-  font-family: Open Sans, serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 23px;
-  color: #888888;
+  width: 100%;
 }
 
-.checkBox input[type="checkbox"] {
-  width: auto;
-  margin-right: 10px;
-  margin-left: 0;
-}
+.sidebar {
+  flex-shrink: 0;
+  width: 300px;
+  height: 100%;
+  border-right: 1px solid $color-grey3;
+  padding: 20px 30px;
 
-.checkBoxResponsive {
-  display: none;
-  @media screen and (max-width: 767px) {
-    all: unset;
+  .filterResourcesTitle {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .clearAll {
+    font-size: 16px;
+    padding: 8px 0;
+    color: $color-brand;
+  }
+
+  .filterGroup {
+    margin-top: 12px;
+  }
+
+  .filterTitle {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 16px 0;
+  }
+
+  .checkBox {
+    display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
-    font-family: Open Sans, serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 23px;
-    color: #888888;
-    display: flex;
-    margin-top: -20px;
-    margin-left: 160px;
+    color: $color-grey5;
+    padding: 8px 0;
+  }
+
+  .checkBox input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    margin-left: 0;
   }
 }
 
-.checkBoxResponsive input[type="checkbox"] {
-  width: auto;
-  margin-right: 10px;
-  margin-left: 0;
-}
-
-.instantSearchOverride {
-  all:unset;
+.results {
   width: 100%;
-}
-
-.filterIcon {
-  display: none;
-  width: 20.24px;
-  height: 13.49px;
-  @media screen and (max-width: 767px) {
-    display: unset;
-  }
-}
-
-.filterButton {
-  display: none;
-  @media screen and (max-width: 767px) {
-    display: unset;
-    border: unset;
-    height: unset;
-    padding: 0 0 0 4.38px;
-    font-family: Open Sans, serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 19px;
-    color: #276CE5;
-    background: none;
-  }
-}
-
-.filterButton:hover {
-  box-shadow: unset;
-}
-
-.searchFilters {
-  margin-top: 61.83px;
-  margin-left: 30.38px;
+  height: 100%;
 }

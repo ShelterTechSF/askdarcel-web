@@ -102,9 +102,7 @@ class ServiceDiscoveryModal extends Component {
         case STEPS.RESULTS:
         default:
           return (
-            <div className={styles.contentContainer}>
-              <ServiceDiscoveryResults />
-            </div>
+            <ServiceDiscoveryResults />
           );
       }
     };
