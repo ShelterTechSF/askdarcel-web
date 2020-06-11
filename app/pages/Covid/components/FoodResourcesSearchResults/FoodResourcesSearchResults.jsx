@@ -36,7 +36,6 @@ const FoodResourcesSearchResults = ({ searchResults }) => {
   let resultLength = 0;
   let output;
   if (searchResults) {
-    console.log(searchResults);
     const hits = transformHits(searchResults.hits);
     resultLength = searchResults.hits.length;
     output = (

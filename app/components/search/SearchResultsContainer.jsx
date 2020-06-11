@@ -27,7 +27,6 @@ const transformHits = hits => hits.map(hit => {
 
 
 const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
-  console.log(searchState, searchResults, searching);
   let output = null;
   if (!searchResults && searching) {
     output = <Loader />;
