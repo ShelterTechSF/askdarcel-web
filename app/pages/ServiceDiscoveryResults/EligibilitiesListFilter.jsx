@@ -82,30 +82,6 @@ class EligibilitiesListFilter extends Component {
               />
             </label>
           ))}
-          {/* {mapKeys.map(key => {
-            const refinementHasResults = this.refinementHasResults(key);
-            // for each map key, display it as a filtering option
-            // for onClick of each option, call refine on the values of the key
-            // eslint-disable-next-line prefer-template
-            return (
-              <li
-                key={key}
-                className={`refine-li ${isChecked[key] ? 'active' : ''
-                }${!refinementHasResults ? 'refine-li-disabled' : ''}`}
-              >
-                <label>
-                  <input
-                    type="checkbox"
-                    className="refine-checkbox"
-                    onChange={this.changeRefinement.bind(this, key)}
-                    checked={isChecked[key]}
-                    disabled={!refinementHasResults}
-                  />
-                  {key}
-                </label>
-              </li>
-            );
-          })} */}
         </ul>
       </div>
     );
