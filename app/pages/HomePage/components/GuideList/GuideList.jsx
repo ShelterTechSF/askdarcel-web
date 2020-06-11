@@ -134,7 +134,6 @@ const GuideList = () => (
       <li className={styles.item}>
         <GuideCard
           name="Food resources"
-          link="/covid/foodmap"
           img={ImgFood}
           categoryId="1000001"
         />
