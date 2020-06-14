@@ -26,30 +26,16 @@ export default class ServiceDiscoveryResults extends Component {
       .filter(elg => selectedSubcategories[elg.id]).map(e => e.name);
 
     this.state = {
-      openNow: false,
       initialEligibilityRefinement,
       initialSubcategoriesRefinement,
       searchState: { query: 'food' },
     };
 
-    // this.handleClearAllClick = this.handleClearAllClick.bind(this);
-    this.handleOpenNowClick = this.handleOpenNowClick.bind(this);
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
 
   onSearchStateChange(nextSearchState) {
     this.setState({ searchState: nextSearchState });
-  }
-
-  // handleClearAllClick() {
-
-  // }
-
-  handleOpenNowClick() {
-    const { openNow } = this.state;
-    this.setState({
-      openNow: !openNow,
-    });
   }
 
   render() {
@@ -79,14 +65,6 @@ export default class ServiceDiscoveryResults extends Component {
             <div className={styles.sidebar}>
               <div className={styles.filterResourcesTitle}>Filter Resources</div>
               <ClearAllFilters />
-              {/* <div
-                role="button"
-                tabIndex="0"
-                className={styles.clearAll}
-                onClick={this.handleClearAllClick}
-              >
-              Clear all
-              </div> */}
               <div className={styles.filterGroup}>
                 <div className={styles.filterTitle}>Availability</div>
                 <OpenNowFilter attribute="open_times" />
