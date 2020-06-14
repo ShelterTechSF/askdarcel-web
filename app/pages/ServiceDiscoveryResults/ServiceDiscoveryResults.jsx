@@ -60,7 +60,7 @@ export default class ServiceDiscoveryResults extends Component {
   }
 
   render() {
-    const { eligibilities } = this.props;
+    const { eligibilities, categoryName } = this.props;
 
     const {
       selectedEligibilities,
@@ -70,7 +70,7 @@ export default class ServiceDiscoveryResults extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Food resources</h1>
+          <h1 className={styles.title}>{categoryName}</h1>
         </div>
         <InstantSearch
           appId={config.ALGOLIA_APPLICATION_ID}

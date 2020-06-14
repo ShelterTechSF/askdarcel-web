@@ -31,7 +31,7 @@ function typeform(event, link) {
 }
 
 const GuideCard = ({
-  img, link, name, categoryId, isTypeform = false,
+  img, link, name, categoryId, steps, isTypeform = false,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -77,10 +77,10 @@ const GuideCard = ({
       {modalOpen && (
         <ServiceDiscoveryModal
           categoryId={categoryId}
+          categoryName={name}
           isOpen={modalOpen}
           closeModal={() => setModalOpen(false)}
-          // TODO: allow the steps to be dynamic based on the category
-          steps={[STEPS.ELIGIBILITIES, STEPS.RESULTS]}
+          steps={steps}
         />
       )}
     </a>
@@ -138,13 +138,15 @@ const GuideList = () => (
           name="Food resources"
           img={ImgFood}
           categoryId="1000001"
+          steps={[STEPS.ELIGIBILITIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
         <GuideCard
           name="Hygiene"
-          link="/covid/hygiene"
           img={Imghygiene}
+          categoryId="1000002"
+          steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
