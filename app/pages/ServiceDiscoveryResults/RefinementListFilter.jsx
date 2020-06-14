@@ -72,7 +72,7 @@ class RefinementListFilter extends Component {
                 name={option.name}
                 id={option.id}
                 value={isChecked[option.name]}
-                defaultChecked={isChecked[option.name]}
+                checked={isChecked[option.name]}
                 onChange={this.changeRefinement.bind(this, option.name)}
               />
             </label>

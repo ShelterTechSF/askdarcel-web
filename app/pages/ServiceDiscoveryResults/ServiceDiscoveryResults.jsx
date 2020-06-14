@@ -3,6 +3,7 @@ import { InstantSearch } from 'react-instantsearch/dom';
 import config from '../../config';
 import OpenNowFilter from './OpenNowFilter';
 import RefinementListFilter from './RefinementListFilter';
+import ClearAllFilters from './ClearAllFilters';
 
 import SearchResults from './SearchResults/SearchResults';
 import styles from './ServiceDiscoveryResults.scss';
@@ -77,6 +78,7 @@ export default class ServiceDiscoveryResults extends Component {
           <div className={styles.flexContainer}>
             <div className={styles.sidebar}>
               <div className={styles.filterResourcesTitle}>Filter Resources</div>
+              <ClearAllFilters />
               {/* <div
                 role="button"
                 tabIndex="0"
