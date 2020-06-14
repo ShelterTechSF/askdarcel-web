@@ -31,7 +31,7 @@ function typeform(event, link) {
 }
 
 const GuideCard = ({
-  img, link, name, categoryId, steps, isTypeform = false,
+  img, link, name, categoryId, algoliaCategoryName, steps, isTypeform = false,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -77,6 +77,7 @@ const GuideCard = ({
       {modalOpen && (
         <ServiceDiscoveryModal
           categoryId={categoryId}
+          algoliaCategoryName={algoliaCategoryName}
           categoryName={name}
           isOpen={modalOpen}
           closeModal={() => setModalOpen(false)}
@@ -91,6 +92,7 @@ GuideCard.propTypes = {
   name: PropTypes.string.isRequired,
   link: PropTypes.string,
   categoryId: PropTypes.string,
+  algoliaCategoryName: PropTypes.string,
   steps: PropTypes.array,
   isTypeform: PropTypes.bool,
 };
@@ -98,6 +100,7 @@ GuideCard.propTypes = {
 GuideCard.defaultProps = {
   link: undefined,
   categoryId: '',
+  algoliaCategoryName: '',
   steps: [],
   isTypeform: false,
 };
@@ -141,6 +144,7 @@ const GuideList = () => (
           name="Food resources"
           img={ImgFood}
           categoryId="1000001"
+          algoliaCategoryName="Covid-food"
           steps={[STEPS.ELIGIBILITIES, STEPS.RESULTS]}
         />
       </li>
@@ -149,6 +153,7 @@ const GuideList = () => (
           name="Hygiene"
           img={Imghygiene}
           categoryId="1000002"
+          algoliaCategoryName="Covid-hygiene"
           steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>

@@ -66,7 +66,9 @@ class ServiceDiscoveryModal extends Component {
   }
 
   render() {
-    const { closeModal, steps, categoryName } = this.props;
+    const {
+      closeModal, steps, categoryName, algoliaCategoryName,
+    } = this.props;
     const {
       eligibilities, subcategories, selectedEligibilities, selectedSubcategories, currentStep,
     } = this.state;
@@ -120,6 +122,7 @@ class ServiceDiscoveryModal extends Component {
           return (
             <ServiceDiscoveryResults
               categoryName={categoryName}
+              algoliaCategoryName={algoliaCategoryName}
               eligibilities={eligibilities}
               subcategories={subcategories}
               selectedEligibilities={selectedEligibilities}

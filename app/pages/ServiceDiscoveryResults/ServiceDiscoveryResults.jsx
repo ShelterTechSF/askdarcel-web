@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InstantSearch } from 'react-instantsearch/dom';
+import { InstantSearch, Configure } from 'react-instantsearch/dom';
 import config from '../../config';
 import OpenNowFilter from './OpenNowFilter';
 import RefinementListFilter from './RefinementListFilter';
@@ -18,7 +18,6 @@ export default class ServiceDiscoveryResults extends Component {
       selectedEligibilities,
       subcategories,
       selectedSubcategories,
-      categoryName,
     } = props;
 
     const initialEligibilityRefinement = eligibilities
@@ -29,7 +28,7 @@ export default class ServiceDiscoveryResults extends Component {
     this.state = {
       initialEligibilityRefinement,
       initialSubcategoriesRefinement,
-      searchState: { query: categoryName },
+      searchState: { query: '' },
     };
 
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
@@ -41,7 +40,12 @@ export default class ServiceDiscoveryResults extends Component {
 
   render() {
     const {
-      eligibilities, selectedEligibilities, subcategories, selectedSubcategories, categoryName,
+      eligibilities,
+      selectedEligibilities,
+      subcategories,
+      selectedSubcategories,
+      categoryName,
+      algoliaCategoryName,
     } = this.props;
 
     const {
@@ -62,6 +66,7 @@ export default class ServiceDiscoveryResults extends Component {
           searchState={searchState}
           onSearchStateChange={this.onSearchStateChange}
         >
+          <Configure filters={`categories:'${algoliaCategoryName}'`} />
           <div className={styles.flexContainer}>
             <div className={styles.sidebar}>
               <div className={styles.filterResourcesTitle}>Filter Resources</div>
