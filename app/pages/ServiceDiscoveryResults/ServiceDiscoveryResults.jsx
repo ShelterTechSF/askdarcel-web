@@ -90,6 +90,7 @@ export default class ServiceDiscoveryResults extends Component {
                 <OpenNowFilter attribute="open_times" />
               </div>
 
+              {!!eligibilities.length && (
               <div className={styles.filterGroup}>
                 <div className={styles.filterTitle}>Eligibilities</div>
                 <RefinementListFilter
@@ -99,7 +100,9 @@ export default class ServiceDiscoveryResults extends Component {
                   defaultRefinement={initialEligibilityRefinement}
                 />
               </div>
+              )}
 
+              {!!subcategories.length && (
               <div className={styles.filterGroup}>
                 <div className={styles.filterTitle}>Categories</div>
                 <RefinementListFilter
@@ -109,6 +112,7 @@ export default class ServiceDiscoveryResults extends Component {
                   defaultRefinement={initialSubcategoriesRefinement}
                 />
               </div>
+              )}
 
             </div>
             <div className={styles.results}>
