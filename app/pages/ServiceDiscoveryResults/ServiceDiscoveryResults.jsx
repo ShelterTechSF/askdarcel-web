@@ -18,6 +18,7 @@ export default class ServiceDiscoveryResults extends Component {
       selectedEligibilities,
       subcategories,
       selectedSubcategories,
+      categoryName,
     } = props;
 
     const initialEligibilityRefinement = eligibilities
@@ -28,7 +29,7 @@ export default class ServiceDiscoveryResults extends Component {
     this.state = {
       initialEligibilityRefinement,
       initialSubcategoriesRefinement,
-      searchState: { query: 'food' },
+      searchState: { query: categoryName },
     };
 
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
