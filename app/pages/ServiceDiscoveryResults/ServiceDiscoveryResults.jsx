@@ -14,14 +14,13 @@ export default class ServiceDiscoveryResults extends Component {
 
     const {
       selectedEligibilities,
-      // selectedSubcategories,
+      selectedSubcategories,
     } = props;
 
     this.state = {
       openNow: false,
       selectedEligibilities,
-      // TODO: will we have a subcategory filter too?
-      // selectedSubcategories,
+      selectedSubcategories,
       searchState: { query: 'food' },
     };
 
@@ -39,6 +38,7 @@ export default class ServiceDiscoveryResults extends Component {
     this.setState({
       openNow: false,
       selectedEligibilities: {},
+      selectedSubcategories: {},
     });
   }
 
@@ -59,11 +59,22 @@ export default class ServiceDiscoveryResults extends Component {
     });
   }
 
+  handleSubcategoryClick(optionId) {
+    const { selectedSubcategories } = this.state;
+    this.setState({
+      selectedSubcategories: {
+        ...selectedSubcategories,
+        [optionId]: !selectedSubcategories[optionId],
+      },
+    });
+  }
+
   render() {
-    const { eligibilities, categoryName } = this.props;
+    const { eligibilities, subcategories, categoryName } = this.props;
 
     const {
       selectedEligibilities,
+      selectedSubcategories,
       searchState,
     } = this.state;
 
@@ -102,6 +113,18 @@ export default class ServiceDiscoveryResults extends Component {
                   limit={100}
                   availableEligibilities={eligibilities}
                   selectedEligibilities={selectedEligibilities}
+                  defaultRefinement={eligibilities.filter(elg => selectedEligibilities[elg.id]).map(e => e.name)}
+                />
+              </div>
+
+              <div className={styles.filterGroup}>
+                <div className={styles.filterTitle}>Eligibilities</div>
+                <EligibilitiesListFilter
+                  attribute="categories"
+                  limit={100}
+                  availableEligibilities={subcategories}
+                  selectedEligibilities={selectedSubcategories}
+                  defaultRefinement={subcategories.filter(elg => selectedSubcategories[elg.id]).map(e => e.name)}
                 />
               </div>
 

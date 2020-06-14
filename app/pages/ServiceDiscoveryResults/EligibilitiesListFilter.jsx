@@ -12,12 +12,6 @@ class EligibilitiesListFilter extends Component {
   constructor(props) {
     super(props);
 
-    const { availableEligibilities, selectedEligibilities, refine } = props;
-    const initialRefinement = availableEligibilities
-      .filter(elg => selectedEligibilities[elg.id])
-      .map(e => e.name);
-    refine(initialRefinement);
-
     const checks = {};
     props.availableEligibilities
       .forEach(elg => { checks[elg.name] = props.selectedEligibilities[elg.id]; });
