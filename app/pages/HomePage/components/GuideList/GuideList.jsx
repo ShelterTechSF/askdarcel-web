@@ -89,13 +89,16 @@ const GuideCard = ({
 
 GuideCard.propTypes = {
   name: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  link: PropTypes.string,
   categoryId: PropTypes.string,
+  steps: PropTypes.array,
   isTypeform: PropTypes.bool,
 };
 
 GuideCard.defaultProps = {
+  link: undefined,
   categoryId: '',
+  steps: [],
   isTypeform: false,
 };
 

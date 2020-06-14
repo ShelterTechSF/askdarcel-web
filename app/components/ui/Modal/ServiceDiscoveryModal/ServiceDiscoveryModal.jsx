@@ -84,7 +84,7 @@ class ServiceDiscoveryModal extends Component {
                     <label>
                       <input
                         type="checkbox"
-                        checked={selectedEligibilities[option.id]}
+                        value={selectedEligibilities[option.id]}
                         onChange={() => this.handleEligibilityClick(option.id)}
                       />
                       <span>{option.name}</span>
@@ -105,7 +105,7 @@ class ServiceDiscoveryModal extends Component {
                     <label>
                       <input
                         type="checkbox"
-                        checked={selectedSubcategories[option.id]}
+                        value={selectedSubcategories[option.id]}
                         onChange={() => this.handleSubcategoryClick(option.id)}
                       />
                       <span>{option.name}</span>

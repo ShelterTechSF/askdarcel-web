@@ -77,7 +77,8 @@ class EligibilitiesListFilter extends Component {
                 type="checkbox"
                 name={eligibility.name}
                 id={eligibility.id}
-                checked={isChecked[eligibility.name]}
+                value={isChecked[eligibility.name]}
+                defaultChecked={isChecked[eligibility.name]}
                 onChange={this.changeRefinement.bind(this, eligibility.name)}
               />
             </label>
