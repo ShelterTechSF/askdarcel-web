@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
 import styles from './ServiceDiscoveryResults.scss';
 
-class EligibilitiesListFilter extends Component {
+class RefinementListFilter extends Component {
   static propTypes = {
     refine: PropTypes.func.isRequired,
     currentRefinement: PropTypes.array.isRequired,
@@ -13,8 +13,8 @@ class EligibilitiesListFilter extends Component {
     super(props);
 
     const checks = {};
-    props.availableEligibilities
-      .forEach(elg => { checks[elg.name] = props.selectedEligibilities[elg.id]; });
+    props.availableOptions
+      .forEach(opt => { checks[opt.name] = props.selectedOptions[opt.id]; });
 
     this.state = {
       isChecked: checks,
@@ -34,46 +34,46 @@ class EligibilitiesListFilter extends Component {
   }
 
   setChecks() {
-    const { availableEligibilities, currentRefinement } = this.props;
+    const { availableOptions, currentRefinement } = this.props;
     const checks = {};
-    availableEligibilities.forEach(elg => {
-      checks[elg.name] = currentRefinement.includes(elg.name);
+    availableOptions.forEach(opt => {
+      checks[opt.name] = currentRefinement.includes(opt.name);
     });
     return checks;
   }
 
-  changeRefinement(eligibility, event) { // eslint-disable-line no-unused-vars
+  changeRefinement(option, event) { // eslint-disable-line no-unused-vars
     const { refine } = this.props;
     const { currentRefinement } = this.props;
     const { isChecked } = this.state;
     let newRefinement;
-    if (isChecked[eligibility]) {
-      // If eligibility currently checked, remove from refinement
-      newRefinement = currentRefinement.filter(value => eligibility !== value);
+    if (isChecked[option]) {
+      // If option currently checked, remove from refinement
+      newRefinement = currentRefinement.filter(value => option !== value);
     } else {
       // If key currently unchecked, add to refinement
-      newRefinement = currentRefinement.concat(eligibility);
+      newRefinement = currentRefinement.concat(option);
     }
     refine(newRefinement);
   }
 
   render() {
     const { isChecked } = this.state;
-    const { availableEligibilities } = this.props;
+    const { availableOptions } = this.props;
 
     return (
       <div className="refinement-wrapper">
         <ul className="refinement-ul">
-          {availableEligibilities.map(eligibility => (
-            <label key={eligibility.id} className={styles.checkBox}>
-              {eligibility.name}
+          {availableOptions.map(option => (
+            <label key={option.id} className={styles.checkBox}>
+              {option.name}
               <input
                 type="checkbox"
-                name={eligibility.name}
-                id={eligibility.id}
-                value={isChecked[eligibility.name]}
-                defaultChecked={isChecked[eligibility.name]}
-                onChange={this.changeRefinement.bind(this, eligibility.name)}
+                name={option.name}
+                id={option.id}
+                value={isChecked[option.name]}
+                defaultChecked={isChecked[option.name]}
+                onChange={this.changeRefinement.bind(this, option.name)}
               />
             </label>
           ))}
@@ -83,4 +83,4 @@ class EligibilitiesListFilter extends Component {
   }
 }
 
-export default connectRefinementList(EligibilitiesListFilter);
+export default connectRefinementList(RefinementListFilter);

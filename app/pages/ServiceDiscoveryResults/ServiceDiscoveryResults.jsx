@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { InstantSearch } from 'react-instantsearch/dom';
 import config from '../../config';
 import OpenNowFilter from './OpenNowFilter';
-import EligibilitiesListFilter from './EligibilitiesListFilter';
+import RefinementListFilter from './RefinementListFilter';
 
 import SearchResults from './SearchResults/SearchResults';
 import styles from './ServiceDiscoveryResults.scss';
@@ -13,19 +13,25 @@ export default class ServiceDiscoveryResults extends Component {
     super(props);
 
     const {
+      eligibilities,
       selectedEligibilities,
+      subcategories,
       selectedSubcategories,
     } = props;
 
+    const initialEligibilityRefinement = eligibilities
+      .filter(elg => selectedEligibilities[elg.id]).map(e => e.name);
+    const initialSubcategoriesRefinement = subcategories
+      .filter(elg => selectedSubcategories[elg.id]).map(e => e.name);
+
     this.state = {
       openNow: false,
-      selectedEligibilities,
-      selectedSubcategories,
+      initialEligibilityRefinement,
+      initialSubcategoriesRefinement,
       searchState: { query: 'food' },
     };
 
-    this.handleClearAllClick = this.handleClearAllClick.bind(this);
-    this.handleEligibilityClick = this.handleEligibilityClick.bind(this);
+    // this.handleClearAllClick = this.handleClearAllClick.bind(this);
     this.handleOpenNowClick = this.handleOpenNowClick.bind(this);
     this.onSearchStateChange = this.onSearchStateChange.bind(this);
   }
@@ -34,13 +40,9 @@ export default class ServiceDiscoveryResults extends Component {
     this.setState({ searchState: nextSearchState });
   }
 
-  handleClearAllClick() {
-    this.setState({
-      openNow: false,
-      selectedEligibilities: {},
-      selectedSubcategories: {},
-    });
-  }
+  // handleClearAllClick() {
+
+  // }
 
   handleOpenNowClick() {
     const { openNow } = this.state;
@@ -49,32 +51,14 @@ export default class ServiceDiscoveryResults extends Component {
     });
   }
 
-  handleEligibilityClick(optionId) {
-    const { selectedEligibilities } = this.state;
-    this.setState({
-      selectedEligibilities: {
-        ...selectedEligibilities,
-        [optionId]: !selectedEligibilities[optionId],
-      },
-    });
-  }
-
-  handleSubcategoryClick(optionId) {
-    const { selectedSubcategories } = this.state;
-    this.setState({
-      selectedSubcategories: {
-        ...selectedSubcategories,
-        [optionId]: !selectedSubcategories[optionId],
-      },
-    });
-  }
-
   render() {
-    const { eligibilities, subcategories, categoryName } = this.props;
+    const {
+      eligibilities, selectedEligibilities, subcategories, selectedSubcategories, categoryName,
+    } = this.props;
 
     const {
-      selectedEligibilities,
-      selectedSubcategories,
+      initialEligibilityRefinement,
+      initialSubcategoriesRefinement,
       searchState,
     } = this.state;
 
@@ -93,14 +77,14 @@ export default class ServiceDiscoveryResults extends Component {
           <div className={styles.flexContainer}>
             <div className={styles.sidebar}>
               <div className={styles.filterResourcesTitle}>Filter Resources</div>
-              <div
+              {/* <div
                 role="button"
                 tabIndex="0"
                 className={styles.clearAll}
                 onClick={this.handleClearAllClick}
               >
               Clear all
-              </div>
+              </div> */}
               <div className={styles.filterGroup}>
                 <div className={styles.filterTitle}>Availability</div>
                 <OpenNowFilter attribute="open_times" />
@@ -108,23 +92,21 @@ export default class ServiceDiscoveryResults extends Component {
 
               <div className={styles.filterGroup}>
                 <div className={styles.filterTitle}>Eligibilities</div>
-                <EligibilitiesListFilter
+                <RefinementListFilter
                   attribute="eligibilities"
-                  limit={100}
-                  availableEligibilities={eligibilities}
-                  selectedEligibilities={selectedEligibilities}
-                  defaultRefinement={eligibilities.filter(elg => selectedEligibilities[elg.id]).map(e => e.name)}
+                  availableOptions={eligibilities}
+                  selectedOptions={selectedEligibilities}
+                  defaultRefinement={initialEligibilityRefinement}
                 />
               </div>
 
               <div className={styles.filterGroup}>
-                <div className={styles.filterTitle}>Eligibilities</div>
-                <EligibilitiesListFilter
+                <div className={styles.filterTitle}>Categories</div>
+                <RefinementListFilter
                   attribute="categories"
-                  limit={100}
-                  availableEligibilities={subcategories}
-                  selectedEligibilities={selectedSubcategories}
-                  defaultRefinement={subcategories.filter(elg => selectedSubcategories[elg.id]).map(e => e.name)}
+                  availableOptions={subcategories}
+                  selectedOptions={selectedSubcategories}
+                  defaultRefinement={initialSubcategoriesRefinement}
                 />
               </div>
 
