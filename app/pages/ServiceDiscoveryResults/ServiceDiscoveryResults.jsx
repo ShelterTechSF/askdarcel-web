@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { InstantSearch, Configure } from 'react-instantsearch/dom';
+import _ from 'lodash';
 import config from '../../config';
 import OpenNowFilter from './OpenNowFilter';
 import RefinementListFilter from './RefinementListFilter';
@@ -41,9 +42,7 @@ export default class ServiceDiscoveryResults extends Component {
   render() {
     const {
       eligibilities,
-      selectedEligibilities,
       subcategories,
-      selectedSubcategories,
       categoryName,
       algoliaCategoryName,
     } = this.props;
@@ -53,6 +52,8 @@ export default class ServiceDiscoveryResults extends Component {
       initialSubcategoriesRefinement,
       searchState,
     } = this.state;
+
+    const subcategoryNames = subcategories.map(c => c.name);
 
     return (
       <div className={styles.container}>
@@ -81,9 +82,8 @@ export default class ServiceDiscoveryResults extends Component {
                 <div className={styles.filterTitle}>Eligibilities</div>
                 <RefinementListFilter
                   attribute="eligibilities"
-                  availableOptions={eligibilities}
-                  selectedOptions={selectedEligibilities}
                   defaultRefinement={initialEligibilityRefinement}
+                  transformItems={items => _.sortBy(items, ['label'])}
                 />
               </div>
               )}
@@ -93,9 +93,19 @@ export default class ServiceDiscoveryResults extends Component {
                 <div className={styles.filterTitle}>Categories</div>
                 <RefinementListFilter
                   attribute="categories"
-                  availableOptions={subcategories}
-                  selectedOptions={selectedSubcategories}
                   defaultRefinement={initialSubcategoriesRefinement}
+                  transformItems={items => {
+                    // Note that in Algolia, the categories attribute is for all
+                    // categories, but for this page, we only want to display
+                    // the specific subcategories of the target category, not
+                    // all categories that the services are tagged with.
+                    // We filter down the categories list from Algolia to just
+                    // the subcategories.
+                    const subcategoryItems = items.filter(
+                      item => subcategoryNames.include(item.label),
+                    );
+                    return _.sortBy(subcategoryItems, ['label']);
+                  }}
                 />
               </div>
               )}
