@@ -102,7 +102,7 @@ export default class ServiceDiscoveryResults extends Component {
                     // We filter down the categories list from Algolia to just
                     // the subcategories.
                     const subcategoryItems = items.filter(
-                      item => subcategoryNames.include(item.label),
+                      item => subcategoryNames.includes(item.label),
                     );
                     return _.sortBy(subcategoryItems, ['label']);
                   }}
