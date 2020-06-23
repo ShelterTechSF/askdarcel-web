@@ -160,43 +160,55 @@ const GuideList = () => (
       <li className={styles.item}>
         <GuideCard
           name="Medical Services"
-          link="/covid/medicalservices"
           img={Imgmedicalservices}
+          categoryId="1000005"
+          algoliaCategoryName="Covid-health"
+          steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
         <GuideCard
           name="Domestic Violence"
-          link="/covid/domesticviolence"
           img={Imgdomesticviolence}
+          categoryId="1000006"
+          algoliaCategoryName="Covid-domesticviolence"
+          steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
         <GuideCard
           name="Internet Access"
-          link="/covid/internet"
           img={Imginternet}
+          categoryId="1000007"
+          algoliaCategoryName="Covid-internet"
+          steps={[STEPS.ELIGIBILITIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
         <GuideCard
           name="Financial and Job Assistance"
-          link="/covid/financialassistance"
           img={Imgfinancialassistance}
+          categoryId="1000003"
+          algoliaCategoryName="Covid-finance"
+          steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
         <GuideCard
           name="Rental Assistance"
-          link="/covid/rentalassistance"
           img={Imgrentalassistance}
+          categoryId="1000004"
+          algoliaCategoryName="Covid-housing"
+          steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>
       <li className={styles.item}>
         <GuideCard
           name="LGBTQ Resources"
-          link="/covid/lgbtq"
           img={Imglgbtq}
+          categoryId="1000008"
+          algoliaCategoryName="Covid-lgbtqa"
+          steps={[STEPS.SUBCATEGORIES, STEPS.RESULTS]}
         />
       </li>
       {/* Note: these resource guides have temporarily been disabled due to covid.
