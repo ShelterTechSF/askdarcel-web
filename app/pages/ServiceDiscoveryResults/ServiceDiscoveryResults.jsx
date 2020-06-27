@@ -8,6 +8,7 @@ import config from '../../config';
 import Loader from '../../components/ui/Loader';
 import * as dataService from '../../utils/DataService';
 import { CATEGORIES } from '../../components/ui/Modal/ServiceDiscoveryModal/constants';
+import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
 import ClearAllFilters from './ClearAllFilters';
 import OpenNowFilter from './OpenNowFilter';
@@ -29,8 +30,8 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (category === undefined) { throw new Error(`Unknown category slug ${categorySlug}`); }
   const [parentCategory, setParentCategory] = useState(null);
-  const [eligibilities, setEligibilities] = useState(null);
-  const [subcategories, setSubcategories] = useState(null);
+  const eligibilities = useEligibilitiesForCategory(category.id);
+  const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
 
   const onSearchStateChange = nextSearchState => {
@@ -42,18 +43,6 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
   useEffect(() => {
     dataService.get(`/api/categories/${category.id}`).then(response => {
       setParentCategory(response.category);
-    });
-  }, [category.id]);
-
-  useEffect(() => {
-    dataService.get(`/api/eligibilities?category_id=${category.id}`).then(response => {
-      setEligibilities(response.eligibilities);
-    });
-  }, [category.id]);
-
-  useEffect(() => {
-    dataService.get(`/api/categories/subcategories?id=${category.id}`).then(response => {
-      setSubcategories(response.categories);
     });
   }, [category.id]);
 
