@@ -1,32 +1,169 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect, useHistory } from 'react-router-dom';
+import qs from 'qs';
 
-import ServiceDiscoveryModal from 'components/ui/Modal/ServiceDiscoveryModal/ServiceDiscoveryModal';
+import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
-import { CATEGORIES } from 'components/ui/Modal/ServiceDiscoveryModal/constants';
+import { CATEGORIES, STEPS } from './constants';
+import styles from './ServiceDiscoveryForm.scss';
 
-const ServiceDiscoveryForm = ({ history, match }) => {
+
+/** Wrapper component that handles state management, URL parsing, and external API requests. */
+const ServiceDiscoveryForm = ({ match }) => {
   const { categorySlug } = match.params;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
+  const eligibilities = useEligibilitiesForCategory(category.id) || [];
+  const subcategories = useSubcategoriesForCategory(category.id) || [];
   return (
-    <ServiceDiscoveryModal
-      categoryId={category.id}
+    <InnerServiceDiscoveryForm
       categorySlug={category.slug}
-      algoliaCategoryName={category.algoliaCategoryName}
-      categoryName={category.name}
-      isOpen
-      closeModal={() => history.goBack()}
+      eligibilities={eligibilities}
+      subcategories={subcategories}
       steps={category.steps}
     />
   );
 };
 ServiceDiscoveryForm.propTypes = {
-  history: PropTypes.object.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       categorySlug: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };
+
+
+/** Main component that handles form data and advancing steps. */
+const InnerServiceDiscoveryForm = ({
+  steps, categorySlug, eligibilities, subcategories,
+}) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selectedEligibilities, setSelectedEligibilities] = useState({});
+  const [selectedSubcategories, setSelectedSubcategories] = useState({});
+
+  // TODO: Should goBack go back to the previous step?
+  const history = useHistory();
+  const goBack = () => history.goBack();
+  const goToNextStep = () => setCurrentStep(currentStep + 1);
+
+  const handleEligibilityClick = optionId => {
+    setSelectedEligibilities(
+      {
+        ...selectedEligibilities,
+        [optionId]: !selectedEligibilities[optionId],
+      },
+    );
+  };
+
+  const handleSubcategoryClick = optionId => {
+    setSelectedSubcategories(
+      {
+        ...selectedSubcategories,
+        [optionId]: !selectedSubcategories[optionId],
+      },
+    );
+  };
+
+  const Content = () => {
+    switch (steps[currentStep]) {
+      case STEPS.ELIGIBILITIES:
+        return (
+          <FormStep
+            heading="Tell us more about you"
+            subheading="Select any eligibilities you identify with."
+            options={eligibilities}
+            selectedOptions={selectedEligibilities}
+            toggleOption={handleEligibilityClick}
+          />
+        );
+      case STEPS.SUBCATEGORIES:
+        return (
+          <FormStep
+            heading="Tell us more about you"
+            subheading="What are you currently looking for? Select all that apply."
+            options={subcategories}
+            selectedOptions={selectedSubcategories}
+            toggleOption={handleSubcategoryClick}
+          />
+        );
+      case STEPS.RESULTS:
+      default:
+      {
+        const searchState = {
+          refinementList: {
+            eligibilities: eligibilities
+              .filter(elg => selectedEligibilities[elg.id])
+              .map(el => el.name),
+            categories: subcategories
+              .filter(c => selectedSubcategories[c.id])
+              .map(c => c.name),
+          },
+        };
+        const search = qs.stringify(searchState, { encodeValuesOnly: true });
+        return (
+          <Redirect
+            push
+            to={{
+              pathname: `/${categorySlug}/results`,
+              search: `?${search}`,
+            }}
+          />
+        );
+      }
+    }
+  };
+
+  return (
+    <Fragment>
+      <Header onGoBack={goBack} />
+      <Content />
+      <Footer onGoBack={goBack} onNextStep={goToNextStep} />
+    </Fragment>
+  );
+};
+
+
+// Stateless components that only handle presentation.
+
+const Header = ({ onGoBack }) => (
+  <div className={styles.header}>
+    <div className={styles.backButton} role="button" onClick={onGoBack} tabIndex="0">
+      <i className="material-icons">keyboard_arrow_left</i>
+      All resource guides
+    </div>
+  </div>
+);
+
+const Footer = ({ onGoBack, onNextStep }) => (
+  <div className={styles.footer}>
+    <button type="button" className={styles.actionBack} onClick={onGoBack}>Back</button>
+    <button type="button" className={styles.actionSubmit} onClick={onNextStep}>Submit</button>
+  </div>
+);
+
+const FormStep = ({
+  heading, subheading, options, selectedOptions, toggleOption,
+}) => (
+  <div className={styles.body}>
+    <div className={styles.contentContainer}>
+      <h1>{heading}</h1>
+      <h2>{subheading}</h2>
+      <ul>
+        {options.map(option => (
+          <li className={styles.listOption} key={option.id}>
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedOptions[option.id]}
+                onChange={() => toggleOption(option.id)}
+              />
+              <span>{option.name}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
 
 export default ServiceDiscoveryForm;

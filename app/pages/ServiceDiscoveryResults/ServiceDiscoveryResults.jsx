@@ -7,7 +7,7 @@ import qs from 'qs';
 import config from '../../config';
 import Loader from '../../components/ui/Loader';
 import * as dataService from '../../utils/DataService';
-import { CATEGORIES } from '../../components/ui/Modal/ServiceDiscoveryModal/constants';
+import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
 import ClearAllFilters from './ClearAllFilters';
