@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import styles from './SearchResults.scss';
@@ -47,7 +48,11 @@ const SearchResult = ({ hit, index }) => {
     }
     return <span>No address found</span>;
   };
-  const phoneNumber = hit.phones.length > 0 && hit.phones[0].number;
+
+  const phoneNumber = _get(hit, 'phones[0].number');
+  const latitude = _get(hit, 'addresses[0].latitude');
+  const longitude = _get(hit, 'addresses[0].longitude');
+
   return (
     <div className={styles.searchResult}>
       <div className={styles.searchText}>
@@ -61,15 +66,15 @@ const SearchResult = ({ hit, index }) => {
           phoneNumber
           && (
             <div className={styles.sideLinkText}>
-              <a href={`tel${phoneNumber}`}>{`Call ${phoneNumber}`}</a>
+              <a href={`tel:${phoneNumber}`}>{`Call ${phoneNumber}`}</a>
             </div>
           )
         }
         {
-          (hit._geoloc && hit.addresses[0].address_1)
+          (latitude && longitude)
           && (
             <div className={styles.sideLinkText}>
-              <a href={`http://google.com/maps/dir/?api=1&destination=${hit._geoloc}`}>Get directions</a>
+              <a href={`http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`}>Get directions</a>
             </div>
           )
         }
@@ -82,11 +87,6 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-        {
-          (phoneNumber || hit._geoloc || hit.url)
-          && <div className={styles.divider} />
-        }
-        <a href="http://localhost:8081/" className={styles.sideLinkText}>Report Error</a>
       </div>
     </div>
   );

@@ -4,23 +4,21 @@ import { connectRefinementList } from 'react-instantsearch/connectors';
 import styles from './ServiceDiscoveryResults.scss';
 
 const RefinementListFilter = ({ items, refine }) => (
-  <div className="refinement-wrapper">
-    <ul className="refinement-ul">
-      {items.map(item => (
-        <label key={item.label} className={styles.checkBox}>
-          {item.label}
-          <input
-            type="checkbox"
-            checked={item.isRefined}
-            onChange={e => {
-              e.preventDefault();
-              refine(item.value);
-            }}
-          />
-        </label>
-      ))}
-    </ul>
-  </div>
+  <ul>
+    {items.map(item => (
+      <label key={item.label} className={styles.checkBox}>
+        {item.label}
+        <input
+          type="checkbox"
+          checked={item.isRefined}
+          onChange={e => {
+            e.preventDefault();
+            refine(item.value);
+          }}
+        />
+      </label>
+    ))}
+  </ul>
 );
 
 RefinementListFilter.propTypes = {
