@@ -60,7 +60,7 @@ const SearchResult = ({ hit, index }) => {
           phoneNumber
           && (
             <div className={styles.sideLinkText}>
-              <a href={`tel${phoneNumber}`}>{`Call ${phoneNumber}`}</a>
+              <a href={`tel:${phoneNumber}`}>{`Call ${phoneNumber}`}</a>
             </div>
           )
         }
@@ -81,11 +81,6 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-        {
-          (phoneNumber || hit._geoloc || hit.url)
-          && <div className={styles.divider} />
-        }
-        <a href="http://localhost:8081/" className={styles.sideLinkText}>Report Error</a>
       </div>
     </div>
   );
