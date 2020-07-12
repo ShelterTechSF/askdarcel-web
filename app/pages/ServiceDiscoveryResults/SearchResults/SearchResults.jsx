@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import styles from './SearchResults.scss';
@@ -52,7 +53,7 @@ const SearchResult = ({ hit, index }) => {
       <div className={styles.searchText}>
         <div className={styles.title}>{ `${index + 1}. ${hit.name}`}</div>
         <div className={styles.address}>{renderAddressMetadata(hit)}</div>
-        <div className={styles.description}>{hit.long_description}</div>
+        <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
         <div className={styles.serviceOf}>{hit.service_of}</div>
       </div>
       <div className={styles.sideLinks}>
