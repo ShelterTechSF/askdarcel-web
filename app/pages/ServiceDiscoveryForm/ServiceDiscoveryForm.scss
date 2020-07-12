@@ -62,16 +62,59 @@
 
 .footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     border-top: 1px solid $color-grey3;
     background-color: $color-white;
-    button {
-        margin: 18px;
+    padding: 18px 35px;
+}
+
+.progressBarMeter {
+    width: 666px;
+    height: 11px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    // overflow: hidden must be set to force both the progress bar and progress
+    // value to get clipped to have rounded corders.
+    border-radius: 100px;
+    overflow: hidden;
+
+    &::-webkit-progress-bar {
+        background-color: #e0e0e0;
+    }
+
+    &::-webkit-progress-value {
+        background-color: #0025e4;
+    }
+
+    // This is actually the progress bar value, not the whole bar, in Firefox
+    &::-moz-progress-bar {
+        background-color: #0025e4;
+    }
+}
+
+.progressBarText {
+    color: #202020;
+    font-size: 18px;
+}
+
+.actionGroup {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5px;
+
+    .button {
+        width: 188px;
         border: 1px solid $color-brand;
+        border-radius: 3px;
+
+        &:not(:last-child) {
+            margin-right: 30px;
+        }
     }
     .actionBack {
         background-color: transparent;
@@ -79,6 +122,5 @@
     }
     .actionSubmit {
         background-color: $color-brand;
-        margin-right: 80px;
     }
 }
