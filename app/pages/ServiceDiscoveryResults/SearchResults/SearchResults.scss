@@ -54,9 +54,19 @@
   color: $color-brand;
   padding-top: 32px;
 
-  .divider {
-    border-top: 1px solid $color-grey3;
-    margin-top: 24px;
-    margin-bottom: 24px;
+  .sideLink {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+  }
+
+  .sideLinkIcon {
+    width: 24px;
+  }
+
+  .sideLinkText {
+    padding: 0 8px;
+    white-space: nowrap;
+    overflow: scroll;
   }
 }

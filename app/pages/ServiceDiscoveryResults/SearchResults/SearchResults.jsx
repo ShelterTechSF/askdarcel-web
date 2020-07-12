@@ -2,6 +2,7 @@ import React from 'react';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
+import { images } from 'assets';
 import styles from './SearchResults.scss';
 
 /**
@@ -51,6 +52,7 @@ const SearchResult = ({ hit, index }) => {
   const phoneNumber = _get(hit, 'phones[0].number');
   const latitude = _get(hit, 'addresses[0].latitude');
   const longitude = _get(hit, 'addresses[0].longitude');
+  const url = hit.url || hit.website;
 
   return (
     <div className={styles.searchResult}>
@@ -64,25 +66,28 @@ const SearchResult = ({ hit, index }) => {
         {
           phoneNumber
           && (
-            <div className={styles.sideLinkText}>
-              <a href={`tel:${phoneNumber}`}>{`Call ${phoneNumber}`}</a>
+            <div className={styles.sideLink}>
+              <img src={images.icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
+              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
             </div>
           )
         }
         {
           (latitude && longitude)
           && (
-            <div className={styles.sideLinkText}>
-              <a href={`http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`}>Get directions</a>
+            <div className={styles.sideLink}>
+              <img src={images.icon('directions-blue')} alt="directions" className={styles.sideLinkIcon} />
+              <a href={`http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`} className={styles.sideLinkText}>Get directions</a>
             </div>
           )
         }
         <div />
         {
-          hit.url
+          url
           && (
-            <div className={styles.sideLinkText}>
-              <a href={hit.url} className={styles.sideLinkText}>Go to Website</a>
+            <div className={styles.sideLink}>
+              <img src={images.icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+              <a href={url} className={styles.sideLinkText}>Go to website</a>
             </div>
           )
         }
