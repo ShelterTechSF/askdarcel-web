@@ -38,7 +38,7 @@ export const CATEGORIES = [
     id: '1000007',
     name: 'Internet Access',
     slug: 'internet-access-resources',
-    steps: [STEPS.ELIGIBILITIES, STEPS.RESULTS],
+    steps: [STEPS.RESULTS],
   },
   {
     algoliaCategoryName: 'Covid-finance',
