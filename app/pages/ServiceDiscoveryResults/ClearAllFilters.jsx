@@ -11,7 +11,7 @@ const ClearAllFilter = ({ items, refine }) => (
     onClick={() => refine(items)}
     disabled={!items.length}
   >
-        Clear all
+        Clear all resources
   </div>
 );
 

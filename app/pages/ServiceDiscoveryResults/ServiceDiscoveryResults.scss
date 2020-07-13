@@ -11,6 +11,11 @@
     text-align: left;
     font-weight: bold;
     font-size: 26px;
+
+    @media screen and (max-width: 600px) {
+      font-size: 21px;
+      line-height: 20px;
+    }
   }
 }
 
@@ -62,6 +67,10 @@
     margin-right: 10px;
     margin-left: 0;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 767px) {
+    display: none;
   }
 }
 
