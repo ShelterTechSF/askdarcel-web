@@ -25,11 +25,6 @@
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
-    width: 375px;
-  }
-
-  @media screen and (max-width: 568px) {
-    width: 320px;
   }
 }
 
@@ -50,7 +45,7 @@
     margin-top: 12px;
 
     @media screen and (max-width: 600px) {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
@@ -59,12 +54,7 @@
     margin: 32px 0;
 
     @media screen and (max-width: 600px) {
-      font-size: 14px;
-      width: 335px;
-    }
-
-    @media screen and (max-width: 568px) {
-      width: 279px;
+      font-size: 16px;
     }
   }
 
@@ -74,7 +64,7 @@
     margin-bottom: 24px;
 
     @media screen and (max-width: 600px) {
-      font-size: 14px;
+      font-size: 16px;
       margin-bottom: 16px;
     }
   }
@@ -88,6 +78,19 @@
   font-size: 18px;
   color: $color-brand;
   padding-top: 32px;
+
+  @media screen and (max-width: 1120px) {
+    flex-direction: column;
+    margin-left: 0;
+    margin-right: 0;
+    width: inherit;
+  }
+
+  @media screen and (max-width: 600px) {
+    padding-top: 16px;
+    margin-top: 0;
+    font-size: 16px;
+  }
 
   .sideLink {
     display: flex;
@@ -103,16 +106,5 @@
     padding: 0 8px;
     white-space: nowrap;
     overflow: scroll;
-  }
-
-  @media screen and (max-width: 1120px) {
-    flex-direction: column;
-    margin-left: 0;
-  }
-
-  @media screen and (max-width: 600px) {
-    padding-top: 16px;
-    margin-top: 0;
-    font-size: 14px;
   }
 }
