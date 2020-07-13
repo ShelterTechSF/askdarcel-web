@@ -117,7 +117,12 @@ const InnerServiceDiscoveryForm = ({
     <Fragment>
       <Header onGoBack={goBack} />
       <Content />
-      <Footer onGoBack={goBack} onNextStep={goToNextStep} />
+      <Footer
+        onGoBack={goBack}
+        onNextStep={goToNextStep}
+        currentStep={currentStep}
+        numSteps={steps.length}
+      />
     </Fragment>
   );
 };
@@ -134,10 +139,40 @@ const Header = ({ onGoBack }) => (
   </div>
 );
 
-const Footer = ({ onGoBack, onNextStep }) => (
+const Footer = ({
+  onGoBack, onNextStep, currentStep, numSteps,
+}) => (
   <div className={styles.footer}>
-    <button type="button" className={styles.actionBack} onClick={onGoBack}>Back</button>
-    <button type="button" className={styles.actionSubmit} onClick={onNextStep}>Submit</button>
+    <div className={styles.progressBarContainer}>
+      {
+        /*
+         * Add 1 to current step because it is 0-indexed.
+         * Subtract 1 from numSteps because we shouldn't include the RESULT step.
+         */
+      }
+      <ProgressBar currentNumber={currentStep + 1} totalNumber={numSteps - 1} />
+    </div>
+    <div className={styles.actionGroup}>
+      <button type="button" className={`${styles.button} ${styles.actionBack}`} onClick={onGoBack}>
+        Back
+      </button>
+      <button type="button" className={`${styles.button} ${styles.actionSubmit}`} onClick={onNextStep}>
+        Submit
+      </button>
+    </div>
+  </div>
+);
+
+const ProgressBar = ({ currentNumber, totalNumber }) => (
+  <div className={styles.progressBar}>
+    {totalNumber > 1 && (
+      <Fragment>
+        <div className={styles.progressBarText}>
+          {`Question ${currentNumber} / ${totalNumber}`}
+        </div>
+        <progress className={styles.progressBarMeter} value={currentNumber} max={totalNumber} />
+      </Fragment>
+    )}
   </div>
 );
 
