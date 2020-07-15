@@ -206,9 +206,12 @@ module.exports = {
     contentBase: buildDir,
     historyApiFallback: true,
     proxy: {
-      '/api': {
+      '/api-docs': {
         target: process.env.API_URL || 'http://localhost:3000',
-        pathRewrite: { '^/api': '' },
+      },
+      '/api/': {
+        target: process.env.API_URL || 'http://localhost:3000',
+        pathRewrite: { '^/api/': '' },
       },
     },
   },
