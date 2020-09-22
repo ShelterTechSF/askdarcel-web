@@ -77,15 +77,6 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-        {
-          (latitude && longitude)
-          && (
-            <div className={styles.sideLink}>
-              <img src={images.icon('directions-blue')} alt="directions" className={styles.sideLinkIcon} />
-              <a href={`http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`} className={styles.sideLinkText}>Get directions</a>
-            </div>
-          )
-        }
         <div />
         {
           url
