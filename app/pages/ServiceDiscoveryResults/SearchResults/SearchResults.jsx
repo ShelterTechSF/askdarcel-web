@@ -52,8 +52,6 @@ const SearchResult = ({ hit, index }) => {
   };
 
   const phoneNumber = _get(hit, 'phones[0].number');
-  const latitude = _get(hit, 'addresses[0].latitude');
-  const longitude = _get(hit, 'addresses[0].longitude');
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
 
