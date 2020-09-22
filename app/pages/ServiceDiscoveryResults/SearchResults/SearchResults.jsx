@@ -51,10 +51,6 @@ const SearchResult = ({ hit, index }) => {
     return <span>No address found</span>;
   };
 
-  const phoneNumber = _get(hit, 'phones[0].number');
-  const latitude = _get(hit, 'addresses[0].latitude');
-  const longitude = _get(hit, 'addresses[0].longitude');
-  const url = hit.url || hit.website;
   const serviceId = hit.service_id;
 
   return (
@@ -66,36 +62,6 @@ const SearchResult = ({ hit, index }) => {
         <div className={styles.address}>{renderAddressMetadata(hit)}</div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
         <div className={styles.serviceOf}>{hit.service_of}</div>
-      </div>
-      <div className={styles.sideLinks}>
-        {
-          phoneNumber
-          && (
-            <div className={styles.sideLink}>
-              <img src={images.icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
-              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
-            </div>
-          )
-        }
-        {
-          (latitude && longitude)
-          && (
-            <div className={styles.sideLink}>
-              <img src={images.icon('directions-blue')} alt="directions" className={styles.sideLinkIcon} />
-              <a href={`http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`} className={styles.sideLinkText}>Get directions</a>
-            </div>
-          )
-        }
-        <div />
-        {
-          url
-          && (
-            <div className={styles.sideLink}>
-              <img src={images.icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
-              <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Go to website</a>
-            </div>
-          )
-        }
       </div>
     </div>
   );
