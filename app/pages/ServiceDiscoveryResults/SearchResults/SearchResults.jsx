@@ -51,7 +51,6 @@ const SearchResult = ({ hit, index }) => {
     return <span>No address found</span>;
   };
 
-  const phoneNumber = _get(hit, 'phones[0].number');
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
@@ -69,16 +68,6 @@ const SearchResult = ({ hit, index }) => {
         </div>
       </div>
       <div className={styles.sideLinks}>
-        {
-          phoneNumber
-          && (
-            <div className={styles.sideLink}>
-              <img src={images.icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
-              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
-            </div>
-          )
-        }
-        <div />
         {
           url
           && (
