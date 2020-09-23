@@ -10,7 +10,7 @@ export const CATEGORIES = [
     id: '1000001',
     name: 'Food resources',
     slug: 'food-resources',
-    steps: [STEPS.ELIGIBILITIES, STEPS.RESULTS],
+    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
   },
   {
     algoliaCategoryName: 'Covid-hygiene',
