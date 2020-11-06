@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
@@ -6,7 +6,7 @@ import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import { images } from 'assets';
 import styles from './SearchResults.scss';
-
+import Textellent from '../../../components/textellent'
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
  * uses the time helper classes.
@@ -38,6 +38,11 @@ const SearchResults = ({ searchResults }) => {
 };
 
 const SearchResult = ({ hit, index }) => {
+
+  const [isShowing, setIsShowing] = useState(true);
+
+  const toggle = () => setIsShowing(!isShowing);
+  
   const renderAddressMetadata = hit_ => {
     if (hit_.addresses.length === 0) {
       return <span>No address found</span>;
@@ -58,6 +63,7 @@ const SearchResult = ({ hit, index }) => {
 
   return (
     <div className={styles.searchResult}>
+      {isShowing && <Textellent toggle={toggle} isShowing={isShowing} hit={hit}/>}
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={`/services/${serviceId}`}>{`${index + 1}. ${hit.name}`}</Link>
@@ -88,6 +94,10 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
+            <div className={styles.sideLink} onClick={toggle}>
+              <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+              <div className={styles.sideLinkText}>Text me the info</div>
+            </div>
       </div>
     </div>
   );
