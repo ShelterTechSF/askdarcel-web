@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import './Texting.scss';
 import { images } from 'assets';
 import  * as dataService from '../../utils/DataService';
-import PropTypes from 'prop-types';
 import Loader from '../ui/Loader';
 
 const initialState = {
@@ -13,13 +13,15 @@ const initialState = {
   isLoading: false,
   isSent: false,
   errors: false,
-}
+};
 
 const Texting = ({ toggle, resource }) => {
 
   const [state, setState] = useState(initialState);
-  const { name, phoneNumber, agreed, isLoading, errors, isSent } = {...state};
+  const { name, phoneNumber, agreed, isLoading, errors, isSent } = { ...state };
 
+  // Data object to send to the Api
+  // The logic in the values handles the missing information
   const data = {
     firstName : name ? name.match(/\S+/g)[0] : '',
     lastName: name ? name.match(/\S+/g).slice(1).join(' ') : '',
@@ -38,33 +40,35 @@ const Texting = ({ toggle, resource }) => {
         Zip: resource.addresses.length ? resource.addresses[0].postal_code : '',
         Org_Phone: resource.phones ? resource.phones[0].number : ''
     }
-  }
+  };
 
-  const PhoneNumberValidator = () => 
+  // US phone number validator
+  const phoneNumberValidator = () => 
     /^\(?(\d{3})\)?[-\. ]?(\d{3})[-\. ]?(\d{4})$/.test(phoneNumber);
 
-  const handleSubmit = evt => {
+  const onSubmit = evt => {
     evt.preventDefault();
-    setState({...state, isLoading: true});
+    setState({ ...state, isLoading: true });
 
     const resp = async () => {
       dataService.post(
-        "/api/textellent", {data: {...data}}).then( response => {
+        "/api/textellent", { data: { ...data } }).then( response => {
           response.ok ? 
-            setState({...state, isSent: true, isLoading:false})
-            : setState({...state, errors: true, isLoading:false});
+            setState({ ...state, isSent: true, isLoading: false })
+            : setState({ ...state, errors: true, isLoading:false });
       });
     }
     resp();
-  }
+  };
 
   const onChange = evt => {
-    errors ? setState({...state, errors:false}) : null;
+    errors ? setState({ ...state, errors: false }) : null;
     const value = evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value;
     const name = evt.target.name;
     setState({ ...state, [name]: value });
   };
 
+  // form view 
   const form = () => {
     return (
       ReactDOM.createPortal(
@@ -122,10 +126,10 @@ const Texting = ({ toggle, resource }) => {
               </button>
               <button
                 type="submit"
-                className={`button${agreed && PhoneNumberValidator(phoneNumber) ? '' : ' disabled'}`}
-                disabled={!(agreed && PhoneNumberValidator(phoneNumber))}
+                className={`button${agreed && phoneNumberValidator(phoneNumber) ? '' : ' disabled'}`}
+                disabled={!(agreed && phoneNumberValidator(phoneNumber))}
                 data-field="submit"
-                onClick={handleSubmit}>
+                onClick={onSubmit}>
                 Text me
               </button>
     
@@ -137,8 +141,9 @@ const Texting = ({ toggle, resource }) => {
         </div>, document.body
       )
     )
-  }
+  };
 
+  // Loading spinner view 
   const loading =  () => {
     return (
       <div className="overlay"> 
@@ -147,8 +152,9 @@ const Texting = ({ toggle, resource }) => {
         </div>
       </div>
     )
-  }
-  // 
+  };
+
+  // Success sending view 
   const sent = () => {
     return (
       <div className="overlay"> 
@@ -166,10 +172,10 @@ const Texting = ({ toggle, resource }) => {
         </div>
       </div>
     )
-  }
+  };
 
   return isSent ? sent() : isLoading ? loading() : form();
-}
+};
 
 Texting.propTypes = {
   resource: PropTypes.object.isRequired,
