@@ -82,7 +82,6 @@
   color: #FFFFFF;
   font-size: calc-em(16px);
   padding: calc-em(7px) calc-em(15px);
-  // border: 1px solid $color-brand;
   background: $color-brand;
   color: $color-white;
   border-radius: 3px;
@@ -129,5 +128,30 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 20px;
-  
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    background: #00916A;
+    border-radius: 50%;
+    position: absolute;
+    text-align: center;
+}
+.checMarkkIcon {
+  width: 116.67px;
+  margin-top: 20%;
+}
+
+.sentIcons {
+  position: absolute;
+  text-align: center;
+  margin: 30% 30%;
+}
+
+.sentText {
+  margin-top: 30%;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
 }
