@@ -1,6 +1,5 @@
 import { ReactSelector } from 'testcafe-react-selectors';
 
-
 export default class Texting {
   constructor(){
     const baseSelector = ReactSelector('Texting')
