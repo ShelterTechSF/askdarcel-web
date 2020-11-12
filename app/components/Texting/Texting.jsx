@@ -15,6 +15,8 @@ const initialState = {
   errors: false,
 };
 
+// Text resaurce informations to the user phone
+
 const Texting = ({ toggle, resource }) => {
 
   const [state, setState] = useState(initialState);

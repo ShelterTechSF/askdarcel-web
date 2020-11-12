@@ -3,7 +3,8 @@ import config from '../config';
 
 export default class SearchResults {
   constructor(){
-    this.textMeInfo = ReactSelector('SearchResults').find('.sideLink:nth-child(3)');
+    const baseSelector = ReactSelector('SearchResults')
+    this.textMeInfo = baseSelector.find('div').withAttribute('data-field', 'text-me').nth(0);
   }
 
   static url() {

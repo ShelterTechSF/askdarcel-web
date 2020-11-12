@@ -94,9 +94,9 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-            <div className="sideLink" onClick={toggle}>
-              <img src={images.icon('text-message')} alt="chat-bubble" className="sideLinkIcon" />
-              <div className="sideLinkText">Text me the info</div>
+            <div className={styles.sideLink} data-field="text-me" onClick={toggle} data-field= "text-me">
+              <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+              <div className={styles.sideLinkText}>Text me the info</div>
             </div>
       </div>
     </div>
