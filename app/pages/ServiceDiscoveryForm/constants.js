@@ -68,4 +68,11 @@ export const CATEGORIES = [
     slug: 'lgbtq-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
   },
+  {
+      algoliaCategoryName: 'Covid-shelter',
+      id: '1000010',
+      name: 'Shelter resources',
+      slug: 'shelter-resources',
+      steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+  },
 ];
