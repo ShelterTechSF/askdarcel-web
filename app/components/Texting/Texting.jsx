@@ -6,6 +6,7 @@ import { images } from 'assets';
 import  * as dataService from '../../utils/DataService';
 import Loader from '../ui/Loader';
 
+// Initial state's values
 const initialState = {
   name: '',
   phoneNumber: '',
@@ -22,8 +23,8 @@ const Texting = ({ toggle, resource }) => {
   const [state, setState] = useState(initialState);
   const { name, phoneNumber, agreed, isLoading, errors, isSent } = { ...state };
 
-  // Data object to send to the Api
-  // The logic in the values handles the missing information
+  // Data to send to the Api
+  // The logic in the values handles the missing infos
   const data = {
     firstName : name ? name.match(/\S+/g)[0] : '',
     lastName: name ? name.match(/\S+/g).slice(1).join(' ') : '',
@@ -52,15 +53,15 @@ const Texting = ({ toggle, resource }) => {
     evt.preventDefault();
     setState({ ...state, isLoading: true });
 
-    const resp = async () => {
+    const sendData = async () => {
       dataService.post(
-        "/api/textellent", { data: { ...data } }).then( response => {
+        "/api/textings", data ).then( response => {
           response.ok ? 
             setState({ ...state, isSent: true, isLoading: false })
-            : setState({ ...state, errors: true, isLoading:false });
+            : setState({ ...state, errors: true, isLoading: false });
       });
     }
-    resp();
+    sendData();
   };
 
   const onChange = evt => {
@@ -170,7 +171,6 @@ const Texting = ({ toggle, resource }) => {
               <h1 className="sentText">Sent!</h1>
             </div>
           </div>
-          
         </div>
       </div>
     )
