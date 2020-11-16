@@ -4,7 +4,6 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  left: 0px;
   top: 70px;
   background: rgba(0, 0, 0, 0.2);
 }
@@ -79,7 +78,6 @@
 }
 
 .button {
-  color: #FFFFFF;
   font-size: calc-em(16px);
   padding: calc-em(7px) calc-em(15px);
   background: $color-brand;
@@ -146,7 +144,7 @@
 .sentIcons {
   position: absolute;
   text-align: center;
-  margin: 30% 30%;
+  margin: 30%;
 }
 
 .sentText {
