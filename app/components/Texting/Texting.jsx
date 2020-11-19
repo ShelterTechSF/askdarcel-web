@@ -8,12 +8,12 @@ import Loader from '../ui/Loader';
 
 // Initial state's values
 const initialState = {
-  name: 'Faycel Touili',
-  phoneNumber: '4134567788',
-  agreed: true,
+  name: '',
+  phoneNumber: '',
+  agreed: false,
   isLoading: false,
-  isSent: true,
-  error: true,
+  isSent: false,
+  error: false,
 };
 
 // Text resaurce informations to the user phone
