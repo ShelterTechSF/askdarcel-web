@@ -136,20 +136,28 @@
     position: absolute;
     text-align: center;
 }
-.checMarkkIcon {
+.responseIcon {
   width: 116.67px;
   margin-top: 20%;
 }
 
-.sentIcons {
+.responseIcons {
   position: absolute;
   text-align: center;
   margin: 30%;
+  &.error {
+    margin: 20%;
+  }
 }
 
-.sentText {
+.responseText {
   margin-top: 30%;
   font-style: normal;
   font-weight: bold;
   font-size: 26px;
+  &.error{
+    margin-top: 10%;
+    font-size: 16px;
+  }
 }
+
