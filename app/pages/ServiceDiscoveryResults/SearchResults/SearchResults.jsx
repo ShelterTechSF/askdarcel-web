@@ -6,7 +6,7 @@ import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import { images } from 'assets';
 import styles from './SearchResults.scss';
-import Texting from '../../../components/Texting'
+import Texting from '../../../components/Texting';
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
  * uses the time helper classes.
@@ -38,11 +38,10 @@ const SearchResults = ({ searchResults }) => {
 };
 
 const SearchResult = ({ hit, index }) => {
-
   const [isShowing, setIsShowing] = useState(false);
 
   const toggle = () => setIsShowing(!isShowing);
-  
+
   const renderAddressMetadata = hit_ => {
     if (hit_.addresses.length === 0) {
       return <span>No address found</span>;
@@ -63,7 +62,7 @@ const SearchResult = ({ hit, index }) => {
 
   return (
     <div className={styles.searchResult}>
-      {isShowing && <Texting toggle={toggle} isShowing={isShowing} resource={hit}/>}
+      { isShowing && <Texting toggle={toggle} isShowing={isShowing} resource={hit} /> }
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={`/services/${serviceId}`}>{`${index + 1}. ${hit.name}`}</Link>
@@ -94,10 +93,10 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-            <div className={styles.sideLink} data-field="text-me" onClick={toggle} data-field= "text-me">
-              <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
-              <div className={styles.sideLinkText}>Text me the info</div>
-            </div>
+        <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggle}>
+          <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+          <div className={styles.sideLinkText}>Text me the info</div>
+        </div>
       </div>
     </div>
   );
