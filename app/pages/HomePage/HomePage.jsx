@@ -11,7 +11,7 @@ import ResourceList from './components/ResourceList/ResourceList';
 
 const covidResources = [
   { name: 'Food', icon: 'food', categorySlug: 'food-resources' },
-  { name: 'Shelter', icon: 'bed', link: '/covid/shelteraccess' },
+  { name: 'Shelter', icon: 'bed', categorySlug: 'shelter-resources' },
   { name: 'Hygiene', icon: 'shower', categorySlug: 'hygiene-resources' },
   { name: 'Health', icon: 'hospital', categorySlug: 'medical-services-resources' },
   { name: 'Financial Assistance', icon: 'wallet', categorySlug: 'financial-resources' },
