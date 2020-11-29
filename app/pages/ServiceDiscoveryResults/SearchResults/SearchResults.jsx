@@ -62,11 +62,11 @@ const SearchResult = ({ hit, index }) => {
         <div className={styles.title}>
           <Link to={`/services/${serviceId}`}>{`${index + 1}. ${hit.name}`}</Link>
         </div>
-        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
-        <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
         <div className={styles.serviceOf}>
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
+        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
+        <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
       </div>
       <div className={styles.sideLinks}>
         {
