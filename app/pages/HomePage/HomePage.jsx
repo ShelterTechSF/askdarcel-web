@@ -12,8 +12,8 @@ import ResourceList from './components/ResourceList/ResourceList';
 const covidResources = [
   { name: 'Food', icon: 'food', categorySlug: 'food-resources' },
   { name: 'Shelter', icon: 'bed', categorySlug: 'shelter-resources' },
-  { name: 'Hygiene', icon: 'shower', categorySlug: 'hygiene-resources' },
-  { name: 'Health', icon: 'hospital', categorySlug: 'medical-services-resources' },
+  { name: 'Showers and Restrooms', icon: 'shower', categorySlug: 'hygiene-resources' },
+  { name: 'Health and COVID-19', icon: 'hospital', categorySlug: 'medical-services-resources' },
   { name: 'Financial Assistance', icon: 'wallet', categorySlug: 'financial-resources' },
   { name: 'Jobs', icon: 'employment', categorySlug: 'job-assistance-resources' },
   { name: 'Housing', icon: 'eviction-prevention', categorySlug: 'rental-assistance-resources' },
