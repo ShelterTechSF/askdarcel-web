@@ -112,6 +112,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 1,
               modules: false,
             },
           },
@@ -129,6 +130,9 @@ module.exports = {
           'style-loader',
           {
             loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
           },
           'sass-loader',
         ],
@@ -153,8 +157,10 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              importLoaders: 1,
+              modules: {
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              },
             },
           },
           'sass-loader',
