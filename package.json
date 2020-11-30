@@ -75,7 +75,7 @@
     "node-sass": "^4.12.0",
     "nyc": "^15.0.0",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.13.1",
+    "style-loader": "^2.0.0",
     "testcafe": "^1.6.0",
     "testcafe-browser-provider-saucelabs": "^1.8.0",
     "testcafe-react-selectors": "^3.3.0",
