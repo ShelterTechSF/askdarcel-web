@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import * as typeformEmbed from '@typeform/embed';
 import { images } from 'assets';
 
-import styles from './ResourceCard.scss';
+import styles from './ResourceCard.module.scss';
 
 const openTypeform = (event, link) => {
   const typeformReference = typeformEmbed.makePopup(

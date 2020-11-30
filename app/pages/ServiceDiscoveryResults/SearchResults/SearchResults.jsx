@@ -5,7 +5,7 @@ import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import { images } from 'assets';
-import styles from './SearchResults.scss';
+import styles from './SearchResults.module.scss';
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that

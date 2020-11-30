@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './SearchBar.scss';
+import styles from './SearchBar.module.scss';
 
 const SearchBar = ({
   onChange, onSubmit, placeholder, value,

@@ -14,7 +14,7 @@ import ClearAllFilters from './ClearAllFilters';
 import OpenNowFilter from './OpenNowFilter';
 import RefinementListFilter from './RefinementListFilter';
 import SearchResults from './SearchResults/SearchResults';
-import styles from './ServiceDiscoveryResults.scss';
+import styles from './ServiceDiscoveryResults.module.scss';
 
 
 const createURL = state => `?${qs.stringify(state, { encodeValuesOnly: true })}`;

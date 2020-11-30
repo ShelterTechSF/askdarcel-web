@@ -89,68 +89,6 @@ module.exports = {
         exclude: [/node_modules/, /typings/],
       },
       {
-        // Legacy stylesheets are not wrapped with CSS Modules, allowing the
-        // selector class names to be usable globally.
-        exclude: [
-          path.resolve(__dirname, 'app/components/ui/HamburgerMenu'),
-          path.resolve(__dirname, 'app/components/ui/Navigation'),
-          path.resolve(__dirname, 'app/components/ui/Banner'),
-          path.resolve(__dirname, 'app/components/edit/EditSidebar'),
-          path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
-          path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
-          path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
-          path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
-          path.resolve(__dirname, 'app/pages/HomePage'),
-          path.resolve(__dirname, 'app/pages/About'),
-          path.resolve(__dirname, 'app/pages/Covid'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryForm'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryResults'),
-        ],
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: false,
-            },
-          },
-          'sass-loader',
-        ],
-      },
-      {
-        include: [
-          path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
-          path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
-          path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
-        ],
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-            },
-          },
-          'sass-loader',
-        ],
-      },
-      {
-        // New stylesheets are treated as locally-scoped CSS modules.
-        include: [
-          path.resolve(__dirname, 'app/components/ui/HamburgerMenu'),
-          path.resolve(__dirname, 'app/components/ui/Navigation'),
-          path.resolve(__dirname, 'app/components/ui/Banner'),
-          path.resolve(__dirname, 'app/components/edit/EditSidebar'),
-          path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
-          path.resolve(__dirname, 'app/pages/HomePage'),
-          path.resolve(__dirname, 'app/pages/About'),
-          path.resolve(__dirname, 'app/pages/Covid'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryForm'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryResults'),
-        ],
         test: /\.s?css$/,
         use: [
           'style-loader',
@@ -159,6 +97,7 @@ module.exports = {
             options: {
               importLoaders: 1,
               modules: {
+                auto: true,
                 localIdentName: '[path][name]__[local]--[hash:base64:5]',
               },
             },

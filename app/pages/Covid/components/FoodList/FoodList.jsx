@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import CovidHeader from '../CovidHeader';
 import GoogleDocEmbed from '../GoogleDocEmbed';
-import styles from './FoodList.scss';
+import styles from './FoodList.module.scss';
 
 
 const FoodList = () => (
