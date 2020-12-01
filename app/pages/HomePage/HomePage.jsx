@@ -19,6 +19,7 @@ const covidResources = [
   { name: 'Housing', icon: 'eviction-prevention', categorySlug: 'rental-assistance-resources' },
   { name: 'Domestic Violence', icon: 'warning', categorySlug: 'domestic-violence-resources' },
   { name: 'LGBTQ+', icon: 'community', categorySlug: 'lgbtq-resources' },
+  { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' }
 ];
 
 const generalResources = [{
