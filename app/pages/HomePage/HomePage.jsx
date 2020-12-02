@@ -16,7 +16,7 @@ const covidResources = [
   { name: 'Health and COVID-19', icon: 'hospital', categorySlug: 'medical-services-resources' },
   { name: 'Financial Assistance', icon: 'wallet', categorySlug: 'financial-resources' },
   { name: 'Jobs', icon: 'employment', categorySlug: 'job-assistance-resources' },
-  { name: 'Housing', icon: 'eviction-prevention', categorySlug: 'rental-assistance-resources' },
+  { name: 'Rental Assistance and Eviction Prevention', icon: 'housing-1', categorySlug: 'rental-assistance-resources' },
   { name: 'Domestic Violence', icon: 'warning', categorySlug: 'domestic-violence-resources' },
   { name: 'LGBTQ+', icon: 'community', categorySlug: 'lgbtq-resources' },
   { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' },
