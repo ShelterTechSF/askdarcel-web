@@ -105,6 +105,7 @@ module.exports = {
           path.resolve(__dirname, 'app/pages/Covid'),
           path.resolve(__dirname, 'app/pages/ServiceDiscoveryForm'),
           path.resolve(__dirname, 'app/pages/ServiceDiscoveryResults'),
+          path.resolve(__dirname, 'app/components/Texting'),
         ],
         test: /\.s?css$/,
         use: [
@@ -146,6 +147,7 @@ module.exports = {
           path.resolve(__dirname, 'app/pages/Covid'),
           path.resolve(__dirname, 'app/pages/ServiceDiscoveryForm'),
           path.resolve(__dirname, 'app/pages/ServiceDiscoveryResults'),
+          path.resolve(__dirname, 'app/components/Texting'),
         ],
         test: /\.s?css$/,
         use: [

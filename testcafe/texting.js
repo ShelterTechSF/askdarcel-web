@@ -26,6 +26,6 @@ test('Text info, Basic', async t => {
   await t.expect(texting.submitButton.hasAttribute('disabled')).notOk();
 
   await t.click(texting.submitButton);
-  // Check if Backend request fulfilled successfully
+  // Check the request fulfilled successfully
   await t.expect(texting.sent.innerText).contains('Sent!');
 });
