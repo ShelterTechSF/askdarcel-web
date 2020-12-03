@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { images } from 'assets';
 import styles from './Texting.scss';
 import * as dataService from '../../utils/DataService';
-import FormView from './FormView';
+import FormView from './FormView/';
 import Loader from '../ui/Loader';
 import SentView from './SentView';
 import ErrorView from './ErrorView';
@@ -12,28 +12,28 @@ import ErrorView from './ErrorView';
 // Text resource informations to the user phone
 
 const Texting = ({ toggle, resource }) => {
-  const [view, changeView] = useState('FormView');
+  const [view, changeView] = useState('formView');
 
   // Send data to backend
   const sendData = async data => dataService.post(
     '/api/textings', { data },
   ).then(response => {
     if (response.ok) {
-      changeView('SentView');
+      changeView('sentView');
     }
   })
-    .catch(() => changeView('ErrorView'));
+    .catch(() => changeView('errorView'));
 
   const handleSubmit = data => {
-    changeView('Loader');
+    changeView('loader');
     sendData(data);
   };
 
   const myViews = {
-    FormView: <FormView handleSubmit={handleSubmit} resource={resource} toggle={toggle} />,
-    Loader: <Loader />,
-    SentView: <SentView />,
-    ErrorView: <ErrorView />,
+    formView: <FormView handleSubmit={handleSubmit} resource={resource} toggle={toggle} />,
+    loader: <Loader />,
+    sentView: <SentView />,
+    errorView: <ErrorView />,
   };
 
   return (
