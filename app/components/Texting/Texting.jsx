@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { images } from 'assets';
 import styles from './Texting.scss';
 import * as dataService from '../../utils/DataService';
-import FormView from './FormView/';
+import FormView from './FormView';
 import Loader from '../ui/Loader';
 import SentView from './SentView';
 import ErrorView from './ErrorView';
