@@ -8,7 +8,7 @@ import Navigation from './ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
-import { isSFServiceGuideSite } from '../utils/whitelabel';
+import { isSFServiceGuideSite, isSFFamiliesSite } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
@@ -134,6 +134,34 @@ class App extends Component {
     this.setState(state => ({ hamburgerMenuIsOpen: !state.hamburgerMenuIsOpen }));
   }
 
+  getTitleMeta() {
+    if (isSFServiceGuideSite()) {
+      return (
+        <>
+          <title>SF Service Guide</title>
+          <meta property="og:url" content="https://sfserviceguide.org" />
+          <meta property="og:title" content="SF Service Guide" />
+        </>
+      );
+    } else if (isSFFamiliesSite()) {
+      return (
+        <>
+          <title>SF Families</title>
+          <meta property="og:url" content="https://sffamilies.sfserviceguide.org/" />
+          <meta property="og:title" content="SF Families" />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <title>AskDarcel</title>
+          <meta property="og:url" content="https://askdarcel.org" />
+          <meta property="og:title" content="AskDarcel" />
+        </>
+      );
+    }
+  }
+
   render() {
     const { hamburgerMenuIsOpen } = this.state;
 
@@ -142,19 +170,7 @@ class App extends Component {
     return (
       <div id={outerContainerId}>
         <Helmet>
-          { isSFServiceGuideSite() ? (
-            <>
-              <title>SF Service Guide</title>
-              <meta property="og:url" content="https://sfserviceguide.org" />
-              <meta property="og:title" content="SF Service Guide" />
-            </>
-          ) : (
-            <>
-              <title>AskDarcel</title>
-              <meta property="og:url" content="https://askdarcel.org" />
-              <meta property="og:title" content="AskDarcel" />
-            </>
-          ) }
+          {this.getTitleMeta()}
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@sheltertechorg" />
@@ -184,6 +200,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 function mapStateToProps(state) {
