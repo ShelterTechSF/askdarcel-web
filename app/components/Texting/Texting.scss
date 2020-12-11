@@ -62,12 +62,6 @@
   }
 }
 
-.inputField{
-  margin-top: 2em;
-  @media screen and (max-width: 900px ) {
-    margin-top: 1em;
-  }
-}
 .label {
   font-size: 1em;
   color: $color-grey5;
@@ -81,6 +75,7 @@
 }
 
 .checkBox {
+  margin-top: 1em;
   font-size: 0.9em;
   color: $color-grey5;
   align-items: center;
