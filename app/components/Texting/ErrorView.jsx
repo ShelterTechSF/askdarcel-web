@@ -4,10 +4,16 @@ import styles from './Texting.scss';
 
 // Error View: show Alert graphic and a friendly message
 const ErrorView = () => (
-  <div className={`${styles.responseIcons} ${styles.error}`}>
-    <img src={images.icon('emergency')} alt="error" className={styles.responseIcon} />
-    <h1 className="responseText error">Sorry, something went wrong, please try again later.</h1>
-  </div>
+  <>
+    <div className={styles.errorDiv}>
+      <img className={styles.responseIcon} src={images.icon('emergency')} alt="error" />
+      <div className={styles.errorText}>
+        Sorry, something went wrong, please try again later.
+      </div>
+    </div>
+
+  </>
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export default ErrorView;

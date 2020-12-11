@@ -38,9 +38,13 @@ const SearchResults = ({ searchResults }) => {
 };
 
 const SearchResult = ({ hit, index }) => {
-  const [isShowing, setIsShowing] = useState(false);
+  const [textingIsOpen, setTextingIsOpen] = useState(false);
+  const service = {
+    serviceName: hit.name,
+    service_id: hit.service_id,
+  };
 
-  const toggle = () => setIsShowing(!isShowing);
+  const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
 
   const renderAddressMetadata = hit_ => {
     if (hit_.addresses.length === 0) {
@@ -62,7 +66,7 @@ const SearchResult = ({ hit, index }) => {
 
   return (
     <div className={styles.searchResult}>
-      { isShowing && <Texting toggle={toggle} isShowing={isShowing} resource={hit} /> }
+      { textingIsOpen && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} /> }
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={`/services/${serviceId}`}>{`${index + 1}. ${hit.name}`}</Link>
@@ -93,7 +97,7 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-        <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggle}>
+        <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggleTextingModal}>
           <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
           <div className={styles.sideLinkText}>Text me the info</div>
         </div>

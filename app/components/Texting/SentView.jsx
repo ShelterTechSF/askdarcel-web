@@ -4,10 +4,10 @@ import styles from './Texting.scss';
 
 // Success sending view
 const SentView = () => (
-  <div className={styles.responseIcons}>
+  <div className={styles.successDiv}>
     <div className={styles.circle}>
-      <img src={images.icon('check-mark')} alt="check-mark" className={styles.responseIcon} />
-      <h1 className={styles.responseText} datafield="sent">Sent!</h1>
+      <img className={styles.responseIcon} src={images.icon('check-mark')} alt="Success" />
+      <div className={styles.successText} data-field="sent">Sent!</div>
     </div>
   </div>
 );

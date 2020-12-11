@@ -1,54 +1,95 @@
-import React, { useState, useMemo, Fragment } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { getConfig } from './config';
-import Heading from './components/Heading';
-import Privacy from './components/Privacy';
-import Buttons from './components/Buttons';
-import RenderInputs from './components/RenderInputs';
+import Heading from './Heading';
+import Privacy from './Privacy';
+import Buttons from './Buttons';
+import styles from '../Texting.scss';
 
 const initialState = {
-  user_name: '',
+  recipient_name: '',
   phone_number: '',
   agreed: false,
 };
+const ServicePropTypes = PropTypes.shape({
+  serviceName: PropTypes.string.isRequired,
+  service_id: PropTypes.number.isRequired,
+});
 
-const FormView = ({ resource, handleSubmit, toggle }) => {
+const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
-  const { user_name, phone_number, agreed } = state;
+  const { recipient_name, phone_number, agreed } = state;
+  const { serviceName, service_id } = service;
 
-  const buttonDisabled = () => !(agreed && /^\(?(\d{3})\)?[-. ]?(\d{3})[- . ]?(\d{4})$/.test(phone_number));
-
-  const onChange = name => event => {
-    const { type, value, checked } = event.target;
+  const onChange = evt => {
+    const {
+      type,
+      name,
+      value,
+      checked,
+    } = evt.target;
     const newValue = type === 'checkbox' ? checked : value;
     setState(prevState => ({ ...prevState, [name]: newValue }));
   };
 
-  const config = useMemo(() => getConfig({ state, onChange }), [state]);
-
   const onSubmit = event => {
     event.preventDefault();
     const data = {
-      user_name,
+      recipient_name,
       phone_number,
-      resource_id: resource.id,
+      service_id,
     };
     handleSubmit(data);
   };
 
   return (
-    <Fragment>
-      <Heading resource_name={resource.name} />
-      <RenderInputs config={config} />
-      <Buttons disabled={buttonDisabled()} toggle={toggle} onSubmit={onSubmit} />
+    <div>
+      <Heading serviceName={serviceName} />
+      <label className={styles.label}>
+        First name (optional)
+        <input
+          type="text"
+          name="recipient_name"
+          className={styles.input}
+          value={recipient_name}
+          data-field="recipientName"
+          onChange={onChange}
+        />
+      </label>
+      <label className={styles.label}>
+        Phone number (required)
+        <div className={styles.dataRates}>
+          *Standard text and data rates may apply.
+        </div>
+        <input
+          type="text"
+          name="phone_number"
+          placeholder=""
+          className={styles.input}
+          value={phone_number}
+          data-field="phoneNumber"
+          onChange={onChange}
+        />
+      </label>
+      <label className={styles.checkBox}>
+        <input
+          type="checkbox"
+          name="agreed"
+          checked={agreed}
+          className={styles.checkBox}
+          data-field="agree"
+          onChange={onChange}
+        />
+        I agree to receive text messages from SF Service Guide.
+      </label>
+      <Buttons disabled={!agreed} closeModal={closeModal} onSubmit={onSubmit} />
       <Privacy />
-    </Fragment>
+    </div>
   );
 };
 
 FormView.propTypes = {
-  resource: PropTypes.object.isRequired,
-  toggle: PropTypes.func.isRequired,
+  service: ServicePropTypes.isRequired,
+  closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

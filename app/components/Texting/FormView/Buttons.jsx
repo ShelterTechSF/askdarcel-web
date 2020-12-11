@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../../Texting.scss';
+import classNames from 'classnames';
+import styles from '../Texting.scss';
 
 
-const Buttons = ({ toggle, onSubmit, disabled }) => (
+const Buttons = ({ closeModal, onSubmit, disabled }) => (
   <div className={styles.buttons}>
     <button
       type="button"
-      className={`${styles.cancel} ${styles.button}`}
-      onClick={toggle}
+      className={classNames(styles.cancel, styles.button)}
+      onClick={closeModal}
     >
-      cancel
+      Cancel
     </button>
     <button
       type="submit"
-      className={`${styles.button} ${!disabled ? '' : styles.disabled}`}
+      className={classNames(styles.button, { [styles.disabled]: disabled })}
       disabled={disabled}
-      datafield="submit"
+      data-field="submit"
       onClick={onSubmit}
     >
       Text me
@@ -26,7 +27,7 @@ const Buttons = ({ toggle, onSubmit, disabled }) => (
 
 Buttons.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  toggle: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
 };
 

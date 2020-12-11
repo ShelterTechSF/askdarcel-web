@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../Texting.scss';
+import styles from '../Texting.scss';
 
 const Privacy = () => (
   <div className={styles.privacy}>

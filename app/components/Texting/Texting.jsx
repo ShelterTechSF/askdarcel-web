@@ -1,58 +1,84 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { images } from 'assets';
+import ReactModal from 'react-modal';
 import styles from './Texting.scss';
 import * as dataService from '../../utils/DataService';
 import FormView from './FormView';
 import Loader from '../ui/Loader';
 import SentView from './SentView';
 import ErrorView from './ErrorView';
+import closeIcon from './close-icon.svg';
+
+const ServicePropTypes = PropTypes.shape({
+  serviceName: PropTypes.string.isRequired,
+  service_id: PropTypes.number.isRequired,
+});
 
 // Text resource informations to the user phone
 
-const Texting = ({ toggle, resource }) => {
-  const [view, changeView] = useState('formView');
+const Texting = ({ closeModal, service, isShowing }) => {
+  const [view, setView] = useState('');
 
   // Send data to backend
-  const sendData = async data => dataService.post(
+  const sendData = data => dataService.post(
     '/api/textings', { data },
   ).then(response => {
     if (response.ok) {
-      changeView('sentView');
+      setView('sentView');
     }
   })
-    .catch(() => changeView('errorView'));
+    .catch(() => setView('errorView'));
 
   const handleSubmit = data => {
-    changeView('loader');
+    setView('loader');
     sendData(data);
   };
 
-  const myViews = {
-    formView: <FormView handleSubmit={handleSubmit} resource={resource} toggle={toggle} />,
-    loader: <Loader />,
-    sentView: <SentView />,
-    errorView: <ErrorView />,
-  };
+  let activeView;
+
+  switch (view) {
+    case 'loader':
+      activeView = <Loader />;
+      break;
+    case 'sentView':
+      activeView = <SentView />;
+      break;
+    case 'errorView':
+      activeView = <ErrorView />;
+      break;
+    default:
+      activeView = (
+        <FormView
+          handleSubmit={handleSubmit}
+          service={service}
+          closeModal={closeModal}
+        />
+      );
+  }
 
   return (
-    ReactDOM.createPortal(
-      <div className={styles.overlay}>
-        <div className={styles.popup}>
-          <div className={styles.closeIconDiv} role="button" onClick={toggle} tabIndex={0}>
-            <img src={images.icon('close')} alt="close" className={styles.closeIcon} />
-          </div>
-          { myViews[view] }
-        </div>
-      </div>, document.body,
-    )
+    <ReactModal
+      className={styles.content}
+      overlayClassName={styles.overlay}
+      isOpen={isShowing}
+      onRequestClose={closeModal}
+      ariaHideApp={false}
+    >
+      <button
+        className={styles.closeButton}
+        onClick={closeModal}
+        type="button"
+      >
+        <img src={closeIcon} alt="Close" />
+      </button>
+      { activeView }
+    </ReactModal>
   );
 };
 
 Texting.propTypes = {
-  resource: PropTypes.object.isRequired,
-  toggle: PropTypes.func.isRequired,
+  service: ServicePropTypes.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default Texting;

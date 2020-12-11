@@ -9,7 +9,7 @@ fixture`Texting info`
 
 test('Text info, Basic', async t => {
   const data = {
-    name: 'test name',
+    recipientName: 'test name',
     phoneNumber: '4154353493',
   };
 
@@ -18,8 +18,8 @@ test('Text info, Basic', async t => {
   // check submit button is disabled
   await t.expect(texting.submitButton.hasAttribute('disabled')).ok();
 
-  await t.typeText(texting.name, data.name, { replace: true });
-  await t.typeText(texting.phone, data.phoneNumber, { replace: true });
+  await t.typeText(texting.recipientName, data.recipientName, { replace: true });
+  await t.typeText(texting.phoneNumber, data.phoneNumber, { replace: true });
   await t.click(texting.agree);
 
   // check submit button is not disabled
