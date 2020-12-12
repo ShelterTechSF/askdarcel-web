@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import styles from './EditSidebar.scss';
+import styles from './EditSidebar.module.scss';
 
 const SaveButton = ({ children, disabled, onClick }) => (
   <button

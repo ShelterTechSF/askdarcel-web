@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Iframe from 'react-iframe';
 
-import styles from './GoogleDocEmbed.scss';
+import styles from './GoogleDocEmbed.module.scss';
 
 
 const GoogleDocEmbed = ({ title, embedURL }) => (

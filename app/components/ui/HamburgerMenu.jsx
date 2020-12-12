@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { push as Menu } from 'react-burger-menu';
 
-import styles from './HamburgerMenu.scss';
+import styles from './HamburgerMenu.module.scss';
 
 
 const burgerStyles = {

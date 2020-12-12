@@ -6,7 +6,7 @@ import Footer from '../../components/ui/Footer/Footer';
 import FoodList from './components/FoodList';
 import FoodMap from './components/FoodMap';
 import SimpleGuide from './components/SimpleGuide';
-import styles from './Covid.scss';
+import styles from './Covid.module.scss';
 
 
 const CovidRoutes = () => {
