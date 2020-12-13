@@ -31,6 +31,9 @@ const renderButtonContent = action => (
   </Fragment>
 );
 
+const rootElement = document.getElementById('root');
+Modal.setAppElement(rootElement);
+
 class ListPageSidebar extends React.Component {
   constructor() {
     super();
@@ -61,35 +64,33 @@ class ListPageSidebar extends React.Component {
                 {renderButtonContent(action)}
               </Link>
             ) : (
-              <Fragment>
-                <a
-                  href={action.link}
-                  onClick={() => (
-                    action.feedback ? this.toggleModalOpen() : action.handler()
-                  )}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className={`action-sidebar--${action.name.toLowerCase()}`}
-                >
-                  {renderButtonContent(action)}
-                </a>
-                {action.feedback && (
-                  <Modal
-                    isOpen={isModalOpen}
-                    className="feedback__Modal"
-                    overlayClassName="feedback__Overlay"
-                  >
-                    <FeedbackModal
-                      closeModal={this.toggleModalOpen}
-                      resource={resource}
-                      service={service}
-                    />
-                  </Modal>
+              <a
+                href={action.link}
+                onClick={() => (
+                  action.feedback ? this.toggleModalOpen() : action.handler()
                 )}
-              </Fragment>
+                rel="noopener noreferrer"
+                target="_blank"
+                className={`action-sidebar--${action.name.toLowerCase()}`}
+              >
+                {renderButtonContent(action)}
+              </a>
             )}
           </li>
         ))}
+        <li>
+          <Modal
+            isOpen={isModalOpen}
+            className="feedback__Modal"
+            overlayClassName="feedback__Overlay"
+          >
+            <FeedbackModal
+              closeModal={this.toggleModalOpen}
+              resource={resource}
+              service={service}
+            />
+          </Modal>
+        </li>
       </ul>
     );
   }
@@ -98,7 +99,5 @@ class ListPageSidebar extends React.Component {
 ListPageSidebar.propTypes = {
   resource: PropTypes.object.isRequired,
 };
-
-Modal.setAppElement('#root');
 
 export default ListPageSidebar;
