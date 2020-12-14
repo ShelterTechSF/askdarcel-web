@@ -3,22 +3,18 @@ import PropTypes from 'prop-types';
 import Heading from './Heading';
 import Privacy from './Privacy';
 import Buttons from './Buttons';
-import styles from '../Texting.scss';
+import styles from './Form.module.scss';
 
 const initialState = {
-  recipient_name: '',
-  phone_number: '',
+  recipientName: '',
+  phoneNumber: '',
   agreed: false,
 };
-const ServicePropTypes = PropTypes.shape({
-  serviceName: PropTypes.string.isRequired,
-  service_id: PropTypes.number.isRequired,
-});
 
 const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
-  const { recipient_name, phone_number, agreed } = state;
-  const { serviceName, service_id } = service;
+  const { recipientName, phoneNumber, agreed } = state;
+  const { serviceName, serviceId } = service;
 
   const onChange = evt => {
     const {
@@ -34,9 +30,9 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
   const onSubmit = event => {
     event.preventDefault();
     const data = {
-      recipient_name,
-      phone_number,
-      service_id,
+      recipientName,
+      phoneNumber,
+      serviceId,
     };
     handleSubmit(data);
   };
@@ -48,9 +44,9 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
         First name (optional)
         <input
           type="text"
-          name="recipient_name"
+          name="recipientName"
           className={styles.input}
-          value={recipient_name}
+          value={recipientName}
           data-field="recipientName"
           onChange={onChange}
         />
@@ -62,10 +58,9 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
         </div>
         <input
           type="text"
-          name="phone_number"
-          placeholder=""
+          name="phoneNumber"
           className={styles.input}
-          value={phone_number}
+          value={phoneNumber}
           data-field="phoneNumber"
           onChange={onChange}
         />
@@ -88,7 +83,10 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
 };
 
 FormView.propTypes = {
-  service: ServicePropTypes.isRequired,
+  service:  PropTypes.shape({
+    serviceName: PropTypes.string.isRequired,
+    serviceId: PropTypes.number.isRequired,
+  }),
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

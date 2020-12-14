@@ -41,7 +41,7 @@ const SearchResult = ({ hit, index }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const service = {
     serviceName: hit.name,
-    service_id: hit.service_id,
+    serviceId: hit.service_id,
   };
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);

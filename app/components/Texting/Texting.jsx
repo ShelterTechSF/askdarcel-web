@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
-import styles from './Texting.scss';
+import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
-import FormView from './FormView';
+import FormView from './components/FormView';
 import Loader from '../ui/Loader';
-import SentView from './SentView';
-import ErrorView from './ErrorView';
+import SentView from './components/SentView';
+import ErrorView from './components/ErrorView';
 import closeIcon from './close-icon.svg';
-
-const ServicePropTypes = PropTypes.shape({
-  serviceName: PropTypes.string.isRequired,
-  service_id: PropTypes.number.isRequired,
-});
 
 // Text resource informations to the user phone
 
@@ -77,7 +72,10 @@ const Texting = ({ closeModal, service, isShowing }) => {
 };
 
 Texting.propTypes = {
-  service: ServicePropTypes.isRequired,
+  service: PropTypes.shape({
+    serviceName: PropTypes.string.isRequired,
+    serviceId: PropTypes.number.isRequired,
+  }),
   closeModal: PropTypes.func.isRequired,
 };
 

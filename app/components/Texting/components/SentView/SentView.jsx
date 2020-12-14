@@ -1,6 +1,6 @@
 import React from 'react';
 import { images } from 'assets';
-import styles from './Texting.scss';
+import styles from './SentView.module.scss';
 
 // Success sending view
 const SentView = () => (

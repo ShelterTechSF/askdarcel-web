@@ -1,0 +1,40 @@
+@import '../../../../styles/utils/_helpers.scss';
+
+.circle {
+  width: 150px;
+  height: 150px;
+  background: #00916A;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.successDiv {
+  position: relative;
+  text-align: center;
+  top: 33%;
+  left: 35%;
+}
+
+.responseIcon {
+  width: 116.67px;
+  margin-top: 20%;
+}
+
+.successText {
+  margin-top: 30%;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+}
+
+.errorDiv {
+  position: relative;
+  text-align: center;
+  top: 20%;
+}
+
+.errorText {
+  margin-top: 10%;
+  font-style: normal;
+  font-size: 16px;
+}

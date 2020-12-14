@@ -1,10 +1,9 @@
 import React from 'react';
 import { images } from 'assets';
-import styles from './Texting.scss';
+import styles from './ErrorView.module.scss';
 
 // Error View: show Alert graphic and a friendly message
 const ErrorView = () => (
-  <>
     <div className={styles.errorDiv}>
       <img className={styles.responseIcon} src={images.icon('emergency')} alt="error" />
       <div className={styles.errorText}>
@@ -12,8 +11,6 @@ const ErrorView = () => (
       </div>
     </div>
 
-  </>
 );
 
-// eslint-disable-next-line import/no-unused-modules
 export default ErrorView;

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../Texting.scss';
+import styles from './Form.module.scss';
 
 
 const Heading = ({ serviceName }) => (
   <div>
     <h1 className={styles.title}>
-      {`Text me information for ${serviceName}`}
+    Text me information for
+      <i> {serviceName}</i>
     </h1>
     <h3 className={styles.description}>
       You will receive their address and phone number.
