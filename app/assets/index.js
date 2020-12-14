@@ -22,7 +22,7 @@ if (isSFServiceGuideSite()) {
     mohcdSeal: require('../assets/img/sf-seal.png'),
     icon,
   };
-} else if(isSFFamiliesSite()) {
+} else if (isSFFamiliesSite()) {
   appImages = {
     background: require('../assets/img/bg.png'),
     logoLarge: require('../assets/img/sf-families.svg'),

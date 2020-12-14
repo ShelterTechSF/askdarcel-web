@@ -8,7 +8,7 @@ import Navigation from './ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
-import { isSFServiceGuideSite, isSFFamiliesSite } from '../utils/whitelabel';
+import { getSiteTitle, getSiteUrl } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
@@ -134,43 +134,19 @@ class App extends Component {
     this.setState(state => ({ hamburgerMenuIsOpen: !state.hamburgerMenuIsOpen }));
   }
 
-  getTitleMeta() {
-    if (isSFServiceGuideSite()) {
-      return (
-        <>
-          <title>SF Service Guide</title>
-          <meta property="og:url" content="https://sfserviceguide.org" />
-          <meta property="og:title" content="SF Service Guide" />
-        </>
-      );
-    } else if (isSFFamiliesSite()) {
-      return (
-        <>
-          <title>SF Families</title>
-          <meta property="og:url" content="https://sffamilies.sfserviceguide.org/" />
-          <meta property="og:title" content="SF Families" />
-        </>
-      );
-    } else {
-      return (
-        <>
-          <title>AskDarcel</title>
-          <meta property="og:url" content="https://askdarcel.org" />
-          <meta property="og:title" content="AskDarcel" />
-        </>
-      );
-    }
-  }
-
   render() {
     const { hamburgerMenuIsOpen } = this.state;
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
+    const siteTitle = getSiteTitle();
+    const siteUrl = getSiteUrl();
     return (
       <div id={outerContainerId}>
         <Helmet>
-          {this.getTitleMeta()}
+          <title>{siteTitle}</title>
+          <meta property="og:url" content={siteUrl} />
+          <meta property="og:title" content={siteTitle} />
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@sheltertechorg" />
@@ -200,7 +176,6 @@ class App extends Component {
       </div>
     );
   }
-
 }
 
 function mapStateToProps(state) {
