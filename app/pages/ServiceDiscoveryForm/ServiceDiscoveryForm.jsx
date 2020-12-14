@@ -6,7 +6,7 @@ import qs from 'qs';
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
 import { CATEGORIES, STEPS } from './constants';
-import styles from './ServiceDiscoveryForm.scss';
+import styles from './ServiceDiscoveryForm.module.scss';
 
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */

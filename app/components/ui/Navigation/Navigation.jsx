@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
 import { images } from 'assets';
-import styles from './Navigation.scss';
+import styles from './Navigation.module.scss';
 
 class Navigation extends React.Component {
   constructor() {

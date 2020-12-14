@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../../components/ui/Footer/Footer';
 
-import styles from './About.scss';
+import styles from './About.module.scss';
 
 import STLogo from './assets/STLogo.png';
 import MOHCDLogo from './assets/MOHCDLogo.png';

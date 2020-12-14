@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connectCurrentRefinements } from 'react-instantsearch/connectors';
-import styles from './ServiceDiscoveryResults.scss';
+import styles from './ServiceDiscoveryResults.module.scss';
 
 const ClearAllFilter = ({ items, refine }) => (
   <div

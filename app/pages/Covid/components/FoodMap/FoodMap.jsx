@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Iframe from 'react-iframe';
 
-import styles from './FoodMap.scss';
+import styles from './FoodMap.module.scss';
 
 import ImgSFGovLogo from './assets/SFGovLogo.png';
 
