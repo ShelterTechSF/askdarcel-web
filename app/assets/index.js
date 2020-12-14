@@ -1,4 +1,4 @@
-import { isSFServiceGuideSite } from '../utils/whitelabel';
+import { isSFServiceGuideSite, isSFFamiliesSite } from '../utils/whitelabel';
 
 const icons = require.context('../assets/img', true, /ic-.*\.(png|svg)$/i);
 const iconPathMap = {};
@@ -18,6 +18,15 @@ if (isSFServiceGuideSite()) {
     background: require('../assets/img/bg.png'),
     logoLarge: require('../assets/img/sf-service.svg'),
     logoSmall: require('../assets/img/sf-service.svg'),
+    algolia: require('../assets/img/search-by-algolia.png'),
+    mohcdSeal: require('../assets/img/sf-seal.png'),
+    icon,
+  };
+} else if (isSFFamiliesSite()) {
+  appImages = {
+    background: require('../assets/img/bg.png'),
+    logoLarge: require('../assets/img/sf-families.svg'),
+    logoSmall: require('../assets/img/sf-families.svg'),
     algolia: require('../assets/img/search-by-algolia.png'),
     mohcdSeal: require('../assets/img/sf-seal.png'),
     icon,
