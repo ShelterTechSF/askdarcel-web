@@ -25,5 +25,6 @@ test('Basic search test', async t => {
   await t
     .typeText(findPage.searchBox, 'Food')
     .pressKey('enter')
-    .expect(searchPage.pagination).exists;
+    .expect(searchPage.pagination.exists)
+    .ok();
 });
