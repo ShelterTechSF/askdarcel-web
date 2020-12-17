@@ -17,14 +17,14 @@
   height: 660px;
   background: #FFFFFF;
   margin: 35px auto;
-  padding: 30px;
+  padding: 24px 40px;
   box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   box-sizing: border-box;
   border-radius: 8px;
 
   @media screen and (max-width: 900px ) {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
     font-size: 14px;
     padding: 20px;
     margin: 0 auto;
@@ -38,6 +38,6 @@
   display: inline-block;
   padding: 0;
   position: absolute;
-  right: 20px;
+  right: 30px;
   top: 20px;
 }

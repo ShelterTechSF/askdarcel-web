@@ -17,7 +17,6 @@ const Buttons = ({ closeModal, onSubmit, disabled }) => (
       type="submit"
       className={classNames(styles.button, { [styles.disabled]: disabled })}
       disabled={disabled}
-      data-field="submit"
       onClick={onSubmit}
     >
       Text me

@@ -15,7 +15,6 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
   const { serviceName, serviceId } = service;
-
   const onChange = evt => {
     const {
       type,
@@ -30,9 +29,9 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
   const onSubmit = event => {
     event.preventDefault();
     const data = {
-      recipientName,
-      phoneNumber,
-      serviceId,
+      recipient_name: recipientName,
+      phone_number: phoneNumber,
+      service_id: serviceId,
     };
     handleSubmit(data);
   };
@@ -40,42 +39,41 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
   return (
     <div>
       <Heading serviceName={serviceName} />
-      <label className={styles.label}>
-        First name (optional)
-        <input
-          type="text"
-          name="recipientName"
-          className={styles.input}
-          value={recipientName}
-          data-field="recipientName"
-          onChange={onChange}
-        />
-      </label>
-      <label className={styles.label}>
-        Phone number (required)
-        <div className={styles.dataRates}>
-          *Standard text and data rates may apply.
-        </div>
-        <input
-          type="text"
-          name="phoneNumber"
-          className={styles.input}
-          value={phoneNumber}
-          data-field="phoneNumber"
-          onChange={onChange}
-        />
-      </label>
-      <label className={styles.checkBox}>
-        <input
-          type="checkbox"
-          name="agreed"
-          checked={agreed}
-          className={styles.checkBox}
-          data-field="agree"
-          onChange={onChange}
-        />
-        I agree to receive text messages from SF Service Guide.
-      </label>
+      <div className={styles.inputField}>
+        <label className={styles.label}>
+          First name (optional)
+          <input
+            type="text"
+            name="recipientName"
+            className={styles.input}
+            value={recipientName}
+            onChange={onChange}
+          />
+        </label>
+        <label className={styles.label}>
+          Phone number (required)
+          <div className={styles.dataRates}>
+            *Standard text and data rates may apply.
+          </div>
+          <input
+            type="text"
+            name="phoneNumber"
+            className={styles.input}
+            value={phoneNumber}
+            onChange={onChange}
+          />
+        </label>
+        <label className={styles.checkBox}>
+          <input
+            type="checkbox"
+            name="agreed"
+            checked={agreed}
+            className={styles.checkBox}
+            onChange={onChange}
+          />
+          I agree to receive text messages from SF Service Guide.
+        </label>
+      </div>
       <Buttons disabled={!agreed} closeModal={closeModal} onSubmit={onSubmit} />
       <Privacy />
     </div>
@@ -83,10 +81,10 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
 };
 
 FormView.propTypes = {
-  service:  PropTypes.shape({
+  service: PropTypes.shape({
     serviceName: PropTypes.string.isRequired,
     serviceId: PropTypes.number.isRequired,
-  }),
+  }).isRequired,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

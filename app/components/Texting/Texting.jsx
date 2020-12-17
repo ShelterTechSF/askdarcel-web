@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
+import { images } from 'assets';
 import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
 import FormView from './components/FormView';
 import Loader from '../ui/Loader';
 import SentView from './components/SentView';
 import ErrorView from './components/ErrorView';
-import closeIcon from './close-icon.svg';
 
 // Text resource informations to the user phone
 
@@ -58,13 +58,14 @@ const Texting = ({ closeModal, service, isShowing }) => {
       isOpen={isShowing}
       onRequestClose={closeModal}
       ariaHideApp={false}
+      parentSelector={() => document.querySelector('#root')}
     >
       <button
         className={styles.closeButton}
         onClick={closeModal}
         type="button"
       >
-        <img src={closeIcon} alt="Close" />
+        <img src={images.icon('close')} alt="Close" />
       </button>
       { activeView }
     </ReactModal>
@@ -75,8 +76,9 @@ Texting.propTypes = {
   service: PropTypes.shape({
     serviceName: PropTypes.string.isRequired,
     serviceId: PropTypes.number.isRequired,
-  }),
+  }).isRequired,
   closeModal: PropTypes.func.isRequired,
+  isShowing: PropTypes.bool.isRequired,
 };
 
 export default Texting;
