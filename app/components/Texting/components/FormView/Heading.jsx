@@ -6,10 +6,7 @@ import styles from './Form.module.scss';
 const Heading = ({ serviceName }) => (
   <div>
     <div className={styles.title}>
-      Text me information for
-      <i>
-        {serviceName}
-      </i>
+      Text me information for {serviceName}
     </div>
     <h3 className={styles.description}>
       You will receive their address and phone number.
