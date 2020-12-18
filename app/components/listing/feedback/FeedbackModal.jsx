@@ -67,9 +67,7 @@ const FeedbackModal = ({ closeModal }) => {
     e.preventDefault();
     const path = window.location.pathname.slice(1).split('/');
     const rating = upvote ? 'true' : 'false';
-    const tags = tagOptions.reduce((res, { tag, selected }) => (
-      selected ? res.concat(tag) : res
-    ), []);
+    const tags = tagOptions.filter(({ selected }) => selected).map(({ tag }) => tag);
 
     const feedback = {
       rating,
