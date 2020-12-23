@@ -56,7 +56,7 @@ module.exports = {
         'og:title': 'SF Service Guide | San Francisco',
         'twitter:card': 'summary_large_image',
         'twitter:site': '@sheltertechorg',
-        'og:description': 'Get guided help finding food, housing, rental assitance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.',
+        'og:description': 'Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.',
         'og:type': 'website',
         // Note: The image is specified in the HTML itself because it needs to
         // reference an image file.
