@@ -2,23 +2,25 @@
   display: flex;
   flex-wrap: wrap;
   margin: 5px;
-  .feedback-tag {
-    flex: 1 0 auto;
-    border: 2px solid #276ce5;
-    box-sizing: border-box;
-    border-radius: 20px;
-    cursor: pointer;
-    margin: 10px;
-    padding: 8px 24px;
-    color: #276ce5;
-    font-weight: 600;
-    font-size: 16px;
-    text-align: center;
-  }
-  .selected {
-    color: white;
-    background: #276ce5;
-  }
+}
+
+.feedback-tag {
+  flex: 1 0 auto;
+  border: 2px solid #276ce5;
+  box-sizing: border-box;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 10px;
+  padding: 8px 24px;
+  color: #276ce5;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+.selected {
+  color: white;
+  background: #276ce5;
 }
 
 .feedback-review {
@@ -35,6 +37,7 @@
     }
   }
 }
+
 .feedback-submit-header {
   font-weight: 600;
   font-size: 24px;
@@ -42,6 +45,7 @@
   text-align: center;
   margin-top: 3.5em;
 }
+
 .feedback-submit-subheader {
   font-size: 18px;
   line-height: 25px;
@@ -49,4 +53,27 @@
   margin: 15px auto;
   width: 80%;
   margin-bottom: 3.5em;
+}
+
+.feedback-action-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-button {
+  width: 30%;
+  background: #276ce5;
+  padding: 0.375rem 1.25rem;
+  margin: 15px;
+  height: auto;
+  border: 2px solid #276CE5;
+  border-radius: 3px;
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.back-button {
+  background: #fffefe;
+  color: #276ce5;
 }

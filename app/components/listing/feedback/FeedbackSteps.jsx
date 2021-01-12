@@ -37,7 +37,7 @@ export const SubmitMessage = ({ closeModal }) => (
       Your feedback will help us continue to improve this guide.
     </div>
     <div className="feedback-action-buttons">
-      <button type="button" className="button" onClick={closeModal}>
+      <button type="button" className="nav-button" onClick={closeModal}>
         Close
       </button>
     </div>
@@ -54,14 +54,14 @@ export const NavigationButtons = ({
 }) => (
   <div className="feedback-action-buttons">
     {step > -1 && (
-      <button type="button" className="button back-button" onClick={handleBack}>
+      <button type="button" className="nav-button back-button" onClick={handleBack}>
         Back
       </button>
     )}
     {step < 1 ? (
       <button
         type="button"
-        className="button"
+        className="nav-button"
         onClick={handleNext}
         disabled={!vote.length}
       >
@@ -70,7 +70,7 @@ export const NavigationButtons = ({
     ) : (
       <button
         type="button"
-        className="button"
+        className="nav-button"
         disabled={isReviewRequired}
         onClick={handleSubmit}
       >
