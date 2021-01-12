@@ -33,18 +33,7 @@
     }
   }
 }
-.feedback__Modal {
-  position: absolute;
-  margin: 0 auto;
-  top: 30%;
-  left: 0;
-  right: 0;
-  width: 580px;
-  padding: 20px;
-  background-color: #FFFEFE;
-  box-shadow: 0 3.22177px 6.44355px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-}
+
 .feedback__Overlay {
   position: fixed;
   top: 0;
@@ -52,4 +41,18 @@
   right: 0;
   bottom: 0;
   background-color: rgba(94, 94, 94, 0.6);
+  overflow: auto;
+}
+
+.feedback__Modal {
+  position: absolute;
+  margin: 0 auto;
+  top: 20%;
+  left: 0;
+  right: 0;
+  width: 580px;
+  padding: 32px 46px;
+  background-color: $color-white;
+  box-shadow: 0 3.22177px 6.44355px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
 }
