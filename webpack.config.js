@@ -16,6 +16,7 @@ const environmentConfig = [
   'ALGOLIA_READ_ONLY_API_KEY',
   'MOHCD_SUBDOMAIN',
   'MOHCD_DOMAIN',
+  'SFFAMILIES_DOMAIN',
   'TESTCAFE_RUNNING',
 ];
 
@@ -53,10 +54,10 @@ module.exports = {
       template: 'app/index.html',
       meta: {
         'og:url': 'https://sfserviceguide.org',
-        'og:title': 'SF Service Guide',
+        'og:title': 'SF Service Guide | San Francisco',
         'twitter:card': 'summary_large_image',
         'twitter:site': '@sheltertechorg',
-        'og:description': 'Get guided help finding food, housing, health resources and more in San Francisco',
+        'og:description': 'Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.',
         'og:type': 'website',
         // Note: The image is specified in the HTML itself because it needs to
         // reference an image file.
@@ -89,72 +90,17 @@ module.exports = {
         exclude: [/node_modules/, /typings/],
       },
       {
-        // Legacy stylesheets are not wrapped with CSS Modules, allowing the
-        // selector class names to be usable globally.
-        exclude: [
-          path.resolve(__dirname, 'app/components/ui/HamburgerMenu'),
-          path.resolve(__dirname, 'app/components/ui/Navigation'),
-          path.resolve(__dirname, 'app/components/ui/Banner'),
-          path.resolve(__dirname, 'app/components/edit/EditSidebar'),
-          path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
-          path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
-          path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
-          path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
-          path.resolve(__dirname, 'app/pages/HomePage'),
-          path.resolve(__dirname, 'app/pages/About'),
-          path.resolve(__dirname, 'app/pages/Covid'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryForm'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryResults'),
-        ],
         test: /\.s?css$/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
             options: {
-              modules: false,
-            },
-          },
-          'sass-loader',
-        ],
-      },
-      {
-        include: [
-          path.resolve(__dirname, 'app/components/listing/MobileActionBar'),
-          path.resolve(__dirname, 'app/components/listing/ActionSidebar'),
-          path.resolve(__dirname, 'app/components/listing/ServiceAttribution'),
-        ],
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-          },
-          'sass-loader',
-        ],
-      },
-      {
-        // New stylesheets are treated as locally-scoped CSS modules.
-        include: [
-          path.resolve(__dirname, 'app/components/ui/HamburgerMenu'),
-          path.resolve(__dirname, 'app/components/ui/Navigation'),
-          path.resolve(__dirname, 'app/components/ui/Banner'),
-          path.resolve(__dirname, 'app/components/edit/EditSidebar'),
-          path.resolve(__dirname, 'app/components/listing/MOHCDBadge'),
-          path.resolve(__dirname, 'app/pages/HomePage'),
-          path.resolve(__dirname, 'app/pages/About'),
-          path.resolve(__dirname, 'app/pages/Covid'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryForm'),
-          path.resolve(__dirname, 'app/pages/ServiceDiscoveryResults'),
-        ],
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              importLoaders: 1,
+              modules: {
+                auto: true,
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              },
             },
           },
           'sass-loader',

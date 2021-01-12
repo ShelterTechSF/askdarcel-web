@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './CovidHeader.scss';
+import styles from './CovidHeader.module.scss';
 
 
 /** Common header shared across all COVID pages. */

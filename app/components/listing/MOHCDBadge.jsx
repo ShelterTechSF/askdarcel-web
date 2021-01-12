@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MOHCDFunded from '../../assets/img/ic-mohcd-funded-services.svg';
 
-import styles from './MOHCDBadge.scss';
+import styles from './MOHCDBadge.module.scss';
 
 class MOHCDBadge extends React.Component {
   isMOHCDFunded() {

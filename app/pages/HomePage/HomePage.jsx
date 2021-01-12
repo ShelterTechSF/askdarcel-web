@@ -5,22 +5,21 @@ import qs from 'qs';
 
 import Footer from 'components/ui/Footer/Footer';
 import Partners from 'components/ui/Partners/Partners';
-import HomePageHero from './components/HomePageHero';
 import SearchBar from './components/SearchBar';
 import Section from './components/Section';
 import ResourceList from './components/ResourceList/ResourceList';
 
 const covidResources = [
   { name: 'Food', icon: 'food', categorySlug: 'food-resources' },
+  { name: 'Shelter', icon: 'bed', categorySlug: 'shelter-resources' },
   { name: 'Showers and Restrooms', icon: 'shower', categorySlug: 'hygiene-resources' },
-  { name: 'Access Points and Shelters', icon: 'bed', link: '/covid/shelteraccess' },
-  { name: 'Financial', icon: 'wallet', categorySlug: 'financial-resources' },
-  { name: 'Job Assistance', icon: 'employment', categorySlug: 'job-assistance-resources' },
-  { name: 'Rent and Eviction Help', icon: 'eviction-prevention', categorySlug: 'rental-assistance-resources' },
-  { name: 'COVID-19 Testing & Other Health Services', icon: 'hospital', categorySlug: 'medical-services-resources' },
+  { name: 'Health and COVID-19', icon: 'hospital', categorySlug: 'medical-services-resources' },
+  { name: 'Financial Assistance', icon: 'wallet', categorySlug: 'financial-resources' },
+  { name: 'Jobs', icon: 'employment', categorySlug: 'job-assistance-resources' },
+  { name: 'Rental Assistance and Eviction Prevention', icon: 'housing-1', categorySlug: 'rental-assistance-resources' },
   { name: 'Domestic Violence', icon: 'warning', categorySlug: 'domestic-violence-resources' },
-  { name: 'Internet Access', icon: 'wifi', categorySlug: 'internet-access-resources' },
-  { name: 'LGBTQ Resources', icon: 'community', categorySlug: 'lgbtq-resources' },
+  { name: 'LGBTQ+', icon: 'community', categorySlug: 'lgbtq-resources' },
+  { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' },
 ];
 
 const generalResources = [{
@@ -81,19 +80,14 @@ class HomePage extends React.Component {
     const { resourceCount, searchValue } = this.state;
     return (
       <div className="find-page">
-        <HomePageHero
-          title="Welcome to the SF Service Guide"
-          description="Get guided help with many of the most common issues people are facing in San Francisco."
-        />
         <Section
-          title="Resource Guides"
-          description="Get guided help for common issues people are facing in San Francisco."
+          title="Find essential services in San Francisco"
         >
           <ResourceList resources={covidResources} />
         </Section>
         <Section
           title="Get step-by-step help"
-          description="Get guided help with many of the most common issues peeople are facing in San Francisco."
+          description="Get guided help with many of the most common issues people are facing in San Francisco."
         >
           <ResourceList resources={generalResources} />
         </Section>
