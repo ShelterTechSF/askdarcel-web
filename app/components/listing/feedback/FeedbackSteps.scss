@@ -1,7 +1,7 @@
 .feedback-tags {
   display: flex;
   flex-wrap: wrap;
-  margin: 20px;
+  margin: 5px;
   .feedback-tag {
     flex: 1 0 auto;
     border: 2px solid #276ce5;
@@ -14,7 +14,6 @@
     font-weight: 600;
     font-size: 16px;
     text-align: center;
-    letter-spacing: 0.5px;
   }
   .selected {
     color: white;
@@ -23,15 +22,13 @@
 }
 
 .feedback-review {
-  margin: 20px;
+  margin: 5px;
   textarea {
     resize: none !important;
     background: #fbf8f8;
     border: 2px solid #276ce5;
     box-sizing: border-box;
     border-radius: 20px;
-    font-size: 16px;
-    letter-spacing: 0.402722px;
     height: 180px;
     &::-webkit-scrollbar {
       width: 0%;
