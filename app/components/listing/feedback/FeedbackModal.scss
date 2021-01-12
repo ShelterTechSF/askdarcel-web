@@ -1,58 +1,40 @@
-.feedback-modal-body {
-  .close-modal {
-    position: absolute;
-    right: 5%;
+.close-modal {
+  position: absolute;
+  right: 5%;
+  cursor: pointer;
+}
+
+.feedback-header {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 27px;
+  text-align: center;
+  color: #1c72e6;
+}
+
+.feedback-subheader {
+  margin: 0 auto;
+  width: 203.42px;
+  font-size: 14.498px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.vote-header {
+  margin-top: 30px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.vote-icons {
+  width: 40%;
+  height: 35px;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-evenly;
+  img {
     cursor: pointer;
-  }
-  .feedback-header {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 27px;
-    text-align: center;
-    color: #1c72e6;
-  }
-  .feedback-subheader {
-    margin: 0 auto;
-    width: 203.42px;
-    font-size: 14.498px;
-    line-height: 20px;
-    text-align: center;
-  }
-  .vote-header {
-    margin-top: 30px;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 25px;
-    text-align: center;
-  }
-  .vote-icons {
-    width: 40%;
-    height: 35px;
-    margin: 30px auto;
-    display: flex;
-    justify-content: space-evenly;
-    img {
-      cursor: pointer;
-    }
-  }
-  .feedback-action-buttons {
-    display: flex;
-    justify-content: center;
-    .button {
-      width: 30%;
-      background: #276ce5;
-      padding: 0.375rem 1.25rem;
-      margin: 15px;
-      height: auto;
-      border: 2px solid #276CE5;
-      border-radius: 3px;
-      &:disabled {
-        opacity: 0.5;
-      }
-    }
-    .back-button {
-      background: #fffefe;
-      color: #276ce5;
-    }
   }
 }
