@@ -113,7 +113,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <Fragment>
-          <div className="vote-header">
+          <div className="steps-prompt">
             How was your experience on this site?
           </div>
           <div className="vote-icons">

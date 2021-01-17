@@ -3,22 +3,30 @@ import './FeedbackSteps.scss';
 
 export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
   <div className="feedback-tags">
-    {tagOptions.map(({ tag, selected }, pos) => (
-      <div
-        key={tag}
-        role="button"
-        tabIndex="0"
-        className={`feedback-tag ${selected ? 'selected' : ''}`}
-        onClick={() => onSelectTag(pos)}
-      >
-        {tag}
-      </div>
-    ))}
+    <div className="steps-prompt">
+      What can be improved?
+    </div>
+    <div className="feedback-tags-container">
+      {tagOptions.map(({ tag, selected }, pos) => (
+        <div
+          key={tag}
+          role="button"
+          tabIndex="0"
+          className={`feedback-tag ${selected ? 'selected' : ''}`}
+          onClick={() => onSelectTag(pos)}
+        >
+          {tag}
+        </div>
+      ))}
+    </div>
   </div>
 );
 
 export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
   <div className="feedback-review">
+    <div className="steps-prompt">
+      Please provide your feedback below:
+    </div>
     <textarea
       type="text"
       placeholder={`Type your feedback here ${

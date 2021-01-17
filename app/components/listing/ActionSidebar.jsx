@@ -81,7 +81,7 @@ class ListPageSidebar extends React.Component {
             )}
           </li>
         ))}
-        <li>
+        <li className="feedback-modal">
           <Modal
             isOpen={isModalOpen}
             className="feedback__Modal"

@@ -50,9 +50,13 @@
   top: 20%;
   left: 0;
   right: 0;
-  width: 580px;
-  padding: 32px 46px;
+  width: 570px;
+  padding: 34px 46px;
   background-color: $color-white;
   box-shadow: 0 3.22177px 6.44355px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+}
+
+.feedback-modal {
+  display: none;
 }

@@ -1,3 +1,11 @@
+@import '../../../styles/utils/colors';
+
+.feedback-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 .close-modal {
   position: absolute;
   right: 25px;
@@ -8,33 +16,28 @@
 .feedback-header {
   font-weight: 600;
   font-size: 20px;
-  line-height: 27px;
-  text-align: center;
-  color: #1c72e6;
+  color: $color-brand;
 }
 
 .feedback-subheader {
-  margin: 0 auto;
-  width: 203.42px;
-  font-size: 14.498px;
-  line-height: 20px;
-  text-align: center;
+  width: 200px;
+  font-size: 15px;
 }
 
-.vote-header {
-  margin-top: 30px;
+.steps-prompt {
   font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 10px;
   font-size: 18px;
-  line-height: 25px;
-  text-align: center;
+  line-height: 1.5;
 }
 
 .vote-icons {
-  width: 40%;
-  height: 35px;
-  margin: 30px auto;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: 110px;
+  height: 35px;
+  margin-top: 10px;
   img {
     cursor: pointer;
   }
