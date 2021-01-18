@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { cloneDeep } from 'lodash';
 import {
+  VoteButtons,
   FeedbackTags,
   Review,
   SubmitMessage,
@@ -19,7 +20,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
   const [step, setStep] = useState(-1);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleVote = voteType => {
+  const handleVoteChange = voteType => {
     setStep(-1);
     setVote(voteType);
   };
@@ -111,27 +112,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <Fragment>
-          <div className={styles.stepsPrompt}>
-            How was your experience on this site?
-          </div>
-          <div className={styles.voteIcons}>
-            <div onClick={() => handleVote(UPVOTE)} role="button" tabIndex="-1">
-              <img
-                src={images.icon(`upvote${vote === UPVOTE ? '-active' : ''}`)}
-                alt="upvote"
-              />
-            </div>
-            <div
-              onClick={() => handleVote(DOWNVOTE)}
-              role="button"
-              tabIndex="-2"
-            >
-              <img
-                src={images.icon(`downvote${vote === DOWNVOTE ? '-active' : ''}`)}
-                alt="downvote"
-              />
-            </div>
-          </div>
+          {<VoteButtons vote={vote} onVoteChange={handleVoteChange} />}
           {steps[step]}
           <NavigationButtons
             step={step}

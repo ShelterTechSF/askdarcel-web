@@ -1,5 +1,24 @@
 @import '../../../styles/utils/colors';
 
+.voteIcons {
+  display: flex;
+  justify-content: space-between;
+  width: 110px;
+  height: 35px;
+  margin-top: 10px;
+  img {
+    cursor: pointer;
+  }
+}
+
+.stepsPrompt {
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
 .feedbackTags {
   margin-top: 10px;
 }
@@ -74,8 +93,4 @@
   background: $color-white;
   border: 2px solid $color-brand;
   color: $color-brand;
-}
-
-.prompts {
-  composes: stepsPrompt from 'FeedbackModal.module.scss'
 }
