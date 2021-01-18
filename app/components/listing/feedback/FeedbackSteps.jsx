@@ -55,14 +55,14 @@ export const SubmitMessage = ({ closeModal }) => (
 export const NavigationButtons = ({
   step,
   vote,
-  handleBack,
-  handleNext,
-  handleSubmit,
+  onPrevStep,
+  onNextStep,
+  onSubmit,
   isReviewRequired,
 }) => (
   <div className="feedback-action-buttons">
     {step > -1 && (
-      <button type="button" className="nav-button back-button" onClick={handleBack}>
+      <button type="button" className="nav-button back-button" onClick={onPrevStep}>
         Back
       </button>
     )}
@@ -70,7 +70,7 @@ export const NavigationButtons = ({
       <button
         type="button"
         className="nav-button"
-        onClick={handleNext}
+        onClick={onNextStep}
         disabled={!vote.length}
       >
         Next
@@ -80,7 +80,7 @@ export const NavigationButtons = ({
         type="button"
         className="nav-button"
         disabled={isReviewRequired}
-        onClick={handleSubmit}
+        onClick={onSubmit}
       >
         Submit
       </button>

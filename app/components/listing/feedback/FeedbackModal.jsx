@@ -37,16 +37,16 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     setTags(updatedTags);
   };
 
-  const handleReview = e => {
+  const handleReviewChange = e => {
     e.preventDefault();
     setReview(e.target.value);
   };
 
-  const handleBack = () => (
+  const handlePrevStep = () => (
     setStep(prev => (vote === UPVOTE ? prev - 2 : prev - 1))
   );
 
-  const handleNext = () => {
+  const handleNextStep = () => {
     if (!vote.length || step >= 1) return;
     if (vote === UPVOTE) {
       setStep(prev => prev + 2);
@@ -88,7 +88,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     <Review
       reviewValue={review}
       isReviewRequired={isReviewRequired}
-      onReviewChange={handleReview}
+      onReviewChange={handleReviewChange}
     />,
   ];
 
@@ -138,9 +138,9 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
           <NavigationButtons
             step={step}
             vote={vote}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            handleSubmit={handleSubmit}
+            onPrevStep={handlePrevStep}
+            onNextStep={handleNextStep}
+            onSubmit={handleSubmit}
             isReviewRequired={isReviewRequired}
           />
         </Fragment>
