@@ -1,5 +1,5 @@
 import React from 'react';
-import './FeedbackSteps.scss';
+import './FeedbackSteps.module.scss';
 
 export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
   <div className="feedback-tags">

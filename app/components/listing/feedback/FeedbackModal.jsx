@@ -7,7 +7,7 @@ import {
   TAG_LIST,
   NavigationButtons,
 } from './FeedbackSteps';
-import './FeedbackModal.scss';
+import './FeedbackModal.module.scss';
 import { images } from '../../../assets';
 import { addFeedback } from '../../../utils/DataService';
 
