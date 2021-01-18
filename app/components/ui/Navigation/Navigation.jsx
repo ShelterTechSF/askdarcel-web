@@ -39,6 +39,18 @@ class Navigation extends React.Component {
   render() {
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
+    /* const cookieVal = document.cookie = "username=rar"; */
+    const renderAuthButton = ()=>{
+      /* get cookie value by key 'username', should this be inside renderAuthButton? */
+      let cookieValue = document.cookie.replace(/(?:(?:^|.;\s)username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      if(!cookieValue){
+      return <li>
+      <a href="www.askdarcel.org/login" target="_blank" rel="noopener noreferrer">
+      Login
+      </a>
+      </li>
+      }
+    }
     return (
       <nav className={styles.siteNav}>
         <div className={styles.primaryRow}>
@@ -86,6 +98,8 @@ class Navigation extends React.Component {
                 Contact Us
               </a>
             </li>
+            {/* ADDED */}
+            {renderAuthButton()} 
           </ul>
         </div>
         <div className={`${styles.secondaryRowWrapper} ${showSecondarySearch ? '' : styles.hide}`}>
