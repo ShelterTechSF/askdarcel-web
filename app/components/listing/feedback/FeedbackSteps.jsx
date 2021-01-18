@@ -1,30 +1,31 @@
 import React from 'react';
-import './FeedbackSteps.module.scss';
+import styles from './FeedbackSteps.module.scss';
 
 export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
-  <div className="feedback-tags">
-    <div className="steps-prompt">
-      What can be improved?
-    </div>
-    <div className="feedback-tags-container">
-      {tagOptions.map(({ tag, selected }, pos) => (
-        <div
-          key={tag}
-          role="button"
-          tabIndex="0"
-          className={`feedback-tag ${selected ? 'selected' : ''}`}
-          onClick={() => onSelectTag(pos)}
-        >
-          {tag}
-        </div>
-      ))}
+  <div className={styles.feedbackTags}>
+    <div className={styles.prompts}>What can be improved?</div>
+    <div className={styles.feedbackTagsContainer}>
+      {tagOptions.map(({ tag, selected }, pos) => {
+        const selectedStyle = selected ? styles.selectedTag : '';
+        return (
+          <div
+            key={tag}
+            role="button"
+            tabIndex="0"
+            className={`${styles.feedbackTag} ${selectedStyle}`}
+            onClick={() => onSelectTag(pos)}
+          >
+            {tag}
+          </div>
+        );
+      })}
     </div>
   </div>
 );
 
 export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
-  <div className="feedback-review">
-    <div className="steps-prompt">
+  <div className={styles.feedbackReview}>
+    <div className={styles.prompts}>
       Please provide your feedback below:
     </div>
     <textarea
@@ -40,15 +41,15 @@ export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
 
 export const SubmitMessage = ({ closeModal }) => (
   <>
-    <div className="feedback-submit-header">Thank you for your feedback!</div>
-    <div className="feedback-submit-subheader">
+    <div className={styles.feedbackSubmitHeader}>
+      Thank you for your feedback!
+    </div>
+    <div className={styles.feedbackSubmitSubheader}>
       Your feedback will help us continue to improve this guide.
     </div>
-    <div className="feedback-action-buttons">
-      <button type="button" className="nav-button" onClick={closeModal}>
-        Close
-      </button>
-    </div>
+    <button type="button" className={styles.navButtons} onClick={closeModal}>
+      Close
+    </button>
   </>
 );
 
@@ -60,16 +61,16 @@ export const NavigationButtons = ({
   onSubmit,
   isReviewRequired,
 }) => (
-  <div className="feedback-action-buttons">
+  <div>
     {step > -1 && (
-      <button type="button" className="nav-button back-button" onClick={onPrevStep}>
+      <button type="button" className={styles.backButton} onClick={onPrevStep}>
         Back
       </button>
     )}
     {step < 1 ? (
       <button
         type="button"
-        className="nav-button"
+        className={styles.navButtons}
         onClick={onNextStep}
         disabled={!vote.length}
       >
@@ -78,7 +79,7 @@ export const NavigationButtons = ({
     ) : (
       <button
         type="button"
-        className="nav-button"
+        className={styles.navButtons}
         disabled={isReviewRequired}
         onClick={onSubmit}
       >

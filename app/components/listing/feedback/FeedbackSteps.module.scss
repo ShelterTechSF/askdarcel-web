@@ -1,15 +1,15 @@
 @import '../../../styles/utils/colors';
 
-.feedback-tags {
+.feedbackTags {
   margin-top: 10px;
 }
 
-.feedback-tags-container {
+.feedbackTagsContainer {
   display: flex;
   flex-wrap: wrap;
 }
 
-.feedback-tag {
+.feedbackTag {
   flex: 1 0 auto;
   border: 2px solid $color-brand;
   box-sizing: border-box;
@@ -22,12 +22,12 @@
   font-size: 16px;
 }
 
-.selected {
+.selectedTag {
   color: $color-white;
   background: $color-brand;
 }
 
-.feedback-review {
+.feedbackReview {
   margin-top: 10px;
   textarea {
     resize: none !important;
@@ -43,14 +43,14 @@
   }
 }
 
-.feedback-submit-header {
+.feedbackSubmitHeader {
   font-weight: 600;
   font-size: 24px;
   line-height: 33px;
   margin-top: 3.5em;
 }
 
-.feedback-submit-subheader {
+.feedbackSubmitSubheader {
   font-size: 18px;
   line-height: 25px;
   margin-top: 15px;
@@ -59,10 +59,9 @@
 }
 
 
-.nav-button {
+.navButtons {
   background: $color-brand;
   width: 150px;
-  padding: 0.375rem 1.25rem;
   margin: 25px 25px 0 25px;
   border-radius: 3px;
   &:disabled {
@@ -70,8 +69,13 @@
   }
 }
 
-.back-button {
+.backButton {
+  composes: navButtons;
   background: $color-white;
   border: 2px solid $color-brand;
   color: $color-brand;
+}
+
+.prompts {
+  composes: stepsPrompt from 'FeedbackModal.module.scss'
 }

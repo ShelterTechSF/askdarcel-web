@@ -7,9 +7,9 @@ import {
   TAG_LIST,
   NavigationButtons,
 } from './FeedbackSteps';
-import './FeedbackModal.module.scss';
 import { images } from '../../../assets';
 import { addFeedback } from '../../../utils/DataService';
+import styles from './FeedbackModal.module.scss';
 
 const UPVOTE = 'upvote';
 const DOWNVOTE = 'downvote';
@@ -93,30 +93,30 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
   ];
 
   return (
-    <div className="feedback-modal-body">
+    <div className={styles.feedbackModalBody}>
       <div
-        className="close-modal"
+        className={styles.closeModal}
         role="button"
         tabIndex="0"
         onClick={closeModal}
       >
         <img src={images.icon('close')} alt="close" />
       </div>
-      <div className="feedback-header">
+      <div className={styles.feedbackHeader}>
         <img src={images.icon('feedback-blue')} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
-      <div className="feedback-subheader">
+      <div className={styles.feedbackSubheader}>
         The team usually replies within a day.
       </div>
       {isSubmitted ? (
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <Fragment>
-          <div className="steps-prompt">
+          <div className={styles.stepsPrompt}>
             How was your experience on this site?
           </div>
-          <div className="vote-icons">
+          <div className={styles.voteIcons}>
             <div onClick={() => handleVote(UPVOTE)} role="button" tabIndex="-1">
               <img
                 src={images.icon(`upvote${vote === UPVOTE ? '-active' : ''}`)}
