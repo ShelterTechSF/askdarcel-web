@@ -4,15 +4,13 @@ import {
   FeedbackTags,
   Review,
   SubmitMessage,
-  TAG_LIST,
   NavigationButtons,
 } from './FeedbackSteps';
-import { images } from '../../../assets';
+import { TAG_LIST, UPVOTE, DOWNVOTE } from './constants';
 import { addFeedback } from '../../../utils/DataService';
-import styles from './FeedbackModal.module.scss';
 
-const UPVOTE = 'upvote';
-const DOWNVOTE = 'downvote';
+import { images } from '../../../assets';
+import styles from './FeedbackModal.module.scss';
 
 const FeedbackModal = ({ service, resource, closeModal }) => {
   const [vote, setVote] = useState('');
