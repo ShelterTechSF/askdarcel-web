@@ -14,14 +14,14 @@ import { images } from '../../../assets';
 import styles from './FeedbackModal.module.scss';
 
 const FeedbackModal = ({ service, resource, closeModal }) => {
-  const [vote, setVote] = useState('');
+  const [vote, setVote] = useState('neither');
   const [tagOptions, setTags] = useState(TAG_LIST);
   const [review, setReview] = useState('');
-  const [step, setStep] = useState(-1);
+  const [step, setStep] = useState('start');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleVoteChange = voteType => {
-    setStep(-1);
+    setStep('start');
     setVote(voteType);
   };
 
@@ -41,18 +41,13 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     setReview(e.target.value);
   };
 
-  const handlePrevStep = () => (
-    setStep(prev => (vote === UPVOTE ? prev - 2 : prev - 1))
+  const handleNextStep = () => (
+    (vote === DOWNVOTE && step === 'start') ? setStep('tags') : setStep('review')
   );
 
-  const handleNextStep = () => {
-    if (!vote.length || step >= 1) return;
-    if (vote === UPVOTE) {
-      setStep(prev => prev + 2);
-    } else {
-      setStep(prev => prev + 1);
-    }
-  };
+  const handlePrevStep = () => (
+    (vote === DOWNVOTE && step === 'review') ? setStep('tags') : setStep('start')
+  );
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -82,14 +77,18 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     && vote === DOWNVOTE
   );
 
-  const steps = [
-    <FeedbackTags tagOptions={tagOptions} onSelectTag={toggleSelectedTag} />,
-    <Review
-      reviewValue={review}
-      isReviewRequired={isReviewRequired}
-      onReviewChange={handleReviewChange}
-    />,
-  ];
+  const steps = {
+    tags: (
+      <FeedbackTags tagOptions={tagOptions} onSelectTag={toggleSelectedTag} />
+    ),
+    review: (
+      <Review
+        reviewValue={review}
+        isReviewRequired={isReviewRequired}
+        onReviewChange={handleReviewChange}
+      />
+    ),
+  };
 
   return (
     <div className={styles.feedbackModalBody}>
