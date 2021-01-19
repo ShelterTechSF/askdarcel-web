@@ -18,7 +18,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
   const [tagOptions, setTags] = useState(TAG_LIST);
   const [review, setReview] = useState('');
   const [step, setStep] = useState('start');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(null);
 
   const handleVoteChange = voteType => {
     setStep('start');
@@ -49,8 +49,8 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     (vote === DOWNVOTE && step === 'review') ? setStep('tags') : setStep('start')
   );
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    setIsSubmitted('submitting');
     const tags = tagOptions
       .filter(({ selected }) => selected)
       .map(({ tag }) => tag);
@@ -67,7 +67,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
 
     addFeedback(url, feedback)
       .then(({ msg }) => {
-        if (msg === 'Success!') setIsSubmitted(true);
+        if (msg === 'Success!') setIsSubmitted('submitted');
       })
       .catch(err => console.log(err));
   };
@@ -107,7 +107,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       <div className={styles.feedbackSubheader}>
         The team usually replies within a day.
       </div>
-      {isSubmitted ? (
+      {isSubmitted === 'submitted' ? (
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <Fragment>
@@ -120,6 +120,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
             onNextStep={handleNextStep}
             onSubmit={handleSubmit}
             isReviewRequired={isReviewRequired}
+            isSubmitted={isSubmitted}
           />
         </Fragment>
       )}

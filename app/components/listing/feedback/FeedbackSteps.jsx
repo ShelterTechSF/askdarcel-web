@@ -89,6 +89,7 @@ export const NavigationButtons = ({
   onNextStep,
   onSubmit,
   isReviewRequired,
+  isSubmitted,
 }) => (
   <div>
     {step !== 'start' && (
@@ -100,10 +101,10 @@ export const NavigationButtons = ({
       <button
         type="button"
         className={styles.navButtons}
-        disabled={isReviewRequired}
+        disabled={isReviewRequired || isSubmitted === 'submitting'}
         onClick={onSubmit}
       >
-        Submit
+        {isSubmitted === 'submitting' ? 'Submitting...' : 'Submit'}
       </button>
     ) : (
       <button
