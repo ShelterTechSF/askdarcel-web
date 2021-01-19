@@ -77,7 +77,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     && vote === DOWNVOTE
   );
 
-  const steps = {
+  const STEPS = {
     tags: (
       <FeedbackTags tagOptions={tagOptions} onSelectTag={toggleSelectedTag} />
     ),
@@ -112,7 +112,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       ) : (
         <Fragment>
           {<VoteButtons vote={vote} onVoteChange={handleVoteChange} />}
-          {steps[step]}
+          {STEPS[step]}
           <NavigationButtons
             step={step}
             vote={vote}
