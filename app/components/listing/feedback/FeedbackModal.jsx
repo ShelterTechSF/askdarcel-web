@@ -7,7 +7,7 @@ import {
   SubmitMessage,
   NavigationButtons,
 } from './FeedbackSteps';
-import { TAG_LIST, UPVOTE, DOWNVOTE } from './constants';
+import { TAG_LIST, DOWNVOTE } from './constants';
 import { addFeedback } from '../../../utils/DataService';
 
 import { images } from '../../../assets';
