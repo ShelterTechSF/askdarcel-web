@@ -66,8 +66,8 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       : `/api/services/${service.id}/feedbacks`;
 
     addFeedback(url, feedback)
-      .then(({ msg }) => {
-        if (msg === 'Success!') setIsSubmitted('submitted');
+      .then(() => {
+        setIsSubmitted('submitted');
       })
       .catch(err => console.log(err));
   };
