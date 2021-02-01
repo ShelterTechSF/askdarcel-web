@@ -123,6 +123,6 @@ export const getService = id => get(`/api/services/${id}`)
     );
   });
 
-export const addFeedback = (url, body) => (
-  post(url, body).then(res => res.json())
+export const addFeedback = (source, sourceId, body) => (
+  post(`/api/${source}/${sourceId}/feedbacks`, body).then(res => res.json())
 );

@@ -19,7 +19,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
   const [review, setReview] = useState('');
   const [step, setStep] = useState('start');
   const [isSubmitted, setIsSubmitted] = useState(null);
-
   const handleVoteChange = voteType => {
     setStep('start');
     setVote(voteType);
@@ -61,11 +60,11 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       review,
     };
 
-    const url = !service
-      ? `/api/resources/${resource.id}/feedbacks`
-      : `/api/services/${service.id}/feedbacks`;
+    const [source, sourceId] = !service
+      ? ['resources', resource.id]
+      : ['services', service.id];
 
-    addFeedback(url, feedback)
+    addFeedback(source, sourceId, feedback)
       .then(() => {
         setIsSubmitted('submitted');
       })
