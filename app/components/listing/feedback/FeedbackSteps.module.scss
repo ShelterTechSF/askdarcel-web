@@ -16,6 +16,15 @@
   margin-top: 20px;
   font-size: 18px;
   line-height: 1.5;
+  @media screen and (max-width: 767px ) {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+}
+.votePrompt {
+  @media screen and (max-width: 767px ) {
+    width: 215px;
+  }
 }
 
 .feedbackTags {
@@ -38,6 +47,11 @@
   color: $color-brand;
   font-weight: 600;
   font-size: 16px;
+  @media screen and (max-width: 767px ) {
+    margin: 10px;
+    padding: 8px 15px;
+    font-size: 18px;
+  }
 }
 
 .selectedTag {
@@ -47,18 +61,23 @@
 
 .feedbackReview {
   margin-top: 10px;
-  textarea {
-    resize: none !important;
-    width: 450px;
-    height: 165px;
-    margin-top: 10px;
-    background: $color-grey1;
-    border: 2px solid $color-brand;
-    box-sizing: border-box;
-    border-radius: 20px;
-    &::-webkit-scrollbar {
-      width: 0%;
-    }
+}
+.feedbackTextarea {
+  resize: none !important;
+  width: 450px;
+  height: 165px;
+  margin-top: 10px;
+  background: $color-grey1;
+  border: 2px solid $color-brand;
+  box-sizing: border-box;
+  border-radius: 20px;
+  &::-webkit-scrollbar {
+    width: 0%;
+  }
+  @media screen and (max-width: 767px ) {
+    max-width: 350px;
+    height: 180px;
+    margin-top: 7px;
   }
 }
 
@@ -75,16 +94,31 @@
   margin-top: 15px;
   width: 80%;
   margin-bottom: 3.5em;
+  @media screen and (max-width: 767px ) {
+    font-weight: 600;
+  }
 }
 
+.navButtonsContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 340px;
+  margin-top: 30px;
+  @media screen and (max-width: 767px ) {
+    position: absolute;
+    bottom: 40px;
+  }
+}
 
 .navButtons {
   background: $color-brand;
   width: 150px;
-  margin: 30px 25px 0 25px;
   border-radius: 3px;
   &:disabled {
     opacity: 0.5;
+  }
+  &:only-child {
+    margin: 0 auto;
   }
 }
 

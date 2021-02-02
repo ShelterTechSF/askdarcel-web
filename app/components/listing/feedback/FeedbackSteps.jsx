@@ -6,7 +6,7 @@ import styles from './FeedbackSteps.module.scss';
 
 export const VoteButtons = ({ vote, onVoteChange }) => (
   <>
-    <div className={styles.stepsPrompt}>
+    <div className={`${styles.stepsPrompt} ${styles.votePrompt}`}>
       How was your experience on this site?
     </div>
     <div className={styles.voteIcons}>
@@ -58,6 +58,7 @@ export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
       Please provide your feedback below:
     </div>
     <textarea
+      className={styles.feedbackTextarea}
       type="text"
       placeholder={`Type your feedback here ${
         !isReviewRequired ? '(optional)' : ''
@@ -91,7 +92,7 @@ export const NavigationButtons = ({
   isReviewRequired,
   isSubmitted,
 }) => (
-  <div>
+  <div className={styles.navButtonsContainer}>
     {step !== 'start' && (
       <button type="button" className={styles.backButton} onClick={onPrevStep}>
         Back

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { cloneDeep } from 'lodash';
 import {
   VoteButtons,
@@ -100,7 +100,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <img src={images.icon('close')} alt="close" />
       </div>
       <div className={styles.feedbackHeader}>
-        <img src={images.icon('feedback-blue')} alt="feedback" />
+        <img src={images.icon('feedback-blue-header')} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
       <div className={styles.feedbackSubheader}>
@@ -109,7 +109,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       {isSubmitted === 'submitted' ? (
         <SubmitMessage closeModal={closeModal} />
       ) : (
-        <Fragment>
+        <div className={styles.stepsContainer}>
           {<VoteButtons vote={vote} onVoteChange={handleVoteChange} />}
           {STEPS[step]}
           <NavigationButtons
@@ -121,7 +121,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
             isReviewRequired={isReviewRequired}
             isSubmitted={isSubmitted}
           />
-        </Fragment>
+        </div>
       )}
     </div>
   );

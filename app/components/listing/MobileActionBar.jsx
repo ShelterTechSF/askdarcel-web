@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 
 import { Link } from 'react-router-dom';
 import { getResourceActions } from 'utils/ResourceActions';
+import FeedbackModal from './feedback/FeedbackModal';
 import { images } from '../../assets';
 
 import './MobileActionBar.scss';
@@ -17,7 +19,7 @@ const getMobileActions = (resource, service) => {
   if (resourceActions.directions) {
     mobileActions.push(resourceActions.directions);
   }
-  mobileActions.push(resourceActions.edit);
+  mobileActions.push(resourceActions.feedback);
   return mobileActions;
 };
 
@@ -32,10 +34,25 @@ const renderButtonContent = action => (
   </div>
 );
 
+const rootElement = document.getElementById('root');
+Modal.setAppElement(rootElement);
+
 export default class MobileActionBar extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isModalOpen: false,
+    };
+  }
+
+  toggleModalOpen = () => {
+    this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen }));
+  }
+
   render() {
     const { resource, service } = this.props;
     const actions = getMobileActions(resource, service);
+    const { isModalOpen } = this.state;
     return (
       <div className="mobile-action-bar">
         {actions.map(action => (
@@ -48,13 +65,31 @@ export default class MobileActionBar extends React.Component {
                   </Link>
                 )
                 : (
-                  <a href={action.link} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={action.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => (
+                      action.feedback ? this.toggleModalOpen() : action.handler()
+                    )}
+                  >
                     {renderButtonContent(action)}
                   </a>
                 )
             }
           </div>
         ))}
+        <Modal
+          isOpen={isModalOpen}
+          className="feedback__Modal"
+          overlayClassName="feedback__Overlay"
+        >
+          <FeedbackModal
+            closeModal={this.toggleModalOpen}
+            resource={resource}
+            service={service}
+          />
+        </Modal>
       </div>
     );
   }
