@@ -1,23 +1,24 @@
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import qs from 'qs';
-import './utils/google';
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import qs from "qs";
+import "./utils/google";
 
 // import configureStore from './store/configureStore';
 
-import HomePage from './pages/HomePage';
-import OrganizationEditPage from './pages/OrganizationEditPage';
-import { OrganizationListingPage } from './pages/OrganizationListingPage';
-import { SearchResultsPage } from './pages/SearchPage';
-import { ServiceListingPage } from './pages/ServiceListingPage';
-import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
-import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
+import HomePage from "./pages/HomePage";
+import OrganizationEditPage from "./pages/OrganizationEditPage";
+import { OrganizationListingPage } from "./pages/OrganizationListingPage";
+import { SearchResultsPage } from "./pages/SearchPage";
+import { ServiceListingPage } from "./pages/ServiceListingPage";
+import ServiceDiscoveryForm from "./pages/ServiceDiscoveryForm";
+import ServiceDiscoveryResults from "./pages/ServiceDiscoveryResults";
 
-import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
-import { TermsOfServicePage } from './pages/legal/TermsOfService';
-import About from './pages/About';
-import CovidPages from './pages/Covid';
-import { ListingDebugPage } from './pages/debug/ListingDemoPage';
+import { PrivacyPolicyPage } from "./pages/legal/PrivacyPolicy";
+import { TermsOfServicePage } from "./pages/legal/TermsOfService";
+import About from "./pages/About";
+import Admin from "./pages/Admin";
+import CovidPages from "./pages/Covid";
+import { ListingDebugPage } from "./pages/debug/ListingDemoPage";
 
 const RedirectToOrganizations = ({ location: { search } }) => {
   const { id } = qs.parse(search.slice(1));
@@ -33,6 +34,7 @@ export default () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
     <Route path="/about" component={About} />
+    <Route path="/admin" component={Admin} />
     <Route path="/covid" component={CovidPages} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
