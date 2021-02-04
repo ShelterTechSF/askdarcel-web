@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from "react";
 import AccordionMenu from "./components/AccordionMenu";
 import fake_data from "./fake_data";
@@ -16,23 +17,29 @@ class Categories extends React.Component {
   }
 
   componentDidMount() {
-    console.log(fake_data.get());
-    console.log(fake_data.update(1, {}));
-    console.log(fake_data.post("food"));
-    console.log(fake_data.del(1));
+    this.getCategories();
+  }
 
+  getCategories() {
+    const categories = fake_data.get();
     this.setState({
-      categories: fake_data.get(),
+      categories,
     });
   }
 
-  addCategory() {}
+  addCategory(val) {
+    console.log(fake_data.post(`${val}`));
+  }
 
   addSubcategory() {}
 
-  editCategory() {}
+  editCategory(id, val) {
+    console.log(fake_data.update(id, val));
+  }
 
-  deleteCategory() {}
+  deleteCategory(id) {
+    console.log(fake_data.del(id));
+  }
 
   render() {
     return (
