@@ -8,6 +8,11 @@ class Categories extends React.Component {
     this.state = {
       categories: [],
     };
+
+    this.addCategory = this.addCategory.bind(this);
+    this.addSubcategory = this.addSubcategory.bind(this);
+    this.editCategory = this.editCategory.bind(this);
+    this.deleteCategory = this.deleteCategory.bind(this);
   }
 
   componentDidMount() {
@@ -15,7 +20,19 @@ class Categories extends React.Component {
     console.log(fake_data.update(1, {}));
     console.log(fake_data.post("food"));
     console.log(fake_data.del(1));
+
+    this.setState({
+      categories: fake_data.get(),
+    });
   }
+
+  addCategory() {}
+
+  addSubcategory() {}
+
+  editCategory() {}
+
+  deleteCategory() {}
 
   render() {
     return (
