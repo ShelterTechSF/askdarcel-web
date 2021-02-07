@@ -17,7 +17,6 @@ const getMobileActions = (resource, service) => {
   if (resourceActions.directions) {
     mobileActions.push(resourceActions.directions);
   }
-  mobileActions.push(resourceActions.edit);
   return mobileActions;
 };
 

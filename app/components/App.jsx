@@ -8,7 +8,7 @@ import Navigation from './ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
-import { getSiteTitle, getSiteUrl } from '../utils/whitelabel';
+import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
@@ -157,7 +157,9 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
+        {!isSFFamiliesSite()
+          && config.INTERCOM_APP_ID
+          && <Intercom appID={config.INTERCOM_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
           outerContainerId={outerContainerId}
@@ -166,8 +168,11 @@ class App extends Component {
           toggleHamburgerMenu={this.toggleHamburgerMenu}
         />
         <div id={pageWrapId}>
-          <Navigation showSearch toggleHamburgerMenu={this.toggleHamburgerMenu} />
-          <Banner />
+          <Navigation
+            showSearch={!isSFFamiliesSite()}
+            toggleHamburgerMenu={this.toggleHamburgerMenu}
+          />
+          {!isSFFamiliesSite() && <Banner />}
           <div className="container">
             <Routes />
           </div>
