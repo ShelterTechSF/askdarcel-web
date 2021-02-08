@@ -9,20 +9,30 @@ class CategoriesList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    this.selecteCategory = this.selecteCategory.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       categories: this.props.categories,
-      selectedCategory: -1,
+      selectedCategory: null,
     });
+  }
+
+  selecteCategory(id) {
+    // function to track the selected category by id or null if all not selected
+    this.setState({selectedCategory: id}, ()=> {
+      console.log(`selected Category is ${this.state.selectedCategory}`);
+    });
+    
   }
 
   render() {
     return (
       <div>
-        <Accordion>
-          <Card className="category">
+        <Accordion defaultActiveKey={this.state.selectedCategory} onSelect={this.selecteCategory}>
+          <Card className={Style.CategoriesList}>
             <Card.Header>
               <span className={Style.CategoriesListHeader}>
                 Top Level Categories
@@ -35,6 +45,7 @@ class CategoriesList extends React.Component {
               key={category.id}
               category={category}
               eventKey={++idx}
+              selectedCategory={this.state.selectedCategory}
             />
           ))}
         </Accordion>
