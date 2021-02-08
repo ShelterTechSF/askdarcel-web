@@ -106,4 +106,10 @@ let data = [
       },
     ],
   },
+  {
+    id: 3,
+    name: "Empty",
+    top_level: true,
+    featured: false,
+  },
 ];

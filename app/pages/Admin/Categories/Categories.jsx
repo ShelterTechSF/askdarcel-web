@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import React from "react";
-import AccordionMenu from "./components/AccordionMenu";
-import fake_data from "./fake_data";
+import React from 'react';
+import CategoriesList from './components/CategoriesList';
+import fake_data from './fake_data';
 
 class Categories extends React.Component {
   constructor(props) {
@@ -17,10 +17,6 @@ class Categories extends React.Component {
   }
 
   componentDidMount() {
-    this.getCategories();
-  }
-
-  getCategories() {
     const categories = fake_data.get();
     this.setState({
       categories,
@@ -45,7 +41,7 @@ class Categories extends React.Component {
     return (
       <div>
         <div>initialize the Categories page</div>
-        <AccordionMenu catagories={this.state.categories} />
+        <CategoriesList categories={this.state.categories} />
       </div>
     );
   }
