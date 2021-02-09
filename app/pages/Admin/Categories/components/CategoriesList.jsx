@@ -33,7 +33,7 @@ class CategoriesList extends React.Component {
       <div>
         <Accordion defaultActiveKey={this.state.selectedCategory} onSelect={this.selecteCategory}>
           <Card className={Style.CategoriesList}>
-            <Card.Header>
+            <Card.Header> 
               <span className={Style.CategoriesListHeader}>
                 Top Level Categories
               </span>
