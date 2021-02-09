@@ -22,7 +22,7 @@ class CategoriesList extends React.Component {
     return (
       <div>
         <Accordion>
-          <Card className="category">
+          <Card className='category'>
             <Card.Header>
               <span className={Style.CategoriesListHeader}>
                 Top Level Categories

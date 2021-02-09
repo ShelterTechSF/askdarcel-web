@@ -5,7 +5,7 @@ import { Accordion, Card, ListGroup } from 'react-bootstrap';
 const CategoriesItem = props => {
   const subCategories = props.category.subCategories || [];
   return (
-    <Card className="category">
+    <Card className='category'>
       <Accordion.Toggle as={Card.Header} eventKey={props.eventKey}>
         {props.category.name}
       </Accordion.Toggle>

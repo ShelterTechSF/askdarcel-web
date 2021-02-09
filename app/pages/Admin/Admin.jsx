@@ -1,5 +1,5 @@
-import React from "react";
-import Categories from "./Categories/Categories";
+import React from 'react';
+import Categories from './Categories/Categories';
 
 export default class Admin extends React.Component {
   render() {
