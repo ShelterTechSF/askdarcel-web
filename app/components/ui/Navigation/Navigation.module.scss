@@ -3,12 +3,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // NAVIGATION
 
-.siteNav {
-  background: $color-white;
+@mixin siteNavShared {
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   z-index: 1000;
+}
+
+.siteNav {
+  background: $color-white;
+  @include siteNavShared;
+}
+
+.siteNavSFFamilies {
+  background: $color-sffamilies-nav;
+  @include siteNavShared;
 }
 
 @mixin navRow {
@@ -44,14 +53,27 @@
   }
 }
 
-.navLogo {
+@mixin navLogoShared {
   display: inline-block;
-  margin-right: calc-em(25px);
   vertical-align: top;
+}
+
+.navLogo {
+  margin-right: calc-em(25px);
   img {
     height: calc-em(20px);
     width: auto;
   }
+  @include navLogoShared;
+}
+
+.navLogoSFFamilies {
+  margin-right: calc-em(45px);
+  img {
+    height: calc-em(36px);
+    width: auto;
+  }
+  @include navLogoShared;
 }
 
 .navSearch {
