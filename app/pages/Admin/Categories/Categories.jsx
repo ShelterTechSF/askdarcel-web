@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
 import fake_data from './fake_data';
+import TopLevelHeader from './TopLevelHeader';
 
 class Categories extends React.Component {
   constructor(props) {
@@ -49,6 +50,7 @@ class Categories extends React.Component {
     return (
       <div>
         <div>initialize the Categories page</div>
+        <TopLevelHeader />
       </div>
     );
   }
