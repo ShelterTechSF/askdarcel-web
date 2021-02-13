@@ -47,13 +47,13 @@ class Categories extends React.Component {
   }
 
   render() {
-      const { categories } = this.state;
-      return (
-        <div>
-          <div>initialize the Categories page</div>
-          <CategoriesList categories={categories} />
-        </div>
-      );
+    const { categories } = this.state;
+    return (
+      <div>
+        <div>initialize the Categories page</div>
+        <CategoriesList categories={categories} />
+      </div>
+    );
   }
 }
 

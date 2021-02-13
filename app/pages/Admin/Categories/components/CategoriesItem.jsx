@@ -10,14 +10,14 @@ const CategoriesItem = props => {
   const subCategories = props.category.subCategories || [];
   return (
     <Card>
-      <Accordion.Toggle as={Card.Header} eventKey={props.eventKey} >
+      <Accordion.Toggle as={Card.Header} eventKey={props.eventKey}>
         <div className={Style.Category}>
           {
               subCategories.length > 0 ? (
-                (props.selectedCategory === props.eventKey) ? 
-                <img className={Style.CategoriesListArrow} src={down_arrow} /> : 
-                <img className={Style.CategoriesListArrow} src={right_arrow} />
-              ) : <img className={Style.CategoriesListArrow} src={no_arrow}/>
+                (props.selectedCategory === props.eventKey)
+                  ? <img className={Style.CategoriesListArrow} src={down_arrow} alt="" />
+                  : <img className={Style.CategoriesListArrow} src={right_arrow} alt="" />
+              ) : <img className={Style.CategoriesListArrow} src={no_arrow} alt="" />
           }
           <div className={Style.CategoryName}>{props.category.name}</div>
         </div>
