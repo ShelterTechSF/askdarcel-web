@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import React from 'react';
+import CategoriesList from './components/CategoriesList';
 import fake_data from './fake_data';
 
 class Categories extends React.Component {
@@ -46,11 +47,13 @@ class Categories extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <div>initialize the Categories page</div>
-      </div>
-    );
+      const { categories } = this.state;
+      return (
+        <div>
+          <div>initialize the Categories page</div>
+          <CategoriesList categories={categories} />
+        </div>
+      );
   }
 }
 
