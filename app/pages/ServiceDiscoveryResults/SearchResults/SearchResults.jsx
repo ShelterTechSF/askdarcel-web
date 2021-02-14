@@ -38,12 +38,21 @@ const SearchResults = ({ searchResults }) => {
   );
 };
 
+const texting = (
+  <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggleTextingModal}>
+   <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+    <div className={styles.sideLinkText}>Text me the info</div>
+  </div>
+);
+
+
 const SearchResult = ({ hit, index }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const service = {
     serviceName: hit.name,
     serviceId: hit.service_id,
   };
+  const isProduction = process.env.isProduction;
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
 
@@ -98,10 +107,7 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-        <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggleTextingModal}>
-          <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
-          <div className={styles.sideLinkText}>Text me the info</div>
-        </div>
+        { !isProduction && texting }
       </div>
     </div>
   );
