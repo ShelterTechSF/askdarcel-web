@@ -5,7 +5,7 @@ class ContactInfoTable extends React.Component {
   render() {
     const { item } = this.props;
     // TODO May break for non services, need a better check for inheritance
-    const website = item.website || item.resource.website;
+    const website = item.url || item.resource.website;
     const email = item.email || item.resource.email;
     const phones = item.phones || item.resource.phones;
 

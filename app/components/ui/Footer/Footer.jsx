@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { isSFServiceGuideSite } from '../../../utils/whitelabel';
+import { getSiteTitle } from '../../../utils/whitelabel';
 import './Footer.scss';
 
 function Footer() {
+  const title = getSiteTitle();
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer__content">
@@ -11,7 +12,7 @@ function Footer() {
           <section className="service-guide">
             <div className="service-guide__icon" />
             <h1 className="service-guide__text">
-              <Link to="/">{isSFServiceGuideSite() ? 'SF Service Guide' : 'Ask Darcel'}</Link>
+              <Link to="/">{title}</Link>
             </h1>
           </section>
           <section className="site-footer__links">
