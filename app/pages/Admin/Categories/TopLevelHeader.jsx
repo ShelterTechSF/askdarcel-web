@@ -1,22 +1,10 @@
 import React from 'react';
 
-const divStyle = {
-  'display': 'flex',
-  'justify-content': 'space-between',
-  'height': '40px',
-  'width': '700px',
-  'margin': 'auto',
-  'border-style': 'inset',
-  'border-color': 'gray',
-  'border-width': '5px',
-  'padding': '5px',
-  'background': 'lightgray',
-  'font-weight': '600',
-}
+import styles from '.././Admin.module.scss';
 
 const TopLevelHeader = (props) => {
   return (
-    <div style={divStyle}>
+    <div className={styles.topLevelHeader}>
       <span>Top Level Categories</span>
       <span>+ Add Category</span>
     </div>
