@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
@@ -6,6 +6,7 @@ import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import { images } from 'assets';
 import styles from './SearchResults.module.scss';
+import Texting from '../../../components/Texting';
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -37,7 +38,24 @@ const SearchResults = ({ searchResults }) => {
   );
 };
 
+
 const SearchResult = ({ hit, index }) => {
+  const [textingIsOpen, setTextingIsOpen] = useState(false);
+  const service = {
+    serviceName: hit.name,
+    serviceId: hit.service_id,
+  };
+  const isProduction = process.env.IS_PRODUCTION;
+
+  const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
+
+  const texting = (
+    <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggleTextingModal}>
+      <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+      <div className={styles.sideLinkText}>Text me the info</div>
+    </div>
+  );
+
   const renderAddressMetadata = hit_ => {
     if (hit_.addresses.length === 0) {
       return <span>No address found</span>;
@@ -58,6 +76,9 @@ const SearchResult = ({ hit, index }) => {
 
   return (
     <div className={styles.searchResult}>
+      { textingIsOpen
+        && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />
+      }
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={`/services/${serviceId}`}>{`${index + 1}. ${hit.name}`}</Link>
@@ -88,6 +109,7 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
+        { !isProduction && texting }
       </div>
     </div>
   );

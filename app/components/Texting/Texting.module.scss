@@ -1,0 +1,43 @@
+@import '../../styles/utils/_helpers.scss';
+
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 70px;
+  background: rgba(0, 0, 0, 0.2);
+  @media screen and (max-width: 900px ){
+    top: 50px;
+  }
+}
+
+.content {
+  position: relative;
+  width: 500px;
+  height: 660px;
+  background: #FFFFFF;
+  margin: 35px auto;
+  padding: 24px 40px;
+  box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  @media screen and (max-width: 900px ) {
+    width: 95%;
+    height: 95%;
+    font-size: 14px;
+    padding: 20px;
+    margin: 0 auto;
+  }
+}
+
+.closeButton {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
