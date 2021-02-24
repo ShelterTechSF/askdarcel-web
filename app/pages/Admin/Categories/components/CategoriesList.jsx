@@ -19,7 +19,7 @@ class CategoriesList extends React.Component {
     });
   }
 
-  selecteCategory(id) {
+  selectCategory(id) {
     // function to track the selected category by id or null if all not selected
     this.setState({ selectedCategory: id }, () => {
       console.log(`selected Category is ${this.state.selectedCategory}`);
@@ -28,8 +28,8 @@ class CategoriesList extends React.Component {
 
   render() {
     return (
-      <Accordion defaultActiveKey={this.state.selectedCategory} onSelect={this.selecteCategory}>
-        <Card className={Style.CategoriesList}>
+      <Accordion defaultActiveKey={this.state.selectedCategory} onSelect={this.selectCategory} className={Style.CategoriesList}>
+        <Card >
           <Card.Header>
             <span className={Style.CategoriesListHeader}>
                 Top Level Categories
