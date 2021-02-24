@@ -10,7 +10,7 @@ class CategoriesList extends React.Component {
     super(props);
     this.state = {};
 
-    this.selecteCategory = this.selecteCategory.bind(this);
+    this.selectCategory = this.selectCategory.bind(this);
   }
 
   componentDidMount() {
