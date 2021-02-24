@@ -7,11 +7,19 @@
   font-weight: bold;
 }
 
-.Category{
+.AddCategory {
+  float: right;
+  font-size: small;
+  color: black;
+  cursor: pointer;
+}
+
+.CategoryHeader{
   color: black;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .CategoriesListArrow{
@@ -25,16 +33,13 @@
   cursor: pointer;
 }
 
-.AddCategory {
-  float: right;
+.CategorySpacer{
+  flex-grow: 1;
+}
+
+.EditCategory {
   font-size: small;
   color: black;
   cursor: pointer;
 }
 
-.updateCategory{
-  float: right;
-  font-size: small;
-  color: black;
-  cursor: pointer;
-}
