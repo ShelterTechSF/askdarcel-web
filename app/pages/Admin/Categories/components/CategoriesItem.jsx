@@ -8,10 +8,12 @@ import no_arrow from '../../assets/no_arrow.png';
 
 const CategoriesItem = props => {
   const subCategories = props.category.subCategories || [];
+  const isSelected = props.category.id === props.selectedCategory;
   return (
     <Card>
-      <Accordion.Toggle as={Card.Header} eventKey={props.eventKey}>
-        <div className={Style.Category}>
+      <Accordion.Toggle as={Card.Header} eventKey={props.eventKey} >
+        <div className={Style.CategoryHeader}>
+          <div>
           {
               subCategories.length > 0 ? (
                 (props.selectedCategory === props.eventKey)
@@ -19,7 +21,12 @@ const CategoriesItem = props => {
                   : <img className={Style.CategoriesListArrow} src={right_arrow} alt="" />
               ) : <img className={Style.CategoriesListArrow} src={no_arrow} alt="" />
           }
+          </div>
           <div className={Style.CategoryName}>{props.category.name}</div>
+          <div className={Style.CategorySpacer}></div>
+          {
+            isSelected ? <div className={Style.EditCategory}>Edit Category</div> : null
+          }
         </div>
       </Accordion.Toggle>
       {subCategories.length > 0 ? (
