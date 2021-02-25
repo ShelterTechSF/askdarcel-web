@@ -16,6 +16,7 @@ import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
+import Admin from './pages/Admin';
 import CovidPages from './pages/Covid';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 
@@ -33,6 +34,7 @@ export default () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
     <Route path="/about" component={About} />
+    <Route path="/admin" component={Admin} />
     <Route path="/covid" component={CovidPages} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
