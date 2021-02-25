@@ -31,7 +31,7 @@ const CategoriesItem = props => {
         </div>
       </Accordion.Toggle>
       {subCategories.length > 0 ? (
-        <Accordion.Collapse eventKey={props.eventKey}>
+        <Accordion.Collapse eventKey={props.eventKey} className={Style.SubcategoryList}>
           <Card.Body>
             <SubcategoriesList subCategories={subCategories} />
           </Card.Body>
