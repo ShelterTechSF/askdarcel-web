@@ -7,16 +7,10 @@
   font-weight: bold;
 }
 
-.AddCategory {
-  float: right;
-  font-size: small;
-  color: black;
-  cursor: pointer;
-}
-
-.CategoryHeader{
+.CategoryHeader, .Subcategory{
   color: black;
   width: 100%;
+  font-weight: normal;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,9 +31,11 @@
   flex-grow: 1;
 }
 
-.EditCategory {
+.AddCategory, .EditCategory, .EditSubcategory{
+  float: right;
   font-size: small;
   color: black;
   cursor: pointer;
 }
+
 
