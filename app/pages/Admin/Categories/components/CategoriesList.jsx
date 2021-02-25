@@ -28,8 +28,12 @@ class CategoriesList extends React.Component {
 
   render() {
     return (
-      <Accordion defaultActiveKey={this.state.selectedCategory} onSelect={this.selectCategory} className={Style.CategoriesList}>
-        <Card >
+      <Accordion
+        defaultActiveKey={this.state.selectedCategory}
+        onSelect={this.selectCategory}
+        className={Style.CategoriesList}
+      >
+        <Card>
           <Card.Header>
             <span className={Style.CategoriesListHeader}>
                 Top Level Categories
