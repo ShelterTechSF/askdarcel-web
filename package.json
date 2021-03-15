@@ -73,7 +73,7 @@
     "js-yaml": "^3.13.1",
     "jsdom": "^15.2.1",
     "mocha": "^6.1.4",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "nyc": "^15.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^2.0.0",
