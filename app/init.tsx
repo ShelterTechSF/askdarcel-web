@@ -2,6 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import ReactModal from 'react-modal';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import * as Sentry from '@sentry/browser';
@@ -30,6 +31,9 @@ history.listen(loc => {
   ReactGA.pageview(loc.pathname);
 });
 
+const rootElement = document.getElementById('root');
+ReactModal.setAppElement(rootElement);
+
 ReactDOM.render((
   <Provider store={store} key="provider">
     <ConnectedRouter history={history}>
@@ -40,4 +44,4 @@ ReactDOM.render((
       </ScrollToTop>
     </ConnectedRouter>
   </Provider>
-), document.getElementById('root'));
+), rootElement);
