@@ -52,15 +52,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG HEADER
 
-.certified {
-	float: right;
-	height: 36px;
-
-	&:after {
-		clear: both;
-	}
-}
-
 .org--main--header {
   &--title-container {
     display: flex;

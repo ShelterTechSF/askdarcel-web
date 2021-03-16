@@ -69,84 +69,8 @@ button.filter-chip {
   }
 }
 
-.search {
-  @include r_max($break-tablet-s) {
-    span {
-      display: none;
-    }
-  }
-}
-
 button, input, textarea {
   transition: all 200ms ease;
-}
-
-%st-btn {
-  @extend %font-size-small;
-  @extend %flex-center;
-  color: $color-brand;
-  background-color: $color-white;
-  display: block;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  background-position: center;
-  padding: calc-em(18px) calc-em(20px);
-  position: relative;
-  &:active, &:hover, &:focus {
-    color: $color-brand;
-    z-index: 1;
-    text-decoration: none;
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
-  }
-  &.loading {
-    background-image: url(../assets/img/smallLoader.svg);
-    background-size: calc-em(16px);
-    background-repeat: no-repeat;
-    background-position: center;
-    text-indent: -999999;
-    overflow: hidden;
-    color: transparent;
-    &:hover {
-      background-color: $color-white;
-      color: transparent;
-      border: 1px solid $color-grey3;
-    }
-  }
-  &.disabled {
-    background: $color-grey2;
-    color: $color-grey2;
-    border: 1px solid $color-grey3;
-    &:hover {
-      background: $color-grey2;
-      color: $color-grey2;
-      border: 1px solid $color-grey3;
-    }
-  }
-  &.text-button {
-    @extend %font-size-small;
-    text-transform: none;
-    background: none;
-    border: 0;
-    color: $color-grey4;
-    font-weight: 400;
-    height: auto;
-    margin: calc-em(20px) auto;
-    &:hover {
-      background: none;
-      color: $color-brand;
-    }
-  }
-}
-
-.back-btn {
-  background-repeat: no-repeat;
-background-size: contain;
-background-position: center;
-  display: block;
-  width: calc-em(50px);
-  height: calc-em(50px);
-  background-size: calc-em(20px);
-  background-image: url(../assets/img/ic-back-white.png);
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

@@ -8,36 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // TABLE VIEW
 
-%table-view {
-  @extend %flex-column;
-  margin: calc-em(20px) 0;
-  li {
-    @extend %flex-row;
-    height: calc-em(60px);
-    border-bottom: 1px solid $color-grey2;
-    margin-left: calc-em(20px);
-    background-repeat: no-repeat;
-    background-size: calc-em(8px) calc-em(12px);
-    background-position: 95% center;
-    text-align: left;
-    p {
-      flex: 1 1 auto;
-      text-align: left;
-    }
-    &:last-of-type {
-      border-bottom: 0;
-    }
-  }
-  %table-view-image {
-    width: calc-em(32px);
-    height: calc-em(32px);
-    margin: calc-em(12px);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
-}
-
 table {
   width: 100%;
 
@@ -87,23 +57,6 @@ $font-family-base: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // FONT SIZES
-
-%font-size-hero {
-  font-size: calc-em(36px);
-  line-height: calc-em(43px);
-  @include r_max($break-tablet-s) {
-    font-size: calc-em(21px);
-    line-height: calc-em(30px);
-  }
-}
-
-%font-size-sub-hero {
-  font-size: calc-em(15px);
-  line-height: calc-em(20px);
-  @include r_max($break-tablet-s) {
-    display: none;
-  }
-}
 
 %font-size-x-large {
   font-size: calc-em(30px);
