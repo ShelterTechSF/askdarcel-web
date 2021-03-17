@@ -70,7 +70,11 @@ body {
 }
 
 .search-page-container {
-  overflow: hidden;
+  // Create a stacking context so that any descendent elements that increase
+  // their z-index cannot stack above elements in the stacking context of
+  // .search-page-container, which includes the nav bar.
+  position: relative;
+  z-index: 0;
 }
 
 .disabled-feature {
