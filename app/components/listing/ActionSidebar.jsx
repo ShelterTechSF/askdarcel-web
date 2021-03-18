@@ -13,7 +13,6 @@ const getSidebarActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);
   const sidebarActions = [
     resourceActions.print,
-    resourceActions.verify,
   ];
   if (resourceActions.directions) {
     sidebarActions.push(resourceActions.directions);

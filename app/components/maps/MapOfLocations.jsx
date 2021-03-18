@@ -8,7 +8,7 @@ import { Accordion, AccordionItem } from '../ui/Accordion';
 
 class MapOfLocations extends React.Component {
   componentDidMount() {
-    if (google === undefined) { return; }
+    if (typeof google === 'undefined' || google === null) { return; }
 
     const {
       Map, Marker, LatLng, SymbolPath,
