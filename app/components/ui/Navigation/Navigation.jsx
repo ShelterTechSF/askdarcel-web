@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
@@ -86,29 +86,31 @@ class Navigation extends React.Component {
               )
             }
           </div>
-          <div className={styles.mobileNavigation}>
-            <button type="button" className={styles.searchButton} onClick={this.toggleSecondarySearch} />
-            <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
-          </div>
           {!isSFFamiliesSite()
             && (
-              <ul className={styles.navRight}>
-                <li>
-                  <Link to="/about">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
-                    FAQ
-                  </a>
-                </li>
-                <li>
-                  <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
-                    Contact Us
-                  </a>
-                </li>
-              </ul>
+              <Fragment>
+                <div className={styles.mobileNavigation}>
+                  <button type="button" className={styles.searchButton} onClick={this.toggleSecondarySearch} />
+                  <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
+                </div>
+                <ul className={styles.navRight}>
+                  <li>
+                    <Link to="/about">
+                      About
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
+                      FAQ
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
+                      Contact Us
+                    </a>
+                  </li>
+                </ul>
+              </Fragment>
             )
           }
         </div>
