@@ -5,18 +5,12 @@
 @import 'utils/reset';
 
 // Basic Styles
-@import 'st-base/buttons';
 @import 'st-base/forms';
 @import 'st-base/layout';
 @import 'st-base/loader';
-
-// GLOBAL COMPONENTS
-@import 'components/header';
-@import 'components/largeheader';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // PAGE SPECIFIC STYLES
 @import 'components/listing-page';
 @import 'components/org-page';
 @import 'components/map';
-@import 'components/white-label';

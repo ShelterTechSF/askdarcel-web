@@ -84,45 +84,6 @@ pre {
   }
 }
 
-.right {
-  text-align: right;
-}
-
-.block {
-  display: block;
-}
-
-// Listing page action buttons
-ul.actions {
-  margin: $padding-xlarge 0;
-
-  li {
-    text-align: center;
-    border: 1px solid $color-grey2;
-    width: 128px;
-    height: 128px;
-
-    a {
-      color: $color-textfade;
-      padding: $padding-xlarge;
-      display: block;
-      width: 128px;
-      height: 128px;
-
-      .material-icons {
-        display: block;
-        margin: $padding-default $padding-default $padding-large;
-        font-size: $padding-xxlarge;
-      }
-    }
-
-    &:hover {
-      background: $color-grey2;
-      color: $color-title;
-    }
-  }
-}
-
 .tippy-tooltip {
   padding: 0;
 
@@ -136,14 +97,6 @@ ul.actions {
     border: 0;
     text-align: left;
   }
-}
-
-.right {
-  text-align: right;
-}
-
-.block {
-  display: block;
 }
 
 .listing {
@@ -185,12 +138,4 @@ ul.actions {
       }
     }
   }
-}
-
-.pad-inline {
-  padding: 0 6px;
-}
-
-.float-right {
-  float: right;
 }
