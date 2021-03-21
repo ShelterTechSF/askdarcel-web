@@ -13,6 +13,7 @@ import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
 import PopUpMessage from './ui/PopUpMessage';
+import UserWay from './ui/UserWay';
 import { User } from '../models';
 import Routes from '../routes';
 import MetaImage from '../assets/img/sfsg-preview.png';
@@ -160,6 +161,8 @@ class App extends Component {
         {!isSFFamiliesSite()
           && config.INTERCOM_APP_ID
           && <Intercom appID={config.INTERCOM_APP_ID} />}
+        {isSFFamiliesSite()
+          && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
           outerContainerId={outerContainerId}
