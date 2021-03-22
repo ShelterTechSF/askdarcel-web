@@ -32,7 +32,7 @@ export function post(url, body, headers) {
     headers: queryHeaders,
     body: JSON.stringify(body),
   }).then(resp => {
-    if (!resp.ok) { return resp.text().then(text => Promise.reject(text)); }
+    if (!resp.ok) { return resp.text().then(text => Promise.reject(new Error(`POST to ${url} failed with response: ${text}`))); }
     setAuthHeaders(resp);
     return resp;
   });
