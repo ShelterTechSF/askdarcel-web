@@ -32,7 +32,7 @@ export function post(url, body, headers) {
     headers: queryHeaders,
     body: JSON.stringify(body),
   }).then(resp => {
-    if (!resp.ok) { throw resp; }
+    if (!resp.ok) { return resp.text().then(text => Promise.reject(text)); }
     setAuthHeaders(resp);
     return resp;
   });
