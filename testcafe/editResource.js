@@ -7,7 +7,19 @@ const editResourcePage = new EditResourcePage();
 const servicePage = new ServicePage();
 
 fixture`Edit Resource`
-  .page(ResourcePage.url(1));
+  .page(ResourcePage.url(1))
+  .afterEach(async t => {
+    const { log, warn, error } = await t.getBrowserConsoleMessages();
+
+    console.log('Captured console.log() messages:');
+    console.log(JSON.stringify(log));
+
+    console.log('Captured console.warn() messages:');
+    console.log(JSON.stringify(warn));
+
+    console.log('Captured console.error() messages:');
+    console.log(JSON.stringify(error));
+  });
 
 
 async function testEditTextProperty(t, showPageSelector, editPageSelector, newValue) {
