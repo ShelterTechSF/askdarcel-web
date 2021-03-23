@@ -45,7 +45,7 @@ const SearchResult = ({ hit, index }) => {
     serviceName: hit.name,
     serviceId: hit.service_id,
   };
-  const isProduction = process.env.IS_PRODUCTION;
+  const isProduction = true;
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
 
