@@ -76,3 +76,11 @@ npm run testcafe -- 'saucelabs:Chrome@86.0:Windows 10' \
   --page-load-timeout 15000 \
   --selector-timeout 15000 \
   testcafe/*.js
+status=$?
+
+if [[ $status -ne 0 ]]; then
+  echo "Printing askdarcel-api logs:"
+  docker logs api
+fi
+
+exit $status
