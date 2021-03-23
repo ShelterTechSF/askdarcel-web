@@ -4,6 +4,7 @@ import Texting from './pages/Texting';
 const searchResultsPage = new SearchResultsPage();
 const texting = new Texting();
 
+/*
 fixture`Texting info`
   .page(SearchResultsPage.url());
 
@@ -28,4 +29,5 @@ test('Text info, Basic', async t => {
   await t.click(texting.submitButton);
   // Check the request fulfilled successfully
   // await t.expect(texting.sent.innerText).contains('Sent!');
-});
+
+}); */
