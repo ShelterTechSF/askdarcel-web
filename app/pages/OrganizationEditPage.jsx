@@ -5,7 +5,7 @@ import { Prompt, withRouter } from 'react-router-dom';
 import _ from 'lodash';
 
 import { Loader } from 'components/ui';
-import EditAddress from '../components/edit/EditAddress';
+import EditAddresses from '../components/edit/EditAddress';
 import EditServices from '../components/edit/EditServices';
 import EditNotes from '../components/edit/EditNotes';
 import EditSchedule from '../components/edit/EditSchedule';
@@ -17,6 +17,12 @@ import * as dataService from '../utils/DataService';
 import { withPopUpMessages } from '../actions/popUpMessageActions';
 
 import './OrganizationEditPage.scss';
+
+// These correspond to the ChangeRequest.action enum on the askdarcel-api side,
+// which are apparently strings that contain numbers, rather than numbers.
+const ACTION_INSERT = '0';
+const ACTION_EDIT = '1';
+const ACTION_REMOVE = '2';
 
 /**
  * Apply a set of changes to a base array of items.
@@ -72,7 +78,7 @@ function updateCollectionObject(object, id, path, promises) {
   promises.push(
     dataService.post(
       `/api/${path}/${id}/change_requests`,
-      { change_request: object },
+      { change_request: { action: ACTION_EDIT, field_changes: object } },
     ),
   );
 }
@@ -94,9 +100,12 @@ function createNewPhoneNumber(item, resourceID, promises) {
     dataService.post(
       '/api/change_requests',
       {
-        change_request: item,
-        type: 'phones',
+        change_request: {
+          action: ACTION_INSERT,
+          field_changes: item,
+        },
         parent_resource_id: resourceID,
+        type: 'phones',
       },
     ),
   );
@@ -195,6 +204,59 @@ function postNotes(notesObj, promises, uriObj) {
   }
 }
 
+/** Return an array of Promises performing the correct update operation.
+ *
+ * Note that all of these operations will create change requests reflecting the
+ * operation.
+ *
+ * If the `id` field is not present, then we assume that this is a new address
+ * that must be created.
+ *
+ * If the `isRemoved` field is true, then delete the address.
+ *
+ * If the `dirty` field is true, then submit a change request to update the
+ * address.
+ *
+ * Otherwise, assume that the address is unmodified and don't do anything.
+ */
+const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
+  const { id, isRemoved, dirty } = address;
+  const { id: parent_resource_id } = uriObj;
+  const postableAddress = _.omit(address, ['dirty', 'isRemoved']);
+
+  if (!id) {
+    // Create new address
+
+    // Skip any addresses that only have blank fields
+    if (_.every(Object.values(postableAddress), _.isEmpty)) {
+      return [];
+    }
+
+    return [dataService.post('/api/change_requests', {
+      change_request: {
+        action: ACTION_INSERT,
+        field_changes: postableAddress,
+      },
+      parent_resource_id,
+      type: 'addresses',
+    })];
+  } if (isRemoved) {
+    // Delete existing address
+    return [dataService.post(`/api/addresses/${id}/change_requests`, {
+      change_request: { action: ACTION_REMOVE },
+    })];
+  } if (dirty) {
+    // Update existing address
+    return [dataService.post(
+      `/api/addresses/${id}/change_requests`,
+      { change_request: postableAddress },
+    )];
+  }
+
+  // Skip any unmodified addresses.
+  return [];
+});
+
 // THis is only called for schedules for new services, not for resources nor for
 // existing services.
 function createFullSchedule(scheduleObj) {
@@ -276,7 +338,7 @@ class OrganizationEditPage extends React.Component {
     this.state = {
       scheduleObj: {},
       hasLocation: false,
-      address: {},
+      addresses: [],
       services: {},
       deactivatedServiceIds: new Set(),
       notes: {},
@@ -426,30 +488,34 @@ class OrganizationEditPage extends React.Component {
   // Combine several sources of data to provide a view of an address appropriate
   // both for the UI and for sending API requests.
   //
-  // this.state.resource.address always contains the original, unmodified
-  // address that came from the initial API load. (Note, it might be the case
+  // this.state.resource.addresses always contains the original, unmodified
+  // addresses that came from the initial API load. (Note, it might be the case
   // that this field is being modified without going through this.setState().
   // Whoops!)
   //
-  // this.state.address only contains modifications to the address
+  // this.state.addresses only contains modifications to the addresses
   //
   // this.state.hasLocation = false will always force the flattened address to
-  // be "null/empty". This reason this exists as a separate flag instead of
-  // actually just nullifying this.state.address is so that when toggling back
+  // be the empty array. This reason this exists as a separate flag instead of
+  // actually just nullifying this.state.addresses is so that when toggling back
   // and forth between having and not having a location, the previous values are
   // restored.
-  getFlattenedAddress = () => {
-    const { resource, address, hasLocation } = this.state;
+  getFlattenedAddresses = () => {
+    const { resource, addresses, hasLocation } = this.state;
     if (!hasLocation) {
-      return null;
+      return [];
     }
-    // TODO: Update this to handle multiple addresses
     const { addresses: resourceAddresses = [] } = resource;
-    return { ...blankAddress, ...resourceAddresses[0], ...address };
+    if (!_.isEmpty(addresses)) {
+      return addresses;
+    } if (!_.isEmpty(resourceAddresses)) {
+      return resourceAddresses;
+    }
+    return [blankAddress];
   }
 
-  setAddress = address => {
-    this.setState({ address, inputsDirty: true });
+  setAddresses = addresses => {
+    this.setState({ addresses, inputsDirty: true });
   }
 
   setHasLocation = hasLocation => {
@@ -473,14 +539,14 @@ class OrganizationEditPage extends React.Component {
       long_description,
       website,
       email,
-      address,
+      addresses,
       hasLocation,
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
     const newResource = {
       name,
-      addresses: hasLocation ? [address] : [],
+      addresses: hasLocation ? addresses : [],
       long_description,
       email,
       website,
@@ -514,7 +580,7 @@ class OrganizationEditPage extends React.Component {
     const { history, showPopUpMessage } = this.props;
     this.setState({ submitting: true });
     const {
-      address,
+      addresses,
       alternate_name,
       email,
       hasLocation,
@@ -573,103 +639,12 @@ class OrganizationEditPage extends React.Component {
     // schedule
     postSchedule(scheduleObj, promises);
 
-    // address
-    //
-    // There are many possible scenarios here, some of which we just cannot
-    // support right now and we should just fail loudly if they happen.
-    //
-    // In terms of starting states, we have the following:
-    //
-    //   No addresses associated with the resource:
-    //     We can't really handle this case today so just abort.
-    //
-    //   Multiple addresses asociated with the resource:
-    //     We can't really handle this case today so just abort.
-    //
-    //   Exactly one address associated with the resource:
-    //     Two cases:
-    //     1. Every single field on the address is the blank string. This is
-    //        equivalent to "No Physical Location", since previously (and
-    //        currently) we had no way of deleting an address.
-    //     2. The address is not blank.
-    //
-    //  If we ignore the 0 and > 1 address cases, then we only have to handle
-    //  stating states 1) and 2).
-    //
-    //  Drilling down deeper into each of these starting states, we list out the
-    //  possible user actions:
-    //    1. Started with "No Physical Location"/blank address.
-    //      a) User does not touch anything related to the address field.
-    //         => Don't submit anything related to the address.
-    //      b) User unchecks the "No Physical Location" box.
-    //         => Submit all of the field changes as a change request. Note that
-    //            because the id field is _not_ blank, we still have an ID that
-    //            we can target.
-    //
-    //    2. Started with a non-blank address.
-    //      a) User does not touch anything related to the address field.
-    //         => Don't submit anything related to the address.
-    //      b) User modifies a field on the address.
-    //         => Submit all of the field changes as a change request.
-    //      c) User checks the "No Physical Location" box.
-    //         => Blank out all of the fields and then submit a change request
-    //         with the fields blanked out.
-    //
-    // Just to reiterate the actual representation of these states within the
-    // React this.state property:
-    //
-    //   this.state.resource.addresses[0]
-    //     Represents the original, unmodified address from the API load.
-    //
-    //   this.state.address
-    //     Represents any diffs to the address field, and should generally be
-    //     combined with this.state.resource.addresses[0] to get the full
-    //     representation of the resource.
-    //
-    //   this.state.hasLocation
-    //     Represents whether the user has (un)checked the "No Physical
-    //     Location") checkbox, and should be consulted before directly reading
-    //     from this.state.address. For UI purposes, we don't want to
-    //     immediately blank out this.state.address in case if the user unchecks
-    //     the "No Physical Location" checkbox, since we would want to restore
-    //     the previous values.
-
-    // Abort on the unhandled cases
-    if (_.isEmpty(resource.addresses) || resource.addresses.length !== 1) {
-      alert('Issue saving changes.');
-      throw new Error(`Cannot handle resource with 0 or more than 1 address. Resource id: ${resource.id}.`);
-    }
-
-    const originalAddress = resource.addresses[0];
-
-    // Scenario 1)
-    if (addressIsBlank(originalAddress)) {
-      if (!hasLocation) {
-        // 1a)
-        // Do nothing
-      } else {
-        // 1b)
-        promises.push(dataService.post(`/api/addresses/${originalAddress.id}/change_requests`, {
-          change_request: address,
-        }));
-      }
-    // Scenario 2)
-    } else if (hasLocation) {
-      if (_.isEmpty(address)) {
-        // 2a)
-        // Do nothing
-      } else {
-        // 2b)
-        promises.push(dataService.post(`/api/addresses/${originalAddress.id}/change_requests`, {
-          change_request: address,
-        }));
-      }
-    } else {
-      // 2c)
-      promises.push(dataService.post(`/api/addresses/${originalAddress.id}/change_requests`, {
-        change_request: blankAddress,
-      }));
-    }
+    // Addresses
+    // If "No Physical Location" is checked, then remove all existing addresses.
+    const postedAddresses = hasLocation
+      ? addresses
+      : addresses.filter(a => a.id).map(a => ({ ...a, isRemoved: true }));
+    promises.push(...postAddresses(postedAddresses, { path: 'resources', id: resource.id }));
 
     // Services
     this.postServices(services, promises);
@@ -808,9 +783,9 @@ class OrganizationEditPage extends React.Component {
             />
           </li>
 
-          <EditAddress
-            address={this.getFlattenedAddress()}
-            setAddress={this.setAddress}
+          <EditAddresses
+            addresses={this.getFlattenedAddresses()}
+            setAddresses={this.setAddresses}
             setHasLocation={this.setHasLocation}
           />
 
