@@ -1,3 +1,4 @@
+#!/bin/bash
 COMMIT=${TRAVIS_COMMIT::8}
 SANITIZED_BRANCH=$(echo $TRAVIS_BRANCH|sed 's|/|-|g')
 REPO=sheltertechsf/askdarcel-web
@@ -8,15 +9,9 @@ if [[ -n "$TRAVIS_TAG" ]]; then
     TAG="$TRAVIS_TAG"
     ALGOLIA_INDEX_PREFIX="production"
 else
-    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-        TAG="pull-request-$TRAVIS_PULL_REQUEST"
-    else
-        if [ "$SANITIZED_BRANCH" == "master" ]; then
-            TAG="latest"
-            ALGOLIA_INDEX_PREFIX="staging"
-        else
-            TAG="branch-$SANITIZED_BRANCH"
-        fi
+    if [[ "$SANITIZED_BRANCH" == "master" ]]; then
+         TAG="latest"
+         ALGOLIA_INDEX_PREFIX="staging"
     fi
 fi
 
