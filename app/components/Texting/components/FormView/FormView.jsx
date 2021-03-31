@@ -55,13 +55,16 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
           <div className={styles.dataRates}>
             *Standard text and data rates may apply.
           </div>
-          <input
-            type="text"
-            name="phoneNumber"
-            className={styles.input}
-            value={phoneNumber}
-            onChange={onChange}
-          />
+          <div className={styles.phoneInputBox}>
+            <span className={styles.phoneInputPrefix}>+1</span>
+            <input
+              type="text"
+              name="phoneNumber"
+              className={styles.phoneInput}
+              value={phoneNumber}
+              onChange={onChange}
+            />
+          </div>
         </label>
         <label className={styles.checkBox}>
           <input
