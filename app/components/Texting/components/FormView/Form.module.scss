@@ -48,7 +48,12 @@
   border: none;
   background: $color-white;
   padding-left: 5px;
+  margin: 0; /* to avoid Safari for adding extra margin */
   box-shadow: none !important;
+  /* Remove Chrome's autocomplete background color for input */
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px white inset !important;
+  }
 }
 
 .input {
