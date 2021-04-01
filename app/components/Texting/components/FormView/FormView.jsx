@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  normalize,
+  validatePhoneNumber,
+} from '../../../../utils/validatePhoneNumber';
 import Heading from './Heading';
 import Privacy from './Privacy';
 import Buttons from './Buttons';
@@ -7,14 +11,16 @@ import styles from './Form.module.scss';
 
 const initialState = {
   recipientName: '',
-  phoneNumber: '',
   agreed: false,
 };
 
 const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
-  const { recipientName, phoneNumber, agreed } = state;
+  const { recipientName, agreed } = state;
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isValidNumber, setIsValidNumber] = useState(false);
   const { serviceName, serviceId } = service;
+
   const onChange = evt => {
     const {
       type,
@@ -24,6 +30,13 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
     } = evt.target;
     const newValue = type === 'checkbox' ? checked : value;
     setState(prevState => ({ ...prevState, [name]: newValue }));
+  };
+
+  const onPhoneNumberChange = evt => {
+    const normalized = normalize(evt.target.value);
+    const isValid = validatePhoneNumber(normalized);
+    setIsValidNumber(isValid);
+    setPhoneNumber(normalized);
   };
 
   const onSubmit = event => {
@@ -62,7 +75,8 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
               name="phoneNumber"
               className={styles.phoneInput}
               value={phoneNumber}
-              onChange={onChange}
+              maxLength="14"
+              onChange={onPhoneNumberChange}
             />
           </div>
         </label>
@@ -77,7 +91,11 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
           I agree to receive text messages from SF Service Guide.
         </label>
       </div>
-      <Buttons disabled={!agreed} closeModal={closeModal} onSubmit={onSubmit} />
+      <Buttons
+        disabled={!agreed || !isValidNumber}
+        closeModal={closeModal}
+        onSubmit={onSubmit}
+      />
       <Privacy />
     </div>
   );
