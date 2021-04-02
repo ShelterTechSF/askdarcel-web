@@ -1,4 +1,3 @@
-/*
 import SearchResultsPage from './pages/SearchResultsPage';
 import Texting from './pages/Texting';
 
@@ -32,4 +31,4 @@ test('Text info, Basic', async t => {
   // Check the request fulfilled successfully
   // await t.expect(texting.sent.innerText).contains('Sent!');
 
-}); */
+});
