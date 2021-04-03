@@ -45,7 +45,6 @@ const SearchResult = ({ hit, index }) => {
     serviceName: hit.name,
     serviceId: hit.service_id,
   };
-  const isProduction = true;
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
 
@@ -109,7 +108,7 @@ const SearchResult = ({ hit, index }) => {
             </div>
           )
         }
-        { !isProduction && texting }
+        { texting }
       </div>
     </div>
   );
