@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ResourceGuideIFrame, ResourceGuidesData } from './layout';
 import styles from './ResourceGuides.module.scss';
@@ -12,7 +12,6 @@ export const ResourceGuide = () => {
 
   useEffect(() => {
     const g = ResourceGuidesData.find(g => g.id === id);
-    console.log('we have a guide', id, g);
     if (g) {
       setGuide(g);
     }

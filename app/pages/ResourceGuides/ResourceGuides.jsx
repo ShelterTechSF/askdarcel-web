@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ResourceGuidesLookup, ResourceGuidesData } from './layout';
+import { ResourceGuidesData } from './layout';
 import styles from './ResourceGuides.module.scss';
 import Footer from '../../components/ui/Footer/Footer';
 
