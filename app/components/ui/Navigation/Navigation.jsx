@@ -100,6 +100,11 @@ class Navigation extends React.Component {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/resource_guides">
+                      Resource Guides
+                    </Link>
+                  </li>
+                  <li>
                     <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
                       FAQ
                     </a>

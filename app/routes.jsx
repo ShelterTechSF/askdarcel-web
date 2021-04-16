@@ -14,6 +14,7 @@ import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
 import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
 
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
+import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import About from './pages/About';
 import CovidPages from './pages/Covid';
@@ -33,6 +34,8 @@ export default () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
     <Route path="/about" component={About} />
+    <Route path="/resource_guides/:id" component={ResourceGuide} />
+    <Route path="/resource_guides" component={ResourceGuides} />
     <Route path="/covid" component={CovidPages} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
