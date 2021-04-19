@@ -1,6 +1,6 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import * as ax from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import ax from 'axios';
 import qs from 'qs';
 
 import Footer from 'components/ui/Footer/Footer';
@@ -51,62 +51,50 @@ const generalResources = [{
   isTypeform: true,
 }];
 
-class HomePage extends React.Component {
-  state = {
-    resourceCount: undefined,
-    searchValue: '',
-  };
+export const HomePage = () => {
+  const [resourceCount, setResourceCount] = useState<number|undefined>()
+  const [searchValue, setSearchValue] = useState('')
+  const history = useHistory()
 
-  componentDidMount() {
-    this.loadResourceCountFromServer();
-  }
-
-  submitSearch = () => {
-    const { searchValue } = this.state;
-    const { history } = this.props;
+  const submitSearch = () => {
     if (searchValue) {
       const query = qs.stringify({ query: searchValue });
       history.push(`/search?${query}`);
     }
   }
 
-  loadResourceCountFromServer() {
+  useEffect(() => {
     ax.get('/api/resources/count').then(resp => {
-      this.setState({ resourceCount: resp.data });
+      setResourceCount(resp.data)
     });
-  }
+  }, [])
 
-  render() {
-    const { resourceCount, searchValue } = this.state;
-    return (
-      <div className="find-page">
-        <Section
-          title="Find essential services in San Francisco"
-        >
-          <ResourceList resources={covidResources} />
-        </Section>
-        <Section
-          title="Get step-by-step help"
-          description="Get guided help with many of the most common issues people are facing in San Francisco."
-        >
-          <ResourceList resources={generalResources} />
-        </Section>
-        <Section
-          title="Browse Directory"
-          description="Search the directory for a specific social service provider or browse by category."
-        >
-          <SearchBar
-            placeholder={`Search ${resourceCount || ''} resources in San Francisco`}
-            onSubmit={this.submitSearch}
-            onChange={newSearchValue => this.setState({ searchValue: newSearchValue })}
-            value={searchValue}
-          />
-        </Section>
-        <Partners />
-        <Footer />
-      </div>
-    );
-  }
+  return (
+    <div className="find-page">
+      <Section
+        title="Find essential services in San Francisco"
+      >
+        <ResourceList resources={covidResources} />
+      </Section>
+      <Section
+        title="Get step-by-step help"
+        description="Get guided help with many of the most common issues people are facing in San Francisco."
+      >
+        <ResourceList resources={generalResources} />
+      </Section>
+      <Section
+        title="Browse Directory"
+        description="Search the directory for a specific social service provider or browse by category."
+      >
+        <SearchBar
+          placeholder={`Search ${resourceCount || ''} resources in San Francisco`}
+          onSubmit={submitSearch}
+          onChange={newSearchValue => setSearchValue(newSearchValue)}
+          value={searchValue}
+        />
+      </Section>
+      <Partners />
+      <Footer />
+    </div>
+  );
 }
-
-export default withRouter(HomePage);

@@ -77,7 +77,7 @@ const CovidRoutes = () => {
   );
 };
 
-const CovidPages = () => (
+export const CovidPages = () => (
   <React.Fragment>
     <div className={styles.page}>
       <CovidRoutes />
@@ -85,5 +85,3 @@ const CovidPages = () => (
     <Footer />
   </React.Fragment>
 );
-
-export default CovidPages;

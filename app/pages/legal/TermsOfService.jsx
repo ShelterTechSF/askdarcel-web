@@ -2,9 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Footer from '../../components/ui/Footer/Footer';
 
-export class TermsOfServicePage extends React.Component {
-  static get content() {
-    return `
+const termsOfServiceContent = `
 # SF Service Guide Terms of Service
 
 PLEASE READ THE FOLLOWING TERMS OF USE (“TERMS”) CAREFULLY BEFORE USING SF SERVICE GUIDE (“SF SERVICE GUIDE” OR THE “SERVICE”). BY ACCESSING OR USING SF SERVICE GUIDE, YOU AGREE, WITHOUT LIMITATION OR QUALIFICATION, TO BE BOUND BY THESE TERMS. IF YOU DO NOT ACCEPT THESE TERMS, YOU WILL NOT BE ABLE TO USE SF SERVICE GUIDE.
@@ -46,7 +44,7 @@ PLEASE READ THE FOLLOWING TERMS OF USE (“TERMS”) CAREFULLY BEFORE USING SF S
 
 6. Disclaimers
     1. SF Service Guide and all information contained in it are distributed and transmitted "as is" and “as available” without warranties of any kind, either express or implied, including but not limited to warranties of title or implied warranties of merchantability or fitness for a particular purpose with respect to the quality, content, accuracy, timeliness, completeness, currency, freedom from interruption, freedom from computer virus, freedom from errors or omissions, non-infringement of content placed in SF Service Guide including any of the design, information, text, graphics, images, pages, interfaces, links, software, or other information and items contained in or displayed in jps.
-    2. ShelterTech is not responsible for any special, indirect, incidental or consequential damages (regardless of whether they were foreseeable) that may arise from the use of, or the inability to use SF Service Guide, whether the materials contained in SF Service Guide are provided by sheltertech or a third party.
+    2. ShelterTechis not responsible for any special, indirect, incidental or consequential damages (regardless of whether they were foreseeable) that may arise from the use of, or the inability to use SF Service Guide, whether the materials contained in SF Service Guide are provided by sheltertech or a third party.
     3. Any material downloaded or otherwise obtained through the use of SF Service Guide is done at the user’s own discretion and risk. you will be solely responsible for any damage to your computer system or other device or loss of data that results from the download of any such material.
     4. SF Service Guide is for informational purposes only and not for the purpose of providing legal advice.
     5. ShelterTech does not guarantee that use of SF Service Guide will be secure or that any use of SF Service Guide will be uninterrupted. please note that information on SF Service Guide may occasionally be inaccurate, incorrect or out of date.
@@ -74,19 +72,17 @@ PLEASE READ THE FOLLOWING TERMS OF USE (“TERMS”) CAREFULLY BEFORE USING SF S
     8. ShelterTech reserves the right to revise and otherwise change the Terms at any time. Users will be notified of any modification by reasonable means, including by posting the revised version of this Agreement on SF Service Guide. Users can determine when ShelterTech last changed this Agreement by referring to the “Last Updated” date below.
     9. The Terms constitute the entire Agreement between the User and ShelterTech with respect to access to and use of SF Service Guide, and they supersede all prior or contemporaneous communications and proposals, whether electronic, oral or written, between the User and ShelterTech with respect to SF Service Guide.
 
-    `;
-  }
+`
 
-  render() {
-    return (
-      <div className="listing-container">
-        <article className="text-page listing" id="privacyPolict">
-          <div className="listing--main">
-            <ReactMarkdown className="rendered-markdown" source={this.constructor.content} />
-          </div>
-        </article>
-        <Footer />
-      </div>
-    );
-  }
+export const TermsOfServicePage = () => {
+  return (
+    <div className="listing-container">
+      <article className="text-page listing" id="privacyPolict">
+        <div className="listing--main">
+          <ReactMarkdown className="rendered-markdown" source={termsOfServiceContent} />
+        </div>
+      </article>
+      <Footer />
+    </div>
+  );
 }
