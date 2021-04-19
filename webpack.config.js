@@ -3,6 +3,7 @@ const yaml = require('js-yaml');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const CONFIG_YAML = process.env.CONFIG_YAML || 'config.yml';
@@ -31,7 +32,7 @@ const buildDir = path.resolve(__dirname, 'build');
 module.exports = {
   mode: process.env.NODE_ENV || 'production',
   context: __dirname,
-  entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.jsx')],
+  entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.tsx')],
   output: {
     path: buildDir,
     publicPath: '/dist/',
@@ -71,23 +72,22 @@ module.exports = {
       CONFIG: config,
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     }),
+    new ForkTsCheckerWebpackPlugin(),
     new CopyWebpackPlugin([
-      {
-        from: 'public',
-      },
+      { from: 'public' },
     ]),
   ],
   devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(j|t)sx?$/,
         use: [
           {
             loader: 'babel-loader',
           },
         ],
-        exclude: [/node_modules/, /typings/],
+        exclude: [/node_modules/],
       },
       {
         test: /\.s?css$/,

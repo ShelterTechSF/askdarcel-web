@@ -17,11 +17,11 @@ if (process.env.NODE_ENV === 'production') {
   Sentry.init({ dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}` });
 } else {
   // If Sentry is not enabled, use console instead.
-  Sentry.captureException = e => console.error(e);
-  Sentry.captureMessage = m => console.error(m);
+  (Sentry as any).captureException = (e: any) => console.error(e);
+  (Sentry as any).captureMessage = (m: any) => console.error(m);
 }
 
-const store = configureStore();
+const store = (configureStore as any)();
 const googleAnalyticsId = (process.env.NODE_ENV === 'production' || window.location.host === 'www.askdarcel.org') ? 'UA-116318550-1' : 'UA-116318550-2';
 
 ReactGA.initialize(googleAnalyticsId);

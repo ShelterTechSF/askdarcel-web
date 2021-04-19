@@ -19,12 +19,12 @@ import About from './pages/About';
 import CovidPages from './pages/Covid';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 
-const RedirectToOrganizations = ({ location: { search } }) => {
+const RedirectToOrganizations = ({ location: { search } }: any) => {
   const { id } = qs.parse(search.slice(1));
   return <Redirect to={`/organizations/${id}`} />;
 };
 
-const RedirectToOrganizationsEdit = ({ location: { search } }) => {
+const RedirectToOrganizationsEdit = ({ location: { search } }: any) => {
   const { resourceid: id } = qs.parse(search.slice(1));
   return <Redirect to={`/organizations/${id}/edit`} />;
 };
