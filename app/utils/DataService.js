@@ -122,3 +122,5 @@ export const getService = id => get(`/api/services/${id}`)
       }
     );
   });
+
+export const getResourceCount = () => get('/api/resources/count');
