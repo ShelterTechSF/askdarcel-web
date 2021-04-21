@@ -16,13 +16,8 @@ require('./styles/main.scss');
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({ dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}` });
 } else {
-  Sentry.init({
-    dsn: 'DISABLED',
-    beforeSend: (event, hint) => {
-      console.error(`Sentry Event: not sending during development`, { event, hint })
-      return null
-    }
-  })
+  (Sentry as any).captureException = (e: any) => console.error(e);
+  (Sentry as any).captureMessage = (m: any) => console.error(m);
 }
 
 const store = (configureStore as any)();
