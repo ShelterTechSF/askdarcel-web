@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import qs from 'qs';
 import './utils/google';
 
@@ -17,12 +17,12 @@ import { ServiceListingPage } from './pages/ServiceListingPage';
 import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
 import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
 
-const RedirectToOrganizations = ({ location: { search } }: any) => {
+const RedirectToOrganizations = ({ location: { search } }: RouteComponentProps) => {
   const { id } = qs.parse(search.slice(1));
   return <Redirect to={`/organizations/${id}`} />;
 };
 
-const RedirectToOrganizationsEdit = ({ location: { search } }: any) => {
+const RedirectToOrganizationsEdit = ({ location: { search } }: RouteComponentProps) => {
   const { resourceid: id } = qs.parse(search.slice(1));
   return <Redirect to={`/organizations/${id}/edit`} />;
 };

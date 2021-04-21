@@ -1,23 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": "app",
-    "target": "es5",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
+    "allowJs": true, // Allow a mix of JS and TS until we fully migrate to TS.
     "jsx": "react",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noEmitOnError": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "noEmit": true, // No need to emit .d.ts files, since we're not publishing a package.
     "strict": true,
-    "strictPropertyInitialization": false,
+    "esModuleInterop": true, // Allows us to use default imports with CommonJS modules (which some third-party packages use)
+    "skipLibCheck": true // Don't type check .d.ts files, which mostly come from third party libraries.
   },
-  "include": ["app"]
+  "include": ["app"],
+  "exclude": ["node_modules"]
 }
