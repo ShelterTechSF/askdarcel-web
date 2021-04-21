@@ -1,9 +1,9 @@
 // The CONFIG variable is injected by the ExtendedDefinePlugin in webpack
 
-declare var CONFIG: any
+declare var CONFIG: any // TODO Convert to interface
 
 /* global CONFIG */
-const config = {
+const config: any = {
   ALGOLIA_APPLICATION_ID: CONFIG.ALGOLIA_APPLICATION_ID,
   ALGOLIA_INDEX_PREFIX: CONFIG.ALGOLIA_INDEX_PREFIX,
   ALGOLIA_READ_ONLY_API_KEY: CONFIG.ALGOLIA_READ_ONLY_API_KEY,
