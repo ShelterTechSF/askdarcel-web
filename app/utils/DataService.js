@@ -129,4 +129,3 @@ export const addFeedback = (source, sourceId, body) => (
 );
 
 export const getResourceCount = () => get('/api/resources/count');
-
