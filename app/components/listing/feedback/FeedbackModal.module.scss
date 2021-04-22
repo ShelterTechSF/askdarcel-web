@@ -1,0 +1,50 @@
+@import '../../../styles/utils/colors';
+
+.feedbackModalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.closeModal {
+  position: absolute;
+  right: 25px;
+  top: 15px;
+  cursor: pointer;
+  @media screen and (max-width: 767px ){
+    top: 45px;
+  }
+}
+
+.feedbackHeader {
+  font-weight: 600;
+  font-size: 20px;
+  color: $color-brand;
+  @media screen and (max-width: 767px ) {
+    width: 100%;
+    text-align: start;
+  }
+}
+
+.feedbackSubheader {
+  width: 200px;
+  font-size: 15px;
+  @media screen and (max-width: 767px ) {
+    width: 100%;
+    margin-top: 5px;
+    text-align: start;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (max-width: 767px ) {
+    height: 450px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}

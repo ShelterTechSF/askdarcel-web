@@ -123,4 +123,9 @@ export const getService = id => get(`/api/services/${id}`)
     );
   });
 
+
+export const addFeedback = (source, sourceId, body) => (
+  post(`/api/${source}/${sourceId}/feedbacks`, body).then(res => res.json())
+);
+
 export const getResourceCount = () => get('/api/resources/count');
