@@ -69,6 +69,6 @@ EditPhone.propTypes = {
   }).isRequired,
 };
 
-const EditPhones = editCollectionHOC(EditPhone, 'Phones', {}, true);
+const EditPhones = editCollectionHOC(EditPhone, 'Phones', {}, 'Add Phone');
 EditPhones.displayName = 'EditPhones';
 export default EditPhones;

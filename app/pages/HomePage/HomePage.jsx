@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import * as ax from 'axios';
 import qs from 'qs';
 
 import Footer from 'components/ui/Footer/Footer';
 import Partners from 'components/ui/Partners/Partners';
+import { getResourceCount } from 'utils/DataService';
 import SearchBar from './components/SearchBar';
 import Section from './components/Section';
 import ResourceList from './components/ResourceList/ResourceList';
@@ -71,9 +71,7 @@ class HomePage extends React.Component {
   }
 
   loadResourceCountFromServer() {
-    ax.get('/api/resources/count').then(resp => {
-      this.setState({ resourceCount: resp.data });
-    });
+    getResourceCount().then(resourceCount => this.setState({ resourceCount }));
   }
 
   render() {

@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 export default function editCollectionHOC(ResourceObjectItem,
   label,
   blankTemplateObj,
-  showAdd = true) {
+  buttonText) {
   return class EditCollection extends Component {
     constructor(props) {
       super(props);
@@ -83,13 +83,9 @@ export default function editCollectionHOC(ResourceObjectItem,
           <ul className="edit--section--list--item--sublist">
             {this.createItemComponents()}
           </ul>
-          {showAdd
-            && (
-              <button type="button" className="edit--section--list--item--button solid-brand" onClick={this.addItem}>
-                Add phone
-              </button>
-            )
-          }
+          <button type="button" className="edit--section--list--item--button solid-brand" onClick={this.addItem}>
+            {buttonText}
+          </button>
         </li>
       );
     }

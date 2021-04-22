@@ -1,8 +1,10 @@
 import SearchResultsPage from './pages/SearchResultsPage';
 import Texting from './pages/Texting';
 
+
 const searchResultsPage = new SearchResultsPage();
 const texting = new Texting();
+
 
 fixture`Texting info`
   .page(SearchResultsPage.url());
