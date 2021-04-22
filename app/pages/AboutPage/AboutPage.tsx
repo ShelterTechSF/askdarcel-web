@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../../components/ui/Footer/Footer';
 
-import styles from './About.module.scss';
+import styles from './AboutPage.module.scss';
 
 import STLogo from './assets/STLogo.png';
 import MOHCDLogo from './assets/MOHCDLogo.png';
@@ -19,7 +19,7 @@ import HomeownershipSFLogo from './assets/HomeownershipSF.png';
 // Disable max line length rule, since this file is mostly just text-heavy HTML content.
 /* eslint-disable max-len */
 
-export const About = () => {
+export const AboutPage = () => {
   return (
     <div className={styles.about}>
       <article className={styles.textPage} id="about">

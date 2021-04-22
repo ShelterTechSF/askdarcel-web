@@ -6,7 +6,7 @@ import Footer from '../../components/ui/Footer/Footer';
 import FoodList from './components/FoodList';
 import FoodMap from './components/FoodMap';
 import SimpleGuide from './components/SimpleGuide';
-import styles from './Covid.module.scss';
+import styles from './CovidPage.module.scss';
 
 
 const CovidRoutes = () => {
@@ -77,7 +77,7 @@ const CovidRoutes = () => {
   );
 };
 
-export const CovidPages = () => (
+export const CovidPage = () => (
   <React.Fragment>
     <div className={styles.page}>
       <CovidRoutes />

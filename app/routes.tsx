@@ -4,8 +4,8 @@ import qs from 'qs';
 import './utils/google';
 
 import { HomePage } from './pages/HomePage';
-import { About } from './pages/About';
-import { CovidPages } from './pages/Covid';
+import { AboutPage } from './pages/AboutPage';
+import { CovidPage } from './pages/CovidPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
@@ -30,8 +30,8 @@ const RedirectToOrganizationsEdit = ({ location: { search } }: RouteComponentPro
 export default () => (
   <Switch>
     <Route exact path="/" component={HomePage} />
-    <Route path="/about" component={About} />
-    <Route path="/covid" component={CovidPages} />
+    <Route path="/about" component={AboutPage} />
+    <Route path="/covid" component={CovidPage} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
     <Route path="/organizations/:id/edit" component={OrganizationEditPage} />

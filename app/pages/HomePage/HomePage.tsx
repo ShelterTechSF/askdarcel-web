@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import * as Sentry from '@sentry/browser';
 import ax from 'axios';
 import qs from 'qs';
 
@@ -64,6 +65,7 @@ export const HomePage = () => {
   }
 
   useEffect(() => {
+    Sentry.captureException('Cheesy Eggs')
     ax.get('/api/resources/count').then(resp => {
       setResourceCount(resp.data)
     });
