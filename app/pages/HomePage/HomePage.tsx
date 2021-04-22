@@ -1,12 +1,6 @@
-<<<<<<< HEAD:app/pages/HomePage/HomePage.tsx
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
-import ax from 'axios';
-=======
-import React from 'react';
-import { withRouter } from 'react-router-dom';
->>>>>>> 70bd01596ec25a83acc8d044963e8d4435e2a25c:app/pages/HomePage/HomePage.jsx
 import qs from 'qs';
 
 import Footer from 'components/ui/Footer/Footer';
@@ -72,9 +66,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     Sentry.captureException('Cheesy Eggs')
-    ax.get('/api/resources/count').then(resp => {
-      setResourceCount(resp.data)
-    });
+    getResourceCount().then(count => setResourceCount(count))
   }, [])
 
   return (
