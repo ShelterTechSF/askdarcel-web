@@ -16,7 +16,14 @@ services:
       - '8080:8080'
     volumes:
       - .:/usr/src/app:delegated
+      # Mount a separate, named volume over node_modules/ because Docker for
+      # Mac's gRPC FUSE sync is really, really slow for the number of files in
+      # node_modules.
+      - node-modules:/usr/src/app/node_modules
     working_dir: /usr/src/app
+
+volumes:
+  node-modules:
 
 networks:
   # Used to connect to askdarcel-api in a different docker-compose instance

@@ -68,6 +68,37 @@ target a different instance of askdarcel-api, you can modify the `API_URL`
 environment variable in docker-compose.yml.
 
 
+#### Fully tearing down environment
+
+In case you ever need to fully tear down your local development environment,
+such as to do a fresh setup from a clean slate, you will need to run extra
+commands to remove state that is stored in Docker. Removing the git repository
+and re-cloning is _insufficient_ because some of the state is stored in Docker.
+
+In particular, for performance reasons, we save NPM modules in a `node_modules/`
+directory that is mounted from a Docker volume rather than bind mounting the
+`node_modules/` directory from the host operating system (e.g. macOS). To delete
+all the installed NPM modules, you will have to remove the Docker volume.
+
+The following command will stop all running Docker containers, delete them, and
+remove their volumes:
+
+```sh
+$ docker-compose down --remove-orphans --volumes
+```
+
+Note: When you run that command, you may get an error message about removing
+networks:
+
+```
+ERROR: error while removing network: network askdarcel id
+4c4713d7f42173843437de3b0051a9d7e7bc81eb18123993975c3cd5a9e0a38e has active
+endpoints
+```
+
+If this happens, then you need to run `docker-compose stop` in the askdarcel-api
+application first before running the `docker-compose down` command above.
+
 ## Non-Docker Development Environment
 
 ### Installing Node.js and npm
