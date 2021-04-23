@@ -72,17 +72,15 @@ PLEASE READ THE FOLLOWING TERMS OF USE (“TERMS”) CAREFULLY BEFORE USING SF S
     8. ShelterTech reserves the right to revise and otherwise change the Terms at any time. Users will be notified of any modification by reasonable means, including by posting the revised version of this Agreement on SF Service Guide. Users can determine when ShelterTech last changed this Agreement by referring to the “Last Updated” date below.
     9. The Terms constitute the entire Agreement between the User and ShelterTech with respect to access to and use of SF Service Guide, and they supersede all prior or contemporaneous communications and proposals, whether electronic, oral or written, between the User and ShelterTech with respect to SF Service Guide.
 
-`
+`;
 
-export const TermsOfServicePage = () => {
-  return (
-    <div className="listing-container">
-      <article className="text-page listing" id="privacyPolict">
-        <div className="listing--main">
-          <ReactMarkdown className="rendered-markdown" source={termsOfServiceContent} />
-        </div>
-      </article>
-      <Footer />
-    </div>
-  );
-}
+export const TermsOfServicePage = () => (
+  <div className="listing-container">
+    <article className="text-page listing" id="privacyPolict">
+      <div className="listing--main">
+        <ReactMarkdown className="rendered-markdown" source={termsOfServiceContent} />
+      </div>
+    </article>
+    <Footer />
+  </div>
+);

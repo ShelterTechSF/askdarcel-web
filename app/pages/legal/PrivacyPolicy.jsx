@@ -62,17 +62,15 @@ You may remove your personal identifiable information or cancel your account wit
 If you have questions about this Privacy Policy, the practices of SF Service Guide, or any other dealings with SF Service Guide, please contact us at :
 ShelterTech
 <info@sheltertech.org>
-`
+`;
 
-export const PrivacyPolicyPage = () => {
-  return (
-    <div className="listing-container">
-      <article className="text-page listing" id="privacyPolict">
-        <div className="listing--main">
-          <ReactMarkdown className="rendered-markdown" source={privacyPolicyContent} />
-        </div>
-      </article>
-      <Footer />
-    </div>
-  );
-}
+export const PrivacyPolicyPage = () => (
+  <div className="listing-container">
+    <article className="text-page listing" id="privacyPolict">
+      <div className="listing--main">
+        <ReactMarkdown className="rendered-markdown" source={privacyPolicyContent} />
+      </div>
+    </article>
+    <Footer />
+  </div>
+);

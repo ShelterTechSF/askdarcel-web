@@ -5,7 +5,7 @@ import EditScheduleDay from './EditScheduleDay';
 import './EditSchedule.scss';
 
 class EditSchedule extends Component {
-  setScheduleDaysForDay = (day, scheduleDays) => {
+  setScheduleDaysForDay(day, scheduleDays) {
     const { handleScheduleChange, scheduleDaysByDay } = this.props;
     handleScheduleChange({
       ...scheduleDaysByDay,

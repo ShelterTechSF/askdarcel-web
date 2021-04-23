@@ -14,7 +14,7 @@ class Filtering extends Component {
     };
   }
 
-  setFiltersActive = filtersActive => this.setState({ filtersActive })
+  setFiltersActive(filtersActive) { return this.setState({ filtersActive }); }
 
   render() {
     const { filtersActive } = this.state;

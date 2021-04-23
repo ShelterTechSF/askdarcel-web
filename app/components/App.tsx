@@ -12,13 +12,12 @@ import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../utils/whitelabel'
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
-import PopUpMessage from './ui/PopUpMessage';
 import UserWay from './ui/UserWay';
 import { User } from '../models';
 import Routes from '../routes';
 import MetaImage from '../assets/img/sfsg-preview.png';
 
-const coordsInSanFrancisco = coords => {
+const coordsInSanFrancisco = (coords: any) => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
   // City.
   const bb = {
@@ -36,35 +35,33 @@ const coordsInSanFrancisco = coords => {
 /**
  * Get location via HTML5 Geolocation API.
  */
-const getLocationBrowser = () => new Promise((resolve, reject) => {
+const getLocationBrowser = async () => {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
+    return navigator.geolocation.getCurrentPosition(position => {
       const coords = {
         lat: round(position.coords.latitude, 4),
         lng: round(position.coords.longitude, 4),
       };
       if (coordsInSanFrancisco(coords)) {
-        resolve(coords);
-      } else {
-        const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
-        console.log(msg);
-        reject(msg);
+        return coords;
       }
+      const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
+      console.log(msg);
+      throw msg;
     }, error => {
       console.log(error);
-      reject(error);
+      throw error;
     });
-  } else {
-    const msg = 'Geolocation is not supported by this browser.';
-    console.log(msg);
-    reject(msg);
   }
-}, { timeout: 10000 });
+  const msg = 'Geolocation is not supported by this browser.';
+  console.log(msg);
+  throw msg;
+};
 
 /**
  * Get location via the Google Maps Geolocation API.
  */
-const getLocationGoogle = () => new Promise((resolve, reject) => {
+const getLocationGoogle = async () => {
   // Results are not very accurate
   let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
   if (config.GOOGLE_API_KEY) {
@@ -73,15 +70,13 @@ const getLocationGoogle = () => new Promise((resolve, reject) => {
   return fetch(url, { method: 'post' }).then(r => r.json())
     .then(data => {
       if (coordsInSanFrancisco(data.location)) {
-        resolve(data.location);
-      } else {
-        const msg = 'User location out of bounds';
-        console.log(msg);
-        reject(msg);
+        return data.location;
       }
-    })
-    .catch(reject);
-});
+      const msg = 'User location out of bounds';
+      console.log(msg);
+      throw msg;
+    });
+};
 
 /**
  * Get user location.
@@ -94,32 +89,25 @@ const getLocationGoogle = () => new Promise((resolve, reject) => {
  * @returns A Promise of a location, which is either an object with `lat` and
  * `lng` properties or an error if location is unavaible or out of bounds.
  */
-const getLocation = () => new Promise((resolve, reject) => {
-  getLocationBrowser()
-    .then(resolve)
-    .catch(() => {
-      getLocationGoogle()
-        .then(resolve)
-        .catch(reject);
-    });
-});
-
+const getLocation = () => getLocationBrowser()
+  .catch(() => getLocationGoogle());
 
 class App extends Component {
-  constructor(props) {
+  state = {
+    hamburgerMenuIsOpen: false,
+  }
+
+  constructor(public props: any) {
     super(props);
-    this.state = {
-      hamburgerMenuIsOpen: false,
-    };
     this.toggleHamburgerMenu = this.toggleHamburgerMenu.bind(this);
     this.onHamburgerMenuStateChange = this.onHamburgerMenuStateChange.bind(this);
   }
 
   componentDidMount() {
     const { setUserLocation } = this.props;
-    getLocation().then(coords => {
+    getLocation().then((coords: any) => {
       setUserLocation(coords);
-    }).catch(e => {
+    }).catch((e: any) => {
       console.log('Could not obtain location, defaulting to San Francisco.', e);
       // HACK: Hardcode middle of San Francisco
       const userLocation = { lat: 37.7749, lng: -122.4194 };
@@ -127,12 +115,12 @@ class App extends Component {
     });
   }
 
-  onHamburgerMenuStateChange(state) {
+  onHamburgerMenuStateChange(state: any) {
     this.setState({ hamburgerMenuIsOpen: state.isOpen });
   }
 
   toggleHamburgerMenu() {
-    this.setState(state => ({ hamburgerMenuIsOpen: !state.hamburgerMenuIsOpen }));
+    this.setState((state: any) => ({ hamburgerMenuIsOpen: !state.hamburgerMenuIsOpen }));
   }
 
   render() {
@@ -179,22 +167,21 @@ class App extends Component {
           <div className="container">
             <Routes />
           </div>
-          <PopUpMessage />
         </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   return {
     userLocation: state.user.location,
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any) {
   return {
-    setUserLocation: location => dispatch(User.setUserLocation(location)),
+    setUserLocation: (location: any) => dispatch(User.setUserLocation(location)),
   };
 }
 

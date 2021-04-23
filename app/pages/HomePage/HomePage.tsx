@@ -53,21 +53,21 @@ const generalResources = [{
 }];
 
 export const HomePage = () => {
-  const [resourceCount, setResourceCount] = useState<number|undefined>()
-  const [searchValue, setSearchValue] = useState('')
-  const history = useHistory()
+  const [resourceCount, setResourceCount] = useState<number|undefined>();
+  const [searchValue, setSearchValue] = useState('');
+  const history = useHistory();
 
   const submitSearch = () => {
     if (searchValue) {
       const query = qs.stringify({ query: searchValue });
       history.push(`/search?${query}`);
     }
-  }
+  };
 
   useEffect(() => {
-    Sentry.captureException('Cheesy Eggs')
-    getResourceCount().then(count => setResourceCount(count))
-  }, [])
+    Sentry.captureException('Cheesy Eggs');
+    getResourceCount().then(count => setResourceCount(count));
+  }, []);
 
   return (
     <div className="find-page">
@@ -97,4 +97,4 @@ export const HomePage = () => {
       <Footer />
     </div>
   );
-}
+};

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import {
+  Redirect, Route, RouteComponentProps, Switch,
+} from 'react-router-dom';
 import qs from 'qs';
 import './utils/google';
 

@@ -45,7 +45,7 @@ export default class MobileActionBar extends React.Component {
     };
   }
 
-  toggleModalOpen = () => {
+  toggleModalOpen() {
     this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen }));
   }
 
