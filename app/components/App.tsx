@@ -35,48 +35,52 @@ const coordsInSanFrancisco = (coords: any) => {
 /**
  * Get location via HTML5 Geolocation API.
  */
-const getLocationBrowser = async () => {
+const getLocationBrowser = () => new Promise((resolve, reject) => {
   if (navigator.geolocation) {
-    return navigator.geolocation.getCurrentPosition(position => {
+    navigator.geolocation.getCurrentPosition(position => {
       const coords = {
         lat: round(position.coords.latitude, 4),
         lng: round(position.coords.longitude, 4),
       };
       if (coordsInSanFrancisco(coords)) {
-        return coords;
+        resolve(coords);
+      } else {
+        const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
+        console.log(msg);
+        reject(msg);
       }
-      const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
-      console.log(msg);
-      throw msg;
     }, error => {
       console.log(error);
-      throw error;
+      reject(error);
     });
+  } else {
+    const msg = 'Geolocation is not supported by this browser.';
+    console.log(msg);
+    reject(msg);
   }
-  const msg = 'Geolocation is not supported by this browser.';
-  console.log(msg);
-  throw msg;
-};
+});
 
 /**
  * Get location via the Google Maps Geolocation API.
  */
-const getLocationGoogle = async () => {
+const getLocationGoogle = () => new Promise((resolve, reject) => {
   // Results are not very accurate
   let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
   if (config.GOOGLE_API_KEY) {
     url += `?key=${config.GOOGLE_API_KEY}`;
   }
-  return fetch(url, { method: 'post' }).then(r => r.json())
+  fetch(url, { method: 'post' }).then(r => r.json())
     .then(data => {
       if (coordsInSanFrancisco(data.location)) {
-        return data.location;
+        resolve(data.location);
+      } else {
+        const msg = 'User location out of bounds';
+        console.log(msg);
+        reject(msg);
       }
-      const msg = 'User location out of bounds';
-      console.log(msg);
-      throw msg;
-    });
-};
+    })
+    .catch(reject);
+});
 
 /**
  * Get user location.

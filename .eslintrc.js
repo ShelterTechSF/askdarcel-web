@@ -60,6 +60,7 @@ module.exports = {
     {
       // Non-TypeScript, JavaScript files
       files: ['*.js', '*.jsx'],
+      parser: 'babel-eslint',
       rules: {
         'react/sort-comp': 'off',
         // Disable TypeScript-specific rules on regular JavaScript files.

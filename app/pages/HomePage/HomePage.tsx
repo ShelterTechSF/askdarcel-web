@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import * as Sentry from '@sentry/browser';
 import qs from 'qs';
 
 import Footer from 'components/ui/Footer/Footer';
@@ -65,7 +64,6 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    Sentry.captureException('Cheesy Eggs');
     getResourceCount().then(count => setResourceCount(count));
   }, []);
 
