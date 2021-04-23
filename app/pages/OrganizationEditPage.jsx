@@ -385,7 +385,7 @@ class OrganizationEditPage extends React.Component {
     window.removeEventListener('beforeunload', this.keepOnPage);
   }
 
-  handleAPIGetResource(resource) {
+  handleAPIGetResource = resource => {
     const services = (resource.services || []).reduce(
       (acc, service) => ({
         ...acc,
@@ -408,7 +408,7 @@ class OrganizationEditPage extends React.Component {
     });
   }
 
-  postServices(servicesObj, promises) {
+  postServices = (servicesObj, promises) => {
     if (!servicesObj) return;
     const { resource } = this.state;
     const newServices = [];
@@ -452,7 +452,7 @@ class OrganizationEditPage extends React.Component {
    * @param {object} service the service to be updated
    * @returns {void}
    */
-  editServiceById(id, changes) {
+  editServiceById = (id, changes) => {
     this.setState(({ services }) => {
       const oldService = services[id] || {};
       const newService = { ...oldService, ...changes };
@@ -466,7 +466,7 @@ class OrganizationEditPage extends React.Component {
   /** @method addService
    * @description Creates a brand new service
    */
-  addService() {
+  addService = () => {
     const { services, latestServiceId } = this.state;
     const nextServiceId = latestServiceId - 1;
 
@@ -500,7 +500,7 @@ class OrganizationEditPage extends React.Component {
   // actually just nullifying this.state.addresses is so that when toggling back
   // and forth between having and not having a location, the previous values are
   // restored.
-  getFlattenedAddresses() {
+  getFlattenedAddresses = () => {
     const { resource, addresses, hasLocation } = this.state;
     if (!hasLocation) {
       return [];
@@ -514,11 +514,11 @@ class OrganizationEditPage extends React.Component {
     return [blankAddress];
   }
 
-  setAddresses(addresses) {
+  setAddresses = addresses => {
     this.setState({ addresses, inputsDirty: true });
   }
 
-  setHasLocation(hasLocation) {
+  setHasLocation = hasLocation => {
     this.setState({ hasLocation, inputsDirty: true });
   }
 
