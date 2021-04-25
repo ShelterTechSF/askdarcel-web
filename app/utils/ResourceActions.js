@@ -36,6 +36,11 @@ export const getResourceActions = (resource, service) => {
       icon: 'verify',
       handler: () => (service ? verifyItem(service, 'service') : verifyItem(resource, 'resource')),
     },
+    feedback: {
+      name: 'Share Feedback',
+      icon: 'feedback',
+      feedback: true,
+    },
   };
 
   if (phoneNumber) {

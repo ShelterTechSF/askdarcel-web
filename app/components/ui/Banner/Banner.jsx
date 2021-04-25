@@ -5,9 +5,9 @@ import styles from './Banner.module.scss';
 export default function Banner() {
   return (
     <div className={styles.bannerContainer}>
-      <strong>CORONAVIRUS COVID-19 UPDATE: </strong>
-      Starting March 15, you will be elegible if you have certain health conditions, disabilities, or live or work in congregate settings. More&nbsp;
-      <a href="https://sf.gov/information/other-conditions-eligible-covid-19-vaccine-starting-march-15">HERE</a>
+      <strong>COVID-19 VACCINE SITES: </strong>
+      Find out where to get a vaccine if you’re eligible&nbsp;
+      <a href="https://sf.gov/vaccine-sites">HERE</a>
     </div>
   );
 }
