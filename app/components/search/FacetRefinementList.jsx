@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
 
 class FacetRefinementList extends Component {
-  static propTypes = {
-    items: PropTypes.array.isRequired,
-    refine: PropTypes.func.isRequired,
-    currentRefinement: PropTypes.array.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.changeRefinement = this.changeRefinement.bind(this);
@@ -108,5 +102,11 @@ class FacetRefinementList extends Component {
     );
   }
 }
+
+FacetRefinementList.propTypes = {
+  items: PropTypes.array.isRequired,
+  refine: PropTypes.func.isRequired,
+  currentRefinement: PropTypes.array.isRequired,
+};
 
 export default connectRefinementList(FacetRefinementList);

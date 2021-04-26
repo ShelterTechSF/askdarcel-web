@@ -2,9 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Footer from '../../components/ui/Footer/Footer';
 
-export class PrivacyPolicyPage extends React.Component {
-  static get content() {
-    return `
+const privacyPolicyContent = `
 # Privacy Policy
 We do everything within our power to protect your privacy given the sensitive nature of many of the services listed on SF Service Guide.
 ## Our Privacy Promises
@@ -64,19 +62,15 @@ You may remove your personal identifiable information or cancel your account wit
 If you have questions about this Privacy Policy, the practices of SF Service Guide, or any other dealings with SF Service Guide, please contact us at :
 ShelterTech
 <info@sheltertech.org>
-    `;
-  }
+`;
 
-  render() {
-    return (
-      <div className="listing-container">
-        <article className="text-page listing" id="privacyPolict">
-          <div className="listing--main">
-            <ReactMarkdown className="rendered-markdown" source={this.constructor.content} />
-          </div>
-        </article>
-        <Footer />
+export const PrivacyPolicyPage = () => (
+  <div className="listing-container">
+    <article className="text-page listing" id="privacyPolict">
+      <div className="listing--main">
+        <ReactMarkdown className="rendered-markdown" source={privacyPolicyContent} />
       </div>
-    );
-  }
-}
+    </article>
+    <Footer />
+  </div>
+);
