@@ -18,7 +18,6 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, agreed } = state;
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isValidNumber, setIsValidNumber] = useState(false);
   const { serviceName, serviceId } = service;
 
   const onChange = evt => {
@@ -34,8 +33,6 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
 
   const onPhoneNumberChange = evt => {
     const normalized = normalize(evt.target.value);
-    const isValid = validatePhoneNumber(normalized);
-    setIsValidNumber(isValid);
     setPhoneNumber(normalized);
   };
 
@@ -48,6 +45,8 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
     };
     handleSubmit(data);
   };
+  
+  const isValidNumber = validatePhoneNumber(phoneNumber);
 
   return (
     <div>
