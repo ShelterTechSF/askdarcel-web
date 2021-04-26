@@ -1,0 +1,103 @@
+@import 'app/styles/utils/_colors.scss';
+
+// react-modal styles
+
+.modal {
+  background: $color-white;
+  border-radius: 8px;
+  border: 1px solid $color-grey4;
+  margin: 100px auto;
+  max-width: 700px;
+  overflow: auto;
+  padding: 34px 40px;
+  width: 700px;
+}
+
+.overlay {
+  background-color: rgba(72, 72, 72, 0.5);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  overflow: auto;
+}
+
+// Layout/container styles
+
+.modalContent {
+  display: grid;
+  row-gap: 80px;
+}
+
+.formBody {
+  display: grid;
+  row-gap: 24px;
+}
+
+.formControlGroup {
+  display: grid;
+  row-gap: 8px;
+}
+
+// Must be unused on a <label> that wraps the <input>
+.inputLabel {
+  color: $color-grey5;
+  display: grid;
+  font-size: 16px;
+  line-height: 1.35;
+  row-gap: 8px;
+}
+
+// Element styles
+
+.title {
+  color: #000;
+  font-size: 42px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.formControlGroupLabel {
+  color: $color-grey5;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.inputTextbox {
+  background-color: $color-white;
+}
+
+.actionRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancelButton {
+  background: transparent;
+  color: $color-brand;
+  font-size: 16px;
+
+  // Reset a style added by a global selector on button elements.
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.addButton {
+  background: $color-brand;
+  border-radius: 3px;
+  color: $color-white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 14px;
+
+  // Reset a style added by a global selector on input elements.
+  width: auto;
+
+  &:hover {
+    background: $color-white;
+    color: $color-brand;
+  }
+}
