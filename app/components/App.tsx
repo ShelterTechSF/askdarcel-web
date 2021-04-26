@@ -130,6 +130,7 @@ class App extends Component {
 
   render() {
     const { hamburgerMenuIsOpen } = this.state;
+    const { popUpMessage } = this.props;
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
@@ -172,7 +173,7 @@ class App extends Component {
           <div className="container">
             <Routes />
           </div>
-          { this.props.popUpMessage && <PopUpMessage popUpMessage={this.props.popUpMessage} /> }
+          { popUpMessage && <PopUpMessage popUpMessage={popUpMessage} /> }
         </div>
       </div>
     );
