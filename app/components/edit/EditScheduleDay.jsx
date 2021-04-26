@@ -89,7 +89,7 @@ const DAYS_OF_WEEK = Object.freeze({
 });
 
 class EditScheduleDay extends Component {
-  setScheduleDayForIndex(index, scheduleDay) {
+  setScheduleDayForIndex = (index, scheduleDay) => {
     const { scheduleDays, setScheduleDays } = this.props;
     const newScheduleDays = [
       ...scheduleDays.slice(0, index),
@@ -99,7 +99,7 @@ class EditScheduleDay extends Component {
     setScheduleDays(newScheduleDays);
   }
 
-  addTime() {
+  addTime = () => {
     const { scheduleDays, scheduleId, setScheduleDays } = this.props;
     const tempDaySchedule = [
       ...scheduleDays,
@@ -108,7 +108,7 @@ class EditScheduleDay extends Component {
     setScheduleDays(tempDaySchedule);
   }
 
-  setIs24Hours(is24Hours) {
+  setIs24Hours = is24Hours => {
     const { scheduleId, scheduleDays, setScheduleDays } = this.props;
 
     const oldScheduleDay = scheduleDays[0];

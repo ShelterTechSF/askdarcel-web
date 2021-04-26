@@ -44,7 +44,7 @@ class ListPageSidebar extends React.Component {
     };
   }
 
-  toggleModalOpen() {
+  toggleModalOpen = () => {
     this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen }));
   }
 
