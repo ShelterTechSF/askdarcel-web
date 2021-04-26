@@ -12,6 +12,7 @@ import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../utils/whitelabel'
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
+import { PopUpMessage } from './ui/PopUpMessage';
 import UserWay from './ui/UserWay';
 import { User } from '../models';
 import Routes from '../routes';
@@ -171,6 +172,7 @@ class App extends Component {
           <div className="container">
             <Routes />
           </div>
+          { this.props.popUpMessage && <PopUpMessage popUpMessage={this.props.popUpMessage} /> }
         </div>
       </div>
     );
@@ -180,6 +182,7 @@ class App extends Component {
 function mapStateToProps(state: any) {
   return {
     userLocation: state.user.location,
+    popUpMessage: state.popUpMessage,
   };
 }
 
