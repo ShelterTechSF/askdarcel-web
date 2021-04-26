@@ -48,7 +48,9 @@
   border: none;
   background: transparent;
   padding-left: 5px;
-  box-shadow: none !important;
+  &:active, &:hover, &:focus {
+    box-shadow: none;
+  }
   /* Remove Chrome's autocomplete background color for input */
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 100px white inset !important;
