@@ -30,4 +30,5 @@ jobs:
         key: npm-${{ hashFiles('package-lock.json') }}
         restore-keys: npm-
     - run: npm ci
+    - run: cp config.example.yml config.yml
     - run: npm run lint
