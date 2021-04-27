@@ -3,12 +3,12 @@ module.exports = {
     'airbnb',
     'plugin:testcafe/recommended',
   ],
-  parser: 'babel-eslint',
   plugins: [
     'react',
     'jsx-a11y',
     'import',
     'testcafe',
+    '@typescript-eslint',
   ],
   env: {
     browser: true,
@@ -20,12 +20,10 @@ module.exports = {
   rules: {
     'arrow-parens': ['warn', 'as-needed'],
     'camelcase': 'off',
-    'import/no-extraneous-dependencies': 'error',
-    'import/no-unused-modules': ['error', {
-      missingExports: true,
-      unusedExports: true,
-      ignoreExports: ['app/init.jsx', 'app/store/configureStore.dev.js', 'app/store/configureStore.prod.js'],
+    'import/extensions': ['error', {
+      js: 'never', jsx: 'never', ts: 'never', tsx: 'never',
     }],
+    'import/no-extraneous-dependencies': 'error',
     'import/prefer-default-export': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
@@ -35,8 +33,48 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/prefer-stateless-function': 'off',
     'react/prop-types': 'off',
+    'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
   },
   overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: './tsconfig.json',
+      },
+      rules: {
+        '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/unbound-method': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
+        '@typescript-eslint/require-await': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
+        'no-use-before-define': 'off',
+      },
+    },
+    {
+      // Non-TypeScript, JavaScript files
+      files: ['*.js', '*.jsx'],
+      parser: 'babel-eslint',
+      rules: {
+        'react/sort-comp': 'off',
+        // Disable TypeScript-specific rules on regular JavaScript files.
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-call': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/require-await': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off',
+      },
+    },
     // Mocha Tests
     {
       files: ['**/*.spec.js*', 'testing/mocha.js'],

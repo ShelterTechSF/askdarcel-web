@@ -1,4 +1,4 @@
-// The CONFIG variable is injected by the ExtendedDefinePlugin in webpack
+
 /* global CONFIG */
 const config = {
   ALGOLIA_APPLICATION_ID: CONFIG.ALGOLIA_APPLICATION_ID,
