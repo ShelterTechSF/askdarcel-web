@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy: { matrix: { node_version: [10.x] } }
     steps:
-      - uses: actions/setup-env
+      - uses: sheltertechsf/askdarcel-web/.github/actions/setup-env
       - run: npm run lint
-  test:
+  test_unit:
     runs-on: ubuntu-latest
     strategy: { matrix: { node_version: [10.x] } }
     steps:
-      - uses: actions/setup-env
+      - uses: sheltertechsf/askdarcel-web/.github/actions/setup-env
       - run: npm run test
