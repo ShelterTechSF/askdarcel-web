@@ -31,7 +31,7 @@ history.listen(loc => {
   ReactGA.pageview(loc.pathname);
 });
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById('root')!;
 ReactModal.setAppElement(rootElement);
 
 ReactDOM.render((
