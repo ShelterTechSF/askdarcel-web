@@ -35,8 +35,8 @@ export default () => (
     <Route exact path="/" component={HomePage} />
     <Route path="/about" component={AboutPage} />
     <Route path="/covid" component={CovidPage} />
-    <Route path="/resource_guides/:id" component={ResourceGuide} />
-    <Route path="/resource_guides" component={ResourceGuides} />
+    <Route path="/resource-guides/:id" component={ResourceGuide} />
+    <Route path="/resource-guides" component={ResourceGuides} />
     <Route path="/demo/listing" component={ListingDebugPage} />
     <Route path="/organizations/new" component={OrganizationEditPage} />
     <Route path="/organizations/:id/edit" component={OrganizationEditPage} />

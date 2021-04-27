@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ResourceGuideIFrame, ResourceGuidesData } from './layout';
+import { ResourceGuideModel, ResourceGuideIFrame, ResourceGuidesData } from './layout';
 import styles from './ResourceGuides.module.scss';
 import Footer from '../../components/ui/Footer/Footer';
 
 export const ResourceGuide = () => {
-  const { id } = useParams();
-  const [guide, setGuide] = useState(null);
+  const { id } = useParams<{ id: string }>();
+  const [guide, setGuide] = useState<ResourceGuideModel|null>(null);
   const [loading, setLoading] = useState(true);
-  // const items = useMemo(() => Object.entries(ResourceGuidesLookup), []);
 
   useEffect(() => {
     const g = ResourceGuidesData.find(g => g.id === id);

@@ -12,7 +12,7 @@ export const ResourceGuides = () => (
       <ul>
         { ResourceGuidesData.map(guide => (
           <li>
-            <Link to={`/resource_guides/${guide.id}`}>{guide.name}</Link>
+            <Link to={`/resource-guides/${guide.id}`}>{guide.name}</Link>
           </li>
         )) }
       </ul>
