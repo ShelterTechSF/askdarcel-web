@@ -6,18 +6,12 @@ import Footer from '../../components/ui/Footer/Footer';
 
 export const ResourceGuide = () => {
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(true);
-  const guide = useMemo(() => {
-    const g = ResourceGuidesData.find(g => g.id === id);
-    setLoading(false)
-    return g || null
-  }, [id])
+  const guide = useMemo(() => ResourceGuidesData.find(g => g.id === id) || null, [id])
 
   return (
     <>
       <div className={styles.resourceWrapper}>
-        { loading && <p>Loading!</p> }
-        { !loading && !guide && <p>Cannot find a guide named {id}</p> }
+        { !guide && <p>Cannot find a guide named {id}</p> }
         { guide && (
         <div className={styles.resourceFrameWrapper}>
           <h1>{ guide.name }</h1>
