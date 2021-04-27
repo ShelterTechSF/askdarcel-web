@@ -14,11 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy: { matrix: { node_version: [10.x] } }
     steps:
-      - uses: actions/setup-env@mastHEADer
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup-env
       - run: npm run lint
   test_unit:
     runs-on: ubuntu-latest
     strategy: { matrix: { node_version: [10.x] } }
     steps:
-      - uses: actions/setup-env@HEAD
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/setup-env
       - run: npm run test
