@@ -18,17 +18,5 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: npm-${{ hashFiles('package-lock.json') }}
-        restore-keys: npm-
-    - run: npm ci
-    - run: cp config.example.yml config.yml
-    - run: npm run lint
+      - uses: actions/setup-env@v1
+      - run: npm run lint
