@@ -12,11 +12,13 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    strategy: { matrix: { node_version: [10.x] } }
     steps:
-      - uses: actions/setup-env@v1
+      - uses: actions/setup-env
       - run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    strategy: { matrix: { node_version: [10.x] } }
+    steps:
+      - uses: actions/setup-env
+      - run: npm run test
