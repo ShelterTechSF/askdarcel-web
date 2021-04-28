@@ -45,7 +45,7 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
     };
     handleSubmit(data);
   };
-  
+
   const isValidNumber = validatePhoneNumber(phoneNumber);
 
   return (
