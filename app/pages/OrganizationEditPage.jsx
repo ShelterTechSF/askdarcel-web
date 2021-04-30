@@ -18,11 +18,9 @@ import { withPopUpMessages } from '../actions/popUpMessageActions';
 
 import './OrganizationEditPage.scss';
 
-// These correspond to the ChangeRequest.action enum on the askdarcel-api side,
-// which are apparently strings that contain numbers, rather than numbers.
-const ACTION_INSERT = '0';
-const ACTION_EDIT = '1';
-const ACTION_REMOVE = '2';
+const ACTION_INSERT = 'insert';
+const ACTION_EDIT = 'edit';
+const ACTION_REMOVE = 'remove';
 
 /**
  * Apply a set of changes to a base array of items.
