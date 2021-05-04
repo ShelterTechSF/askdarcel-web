@@ -61,7 +61,7 @@ export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
       className={styles.feedbackTextarea}
       type="text"
       placeholder={`Type your feedback here ${
-        !isReviewRequired ? '(optional)' : ''
+        !isReviewRequired ? '(optional)' : '(required)'
       }`}
       value={reviewValue}
       onChange={onReviewChange}

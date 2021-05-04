@@ -103,9 +103,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <img src={images.icon('feedback-blue-header')} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
-      <div className={styles.feedbackSubheader}>
-        The team usually replies within a day.
-      </div>
       {isSubmitted === 'submitted' ? (
         <SubmitMessage closeModal={closeModal} />
       ) : (
