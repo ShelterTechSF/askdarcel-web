@@ -101,3 +101,70 @@
     color: $color-brand;
   }
 }
+
+.addressListTitle {
+  color: #888888;
+  margin-bottom: 9px;
+}
+
+.addressList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}
+
+// AddressListItem
+
+.listItemContainer {
+  align-items: center;
+  background-color: #f9f9f9;
+  column-gap: 24px;
+  display: flex;
+  padding: 8px 10px;
+}
+
+.listItemEdit,
+.listItemRemove {
+  flex: 0 0 auto;
+}
+
+.listItemIndex {
+  flex: 0 0 auto;
+  color: #888888;
+}
+
+.listItemName {
+  flex: 0 0 auto;
+}
+
+.listItemAddress {
+  color: #888888;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// This class name is repeated three times as a hack to bump up specificity,
+// since we have global styles that are too specific and would otherwise have
+// higher priority over a single class selector.
+.listItemButton.listItemButton.listItemButton {
+  // Undo global button styles
+  padding: 0;
+  border: none;
+  height: auto;
+  font-weight: inherit;
+  color: inherit;
+
+  // Actual styles that are specific to this component
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.25em;
+
+  &:active,
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}

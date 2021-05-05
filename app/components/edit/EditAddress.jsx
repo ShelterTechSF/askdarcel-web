@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
+import { RiDeleteBin5Line, RiEditBoxLine } from 'react-icons/ri';
 import editCollectionHOC from './EditCollection';
 
 import s from './EditAddress.module.scss';
@@ -221,6 +222,40 @@ EditAddress.propTypes = {
 const EditAddressCollection = editCollectionHOC(EditAddress, 'Addresses', {}, 'Add Address');
 EditAddressCollection.displayName = 'EditAddressCollection';
 
+/** Format address as a single line. */
+const compactAddressDisplay = ({
+  address_1, address_2, address_3, address_4, city, state_province, postal_code,
+}) => {
+  // No comma between state and postal code
+  const state_postal = `${state_province} ${postal_code}`;
+  const lines = [address_1, address_2, address_3, address_4, city, state_postal];
+  return lines.filter(x => x).join(', ');
+};
+
+const AddressListItem = ({
+  displayIndex, address, onEdit, onRemove,
+}) => (
+  <div className={s.listItemContainer}>
+    <div className={s.listItemIndex}>
+      {`${displayIndex}.`}
+    </div>
+    <div className={s.listItemName}>{address.name}</div>
+    <div className={s.listItemAddress}>{compactAddressDisplay(address)}</div>
+    <div className={s.listItemEdit}>
+      <button className={s.listItemButton} type="button" onClick={onEdit}>
+        <RiEditBoxLine />
+        Edit
+      </button>
+    </div>
+    <div className={s.listItemRemove}>
+      <button className={s.listItemButton} type="button" onClick={onRemove}>
+        <RiDeleteBin5Line />
+        Remove
+      </button>
+    </div>
+  </div>
+);
+
 // Main component
 
 // For when we actually add TypeScript support
@@ -248,7 +283,7 @@ const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
       modalDefaultData = addresses[modalState.editingIndex];
       modalOnSave = newData => {
         const addressesCopy = addresses.slice();
-        addressesCopy[modalState.editingIndex] = newData;
+        addressesCopy[modalState.editingIndex] = { ...newData, dirty: true };
         setAddresses(addressesCopy);
       };
       break;
@@ -270,6 +305,19 @@ const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
         setHasLocation={setHasLocation}
       />
       <EditAddressCollection collection={addresses} handleChange={setAddresses} />
+
+      <div className={s.addressListTitle}>Location</div>
+      <div className={s.addressList}>
+        {addresses.map((address, i) => (
+          <AddressListItem
+            key={address.id || JSON.stringify(address)}
+            displayIndex={i + 1}
+            address={address}
+            onEdit={() => setModalState({ type: 'edit', editingIndex: i })}
+            onRemove={() => {}}
+          />
+        ))}
+      </div>
 
       <button type="button" onClick={() => setModalState({ type: 'add' })}>
         Add location
