@@ -226,7 +226,11 @@ const EditAddresses = ({ addresses, setAddresses }) => {
         ))}
       </div>
 
-      <button type="button" onClick={() => setModalState({ type: 'add' })}>
+      <button
+        className={s.newAddressButton}
+        type="button"
+        onClick={() => setModalState({ type: 'add' })}
+      >
         Add location
       </button>
     </li>

@@ -84,7 +84,9 @@
   }
 }
 
-.addButton {
+.addButton,
+// This class name is repeated twice as a hack to bump up specificity.
+.newAddressButton.newAddressButton {
   background: $color-brand;
   border-radius: 3px;
   color: $color-white;
@@ -110,6 +112,7 @@
 .addressList {
   display: flex;
   flex-direction: column;
+  margin-bottom: 12px;
   row-gap: 2px;
 }
 
