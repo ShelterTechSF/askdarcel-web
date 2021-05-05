@@ -18,10 +18,17 @@ import s from './EditAddress.module.scss';
 const EditAddressModal = ({
   isOpen, onRequestClose, defaultData, onSave,
 }) => {
+  const isEdit = !!defaultData.id;
+  const title = isEdit ? 'Edit Address' : 'Add New Address';
+  const submitButtonText = isEdit ? 'Save address' : 'Add new address';
   const handleSubmit = e => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    onSave(Object.fromEntries(formData.entries()));
+    const newData = Object.fromEntries(formData.entries());
+    if (isEdit) {
+      newData.id = defaultData.id;
+    }
+    onSave(newData);
     onRequestClose();
   };
   return (
@@ -32,7 +39,7 @@ const EditAddressModal = ({
       onRequestClose={onRequestClose}
     >
       <form className={s.modalContent} onSubmit={handleSubmit}>
-        <h1 className={s.title}>Add New Address</h1>
+        <h1 className={s.title}>{title}</h1>
         <div className={s.formBody}>
           <label className={s.inputLabel}>
             Address name (optional)
@@ -103,7 +110,7 @@ const EditAddressModal = ({
           <input
             className={s.addButton}
             type="submit"
-            value="Add new address"
+            value={submitButtonText}
           />
         </div>
       </form>
