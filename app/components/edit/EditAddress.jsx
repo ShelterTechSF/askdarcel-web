@@ -121,18 +121,6 @@ EditAddressModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
 };
 
-const HasPhysicalLocationToggle = ({ hasLocation, setHasLocation }) => (
-  <label className="inline-checkbox">
-    <input
-      type="checkbox"
-      className="input-checkbox"
-      checked={!hasLocation}
-      onChange={e => setHasLocation(!e.target.checked)}
-    />
-    No Physical Location
-  </label>
-);
-
 /** Format address as a single line. */
 const compactAddressDisplay = ({
   address_1, address_2, address_3, address_4, city, state_province, postal_code,
@@ -172,7 +160,7 @@ const AddressListItem = ({
 // For when we actually add TypeScript support
 // type ModalState = { type: "closed" } | { type: "add" } | { type: "edit"; editingIndex: number };
 
-const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
+const EditAddresses = ({ addresses, setAddresses }) => {
   const [modalState, setModalState] = useState({ type: 'closed' });
 
   const closeModal = () => setModalState({ type: 'closed' });
@@ -222,10 +210,6 @@ const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
         defaultData={modalDefaultData}
         onSave={modalOnSave}
       />
-      <HasPhysicalLocationToggle
-        hasLocation={addresses.length !== 0}
-        setHasLocation={setHasLocation}
-      />
 
       <div className={s.addressListTitle}>Location</div>
       <div className={s.addressList}>
@@ -251,7 +235,6 @@ const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
 
 EditAddresses.propTypes = {
   addresses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setHasLocation: PropTypes.func.isRequired,
   setAddresses: PropTypes.func.isRequired,
 };
 
