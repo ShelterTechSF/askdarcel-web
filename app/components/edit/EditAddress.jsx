@@ -299,6 +299,17 @@ const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
       throw new Error(`Unexpected modal state: ${modalState}`);
   }
 
+  const removeAddress = index => {
+    const address = addresses[index];
+    const newAddresses = addresses.slice();
+    if (address.id) {
+      newAddresses[index] = { ...address, isRemoved: true };
+    } else {
+      newAddresses.splice(index, 1);
+    }
+    setAddresses(newAddresses);
+  };
+
   return (
     <li key="address" className="edit--section--list--item">
       <EditAddressModal
@@ -316,13 +327,15 @@ const EditAddresses = ({ addresses, setHasLocation, setAddresses }) => {
       <div className={s.addressListTitle}>Location</div>
       <div className={s.addressList}>
         {addresses.map((address, i) => (
-          <AddressListItem
-            key={address.id || JSON.stringify(address)}
-            displayIndex={i + 1}
-            address={address}
-            onEdit={() => setModalState({ type: 'edit', editingIndex: i })}
-            onRemove={() => {}}
-          />
+          !address.isRemoved && (
+            <AddressListItem
+              key={address.id || JSON.stringify(address)}
+              displayIndex={i + 1}
+              address={address}
+              onEdit={() => setModalState({ type: 'edit', editingIndex: i })}
+              onRemove={() => removeAddress(i)}
+            />
+          )
         ))}
       </div>
 
