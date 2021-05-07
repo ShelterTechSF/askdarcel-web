@@ -71,11 +71,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       .catch(err => console.log(err));
   };
 
-  const isReviewRequired = (
-    tagOptions.some(({ tag, selected }) => tag === 'Other' && selected)
-    && vote === DOWNVOTE
-  );
-
   const STEPS = {
     tags: (
       <FeedbackTags tagOptions={tagOptions} onSelectTag={toggleSelectedTag} />
@@ -83,7 +78,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     review: (
       <Review
         reviewValue={review}
-        isReviewRequired={isReviewRequired}
         onReviewChange={handleReviewChange}
       />
     ),
@@ -115,7 +109,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
             onPrevStep={handlePrevStep}
             onNextStep={handleNextStep}
             onSubmit={handleSubmit}
-            isReviewRequired={isReviewRequired}
             isSubmitted={isSubmitted}
           />
         </div>
