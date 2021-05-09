@@ -301,18 +301,6 @@ const prepSchedule = scheduleObj => {
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
-const blankAddress = Object.freeze({
-  name: '',
-  address_1: '',
-  address_2: '',
-  address_3: '',
-  address_4: '',
-  city: '',
-  country: '',
-  postal_code: '',
-  state_province: '',
-});
-
 class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
@@ -481,7 +469,7 @@ class OrganizationEditPage extends React.Component {
     } if (!_.isEmpty(resourceAddresses)) {
       return resourceAddresses;
     }
-    return [blankAddress];
+    return [];
   }
 
   setAddresses = addresses => {
