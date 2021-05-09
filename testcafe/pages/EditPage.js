@@ -1,18 +1,17 @@
 import { Selector } from 'testcafe';
 import { ReactSelector } from 'testcafe-react-selectors';
 
-class EditAddress {
+class EditAddressModal {
   constructor() {
-    const baseSelector = ReactSelector('EditAddress');
-    this.name = baseSelector.find('input').withAttribute('data-field', 'name');
-    this.address1 = baseSelector.find('input').withAttribute('data-field', 'address_1');
-    this.address2 = baseSelector.find('input').withAttribute('data-field', 'address_2');
-    this.address3 = baseSelector.find('input').withAttribute('data-field', 'address_3');
-    this.address4 = baseSelector.find('input').withAttribute('data-field', 'address_4');
-    this.city = baseSelector.find('input').withAttribute('data-field', 'city');
-    this.stateOrProvince = baseSelector.find('input').withAttribute('data-field', 'state_province');
-    this.country = baseSelector.find('input').withAttribute('data-field', 'country');
-    this.postalCode = baseSelector.find('input').withAttribute('data-field', 'postal_code');
+    const baseSelector = ReactSelector('EditAddressModal');
+    this.name = baseSelector.find('input[name="name"]');
+    this.address1 = baseSelector.find('input[name="address_1"]');
+    this.address2 = baseSelector.find('input[name="address_2"]');
+    this.city = baseSelector.find('input[name="city"]');
+    this.stateOrProvince = baseSelector.find('input[name="state_province"]');
+    this.postalCode = baseSelector.find('input[name="postal_code"]');
+    this.cancelButton = baseSelector.find('button').withText(/cancel/i);
+    this.saveButton = baseSelector.find('input[type="submit"]');
   }
 }
 
@@ -93,7 +92,8 @@ export default class EditPage {
     const baseSelectorName = 'OrganizationEditPage';
     const baseSelector = ReactSelector(baseSelectorName);
     this.name = baseSelector.find('#edit-name-input');
-    this.address = new EditAddress();
+    this.addressModal = new EditAddressModal();
+    this.addAddressButton = ReactSelector('EditAddresses').find('button').withText(/add location/i);
     this.addNoteButton = ReactSelector('EditNotes').find('.edit--section--list--item--button');
     this.addPhoneButton = ReactSelector('EditPhones').find('.edit--section--list--item--button');
     this.website = baseSelector.find('#edit-website-input');
@@ -106,6 +106,10 @@ export default class EditPage {
     this.removeFirstServiceButton = baseSelector.find('.remove-item:nth-last-of-type(1)');
     this.services = baseSelector.find('.edit--service');
     this.newService = new NewService();
+  }
+
+  static getAddressEditButton(index) {
+    return ReactSelector('EditAddresses AddressListItem').nth(index).find('button').withText(/edit/i);
   }
 
   static getPhone(index) {
