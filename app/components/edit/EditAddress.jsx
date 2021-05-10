@@ -57,6 +57,7 @@ const EditAddressModal = ({
               type="text"
               name="address_1"
               placeholder="Address"
+              required
               defaultValue={defaultData.address_1}
             />
             <input
@@ -74,6 +75,7 @@ const EditAddressModal = ({
               type="text"
               name="city"
               placeholder="City"
+              required
               defaultValue={defaultData.city}
             />
           </label>
@@ -84,6 +86,7 @@ const EditAddressModal = ({
               type="text"
               name="state_province"
               placeholder="State"
+              required
               defaultValue={defaultData.state_province}
             />
           </label>
@@ -94,6 +97,7 @@ const EditAddressModal = ({
               type="text"
               name="postal_code"
               placeholder="Zip Code"
+              required
               defaultValue={defaultData.postal_code}
             />
           </label>
