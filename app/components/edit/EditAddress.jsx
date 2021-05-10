@@ -213,17 +213,21 @@ const EditAddresses = ({ addresses, setAddresses }) => {
 
       <div className={s.addressListTitle}>Location</div>
       <div className={s.addressList}>
-        {addresses.map((address, i) => (
-          !address.isRemoved && (
+        {addresses
+          .map((address, arrayIndex) => [address, arrayIndex])
+          .filter(([address]) => !address.isRemoved)
+          // The displayIndex should skip over any elements that have been
+          // marked for removal, but the arrayIndex must be the actual index of
+          // the element in the addresses array
+          .map(([address, arrayIndex], displayIndexMinusOne) => (
             <AddressListItem
               key={address.id || JSON.stringify(address)}
-              displayIndex={i + 1}
+              displayIndex={displayIndexMinusOne + 1}
               address={address}
-              onEdit={() => setModalState({ type: 'edit', editingIndex: i })}
-              onRemove={() => removeAddress(i)}
+              onEdit={() => setModalState({ type: 'edit', editingIndex: arrayIndex })}
+              onRemove={() => removeAddress(arrayIndex)}
             />
-          )
-        ))}
+          ))}
       </div>
 
       <button
