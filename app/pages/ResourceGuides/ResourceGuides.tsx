@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ResourceGuidesData } from './layout';
+import { ResourceGuidesData } from './data';
 import styles from './ResourceGuides.module.scss';
 import Footer from '../../components/ui/Footer/Footer';
 
