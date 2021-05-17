@@ -11,7 +11,6 @@ on:
 
 env:
   NODE_VERSION: 10.x
-  CACHE_ID: npm-${{ hashFiles('package-lock.json') }}
   SAUCE_MASTER_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
   SAUCE_MASTER_USERNAME: ${{ secrets.SAUCE_USERNAME }}
 
@@ -26,7 +25,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ env.CACHE_ID }}
+          key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
       - run: npm ci
       - run: cp config.example.yml config.yml
@@ -42,7 +41,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ env.CACHE_ID }}
+          key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
       - run: npm ci
       - run: cp config.example.yml config.yml
@@ -58,7 +57,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ env.CACHE_ID }}
+          key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
       - run: npm ci
       - run: cp config.example.yml config.yml
