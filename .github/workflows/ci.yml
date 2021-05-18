@@ -11,8 +11,6 @@ on:
 
 env:
   NODE_VERSION: 10.x
-  SAUCE_MASTER_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-  SAUCE_MASTER_USERNAME: ${{ secrets.SAUCE_USERNAME }}
 
 jobs:
   lint:
@@ -49,6 +47,24 @@ jobs:
 
   test_e2e:
     runs-on: ubuntu-latest
+    env:
+      SAUCE_MASTER_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      SAUCE_MASTER_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+    services:
+      api:
+        image: sheltertechsf/askdarcel-api:latest
+        ports: [3000:3000]
+        options: --entrypoint `bundle install && bundle exec rake db:setup db:populate && bundle exec rails server`
+        env:
+          DATABASE_URL: postgres://postgres@db/askdarcel_development
+          TEST_DATABASE_URL: postgres://postgres@db/askdarcel_test
+          SECRET_KEY_BASE: notasecret
+          # ALGOLIA_APPLICATION_ID: $ALGOLIA_APPLICATION_ID
+          # ALGOLIA_API_KEY: $ALGOLIA_API_KEY
+          # ALGOLIA_INDEX_PREFIX: $ALGOLIA_INDEX_PREFIX
+          RAILS_ENV: development
+      db:
+        image: postgres:9.5
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -61,4 +77,9 @@ jobs:
           restore-keys: npm-
       - run: npm ci
       - run: cp config.example.yml config.yml
-      - run: ./travis-testcafe.sh
+      - run: TESTCAFE_RUNNING=true npm run dev &
+      - uses: DevExpress/testcafe-action@latest
+        with:
+          skip-install: true
+          args: chrome testcafe/*.js
+      # - run: ./travis-testcafe.sh
