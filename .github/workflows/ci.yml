@@ -53,6 +53,9 @@ jobs:
     services:
       api:
         image: sheltertechsf/askdarcel-api:latest
+        credentials:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
         ports: ['3000:3000']
         options: --entrypoint 'bundle install && bundle exec rake db:setup db:populate && bundle exec rails server'
         env:
