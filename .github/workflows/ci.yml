@@ -89,5 +89,5 @@ jobs:
       - uses: DevExpress/testcafe-action@latest
         with:
           skip-install: true
-          args: 'chrome:headless testcafe/*.js -c 3 --skip-js-errors'
+          args: 'chrome:headless testcafe/*.js -c 3 --skip-js-errors   --assertion-timeout 50000 --page-load-timeout 15000 --selector-timeout 15000'
       # - run: ./travis-testcafe.sh
