@@ -53,6 +53,7 @@ jobs:
     services:
       db:
         image: postgres:9.5
+        ports: ['5432:5432']
       # api:
       #   image: sheltertechsf/askdarcel-api:latest
       #   credentials:
@@ -82,11 +83,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker run -d -e DATABASE_URL=postgres://postgres@db/askdarcel_development -e TEST_DATABASE_URL=postgres://postgres@db/askdarcel_test -e SECRET_KEY_BASE=notasecret --name=api -p 3000:3000 sheltertechsf/askdarcel-api:latest bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0'
+      - run: docker run -d -e DATABASE_URL=postgres://postgres@localhost:5432/askdarcel_development -e TEST_DATABASE_URL=postgres://postgres@localhost:5432/askdarcel_test -e SECRET_KEY_BASE=notasecret --name=api -p 3000:3000 sheltertechsf/askdarcel-api:latest bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0'
       - run: npm ci
       - run: cp config.example.yml config.yml
       # - run: TESTCAFE_RUNNING=true npm run dev &
-      - run: sleep 60
+      # - run: sleep 60
       - run: docker logs api
       - run: npm run build
       - run: npx http-server ./build -p 8080 &
