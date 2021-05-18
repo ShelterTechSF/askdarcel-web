@@ -86,6 +86,8 @@ jobs:
       - run: npm ci
       - run: cp config.example.yml config.yml
       - run: TESTCAFE_RUNNING=true npm run dev &
+      - run: sleep 60
+      - run: docker logs api
       - uses: DevExpress/testcafe-action@latest
         with:
           skip-install: true
