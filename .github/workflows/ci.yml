@@ -88,7 +88,7 @@ jobs:
       - run: cp config.example.yml config.yml
       # - run: TESTCAFE_RUNNING=true npm run dev &
       # - run: sleep 60
-      - run: docker exec "${{ job.services.api.id }}" "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
+      - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
       - run: docker logs "${{ job.services.api.id }}"
       - run: npm run build
       - run: npx http-server ./build -p 8080 &
