@@ -54,7 +54,7 @@ jobs:
       api:
         image: sheltertechsf/askdarcel-api:latest
         ports: ['3000:3000']
-        options: --entrypoint `bundle install && bundle exec rake db:setup db:populate && bundle exec rails server`
+        options: --entrypoint 'bundle install && bundle exec rake db:setup db:populate && bundle exec rails server'
         env:
           DATABASE_URL: 'postgres://postgres@db/askdarcel_development'
           TEST_DATABASE_URL: 'postgres://postgres@db/askdarcel_test'
