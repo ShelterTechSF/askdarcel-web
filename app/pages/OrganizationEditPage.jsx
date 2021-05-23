@@ -220,7 +220,9 @@ function postNotes(notesObj, promises, uriObj) {
 const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
   const { id, isRemoved, dirty } = address;
   const { id: parent_resource_id } = uriObj;
-  const postableAddress = _.omit(address, ['dirty', 'isRemoved']);
+  // TODO: Stop sending the country field after it is no longer required on the
+  // API side.
+  const postableAddress = { ..._.omit(address, ['dirty', 'isRemoved']), country: 'USA' };
 
   if (!id) {
     // Create new address
@@ -497,9 +499,12 @@ class OrganizationEditPage extends React.Component {
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
+    // TODO: Stop sending the country field after it is no longer required on the
+    // API side.
+    const modifiedAddresses = addresses.map(a => ({ country: 'USA', ...a }));
     const newResource = {
       name,
-      addresses,
+      addresses: modifiedAddresses,
       long_description,
       email,
       website,
