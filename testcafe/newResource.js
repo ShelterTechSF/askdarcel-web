@@ -15,7 +15,6 @@ test('Add new resource, basic', async t => {
       address1: '123 Fake St.',
       city: 'San Francisco',
       stateOrProvince: 'CA',
-      country: 'United States',
       postalCode: '94110',
     },
     phone: {
@@ -32,14 +31,16 @@ test('Add new resource, basic', async t => {
   await t.typeText(newResourcePage.name, data.name, { replace: true });
 
   // Add address
+  await t.click(newResourcePage.addAddressButton);
   await Object.keys(data.address).reduce(
     (_t, prop) => _t.typeText(
-      newResourcePage.address[prop],
+      newResourcePage.addressModal[prop],
       data.address[prop],
       { replace: true },
     ),
     t,
   );
+  await t.click(newResourcePage.addressModal.saveButton);
 
   // Add phone
   await t.click(newResourcePage.addPhoneButton);
