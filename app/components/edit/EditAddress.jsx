@@ -19,7 +19,7 @@ const EditAddressModal = ({
 }) => {
   const isEdit = !!defaultData.id;
   const title = isEdit ? 'Edit Address' : 'Add New Address';
-  const submitButtonText = isEdit ? 'Save address' : 'Add new address';
+  const submitButtonText = isEdit ? 'Save Address' : 'Add New Address';
   const handleSubmit = e => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -41,7 +41,7 @@ const EditAddressModal = ({
         <h1 className={s.title}>{title}</h1>
         <div className={s.formBody}>
           <label className={s.inputLabel}>
-            Address name (optional)
+            Address Name (Optional)
             <input
               className={s.inputTextbox}
               type="text"
@@ -91,7 +91,7 @@ const EditAddressModal = ({
             />
           </label>
           <label className={s.inputLabel}>
-            Zip code
+            Zip Code
             <input
               className={s.inputTextbox}
               type="text"
@@ -241,7 +241,7 @@ const EditAddresses = ({ addresses, setAddresses }) => {
         type="button"
         onClick={() => setModalState({ type: 'add' })}
       >
-        Add location
+        Add Location
       </button>
     </li>
   );
