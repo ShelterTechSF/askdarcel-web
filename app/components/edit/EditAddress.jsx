@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
-import { RiDeleteBin5Line, RiEditBoxLine } from 'react-icons/ri';
+import { RiDeleteBin5Line, RiEditBoxLine, RiArrowLeftLine } from 'react-icons/ri';
 
 import s from './EditAddress.module.scss';
 
@@ -108,7 +108,9 @@ const EditAddressModal = ({
             type="button"
             onClick={onRequestClose}
           >
-            ← Cancel
+            <RiArrowLeftLine />
+            {' '}
+            Cancel
           </button>
           <input
             className={s.addButton}
