@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
 import { images } from 'assets';
 import styles from './Navigation.module.scss';
+import { getSiteUrl, isSFFamiliesSite } from '../../../utils/whitelabel';
 
 class Navigation extends React.Component {
   constructor() {
@@ -40,12 +41,15 @@ class Navigation extends React.Component {
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
     return (
-      <nav className={styles.siteNav}>
+      <nav className={isSFFamiliesSite() ? styles.siteNavSFFamilies : styles.siteNav}>
         <div className={styles.primaryRow}>
           <div className={styles.navLeft}>
-            <Link className={styles.navLogo} to="/">
+            <a
+              className={isSFFamiliesSite() ? styles.navLogoSFFamilies : styles.navLogo}
+              href={getSiteUrl()}
+            >
               <img src={images.logoSmall} alt="Ask Darcel" />
-            </Link>
+            </a>
             {showSearch
               && (
                 <form
@@ -70,23 +74,27 @@ class Navigation extends React.Component {
             <button type="button" className={styles.searchButton} onClick={this.toggleSecondarySearch} />
             <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
           </div>
-          <ul className={styles.navRight}>
-            <li>
-              <Link to="/about">
-                About
-              </Link>
-            </li>
-            <li>
-              <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
-                FAQ
-              </a>
-            </li>
-            <li>
-              <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
-                Contact Us
-              </a>
-            </li>
-          </ul>
+          {!isSFFamiliesSite()
+            && (
+              <ul className={styles.navRight}>
+                <li>
+                  <Link to="/about">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
+                    Contact Us
+                  </a>
+                </li>
+              </ul>
+            )
+          }
         </div>
         <div className={`${styles.secondaryRowWrapper} ${showSecondarySearch ? '' : styles.hide}`}>
           <div className={styles.secondaryRow}>

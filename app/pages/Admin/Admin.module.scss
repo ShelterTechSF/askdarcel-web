@@ -1,0 +1,44 @@
+.CategoriesList{
+  color: black;
+}
+
+.CategoriesListHeader {
+  color: black;
+  font-weight: bold;
+}
+
+.CategoryHeader, .Subcategory{
+  color: black;
+  width: 100%;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.CategoriesListArrow{
+  width: 25px;
+  height: 25px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.CategoryName{
+  cursor: pointer;
+}
+
+.CategorySpacer{
+  flex-grow: 1;
+}
+
+.AddCategory, .EditCategory, .EditSubcategory{
+  float: right;
+  font-size: small;
+  color: black;
+  cursor: pointer;
+}
+
+.SubcategoryList{
+  background-color: white;
+}
+
