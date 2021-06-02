@@ -27,7 +27,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
-    'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
+    'jsx-a11y/label-has-for': ['off'], // This is deprecated in favor of jsx-a11y/label-has-associated-control
     'no-console': 'warn',
     'no-underscore-dangle': 'off',
     'react/forbid-prop-types': 'off',
