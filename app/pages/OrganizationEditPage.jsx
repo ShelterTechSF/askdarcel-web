@@ -835,6 +835,7 @@ class OrganizationEditPage extends React.Component {
           editServiceById={this.editServiceById}
           addService={this.addService}
           handleDeactivation={this.handleDeactivation}
+          resourceAddresses={this.getFlattenedAddresses()}
         />
       </ul>
     );

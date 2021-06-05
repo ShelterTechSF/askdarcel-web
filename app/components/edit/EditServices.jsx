@@ -4,7 +4,7 @@ import ProvidedService from './ProvidedService';
 
 
 const EditServices = ({
-  addService, editServiceById, handleDeactivation, services,
+  addService, editServiceById, handleDeactivation, services, resourceAddresses,
 }) => (
   <li className="edit--section--list--item">
     <ul className="edit--section--list--item--sublist edit--service--list">
@@ -16,6 +16,7 @@ const EditServices = ({
             service={service}
             editServiceById={editServiceById}
             handleDeactivation={handleDeactivation}
+            resourceAddresses={resourceAddresses}
           />
         ))
       }
