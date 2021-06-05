@@ -204,6 +204,10 @@ function postNotes(notesObj, promises, uriObj) {
 
 /** Return an array of Promises performing the correct update operation.
  *
+ * Note that this will return a promise that resolves to null for addresses that
+ * do not need to be updated, created, or deleted so that we maintain a 1-1
+ * mapping from input addresses and output promises.
+ *
  * Note that all of these operations will create change requests reflecting the
  * operation.
  *
@@ -217,7 +221,7 @@ function postNotes(notesObj, promises, uriObj) {
  *
  * Otherwise, assume that the address is unmodified and don't do anything.
  */
-const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
+const postAddresses = (addresses, uriObj) => addresses.map(address => {
   const { id, isRemoved, dirty } = address;
   const { id: parent_resource_id } = uriObj;
   const postableAddress = { ..._.omit(address, ['dirty', 'isRemoved']) };
@@ -227,32 +231,32 @@ const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
 
     // Skip any addresses that only have blank fields
     if (_.every(Object.values(postableAddress), _.isEmpty)) {
-      return [];
+      return Promise.resolve(null);
     }
 
-    return [dataService.post('/api/change_requests', {
+    return dataService.post('/api/change_requests', {
       change_request: {
         action: ACTION_INSERT,
         field_changes: postableAddress,
       },
       parent_resource_id,
       type: 'addresses',
-    })];
+    });
   } if (isRemoved) {
     // Delete existing address
-    return [dataService.post(`/api/addresses/${id}/change_requests`, {
+    return dataService.post(`/api/addresses/${id}/change_requests`, {
       change_request: { action: ACTION_REMOVE },
-    })];
+    });
   } if (dirty) {
     // Update existing address
-    return [dataService.post(
+    return dataService.post(
       `/api/addresses/${id}/change_requests`,
       { change_request: postableAddress },
-    )];
+    );
   }
 
   // Skip any unmodified addresses.
-  return [];
+  return Promise.resolve(null);
 });
 
 // THis is only called for schedules for new services, not for resources nor for
