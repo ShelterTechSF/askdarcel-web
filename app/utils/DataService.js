@@ -57,6 +57,26 @@ export function get(url, headers) {
   });
 }
 
+export function put(url, body, headers) {
+  let queryHeaders = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+  if (headers) {
+    queryHeaders = _.assignIn(queryHeaders, headers);
+  }
+  return fetch(url, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: queryHeaders,
+    body: JSON.stringify(body),
+  }).then(resp => {
+    if (!resp.ok) { throw resp; }
+    setAuthHeaders(resp);
+    return resp;
+  });
+}
+
 export function APIDelete(url, headers) {
   let queryHeaders = {
     'Content-Type': 'application/json',
