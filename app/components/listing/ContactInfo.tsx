@@ -1,5 +1,82 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, useMemo } from 'react';
+import { AddressModel, PhoneNumberModel } from '../../models';
+
+export const PhoneNumbers = ({ phones }: { phones: PhoneNumberModel[] }) => (
+  <span className="phone">
+    { phones.map(n => <PhoneNumber phone={n} key={n.id} />) }
+  </span>
+);
+
+export const PhoneNumber = ({ phone }: { phone: PhoneNumberModel }) => (
+  <p key={phone.id}>
+    <a href={`tel:${phone.number}`}>{phone.number}</a>
+    {` ${phone.service_type}`}
+  </p>
+);
+
+export const ExternalLink = ({ children, to }: { children: any, to: string }) => (
+  <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>
+);
+
+export const EmailAddress = ({ email }: { email: string }) => (
+  <span className="email">
+    <ExternalLink to={`mailto:${email}`}>{email}</ExternalLink>
+  </span>
+);
+
+export const WebsiteLink = ({ url }: { url: string }) => (
+  <span className="website">
+    <ExternalLink to={url}>{url}</ExternalLink>
+  </span>
+);
+
+// Given an address object, returns a React DOM element that displays the
+// address on up to three lines:
+//
+//   <name>
+//   <address_1>, <address_2>
+//   <city>, <state_province>, <postal_code>
+//
+// Example 1:
+//
+//   123 Fourth Street
+//   San Francisco, CA, 94115
+//
+// Example 2:
+//
+//   SF Headquarters
+//   567 Eighth Street, Suite 201
+//   San Francisco, CA, 94115
+//
+const buildLocation = (address: AddressModel) => {
+  const fieldsOnEachLine = [
+    ['name'],
+    ['address_1', 'address_2'],
+    ['city', 'state_province', 'postal_code'],
+  ];
+
+  return fieldsOnEachLine.map(fields => {
+    const line = fields.map(field => (address as any)[field])
+      .filter(Boolean)
+      .join(', ');
+    if (line.length > 0) {
+      const key = fields.join('-');
+
+      return (
+        <Fragment key={key}>
+          <span>{line}</span>
+          <br />
+        </Fragment>
+      );
+    }
+    return null;
+  });
+};
+
+export const AddressDisplay = ({ address }: { address: AddressModel }) => {
+  const addr = useMemo(() => buildLocation(address), [address]);
+  return <span className="address">{addr}</span>;
+};
 
 class ContactInfoTable extends React.Component {
   render() {
@@ -82,9 +159,3 @@ class ContactInfoTable extends React.Component {
     );
   }
 }
-
-ContactInfoTable.propTypes = {
-  item: PropTypes.object.isRequired,
-};
-
-export default ContactInfoTable;
