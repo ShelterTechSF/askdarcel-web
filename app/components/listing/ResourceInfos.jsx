@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -109,9 +109,13 @@ PhoneNumber.propTypes = {
 };
 
 
-const ExternalLink = ({ children, to }) => (
-  <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>
-);
+const ExternalLink = ({ children, to }) => {
+  const url = useMemo(() => {
+    if (!/^https+:\/\//.test(to)) { return `https://${to}`; }
+    return to;
+  }, [to]);
+  return <a href={url} target="_blank" rel="noopener noreferrer">{children}</a>;
+};
 
 ExternalLink.propTypes = {
   to: PropTypes.string.isRequired,
