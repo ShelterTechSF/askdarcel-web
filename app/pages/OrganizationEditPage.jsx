@@ -305,6 +305,92 @@ const prepSchedule = scheduleObj => {
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
+/** Determine the type of change between oldAddresses and newAddresses.
+ *
+ * Given the complete arrays of both the old and new addresses, attempt to
+ * compute the exact difference between them, identifying exactly which address
+ * was changed. Note that this function assumes that only a single address has
+ * been changed, and it cannot succeed if more than one address has been
+ * changed.
+ *
+ * This specifically differentiates between two types of removals:
+ * - Marking an address for removal, which is only performed on addresses that
+ *   already existed in the DB prior to this page initially being loaded
+ * - Completely deleting an address, which is only performed on addresses that
+ *   were created in the UI of this page, but before saving the changes. E.g.
+ *   creating an address and then immediately deleting it.
+ *
+ * This returns one of four possibily shapes, where `handle` is always the index
+ * of the address in the oldAddresses array:
+ *
+ * - { type: "markedForRemoval", handle: number }
+ * - { type: "removed", handle: number }
+ * - { type: "modified", handle: number }
+ * - { type: "added" } (no handle, because it doesn't exist in oldAddresses)
+ */
+const computeTypeOfChangeToAddresses = (oldAddresses, newAddresses) => {
+  if (oldAddresses.length > newAddresses.length) {
+    // In this case, we assume that an address was deleted, so we attempt to
+    // identify which index was removed so that we can adjust the address
+    // handles on the services to reflect the new indexes.
+    if (oldAddresses.length !== newAddresses.length + 1) {
+      throw new Error('Cannot handle case where multiple updates are processed at the same time');
+    }
+    for (let i = 0; i < oldAddresses.length; i += 1) {
+      if (!_.isEqual(oldAddresses[i], newAddresses[i])) {
+        return { type: 'removed', handle: i };
+      }
+    }
+    throw new Error('Error detecting index of removed address');
+  } else if (oldAddresses.length === newAddresses.length) {
+    for (let i = 0; i < oldAddresses.length; i += 1) {
+      if (!oldAddresses[i].isRemoved && newAddresses[i].isRemoved) {
+        return { type: 'markedForRemoval', handle: i };
+      }
+    }
+    for (let i = 0; i < oldAddresses.length; i += 1) {
+      if (!_.isEqual(oldAddresses[i], newAddresses[i])) {
+        return { type: 'modified', handle: i };
+      }
+    }
+    throw new Error('Error detecting index of edited or removed address');
+  } else {
+    // oldAddresses.length < newAddresses.length
+    return { type: 'added' };
+  }
+};
+
+/** Return items in set1 that are not in set2.
+ *
+ * This recipe was copied from
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+ */
+const setDifference = (set1, set2) => new Set([...set1].filter(x => !set2.has(x)));
+
+// Helper functions for computing views on state.
+//
+// Because the state of this page has gotten so complex, it is very easy to make
+// mistakes when attempting to directly access information from the `this.state`
+// object, especially since you may often need to consult multiple different
+// locations in order to build the complete picture.
+
+/** Get latest list of addresses. */
+const getAddresses = state => {
+  const { addresses } = state;
+  // addresses could be empty if we haven't added, removed, or modified an
+  // address. In this case, we want to use the addresses on
+  // state.resource.addresses, since that will actually contain the current set
+  // of addresses associated with the resource.
+  //
+  // The one case where this could be false is where the resource never had an
+  // address in the first place, but in that case, using either state.addresses
+  // or state.resources.addresses should both give the same result.
+  if (addresses.length === 0) {
+    return state.resource.addresses;
+  }
+  return addresses;
+};
+
 class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
@@ -358,7 +444,46 @@ class OrganizationEditPage extends React.Component {
   }
 
   handleAPIGetResource = resource => {
-    const services = (resource.services || []).reduce(
+    // Transform the original API response such that all addresses on services
+    // are replaced with handles to the corresponding address on the resource.
+    // This ensures that there is only one canonical copy of an address, which
+    // guarantees that changes to an address are reflected everywhere it is
+    // referenced. Retrieving info about a service's address requires going
+    // through the resource first. You can think of this as being similar to
+    // database normalization, where the original API response returned
+    // denormalized data (same address duplicated in multiple places).
+    //
+    // The handle is always represented as the index of the address within the
+    // canonical array of addresses. Normally, the canonical array is
+    // this.state.addresses, but if this.state.addresses is empty, then
+    // this.state.resource.addresses is the canonical one. This is because when
+    // a resource address is edited, this.state.addresses always contains the
+    // most up-to-date information, but this.state.addresses is empty until the
+    // first edit to the resource's addresses.
+
+    const resourceAddresses = resource.addresses || [];
+    const rawServices = resource.services || [];
+
+    // Transformed version of services where the `addresses` property has been
+    // replaced with an `addressHandles` property, which only contains the index
+    // of an address within the resourceAddresses array.
+    const transformedServices = rawServices.map(service => {
+      const { addresses = [], ...serviceWithoutAddresses } = service;
+      // It is safe to compare addresses using the  `id` here because at this
+      // point, all addresses came from the API response and therefore have
+      // database primary key IDs assigned. Addresses that are added in the Edit
+      // page are not assigned IDs until after saving the page, so this
+      // assumption is not safe to make after this point in time.
+      const addressHandles = addresses.map(a => resourceAddresses.findIndex(ra => ra.id === a.id));
+      return { ...serviceWithoutAddresses, addressHandles };
+    });
+    // Build new version of the resource that has the services replaced with the
+    // transformed services.
+    const transformedResource = { ...resource, services: transformedServices };
+
+    // Prebuild some data to get saved to this.state.services, which otherwise
+    // only contains edits to the original data from the API response.
+    const services = transformedServices.reduce(
       (acc, service) => ({
         ...acc,
         [service.id]: {
@@ -373,19 +498,102 @@ class OrganizationEditPage extends React.Component {
     );
 
     this.setState({
-      resource,
+      resource: transformedResource,
       services,
       scheduleObj: buildScheduleDays(resource.schedule),
     });
   }
 
-  postServices = (servicesObj, promises) => {
+  /** Post new and modified services to API.
+   *
+   * WARNING: This function makes a lot of brittle assumptions about many other
+   * parts of the code. Please be very careful when modifying anything.
+   *
+   * This function is much more complex than one may realize because it needs to
+   * handle many different scenarios, each of which has unique ways of sourcing
+   * data from different sources.
+   *
+   * In the specific scenario where new addresses were created on the
+   * organization _and_ these addresses were added to the service, we must POST
+   * the addresses to the API _first_ before we can obtain their IDs, since they
+   * do not have IDs until the backend saves them to the database. Only after
+   * the addresses are created can we associate services with them.
+   *
+   * This needs to be handled correctly in the scenario where we must also
+   * create a new service, since neither the service nor the addresses will have
+   * IDs until we create them, so we cannot associate the two until we have
+   * both.
+   *
+   * A graphical illustration of the dependency of promises follows:
+   *
+   * [created addresses] --->
+   *                          [service-address relationships]
+   * [create services] ----->
+   *
+   * This code attempts to handle the following scenarios:
+   *
+   * 1. No services have been touched. In this scenario, we just return
+   *    immediately.
+   *
+   *    [created addresses]
+   *
+   * 2. Services are edited, but no changes were made to the addresses
+   *    associated with the services. In this scenario, we have no chains, but
+   *    we ignore the address promises and we push the service promises to
+   *    the promises array.
+   *
+   *    [created addresses] (ignored)
+   *
+   *    [edit services] (pushed)
+   *
+   * 3. Services are edited, and they depend on newly-created addresses. In this
+   *    scenario, we have a true dependency chain, and we must resolve the
+   *    address promises first, retrieve their IDs, and then construct a new
+   *    promise to associate the services with the addresses.
+   *
+   *    [created addresses] -> [associate services with addresses]
+   *
+   * 4. New services are created, and they depend on newly-created addresses. In
+   *    this scenario, we have a chain three items deep, where we must create
+   *    the addresses, create the services, and then associate the services with
+   *    the addresses. Note that we could have chained them the other way
+   *    around, but chaining them this way allows us to handle this in a similar
+   *    way to the case where new services are created but do not depend on
+   *    newly created addresses.
+   *
+   *    [created addresses] -> [create services] -> [associate services with addresses]
+   *
+   * HACK: WE CANNOT ACTUALLY IMPLEMENT SCENARIOS 3 AND 4 BECAUSE THE API DOES
+   * NOT RESPOND WITH THE NEWLY CREATED ADDRESSES' IDS.
+   */
+  postServices = (servicesObj, promises, postAddressPromises) => {
     if (!servicesObj) return;
-    const { resource } = this.state;
+    const { resource, addresses } = this.state;
     const newServices = [];
+    const newServicesAddressHandles = [];
+    const unsavedAddresses = addresses.length > 0 ? addresses : resource.addresses;
+
+    const getAddressIDFromHandle = handle => {
+      if (unsavedAddresses[handle] && unsavedAddresses[handle].id) {
+        // Associating with an address that already existed, which means
+        // we can simply grab its ID.
+        return Promise.resolve(unsavedAddresses[handle].id);
+      } if (postAddressPromises[handle]) {
+        // Associating with an address that was just created, which means
+        // we have to index into postAddressPromises in order to obtain
+        // its ID from the API response.
+        return postAddressPromises[handle].then(() => {
+          // FIXEME: The API does not respond with the address's ID
+          throw new Error('NOT IMPLEMENTED');
+        });
+      }
+      return Promise.reject(new Error("Received a handle to an address that doesn't exist."));
+    };
+
     Object.entries(servicesObj).forEach(([key, value]) => {
       const currentService = deepClone(value);
       if (key < 0) {
+        // Create new service
         if (currentService.notesObj) {
           const notes = Object.values(currentService.notesObj.notes);
           delete currentService.notesObj;
@@ -395,25 +603,60 @@ class OrganizationEditPage extends React.Component {
         currentService.schedule = createFullSchedule(currentService.scheduleObj);
         delete currentService.scheduleObj;
 
+        const { addressHandles } = currentService;
+        delete currentService.addressHandles;
+
         if (!_.isEmpty(currentService)) {
           newServices.push(currentService);
+          newServicesAddressHandles.push(addressHandles);
         }
       } else {
+        // Edit an existing service
         const uri = `/api/services/${key}/change_requests`;
         postNotes(currentService.notesObj, promises, { path: 'services', id: key });
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
         delete currentService.shouldInheritScheduleFromParent;
+        const { addressHandles } = currentService;
+        delete currentService.addressHandles;
         if (!_.isEmpty(currentService)) {
           promises.push(dataService.post(uri, { change_request: currentService }));
+
+          // Compute the added and removed addresses by comparing the original
+          // address handles to the new address handles, and submit API requests
+          // that add/remove addresses from the service.
+          const originalService = resource.services.find(s => s.id === currentService.id);
+          const oldAddressHandleSet = new Set(originalService.addressHandles);
+          const newAddressHandleSet = new Set(addressHandles);
+          const removedAddressHandles = [
+            ...setDifference(oldAddressHandleSet, newAddressHandleSet)];
+          const addedAddressHandles = [...setDifference(newAddressHandleSet, oldAddressHandleSet)];
+
+          promises.push(...removedAddressHandles.map(handle => (
+            getAddressIDFromHandle(handle).then(addressID => dataService.APIDelete(`/api/services/${key}/addresses/${addressID}`))
+          )));
+          promises.push(...addedAddressHandles.map(handle => (
+            getAddressIDFromHandle(handle).then(addressID => dataService.put(`/api/services/${key}/addresses/${addressID}`, ''))
+          )));
         }
       }
     });
 
     if (newServices.length > 0) {
       const uri = `/api/resources/${resource.id}/services`;
-      promises.push(dataService.post(uri, { services: newServices }));
+      const newServicePromises = dataService
+        .post(uri, { services: newServices })
+        .then(resp => resp.json())
+        // After new services are created, grab their IDs and associate them
+        // with addresses.
+        .then(resp => Promise.all(resp.services.map(({ service }, i) => {
+          const serviceAddressPromises = newServicesAddressHandles[i].map(handle => (
+            getAddressIDFromHandle(handle).then(addressID => dataService.put(`/api/services/${service.id}/addresses/${addressID}`, ''))
+          ));
+          return Promise.all(serviceAddressPromises);
+        })));
+      promises.push(newServicePromises);
     }
   }
 
@@ -443,6 +686,7 @@ class OrganizationEditPage extends React.Component {
 
     const newService = {
       id: nextServiceId,
+      addressHandles: [],
       notes: [],
       schedule: {
         schedule_days: [],
@@ -477,7 +721,104 @@ class OrganizationEditPage extends React.Component {
   }
 
   setAddresses = addresses => {
-    this.setState({ addresses, inputsDirty: true });
+    this.setState(state => {
+      // Update addresses, and possibly update services as well due to addresses
+      // being removed.
+      //
+      // NOTE! This is very fragile, and if React does not schedule this state
+      // update fast enough, then we could end up in a situation where we do not
+      // have enough information to reconstruct what happened. Specifically,
+      // this update function can only work if each add, edit and removal update
+      // runs in isolation so that we can properly "diff" against the previous
+      // state. If an edit and removal are scheduled at the same time will make it
+      // impossible to perform the diff because we have no way of
+      // differentiating between a removed address and an edited one. This
+      // specifically affects addresses that were added in the edit page, not
+      // ones that were originally from the database, since new addresses lack
+      // an `id` property.
+      //
+      // This page _really_ needs to be completely rewritten.
+      const { resource, services: oldServices } = state;
+      const oldAddresses = getAddresses(state);
+      const changeType = computeTypeOfChangeToAddresses(oldAddresses, addresses);
+
+      let newServices = null;
+      if (changeType.type === 'removed') {
+        const removedAddressHandle = changeType.handle;
+        // Adjust the address handles on the services to reflect the new
+        // indexes.
+        newServices = Object.fromEntries(Object.entries(oldServices).map(([key, service]) => {
+          let oldServiceAddressHandles = null;
+          if (service.addressHandles) {
+            // If we had previously made a change to the service's addresses,
+            // then they should be on this.state.services[x].addressHandles, and
+            // we should use that list.
+            oldServiceAddressHandles = service.addressHandles;
+          } else {
+            const serviceOnResource = resource.services.find(s => s.id === service.id);
+            if (serviceOnResource && serviceOnResource.addressHandles) {
+              // If we hadn't modified the service yet, but the service existed
+              // on this.resource.services and had addressHandles, then use that
+              // list.
+              oldServiceAddressHandles = serviceOnResource.addressHandles;
+            } else {
+              // If neither of the above two cases apply, then return from the
+              // .map() early by returning the original key-value pair
+              // unmodified.
+              return [key, service];
+            }
+          }
+          const newAddressHandles = oldServiceAddressHandles.reduce((handles, handle) => {
+            if (handle < removedAddressHandle) {
+              // Address unchanged
+              return [...handles, handle];
+            } if (handle === removedAddressHandle) {
+              // Removed address; skip pushing this handle.
+              return handles;
+            }
+            // Handle is outdated; subtract 1 from the handle to get the new
+            // index.
+            return [...handles, handle - 1];
+          }, []);
+          return [key, { ...service, addressHandles: newAddressHandles }];
+        }));
+      } else if (changeType.type === 'markedForRemoval') {
+        // No addresses were added or removed, but we still need to check to see
+        // if any addresses had `isRemoved` set to true. If so, if any service
+        // has a handle to that address, remove it from the service.
+        const removedAddressHandle = changeType.handle;
+        const someServiceHasStaleHandle = Object.values(oldServices).some(
+          service => {
+            let addressHandles;
+            if (service.addressHandles) {
+              ({ addressHandles } = service);
+            } else {
+              const serviceOnResource = resource.services.find(s => s.id === service.id);
+              if (serviceOnResource && serviceOnResource.addressHandles) {
+                ({ addressHandles } = serviceOnResource);
+              } else {
+                // exit early
+                return false;
+              }
+            }
+            return addressHandles.some(handle => handle === removedAddressHandle);
+          },
+        );
+        if (someServiceHasStaleHandle) {
+          newServices = Object.fromEntries(Object.entries(oldServices).map(([key, service]) => {
+            const filteredHandles = service.addressHandles
+              .filter(handle => handle !== removedAddressHandle);
+            return [key, { ...service, addressHandles: filteredHandles }];
+          }));
+        }
+      }
+
+      const updates = { addresses, inputsDirty: true };
+      if (newServices !== null) {
+        updates.services = newServices;
+      }
+      return updates;
+    });
   }
 
   keepOnPage(e) {
@@ -599,10 +940,11 @@ class OrganizationEditPage extends React.Component {
     postSchedule(scheduleObj, promises);
 
     // Addresses
-    promises.push(...postAddresses(addresses, { path: 'resources', id: resource.id }));
+    const postAddressPromises = postAddresses(addresses, { path: 'resources', id: resource.id });
+    promises.push(...postAddressPromises);
 
     // Services
-    this.postServices(services, promises);
+    this.postServices(services, promises, postAddressPromises);
 
     // Notes
     postNotes(notes, promises, { path: 'resources', id: resource.id });
