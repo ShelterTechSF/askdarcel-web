@@ -112,6 +112,13 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
       if (resourceAddresses[handle].isRemoved) {
         return [];
       }
+      // HACK: Filter out any addresses that were just created on the Edit page
+      // but have not been saved to the DB yet, since they do not have IDs and the
+      // current create address API does not return the ID of the address, which
+      // prevents other logic on the Edit page from functioning correctly.
+      if (!('id' in resourceAddresses[handle])) {
+        return [];
+      }
       return [{ value: handle, label: address.name || address.address_1 }];
     });
   const handleSelectChange = e => {
