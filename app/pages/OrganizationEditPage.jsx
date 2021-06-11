@@ -386,7 +386,7 @@ const getAddresses = state => {
   // address in the first place, but in that case, using either state.addresses
   // or state.resources.addresses should both give the same result.
   if (addresses.length === 0) {
-    return state.resource.addresses;
+    return state.resource.addresses || [];
   }
   return addresses;
 };
