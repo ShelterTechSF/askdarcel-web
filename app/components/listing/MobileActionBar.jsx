@@ -34,9 +34,6 @@ const renderButtonContent = action => (
   </div>
 );
 
-const rootElement = document.getElementById('root');
-Modal.setAppElement(rootElement);
-
 export default class MobileActionBar extends React.Component {
   constructor() {
     super();

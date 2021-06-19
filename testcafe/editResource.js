@@ -31,26 +31,24 @@ test('Edit resource address', async t => {
     name: 'Main HQ',
     address1: '123 Fake St.',
     address2: 'Suite 456',
-    address3: 'Room 789',
-    address4: 'Desk 10',
     city: 'Springfield',
     stateOrProvince: 'Illinois',
-    country: 'United States',
     postalCode: '62701',
   };
-  // TODO: Some fields are not displayed on the show page
-  const notVisibleOnShowPage = ['address3', 'address4', 'country'];
 
   // Make edits
+  await t.click(EditResourcePage.getAddressEditButton(0));
   await Object.keys(newProps).reduce(
-    (_t, prop) => _t.typeText(editResourcePage.address[prop], newProps[prop], { replace: true }),
+    (_t, prop) => _t.typeText(
+      editResourcePage.addressModal[prop], newProps[prop], { replace: true },
+    ),
     t,
   );
+  await t.click(editResourcePage.addressModal.saveButton);
   await t.click(editResourcePage.saveButton);
 
   // Check visibility of edits on show page
   await Object.keys(newProps)
-    .filter(prop => !notVisibleOnShowPage.includes(prop))
     .reduce(
       (_t, prop) => _t.expect(resourcePage.address.textContent).contains(newProps[prop]),
       t,
@@ -59,8 +57,9 @@ test('Edit resource address', async t => {
   await t.navigateTo(editResourcePage.url(1));
 
   // Check visibility of edits on edit page
+  await t.click(EditResourcePage.getAddressEditButton(0));
   await Object.keys(newProps).reduce(
-    (_t, prop) => _t.expect(editResourcePage.address[prop].value).eql(newProps[prop]),
+    (_t, prop) => _t.expect(editResourcePage.addressModal[prop].value).eql(newProps[prop]),
     t,
   );
 });

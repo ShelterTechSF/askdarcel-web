@@ -33,9 +33,6 @@ const renderButtonContent = action => (
   </Fragment>
 );
 
-const rootElement = document.getElementById('root');
-Modal.setAppElement(rootElement);
-
 class ListPageSidebar extends React.Component {
   constructor() {
     super();

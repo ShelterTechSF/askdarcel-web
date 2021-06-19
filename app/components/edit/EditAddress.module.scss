@@ -1,0 +1,173 @@
+@import 'app/styles/utils/_colors.scss';
+
+// react-modal styles
+
+.modal {
+  background: $color-white;
+  border-radius: 8px;
+  border: 1px solid $color-grey4;
+  margin: 100px auto;
+  max-width: 700px;
+  overflow: auto;
+  padding: 34px 40px;
+  width: 700px;
+}
+
+.overlay {
+  background-color: rgba(72, 72, 72, 0.5);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  overflow: auto;
+}
+
+// Layout/container styles
+
+.modalContent {
+  display: grid;
+  row-gap: 80px;
+}
+
+.formBody {
+  display: grid;
+  row-gap: 24px;
+}
+
+.formControlGroup {
+  display: grid;
+  row-gap: 8px;
+}
+
+// Must be unused on a <label> that wraps the <input>
+.inputLabel {
+  color: $color-grey5;
+  display: grid;
+  font-size: 16px;
+  line-height: 1.35;
+  row-gap: 8px;
+}
+
+// Element styles
+
+.title {
+  color: #000;
+  font-size: 42px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.formControlGroupLabel {
+  color: $color-grey5;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.inputTextbox {
+  background-color: $color-white;
+}
+
+.actionRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancelButton {
+  background: transparent;
+  color: $color-brand;
+  font-size: 16px;
+
+  // Reset a style added by a global selector on button elements.
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.addButton,
+// This class name is repeated twice as a hack to bump up specificity.
+.newAddressButton.newAddressButton {
+  background: $color-brand;
+  border-radius: 3px;
+  color: $color-white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 14px;
+
+  // Reset a style added by a global selector on input elements.
+  width: auto;
+
+  &:hover {
+    background: $color-white;
+    color: $color-brand;
+  }
+}
+
+.addressListTitle {
+  color: #888888;
+  margin-bottom: 9px;
+}
+
+.addressList {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  row-gap: 2px;
+}
+
+// AddressListItem
+
+.listItemContainer {
+  align-items: center;
+  background-color: #f9f9f9;
+  column-gap: 24px;
+  display: flex;
+  padding: 8px 10px;
+}
+
+.listItemEdit,
+.listItemRemove {
+  flex: 0 0 auto;
+}
+
+.listItemIndex {
+  flex: 0 0 auto;
+  color: #888888;
+}
+
+.listItemName {
+  flex: 0 0 auto;
+}
+
+.listItemAddress {
+  color: #888888;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// This class name is repeated three times as a hack to bump up specificity,
+// since we have global styles that are too specific and would otherwise have
+// higher priority over a single class selector.
+.listItemButton.listItemButton.listItemButton {
+  // Undo global button styles
+  padding: 0;
+  border: none;
+  height: auto;
+  font-weight: inherit;
+  color: inherit;
+
+  // Actual styles that are specific to this component
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.25em;
+
+  &:active,
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}

@@ -220,7 +220,9 @@ function postNotes(notesObj, promises, uriObj) {
 const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
   const { id, isRemoved, dirty } = address;
   const { id: parent_resource_id } = uriObj;
-  const postableAddress = _.omit(address, ['dirty', 'isRemoved']);
+  // TODO: Stop sending the country field after it is no longer required on the
+  // API side.
+  const postableAddress = { ..._.omit(address, ['dirty', 'isRemoved']), country: 'USA' };
 
   if (!id) {
     // Create new address
@@ -301,41 +303,12 @@ const prepSchedule = scheduleObj => {
 
 const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
-const addressIsBlank = address => {
-  if (_.isEmpty(address)) {
-    return true;
-  }
-  const someFieldExists = address.name !== ''
-    || address.address_1 !== ''
-    || address.address_2 !== ''
-    || address.address_3 !== ''
-    || address.address_4 !== ''
-    || address.city !== ''
-    || address.postal_code !== ''
-    || address.state_province !== ''
-    || address.country !== '';
-  return !someFieldExists;
-};
-
-const blankAddress = Object.freeze({
-  name: '',
-  address_1: '',
-  address_2: '',
-  address_3: '',
-  address_4: '',
-  city: '',
-  country: '',
-  postal_code: '',
-  state_province: '',
-});
-
 class OrganizationEditPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       scheduleObj: {},
-      hasLocation: false,
       addresses: [],
       services: {},
       deactivatedServiceIds: new Set(),
@@ -365,7 +338,6 @@ class OrganizationEditPage extends React.Component {
     window.addEventListener('beforeunload', this.keepOnPage);
     if (splitPath[splitPath.length - 1] === 'new') {
       this.setState({
-        hasLocation: true,
         newResource: true,
         resource: { schedule: {} },
         scheduleObj: buildScheduleDays(undefined),
@@ -401,7 +373,6 @@ class OrganizationEditPage extends React.Component {
     this.setState({
       resource,
       services,
-      hasLocation: !addressIsBlank(resource.addresses[0]),
       scheduleObj: buildScheduleDays(resource.schedule),
     });
   }
@@ -492,32 +463,19 @@ class OrganizationEditPage extends React.Component {
   // Whoops!)
   //
   // this.state.addresses only contains modifications to the addresses
-  //
-  // this.state.hasLocation = false will always force the flattened address to
-  // be the empty array. This reason this exists as a separate flag instead of
-  // actually just nullifying this.state.addresses is so that when toggling back
-  // and forth between having and not having a location, the previous values are
-  // restored.
   getFlattenedAddresses = () => {
-    const { resource, addresses, hasLocation } = this.state;
-    if (!hasLocation) {
-      return [];
-    }
+    const { resource, addresses } = this.state;
     const { addresses: resourceAddresses = [] } = resource;
     if (!_.isEmpty(addresses)) {
       return addresses;
     } if (!_.isEmpty(resourceAddresses)) {
       return resourceAddresses;
     }
-    return [blankAddress];
+    return [];
   }
 
   setAddresses = addresses => {
     this.setState({ addresses, inputsDirty: true });
-  }
-
-  setHasLocation = hasLocation => {
-    this.setState({ hasLocation, inputsDirty: true });
   }
 
   keepOnPage(e) {
@@ -538,13 +496,15 @@ class OrganizationEditPage extends React.Component {
       website,
       email,
       addresses,
-      hasLocation,
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
+    // TODO: Stop sending the country field after it is no longer required on the
+    // API side.
+    const modifiedAddresses = addresses.map(a => ({ country: 'USA', ...a }));
     const newResource = {
       name,
-      addresses: hasLocation ? addresses : [],
+      addresses: modifiedAddresses,
       long_description,
       email,
       website,
@@ -581,7 +541,6 @@ class OrganizationEditPage extends React.Component {
       addresses,
       alternate_name,
       email,
-      hasLocation,
       legal_status,
       long_description,
       name,
@@ -638,11 +597,7 @@ class OrganizationEditPage extends React.Component {
     postSchedule(scheduleObj, promises);
 
     // Addresses
-    // If "No Physical Location" is checked, then remove all existing addresses.
-    const postedAddresses = hasLocation
-      ? addresses
-      : addresses.filter(a => a.id).map(a => ({ ...a, isRemoved: true }));
-    promises.push(...postAddresses(postedAddresses, { path: 'resources', id: resource.id }));
+    promises.push(...postAddresses(addresses, { path: 'resources', id: resource.id }));
 
     // Services
     this.postServices(services, promises);
@@ -784,7 +739,6 @@ class OrganizationEditPage extends React.Component {
           <EditAddresses
             addresses={this.getFlattenedAddresses()}
             setAddresses={this.setAddresses}
-            setHasLocation={this.setHasLocation}
           />
 
           <EditPhones
