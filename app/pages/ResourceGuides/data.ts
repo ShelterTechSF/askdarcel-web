@@ -1,6 +1,6 @@
 import { last } from 'lodash';
-import EvictionGuideSpanish from '../../assets/guides/edc-guide-032021-spanish.pdf';
-import EvictionGuideEnglish from '../../assets/guides/edc-guide-032021.pdf';
+import EvictionGuideSpanish from '../../assets/guides/edc-guide-spanish.pdf';
+import EvictionGuideEnglish from '../../assets/guides/edc-guide.pdf';
 
 export interface ResourceGuideModel {
   name: string
