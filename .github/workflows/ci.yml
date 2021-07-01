@@ -11,7 +11,7 @@ on:
 
 env:
   NODE_VERSION: 10.x
-  DOCKER_REPO: sheltertechsf
+  DOCKER_REPO: sheltertechsf/askdarcel-web
 
 jobs:
   lint:
@@ -31,7 +31,6 @@ jobs:
       - run: npm run lint
 
   test_unit:
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -49,7 +48,7 @@ jobs:
 
   publish-latest:
     runs-on: ubuntu-latest
-    needs: test_unit
+    needs: [test_unit, lint]
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -62,7 +61,7 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ env.DOCKER_REPO }}/askdarcel-web:latest
+          tags: ${{ env.DOCKER_REPO }}:latest
       - run: echo ${{ steps.docker_build.outputs.digest }}
 
   # test_e2e:
