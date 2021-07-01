@@ -6,7 +6,7 @@ on:
       - '*'
 
 env:
-  DOCKER_REPO: sheltertechsf
+  DOCKER_REPO: sheltertechsf/askdarcel-web
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
             prefix=
             suffix=
           images: |
-            ${{ env.DOCKER_REPO }}/askdarcel-web
+            ${{ env.DOCKER_REPO }}
           tags: |
             type=semver,pattern={{version}}
       - uses: docker/setup-qemu-action@v1
