@@ -31,7 +31,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - run: echo "{}" > version.json
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -44,6 +43,7 @@ jobs:
       - run: npm ci
       - run: cp config.example.yml config.yml
       - run: CONFIG_YAML=config.docker.yml npm run build
+      - run: touch version.json
       - uses: docker/build-push-action@v2
         with:
           push: true
