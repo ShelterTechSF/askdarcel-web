@@ -69,6 +69,8 @@ jobs:
       - run: npm ci
       - run: cp config.example.yml config.yml
       - run: CONFIG_YAML=config.docker.yml npm run build
+      - run: echo ls -la
+      - run: echo ls -la build
       - uses: docker/build-push-action@v2
         with:
           push: true
