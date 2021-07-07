@@ -52,6 +52,9 @@ sub { bottom: -0.25em; }
 // Remove underlines from links */
 a, a:hover, a:focus, a:active{ text-decoration:none;}
 
+// Set margin to 0 for all input elements */
+input { margin: 0;}
+
 // Extend Clearfix
 .cf { zoom:1;
   &:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }

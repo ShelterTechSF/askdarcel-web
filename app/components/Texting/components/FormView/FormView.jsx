@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  normalize,
+  validatePhoneNumber,
+} from '../../../../utils/validatePhoneNumber';
 import Heading from './Heading';
 import Privacy from './Privacy';
 import Buttons from './Buttons';
@@ -7,14 +11,15 @@ import styles from './Form.module.scss';
 
 const initialState = {
   recipientName: '',
-  phoneNumber: '',
   agreed: false,
 };
 
 const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
-  const { recipientName, phoneNumber, agreed } = state;
+  const { recipientName, agreed } = state;
+  const [phoneNumber, setPhoneNumber] = useState('');
   const { serviceName, serviceId } = service;
+
   const onChange = evt => {
     const {
       type,
@@ -26,6 +31,11 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
     setState(prevState => ({ ...prevState, [name]: newValue }));
   };
 
+  const onPhoneNumberChange = evt => {
+    const normalized = normalize(evt.target.value);
+    setPhoneNumber(normalized);
+  };
+
   const onSubmit = event => {
     event.preventDefault();
     const data = {
@@ -35,6 +45,8 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
     };
     handleSubmit(data);
   };
+
+  const isValidNumber = validatePhoneNumber(phoneNumber);
 
   return (
     <div>
@@ -55,13 +67,17 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
           <div className={styles.dataRates}>
             *Standard text and data rates may apply.
           </div>
-          <input
-            type="text"
-            name="phoneNumber"
-            className={styles.input}
-            value={phoneNumber}
-            onChange={onChange}
-          />
+          <div className={styles.phoneInputBox}>
+            <span className={styles.phoneInputPrefix}>+1</span>
+            <input
+              type="text"
+              name="phoneNumber"
+              className={styles.phoneInput}
+              value={phoneNumber}
+              maxLength="14"
+              onChange={onPhoneNumberChange}
+            />
+          </div>
         </label>
         <label className={styles.checkBox}>
           <input
@@ -74,7 +90,11 @@ const FormView = ({ service, handleSubmit, closeModal }) => {
           I agree to receive text messages from SF Service Guide.
         </label>
       </div>
-      <Buttons disabled={!agreed} closeModal={closeModal} onSubmit={onSubmit} />
+      <Buttons
+        disabled={!agreed || !isValidNumber}
+        closeModal={closeModal}
+        onSubmit={onSubmit}
+      />
       <Privacy />
     </div>
   );
