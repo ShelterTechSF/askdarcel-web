@@ -220,9 +220,7 @@ function postNotes(notesObj, promises, uriObj) {
 const postAddresses = (addresses, uriObj) => addresses.flatMap(address => {
   const { id, isRemoved, dirty } = address;
   const { id: parent_resource_id } = uriObj;
-  // TODO: Stop sending the country field after it is no longer required on the
-  // API side.
-  const postableAddress = { ..._.omit(address, ['dirty', 'isRemoved']), country: 'USA' };
+  const postableAddress = { ..._.omit(address, ['dirty', 'isRemoved']) };
 
   if (!id) {
     // Create new address
