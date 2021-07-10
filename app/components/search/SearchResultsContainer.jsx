@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { Loader } from 'components/ui';
@@ -25,8 +25,29 @@ const transformHits = hits => hits.map(hit => {
   return { ...hit, recurringSchedule };
 });
 
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return { width, height };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
 
 const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
+  const [getMapButton, setMapButton] = useState(false);
+  const { width } = useWindowDimensions();
+  const isMobile = (width <= 767);
   let output = null;
   if (!searchResults && searching) {
     output = <Loader />;
@@ -49,13 +70,27 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
             {searchResults.query.length > 0
                 && <h1>{searchResults.query}</h1>
             }
-            <Filtering />
+            <Filtering
+              setMapButton={setMapButton}
+              getMapButton={getMapButton}
+              isMobile={isMobile}
+            />
           </div>
-          <SearchTable
-            hits={hits}
-            page={searchResults.page}
-            hitsPerPage={searchResults.hitsPerPage}
-          />
+          { (getMapButton && isMobile) ? (
+            <SearchMap
+              hits={hits}
+              page={searchResults.page}
+              hitsPerPage={searchResults.hitsPerPage}
+              isMobile
+            />
+          ) : (
+            <SearchTable
+              hits={hits}
+              page={searchResults.page}
+              hitsPerPage={searchResults.hitsPerPage}
+            />
+          )
+          }
           <div className="add-resource">
             Can&apos;t find the organization you&apos;re looking for?
             <Link to="/organizations/new" className="add-resource-button">
@@ -69,6 +104,7 @@ const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
           hits={hits}
           page={searchResults.page}
           hitsPerPage={searchResults.hitsPerPage}
+          isMobile={false}
         />
       </div>
     );

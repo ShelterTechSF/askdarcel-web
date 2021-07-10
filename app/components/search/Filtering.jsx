@@ -17,6 +17,7 @@ class Filtering extends Component {
   setFiltersActive = filtersActive => this.setState({ filtersActive })
 
   render() {
+    const { isMobile, getMapButton, setMapButton } = this.props;
     const { filtersActive } = this.state;
     return (
       <div>
@@ -35,6 +36,16 @@ class Filtering extends Component {
               Filters
             </button>
             <OpenNowRefinementList attribute="open_times" />
+            {isMobile && (
+              <button
+                className={`filter-chip ${getMapButton ? 'active' : ''}`}
+                onClick={() => setMapButton(!getMapButton)}
+                type="button"
+              >
+                    Map
+              </button>
+            )
+            }
             <div className={`custom-refinement ${filtersActive ? 'active' : ''}`}>
               {/* FacetRefinementList is a generalized refinement list for filtering
                   limit={100} indicates the limit of facet values Algolia returns. default is 10

@@ -10,6 +10,14 @@
   }
 }
 
+.results-map-mobile {
+  flex: 1 1 auto;
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 60vh;
+}
+
 .results-map-inner {
   position: fixed;
   width: 100%;
@@ -39,4 +47,10 @@
   @media screen and ( min-width: 1440px ){
     width: 60vw;
   }
+}
+
+.map-wrapper-mobile {
+  width: 100vw;
+  height: 100%;
+  position: relative;
 }

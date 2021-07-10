@@ -78,7 +78,7 @@ function CustomMarker({
 }
 
 const SearchMap = ({
-  hits, userLocation, page, hitsPerPage,
+  hits, userLocation, page, hitsPerPage, isMobile,
 }) => {
   if (!hits || !hits.length) {
     return null;
@@ -103,8 +103,8 @@ const SearchMap = ({
   markers.push(<UserLocationMarker lat={userLocation.lat} lng={userLocation.lng} key={1} />);
 
   return (
-    <div className="results-map">
-      <div className="map-wrapper">
+    <div className={`${!isMobile ? 'results-map' : 'results-map-mobile'}`}>
+      <div className={`${!isMobile ? 'map-wrapper ' : 'map-wrapper-mobile'}`}>
         <GoogleMap
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
