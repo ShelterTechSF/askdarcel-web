@@ -56,7 +56,7 @@ const SearchResult = ({ hit, index }) => {
   );
 
   const renderAddressMetadata = hit_ => {
-    if (hit_.addresses.length === 0) {
+    if (!hit_.addresses || hit_.addresses.length === 0) {
       return <span>No address found</span>;
     }
     if (hit_.addresses.length > 1) {
