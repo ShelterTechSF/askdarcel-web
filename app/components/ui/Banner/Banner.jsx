@@ -13,6 +13,7 @@ export default function Banner() {
       &nbsp;Check out Code Tenderloin&apos;s workshops&nbsp;
       <a href="https://docs.google.com/document/d/1t-RM30QQHA5UQdzIGHrD6kaFoBMrwmCBM7mEOBD8a9U/edit">HERE</a>
       <br />
+      and HomeownershipSF&apos;s resources&nbsp;
       <a href="https://www.homeownershipsf.org/application-assistance-for-renters/">HERE</a>
     </div>
   );
