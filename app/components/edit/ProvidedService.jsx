@@ -4,6 +4,9 @@ import EditNotes from './EditNotes';
 import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
+import { AddressListItem } from './EditAddress';
+
+import s from './ProvidedService.module.scss';
 
 /** Build UI state schedule from API schedule.
  *
@@ -98,6 +101,58 @@ InputField.defaultProps = {
 };
 
 
+const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
+  const selectableOptions = resourceAddresses
+    .flatMap((address, handle) => {
+      // Don't include addresses that have already been added to the service
+      if (service.addressHandles.includes(handle)) {
+        return [];
+      }
+      // Don't show addresses that have been marked for removal
+      if (resourceAddresses[handle].isRemoved) {
+        return [];
+      }
+      // HACK: Filter out any addresses that were just created on the Edit page
+      // but have not been saved to the DB yet, since they do not have IDs and the
+      // current create address API does not return the ID of the address, which
+      // prevents other logic on the Edit page from functioning correctly.
+      if (!('id' in resourceAddresses[handle])) {
+        return [];
+      }
+      return [{ value: handle, label: address.name || address.address_1 }];
+    });
+  const handleSelectChange = e => {
+    const selectedValue = parseInt(e.target.value, 10);
+    handleChange('addressHandles', [...service.addressHandles, selectedValue]);
+  };
+  return (
+    <li className="edit--section--list--item">
+      <label>
+        Location
+        <select className={s.addressSelect} value="" onChange={handleSelectChange}>
+          <option value="">Add location from organization</option>
+          {selectableOptions.map(({ value, label }) => (
+            <option key={value} value={value}>{label}</option>))}
+        </select>
+      </label>
+      <div className={s.addressList}>
+        {service.addressHandles.map((handle, displayIndexMinusOne) => {
+          const address = resourceAddresses[handle];
+          return (
+            <AddressListItem
+              key={handle}
+              displayIndex={displayIndexMinusOne + 1}
+              address={address}
+              onRemove={() => handleChange('addressHandles', service.addressHandles.filter(a => a !== handle))}
+            />
+          );
+        })}
+      </div>
+    </li>
+  );
+};
+
+
 const TEXT_AREAS = [
   {
     label: 'Service Description',
@@ -125,7 +180,7 @@ const TEXT_AREAS = [
 
 
 const ProvidedService = ({
-  editServiceById, handleDeactivation, index, service,
+  editServiceById, handleDeactivation, index, service, resourceAddresses,
 }) => {
   const handleChange = (field, value) => {
     const { id } = service;
@@ -194,6 +249,12 @@ const ProvidedService = ({
             setValue={value => handleChange('alternate_name', value)}
           />
         </li>
+
+        <EditAddresses
+          service={service}
+          resourceAddresses={resourceAddresses}
+          handleChange={handleChange}
+        />
 
         <li key="email" className="edit--section--list--item email">
           <InputField

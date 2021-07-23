@@ -137,7 +137,7 @@ const compactAddressDisplay = ({
   return lines.filter(x => x).join(', ');
 };
 
-const AddressListItem = ({
+export const AddressListItem = ({
   displayIndex, address, onEdit, onRemove,
 }) => (
   <div className={s.listItemContainer}>
@@ -147,10 +147,12 @@ const AddressListItem = ({
     <div className={s.listItemName}>{address.name}</div>
     <div className={s.listItemAddress}>{compactAddressDisplay(address)}</div>
     <div className={s.listItemEdit}>
-      <button className={s.listItemButton} type="button" onClick={onEdit}>
-        <RiEditBoxLine />
-        Edit
-      </button>
+      {onEdit && (
+        <button className={s.listItemButton} type="button" onClick={onEdit}>
+          <RiEditBoxLine />
+          Edit
+        </button>
+      )}
     </div>
     <div className={s.listItemRemove}>
       <button className={s.listItemButton} type="button" onClick={onRemove}>

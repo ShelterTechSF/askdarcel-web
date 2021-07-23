@@ -23,7 +23,14 @@ import { getSiteTitle } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
 const getServiceLocations = (service, resource, recurringSchedule) => {
-  const { addresses = [] } = resource;
+  let addresses;
+  if (service.addresses && service.addresses.length > 0) {
+    ({ addresses } = service);
+  } else if (resource.addresses) {
+    ({ addresses } = resource);
+  } else {
+    addresses = [];
+  }
   return addresses.map(address => ({
     id: address.id,
     address,
