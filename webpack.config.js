@@ -35,7 +35,7 @@ module.exports = {
   entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.tsx')],
   output: {
     path: buildDir,
-    // publicPath: '/dist/',
+    publicPath: '/',
     filename: 'bundle.js',
   },
   resolve: {
