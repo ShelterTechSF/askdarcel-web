@@ -65,8 +65,8 @@ jobs:
         ports: ['3000:3000']
         # options: --entrypoint "/sbin/my_init && bundle install"
         env:
-          DATABASE_URL: 'postgres://postgres@127.0.0.1/askdarcel_development'
-          TEST_DATABASE_URL: 'postgres://postgres@127.0.0.1/askdarcel_test'
+          DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_development'
+          TEST_DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_test'
           SECRET_KEY_BASE: notasecret
           # ALGOLIA_APPLICATION_ID: $ALGOLIA_APPLICATION_ID
           # ALGOLIA_API_KEY: $ALGOLIA_API_KEY
@@ -91,14 +91,14 @@ jobs:
       - run: cp config.example.yml config.yml
       # - run: TESTCAFE_RUNNING=true npm run dev &
       # - run: sleep 60
-      - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
-      - run: docker logs "${{ job.services.api.id }}"
-      - run: npm run build
-      - run: npx http-server ./build -p 8080 &
-      - uses: DevExpress/testcafe-action@latest
-        with:
-          skip-install: true
-          args: 'chrome:headless testcafe/*.js -c 3 --skip-js-errors   --assertion-timeout 50000 --page-load-timeout 15000 --selector-timeout 15000'
+      # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
+      # - run: docker logs "${{ job.services.api.id }}"
+      # - run: npm run build
+      # - run: npx http-server ./build -p 8080 &
+      # - uses: DevExpress/testcafe-action@latest
+      #   with:
+      #     skip-install: true
+      #     args: 'chrome:headless testcafe/*.js -c 3 --skip-js-errors   --assertion-timeout 50000 --page-load-timeout 15000 --selector-timeout 15000'
       # - run: ./travis-testcafe.sh
 
 
