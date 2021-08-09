@@ -54,7 +54,7 @@ jobs:
     services:
       db:
         image: postgres:9.5
-        ports: [5432:5432]
+        ports: ['5432:5432']
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
       api:
@@ -62,7 +62,7 @@ jobs:
         credentials:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-        ports: [3000:3000]
+        ports: ['3000:3000']
         # options: --entrypoint "/sbin/my_init && bundle install"
         env:
           DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_development'
@@ -74,7 +74,7 @@ jobs:
           RAILS_ENV: development
       frontend:
         image: nginx:stable
-        ports: [8080:8080]
+        ports: ['8080:8080']
         env:
           LISTEN: 8080
         volumes:
