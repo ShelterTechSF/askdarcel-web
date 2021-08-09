@@ -106,8 +106,8 @@ jobs:
       # - run: sleep 60
       # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
       # - run: docker logs "${{ job.services.api.id }}"
-      - run: docker-compose -f docker-compose.test.yml -d up db api frontend
-      - run: sleep 45 
+      - run: docker-compose -f docker-compose.test.yml up db api frontend
+      - run: sleep 45
       # - uses: docker://docker
       #   with:
       #     args: docker restart nginx
