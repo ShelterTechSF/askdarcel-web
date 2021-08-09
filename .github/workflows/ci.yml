@@ -78,8 +78,8 @@ jobs:
         env:
           LISTEN: 8080
         volumes:
-          - ./docker/tiller/templates:/etc/nginx/templates
-          - ./build:/app/askdarcel
+          - docker/tiller/templates:/etc/nginx/templates
+          - build:/app/askdarcel
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
