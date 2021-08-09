@@ -51,36 +51,38 @@ jobs:
     env:
       SAUCE_MASTER_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
       SAUCE_MASTER_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-    services:
-      db:
-        image: postgres:9.5
-        ports: ['5432:5432']
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-      api:
-        image: sheltertechsf/askdarcel-api:latest
-        credentials:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-        ports: ['3000:3000']
-        # options: --entrypoint "/sbin/my_init && bundle install"
-        env:
-          DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_development'
-          TEST_DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_test'
-          SECRET_KEY_BASE: notasecret
-          # ALGOLIA_APPLICATION_ID: $ALGOLIA_APPLICATION_ID
-          # ALGOLIA_API_KEY: $ALGOLIA_API_KEY
-          # ALGOLIA_INDEX_PREFIX: $ALGOLIA_INDEX_PREFIX
-          RAILS_ENV: development
-      frontend:
-        image: nginx:stable
-        ports: ['8080:8080']
-        env:
-          LISTEN: 8080
-        options: -v ${{ github.workspace }}/build:/app/askdarcel --name nginx
-        # volumes:
-          # - docker/tiller/templates:/etc/nginx/templates
-          # - build:/app/askdarcel
+    # services:
+      # db:
+      #   image: postgres:9.5
+      #   ports: ['5432:5432']
+      #   env:
+      #     POSTGRES_HOST_AUTH_METHOD: trust
+      # api:
+      #   image: sheltertechsf/askdarcel-api:latest
+      #   credentials:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #   ports: ['3000:3000']
+      #   # options: --entrypoint "/sbin/my_init && bundle install"
+      #   env:
+      #     DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_development'
+      #     TEST_DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_test'
+      #     SECRET_KEY_BASE: notasecret
+      #     # ALGOLIA_APPLICATION_ID: $ALGOLIA_APPLICATION_ID
+      #     # ALGOLIA_API_KEY: $ALGOLIA_API_KEY
+      #     # ALGOLIA_INDEX_PREFIX: $ALGOLIA_INDEX_PREFIX
+      #     RAILS_ENV: development
+      # frontend:
+      #   image: nginx:stable
+      #   ports: ['8080:8080']
+      #   env:
+      #     NGINX_PORT: 8080
+      #     NGINX_SERVER_NAME: frontend
+      #     API_URL: http://api:3000
+      #   options: -v ${{ github.workspace }}/build:/app/askdarcel --name nginx
+      #   # volumes:
+      #     # - docker/tiller/templates:/etc/nginx/templates
+      #     # - build:/app/askdarcel
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -98,21 +100,23 @@ jobs:
       # - run: docker run -d -e DATABASE_URL=postgres://postgres@localhost:5432/askdarcel_development -e TEST_DATABASE_URL=postgres://postgres@localhost:5432/askdarcel_test -e SECRET_KEY_BASE=notasecret --name=api -p 3000:3000 sheltertechsf/askdarcel-api:latest bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0'
       - run: npm ci
       - run: cp config.example.yml config.yml
-      - run: docker-compose run
+      - run: npm run build
+      # - run: docker-compose run
       # - run: TESTCAFE_RUNNING=true npm run dev &
       # - run: sleep 60
       # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
       # - run: docker logs "${{ job.services.api.id }}"
-      - run: npm run build
-      - uses: docker://docker
-        with:
-          args: docker restart nginx
+      - run: docker compose -f docker-compose.test.yml -d up db api frontend
+      - run: sleep 45 
+      # - uses: docker://docker
+      #   with:
+      #     args: docker restart nginx
       # - run: npx local-web-server --port 8080 --directory build --spa index.html --rewrite "/api/(.*) -> http://api:3000/$1" &
       # - run: npx http-server ./build --port 8080 --proxy http://api:3000 &
       - uses: DevExpress/testcafe-action@latest
         with:
           skip-install: true
-          args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 50000 --page-load-timeout 15000 --selector-timeout 15000'
+          args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 5000 --page-load-timeout 5000 --selector-timeout 5000'
       # - run: ./travis-testcafe.sh
 
 

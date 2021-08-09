@@ -1,0 +1,38 @@
+server {
+    server_name ${NGINX_SERVER_NAME};
+    listen ${NGINX_PORT};
+
+    root /app/askdarcel;
+
+    location ~ ^/api/(.*)$ {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+
+        # See https://forum.nginx.org/read.php?2,215830,215832#msg-215832
+        # nginx only resolves DNS for statically-configured domain names
+        # once on startup. Since the API is behind an ELB whose IPs may
+        # change, we must configure nginx to resolve DNS dynamically.
+        # To do this, we configure a DNS resolver here and use a variable
+        # rather than a literal URL when configuring the proxy below.
+        resolver 127.0.0.11;
+        resolver_timeout 5s;
+
+        set $api_url ${NGINX_API_URL};
+        proxy_pass $api_url/$1$is_args$args;
+        proxy_redirect off;
+    }
+
+    location = /_version {
+        expires -1;
+        try_files /_version.json =404;
+    }
+
+    location ~ ^/dist/(.*)$ {
+        try_files /$1 /robots.txt =404;
+    }
+
+    location / {
+        try_files /index.html =404;
+    }
+}
