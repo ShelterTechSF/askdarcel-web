@@ -77,9 +77,10 @@ jobs:
         ports: ['8080:8080']
         env:
           LISTEN: 8080
-        volumes:
-          - docker/tiller/templates:/etc/nginx/templates
-          - build:/app/askdarcel
+        options: -v ${{ github.workspace }}/build:/app/askdarcel --name nginx
+        # volumes:
+          # - docker/tiller/templates:/etc/nginx/templates
+          # - build:/app/askdarcel
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -103,7 +104,10 @@ jobs:
       # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
       # - run: docker logs "${{ job.services.api.id }}"
       - run: npm run build
-      - run: npx local-web-server --port 8080 --directory build --spa index.html --rewrite "/api/(.*) -> http://api:3000/$1" &
+      - uses: docker://docker
+        with:
+          args: docker restart nginx
+      # - run: npx local-web-server --port 8080 --directory build --spa index.html --rewrite "/api/(.*) -> http://api:3000/$1" &
       # - run: npx http-server ./build --port 8080 --proxy http://api:3000 &
       - uses: DevExpress/testcafe-action@latest
         with:
