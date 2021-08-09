@@ -113,10 +113,19 @@ jobs:
       #     args: docker restart nginx
       # - run: npx local-web-server --port 8080 --directory build --spa index.html --rewrite "/api/(.*) -> http://api:3000/$1" &
       # - run: npx http-server ./build --port 8080 --proxy http://api:3000 &
-      - uses: DevExpress/testcafe-action@latest
+      - uses: cypress-io/github-action@v2
         with:
-          skip-install: true
-          args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 5000 --page-load-timeout 5000 --selector-timeout 5000'
+          install: false
+          wait-on: 'http://localhost:8080'
+          wait-on-timeout: 120
+          browser: chrome
+          record: true
+          parallel: true
+          spec: cypress/integration/*
+      # - uses: DevExpress/testcafe-action@latest
+      #   with:
+      #     skip-install: true
+      #     args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 5000 --page-load-timeout 5000 --selector-timeout 5000'
       # - run: ./travis-testcafe.sh
 
 

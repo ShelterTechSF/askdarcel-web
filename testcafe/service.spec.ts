@@ -1,7 +1,7 @@
-import ServicePage from './pages/ServicePage';
+import { ServicePageTestHelper } from './pages';
 import EditResourcePage from './pages/EditResourcePage';
 
-const servicePage = new ServicePage();
+const servicePage = new ServicePageTestHelper();
 const editResourcePage = new EditResourcePage();
 
 // Define service id to navigate to
