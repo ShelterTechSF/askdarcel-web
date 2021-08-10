@@ -17,6 +17,6 @@
   "paths": {
     "*": ["app/index.d.ts"]
   },
-  "include": ["app"],
+  "include": ["app", "cypress"],
   "exclude": ["node_modules"]
 }
