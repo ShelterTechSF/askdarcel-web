@@ -64,11 +64,6 @@ jobs:
       - run: docker-compose -f docker-compose.test.yml up -d db api frontend
       - run: sleep 30
       - run: yarn cypress run
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Screenshots
-          path: cypress/screenshots
-          retention-days: 5
       - run: docker-compose -f docker-compose.test.yml logs -t # Output all docker logs from API and frontend to help debugging after the fact
         if: always()
 
