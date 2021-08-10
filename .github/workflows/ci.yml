@@ -51,35 +51,36 @@ jobs:
     # env:
     #   SAUCE_MASTER_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
     #   SAUCE_MASTER_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-    services:
-      db:
-        image: postgres:9.5
-        ports: ['5432:5432']
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-      api:
-        image: sheltertechsf/askdarcel-api:latest
-        # networks: [askdarcel]
-        ports: ["3000:3000"]
-        # depends_on: [db]
-        options: --entrypoint "bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0 -p 3000' "
-        env:
-          RAILS_ENV: development
-          DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
-          DATABASE_URL: postgres://postgres@db/askdarcel_development
-          TEST_DATABASE_URL: postgres://postgres@db/askdarcel_test
-          SECRET_KEY_BASE: abc123
+    # services:
+    #   db:
+    #     image: postgres:9.5
+    #     ports: ['5432:5432']
+    #     env:
+    #       POSTGRES_HOST_AUTH_METHOD: trust
+    #   api:
+    #     image: sheltertechsf/askdarcel-api:latest
+    #     # networks: [askdarcel]
+    #     ports: ["3000:3000"]
+    #     # depends_on: [db]
+    #     options: --entrypoint /bin/bash --command
+    #     # command:  bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0 -p 3000
+    #     env:
+    #       RAILS_ENV: development
+    #       DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
+    #       DATABASE_URL: postgres://postgres@db/askdarcel_development
+    #       TEST_DATABASE_URL: postgres://postgres@db/askdarcel_test
+    #       SECRET_KEY_BASE: abc123
 
-      frontend:
-        image: nginx:stable
-        # networks: [askdarcel]
-        ports: ['8080:8080']
-        # depends_on: [api]
-        options: -v ${{ github.workspace }}/build:/app/askdarcel -v ${{ github.workspace }}/docker/templates:/etc/nginx/templates --name frontend
-        env:
-          NGINX_API_URL: http://api:3000
-          NGINX_PORT: 8080
-          NGINX_SERVER_NAME: frontend
+    #   frontend:
+    #     image: nginx:stable
+    #     # networks: [askdarcel]
+    #     ports: ['8080:8080']
+    #     # depends_on: [api]
+    #     options: -v ${{ github.workspace }}/build:/app/askdarcel -v ${{ github.workspace }}/docker/templates:/etc/nginx/templates --name frontend
+    #     env:
+    #       NGINX_API_URL: http://api:3000
+    #       NGINX_PORT: 8080
+    #       NGINX_SERVER_NAME: frontend
         # volumes:
         #   - ./build:/app/askdarcel
         #   - ./docker/templates:/etc/nginx/templates
@@ -132,11 +133,11 @@ jobs:
       # - run: sleep 60
       # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
       # - run: docker logs "${{ job.services.api.id }}"
-      # - run: docker-compose -f docker-compose.test.yml up db api frontend
+      - run: docker-compose -f docker-compose.test.yml up -d db api frontend
       # - run: sleep 45
-      - uses: docker://docker
-        with:
-          args: docker restart frotend
+      # - uses: docker://docker
+      #   with:
+      #     args: docker restart frotend
       # - run: npx local-web-server --port 8080 --directory build --spa index.html --rewrite "/api/(.*) -> http://api:3000/$1" &
       # - run: npx http-server ./build --port 8080 --proxy http://api:3000 &
       - uses: cypress-io/github-action@v2
@@ -153,6 +154,8 @@ jobs:
       #     skip-install: true
       #     args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 5000 --page-load-timeout 5000 --selector-timeout 5000'
       # - run: ./travis-testcafe.sh
+      - run: docker-compose logs -t db api frontend
+        if: always()
 
 
   publish-latest:
