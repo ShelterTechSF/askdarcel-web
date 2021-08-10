@@ -18,7 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/install
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+      - run: npm ci
+      - run: cp config.example.yml config.yml
       - run: npm run lint
 
   test_unit:
@@ -39,68 +48,6 @@ jobs:
 
   test_e2e:
     runs-on: ubuntu-latest
-    # env:
-    #   SAUCE_MASTER_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-    #   SAUCE_MASTER_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-    # services:
-    #   db:
-    #     image: postgres:9.5
-    #     ports: ['5432:5432']
-    #     env:
-    #       POSTGRES_HOST_AUTH_METHOD: trust
-    #   api:
-    #     image: sheltertechsf/askdarcel-api:latest
-    #     # networks: [askdarcel]
-    #     ports: ["3000:3000"]
-    #     # depends_on: [db]
-    #     options: --entrypoint /bin/bash --command
-    #     # command:  bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0 -p 3000
-    #     env:
-    #       RAILS_ENV: development
-    #       DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
-    #       DATABASE_URL: postgres://postgres@db/askdarcel_development
-    #       TEST_DATABASE_URL: postgres://postgres@db/askdarcel_test
-    #       SECRET_KEY_BASE: abc123
-
-    #   frontend:
-    #     image: nginx:stable
-    #     # networks: [askdarcel]
-    #     ports: ['8080:8080']
-    #     # depends_on: [api]
-    #     options: -v ${{ github.workspace }}/build:/app/askdarcel -v ${{ github.workspace }}/docker/templates:/etc/nginx/templates --name frontend
-    #     env:
-    #       NGINX_API_URL: http://api:3000
-    #       NGINX_PORT: 8080
-    #       NGINX_SERVER_NAME: frontend
-        # volumes:
-        #   - ./build:/app/askdarcel
-        #   - ./docker/templates:/etc/nginx/templates
-      # api:
-      #   image: sheltertechsf/askdarcel-api:latest
-      #   credentials:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-      #   ports: ['3000:3000']
-      #   # options: --entrypoint "/sbin/my_init && bundle install"
-      #   env:
-      #     DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_development'
-      #     TEST_DATABASE_URL: 'postgres://db@127.0.0.1/askdarcel_test'
-      #     SECRET_KEY_BASE: notasecret
-      #     # ALGOLIA_APPLICATION_ID: $ALGOLIA_APPLICATION_ID
-      #     # ALGOLIA_API_KEY: $ALGOLIA_API_KEY
-      #     # ALGOLIA_INDEX_PREFIX: $ALGOLIA_INDEX_PREFIX
-      #     RAILS_ENV: development
-      # frontend:
-      #   image: nginx:stable
-      #   ports: ['8080:8080']
-      #   env:
-      #     NGINX_PORT: 8080
-      #     NGINX_SERVER_NAME: frontend
-      #     API_URL: http://api:3000
-      #   options: -v ${{ github.workspace }}/build:/app/askdarcel --name nginx
-      #   # volumes:
-      #     # - docker/tiller/templates:/etc/nginx/templates
-      #     # - build:/app/askdarcel
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -111,41 +58,13 @@ jobs:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
-      # - uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-      # - run: docker run -d -e DATABASE_URL=postgres://postgres@localhost:5432/askdarcel_development -e TEST_DATABASE_URL=postgres://postgres@localhost:5432/askdarcel_test -e SECRET_KEY_BASE=notasecret --name=api -p 3000:3000 sheltertechsf/askdarcel-api:latest bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0'
       - run: npm ci
       - run: cp config.example.yml config.yml
       - run: npm run build
-      # - run: docker-compose run
-      # - run: TESTCAFE_RUNNING=true npm run dev &
-      # - run: sleep 60
-      # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
-      # - run: docker logs "${{ job.services.api.id }}"
       - run: docker-compose -f docker-compose.test.yml up -d db api frontend
       - run: sleep 45
-      # - uses: docker://docker
-      #   with:
-      #     args: docker restart frotend
-      # - run: npx local-web-server --port 8080 --directory build --spa index.html --rewrite "/api/(.*) -> http://api:3000/$1" &
-      # - run: npx http-server ./build --port 8080 --proxy http://api:3000 &
       - run: yarn cypress run
-      # - uses: cypress-io/github-action@v2
-      #   with:
-      #     install: false
-      #     wait-on: 'http://localhost:8080'
-      #     wait-on-timeout: 120
-      #     browser: chrome
-      #     # record: true
-      #     parallel: true
-      #     spec: cypress/integration/*
-      # - uses: DevExpress/testcafe-action@latest
-      #   with:
-      #     skip-install: true
-      #     args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 5000 --page-load-timeout 5000 --selector-timeout 5000'
-      # - run: ./travis-testcafe.sh
+      # Output all docker logs from API and frontend to help debugging after the fact
       - run: docker-compose -f docker-compose.test.yml logs -t
         if: always()
 
