@@ -12,3 +12,4 @@ config.yml
 yarn.lock
 
 cypress/videos/**
+cypress/screenshots/**
