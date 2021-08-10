@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/* eslint-disable newline-per-chained-call */
 
 describe('Service Page', () => {
   const serviceId = 1;
@@ -7,12 +8,8 @@ describe('Service Page', () => {
     cy.request(`/api/services/${serviceId}`).then(r => {
       cy.visit(`/services/${serviceId}`)
         .get('.listing--main header h1').first().should('have.text', r.body.service.name)
-        .get('.listing--main--left--about')
-        .first()
-        .should('exist')
-        .get('.listing--main--left--details')
-        .first()
-        .should('exist');
+        .get('.listing--main--left--about').first().should('exist')
+        .get('.listing--main--left--details').first().should('exist');
     });
   });
 });
