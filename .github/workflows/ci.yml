@@ -62,7 +62,7 @@ jobs:
         # networks: [askdarcel]
         ports: ["3000:3000"]
         # depends_on: [db]
-        options: --entrypoint "/bin/bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0 -p 3000' "
+        options: --entrypoint "bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0 -p 3000' "
         env:
           RAILS_ENV: development
           DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
