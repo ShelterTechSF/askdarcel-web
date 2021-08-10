@@ -134,7 +134,7 @@ jobs:
       # - run: docker exec "${{ job.services.api.id }}" bash -c "bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0"
       # - run: docker logs "${{ job.services.api.id }}"
       - run: docker-compose -f docker-compose.test.yml up -d db api frontend
-      # - run: sleep 45
+      - run: sleep 45
       # - uses: docker://docker
       #   with:
       #     args: docker restart frotend
@@ -146,7 +146,7 @@ jobs:
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 120
           browser: chrome
-          record: true
+          # record: true
           parallel: true
           spec: cypress/integration/*
       # - uses: DevExpress/testcafe-action@latest
@@ -154,7 +154,7 @@ jobs:
       #     skip-install: true
       #     args: 'chrome:headless testcafe/*.js --skip-js-errors --assertion-timeout 5000 --page-load-timeout 5000 --selector-timeout 5000'
       # - run: ./travis-testcafe.sh
-      - run: docker-compose logs -t db api frontend
+      - run: docker-compose logs -t
         if: always()
 
 
