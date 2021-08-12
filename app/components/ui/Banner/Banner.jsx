@@ -6,7 +6,8 @@ export default function Banner() {
   return (
     <div className={styles.bannerContainer}>
       <strong>COVID-19 VACCINE SITES: </strong>
-      Find out where to get a vaccine if you&apos;re eligible for a vaccine&#44; find a{' '}
+      Find out where to get a vaccine if you&apos;re eligible for a vaccine&#44; find a
+      {' '}
       <a target="_blank" rel="noreferrer" href="https://sf.gov/vaccine-sites">site near you</a>
       .
       <br />
