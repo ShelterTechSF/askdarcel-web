@@ -102,6 +102,12 @@ module.exports = {
         'import/no-unused-modules': 'off',
       },
     },
+    {
+      files: ['cypress/**'],
+      rules: {
+        'newline-per-chained-call': 'off',
+      },
+    },
     // Node.js scripts
     {
       files: [
