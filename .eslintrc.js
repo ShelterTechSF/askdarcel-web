@@ -102,6 +102,7 @@ module.exports = {
         'import/no-unused-modules': 'off',
       },
     },
+    // Cypress
     {
       files: ['cypress/**'],
       rules: {
