@@ -10,12 +10,16 @@ export default function Banner() {
       <a target="_blank" rel="noreferrer" href="https://sf.gov/vaccine-sites">site near you</a>
       .
       <br />
-      <strong>&nbsp;Need help applying for rent payment assistance?</strong>
-      &nbsp;Check out&nbsp;
+      <strong>Need help applying for rent payment assistance?</strong>
+      {' '}
+      Check out
+      {' '}
       <a target="_blank" rel="noreferrer" href="https://docs.google.com/document/d/1t-RM30QQHA5UQdzIGHrD6kaFoBMrwmCBM7mEOBD8a9U/edit">Code Tenderloin&apos;s workshops</a>
-      &nbsp;and&nbsp;
+      {' '}
+      and
+      {' '}
       <a target="_blank" rel="noreferrer" href="https://www.homeownershipsf.org/application-assistance-for-renters/">HomeownershipSF&apos;s resources</a>
-      .&nbsp;
+      .
     </div>
   );
 }
