@@ -55,6 +55,7 @@ module.exports = {
         '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
         'no-use-before-define': 'off',
+        'spaced-comment': ['error', 'always', { markers: ['/'] }],
       },
     },
     {
@@ -99,6 +100,13 @@ module.exports = {
         // The TestCafe test files are entrypoints, so they do not require
         // exports.
         'import/no-unused-modules': 'off',
+      },
+    },
+    // Cypress
+    {
+      files: ['cypress/**'],
+      rules: {
+        'newline-per-chained-call': 'off',
       },
     },
     // Node.js scripts
