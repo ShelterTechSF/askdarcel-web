@@ -3,20 +3,20 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Intercom from 'react-intercom';
 import { connect } from 'react-redux';
-import Banner from './ui/Banner/Banner';
-import Navigation from './ui/Navigation/Navigation';
+import Banner from './components/ui/Banner/Banner';
+import Navigation from './components/ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
-import { round } from '../utils/index';
-import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../utils/whitelabel';
+import { round } from './utils/index';
+import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from './utils/whitelabel';
 import 'react-select/dist/react-select.css';
-import config from '../config';
-import HamburgerMenu from './ui/HamburgerMenu';
-import { PopUpMessage } from './ui/PopUpMessage';
-import UserWay from './ui/UserWay';
-import { User } from '../models';
-import Routes from '../routes';
-import MetaImage from '../assets/img/sfsg-preview.png';
+import config from './config';
+import HamburgerMenu from './components/ui/HamburgerMenu';
+import { PopUpMessage } from './components/ui/PopUpMessage';
+import UserWay from './components/ui/UserWay';
+import { User } from './models';
+import Routes from './routes';
+import MetaImage from './assets/img/sfsg-preview.png';
 
 const coordsInSanFrancisco = (coords: any) => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly

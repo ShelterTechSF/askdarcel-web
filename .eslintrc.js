@@ -107,6 +107,7 @@ module.exports = {
       files: ['cypress/**'],
       rules: {
         'newline-per-chained-call': 'off',
+        'lines-between-class-members': 'off',
       },
     },
     // Node.js scripts
