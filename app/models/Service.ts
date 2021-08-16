@@ -1,23 +1,44 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
-import { Address, Organization } from './Organization'; // eslint-disable-line import/no-cycle
+import { Organization } from './Organization'; // eslint-disable-line import/no-cycle
+import {
+  Address,
+  Category,
+  Eligibility,
+  Note,
+  Program,
+  Schedule,
+} from './Meta';
 
 // A Service is provided by an Organization
 export interface Service {
   id: number
   name: string
-  long_description: string
-  schedule: any
-  recurringSchedule: any[]
-  resource: Organization
-  alsoNamed: string
   addresses?: Address[]
+  alsoNamed: string
+  alternate_name?: string|null
   application_process: any
+  categories: Category[]
+  certified_at: any
+  certified: boolean
+  eligibilities: Eligibility[]
+  eligibility: any
+  email: string|null
+  featured: boolean|null
+  fee: string|null
+  interpretation_services: any
+  long_description: string
+  notes: Note[]
+  program: Program|null
+  recurringSchedule: any[]
   required_documents: any
-  fee: any
-  notes: any[]
-  program: any|null
-  // TODO
+  resource: Organization
+  schedule: Schedule
+  source_attribution: any
+  updated_at: string
+  url: string|null
+  verified_at: any
+  wait_time: any
 }
 
 export const shouldInheritSchedule = (service: Service) => (
@@ -25,7 +46,11 @@ export const shouldInheritSchedule = (service: Service) => (
 );
 
 // TODO This should be serviceAtLocation
-export const getServiceLocations = (service: Service, resource: Organization, recurringSchedule: any) => {
+export const getServiceLocations = (
+  service: Service,
+  resource: Organization,
+  recurringSchedule: any,
+) => {
   let addresses: Address[];
   if (service.addresses && service.addresses.length > 0) {
     ({ addresses } = service);

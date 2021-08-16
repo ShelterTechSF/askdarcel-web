@@ -14,11 +14,14 @@ import {
 import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { MapOfLocations } from 'components/maps';
-
-import {
-  generateServiceDetails, fetchService, getServiceLocations, Organization, Service,
-} from '../models';
 import { getSiteTitle } from '../utils/whitelabel';
+import {
+  fetchService,
+  generateServiceDetails,
+  getServiceLocations,
+  Organization,
+  Service,
+} from '../models';
 
 // Page at /services/123
 export const ServiceListingPage = () => {
@@ -28,6 +31,7 @@ export const ServiceListingPage = () => {
   useEffect(() => {
     fetchService(id as any)
       .then(s => setService(s));
+    // TODO Handle Errors
   }, [id]);
 
   if (!service) { return <Loader />; }
@@ -72,7 +76,9 @@ export const ServiceListingPage = () => {
             <ServiceListingSection title="Location and Hours" className="listing--main--left--hours">
               <MapOfLocations
                 locations={locations}
-                locationRenderer={(location: any) => <TableOfOpeningTimes recurringSchedule={location.recurringSchedule} />}
+                locationRenderer={(location: any) => (
+                  <TableOfOpeningTimes recurringSchedule={location.recurringSchedule} />
+                )}
               />
               {/* TODO Transport Options */}
             </ServiceListingSection>
@@ -103,7 +109,11 @@ export const ServiceListingPage = () => {
 };
 
 // A title with the content of a section
-export const ServiceListingSection = ({ children, title, className }: { children: React.ReactNode, title: string, className: string }) => (
+export const ServiceListingSection = ({ children, title, className }: {
+  children: React.ReactNode
+  title: string
+  className: string
+}) => (
   <section className={className}>
     <h2>{title}</h2>
     {children}
@@ -112,7 +122,10 @@ export const ServiceListingSection = ({ children, title, className }: { children
 
 // TODO Implement rendering/popover when programs exist
 // Details if the service is part of a larger program, and the oorganization that provides it
-export const ServiceProgramDetails = ({ service, resource }: { service: Service, resource: Organization }) => (
+export const ServiceProgramDetails = ({ service, resource }: {
+  service: Service
+  resource: Organization
+}) => (
   <p>
     A service
     { service.program ? ` in the ${service.program.name} program` : null }
