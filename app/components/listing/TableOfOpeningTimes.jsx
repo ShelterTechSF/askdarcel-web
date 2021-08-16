@@ -16,7 +16,7 @@ export const TableOfOpeningTimes = ({ recurringSchedule }) => (
             const opensAt = interval.opensAt.timeString();
             const closesAt = interval.closesAt.timeString();
             return (
-              <tr key={interval.key()}>
+              <tr key={interval.key()} className="opening-times-row">
                 <th>{ interval.opensAt.dayString() }</th>
                 <td>{ `${opensAt} - ${closesAt}` }</td>
               </tr>

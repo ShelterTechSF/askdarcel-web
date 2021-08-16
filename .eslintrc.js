@@ -108,6 +108,7 @@ module.exports = {
       rules: {
         'newline-per-chained-call': 'off',
         'lines-between-class-members': 'off',
+        'indent': 'off',
       },
     },
     // Node.js scripts
