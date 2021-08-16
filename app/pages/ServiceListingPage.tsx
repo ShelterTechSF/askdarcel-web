@@ -16,16 +16,17 @@ import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { MapOfLocations } from 'components/maps';
 
 import {
-  generateServiceDetails, getService, getServiceLocations, Organization, Service,
+  generateServiceDetails, fetchService, getServiceLocations, Organization, Service,
 } from '../models';
 import { getSiteTitle } from '../utils/whitelabel';
 
+// Page at /services/123
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service|null>(null);
 
   useEffect(() => {
-    getService(id as any)
+    fetchService(id as any)
       .then(s => setService(s));
   }, [id]);
 
@@ -89,7 +90,8 @@ export const ServiceListingPage = () => {
             {/* TODO Need an API to get similar services, maybe same category for now? */}
             {/* <section>
                 <h2>Similar Services Near You</h2>
-              </section> */}
+              </section>
+            */}
           </div>
           <div className="listing--aside">
             <ActionSidebar resource={resource} service={service} />
@@ -100,6 +102,7 @@ export const ServiceListingPage = () => {
   );
 };
 
+// A title with the content of a section
 export const ServiceListingSection = ({ children, title, className }: { children: React.ReactNode, title: string, className: string }) => (
   <section className={className}>
     <h2>{title}</h2>
@@ -108,6 +111,7 @@ export const ServiceListingSection = ({ children, title, className }: { children
 );
 
 // TODO Implement rendering/popover when programs exist
+// Details if the service is part of a larger program, and the oorganization that provides it
 export const ServiceProgramDetails = ({ service, resource }: { service: Service, resource: Organization }) => (
   <p>
     A service
@@ -117,6 +121,7 @@ export const ServiceProgramDetails = ({ service, resource }: { service: Service,
   </p>
 );
 
+// Shows a section with relevant service fields in a table
 export const ServiceDetailsTableSection = ({ service }: { service: Service }) => {
   const details = useMemo(() => generateServiceDetails(service), [service]);
 

@@ -2,6 +2,8 @@ import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import { Service, shouldInheritSchedule } from './Service'; // eslint-disable-line import/no-cycle
 
+// An Organization used to be called a 'Resource', and represents
+// an institution that provides services to those experiencing homelessness
 export interface Organization {
   services: Service[]
   schedule: any

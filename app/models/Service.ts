@@ -2,6 +2,7 @@ import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import { Address, Organization } from './Organization'; // eslint-disable-line import/no-cycle
 
+// A Service is provided by an Organization
 export interface Service {
   id: number
   name: string
@@ -58,7 +59,7 @@ export const generateServiceDetails = (service: Service): ({ title: string, valu
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const getService = (id: number): Promise<Service> => get(`/api/services/${id}`)
+export const fetchService = (id: number): Promise<Service> => get(`/api/services/${id}`)
   .then(({ service }) => {
     const recurringSchedule = shouldInheritSchedule(service)
       ? parseAPISchedule(service.schedule)
