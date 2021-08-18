@@ -32,8 +32,8 @@ export interface Schedule {
 export interface ScheduleDay {
   id: number
   day: string
-  opens_at: number
-  closes_at: number
+  opens_at: number|null
+  closes_at: number|null
 }
 
 export interface Note {

@@ -139,7 +139,7 @@ export const ServiceDetailsTableSection = ({ service }: { service: Service }) =>
   const details = useMemo(() => generateServiceDetails(service), [service]);
 
   return details.length ? (
-    <ServiceListingSection title="About This Service" className="listing--main--left--details">
+    <ServiceListingSection title="Service Details" className="listing--main--left--details">
       <Datatable
         rowRenderer={(d: { title: string, value: string }) => (
           <tr key={d.title}>

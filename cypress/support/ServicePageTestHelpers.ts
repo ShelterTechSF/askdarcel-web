@@ -1,4 +1,4 @@
-import { ScheduleDay } from '../../app/models';
+import { ChangeRequestParams, ScheduleDay } from '../../app/models';
 
 export class ServicePageTestHelpers {
   SERVICE_TITLE = '.listing--main header h1'
@@ -14,5 +14,12 @@ export class ServicePageTestHelpers {
 
   url = (serviceId: number) => `/services/${serviceId}`
 
-  removeScheduleDays = (schedulDays: ScheduleDay[]) => Promise.all(schedulDays.map(sd => cy.request('POST', `/api/schedule_days/${sd.id}/change_requests`, { closes_at: null, opens_at: null })))
+  scheduleDayChangeRequestBody = (
+    schedule_id: number,
+    schedule_day: Partial<ScheduleDay>,
+  ): ChangeRequestParams => ({
+    type: 'schedule_days',
+    schedule_id,
+    change_request: schedule_day,
+  })
 }
