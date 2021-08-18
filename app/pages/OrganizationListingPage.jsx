@@ -23,8 +23,9 @@ import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
-import { getResource } from '../models';
 import { getSiteTitle } from '../utils/whitelabel';
+// When this file is TS, this import will no longer throw a linting error
+import { getResource } from '../models'; // eslint-disable-line import/named
 
 const getResourceLocations = resource => {
   const { addresses } = resource;

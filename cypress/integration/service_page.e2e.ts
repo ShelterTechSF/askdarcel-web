@@ -20,8 +20,8 @@ describe('Service Page', () => {
         required_documents: 'Photo ID',
       };
 
-      cy.request('POST', `/api/services/${serviceId}/change_requests`, { change_request }).should(res => {
-        expect(res.status).to.eq(201);
+      cy.request('POST', `/api/services/${serviceId}/change_requests`, { change_request }).should(r => {
+        expect(r.status).to.eq(201);
       });
 
       // Confirm the basic page details
