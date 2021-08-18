@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
-import { RiCreativeCommonsZeroLine } from 'react-icons/ri';
-import { Service, ChangeRequestParams } from '../../app/models';
+import { ScheduleDay, Service } from '../../app/models';
 import { ServicePageTestHelpers } from '../support/ServicePageTestHelpers';
 
 describe('Service Page', () => {
@@ -72,7 +71,7 @@ describe('Service Page', () => {
           .concat(service.resource.schedule.schedule_days)
           .filter(d => d.day === 'Sunday' || (d.opens_at === 800 && d.closes_at === 1000))
           .forEach(d => {
-            cy.request('POST', `/api/schedule_days/${d.id}/change_requests`, { closes_at: null, opens_at: null })
+            cy.request('POST', `/api/schedule_days/${d.id}/change_requests`, { closes_at: null, opens_at: null } as Partial<ScheduleDay>)
               .its('status').should('eq', 201);
           });
 
