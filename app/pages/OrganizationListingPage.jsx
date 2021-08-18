@@ -23,6 +23,7 @@ import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
+import { getResource } from '../models';
 import { getSiteTitle } from '../utils/whitelabel';
 
 const getResourceLocations = resource => {
@@ -52,7 +53,7 @@ class BaseOrganizationListingPage extends React.Component {
 
   loadResourceFromServer() {
     const { match: { params: { id } } } = this.props;
-    dataService.getResource(id).then(resource => {
+    getResource(id).then(resource => {
       this.setState({ resource });
     });
   }

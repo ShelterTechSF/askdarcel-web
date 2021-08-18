@@ -1,4 +1,4 @@
-import { ScheduleDay } from "models"
+import { ScheduleDay } from '../../app/models';
 
 export class ServicePageTestHelpers {
   SERVICE_TITLE = '.listing--main header h1'
@@ -14,7 +14,5 @@ export class ServicePageTestHelpers {
 
   url = (serviceId: number) => `/services/${serviceId}`
 
-  removeScheduleDays = (schedulDays: ScheduleDay[]) => {
-    return Promise.all(schedulDays.map(sd => cy.request('POST', `/api/schedule_days/${sd.id}/change_requests`, { closes_at: null, opens_at: null })));
-  }
+  removeScheduleDays = (schedulDays: ScheduleDay[]) => Promise.all(schedulDays.map(sd => cy.request('POST', `/api/schedule_days/${sd.id}/change_requests`, { closes_at: null, opens_at: null })))
 }
