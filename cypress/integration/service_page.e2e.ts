@@ -55,9 +55,10 @@ describe('Service Page', () => {
           .should('have.length', service.schedule?.schedule_days?.length + 1)
           .should('contain.text', 'Sunday');
 
-      page.removeScheduleDays(service.schedule.schedule_days.filter(sd => sd.day === 'Sunday')).then(d => {
-        // console.log(d);
-      });
+      // page.removeScheduleDays(service.schedule.schedule_days.filter(sd => sd.day === 'Sunday'))
+      //   .then(d => {
+      //   // console.log(d);
+      // });
 
       // service.schedule.schedule_days.forEach(sd => {
       //   if (sd.day)
