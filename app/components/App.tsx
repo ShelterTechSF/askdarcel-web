@@ -129,19 +129,19 @@ class App extends Component {
   }
 
   render() {
+    const {title, siteUrl, isSFFamiliesSite} = whiteLabel
     const { hamburgerMenuIsOpen } = this.state;
     const { popUpMessage } = this.props;
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
-    const siteTitle = whiteLabel.title;
-    const siteUrl = whiteLabel.siteUrl;
+
     return (
       <div id={outerContainerId}>
         <Helmet>
-          <title>{siteTitle}</title>
+          <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
-          <meta property="og:title" content={siteTitle} />
+          <meta property="og:title" content={title} />
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@sheltertechorg" />
@@ -152,10 +152,10 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {!whiteLabel.isSFFamiliesSite
+        {!isSFFamiliesSite
           && config.INTERCOM_APP_ID
           && <Intercom appID={config.INTERCOM_APP_ID} />}
-        {whiteLabel.isSFFamiliesSite
+        {isSFFamiliesSite
           && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
@@ -166,10 +166,10 @@ class App extends Component {
         />
         <div id={pageWrapId}>
           <Navigation
-            showSearch={!whiteLabel.isSFFamiliesSite}
+            showSearch={!isSFFamiliesSite}
             toggleHamburgerMenu={this.toggleHamburgerMenu}
           />
-          {!whiteLabel.isSFFamiliesSite && <Banner />}
+          {!isSFFamiliesSite && <Banner />}
           <div className="container">
             <Routes />
           </div>
