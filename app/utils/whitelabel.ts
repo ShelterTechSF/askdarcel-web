@@ -16,29 +16,29 @@ declare const configurations: any;
 configurations.title = {
   SFFAMILIES_DOMAIN: 'SF Service Guide',
   MOHCD_DOMAIN: 'SF Families',
-  default: 'AskDarcel'
-}
+  default: 'AskDarcel',
+};
 
 // Configure site url
 configurations.siteUrl = {
   SFFAMILIES_DOMAIN: 'https://sfserviceguide.org',
   MOHCD_DOMAIN: 'https://sffamilies.sfserviceguide.org/',
-  default: 'https://askdarcel.org'
-}
+  default: 'https://askdarcel.org',
+};
 
 // @ts-ignore
 const icons = require.context('../assets/img', true, /ic-.*\.(png|svg)$/i);
 const iconPathMap = {};
 
 // @ts-ignore
-icons.keys().forEach(key => iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg|png)/)[1]] = icons(key));
+icons.keys().forEach((key) => {iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg|png)/)[1]] = icons(key)});
 
 // @ts-ignore
 const icon = (name) => iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
 declare const require: any;
 
 // Configure images
-  configurations.appImages = {
+configurations.appImages = {
   SFFAMILIES_DOMAIN: {
     background: BackgroundImage,
     logoLarge: SFServiceLogo,
@@ -61,9 +61,9 @@ declare const require: any;
     logoSmall: AskDarcelImage,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon
+    icon,
   }
-}
+};
 
 const isSFFamiliesSite = configKey === config.SFFAMILIES_DOMAIN;
 
@@ -71,5 +71,5 @@ export const whiteLabel = {
   title: configurations.title[configKey],
   siteUrl: configurations.siteUrl[configKey],
   appImages: configurations.appImages[configKey],
-  isSFFamiliesSite
-}
+  isSFFamiliesSite,
+};
