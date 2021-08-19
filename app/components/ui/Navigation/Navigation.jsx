@@ -38,6 +38,7 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const { title, siteUrl, isSFFamiliesSite } = whiteLabel;
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
 
@@ -47,22 +48,22 @@ class Navigation extends React.Component {
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
     let logoLink;
-    if (whiteLabel.isSFFamiliesSite) {
+    if (isSFFamiliesSite) {
       logoLink = (
-        <a className={styles.navLogoSFFamilies} href={whiteLabel.siteUrl}>
-          <img src={images.logoSmall} alt={whiteLabel.title} />
+        <a className={styles.navLogoSFFamilies} href={siteUrl}>
+          <img src={images.logoSmall} alt={title} />
         </a>
       );
     } else {
       logoLink = (
         <Link className={styles.navLogo} to="/">
-          <img src={images.logoSmall} alt={whiteLabel.title} />
+          <img src={images.logoSmall} alt={title} />
         </Link>
       );
     }
 
     return (
-      <nav className={isSFFamiliesSite() ? styles.siteNavSFFamilies : styles.siteNav}>
+      <nav className={isSFFamiliesSite ? styles.siteNavSFFamilies : styles.siteNav}>
         <div className={styles.primaryRow}>
           <div className={styles.navLeft}>
             {logoLink}
@@ -86,7 +87,7 @@ class Navigation extends React.Component {
               )
             }
           </div>
-          {!isSFFamiliesSite()
+          {!isSFFamiliesSite
             && (
               <Fragment>
                 <div className={styles.mobileNavigation}>

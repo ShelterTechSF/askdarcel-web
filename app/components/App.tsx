@@ -129,7 +129,7 @@ class App extends Component {
   }
 
   render() {
-    const {title, siteUrl, isSFFamiliesSite} = whiteLabel
+    const { title, siteUrl, isSFFamiliesSite } = whiteLabel;
     const { hamburgerMenuIsOpen } = this.state;
     const { popUpMessage } = this.props;
 
