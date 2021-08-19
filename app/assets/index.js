@@ -1,4 +1,4 @@
-import * from '../utils/whitelabel';
+import { whiteLabel } from '../utils/whitelabel';
 
 const images = whiteLabel.appImages;
 
