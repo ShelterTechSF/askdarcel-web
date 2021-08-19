@@ -8,7 +8,7 @@ import Navigation from './ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
-import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../utils/whitelabel';
+import { whiteLabel } from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
@@ -134,8 +134,8 @@ class App extends Component {
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
-    const siteTitle = getSiteTitle();
-    const siteUrl = getSiteUrl();
+    const siteTitle = whiteLabel.title;
+    const siteUrl = whiteLabel.siteUrl;
     return (
       <div id={outerContainerId}>
         <Helmet>
@@ -152,10 +152,10 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {!isSFFamiliesSite()
+        {!whiteLabel.isSFFamiliesSite
           && config.INTERCOM_APP_ID
           && <Intercom appID={config.INTERCOM_APP_ID} />}
-        {isSFFamiliesSite()
+        {whiteLabel.isSFFamiliesSite
           && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
@@ -166,10 +166,10 @@ class App extends Component {
         />
         <div id={pageWrapId}>
           <Navigation
-            showSearch={!isSFFamiliesSite()}
+            showSearch={!whiteLabel.isSFFamiliesSite}
             toggleHamburgerMenu={this.toggleHamburgerMenu}
           />
-          {!isSFFamiliesSite() && <Banner />}
+          {!whiteLabel.isSFFamiliesSite && <Banner />}
           <div className="container">
             <Routes />
           </div>

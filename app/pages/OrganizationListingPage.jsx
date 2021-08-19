@@ -23,7 +23,7 @@ import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
-import { getSiteTitle } from '../utils/whitelabel';
+import { whiteLabel } from '../utils/whitelabel';
 
 const getResourceLocations = resource => {
   const { addresses } = resource;
@@ -94,7 +94,7 @@ class BaseOrganizationListingPage extends React.Component {
       <div>
         <Helmet>
           <title>
-            {`${resource.name} | ${getSiteTitle()}`}
+            {`${resource.name} | ${whiteLabel.title}`}
           </title>
           <meta name="description" content={resource.long_description} />
         </Helmet>

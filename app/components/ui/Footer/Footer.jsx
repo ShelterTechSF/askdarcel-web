@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getSiteTitle } from '../../../utils/whitelabel';
+import { whiteLabel } from '../../../utils/whitelabel';
 import './Footer.scss';
 
 function Footer() {
-  const title = getSiteTitle();
+  const title = whiteLabel.title;
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer__content">

@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
 import { images } from 'assets';
 import styles from './Navigation.module.scss';
-import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../../../utils/whitelabel';
+import { whiteLabel } from '../../../utils/whitelabel';
 
 class Navigation extends React.Component {
   constructor() {
@@ -47,16 +47,16 @@ class Navigation extends React.Component {
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
     let logoLink;
-    if (isSFFamiliesSite()) {
+    if (whiteLabel.isSFFamiliesSite) {
       logoLink = (
-        <a className={styles.navLogoSFFamilies} href={getSiteUrl()}>
-          <img src={images.logoSmall} alt={getSiteTitle()} />
+        <a className={styles.navLogoSFFamilies} href={whiteLabel.siteUrl}>
+          <img src={images.logoSmall} alt={whiteLabel.title} />
         </a>
       );
     } else {
       logoLink = (
         <Link className={styles.navLogo} to="/">
-          <img src={images.logoSmall} alt={getSiteTitle()} />
+          <img src={images.logoSmall} alt={whiteLabel.title} />
         </Link>
       );
     }
