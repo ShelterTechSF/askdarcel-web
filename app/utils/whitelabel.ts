@@ -6,7 +6,6 @@ import SFServiceLogo from '../assets/img/sf-service.svg';
 import SFSeal from '../assets/img/sf-seal.png';
 import config from '../config';
 
-/** Whether we should display the SF Service Guide branded version of the site */
 // Use url to get key of config object
 // @ts-ignore
 private const configKey = Object.keys(config).find((key) => config[key] === window.location.host) || 'default';
@@ -65,6 +64,7 @@ configurations.appImages = {
   }
 };
 
+/** Whether we should display the SF Service Guide branded version of the site */
 const isSFFamiliesSite = configKey === config.SFFAMILIES_DOMAIN;
 
 export const whiteLabel = {
