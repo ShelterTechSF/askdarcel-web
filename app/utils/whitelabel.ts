@@ -48,7 +48,7 @@ configurations.appImages = {
     icon,
   },
   MOHCD_DOMAIN: {
-    background:BackgroundImage,
+    background: BackgroundImage,
     logoLarge: SFFamiliesLogo,
     logoSmall: SFFamiliesLogo,
     algolia: SearchByAlgoliaImage,
