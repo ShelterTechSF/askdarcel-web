@@ -14,15 +14,15 @@ declare const configurations: any;
 
 // Configure title
 configurations.title = {
-  SFFAMILIES_DOMAIN: 'SF Service Guide',
-  MOHCD_DOMAIN: 'SF Families',
+  SFFAMILIES_DOMAIN: 'SF Families',
+  MOHCD_DOMAIN: 'SF Service Guide',
   default: 'AskDarcel',
 };
 
 // Configure site url
 configurations.siteUrl = {
-  SFFAMILIES_DOMAIN: 'https://sfserviceguide.org',
-  MOHCD_DOMAIN: 'https://sffamilies.sfserviceguide.org/',
+  SFFAMILIES_DOMAIN: 'https://sffamilies.sfserviceguide.org/',
+  MOHCD_DOMAIN: 'https://sfserviceguide.org',
   default: 'https://askdarcel.org',
 };
 
@@ -41,16 +41,16 @@ declare const require: any;
 configurations.appImages = {
   SFFAMILIES_DOMAIN: {
     background: BackgroundImage,
-    logoLarge: SFServiceLogo,
-    logoSmall: SFServiceLogo,
+    logoLarge: SFFamiliesLogo,
+    logoSmall: SFFamiliesLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
     icon,
   },
   MOHCD_DOMAIN: {
     background: BackgroundImage,
-    logoLarge: SFFamiliesLogo,
-    logoSmall: SFFamiliesLogo,
+    logoLarge: SFServiceLogo,
+    logoSmall: SFServiceLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
     icon,
