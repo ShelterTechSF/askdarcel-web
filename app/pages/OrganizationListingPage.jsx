@@ -78,6 +78,7 @@ class BaseOrganizationListingPage extends React.Component {
 
 
   render() {
+    const { title } = whiteLabel;
     const { resource } = this.state;
 
     // Use getter here because resource is undefined on first render because componentDidMount runs
@@ -94,7 +95,7 @@ class BaseOrganizationListingPage extends React.Component {
       <div>
         <Helmet>
           <title>
-            {`${resource.name} | ${whiteLabel.title}`}
+            {`${resource.name} | ${title}`}
           </title>
           <meta name="description" content={resource.long_description} />
         </Helmet>

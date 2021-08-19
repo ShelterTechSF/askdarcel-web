@@ -8,7 +8,7 @@ import config from '../config';
 
 // Use url to get key of config object
 // @ts-ignore
-private const configKey = Object.keys(config).find((key) => config[key] === window.location.host) || 'default';
+const configKey = Object.keys(config).find((key) => config[key] === window.location.host) || 'default';
 declare const configurations: any;
 
 // Configure title
