@@ -4,7 +4,7 @@ import { whiteLabel } from '../../../utils/whitelabel';
 import './Footer.scss';
 
 function Footer() {
-  const { title } = whiteLabel
+  const { title } = whiteLabel;
 
   return (
     <footer className="site-footer" role="contentinfo">

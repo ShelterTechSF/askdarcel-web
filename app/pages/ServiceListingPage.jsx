@@ -19,7 +19,7 @@ import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import 'react-tippy/dist/tippy.css';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
-import { getSiteTitle } from '../utils/whitelabel';
+import { whiteLabel } from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
 const getServiceLocations = (service, resource, recurringSchedule) => {
@@ -71,6 +71,7 @@ class ServicePage extends React.Component {
 
 
   render() {
+    const { title } = whiteLabel;
     const { activeService: service } = this.props;
     if (!service) { return <Loader />; }
 
@@ -81,7 +82,7 @@ class ServicePage extends React.Component {
       <div>
         <Helmet>
           <title>
-            {`${service.name} | ${getSiteTitle()}`}
+            {`${service.name} | ${title}`}
           </title>
           <meta name="description" content={service.long_description} />
         </Helmet>
