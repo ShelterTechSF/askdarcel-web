@@ -35,7 +35,6 @@ icons.keys().forEach((key) => { iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg
 
 // @ts-ignore
 const icon = (name) => iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
-declare const require: any;
 
 // Configure images
 configurations.appImages = {
