@@ -11,11 +11,11 @@ Category.propTypes = {
 
 const ResourceCategories = ({ categories }) => {
   const uniqueCategories = _.uniqBy(categories, 'id');
-  return (
+  return categories?.length ? (
     <span className="categories">
       {uniqueCategories.map(cat => <Category key={cat.id} category={cat.name} />)}
     </span>
-  );
+  ) : null;
 };
 
 ResourceCategories.propTypes = {

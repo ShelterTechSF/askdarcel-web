@@ -25,6 +25,7 @@ export interface Organization {
   long_description: string|null
   notes: Note[]
   phones: PhoneNumber[]
+  recurringSchedule: any
   schedule: Schedule
   services: Service[]
   short_description: string|null
@@ -41,7 +42,7 @@ export interface Organization {
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const getResource = (id: number) => get(`/api/resources/${id}`)
+export const fetchOrganization = (id: number): Promise<Organization> => get(`/api/resources/${id}`)
   .then(({ resource }: { resource: Organization }) => {
     const recurringSchedule = parseAPISchedule(resource.schedule);
     const services = resource.services.map(service => {
@@ -57,5 +58,17 @@ export const getResource = (id: number) => get(`/api/resources/${id}`)
       ...resource,
       recurringSchedule,
       services,
-    };
+    } as any;
   });
+
+export const getResourceLocations = (org: Organization) => {
+  const { addresses } = org;
+  if (!addresses || !addresses.length) return null;
+
+  return addresses.map(address => ({
+    id: address.id,
+    address,
+    name: org.name,
+    recurringSchedule: org.recurringSchedule,
+  }));
+};

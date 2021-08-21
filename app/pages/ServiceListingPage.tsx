@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import 'react-tippy/dist/tippy.css';
 import {
   ActionSidebar,
   ServiceAttribution,

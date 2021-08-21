@@ -1,6 +1,6 @@
 import { ScheduleDay } from './Meta';
 
-export type ChangeRequest = any
+export type ChangeRequest = any // TODO
 export type ChangeRequestParams = ScheduleDayChangeRequestParams
 
 interface ScheduleDayChangeRequestParams {
