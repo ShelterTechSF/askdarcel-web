@@ -1,13 +1,12 @@
 import { get } from '../utils/DataService';
-import { parseAPISchedule } from '../utils/transformSchedule';
 import type { Service } from './Service';
+import { Schedule, shouldInheritSchedule, parseAPISchedule } from './Schedule';
+import { RecurringSchedule } from './RecurringSchedule';
 import {
   Address,
   Category,
   Note,
   PhoneNumber,
-  Schedule,
-  shouldInheritSchedule,
 } from './Meta';
 
 // An Organization used to be called a 'Resource', and represents
@@ -26,7 +25,7 @@ export interface Organization {
   long_description: string | null
   notes: Note[]
   phones: PhoneNumber[]
-  recurringSchedule: any
+  recurringSchedule: RecurringSchedule
   schedule: Schedule
   services: Service[]
   short_description: string | null

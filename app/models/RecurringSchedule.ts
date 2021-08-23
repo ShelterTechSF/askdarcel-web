@@ -1,11 +1,24 @@
 /**
  * Data structures used for consistently representing time throughout the app.
  */
-import { minBy, sortBy } from 'lodash';
+import { minBy, sortBy, invert } from 'lodash';
 
-import {
-  DAYS_IN_WEEK, HOURS_IN_DAY, INT_TO_DAY, MINUTES_IN_HOUR,
-} from './constants';
+// WARNING: This must match Moment.js's day of week to integer mapping.
+export const DAY_TO_INT = Object.freeze({
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+});
+
+export const INT_TO_DAY = Object.freeze(invert(DAY_TO_INT));
+
+export const DAYS_IN_WEEK = 7;
+export const HOURS_IN_DAY = 24;
+export const MINUTES_IN_HOUR = 60;
 
 
 const MINUTES_IN_WEEK = MINUTES_IN_HOUR * HOURS_IN_DAY * DAYS_IN_WEEK;
@@ -18,7 +31,7 @@ const MINUTES_IN_WEEK = MINUTES_IN_HOUR * HOURS_IN_DAY * DAYS_IN_WEEK;
  * @param {Array<RecurringInterval>}
  * @returns {Array<RecurringInterval>}
  */
-const sortIntervals = intervals => (
+const sortIntervals = (intervals: RecurringInterval[]) => (
   sortBy(intervals, [
     i => i.opensAt.day,
     i => i.opensAt.hour,
@@ -35,14 +48,12 @@ export class Duration {
    * Constructor for Duration. This is not meant to be used as a public method.
    * Use one of the static method constructors instead.
    */
-  constructor(minutes) {
-    this.minutes = minutes;
-  }
+  constructor(public minutes: number) {}
 
   /**
    * Create duration from minutes.
    */
-  static fromMinutes(minutes) {
+  static fromMinutes(minutes: number) {
     return new Duration(minutes);
   }
 

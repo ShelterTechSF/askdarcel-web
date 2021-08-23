@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Duration, RecurringSchedule, RecurringTime } from '../../utils/RecurringSchedule';
+import { Duration, RecurringSchedule, RecurringTime } from '../../models';
 
 const STATUS_CLOSED = 'status-red';
 const STATUS_OPEN = 'status-green';

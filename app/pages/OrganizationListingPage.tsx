@@ -24,7 +24,7 @@ import { fetchOrganization, getResourceLocations, Organization } from '../models
 // Page at /organization/123
 export const OrganizationListingPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [org, setOrg] = useState<Organization|null>(null);
+  const [org, setOrg] = useState<Organization | null>(null);
 
   useEffect(() => {
     fetchOrganization(id as any)

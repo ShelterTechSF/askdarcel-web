@@ -1,11 +1,30 @@
-/**
- * Helper functions for transforming data from the API into easier to use data
- * structures.
- */
 import * as Sentry from '@sentry/browser';
+import type { Service } from './Service';
 import {
-  DAY_TO_INT, DAYS_IN_WEEK, MINUTES_IN_HOUR, RecurringTime, RecurringSchedule, RecurringInterval,
+  RecurringTime,
+  RecurringSchedule,
+  RecurringInterval,
+  DAY_TO_INT,
+  MINUTES_IN_HOUR,
+  DAYS_IN_WEEK,
 } from './RecurringSchedule';
+
+export interface Schedule {
+  id: number
+  hours_known: boolean
+  schedule_days: ScheduleDay[]
+}
+
+export interface ScheduleDay {
+  id: number
+  day: keyof typeof DAY_TO_INT
+  opens_at: number | null
+  closes_at: number | null
+}
+
+export const shouldInheritSchedule = (service: Service) => (
+  service.schedule && service.schedule.schedule_days.length > 0
+);
 
 /**
  * Convert time from concatenated hours-minutes integer format to hour and
@@ -21,7 +40,7 @@ import {
  * @returns {object} - An object with an `hour` property and a `minute`
  *  property, both represented as integers.
  */
-export const parseConcatenatedIntegerTime = integerTime => {
+export const parseConcatenatedIntegerTime = (integerTime: number) => {
   try {
     // This algorithm is super hacky and slow, as it uses strings to separate the
     // hours digits from the minutes digits.
@@ -38,9 +57,9 @@ export const parseConcatenatedIntegerTime = integerTime => {
 };
 
 /** Transform API ScheduleDay into a RecurringInterval. */
-const parseAPIScheduleDay = apiScheduleDay => {
-  const opensAtTime = parseConcatenatedIntegerTime(apiScheduleDay.opens_at);
-  const closesAtTime = parseConcatenatedIntegerTime(apiScheduleDay.closes_at);
+const parseAPIScheduleDay = (apiScheduleDay: ScheduleDay) => {
+  const opensAtTime = parseConcatenatedIntegerTime(apiScheduleDay.opens_at || 0);
+  const closesAtTime = parseConcatenatedIntegerTime(apiScheduleDay.closes_at || 0);
   if (opensAtTime === null || closesAtTime === null) {
     Sentry.captureMessage(`ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`);
     return null;
@@ -65,7 +84,7 @@ const parseAPIScheduleDay = apiScheduleDay => {
 };
 
 /** Transform API Schedule into a RecurringSchedule. */
-export const parseAPISchedule = apiSchedule => new RecurringSchedule({
+export const parseAPISchedule = (apiSchedule: Schedule) => new RecurringSchedule({
   intervals: apiSchedule.schedule_days
     .map(apiScheduleDay => parseAPIScheduleDay(apiScheduleDay))
     .filter(interval => interval),

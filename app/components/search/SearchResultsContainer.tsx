@@ -6,7 +6,7 @@ import Filtering from './Filtering';
 import SearchTable from './SearchTable';
 import SearchMap from './SearchMap';
 import './SearchResultsContainer.scss';
-import { parseAlgoliaSchedule } from '../../utils/transformSchedule';
+import { parseAlgoliaSchedule } from '../../models';
 
 
 /**

@@ -1,4 +1,4 @@
-import { ScheduleDay } from './Meta';
+import { ScheduleDay } from './Schedule';
 
 export type ChangeRequest = Record<string, any>
 export type ChangeRequestParams = ScheduleDayChangeRequestParams

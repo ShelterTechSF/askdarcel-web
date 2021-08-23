@@ -1,14 +1,12 @@
 import { get } from '../utils/DataService';
-import { parseAPISchedule } from '../utils/transformSchedule';
-import { Organization } from './Organization'; // eslint-disable-line import/no-cycle
+import type { Organization } from './Organization';
+import { Schedule, shouldInheritSchedule, parseAPISchedule } from './Schedule';
 import {
   Address,
   Category,
   Eligibility,
   Note,
   Program,
-  Schedule,
-  shouldInheritSchedule,
 } from './Meta';
 
 // A Service is provided by an Organization

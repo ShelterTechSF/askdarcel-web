@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
-import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import { images } from 'assets';
+import { parseAlgoliaSchedule } from '../../../models';
 import styles from './SearchResults.module.scss';
 import Texting from '../../../components/Texting';
 
