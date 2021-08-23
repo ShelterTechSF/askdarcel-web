@@ -71,7 +71,8 @@ describe('Service Page', () => {
           .concat(service.resource.schedule.schedule_days)
           .filter(d => d.day === 'Sunday' || (d.opens_at === 800 && d.closes_at === 1000))
           .forEach(d => {
-            cy.request('POST', `/api/schedule_days/${d.id}/change_requests`, { closes_at: null, opens_at: null } as Partial<ScheduleDay>)
+            const change: Partial<ScheduleDay> = { closes_at: null, opens_at: null };
+            cy.request('POST', `/api/schedule_days/${d.id}/change_requests`, change)
               .its('status').should('eq', 201);
           });
 
