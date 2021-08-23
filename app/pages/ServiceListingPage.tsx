@@ -108,23 +108,23 @@ export const ServiceListingPage = () => {
   );
 };
 
+type ServiceListingSectionProps = { title: string } & React.HTMLProps<HTMLDivElement>
+
 // A title with the content of a section
-export const ServiceListingSection = ({ children, title, ...props }: {
-  children: React.ReactNode
-  title: string
-} & React.HTMLProps<HTMLDivElement>) => (
+export const ServiceListingSection = (
+  { children, title, ...props }: ServiceListingSectionProps,
+) => (
   <section {...props}>
     <h2>{title}</h2>
     {children}
   </section>
 );
 
+type ServiceProgramDetailsProps = { service: Service, organization: Organization }
+
 // TODO Implement rendering/popover when programs exist
-// Details if the service is part of a larger program, and the oorganization that provides it
-export const ServiceProgramDetails = ({ service, organization }: {
-  service: Service
-  organization: Organization
-}) => (
+// Details if the service is part of a larger program, and the organization that provides it
+export const ServiceProgramDetails = ({ service, organization }: ServiceProgramDetailsProps) => (
   <p>
     A service
     { service.program ? ` in the ${service.program.name} program` : null }
