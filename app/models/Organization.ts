@@ -22,7 +22,7 @@ export interface Organization {
   certified: boolean
   email: string | null
   featured: boolean
-  legal_status: any
+  legal_status: string | null
   long_description: string | null
   notes: Note[]
   phones: PhoneNumber[]
@@ -30,7 +30,7 @@ export interface Organization {
   services: Service[]
   short_description: string | null
   source_attribution: string
-  status: 'approved' // TODO
+  status: 'pending' | 'approved' | 'rejected' | 'inactive'
   updated_at: string
   verified_at: string | null
   website: string | null

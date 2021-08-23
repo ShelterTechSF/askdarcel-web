@@ -62,5 +62,4 @@ export interface Eligibility {
 export interface Program {
   id: number
   name: string
-  // TODO
 }

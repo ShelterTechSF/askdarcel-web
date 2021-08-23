@@ -18,24 +18,24 @@ export interface Service {
   addresses?: Address[]
   alsoNamed: string
   alternate_name: string | null
-  application_process: any
+  application_process: string | null
   categories: Category[]
-  certified_at: any
+  certified_at: string | null
   certified: boolean
   eligibilities: Eligibility[]
-  eligibility: any
+  eligibility: string
   email: string | null
   featured: boolean | null
   fee: string | null
-  interpretation_services: any
+  interpretation_services: string | null
   long_description: string
   notes: Note[]
   program: Program | null
-  recurringSchedule: any[]
+  recurringSchedule: any[] // TODO Move RecurringSchedule to models
   required_documents: any
   resource: Organization
   schedule: Schedule
-  source_attribution: any
+  source_attribution: string
   updated_at: string
   url: string | null
   verified_at: any
