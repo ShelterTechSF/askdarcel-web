@@ -1,12 +1,13 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
-import { Service, shouldInheritSchedule } from './Service'; // eslint-disable-line import/no-cycle
+import type { Service } from './Service';
 import {
   Address,
   Category,
   Note,
   PhoneNumber,
   Schedule,
+  shouldInheritSchedule,
 } from './Meta';
 
 // An Organization used to be called a 'Resource', and represents

@@ -1,3 +1,4 @@
+import type { Service } from './Service';
 
 export interface Address {
   id: number
@@ -35,6 +36,10 @@ export interface ScheduleDay {
   opens_at: number | null
   closes_at: number | null
 }
+
+export const shouldInheritSchedule = (service: Service) => (
+  service.schedule && service.schedule.schedule_days.length > 0
+);
 
 export interface Note {
   id: number

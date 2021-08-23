@@ -8,6 +8,7 @@ import {
   Note,
   Program,
   Schedule,
+  shouldInheritSchedule,
 } from './Meta';
 
 // A Service is provided by an Organization
@@ -16,7 +17,7 @@ export interface Service {
   name: string
   addresses?: Address[]
   alsoNamed: string
-  alternate_name?: string | null
+  alternate_name: string | null
   application_process: any
   categories: Category[]
   certified_at: any
@@ -40,10 +41,6 @@ export interface Service {
   verified_at: any
   wait_time: any
 }
-
-export const shouldInheritSchedule = (service: Service) => (
-  service.schedule && service.schedule.schedule_days.length > 0
-);
 
 // TODO This should be serviceAtLocation
 export const getServiceLocations = (
