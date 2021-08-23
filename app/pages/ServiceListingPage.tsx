@@ -119,7 +119,7 @@ export const ServiceListingSection = (
   </section>
 );
 
-type ServiceProgramDetailsProps = { service: Service, organization: Organization }
+type ServiceProgramDetailsProps = { service: Service; organization: Organization }
 
 // TODO Implement rendering/popover when programs exist
 // Details if the service is part of a larger program, and the organization that provides it
@@ -139,7 +139,7 @@ export const ServiceDetailsTableSection = ({ service }: { service: Service }) =>
   return details.length ? (
     <ServiceListingSection title="Service Details" data-cy="service-details-section">
       <Datatable
-        rowRenderer={(d: { title: string, value: string }) => (
+        rowRenderer={(d: { title: string; value: string }) => (
           <tr key={d.title}>
             <th>{d.title}</th>
             <td><ReactMarkdown className="rendered-markdown">{d.value}</ReactMarkdown></td>

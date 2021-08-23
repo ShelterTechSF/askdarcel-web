@@ -13,28 +13,28 @@ import {
 // An Organization used to be called a 'Resource', and represents
 // an institution that provides services to those experiencing homelessness
 export interface Organization {
-  id: number
-  name: string
-  addresses: Address[]
-  alternate_name: string | null
-  categories: Category[]
-  certified_at: string | null
-  certified: boolean
-  email: string | null
-  featured: boolean
-  legal_status: string | null
-  long_description: string | null
-  notes: Note[]
-  phones: PhoneNumber[]
-  recurringSchedule: any
-  schedule: Schedule
-  services: Service[]
-  short_description: string | null
-  source_attribution: string
-  status: 'pending' | 'approved' | 'rejected' | 'inactive'
-  updated_at: string
-  verified_at: string | null
-  website: string | null
+  id: number;
+  name: string;
+  addresses: Address[];
+  alternate_name: string | null;
+  categories: Category[];
+  certified_at: string | null;
+  certified: boolean;
+  email: string | null;
+  featured: boolean;
+  legal_status: string | null;
+  long_description: string | null;
+  notes: Note[];
+  phones: PhoneNumber[];
+  recurringSchedule: any;
+  schedule: Schedule;
+  services: Service[];
+  short_description: string | null;
+  source_attribution: string;
+  status: 'pending' | 'approved' | 'rejected' | 'inactive';
+  updated_at: string;
+  verified_at: string | null;
+  website: string | null;
 }
 
 /**
