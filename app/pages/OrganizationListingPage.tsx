@@ -49,7 +49,7 @@ export const OrganizationListingPage = () => {
           <div className="org--main--left">
             <header className="org--main--header">
               <div className="org--main--header--title-container">
-                <h1 className="org--main--header--title">{org.name}</h1>
+                <h1 data-cy="org-page-title" className="org--main--header--title">{org.name}</h1>
                 <MOHCDBadge resource={org} />
               </div>
               <div className="org--main--header--hours">
@@ -111,25 +111,23 @@ export const OrganizationListingPage = () => {
   );
 };
 
+type OrganizationListingSectionProps = { title: string } & React.HTMLProps<HTMLDivElement>
+
 // A title with the content of a section
-export const OrganizationListingSection = ({ children, title, className }: {
-  children: React.ReactNode
-  title: string
-  className: string
-}) => (
-  <section className={className}>
+export const OrganizationListingSection = (
+  { children, title, ...props }: OrganizationListingSectionProps,
+) => (
+  <section {...props}>
     <h2>{title}</h2>
     {children}
   </section>
 );
 
 // A title with the content of a section
-export const OrganizationSubheaderSection = ({ children, title, className }: {
-  children: React.ReactNode
-  title: string
-  className: string
-}) => (
-  <section className={className} id="services">
+export const OrganizationSubheaderSection = (
+  { children, title, ...props }: OrganizationListingSectionProps,
+) => (
+  <section {...props} id="services">
     <header className="service--section--header">
       <h4>{title}</h4>
     </header>
