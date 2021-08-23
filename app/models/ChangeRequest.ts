@@ -1,6 +1,13 @@
 import { ScheduleDay } from './Meta';
 
-export type ChangeRequest = Record<string, any>
+export interface ChangeRequest {
+  id: number;
+  field_changes: { field_name: string; field_value: string }[];
+  object_id: number;
+  status: 'pending' | 'approved' | 'rejected';
+  type: string;
+}
+
 export type ChangeRequestParams = ScheduleDayChangeRequestParams
 
 interface ScheduleDayChangeRequestParams {
