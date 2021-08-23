@@ -19,7 +19,7 @@ describe('Service Page', () => {
       expect(r.status).to.eq(201);
     });
 
-    cy.request(`/api/services/${serviceId}`).should((res: Cypress.Response<{ service: Service }>) => {
+    cy.request<{ service: Service }>(`/api/services/${serviceId}`).should(res => {
       expect(res.status).to.eq(200);
       expect(res.body.service).to.include.all.keys('id', 'name', 'long_description', 'email', 'application_process');
     });
@@ -30,11 +30,11 @@ describe('Service Page', () => {
       .get(page.BUTTON_PRINT).should('exist')
       .get(page.BUTTON_DIRECTIONS).should('exist')
 
-      .get(page.SERVICE_TITLE).first().should('contain.text', change_request.name)
-      .get(page.SECTION_ABOUT).first().should('exist')
-      .get(page.SECTION_DETAILS).first().should('contain.text', change_request.application_process)
-      .get(page.SECTION_DETAILS).first().should('contain.text', change_request.required_documents)
-      .get(page.SECTION_CONTACT).first().should('contain.text', change_request.email);
+      .get(page.SERVICE_TITLE).should('contain.text', change_request.name)
+      .get(page.SECTION_ABOUT).should('exist')
+      .get(page.SECTION_DETAILS).should('contain.text', change_request.application_process)
+      .get(page.SECTION_DETAILS).should('contain.text', change_request.required_documents)
+      .get(page.SECTION_CONTACT).should('contain.text', change_request.email);
   });
 
   it('should render the locations and hours section, then add and remove a schedule_day', () => {
@@ -45,7 +45,7 @@ describe('Service Page', () => {
         const { service } = res.body;
 
         // Ensure we already have schedule days
-        cy.get(page.SECTION_HOURS).first().should('exist')
+        cy.get(page.SECTION_HOURS).should('exist')
           .get(page.SECTION_HOURS_ROWS).should('have.length.above', 0);
 
         // Add a schedule day to the service
@@ -55,14 +55,14 @@ describe('Service Page', () => {
         );
         cy.request('POST', '/api/change_requests', cr).its('status').should('eq', 201)
           .visit(page.url(serviceId))
-          .get(page.SECTION_HOURS).first().should('exist')
+          .get(page.SECTION_HOURS).should('exist')
           .get(page.SECTION_HOURS_ROWS)
             // .should('have.length', service.schedule?.schedule_days?.length + 1)
             .should('contain.text', 'Sunday')
             .should('contain.text', '8:00 AM - 10:00 AM');
       });
 
-    cy.request(`/api/services/${serviceId}`).should((res: Cypress.Response<{ service: Service }>) => {
+      cy.request<{ service: Service }>(`/api/services/${serviceId}`).should(res => {
         expect(res.status).to.eq(200);
         const { service } = res.body;
 
@@ -77,7 +77,7 @@ describe('Service Page', () => {
 
         // Confirm we no longer show any Sundays or 8:00 to 10:00 times
         cy.visit(page.url(serviceId))
-          .get(page.SECTION_HOURS).first().should('exist')
+          .get(page.SECTION_HOURS).should('exist')
           .get(page.SECTION_HOURS_ROWS)
             .should('not.contain.text', 'Sunday')
             .should('not.contain.text', '8:00 AM - 10:00 AM');
