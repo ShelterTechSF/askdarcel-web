@@ -30,4 +30,4 @@ export const ResourceGuide = () => {
   );
 };
 
-export const ResourceGuideIFrame = ({ path, title }: { path: string, title: string }) => <iframe className={styles.resourceFrame} title={title} src={path} height="100%" />;
+export const ResourceGuideIFrame = ({ path, title }: { path: string; title: string }) => <iframe className={styles.resourceFrame} title={title} src={path} height="100%" />;

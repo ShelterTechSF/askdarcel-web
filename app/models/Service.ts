@@ -13,33 +13,33 @@ import {
 
 // A Service is provided by an Organization
 export interface Service {
-  id: number
-  name: string
-  addresses?: Address[]
-  alsoNamed: string
-  alternate_name: string | null
-  application_process: string | null
-  categories: Category[]
-  certified_at: string | null
-  certified: boolean
-  eligibilities: Eligibility[]
-  eligibility: string
-  email: string | null
-  featured: boolean | null
-  fee: string | null
-  interpretation_services: string | null
-  long_description: string
-  notes: Note[]
-  program: Program | null
-  recurringSchedule: any[] // TODO Move RecurringSchedule to models
-  required_documents: any
-  resource: Organization
-  schedule: Schedule
-  source_attribution: string
-  updated_at: string
-  url: string | null
-  verified_at: any
-  wait_time: any
+  id: number;
+  name: string;
+  addresses?: Address[];
+  alsoNamed: string;
+  alternate_name: string | null;
+  application_process: string | null;
+  categories: Category[];
+  certified_at: string | null;
+  certified: boolean;
+  eligibilities: Eligibility[];
+  eligibility: string;
+  email: string | null;
+  featured: boolean | null;
+  fee: string | null;
+  interpretation_services: string | null;
+  long_description: string;
+  notes: Note[];
+  program: Program | null;
+  recurringSchedule: any[]; // TODO Move RecurringSchedule to models
+  required_documents: any;
+  resource: Organization;
+  schedule: Schedule;
+  source_attribution: string;
+  updated_at: string;
+  url: string | null;
+  verified_at: any;
+  wait_time: any;
 }
 
 // TODO This should be serviceAtLocation
@@ -67,7 +67,7 @@ export const getServiceLocations = (
 };
 
 // Get all the fields from a service we should render
-export const generateServiceDetails = (service: Service): ({ title: string, value: any }[]) => [
+export const generateServiceDetails = (service: Service): ({ title: string; value: any }[]) => [
   ['How to Apply', service.application_process],
   ['Required Documents', service.required_documents],
   ['Fees', service.fee],
