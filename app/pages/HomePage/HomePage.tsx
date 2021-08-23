@@ -52,7 +52,7 @@ const generalResources = [{
 }];
 
 export const HomePage = () => {
-  const [resourceCount, setResourceCount] = useState<number|undefined>();
+  const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState('');
   const history = useHistory();
 

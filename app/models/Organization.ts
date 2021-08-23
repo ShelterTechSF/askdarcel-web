@@ -1,12 +1,13 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
-import { Service, shouldInheritSchedule } from './Service'; // eslint-disable-line import/no-cycle
+import type { Service } from './Service';
 import {
   Address,
   Category,
   Note,
   PhoneNumber,
   Schedule,
+  shouldInheritSchedule,
 } from './Meta';
 
 // An Organization used to be called a 'Resource', and represents
@@ -15,25 +16,25 @@ export interface Organization {
   id: number
   name: string
   addresses: Address[]
-  alternate_name: string|null
+  alternate_name: string | null
   categories: Category[]
-  certified_at: string|null
+  certified_at: string | null
   certified: boolean
-  email: string|null
+  email: string | null
   featured: boolean
-  legal_status: any
-  long_description: string|null
+  legal_status: string | null
+  long_description: string | null
   notes: Note[]
   phones: PhoneNumber[]
   recurringSchedule: any
   schedule: Schedule
   services: Service[]
-  short_description: string|null
+  short_description: string | null
   source_attribution: string
-  status: 'approved' // TODO
+  status: 'pending' | 'approved' | 'rejected' | 'inactive'
   updated_at: string
-  verified_at: string|null
-  website: string|null
+  verified_at: string | null
+  website: string | null
 }
 
 /**

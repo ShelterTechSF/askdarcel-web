@@ -25,7 +25,7 @@ import {
 // Page at /services/123
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [service, setService] = useState<Service|null>(null);
+  const [service, setService] = useState<Service | null>(null);
 
   useEffect(() => {
     fetchService(id as any)
@@ -49,16 +49,16 @@ export const ServiceListingPage = () => {
           <div className="listing--main--left">
             <header>
               <div className="org--main--header--title-container">
-                <h1>{service.name}</h1>
+                <h1 data-cy="service-page-title">{service.name}</h1>
                 <MOHCDBadge resource={resource} />
               </div>
               {/* {service.alsoNamed ? <p>Also Known As</p> : null} */}
-              <ServiceProgramDetails service={service} resource={resource} />
+              <ServiceProgramDetails service={service} organization={resource} />
             </header>
 
             <MobileActionBar resource={resource} service={service} />
 
-            <ServiceListingSection title="About This Service" className="listing--main--left--about">
+            <ServiceListingSection title="About This Service" data-cy="service-about-section">
               <ReactMarkdown className="rendered-markdown" source={service.long_description} />
               <ServiceAttribution
                 attribution={resource.source_attribution}
@@ -68,11 +68,11 @@ export const ServiceListingPage = () => {
 
             <ServiceDetailsTableSection service={service} />
 
-            <ServiceListingSection title="Contact Info" className="listing--main--left--contact">
+            <ServiceListingSection title="Contact Info" data-cy="service-contact-section">
               <TableOfContactInfo item={service} />
             </ServiceListingSection>
 
-            <ServiceListingSection title="Location and Hours" className="listing--main--left--hours">
+            <ServiceListingSection title="Location and Hours" data-cy="service-loc-hours-section">
               <MapOfLocations
                 locations={locations}
                 locationRenderer={(location: any) => (
@@ -83,7 +83,7 @@ export const ServiceListingPage = () => {
             </ServiceListingSection>
 
             {resource.services.length > 1 && (
-              <ServiceListingSection title="Other Services at this Location" className="listing--main--left--other--services">
+              <ServiceListingSection title="Other Services at this Location" data-cy="service-other-section">
                 {resource.services
                   .filter(srv => srv.id !== service.id)
                   .map(srv => (
@@ -107,29 +107,28 @@ export const ServiceListingPage = () => {
   );
 };
 
+type ServiceListingSectionProps = { title: string } & React.HTMLProps<HTMLDivElement>
+
 // A title with the content of a section
-export const ServiceListingSection = ({ children, title, className }: {
-  children: React.ReactNode
-  title: string
-  className: string
-}) => (
-  <section className={className}>
+export const ServiceListingSection = (
+  { children, title, ...props }: ServiceListingSectionProps,
+) => (
+  <section {...props}>
     <h2>{title}</h2>
     {children}
   </section>
 );
 
+type ServiceProgramDetailsProps = { service: Service, organization: Organization }
+
 // TODO Implement rendering/popover when programs exist
-// Details if the service is part of a larger program, and the oorganization that provides it
-export const ServiceProgramDetails = ({ service, resource }: {
-  service: Service
-  resource: Organization
-}) => (
+// Details if the service is part of a larger program, and the organization that provides it
+export const ServiceProgramDetails = ({ service, organization }: ServiceProgramDetailsProps) => (
   <p>
     A service
     { service.program ? ` in the ${service.program.name} program` : null }
     { ' offered by ' }
-    <ListingTitleLink type="org" listing={resource} />
+    <ListingTitleLink type="org" listing={organization} />
   </p>
 );
 
@@ -138,7 +137,7 @@ export const ServiceDetailsTableSection = ({ service }: { service: Service }) =>
   const details = useMemo(() => generateServiceDetails(service), [service]);
 
   return details.length ? (
-    <ServiceListingSection title="Service Details" className="listing--main--left--details">
+    <ServiceListingSection title="Service Details" data-cy="service-details-section">
       <Datatable
         rowRenderer={(d: { title: string, value: string }) => (
           <tr key={d.title}>

@@ -8,6 +8,7 @@ import {
   Note,
   Program,
   Schedule,
+  shouldInheritSchedule,
 } from './Meta';
 
 // A Service is provided by an Organization
@@ -16,34 +17,30 @@ export interface Service {
   name: string
   addresses?: Address[]
   alsoNamed: string
-  alternate_name?: string|null
-  application_process: any
+  alternate_name: string | null
+  application_process: string | null
   categories: Category[]
-  certified_at: any
+  certified_at: string | null
   certified: boolean
   eligibilities: Eligibility[]
-  eligibility: any
-  email: string|null
-  featured: boolean|null
-  fee: string|null
-  interpretation_services: any
+  eligibility: string
+  email: string | null
+  featured: boolean | null
+  fee: string | null
+  interpretation_services: string | null
   long_description: string
   notes: Note[]
-  program: Program|null
-  recurringSchedule: any[]
+  program: Program | null
+  recurringSchedule: any[] // TODO Move RecurringSchedule to models
   required_documents: any
   resource: Organization
   schedule: Schedule
-  source_attribution: any
+  source_attribution: string
   updated_at: string
-  url: string|null
+  url: string | null
   verified_at: any
   wait_time: any
 }
-
-export const shouldInheritSchedule = (service: Service) => (
-  service.schedule && service.schedule.schedule_days.length > 0
-);
 
 // TODO This should be serviceAtLocation
 export const getServiceLocations = (
