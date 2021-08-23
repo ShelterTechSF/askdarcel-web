@@ -26,7 +26,7 @@ import {
 // Page at /services/123
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [service, setService] = useState<Service|null>(null);
+  const [service, setService] = useState<Service | null>(null);
 
   useEffect(() => {
     fetchService(id as any)

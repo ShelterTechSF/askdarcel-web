@@ -16,27 +16,27 @@ export interface Service {
   name: string
   addresses?: Address[]
   alsoNamed: string
-  alternate_name?: string|null
+  alternate_name?: string | null
   application_process: any
   categories: Category[]
   certified_at: any
   certified: boolean
   eligibilities: Eligibility[]
   eligibility: any
-  email: string|null
-  featured: boolean|null
-  fee: string|null
+  email: string | null
+  featured: boolean | null
+  fee: string | null
   interpretation_services: any
   long_description: string
   notes: Note[]
-  program: Program|null
+  program: Program | null
   recurringSchedule: any[]
   required_documents: any
   resource: Organization
   schedule: Schedule
   source_attribution: any
   updated_at: string
-  url: string|null
+  url: string | null
   verified_at: any
   wait_time: any
 }

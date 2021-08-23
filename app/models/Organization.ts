@@ -15,24 +15,24 @@ export interface Organization {
   id: number
   name: string
   addresses: Address[]
-  alternate_name: string|null
+  alternate_name: string | null
   categories: Category[]
-  certified_at: string|null
+  certified_at: string | null
   certified: boolean
-  email: string|null
+  email: string | null
   featured: boolean
   legal_status: any
-  long_description: string|null
+  long_description: string | null
   notes: Note[]
   phones: PhoneNumber[]
   schedule: Schedule
   services: Service[]
-  short_description: string|null
+  short_description: string | null
   source_attribution: string
   status: 'approved' // TODO
   updated_at: string
-  verified_at: string|null
-  website: string|null
+  verified_at: string | null
+  website: string | null
 }
 
 /**

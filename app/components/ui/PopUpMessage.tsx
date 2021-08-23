@@ -13,6 +13,6 @@ export const PopUpMessage = ({ popUpMessage }: { popUpMessage: PopupMessageProp 
 
 interface PopupMessageProp {
   message: string
-  type: 'success'|'error'
+  type: 'success' | 'error'
   visible: boolean
 }

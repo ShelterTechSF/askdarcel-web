@@ -2,11 +2,11 @@
 export interface Address {
   id: number
   attention: string
-  name: string|null
+  name: string | null
   address_1: string
   address_2: string
-  address_3: string|null
-  address_4: string|null
+  address_3: string | null
+  address_4: string | null
   city: string
   state_province: string
   postal_code: string
@@ -32,8 +32,8 @@ export interface Schedule {
 export interface ScheduleDay {
   id: number
   day: string
-  opens_at: number|null
-  closes_at: number|null
+  opens_at: number | null
+  closes_at: number | null
 }
 
 export interface Note {
