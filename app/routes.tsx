@@ -43,7 +43,7 @@ export default () => (
     <Route path="/organizations/:id" component={OrganizationListingPage} />
     <Route path="/privacy-policy" component={PrivacyPolicyPage} />
     <Route path="/search" component={SearchResultsPage} />
-    <Route path="/services/:service" component={ServiceListingPage} />
+    <Route path="/services/:id" component={ServiceListingPage} />
     <Route path="/terms-of-service" component={TermsOfServicePage} />
     <Route path="/:categorySlug/form" component={ServiceDiscoveryForm} />
     <Route path="/:categorySlug/results" component={ServiceDiscoveryResults} />

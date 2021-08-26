@@ -24,6 +24,8 @@ import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
 import { getSiteTitle } from '../utils/whitelabel';
+// When this file is TS, this import will no longer throw a linting error
+import { getResource } from '../models'; // eslint-disable-line import/named
 
 const getResourceLocations = resource => {
   const { addresses } = resource;
@@ -52,7 +54,7 @@ class BaseOrganizationListingPage extends React.Component {
 
   loadResourceFromServer() {
     const { match: { params: { id } } } = this.props;
-    dataService.getResource(id).then(resource => {
+    getResource(id).then(resource => {
       this.setState({ resource });
     });
   }
