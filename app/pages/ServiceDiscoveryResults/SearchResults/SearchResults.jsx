@@ -8,7 +8,7 @@ import configurations from '../../../utils/whitelabel';
 import styles from './SearchResults.module.scss';
 import Texting from '../../../components/Texting';
 
-const { appImages } = configurations;
+const { appImages: icon } = configurations;
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -52,7 +52,7 @@ const SearchResult = ({ hit, index }) => {
 
   const texting = (
     <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggleTextingModal}>
-      <img src={appImages.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+      <img src={icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
       <div className={styles.sideLinkText}>Text me the info</div>
     </div>
   );
@@ -95,7 +95,7 @@ const SearchResult = ({ hit, index }) => {
           phoneNumber
           && (
             <div className={styles.sideLink}>
-              <img src={appImages.icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
+              <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
               <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
             </div>
           )
@@ -105,7 +105,7 @@ const SearchResult = ({ hit, index }) => {
           url
           && (
             <div className={styles.sideLink}>
-              <img src={appImages.icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+              <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
               <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Go to website</a>
             </div>
           )

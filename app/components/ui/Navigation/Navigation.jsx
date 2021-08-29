@@ -37,7 +37,9 @@ class Navigation extends React.Component {
   }
 
   render() {
-    const { title, siteUrl, appImages } = configurations;
+    const {
+      title, siteUrl, appImages: { logoSmall }, styles: { navLogoSFFamilies, siteNavSFFamilies },
+    } = configurations;
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
 
@@ -46,23 +48,21 @@ class Navigation extends React.Component {
     // sites, we want to just use an internal react-router Link to the root URL,
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
-    let logoLink;
-    if (title === 'SF Families') {
-      logoLink = (
-        <a className={styles.navLogoSFFamilies} href={siteUrl}>
-          <img src={appImages.logoSmall} alt={title} />
+
+    const logoLink = title === 'SF Families'
+      ? (
+        <a className={navLogoSFFamilies} href={siteUrl}>
+          <img src={logoSmall} alt={title} />
         </a>
-      );
-    } else {
-      logoLink = (
+      )
+      : (
         <Link className={styles.navLogo} to="/">
-          <img src={appImages.logoSmall} alt={title} />
+          <img src={logoSmall} alt={title} />
         </Link>
       );
-    }
 
     return (
-      <nav className={title === 'SF Families' ? styles.siteNavSFFamilies : styles.siteNav}>
+      <nav className={title === 'SF Families' ? siteNavSFFamilies : styles.siteNav}>
         <div className={styles.primaryRow}>
           <div className={styles.navLeft}>
             {logoLink}

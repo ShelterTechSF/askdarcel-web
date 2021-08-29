@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import * as typeformEmbed from '@typeform/embed';
 import configurations from '../../../../utils/whitelabel';
 
-const { appImages } = configurations;
-
 import styles from './ResourceCard.module.scss';
+
+const { appImages: { icon: appImageIcon } } = configurations;
 
 const openTypeform = (event, link) => {
   const typeformReference = typeformEmbed.makePopup(
@@ -49,7 +49,7 @@ const ResourceCard = ({ resource }) => {
       className={styles.card}
       {...anchorTagProps}
     >
-      <img src={appImages.icon(icon)} alt={name} className={styles.icon} />
+      <img src={appImageIcon(icon)} alt={name} className={styles.icon} />
       <span className={styles.name}>{name}</span>
     </a>
   );

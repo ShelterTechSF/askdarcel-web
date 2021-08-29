@@ -9,7 +9,7 @@ import configurations from '../../utils/whitelabel';
 
 import './MobileActionBar.scss';
 
-const { appImages } = configurations;
+const { appImages: icon } = configurations;
 
 const getMobileActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);
@@ -28,7 +28,7 @@ const getMobileActions = (resource, service) => {
 const renderButtonContent = action => (
   <div key={action.name} className="mobile-action-bar--button-content">
     <img
-      src={appImages.icon(`${action.icon}-blue`)}
+      src={icon(`${action.icon}-blue`)}
       alt={action.icon}
       className="mobile-action-bar--button-icon"
     />

@@ -13,7 +13,7 @@ import { addFeedback } from '../../../utils/DataService';
 import configurations from '../../../utils/whitelabel';
 import styles from './FeedbackModal.module.scss';
 
-const { appImages } = configurations;
+const { appImages: icon } = configurations;
 
 const FeedbackModal = ({ service, resource, closeModal }) => {
   const [vote, setVote] = useState('neither');
@@ -99,10 +99,10 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         tabIndex="0"
         onClick={closeModal}
       >
-        <img src={appImages.icon('close')} alt="close" />
+        <img src={icon('close')} alt="close" />
       </div>
       <div className={styles.feedbackHeader}>
-        <img src={appImages.icon('feedback-blue-header')} alt="feedback" />
+        <img src={icon('feedback-blue-header')} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
       <div className={styles.feedbackSubheader}>

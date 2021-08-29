@@ -23,7 +23,7 @@ import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
-import { whiteLabel } from '../utils/whitelabel';
+import configurations from '../utils/whitelabel';
 
 const getResourceLocations = resource => {
   const { addresses } = resource;
@@ -78,7 +78,7 @@ class BaseOrganizationListingPage extends React.Component {
 
 
   render() {
-    const { title } = whiteLabel;
+    const { title } = configurations;
     const { resource } = this.state;
 
     // Use getter here because resource is undefined on first render because componentDidMount runs

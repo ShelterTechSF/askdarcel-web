@@ -9,7 +9,7 @@ import configurations from '../../utils/whitelabel';
 
 import './ActionSidebar.scss';
 
-const { appImages } = configurations;
+const { appImages: icon } = configurations;
 
 const getSidebarActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);
@@ -28,7 +28,7 @@ const renderButtonContent = action => (
   <Fragment>
     <img
       className="action-sidebar--icon"
-      src={appImages.icon(`${action.icon}-gray`)}
+      src={icon(`${action.icon}-gray`)}
       alt={action.icon}
     />
     <span>{action.name}</span>

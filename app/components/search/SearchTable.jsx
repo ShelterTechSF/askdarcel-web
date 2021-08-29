@@ -6,7 +6,7 @@ import configurations from '../../utils/whitelabel';
 import SearchRow from './SearchRow';
 import './ResultsPagination.scss';
 
-const { appImages } = configurations;
+const { appImages: { algolia } } = configurations;
 
 const SearchTable = ({ hits, page, hitsPerPage }) => {
   const rows = hits.map((hit, index) => (
@@ -37,7 +37,7 @@ const SearchTable = ({ hits, page, hitsPerPage }) => {
         />
       </div>
       <div className="algolia-img-wrapper">
-        <img src={appImages.algolia} alt="Search by Algolia" />
+        <img src={algolia} alt="Search by Algolia" />
       </div>
     </div>
   );

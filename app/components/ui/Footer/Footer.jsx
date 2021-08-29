@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { whiteLabel } from '../../../utils/whitelabel';
+import configurations from '../../../utils/whitelabel';
 import './Footer.scss';
 
 function Footer() {
-  const { title } = whiteLabel;
+  const { title } = configurations;
 
   return (
     <footer className="site-footer" role="contentinfo">

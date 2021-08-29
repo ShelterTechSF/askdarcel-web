@@ -153,10 +153,10 @@ class App extends Component {
           <meta property="og:image:height" content="630" />
         </Helmet>
         {
-          title === 'SF Families' 
-          ? <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} /> 
-          : config.INTERCOM_APP_ID
-          && <Intercom appID={config.INTERCOM_APP_ID} /> 
+          title === 'SF Families'
+            ? <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />
+            : config.INTERCOM_APP_ID
+          && <Intercom appID={config.INTERCOM_APP_ID} />
         }
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}

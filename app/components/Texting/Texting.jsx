@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
-import { appImages } from '../../utils/whitelabel';
+import configurations from '../../utils/whitelabel';
 import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
 import FormView from './components/FormView';
 import Loader from '../ui/Loader';
 import SentView from './components/SentView';
 import ErrorView from './components/ErrorView';
+
+const { appImages: icon } = configurations;
 
 // Text resource informations to the user phone
 
@@ -65,7 +67,7 @@ const Texting = ({ closeModal, service, isShowing }) => {
         onClick={closeModal}
         type="button"
       >
-        <img src={appImages.icon('close')} alt="Close" />
+        <img src={icon('close')} alt="Close" />
       </button>
       { activeView }
     </ReactModal>
