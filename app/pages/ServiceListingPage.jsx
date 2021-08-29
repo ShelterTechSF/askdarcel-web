@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchService } from './actions/serviceActions';
 
 import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
@@ -13,12 +12,13 @@ import {
   TableOfContactInfo,
   TableOfOpeningTimes,
   MobileActionBar,
+  MOHCDBadge
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import 'react-tippy/dist/tippy.css';
-import MOHCDBadge from 'components/listing/MOHCDBadge';
+import { fetchService } from 'actions/serviceActions';
 import configurations from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation

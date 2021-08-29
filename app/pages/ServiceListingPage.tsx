@@ -23,7 +23,7 @@ import {
   Service,
 } from '../models';
 
-const { title } = configurations!;
+const { title:configurationsTitle  } = configurations!;
 
 // Page at /services/123
 export const ServiceListingPage = () => {
@@ -44,7 +44,7 @@ export const ServiceListingPage = () => {
   return (
     <div className="listing-container">
       <Helmet>
-        <title>{`${service.name} | ${title}`}</title>
+        <title>{`${service.name} | ${configurationsTitle}`}</title>
         <meta name="description" content={service.long_description} />
       </Helmet>
       <article className="listing" id="service">
