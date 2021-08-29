@@ -22,9 +22,9 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
     icon: any;
-  },
+  };
   styles?: any
-}
+};
 
 // Read only to force developer to modify configurations here, disallow changes at compile time
 const configurations: Partial<Record<Readonly<WhiteLabelSiteKey>, Readonly<WhiteLabelSite>>> = {};

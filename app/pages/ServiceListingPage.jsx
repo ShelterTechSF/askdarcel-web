@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchService } from 'actions/serviceActions';
+import { fetchService } from './actions/serviceActions';
 
 import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
