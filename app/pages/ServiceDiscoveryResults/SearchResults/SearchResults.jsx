@@ -8,7 +8,7 @@ import configurations from '../../../utils/whitelabel';
 import styles from './SearchResults.module.scss';
 import Texting from '../../../components/Texting';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that

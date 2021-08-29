@@ -13,7 +13,7 @@ import { addFeedback } from '../../../utils/DataService';
 import configurations from '../../../utils/whitelabel';
 import styles from './FeedbackModal.module.scss';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 const FeedbackModal = ({ service, resource, closeModal }) => {
   const [vote, setVote] = useState('neither');

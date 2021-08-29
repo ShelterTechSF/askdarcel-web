@@ -4,7 +4,7 @@ import { UPVOTE, DOWNVOTE } from './constants';
 import configurations from '../../../utils/whitelabel';
 import styles from './FeedbackSteps.module.scss';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 export const VoteButtons = ({ vote, onVoteChange }) => (
   <>

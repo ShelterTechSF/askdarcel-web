@@ -9,7 +9,7 @@ import Loader from '../ui/Loader';
 import SentView from './components/SentView';
 import ErrorView from './components/ErrorView';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 // Text resource informations to the user phone
 

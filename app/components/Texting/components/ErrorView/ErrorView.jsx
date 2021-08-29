@@ -2,7 +2,7 @@ import React from 'react';
 import configurations from '../../../../utils/whitelabel';
 import styles from './ErrorView.module.scss';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 // Error View: show Alert graphic and a friendly message
 const ErrorView = () => (

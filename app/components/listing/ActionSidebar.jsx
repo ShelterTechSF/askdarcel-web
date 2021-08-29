@@ -9,7 +9,7 @@ import configurations from '../../utils/whitelabel';
 
 import './ActionSidebar.scss';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 const getSidebarActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);

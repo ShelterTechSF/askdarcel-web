@@ -2,7 +2,7 @@ import React from 'react';
 import configurations from '../../../../utils/whitelabel';
 import styles from './SentView.module.scss';
 
-const { appImages: icon } = configurations;
+const { appImages: { icon } } = configurations;
 
 // Success sending view
 const SentView = () => (
