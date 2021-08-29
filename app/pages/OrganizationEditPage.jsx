@@ -626,6 +626,14 @@ class OrganizationEditPage extends React.Component {
           // Compute the added and removed addresses by comparing the original
           // address handles to the new address handles, and submit API requests
           // that add/remove addresses from the service.
+
+          // Special case: if addressHandles is undefined, then skip all the
+          // remaining logic, since the addresses on the service were not
+          // touched. This is important because without this early exit, the
+          // rest of this code will think that we are trying to remove all
+          // addresses from the service.
+          if (addressHandles === undefined) return;
+
           const originalService = resource.services.find(s => s.id === currentService.id);
           const oldAddressHandleSet = new Set(originalService.addressHandles);
           const newAddressHandleSet = new Set(addressHandles);

@@ -48,6 +48,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'semi', requireLast: true } }],
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/unbound-method': 'off',
@@ -107,6 +108,8 @@ module.exports = {
       files: ['cypress/**'],
       rules: {
         'newline-per-chained-call': 'off',
+        'lines-between-class-members': 'off',
+        'indent': 'off',
       },
     },
     // Node.js scripts

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { User } from '../index';
+import * as User from '../User';
 
 describe('User Model', () => {
   it('should set the current user location', () => {
