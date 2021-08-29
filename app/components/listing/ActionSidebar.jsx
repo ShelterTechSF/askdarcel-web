@@ -5,9 +5,11 @@ import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { getResourceActions } from 'utils/ResourceActions';
 import FeedbackModal from './feedback/FeedbackModal';
-import { images } from '../../assets';
+import configurations from '../../utils/whitelabel';
 
 import './ActionSidebar.scss';
+
+const { appImages } = configurations;
 
 const getSidebarActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);
@@ -26,7 +28,7 @@ const renderButtonContent = action => (
   <Fragment>
     <img
       className="action-sidebar--icon"
-      src={images.icon(`${action.icon}-gray`)}
+      src={appImages.icon(`${action.icon}-gray`)}
       alt={action.icon}
     />
     <span>{action.name}</span>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
-import { images } from 'assets';
+import { appImages } from '../../utils/whitelabel';
 import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
 import FormView from './components/FormView';
@@ -65,7 +65,7 @@ const Texting = ({ closeModal, service, isShowing }) => {
         onClick={closeModal}
         type="button"
       >
-        <img src={images.icon('close')} alt="Close" />
+        <img src={appImages.icon('close')} alt="Close" />
       </button>
       { activeView }
     </ReactModal>

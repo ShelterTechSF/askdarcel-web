@@ -8,7 +8,7 @@ import Navigation from './ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from '../utils/index';
-import { whiteLabel } from '../utils/whitelabel';
+import configurations from '../utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from '../config';
 import HamburgerMenu from './ui/HamburgerMenu';
@@ -129,7 +129,7 @@ class App extends Component {
   }
 
   render() {
-    const { title, siteUrl, isSFFamiliesSite } = whiteLabel;
+    const { title, siteUrl } = configurations!;
     const { hamburgerMenuIsOpen } = this.state;
     const { popUpMessage } = this.props;
 
@@ -152,11 +152,12 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {!isSFFamiliesSite
-          && config.INTERCOM_APP_ID
-          && <Intercom appID={config.INTERCOM_APP_ID} />}
-        {isSFFamiliesSite
-          && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
+        {
+          title === 'SF Families' 
+          ? <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} /> 
+          : config.INTERCOM_APP_ID
+          && <Intercom appID={config.INTERCOM_APP_ID} /> 
+        }
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
           outerContainerId={outerContainerId}
@@ -166,10 +167,10 @@ class App extends Component {
         />
         <div id={pageWrapId}>
           <Navigation
-            showSearch={!isSFFamiliesSite}
+            showSearch={title !== 'SF Families'}
             toggleHamburgerMenu={this.toggleHamburgerMenu}
           />
-          {!isSFFamiliesSite && <Banner />}
+          {title !== 'SF Families' && <Banner />}
           <div className="container">
             <Routes />
           </div>

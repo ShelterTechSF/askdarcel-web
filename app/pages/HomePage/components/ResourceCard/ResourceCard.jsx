@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import * as typeformEmbed from '@typeform/embed';
-import { images } from 'assets';
+import configurations from '../../../../utils/whitelabel';
+
+const { appImages } = configurations;
 
 import styles from './ResourceCard.module.scss';
 
@@ -47,7 +49,7 @@ const ResourceCard = ({ resource }) => {
       className={styles.card}
       {...anchorTagProps}
     >
-      <img src={images.icon(icon)} alt={name} className={styles.icon} />
+      <img src={appImages.icon(icon)} alt={name} className={styles.icon} />
       <span className={styles.name}>{name}</span>
     </a>
   );

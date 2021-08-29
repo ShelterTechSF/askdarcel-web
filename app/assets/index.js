@@ -1,5 +1,8 @@
-import { whiteLabel } from '../utils/whitelabel';
+const icons = require.context('../assets/img', true, /ic-.*\.(png|svg)$/i);
+const iconPathMap = {};
 
-const images = whiteLabel.appImages;
+icons.keys().forEach((key) => { iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg|png)/)[1]] = icons(key); });
 
-export { images };
+const icon = (name) => iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
+
+export { default } from './';

@@ -5,71 +5,79 @@ import SFFamiliesLogo from '../assets/img/sf-families.svg';
 import SFServiceLogo from '../assets/img/sf-service.svg';
 import SFSeal from '../assets/img/sf-seal.png';
 import config from '../config';
+import icon from '../assets'
 
-// Use url to get key of config object
-// @ts-ignore
-const configKey = Object.keys(config).find((key) => config[key] === window.location.host) || 'default';
-// @ts-ignore
-let configurations: any;
+// Include new white label here
+type WhiteLabelSiteKey = "default" | "SFServiceGuide" | "SFFamilies";
 
-// Configure title
-configurations.title = {
-  SFFAMILIES_DOMAIN: 'SF Families',
-  MOHCD_DOMAIN: 'SF Service Guide',
-  default: 'AskDarcel',
-};
+interface WhiteLabelSite {
+  title: string;
+  siteUrl: string;
+  appImages: { 
+    background: string,
+     // For appImages, logoLarge and logoSmall are usually different between each white label
+    logoLarge: string,
+    logoSmall: string,
+    algolia: string,
+    mohcdSeal: string, 
+    icon: (arg0: string) => ({Object: string})
+  };
+}
 
-// Configure site url
-configurations.siteUrl = {
-  SFFAMILIES_DOMAIN: 'https://sffamilies.sfserviceguide.org/',
-  MOHCD_DOMAIN: 'https://sfserviceguide.org',
-  default: 'https://askdarcel.org',
-};
+// Read only to force developer to modify configurations here, disallow changes at compile time
+const configurations: Partial<Record<Readonly<WhiteLabelSiteKey>, Readonly<WhiteLabelSite>>> = {}; 
 
-// @ts-ignore
-const icons = require.context('../assets/img', true, /ic-.*\.(png|svg)$/i);
-const iconPathMap = {};
+// Include a domain in config.js
+function determineWhiteLabelSite(): WhiteLabelSiteKey {
+  if (config.SFFAMILIES_DOMAIN === window.location.host) return "SFFamilies";
+  if (config.MOHCD_DOMAIN === window.location.host) return "SFServiceGuide";
+  return "default";
+}
 
-// @ts-ignore
-icons.keys().forEach((key) => { iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg|png)/)[1]] = icons(key); });
+const configKey = determineWhiteLabelSite();
 
-// @ts-ignore
-const icon = (name) => iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
-
-// Configure images
-configurations.appImages = {
-  SFFAMILIES_DOMAIN: {
-    background: BackgroundImage,
+// Specify what is viewed in each white label
+configurations.SFFamilies = {
+  title: 'SF Families',
+  siteUrl: 'https://sffamilies.sfserviceguide.org/',
+  appImages: {     
+    background: BackgroundImage, 
     logoLarge: SFFamiliesLogo,
     logoSmall: SFFamiliesLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon,
-  },
-  MOHCD_DOMAIN: {
+    icon
+  }
+}
+
+configurations.SFServiceGuide = {
+  title: 'SF Service Guide',
+  siteUrl: 'https://sfserviceguide.org',
+  appImages: {     
     background: BackgroundImage,
     logoLarge: SFServiceLogo,
     logoSmall: SFServiceLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon,
-  },
-  default: {
+    icon
+  }
+}
+
+configurations.default = {
+  title: 'AskDarcel',
+  siteUrl: 'https://askdarcel.org',
+  appImages: {     
     background: BackgroundImage,
     logoLarge: AskDarcelImage,
     logoSmall: AskDarcelImage,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon,
-  },
-};
+    icon
+  }
+}
 
-/** Whether we should display the SF Service Guide branded version of the site */
-const isSFFamiliesSite = configKey === config.SFFAMILIES_DOMAIN;
+// Disallow changes at run time
+Object.freeze(configurations);
+Object.freeze(configurations[configKey]?.appImages);
 
-export const whiteLabel = {
-  title: configurations.title[configKey],
-  siteUrl: configurations.siteUrl[configKey],
-  appImages: configurations.appImages[configKey],
-  isSFFamiliesSite,
-};
+export default configurations[configKey]

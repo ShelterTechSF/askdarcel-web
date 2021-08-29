@@ -2,9 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
-import { images } from 'assets';
+import configurations from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
-import { whiteLabel } from '../../../utils/whitelabel';
 
 class Navigation extends React.Component {
   constructor() {
@@ -38,7 +37,7 @@ class Navigation extends React.Component {
   }
 
   render() {
-    const { title, siteUrl, isSFFamiliesSite } = whiteLabel;
+    const { title, siteUrl, appImages } = configurations;
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
 
@@ -48,22 +47,22 @@ class Navigation extends React.Component {
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
     let logoLink;
-    if (isSFFamiliesSite) {
+    if (title === 'SF Families') {
       logoLink = (
         <a className={styles.navLogoSFFamilies} href={siteUrl}>
-          <img src={images.logoSmall} alt={title} />
+          <img src={appImages.logoSmall} alt={title} />
         </a>
       );
     } else {
       logoLink = (
         <Link className={styles.navLogo} to="/">
-          <img src={images.logoSmall} alt={title} />
+          <img src={appImages.logoSmall} alt={title} />
         </Link>
       );
     }
 
     return (
-      <nav className={isSFFamiliesSite ? styles.siteNavSFFamilies : styles.siteNav}>
+      <nav className={title === 'SF Families' ? styles.siteNavSFFamilies : styles.siteNav}>
         <div className={styles.primaryRow}>
           <div className={styles.navLeft}>
             {logoLink}
@@ -87,7 +86,7 @@ class Navigation extends React.Component {
               )
             }
           </div>
-          {!isSFFamiliesSite
+          {title !== 'SF Families'
             && (
               <Fragment>
                 <div className={styles.mobileNavigation}>

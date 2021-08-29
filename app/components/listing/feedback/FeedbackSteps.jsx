@@ -1,8 +1,10 @@
 import React from 'react';
 import { UPVOTE, DOWNVOTE } from './constants';
 
-import { images } from '../../../assets';
+import configurations from '../../../utils/whitelabel';
 import styles from './FeedbackSteps.module.scss';
+
+const { appImages } = configurations;
 
 export const VoteButtons = ({ vote, onVoteChange }) => (
   <>
@@ -12,7 +14,7 @@ export const VoteButtons = ({ vote, onVoteChange }) => (
     <div className={styles.voteIcons}>
       <div onClick={() => onVoteChange(UPVOTE)} role="button" tabIndex="-1">
         <img
-          src={images.icon(`upvote${vote === UPVOTE ? '-active' : ''}`)}
+          src={appImages.icon(`upvote${vote === UPVOTE ? '-active' : ''}`)}
           alt="upvote"
         />
       </div>
@@ -22,7 +24,7 @@ export const VoteButtons = ({ vote, onVoteChange }) => (
         tabIndex="-2"
       >
         <img
-          src={images.icon(`downvote${vote === DOWNVOTE ? '-active' : ''}`)}
+          src={appImages.icon(`downvote${vote === DOWNVOTE ? '-active' : ''}`)}
           alt="downvote"
         />
       </div>
