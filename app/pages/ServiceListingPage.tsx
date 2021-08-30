@@ -23,7 +23,7 @@ import {
   Service,
 } from '../models';
 
-const { title:configurationsTitle } = configurations!;
+const { title: configurationsTitle } = configurations!;
 
 // Page at /services/123
 export const ServiceListingPage = () => {
