@@ -12,13 +12,13 @@ import {
   TableOfContactInfo,
   TableOfOpeningTimes,
   MobileActionBar,
-  MOHCDBadge
+  MOHCDBadge,
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import 'react-tippy/dist/tippy.css';
-import { fetchService } from 'actions/serviceActions';
+import { fetchService } from '../actions/serviceActions';
 import configurations from '../utils/whitelabel';
 
 // TODO This should be serviceAtLocation
