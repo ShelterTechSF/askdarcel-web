@@ -5,6 +5,10 @@ import qs from 'qs';
 import configurations from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
+const {
+  title, siteUrl, appImages: { logoSmall }, styles: { navLogoSFFamilies, siteNavSFFamilies },
+} = configurations;
+
 class Navigation extends React.Component {
   constructor() {
     super();
@@ -37,9 +41,6 @@ class Navigation extends React.Component {
   }
 
   render() {
-    const {
-      title, siteUrl, appImages: { logoSmall }, styles: { navLogoSFFamilies, siteNavSFFamilies },
-    } = configurations;
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
 
