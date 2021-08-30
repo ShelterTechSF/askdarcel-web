@@ -6,7 +6,7 @@ import configurations from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
 const {
-  title, siteUrl, appImages: { logoSmall }, styles: { navLogoSFFamilies, siteNavSFFamilies },
+  title, siteUrl, appImages: { logoSmall }, styles: configurationsStyles,
 } = configurations;
 
 class Navigation extends React.Component {
@@ -52,7 +52,7 @@ class Navigation extends React.Component {
 
     const logoLink = title === 'SF Families'
       ? (
-        <a className={navLogoSFFamilies} href={siteUrl}>
+        <a className={configurationsStyles?.navLogoSFFamilies} href={siteUrl}>
           <img src={logoSmall} alt={title} />
         </a>
       )
@@ -63,7 +63,7 @@ class Navigation extends React.Component {
       );
 
     return (
-      <nav className={title === 'SF Families' ? siteNavSFFamilies : styles.siteNav}>
+      <nav className={title === 'SF Families' ? configurationsStyles?.siteNavSFFamilies : styles.siteNav}>
         <div className={styles.primaryRow}>
           <div className={styles.navLeft}>
             {logoLink}
