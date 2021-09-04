@@ -70,7 +70,7 @@ export const OrganizationListingPage = () => {
               <ReactMarkdown className="rendered-markdown" source={org.long_description || org.short_description || 'No Description available'} />
             </OrganizationListingSection>
 
-            <OrganizationSubheaderSection title="Services" className="service--section">
+            <OrganizationSubheaderSection title="Services" className="service--section" data-cy="org-services-section">
               <Services services={org.services} />
             </OrganizationSubheaderSection>
 

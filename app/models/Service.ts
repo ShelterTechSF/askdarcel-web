@@ -1,14 +1,13 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import type { Organization } from './Organization';
+import { Schedule, ScheduleParams, shouldInheritSchedule } from './Schedule';
 import {
   Address,
   Category,
   Eligibility,
   Note,
   Program,
-  Schedule,
-  shouldInheritSchedule,
 } from './Meta';
 
 // A Service is provided by an Organization
@@ -40,6 +39,12 @@ export interface Service {
   url: string | null;
   verified_at: any;
   wait_time: any;
+}
+
+export interface ServiceParams extends Omit<Partial<Service>, 'notes'|'schedule'> {
+  shouldInheritScheduleFromParent: boolean;
+  notes?: Partial<Note>[];
+  schedule?: ScheduleParams;
 }
 
 // TODO This should be serviceAtLocation

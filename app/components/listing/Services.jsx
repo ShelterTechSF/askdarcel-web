@@ -5,7 +5,7 @@ import Notes from './Notes';
 
 const Services = ({ services }) => (services?.length > 0
   ? (
-    <ul className="service--section--list">
+    <ul className="service--section--list" data-cy="service-list">
       {services.map(service => (
         <Service service={service} key={service.id} />
       ))}
@@ -29,7 +29,7 @@ class Service extends Component {
     const { service } = this.props;
 
     return (
-      <li className="service" id={`service-${service.id}`}>
+      <li className="service" id={`service-${service.id}`} data-cy="service-list-item">
         <div className="service--meta disabled-feature">
           <p><ServiceCategory category={service.category} /></p>
           <p>
