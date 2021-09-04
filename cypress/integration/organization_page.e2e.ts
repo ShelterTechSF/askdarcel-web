@@ -76,6 +76,6 @@ describe('Organization Page', () => {
   });
 
   // it('should render the location section with a schedule', () => {
-
+  //   // TODO
   // });
 });
