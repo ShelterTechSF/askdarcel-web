@@ -64,7 +64,7 @@ export const fetchOrganization = (id: number): Promise<Organization> => get(`/ap
 
 export const getResourceLocations = (org: Organization) => {
   const { addresses } = org;
-  if (!addresses || !addresses.length) return null;
+  if (!addresses || !addresses.length) return [];
 
   return addresses.map(address => ({
     id: address.id,

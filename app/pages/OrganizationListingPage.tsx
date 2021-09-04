@@ -90,16 +90,15 @@ export const OrganizationListingPage = () => {
               </ul>
             </OrganizationSubheaderSection>
 
-            <OrganizationSubheaderSection title="Location" className="location--section">
+            <OrganizationSubheaderSection title="Location" className="location--section" hidden={orgLocations?.length === 0}>
               <MapOfLocations
                 locations={orgLocations}
-                locationRenderer={(location: any) => (
-                  <TableOfOpeningTimes
-                    recurringSchedule={location.recurringSchedule}
-                  />
+                locationRenderer={(loc: any) => (
+                  <TableOfOpeningTimes recurringSchedule={loc.recurringSchedule} />
                 )}
               />
             </OrganizationSubheaderSection>
+
           </div>
 
           <div className="org--aside">
@@ -111,26 +110,29 @@ export const OrganizationListingPage = () => {
   );
 };
 
-type OrganizationListingSectionProps = { title: string } & React.HTMLProps<HTMLDivElement>
+type OrganizationListingSectionProps = {
+  title: string;
+  hidden?: boolean;
+} & React.HTMLProps<HTMLDivElement>
 
 // A title with the content of a section
-export const OrganizationListingSection = (
-  { children, title, ...props }: OrganizationListingSectionProps,
-) => (
+export const OrganizationListingSection = ({
+  children, hidden = false, title, ...props
+}: OrganizationListingSectionProps) => (hidden ? null : (
   <section {...props}>
     <h2>{title}</h2>
     {children}
   </section>
-);
+));
 
 // A title with the content of a section
-export const OrganizationSubheaderSection = (
-  { children, title, ...props }: OrganizationListingSectionProps,
-) => (
-  <section {...props} id="services">
+export const OrganizationSubheaderSection = ({
+  children, hidden, title, ...props
+}: OrganizationListingSectionProps) => (hidden ? null : (
+  <section {...props}>
     <header className="service--section--header">
       <h4>{title}</h4>
     </header>
     {children}
   </section>
-);
+));
