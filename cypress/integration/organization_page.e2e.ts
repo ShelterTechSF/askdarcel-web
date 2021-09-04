@@ -1,15 +1,19 @@
 /// <reference types="cypress" />
-import { Organization, Service, ServiceParams } from '../../app/models';
+import {
+ Organization, OrganizationParams, Service, ServiceParams,
+} from '../../app/models';
 import { OrganizationPageTestHelpers } from '../support/OrganizationPageTestHelpers';
 
 describe('Organization Page', () => {
   const page = new OrganizationPageTestHelpers();
   const orgId = 1;
   // Set org info to ensure the page is consistent
-  const change_request: Partial<Organization> = {
+  const change_request: OrganizationParams = {
     id: orgId,
     name: 'Good Inc',
     email: 'contact@good-stuff.co',
+    website: 'good-stuff.co',
+    long_description: 'Good Inc is a non-profit that seeks to help the community',
   };
 
   it('should correctly set info with a change request', () => {
@@ -19,13 +23,25 @@ describe('Organization Page', () => {
 
     cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).should(res => {
       expect(res.status).to.eq(200);
-      expect(res.body.resource).to.include.all.keys('id', 'name', 'email');
+      expect(res.body.resource).to.include.all.keys('id', 'name', 'email', 'notes');
+
+      // Remove notes, so we can add a fresh one
+      const { notes } = res.body.resource;
+      notes.forEach(n => { cy.request('DELETE', `/api/notes/${n.id}`).its('status').should('eq', 204); });
     });
   });
 
   it('should render basic about, notes and info sections', () => {
+    const note = 'There are good things here!';
+    cy.request('POST', `/api/resources/${orgId}/notes`, { note: { note } }).its('status').should('eq', 201);
+
     cy.visit(page.url(orgId))
-      .get(page.ORG_TITLE).should('contain.text', change_request.name);
+      .get(page.ORG_TITLE).should('contain.text', change_request.name)
+      .get(page.ORG_ABOUT_SECTION).should('contain.html', '<h2>About This Organization</h2>')
+      .get(page.ORG_ABOUT_SECTION).should('contain.text', change_request.long_description)
+      .get(page.ORG_INFO_SECTION).should('contain.text', change_request.email)
+      .get(page.ORG_INFO_SECTION).should('contain.text', change_request.website)
+      .get(page.NOTES_SECTION).should('contain.text', note);
   });
 
   it('should render services section with multiple services', () => {
@@ -48,12 +64,14 @@ describe('Organization Page', () => {
           id: -2,
           name: 'Lunch Service',
           fee: '$1',
+          schedule: { schedule_days: [] },
           shouldInheritScheduleFromParent: true,
         },
         {
           id: -3,
           name: 'Warm Bed',
           notes: [{ note: 'This is a note' }],
+          schedule: { schedule_days: [] },
           shouldInheritScheduleFromParent: true,
         },
         {

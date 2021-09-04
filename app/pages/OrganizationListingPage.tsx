@@ -66,7 +66,7 @@ export const OrganizationListingPage = () => {
 
             <MobileActionBar resource={org} />
 
-            <OrganizationListingSection title="About This Organization" className="org--main--header--description">
+            <OrganizationListingSection title="About This Organization" className="org--main--header--description" data-cy="org-about-section">
               <ReactMarkdown className="rendered-markdown" source={org.long_description || org.short_description || 'No Description available'} />
             </OrganizationListingSection>
 
@@ -76,7 +76,7 @@ export const OrganizationListingPage = () => {
 
             <Notes notes={org.notes} id="notes" />
 
-            <OrganizationSubheaderSection title="Info" className="info--section">
+            <OrganizationSubheaderSection title="Info" className="info--section" data-cy="org-info-section">
               <ul className="info">
                 <div className="info--column">
                   <ResourceCategories categories={org.categories} />
@@ -125,7 +125,7 @@ export const OrganizationListingSection = ({
   </section>
 ));
 
-// A title with the content of a section
+// A subtitle with the content of a section
 export const OrganizationSubheaderSection = ({
   children, hidden, title, ...props
 }: OrganizationListingSectionProps) => (hidden ? null : (

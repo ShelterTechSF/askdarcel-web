@@ -36,6 +36,10 @@ export interface Organization {
   website: string | null;
 }
 
+export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'> {
+  notes?: Partial<Note>[];
+}
+
 /**
  * Return a Promise with the fetched Resource.
  *
