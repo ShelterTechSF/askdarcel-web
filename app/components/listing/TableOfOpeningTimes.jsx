@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RecurringSchedule } from '../../utils/RecurringSchedule';
+import { RecurringSchedule } from '../../models/RecurringSchedule';
 
 
 // TODO order with current day first
