@@ -22,7 +22,7 @@ interface WhiteLabelSite {
   logoLinkDestination: string;
   navLogoStyle: string;
   showBanner: boolean;
-  showMobileNav: boolean
+  showMobileNav: boolean;
   showSearch: boolean;
   siteNavStyle: string;
   siteUrl: string;
