@@ -57,24 +57,22 @@ class Navigation extends React.Component {
     // sites, we want to just use an internal react-router Link to the root URL,
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
-
-    /^https?:\/\//.test(logoLinkDestination)
-      ? (
-        <a className={navLogoStyle} href={siteUrl}>
-          <img src={logoSmall} alt={title} />
-        </a>
-      )
-      : (
-        <Link className={navLogoStyle} to="/">
-          <img src={logoSmall} alt={title} />
-        </Link>
-      );
-
     return (
       <nav className={siteNavStyle}>
         <div className={styles.primaryRow}>
-          <div className={styles.navLeft}>
-            {logoLink}
+          {
+            /^https?:\/\//.test(logoLinkDestination)
+              ? (
+                <a className={navLogoStyle} href={siteUrl}>
+                  <img src={logoSmall} alt={title} />
+                </a>
+              )
+              : (
+                <Link className={navLogoStyle} to="/">
+                  <img src={logoSmall} alt={title} />
+                </Link>
+              )
+          }
             {showSearch
               && (
                 <form

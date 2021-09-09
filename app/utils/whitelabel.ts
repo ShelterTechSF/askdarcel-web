@@ -58,7 +58,7 @@ const SFFamilies = {
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
   userWay: true,
-}; as const;
+}as const;
 
 const SFServiceGuide = {
   appImages: {
