@@ -8,13 +8,13 @@ import styles from './Navigation.module.scss';
 const {
   appImages: { 
     logoSmall 
-  }, 
-  logoLinkDestination, 
-  navLogoStyle, 
-  showMobileNav, 
-  siteNavStyle, 
-  siteUrl, 
-  title
+  },
+  logoLinkDestination,
+  navLogoStyle,
+  showMobileNav,
+  siteNavStyle,
+  siteUrl,
+  title,
 } = whiteLabel;
 
 class Navigation extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { UPVOTE, DOWNVOTE } from './constants';
 
 import { icon } from 'assets';
+import { UPVOTE, DOWNVOTE } from './constants';
 import styles from './FeedbackSteps.module.scss';
 
 export const VoteButtons = ({ vote, onVoteChange }) => (

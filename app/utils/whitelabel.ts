@@ -58,7 +58,8 @@ const SFFamilies = {
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
   userWay: true,
-}as const;
+  // @ts-ignore
+} as const;
 
 const SFServiceGuide = {
   appImages: {
@@ -78,7 +79,8 @@ const SFServiceGuide = {
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
   userWay: false,
-}as const;
+  // @ts-ignore
+} as const;
 
 const defaultWhiteLabel = {
   appImages: {
@@ -98,7 +100,8 @@ const defaultWhiteLabel = {
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
   userWay: false,
-}as const;
+  // @ts-ignore
+} as const;
 
 // Read only to force developer to modify configurations here, disallow changes at compile time
 const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { cloneDeep } from 'lodash';
 
+import { icon } from 'assets';
 import { TAG_LIST, DOWNVOTE } from './constants';
 import { addFeedback } from '../../../utils/DataService';
-import { icon } from 'assets';
 import {
   VoteButtons,
   FeedbackTags,
