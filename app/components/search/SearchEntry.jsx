@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import configurations from '../../utils/whitelabel';
+import whiteLabel from '../../utils/whitelabel';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 import './SearchEntry.scss';
 
-const { appImages: { mohcdSeal } } = configurations;
+const { appImages: { mohcdSeal } } = whiteLabel;
 
 class SearchEntry extends Component {
   renderAddressMetadata() {

@@ -7,8 +7,8 @@ import Banner from './components/ui/Banner/Banner';
 import Navigation from './components/ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
-import { round } from './utils/index';
-import configurations from './utils/whitelabel';
+import { round } from './utils/index'; 
+import whiteLabel from './utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from './config';
 import HamburgerMenu from './components/ui/HamburgerMenu';
@@ -17,6 +17,15 @@ import UserWay from './components/ui/UserWay';
 import { User } from './models';
 import Routes from './routes';
 import MetaImage from './assets/img/sfsg-preview.png';
+
+const { 
+  intercom, 
+  showBanner, 
+  showSearch, 
+  siteUrl, 
+  title, 
+  userWay 
+} = whiteLabel!;
 
 const coordsInSanFrancisco = (coords: any) => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -129,7 +138,6 @@ class App extends Component {
   }
 
   render() {
-    const { title, siteUrl } = configurations!;
     const { hamburgerMenuIsOpen } = this.state;
     const { popUpMessage } = this.props;
 
@@ -152,12 +160,8 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {
-          title === 'SF Families'
-            ? <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />
-            : config.INTERCOM_APP_ID
-          && <Intercom appID={config.INTERCOM_APP_ID} />
-        }
+        {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
+        {intercom && config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
           outerContainerId={outerContainerId}
@@ -167,10 +171,10 @@ class App extends Component {
         />
         <div id={pageWrapId}>
           <Navigation
-            showSearch={title !== 'SF Families'}
+            showSearch={showSearch}
             toggleHamburgerMenu={this.toggleHamburgerMenu}
           />
-          {title !== 'SF Families' && <Banner />}
+          {showBanner && <Banner />}
           <div className="container">
             <Routes />
           </div>

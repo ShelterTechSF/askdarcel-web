@@ -2,12 +2,20 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
-import configurations from '../../../utils/whitelabel';
+import whiteLabel from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
 const {
-  title, siteUrl, appImages: { logoSmall }, styles: configurationsStyles,
-} = configurations;
+  appImages: { 
+    logoSmall 
+  }, 
+  logoLinkDestination, 
+  navLogoStyle, 
+  showMobileNav, 
+  siteNavStyle, 
+  siteUrl, 
+  title
+} = whiteLabel;
 
 class Navigation extends React.Component {
   constructor() {
@@ -50,20 +58,20 @@ class Navigation extends React.Component {
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
 
-    const logoLink = title === 'SF Families'
+    /^https?:\/\//.test(logoLinkDestination)
       ? (
-        <a className={configurationsStyles?.navLogoSFFamilies} href={siteUrl}>
+        <a className={navLogoStyle} href={siteUrl}>
           <img src={logoSmall} alt={title} />
         </a>
       )
       : (
-        <Link className={styles.navLogo} to="/">
+        <Link className={navLogoStyle} to="/">
           <img src={logoSmall} alt={title} />
         </Link>
       );
 
     return (
-      <nav className={title === 'SF Families' ? configurationsStyles?.siteNavSFFamilies : styles.siteNav}>
+      <nav className={siteNavStyle}>
         <div className={styles.primaryRow}>
           <div className={styles.navLeft}>
             {logoLink}
@@ -87,7 +95,7 @@ class Navigation extends React.Component {
               )
             }
           </div>
-          {title !== 'SF Families'
+          {showMobileNav
             && (
               <Fragment>
                 <div className={styles.mobileNavigation}>

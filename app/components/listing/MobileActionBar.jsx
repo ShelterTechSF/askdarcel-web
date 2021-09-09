@@ -5,11 +5,9 @@ import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { getResourceActions } from 'utils/ResourceActions';
 import FeedbackModal from './feedback/FeedbackModal';
-import configurations from '../../utils/whitelabel';
+import { icon } from 'assets';
 
 import './MobileActionBar.scss';
-
-const { appImages: { icon } } = configurations;
 
 const getMobileActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);

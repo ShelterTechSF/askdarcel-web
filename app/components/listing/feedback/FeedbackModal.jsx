@@ -10,10 +10,8 @@ import {
 import { TAG_LIST, DOWNVOTE } from './constants';
 import { addFeedback } from '../../../utils/DataService';
 
-import configurations from '../../../utils/whitelabel';
+import { icon } from 'assets';
 import styles from './FeedbackModal.module.scss';
-
-const { appImages: { icon } } = configurations;
 
 const FeedbackModal = ({ service, resource, closeModal }) => {
   const [vote, setVote] = useState('neither');

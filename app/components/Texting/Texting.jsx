@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
-import configurations from '../../utils/whitelabel';
+import { icon } from 'assets';
 import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
 import FormView from './components/FormView';
 import Loader from '../ui/Loader';
 import SentView from './components/SentView';
 import ErrorView from './components/ErrorView';
-
-const { appImages: { icon } } = configurations;
 
 // Text resource informations to the user phone
 

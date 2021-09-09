@@ -1,10 +1,8 @@
 import React from 'react';
 import { UPVOTE, DOWNVOTE } from './constants';
 
-import configurations from '../../../utils/whitelabel';
+import { icon } from 'assets';
 import styles from './FeedbackSteps.module.scss';
-
-const { appImages: { icon } } = configurations;
 
 export const VoteButtons = ({ vote, onVoteChange }) => (
   <>

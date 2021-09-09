@@ -5,4 +5,4 @@ icons.keys().forEach(key => { iconPathMap[key.match(/ic-([^@]*)(?:@3x)?.(?:svg|p
 
 const icon = name => iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
 
-export default icon;
+export { icon };

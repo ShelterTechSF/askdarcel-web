@@ -5,11 +5,9 @@ import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import { getResourceActions } from 'utils/ResourceActions';
 import FeedbackModal from './feedback/FeedbackModal';
-import configurations from '../../utils/whitelabel';
+import { icon } from 'assets';
 
 import './ActionSidebar.scss';
-
-const { appImages: { icon } } = configurations;
 
 const getSidebarActions = (resource, service) => {
   const resourceActions = getResourceActions(resource, service);

@@ -5,85 +5,110 @@ import SFFamiliesLogo from '../assets/img/sf-families.svg';
 import SFServiceLogo from '../assets/img/sf-service.svg';
 import SFSeal from '../assets/img/sf-seal.png';
 import config from '../config';
-import icon from '../assets';
 import styles from '../components/ui/Navigation/Navigation.module.scss';
 
 // Include new white label here
-type WhiteLabelSiteKey = 'default' | 'SFServiceGuide' | 'SFFamilies';
+type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies';
 
 interface WhiteLabelSite {
-  title: string;
-  siteUrl: string;
   appImages: {
     background: string;
-     // For appImages, logoLarge and logoSmall are usually different between each white label
     logoLarge: string;
     logoSmall: string;
     algolia: string;
     mohcdSeal: string;
-    icon: any;
   };
-  styles?: any;
+  intercom: boolean;
+  logoLinkDestination: string;
+  navLogoStyle: string;
+  showBanner: boolean;
+  showMobileNav: boolean
+  showSearch: boolean;
+  siteNavStyle: string;
+  siteUrl: string;
+  title: string;
+  userWay: boolean;
 }
-
-// Read only to force developer to modify configurations here, disallow changes at compile time
-const configurations: Partial<Record<Readonly<WhiteLabelSiteKey>, Readonly<WhiteLabelSite>>> = {};
 
 // Include a domain in config.js
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
-  if (config.SFFAMILIES_DOMAIN === window.location.host) return 'SFFamilies';
-  if (config.MOHCD_DOMAIN === window.location.host) return 'SFServiceGuide';
-  return 'default';
+  if (window.location.host === config.SFFAMILIES_DOMAIN) return 'SFFamilies';
+  if (window.location.host === config.MOHCD_DOMAIN ) return 'SFServiceGuide';
+  return 'defaultWhiteLabel';
 }
 
 const configKey = determineWhiteLabelSite();
 
 // Specify what is viewed in each white label
-configurations.SFFamilies = {
-  title: 'SF Families',
-  siteUrl: 'https://sffamilies.sfserviceguide.org/',
+const SFFamilies = {
   appImages: {
     background: BackgroundImage,
     logoLarge: SFFamiliesLogo,
     logoSmall: SFFamiliesLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon,
   },
-  styles: {
-    siteNavSFFamilies: styles.siteNavSFFamilies,
-    navLogoSFFamilies: styles.navLogoSFFamilies,
-  },
-};
+  intercom: false,
+  logoLinkDestination: 'https://www.sffamilies.org/',
+  navLogoStyle: styles.navLogoSFFamilies,
+  showBanner: false,
+  showMobileNav: false,
+  showSearch: false,
+  siteNavStyle: styles.siteNavSFFamilies,
+  siteUrl: 'https://sffamilies.sfserviceguide.org/',
+  title: 'SF Families',
+  userWay: true,
+} as const;
 
-configurations.SFServiceGuide = {
-  title: 'SF Service Guide',
-  siteUrl: 'https://sfserviceguide.org',
+const SFServiceGuide = {
   appImages: {
     background: BackgroundImage,
     logoLarge: SFServiceLogo,
     logoSmall: SFServiceLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon,
   },
-};
+  intercom: true,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.navLogo,
+  siteUrl: 'https://sfserviceguide.org',
+  title: 'SF Service Guide',
+  userWay: false,
+} as const;
 
-configurations.default = {
-  title: 'AskDarcel',
-  siteUrl: 'https://askdarcel.org',
+const defaultWhiteLabel = {
   appImages: {
     background: BackgroundImage,
     logoLarge: AskDarcelImage,
     logoSmall: AskDarcelImage,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
-    icon,
   },
-};
+  intercom: true,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.navLogo,
+  siteUrl: 'https://askdarcel.org',
+  title: 'AskDarcel',
+  userWay: false,
+} as const;
+
+// Read only to force developer to modify configurations here, disallow changes at compile time
+const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
+  SFFamilies,
+  SFServiceGuide,
+  defaultWhiteLabel,
+} as const;
 
 // Disallow changes at run time
-Object.freeze(configurations);
-Object.freeze(configurations[configKey]?.appImages);
+Object.freeze(whiteLabel);
+Object.freeze(whiteLabel[configKey]?.appImages);
 
-export default configurations[configKey];
+export default whiteLabel[configKey];

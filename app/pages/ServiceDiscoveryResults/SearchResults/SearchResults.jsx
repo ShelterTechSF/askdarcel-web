@@ -4,11 +4,9 @@ import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
-import configurations from '../../../utils/whitelabel';
+import { icon } from 'assets';
 import styles from './SearchResults.module.scss';
 import Texting from '../../../components/Texting';
-
-const { appImages: { icon } } = configurations;
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
