@@ -6,8 +6,8 @@ import whiteLabel from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
 const {
-  appImages: { 
-    logoSmall 
+  appImages: {
+    logoSmall,
   },
   logoLinkDestination,
   navLogoStyle,
@@ -73,7 +73,7 @@ class Navigation extends React.Component {
                 </Link>
               )
           }
-            {showSearch
+          {showSearch
               && (
                 <form
                   onSubmit={this.submitSearch}
@@ -92,7 +92,8 @@ class Navigation extends React.Component {
                 </form>
               )
             }
-          </div>
+        </div>
+        <div>
           {showMobileNav
             && (
               <Fragment>

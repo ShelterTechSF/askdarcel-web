@@ -40,7 +40,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
 const configKey = determineWhiteLabelSite();
 
 // Specify what is viewed in each white label
-const SFFamilies = {
+const SFFamilies = <const> {
   appImages: {
     background: BackgroundImage,
     logoLarge: SFFamiliesLogo,
@@ -58,10 +58,9 @@ const SFFamilies = {
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
   userWay: true,
-  // @ts-ignore
-} as const;
+};
 
-const SFServiceGuide = {
+const SFServiceGuide = <const> {
   appImages: {
     background: BackgroundImage,
     logoLarge: SFServiceLogo,
@@ -79,10 +78,9 @@ const SFServiceGuide = {
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
   userWay: false,
-  // @ts-ignore
-} as const;
+};
 
-const defaultWhiteLabel = {
+const defaultWhiteLabel = <const> {
   appImages: {
     background: BackgroundImage,
     logoLarge: AskDarcelImage,
@@ -100,15 +98,14 @@ const defaultWhiteLabel = {
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
   userWay: false,
-  // @ts-ignore
-} as const;
+};
 
 // Read only to force developer to modify configurations here, disallow changes at compile time
 const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
   SFFamilies,
   SFServiceGuide,
   defaultWhiteLabel,
-}as const;
+} as const;
 
 // Disallow changes at run time
 Object.freeze(whiteLabel);

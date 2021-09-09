@@ -7,7 +7,7 @@ import Banner from './components/ui/Banner/Banner';
 import Navigation from './components/ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
-import { round } from './utils/index'; 
+import { round } from './utils/index';
 import whiteLabel from './utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from './config';
