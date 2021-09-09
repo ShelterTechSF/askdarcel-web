@@ -41,7 +41,7 @@ const configKey = determineWhiteLabelSite();
 
 /*
   Specify what is viewed in each white label.
-  A '/' (which is forward-slash) as a value for logoLinkDestination
+  A '/' (which is a forward-slash) as a value for logoLinkDestination
   denotes that the link is internal to the application.
 */
 const SFFamilies: WhiteLabelSite = {
@@ -106,7 +106,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
 
 /*
   whiteLabel made Readonly to force developer to modify whiteLabel object in this file.
-  Disallow changes at compile time
+  Disallow changes at compile time.
 */
 const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
   SFFamilies,
