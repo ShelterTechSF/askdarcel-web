@@ -33,7 +33,7 @@ interface WhiteLabelSite {
 // Include a domain in config.js
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
   if (window.location.host === config.SFFAMILIES_DOMAIN) return 'SFFamilies';
-  if (window.location.host === config.MOHCD_DOMAIN ) return 'SFServiceGuide';
+  if (window.location.host === config.MOHCD_DOMAIN) return 'SFServiceGuide';
   return 'defaultWhiteLabel';
 }
 
@@ -58,7 +58,7 @@ const SFFamilies = {
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
   userWay: true,
-} as const;
+}; as const;
 
 const SFServiceGuide = {
   appImages: {
@@ -78,7 +78,7 @@ const SFServiceGuide = {
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
   userWay: false,
-} as const;
+}as const;
 
 const defaultWhiteLabel = {
   appImages: {
@@ -98,14 +98,14 @@ const defaultWhiteLabel = {
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
   userWay: false,
-} as const;
+}as const;
 
 // Read only to force developer to modify configurations here, disallow changes at compile time
 const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
   SFFamilies,
   SFServiceGuide,
   defaultWhiteLabel,
-} as const;
+}as const;
 
 // Disallow changes at run time
 Object.freeze(whiteLabel);

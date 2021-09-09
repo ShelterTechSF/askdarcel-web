@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { cloneDeep } from 'lodash';
+
+import { TAG_LIST, DOWNVOTE } from './constants';
+import { addFeedback } from '../../../utils/DataService';
+import { icon } from 'assets';
 import {
   VoteButtons,
   FeedbackTags,
@@ -7,10 +11,6 @@ import {
   SubmitMessage,
   NavigationButtons,
 } from './FeedbackSteps';
-import { TAG_LIST, DOWNVOTE } from './constants';
-import { addFeedback } from '../../../utils/DataService';
-
-import { icon } from 'assets';
 import styles from './FeedbackModal.module.scss';
 
 const FeedbackModal = ({ service, resource, closeModal }) => {

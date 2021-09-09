@@ -18,14 +18,14 @@ import { User } from './models';
 import Routes from './routes';
 import MetaImage from './assets/img/sfsg-preview.png';
 
-const { 
-  intercom, 
-  showBanner, 
-  showSearch, 
-  siteUrl, 
-  title, 
-  userWay 
-} = whiteLabel!;
+const {
+  intercom,
+  showBanner,
+  showSearch,
+  siteUrl,
+  title,
+  userWay,
+} = whiteLabel;
 
 const coordsInSanFrancisco = (coords: any) => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly

@@ -23,7 +23,7 @@ import {
   Service,
 } from '../models';
 
-const { title: whiteLabelTitle } = whiteLabel!;
+const { title: whiteLabelTitle } = whiteLabel;
 
 // Page at /services/123
 export const ServiceListingPage = () => {

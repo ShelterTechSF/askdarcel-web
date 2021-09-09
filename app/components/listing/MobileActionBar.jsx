@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-import { Link } from 'react-router-dom';
+import { icon } from 'assets';
 import { getResourceActions } from 'utils/ResourceActions';
 import FeedbackModal from './feedback/FeedbackModal';
-import { icon } from 'assets';
+
 
 import './MobileActionBar.scss';
 
