@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import whiteLabel from '../../../utils/whitelabel';
+import whiteLabel from '../../../utils/whiteLabel';
 import './Footer.scss';
 
 function Footer() {

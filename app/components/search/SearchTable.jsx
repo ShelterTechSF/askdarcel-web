@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Pagination,
 } from 'react-instantsearch/dom';
-import whiteLabel from '../../utils/whitelabel';
+import whiteLabel from '../../utils/whiteLabel';
 import SearchRow from './SearchRow';
 import './ResultsPagination.scss';
 

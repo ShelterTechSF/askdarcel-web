@@ -14,7 +14,7 @@ import {
 import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { MapOfLocations } from 'components/maps';
-import whiteLabel from '../utils/whitelabel';
+import whiteLabel from '../utils/whiteLabel';
 import {
   fetchService,
   generateServiceDetails,
