@@ -2,9 +2,11 @@ import React from 'react';
 import {
   Pagination,
 } from 'react-instantsearch/dom';
-import { images } from 'assets';
+import whiteLabel from '../../utils/whitelabel';
 import SearchRow from './SearchRow';
 import './ResultsPagination.scss';
+
+const { appImages: { algolia } } = whiteLabel;
 
 const SearchTable = ({ hits, page, hitsPerPage }) => {
   const rows = hits.map((hit, index) => (
@@ -35,7 +37,7 @@ const SearchTable = ({ hits, page, hitsPerPage }) => {
         />
       </div>
       <div className="algolia-img-wrapper">
-        <img src={images.algolia} alt="Search by Algolia" />
+        <img src={algolia} alt="Search by Algolia" />
       </div>
     </div>
   );

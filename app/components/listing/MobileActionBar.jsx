@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-import { Link } from 'react-router-dom';
+import { icon } from 'assets';
 import { getResourceActions } from 'utils/ResourceActions';
 import FeedbackModal from './feedback/FeedbackModal';
-import { images } from '../../assets';
+
 
 import './MobileActionBar.scss';
 
@@ -26,7 +27,7 @@ const getMobileActions = (resource, service) => {
 const renderButtonContent = action => (
   <div key={action.name} className="mobile-action-bar--button-content">
     <img
-      src={images.icon(`${action.icon}-blue`)}
+      src={icon(`${action.icon}-blue`)}
       alt={action.icon}
       className="mobile-action-bar--button-icon"
     />

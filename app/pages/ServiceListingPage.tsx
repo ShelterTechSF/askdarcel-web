@@ -14,7 +14,7 @@ import {
 import { Datatable, Loader } from 'components/ui';
 import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { MapOfLocations } from 'components/maps';
-import { getSiteTitle } from '../utils/whitelabel';
+import whiteLabel from '../utils/whitelabel';
 import {
   fetchService,
   generateServiceDetails,
@@ -22,6 +22,8 @@ import {
   Organization,
   Service,
 } from '../models';
+
+const { title: whiteLabelTitle } = whiteLabel;
 
 // Page at /services/123
 export const ServiceListingPage = () => {
@@ -42,7 +44,7 @@ export const ServiceListingPage = () => {
   return (
     <div className="listing-container">
       <Helmet>
-        <title>{`${service.name} | ${getSiteTitle()}`}</title>
+        <title>{`${service.name} | ${whiteLabelTitle}`}</title>
         <meta name="description" content={service.long_description} />
       </Helmet>
       <article className="listing" id="service">

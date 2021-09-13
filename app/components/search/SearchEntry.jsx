@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { images } from '../../assets';
+import whiteLabel from '../../utils/whitelabel';
 import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
 import './SearchEntry.scss';
+
+const { appImages: { mohcdSeal } } = whiteLabel;
 
 class SearchEntry extends Component {
   renderAddressMetadata() {
@@ -47,7 +49,7 @@ class SearchEntry extends Component {
               <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
               {hit.is_mohcd_funded && (
               <div className="mohcd-funded">
-                <img src={images.mohcdSeal} alt="MOHCD seal" />
+                <img src={mohcdSeal} alt="MOHCD seal" />
                 <p>Funded by MOHCD</p>
               </div>
               )

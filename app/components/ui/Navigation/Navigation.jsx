@@ -2,9 +2,20 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
-import { images } from 'assets';
+import whiteLabel from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
-import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from '../../../utils/whitelabel';
+
+const {
+  appImages: {
+    logoSmall,
+  },
+  logoLinkDestination,
+  navLogoStyle,
+  showMobileNav,
+  siteNavStyle,
+  siteUrl,
+  title,
+} = whiteLabel;
 
 class Navigation extends React.Component {
   constructor() {
@@ -46,27 +57,23 @@ class Navigation extends React.Component {
     // sites, we want to just use an internal react-router Link to the root URL,
     // since 1) this allows us to use react-router routing and 2) this avoids
     // having staging and development environments link to the production site.
-    let logoLink;
-    if (isSFFamiliesSite()) {
-      logoLink = (
-        <a className={styles.navLogoSFFamilies} href={getSiteUrl()}>
-          <img src={images.logoSmall} alt={getSiteTitle()} />
-        </a>
-      );
-    } else {
-      logoLink = (
-        <Link className={styles.navLogo} to="/">
-          <img src={images.logoSmall} alt={getSiteTitle()} />
-        </Link>
-      );
-    }
-
     return (
-      <nav className={isSFFamiliesSite() ? styles.siteNavSFFamilies : styles.siteNav}>
+      <nav className={siteNavStyle}>
         <div className={styles.primaryRow}>
-          <div className={styles.navLeft}>
-            {logoLink}
-            {showSearch
+          {
+            /^https?:\/\//.test(logoLinkDestination)
+              ? (
+                <a className={navLogoStyle} href={siteUrl}>
+                  <img src={logoSmall} alt={title} />
+                </a>
+              )
+              : (
+                <Link className={navLogoStyle} to="/">
+                  <img src={logoSmall} alt={title} />
+                </Link>
+              )
+          }
+          {showSearch
               && (
                 <form
                   onSubmit={this.submitSearch}
@@ -85,8 +92,9 @@ class Navigation extends React.Component {
                 </form>
               )
             }
-          </div>
-          {!isSFFamiliesSite()
+        </div>
+        <div>
+          {showMobileNav
             && (
               <Fragment>
                 <div className={styles.mobileNavigation}>
