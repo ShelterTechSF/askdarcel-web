@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import qs from 'qs';
-import whiteLabel from '../../../utils/whitelabel';
+import whitelabel from '../../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
 const {
@@ -15,7 +15,7 @@ const {
   siteNavStyle,
   siteUrl,
   title,
-} = whiteLabel;
+} = whitelabel;
 
 class Navigation extends React.Component {
   constructor() {
@@ -48,6 +48,10 @@ class Navigation extends React.Component {
     this.setState(({ showSecondarySearch }) => ({ showSecondarySearch: !showSecondarySearch }));
   }
 
+  static isExternalURL(logoLinkDestination) {
+    return /^https?:\/\//.test(logoLinkDestination)
+  }
+
   render() {
     const { showSearch, toggleHamburgerMenu } = this.props;
     const { showSecondarySearch, query } = this.state;
@@ -61,14 +65,14 @@ class Navigation extends React.Component {
       <nav className={siteNavStyle}>
         <div className={styles.primaryRow}>
           {
-            /^https?:\/\//.test(logoLinkDestination)
+            isExternalURL(logoLinkDestination)
               ? (
                 <a className={navLogoStyle} href={siteUrl}>
                   <img src={logoSmall} alt={title} />
                 </a>
               )
               : (
-                <Link className={navLogoStyle} to="/">
+                <Link className={navLogoStyle} to={logoLinkDestination}>
                   <img src={logoSmall} alt={title} />
                 </Link>
               )

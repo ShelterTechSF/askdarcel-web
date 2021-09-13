@@ -24,8 +24,6 @@ module.exports = {
       js: 'never', jsx: 'never', ts: 'never', tsx: 'never',
     }],
     'import/no-extraneous-dependencies': 'error',
-    'import/no-named-as-default': 0,
-    'import/no-named-as-default-member': 0,
     'import/prefer-default-export': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],

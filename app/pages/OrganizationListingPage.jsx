@@ -23,7 +23,7 @@ import Notes from 'components/listing/Notes';
 import MOHCDBadge from 'components/listing/MOHCDBadge';
 import Loader from 'components/ui/Loader';
 import * as dataService from '../utils/DataService';
-import whiteLabel from '../utils/whitelabel';
+import whitelabel from '../utils/whitelabel';
 // When this file is TS, this import will no longer throw a linting error
 import { getResource } from '../models'; // eslint-disable-line import/named
 
@@ -80,7 +80,7 @@ class BaseOrganizationListingPage extends React.Component {
 
 
   render() {
-    const { title } = whiteLabel;
+    const { title } = whitelabel;
     const { resource } = this.state;
 
     // Use getter here because resource is undefined on first render because componentDidMount runs
