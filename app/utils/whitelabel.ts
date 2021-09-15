@@ -32,8 +32,9 @@ interface WhiteLabelSite {
 
 // Include a domain in config.js
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
-  if (window.location.host.split('.')[0] === String(config.SFFAMILIES_DOMAIN) || window.location.host.split('.')[0] === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
-  if (window.location.host.split('.')[0] === String(config.MOHCD_DOMAIN) || window.location.host.split('.')[0] === `${String(config.MOHCD_DOMAIN)}-staging`) return 'SFServiceGuide';
+  const subdomain = window.location.host.split('.')[0];
+  if (subdomain === String(config.SFFAMILIES_DOMAIN) || subdomain === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
+  if (subdomain === String(config.MOHCD_DOMAIN) || subdomain === `${String(config.MOHCD_DOMAIN)}-staging`) return 'SFServiceGuide';
   return 'defaultWhiteLabel';
 }
 
