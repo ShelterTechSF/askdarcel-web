@@ -48,6 +48,7 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
+    "@babel/eslint-parser": "^7.15.4",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
@@ -61,7 +62,6 @@
     "@types/redux": "^3.6.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
-    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "chai": "^4.1.2",
     "cross-env": "^6.0.3",

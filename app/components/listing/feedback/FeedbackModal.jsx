@@ -110,7 +110,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <div className={styles.stepsContainer}>
-          {<VoteButtons vote={vote} onVoteChange={handleVoteChange} />}
+          <VoteButtons vote={vote} onVoteChange={handleVoteChange} />
           {STEPS[step]}
           <NavigationButtons
             step={step}
