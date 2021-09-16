@@ -4,7 +4,7 @@ import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
 import SFFamiliesLogo from '../assets/img/sf-families.svg';
 import SFServiceLogo from '../assets/img/sf-service.svg';
 import SFSeal from '../assets/img/sf-seal.png';
-import LinkSFLogo from '../assets/img/link-sf.png'
+import LinkSFLogo from '../assets/img/link-sf.png';
 import config from '../config';
 import styles from '../components/ui/Navigation/Navigation.module.scss';
 
