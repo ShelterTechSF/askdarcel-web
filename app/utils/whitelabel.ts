@@ -4,11 +4,12 @@ import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
 import SFFamiliesLogo from '../assets/img/sf-families.svg';
 import SFServiceLogo from '../assets/img/sf-service.svg';
 import SFSeal from '../assets/img/sf-seal.png';
+import LinkSFLogo from '../assets/img/link-sf.png';
 import config from '../config';
 import styles from '../components/ui/Navigation/Navigation.module.scss';
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies';
+type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF';
 
 interface WhiteLabelSite {
   appImages: {
@@ -35,6 +36,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
   const subdomain = window.location.host.split('.')[0];
   if (subdomain === String(config.SFFAMILIES_DOMAIN) || subdomain === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
   if (subdomain === String(config.MOHCD_DOMAIN) || subdomain === `${String(config.MOHCD_DOMAIN)}-staging`) return 'SFServiceGuide';
+  if (subdomain === String(config.LINKSF_DOMAIN) || subdomain === `${String(config.LINKSF_DOMAIN)}-staging`) return 'LinkSF';
   return 'defaultWhiteLabel';
 }
 
@@ -85,6 +87,27 @@ const SFServiceGuide: WhiteLabelSite = {
   userWay: false,
 } as const;
 
+const LinkSF: WhiteLabelSite = {
+  appImages: {
+    background: BackgroundImage,
+    logoLarge: LinkSFLogo,
+    logoSmall: LinkSFLogo,
+    algolia: SearchByAlgoliaImage,
+    mohcdSeal: SFSeal,
+  },
+  intercom: true,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.navLogo,
+  siteUrl: 'https://linksf.sfserviceguide.org',
+  title: 'Link SF',
+  userWay: false,
+} as const;
+
+
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
     background: BackgroundImage,
@@ -112,6 +135,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
 const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
   SFFamilies,
   SFServiceGuide,
+  LinkSF,
   defaultWhiteLabel,
 } as const;
 
