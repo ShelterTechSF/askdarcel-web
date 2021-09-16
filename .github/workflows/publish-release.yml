@@ -7,9 +7,6 @@ on:
 
 env:
   DOCKER_REPO: sheltertechsf/askdarcel-web
-  SFFAMILIES_DOMAIN: sffamilies
-  MOHCD_SUBDOMAIN: help
-  MOHCD_DOMAIN: sfserviceguide
 
 jobs:
   build:
