@@ -28,7 +28,7 @@ const { title: whiteLabelTitle } = whiteLabel;
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
-  const details = useMemo(() => service ? generateServiceDetails(service) : [], [service]);
+  const details = useMemo(() => (service ? generateServiceDetails(service) : []), [service]);
 
   useEffect(() => {
     fetchService(id)
