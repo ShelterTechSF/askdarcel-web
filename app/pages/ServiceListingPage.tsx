@@ -31,7 +31,7 @@ export const ServiceListingPage = () => {
   const details = useMemo(() => service ? generateServiceDetails(service) : [], [service]);
 
   useEffect(() => {
-    fetchService(id as any)
+    fetchService(id)
       .then(s => setService(s));
     // TODO Handle Errors
   }, [id]);

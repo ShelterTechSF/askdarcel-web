@@ -27,7 +27,7 @@ export const OrganizationListingPage = () => {
   const [org, setOrg] = useState<Organization|null>(null);
 
   useEffect(() => {
-    fetchOrganization(id as any)
+    fetchOrganization(id)
       .then(o => setOrg(o));
     // TODO Handle Errors
   }, [id]);

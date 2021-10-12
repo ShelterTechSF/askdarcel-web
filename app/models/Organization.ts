@@ -47,7 +47,7 @@ export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'>
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const fetchOrganization = (id: number): Promise<Organization> => get(`/api/resources/${id}`)
+export const fetchOrganization = (id: string): Promise<Organization> => get(`/api/resources/${id}`)
   .then(({ resource }: { resource: Organization }) => {
     const recurringSchedule = parseAPISchedule(resource.schedule);
     return {
