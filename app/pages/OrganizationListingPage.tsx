@@ -90,7 +90,8 @@ export const OrganizationListingPage = () => {
               </ul>
             </OrganizationSubheaderSection>
 
-            <OrganizationSubheaderSection title="Location" className="location--section" hidden={orgLocations?.length === 0}>
+            {orgLocations?.length > 0 && (
+            <OrganizationSubheaderSection title="Location" className="location--section">
               <MapOfLocations
                 locations={orgLocations}
                 locationRenderer={(loc: any) => (
@@ -98,6 +99,7 @@ export const OrganizationListingPage = () => {
                 )}
               />
             </OrganizationSubheaderSection>
+            )}
 
           </div>
 
@@ -112,27 +114,26 @@ export const OrganizationListingPage = () => {
 
 type OrganizationListingSectionProps = {
   title: string;
-  hidden?: boolean;
 } & React.HTMLProps<HTMLDivElement>
 
 // A title with the content of a section
 export const OrganizationListingSection = ({
-  children, hidden = false, title, ...props
-}: OrganizationListingSectionProps) => (hidden ? null : (
+  children, title, ...props
+}: OrganizationListingSectionProps) => (
   <section {...props}>
     <h2>{title}</h2>
     {children}
   </section>
-));
+);
 
 // A subtitle with the content of a section
 export const OrganizationSubheaderSection = ({
-  children, hidden, title, ...props
-}: OrganizationListingSectionProps) => (hidden ? null : (
+  children, title, ...props
+}: OrganizationListingSectionProps) => (
   <section {...props}>
     <header className="service--section--header">
       <h4>{title}</h4>
     </header>
     {children}
   </section>
-));
+);
