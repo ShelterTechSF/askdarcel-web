@@ -69,7 +69,8 @@ export const ServiceListingPage = () => {
               />
             </ServiceListingSection>
 
-            <ServiceListingSection title="Service Details" data-cy="service-details-section" hidden={details.length === 0}>
+            {details.length > 0 && (
+            <ServiceListingSection title="Service Details" data-cy="service-details-section">
               <Datatable
                 rowRenderer={(d: { title: string; value: string }) => (
                   <tr key={d.title}>
@@ -80,12 +81,14 @@ export const ServiceListingPage = () => {
                 rows={details}
               />
             </ServiceListingSection>
+            )}
 
             <ServiceListingSection title="Contact Info" data-cy="service-contact-section">
               <TableOfContactInfo item={service} />
             </ServiceListingSection>
 
-            <ServiceListingSection title="Location and Hours" data-cy="service-loc-hours-section" hidden={locations.length === 0}>
+            {locations.length > 0 && (
+            <ServiceListingSection title="Location and Hours" data-cy="service-loc-hours-section">
               <MapOfLocations
                 locations={locations}
                 locationRenderer={(location: any) => (
@@ -94,14 +97,17 @@ export const ServiceListingPage = () => {
               />
               {/* TODO Transport Options */}
             </ServiceListingSection>
+            )}
 
-            <ServiceListingSection title="Other Services at this Location" data-cy="service-other-section" hidden={resource.services.length === 0}>
+            {resource.services.length > 0 && (
+            <ServiceListingSection title="Other Services at this Location" data-cy="service-other-section">
               {resource.services
                 .filter(srv => srv.id !== service.id)
                 .map(srv => (
                   <ServiceCard service={srv} key={srv.id} />
                 ))}
             </ServiceListingSection>
+            )}
 
             {/* TODO Need an API to get similar services, maybe same category for now? */}
             {/* <section>
@@ -120,18 +126,17 @@ export const ServiceListingPage = () => {
 
 type ServiceListingSectionProps = {
   title: string;
-  hidden?: boolean;
 } & React.HTMLProps<HTMLDivElement>
 
 // A title with the content of a section
 export const ServiceListingSection = ({
-  children, hidden, title, ...props
-}: ServiceListingSectionProps) => (hidden ? null : (
+  children, title, ...props
+}: ServiceListingSectionProps) => (
   <section {...props}>
     <h2>{title}</h2>
     {children}
   </section>
-));
+);
 
 type ServiceProgramDetailsProps = { service: Service; organization: Organization }
 
