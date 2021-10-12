@@ -24,6 +24,8 @@ module.exports = {
       js: 'never', jsx: 'never', ts: 'never', tsx: 'never',
     }],
     'import/no-extraneous-dependencies': 'error',
+    'import/no-named-as-default': 0,
+    'import/no-named-as-default-member': 0,
     'import/prefer-default-export': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
@@ -64,7 +66,7 @@ module.exports = {
     {
       // Non-TypeScript, JavaScript files
       files: ['*.js', '*.jsx'],
-      parser: 'babel-eslint',
+      parser: '@babel/eslint-parser',
       rules: {
         'react/sort-comp': 'off',
         // Disable TypeScript-specific rules on regular JavaScript files.

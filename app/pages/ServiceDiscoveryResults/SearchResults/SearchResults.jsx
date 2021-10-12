@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { parseAlgoliaSchedule } from 'utils/transformSchedule';
-import { images } from 'assets';
+import { icon } from 'assets';
 import styles from './SearchResults.module.scss';
 import Texting from '../../../components/Texting';
 
@@ -50,7 +50,7 @@ const SearchResult = ({ hit, index }) => {
 
   const texting = (
     <div className={styles.sideLink} data-field="text-me" role="button" tabIndex={0} onClick={toggleTextingModal}>
-      <img src={images.icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+      <img src={icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
       <div className={styles.sideLinkText}>Text me the info</div>
     </div>
   );
@@ -93,7 +93,7 @@ const SearchResult = ({ hit, index }) => {
           phoneNumber
           && (
             <div className={styles.sideLink}>
-              <img src={images.icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
+              <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
               <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
             </div>
           )
@@ -103,7 +103,7 @@ const SearchResult = ({ hit, index }) => {
           url
           && (
             <div className={styles.sideLink}>
-              <img src={images.icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+              <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
               <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Go to website</a>
             </div>
           )

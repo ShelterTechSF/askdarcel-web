@@ -8,7 +8,7 @@ import Navigation from './components/ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from './utils/index';
-import { getSiteTitle, getSiteUrl, isSFFamiliesSite } from './utils/whitelabel';
+import whiteLabel from './utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from './config';
 import HamburgerMenu from './components/ui/HamburgerMenu';
@@ -17,6 +17,15 @@ import UserWay from './components/ui/UserWay';
 import { User } from './models';
 import Routes from './routes';
 import MetaImage from './assets/img/sfsg-preview.png';
+
+const {
+  intercom,
+  showBanner,
+  showSearch,
+  siteUrl,
+  title,
+  userWay,
+} = whiteLabel;
 
 const coordsInSanFrancisco = (coords: any) => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -134,14 +143,13 @@ class App extends Component {
 
     const outerContainerId = 'outer-container';
     const pageWrapId = 'page-wrap';
-    const siteTitle = getSiteTitle();
-    const siteUrl = getSiteUrl();
+
     return (
       <div id={outerContainerId}>
         <Helmet>
-          <title>{siteTitle}</title>
+          <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
-          <meta property="og:title" content={siteTitle} />
+          <meta property="og:title" content={title} />
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@sheltertechorg" />
@@ -152,11 +160,8 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {!isSFFamiliesSite()
-          && config.INTERCOM_APP_ID
-          && <Intercom appID={config.INTERCOM_APP_ID} />}
-        {isSFFamiliesSite()
-          && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
+        {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
+        {intercom && config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
           outerContainerId={outerContainerId}
@@ -166,10 +171,10 @@ class App extends Component {
         />
         <div id={pageWrapId}>
           <Navigation
-            showSearch={!isSFFamiliesSite()}
+            showSearch={showSearch}
             toggleHamburgerMenu={this.toggleHamburgerMenu}
           />
-          {!isSFFamiliesSite() && <Banner />}
+          {showBanner && <Banner />}
           <div className="container">
             <Routes />
           </div>

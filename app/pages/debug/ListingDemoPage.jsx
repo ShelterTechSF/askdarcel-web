@@ -1,6 +1,6 @@
 import React from 'react';
 import { RelativeOpeningTime } from '../../components/listing/RelativeOpeningTime';
-import { RecurringInterval, RecurringSchedule, RecurringTime } from '../../utils/RecurringSchedule';
+import { RecurringInterval, RecurringSchedule, RecurringTime } from '../../models/RecurringSchedule';
 import { parseConcatenatedIntegerTime } from '../../utils/transformSchedule';
 import './ListingDemoPage.scss';
 

@@ -5,7 +5,7 @@
 import * as Sentry from '@sentry/browser';
 import {
   DAY_TO_INT, DAYS_IN_WEEK, MINUTES_IN_HOUR, RecurringTime, RecurringSchedule, RecurringInterval,
-} from './RecurringSchedule';
+} from '../models/RecurringSchedule';
 
 /**
  * Convert time from concatenated hours-minutes integer format to hour and

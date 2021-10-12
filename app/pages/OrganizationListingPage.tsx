@@ -18,7 +18,7 @@ import {
 } from 'components/listing';
 import { MapOfLocations } from 'components/maps';
 import { Loader } from 'components/ui';
-import { getSiteTitle } from '../utils/whitelabel';
+import whitelabel from '../utils/whitelabel';
 import { fetchOrganization, getResourceLocations, Organization } from '../models';
 
 // Page at /organization/123
@@ -40,7 +40,7 @@ export const OrganizationListingPage = () => {
     <div className="org-container">
       <Helmet>
         <title>
-          {`${org.name} | ${getSiteTitle()}`}
+          {`${org.name} | ${whitelabel.title}`}
         </title>
         <meta name="description" content={org.long_description || ''} />
       </Helmet>

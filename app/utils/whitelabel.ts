@@ -1,31 +1,146 @@
+import AskDarcelImage from '../assets/img/askdarcel.svg';
+import BackgroundImage from '../assets/img/bg.png';
+import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
+import SFFamiliesLogo from '../assets/img/sf-families.svg';
+import SFServiceLogo from '../assets/img/sf-service.svg';
+import SFSeal from '../assets/img/sf-seal.png';
+import LinkSFLogo from '../assets/img/link-sf.png';
 import config from '../config';
+import styles from '../components/ui/Navigation/Navigation.module.scss';
 
-/** Whether we should display the SF Service Guide branded version of the site */
-const isSFFamiliesSite = () => window.location.host.indexOf(config.SFFAMILIES_DOMAIN) > -1;
+// Include new white label here
+type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF';
 
-const isSFServiceGuideSite = () => !isSFFamiliesSite()
-  && window.location.host.indexOf(config.MOHCD_DOMAIN) > -1;
+interface WhiteLabelSite {
+  appImages: {
+    background: string;
+    logoLarge: string;
+    logoSmall: string;
+    algolia: string;
+    mohcdSeal: string;
+  };
+  intercom: boolean;
+  logoLinkDestination: string;
+  navLogoStyle: string;
+  showBanner: boolean;
+  showMobileNav: boolean;
+  showSearch: boolean;
+  siteNavStyle: string;
+  siteUrl: string;
+  title: string;
+  userWay: boolean;
+}
 
-const getSiteTitle = () => {
-  if (isSFServiceGuideSite()) {
-    return 'SF Service Guide';
-  }
-  if (isSFFamiliesSite()) {
-    return 'SF Families';
-  }
-  return 'AskDarcel';
-};
+// Include a domain in config.js
+function determineWhiteLabelSite(): WhiteLabelSiteKey {
+  const subdomain = window.location.host.split('.')[0];
+  if (subdomain === String(config.SFFAMILIES_DOMAIN) || subdomain === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
+  if (subdomain === String(config.MOHCD_DOMAIN) || subdomain === `${String(config.MOHCD_DOMAIN)}-staging`) return 'SFServiceGuide';
+  if (subdomain === String(config.LINKSF_DOMAIN) || subdomain === `${String(config.LINKSF_DOMAIN)}-staging`) return 'LinkSF';
+  return 'defaultWhiteLabel';
+}
 
-const getSiteUrl = () => {
-  if (isSFServiceGuideSite()) {
-    return 'https://sfserviceguide.org';
-  }
-  if (isSFFamiliesSite()) {
-    return 'https://sffamilies.sfserviceguide.org/';
-  }
-  return 'https://askdarcel.org';
-};
+const configKey = determineWhiteLabelSite();
 
-export {
-  isSFServiceGuideSite, isSFFamiliesSite, getSiteTitle, getSiteUrl,
-};
+/*
+  Specify what is viewed in each white label.
+  A '/' (which is a forward-slash) as a value for logoLinkDestination
+  denotes that the link is internal to the application.
+*/
+const SFFamilies: WhiteLabelSite = {
+  appImages: {
+    background: BackgroundImage,
+    logoLarge: SFFamiliesLogo,
+    logoSmall: SFFamiliesLogo,
+    algolia: SearchByAlgoliaImage,
+    mohcdSeal: SFSeal,
+  },
+  intercom: false,
+  logoLinkDestination: 'https://www.sffamilies.org/',
+  navLogoStyle: styles.navLogoSFFamilies,
+  showBanner: false,
+  showMobileNav: false,
+  showSearch: false,
+  siteNavStyle: styles.siteNavSFFamilies,
+  siteUrl: 'https://sffamilies.sfserviceguide.org/',
+  title: 'SF Families',
+  userWay: true,
+} as const;
+
+const SFServiceGuide: WhiteLabelSite = {
+  appImages: {
+    background: BackgroundImage,
+    logoLarge: SFServiceLogo,
+    logoSmall: SFServiceLogo,
+    algolia: SearchByAlgoliaImage,
+    mohcdSeal: SFSeal,
+  },
+  intercom: true,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.navLogo,
+  siteUrl: 'https://sfserviceguide.org',
+  title: 'SF Service Guide',
+  userWay: false,
+} as const;
+
+const LinkSF: WhiteLabelSite = {
+  appImages: {
+    background: BackgroundImage,
+    logoLarge: LinkSFLogo,
+    logoSmall: LinkSFLogo,
+    algolia: SearchByAlgoliaImage,
+    mohcdSeal: SFSeal,
+  },
+  intercom: true,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.navLogo,
+  siteUrl: 'https://linksf.sfserviceguide.org',
+  title: 'Link SF',
+  userWay: false,
+} as const;
+
+
+const defaultWhiteLabel: WhiteLabelSite = {
+  appImages: {
+    background: BackgroundImage,
+    logoLarge: AskDarcelImage,
+    logoSmall: AskDarcelImage,
+    algolia: SearchByAlgoliaImage,
+    mohcdSeal: SFSeal,
+  },
+  intercom: true,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.navLogo,
+  siteUrl: 'https://askdarcel.org',
+  title: 'AskDarcel',
+  userWay: false,
+} as const;
+
+/*
+  whiteLabel made Readonly to force developer to modify whiteLabel object in this file.
+  Disallow changes at compile time.
+*/
+const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
+  SFFamilies,
+  SFServiceGuide,
+  LinkSF,
+  defaultWhiteLabel,
+} as const;
+
+// Disallow changes at run time
+Object.freeze(whiteLabel);
+Object.freeze(whiteLabel[configKey]?.appImages);
+
+export default whiteLabel[configKey];

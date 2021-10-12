@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-import { Link } from 'react-router-dom';
+import { icon } from 'assets';
 import { getResourceActions } from 'utils/ResourceActions';
 import FeedbackModal from './feedback/FeedbackModal';
-import { images } from '../../assets';
 
 import './ActionSidebar.scss';
 
@@ -26,7 +26,7 @@ const renderButtonContent = action => (
   <Fragment>
     <img
       className="action-sidebar--icon"
-      src={images.icon(`${action.icon}-gray`)}
+      src={icon(`${action.icon}-gray`)}
       alt={action.icon}
     />
     <span>{action.name}</span>

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { cloneDeep } from 'lodash';
+
+import { icon } from 'assets';
+import { TAG_LIST, DOWNVOTE } from './constants';
+import { addFeedback } from '../../../utils/DataService';
 import {
   VoteButtons,
   FeedbackTags,
@@ -7,10 +11,6 @@ import {
   SubmitMessage,
   NavigationButtons,
 } from './FeedbackSteps';
-import { TAG_LIST, DOWNVOTE } from './constants';
-import { addFeedback } from '../../../utils/DataService';
-
-import { images } from '../../../assets';
 import styles from './FeedbackModal.module.scss';
 
 const FeedbackModal = ({ service, resource, closeModal }) => {
@@ -97,10 +97,10 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         tabIndex="0"
         onClick={closeModal}
       >
-        <img src={images.icon('close')} alt="close" />
+        <img src={icon('close')} alt="close" />
       </div>
       <div className={styles.feedbackHeader}>
-        <img src={images.icon('feedback-blue-header')} alt="feedback" />
+        <img src={icon('feedback-blue-header')} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
       <div className={styles.feedbackSubheader}>
@@ -110,7 +110,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <div className={styles.stepsContainer}>
-          {<VoteButtons vote={vote} onVoteChange={handleVoteChange} />}
+          <VoteButtons vote={vote} onVoteChange={handleVoteChange} />
           {STEPS[step]}
           <NavigationButtons
             step={step}
