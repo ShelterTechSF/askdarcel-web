@@ -31,7 +31,6 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
     'jsx-a11y/label-has-for': ['off'], // This is deprecated in favor of jsx-a11y/label-has-associated-control
     'no-console': 'warn',
-    // 'no-confusing-arrow': 'off',
     'no-underscore-dangle': 'off',
     'react/forbid-prop-types': 'off',
     'react/prefer-stateless-function': 'off',
