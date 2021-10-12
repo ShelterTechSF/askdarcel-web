@@ -8,6 +8,7 @@ import {
   Note,
   PhoneNumber,
 } from './Meta';
+import { RecurringSchedule } from './RecurringSchedule';
 
 // An Organization used to be called a 'Resource', and represents
 // an institution that provides services to those experiencing homelessness
@@ -25,7 +26,7 @@ export interface Organization {
   long_description: string | null;
   notes: Note[];
   phones: PhoneNumber[];
-  recurringSchedule: any;
+  recurringSchedule: RecurringSchedule;
   schedule: Schedule;
   services: Service[];
   short_description: string | null;
@@ -49,20 +50,16 @@ export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'>
 export const fetchOrganization = (id: number): Promise<Organization> => get(`/api/resources/${id}`)
   .then(({ resource }: { resource: Organization }) => {
     const recurringSchedule = parseAPISchedule(resource.schedule);
-    const services = resource.services.map(service => {
-      const scheduleRecurringSchedule = shouldInheritSchedule(service)
-        ? parseAPISchedule(service.schedule)
-        : recurringSchedule;
-      return {
-        ...service,
-        recurringSchedule: scheduleRecurringSchedule,
-      };
-    });
     return {
       ...resource,
       recurringSchedule,
-      services,
-    } as any;
+      services: resource.services.map(service => ({
+        ...service,
+        recurringSchedule: shouldInheritSchedule(service)
+          ? parseAPISchedule(service.schedule)
+          : recurringSchedule,
+      })),
+    };
   });
 
 export const getResourceLocations = (org: Organization) => {

@@ -2,6 +2,7 @@ import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import type { Organization } from './Organization';
 import { Schedule, ScheduleParams, shouldInheritSchedule } from './Schedule';
+import { RecurringSchedule } from './RecurringSchedule';
 import {
   Address,
   Category,
@@ -30,7 +31,7 @@ export interface Service {
   long_description: string;
   notes: Note[];
   program: Program | null;
-  recurringSchedule: any[]; // TODO Move RecurringSchedule to models
+  recurringSchedule: RecurringSchedule;
   required_documents: any;
   resource: Organization;
   schedule: Schedule;
