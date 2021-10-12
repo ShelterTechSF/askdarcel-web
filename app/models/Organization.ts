@@ -1,7 +1,7 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
-import type { Service } from './Service';
-import { Schedule, shouldInheritSchedule } from './Schedule';
+import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
+import { Schedule } from './Schedule';
 import {
   Address,
   Category,
@@ -55,7 +55,7 @@ export const fetchOrganization = (id: number): Promise<Organization> => get(`/ap
       recurringSchedule,
       services: resource.services.map(service => ({
         ...service,
-        recurringSchedule: shouldInheritSchedule(service)
+        recurringSchedule: shouldServiceInheritScheduleFromOrg(service)
           ? parseAPISchedule(service.schedule)
           : recurringSchedule,
       })),

@@ -1,5 +1,3 @@
-import type { Service } from './Service';
-
 export interface Schedule {
   id: number;
   hours_known: boolean;
@@ -16,7 +14,3 @@ export interface ScheduleDay {
 export interface ScheduleParams extends Omit<Partial<Schedule>, 'schedule_days'> {
   schedule_days: Partial<ScheduleDay>[];
 }
-
-export const shouldInheritSchedule = (service: Service) => (
-  service.schedule && service.schedule.schedule_days.length > 0
-);

@@ -1,7 +1,7 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import type { Organization } from './Organization';
-import { Schedule, ScheduleParams, shouldInheritSchedule } from './Schedule';
+import { Schedule, ScheduleParams } from './Schedule';
 import { RecurringSchedule } from './RecurringSchedule';
 import {
   Address,
@@ -81,6 +81,11 @@ export const generateServiceDetails = (service: Service): ({ title: string; valu
 ].filter(row => row[1])
   .map(row => ({ title: row[0], value: row[1] }));
 
+// Determine if a service has its own schedule, or should inherit
+export const shouldServiceInheritScheduleFromOrg = (service: Service) => (
+  service.schedule && service.schedule.schedule_days.length > 0
+);
+
 /**
  * Return a Promise with the fetched Service.
  *
@@ -89,7 +94,7 @@ export const generateServiceDetails = (service: Service): ({ title: string; valu
  */
 export const fetchService = (id: number): Promise<Service> => get(`/api/services/${id}`)
   .then(({ service }) => {
-    const recurringSchedule = shouldInheritSchedule(service)
+    const recurringSchedule = shouldServiceInheritScheduleFromOrg(service)
       ? parseAPISchedule(service.schedule)
       : parseAPISchedule(service.resource.schedule);
     return { ...service, recurringSchedule };
