@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const UserWay = ({ appID }) => {
+export const UserWay = ({ appID }: { appID: string }) => {
   useEffect(() => {
     const userWayScriptId = 'userway-script';
     if (document.getElementById(userWayScriptId) != null) return;
@@ -26,5 +26,3 @@ const UserWay = ({ appID }) => {
 UserWay.propTypes = {
   appID: PropTypes.string.isRequired,
 };
-
-export default UserWay;

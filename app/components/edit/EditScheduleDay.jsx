@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { stringToTime, timeToTimeInputValue } from '../../utils/index';
+import { stringToTime, timeToTimeInputValue } from '../../utils/time';
 
 const TimeInputRow = ({
   dayOfWeekAbbrev, index, scheduleDay, is24Hours, setScheduleDay,

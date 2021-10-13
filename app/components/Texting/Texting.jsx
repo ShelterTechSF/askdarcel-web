@@ -5,7 +5,7 @@ import { icon } from 'assets';
 import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
 import FormView from './components/FormView';
-import Loader from '../ui/Loader';
+import { Loader } from '../ui';
 import SentView from './components/SentView';
 import ErrorView from './components/ErrorView';
 

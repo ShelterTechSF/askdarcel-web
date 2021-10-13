@@ -1,4 +1,4 @@
-@import '../../../styles/utils/_helpers.scss';
+@import '../../styles/utils/_helpers.scss';
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // NAVIGATION
@@ -83,7 +83,7 @@
   .searchField {
     $font-size: calc-em(15px);
     background-repeat: no-repeat;
-    background-image: url(../../../assets/img/ic-search.png);
+    background-image: url(../../assets/img/ic-search.png);
     background-size: 18px 18px;
     background-position: calc-em(15px) center;
     font-size: $font-size;
@@ -122,7 +122,7 @@
 .searchButton {
   @include flat-button;
 
-  background: url(../../../assets/img/ic-search-blue.svg) no-repeat;
+  background: url(../../assets/img/ic-search-blue.svg) no-repeat;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -132,7 +132,7 @@
 .hamburgerButton {
   @include flat-button;
 
-  background: url(../../../assets/img/ic-hamburger-menu.svg) no-repeat;
+  background: url(../../assets/img/ic-hamburger-menu.svg) no-repeat;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -159,7 +159,7 @@
 
   border: 3px transparent;
   background:
-    url(../../../assets/img/ic-search.png) 15px center/18px 18px no-repeat,
+    url(../../assets/img/ic-search.png) 15px center/18px 18px no-repeat,
     #f9f9f9;
   color: #888888;
   font-size: $font-size;

@@ -1,10 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { push as Menu } from 'react-burger-menu';
-
-import styles from './HamburgerMenu.module.scss';
-
+import styles from './HamburgerMenu.scss';
 
 const burgerStyles = {
   bmBurgerButton: {
@@ -34,12 +31,18 @@ const links = [
   { to: '/privacy-policy', text: 'Privacy Policy' },
 ];
 
-const HamburgerMenu = ({
+export const HamburgerMenu = ({
   isOpen,
   onStateChange,
   outerContainerId,
   pageWrapId,
   toggleHamburgerMenu,
+}: {
+  isOpen: boolean;
+  onStateChange: (s: any) => void;
+  outerContainerId: string;
+  pageWrapId: string;
+  toggleHamburgerMenu: () => void;
 }) => (
   <Menu
     isOpen={isOpen}
@@ -63,17 +66,9 @@ const HamburgerMenu = ({
   </Menu>
 );
 
-HamburgerMenu.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onStateChange: PropTypes.func.isRequired,
-  outerContainerId: PropTypes.string.isRequired,
-  pageWrapId: PropTypes.string.isRequired,
-  toggleHamburgerMenu: PropTypes.func.isRequired,
-};
-
 const MenuItem = ({
   children, onClick, to, exact,
-}) => (
+}: { children: any; onClick: () => void; to: string; exact: boolean }) => (
   (to.startsWith('http') || to.startsWith('mailto:'))
     ? <a className={styles.menuItem} href={to}>{children}</a>
     : (
@@ -88,16 +83,3 @@ const MenuItem = ({
       </NavLink>
     )
 );
-
-MenuItem.propTypes = {
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func,
-  to: PropTypes.string.isRequired,
-  exact: PropTypes.bool.isRequired,
-};
-
-MenuItem.defaultProps = {
-  onClick: () => {},
-};
-
-export default HamburgerMenu;

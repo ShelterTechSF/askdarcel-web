@@ -5,7 +5,7 @@ import _ from 'lodash';
 import qs from 'qs';
 
 import config from '../../config';
-import Loader from '../../components/ui/Loader';
+import { Loader } from '../../components/ui';
 import * as dataService from '../../utils/DataService';
 import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';

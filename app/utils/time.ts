@@ -7,14 +7,14 @@ import moment from 'moment';
  * '700' to new Date(..., ..., ..., 7, 0)
  * '1330' to new Date(..., ..., ..., 13, 30)
  */
-function timeToDate(hours) {
+function timeToDate(hours: string) {
   if (hours === null) {
     return null;
   }
   const date = new Date();
   const hoursString = hours.toString();
-  date.setHours(hoursString.substring(0, hoursString.length - 2));
-  date.setMinutes(hoursString.substring(hoursString.length - 2, hoursString.length));
+  date.setHours(Number(hoursString.substring(0, hoursString.length - 2)));
+  date.setMinutes(Number(hoursString.substring(hoursString.length - 2, hoursString.length)));
   date.setSeconds(0);
   return date;
 }
@@ -31,7 +31,7 @@ function timeToDate(hours) {
  * '700' to '7:00'
  * '1330' to '13:30'
  */
-export function timeToTimeInputValue(hours) {
+export function timeToTimeInputValue(hours: string) {
   const date = timeToDate(hours);
   if (date === null) {
     return '';
@@ -43,19 +43,8 @@ export function timeToTimeInputValue(hours) {
   return `${strHour}:${strMinute}`;
 }
 
-export function stringToTime(timeString) {
+export function stringToTime(timeString: string) {
   return parseInt(timeString.replace(':', ''), 10);
-}
-
-/**
- * Round numbers to a specified decimal place.
- *
- * E.g.
- * round(-122.312360, 4) -> -122.3124
- * round(33.102938, 2) -> -33.10
- */
-export function round(value, decimals) {
-  return Number(`${Math.round(`${value}e${decimals}`)}e-${decimals}`);
 }
 
 export function getCurrentDayTime() {
