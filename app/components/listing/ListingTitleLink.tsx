@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import { OrganizationCard } from './OrganizationCard';
@@ -16,7 +16,7 @@ export const ListingTitleLink = ({ listing, type }: { listing: Service; type: 's
       arrow
       className="popover"
       hideDelay={2000}
-      html={summaryCard}
+      html={<BrowserRouter>{summaryCard}</BrowserRouter>}
       theme="light"
     >
       <Link to={to}>{listing.name}</Link>

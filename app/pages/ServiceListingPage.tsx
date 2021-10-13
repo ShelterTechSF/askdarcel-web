@@ -144,10 +144,10 @@ type ServiceProgramDetailsProps = { service: Service; organization: Organization
 // TODO Implement rendering/popover when programs exist
 // Details if the service is part of a larger program, and the organization that provides it
 export const ServiceProgramDetails = ({ service, organization }: ServiceProgramDetailsProps) => (
-  <p>
+  <span>
     A service
     { service.program ? ` in the ${service.program.name} program` : null }
     { ' offered by ' }
     <ListingTitleLink type="org" listing={organization} />
-  </p>
+  </span>
 );
