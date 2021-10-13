@@ -19,6 +19,7 @@ const environmentConfig = [
   'MOHCD_DOMAIN',
   'SFFAMILIES_DOMAIN',
   'TESTCAFE_RUNNING',
+  'LINKSF_DOMAIN',
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
