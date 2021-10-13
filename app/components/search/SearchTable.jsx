@@ -2,11 +2,11 @@ import React from 'react';
 import {
   Pagination,
 } from 'react-instantsearch/dom';
-import whiteLabel from '../../utils/whitelabel';
+import whitelabel from '../../utils/whitelabel';
 import SearchRow from './SearchRow';
 import './ResultsPagination.scss';
 
-const { appImages: { algolia } } = whiteLabel;
+const { appImages: { algolia } } = whitelabel;
 
 const SearchTable = ({ hits, page, hitsPerPage }) => {
   const rows = hits.map((hit, index) => (

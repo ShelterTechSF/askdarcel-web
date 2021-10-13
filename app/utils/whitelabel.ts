@@ -9,9 +9,14 @@ import config from '../config';
 import styles from '../components/ui/Navigation/Navigation.module.scss';
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF';
+type WhitelabelSiteKey = 'defaultWhitelabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF';
 
-interface WhiteLabelSite {
+/*
+  Specify what is viewed in each white label.
+  A '/' (which is a forward-slash) as a value for logoLinkDestination
+  denotes that the link is internal to the application.
+*/
+interface WhitelabelSite {
   appImages: {
     background: string;
     logoLarge: string;
@@ -19,7 +24,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  intercom: boolean;
+  intercomAppID?: string | null;
   logoLinkDestination: string;
   navLogoStyle: string;
   showBanner: boolean;
@@ -28,26 +33,21 @@ interface WhiteLabelSite {
   siteNavStyle: string;
   siteUrl: string;
   title: string;
-  userWay: boolean;
+  userWayAppID?: string | null;
 }
 
 // Include a domain in config.js
-function determineWhiteLabelSite(): WhiteLabelSiteKey {
+function determineWhitelabelSite(): WhitelabelSiteKey {
   const subdomain = window.location.host.split('.')[0];
   if (subdomain === String(config.SFFAMILIES_DOMAIN) || subdomain === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
   if (subdomain === String(config.MOHCD_DOMAIN) || subdomain === `${String(config.MOHCD_DOMAIN)}-staging`) return 'SFServiceGuide';
   if (subdomain === String(config.LINKSF_DOMAIN) || subdomain === `${String(config.LINKSF_DOMAIN)}-staging`) return 'LinkSF';
-  return 'defaultWhiteLabel';
+  return 'defaultWhitelabel';
 }
 
-const configKey = determineWhiteLabelSite();
+const configKey = determineWhitelabelSite();
 
-/*
-  Specify what is viewed in each white label.
-  A '/' (which is a forward-slash) as a value for logoLinkDestination
-  denotes that the link is internal to the application.
-*/
-const SFFamilies: WhiteLabelSite = {
+const SFFamilies: WhitelabelSite = {
   appImages: {
     background: BackgroundImage,
     logoLarge: SFFamiliesLogo,
@@ -55,7 +55,7 @@ const SFFamilies: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  intercom: false,
+  intercomAppID: config?.INTERCOM_APP_ID ? config?.INTERCOM_APP_ID : null,
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
@@ -64,10 +64,10 @@ const SFFamilies: WhiteLabelSite = {
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
-  userWay: true,
+  userWayAppID: config?.SFFAMILIES_USERWAY_APP_ID ? config?.SFFAMILIES_USERWAY_APP_ID : null,
 } as const;
 
-const SFServiceGuide: WhiteLabelSite = {
+const SFServiceGuide: WhitelabelSite = {
   appImages: {
     background: BackgroundImage,
     logoLarge: SFServiceLogo,
@@ -75,7 +75,7 @@ const SFServiceGuide: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  intercom: true,
+  intercomAppID: config?.INTERCOM_APP_ID ? config?.INTERCOM_APP_ID : null,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
@@ -84,10 +84,10 @@ const SFServiceGuide: WhiteLabelSite = {
   siteNavStyle: styles.navLogo,
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
-  userWay: false,
+  userWayAppID: config?.SFFAMILIES_USERWAY_APP_ID ? config?.SFFAMILIES_USERWAY_APP_ID : null,
 } as const;
 
-const LinkSF: WhiteLabelSite = {
+const LinkSF: WhitelabelSite = {
   appImages: {
     background: BackgroundImage,
     logoLarge: LinkSFLogo,
@@ -95,7 +95,7 @@ const LinkSF: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  intercom: true,
+  intercomAppID: config?.INTERCOM_APP_ID ? config?.INTERCOM_APP_ID : null,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
@@ -104,11 +104,11 @@ const LinkSF: WhiteLabelSite = {
   siteNavStyle: styles.navLogo,
   siteUrl: 'https://linksf.sfserviceguide.org',
   title: 'Link SF',
-  userWay: false,
+  userWayAppID: null,
 } as const;
 
 
-const defaultWhiteLabel: WhiteLabelSite = {
+const defaultWhitelabel: WhitelabelSite = {
   appImages: {
     background: BackgroundImage,
     logoLarge: AskDarcelImage,
@@ -116,7 +116,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  intercom: true,
+  intercomAppID: config?.INTERCOM_APP_ID ? config?.INTERCOM_APP_ID : null,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
@@ -125,22 +125,17 @@ const defaultWhiteLabel: WhiteLabelSite = {
   siteNavStyle: styles.navLogo,
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
-  userWay: false,
+  userWayAppID: config?.SFFAMILIES_USERWAY_APP_ID ? config?.SFFAMILIES_USERWAY_APP_ID : null,
 } as const;
 
-/*
-  whiteLabel made Readonly to force developer to modify whiteLabel object in this file.
-  Disallow changes at compile time.
-*/
-const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
+const whitelabel: Readonly<Record<WhitelabelSiteKey, WhitelabelSite>> = {
   SFFamilies,
   SFServiceGuide,
   LinkSF,
-  defaultWhiteLabel,
+  defaultWhitelabel,
 } as const;
 
-// Disallow changes at run time
-Object.freeze(whiteLabel);
-Object.freeze(whiteLabel[configKey]?.appImages);
+Object.freeze(whitelabel);
+Object.freeze(whitelabel[configKey].appImages);
 
-export default whiteLabel[configKey];
+export default whitelabel[configKey];

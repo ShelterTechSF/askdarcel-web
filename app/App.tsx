@@ -8,7 +8,7 @@ import Navigation from './components/ui/Navigation/Navigation';
 // import CategoryPage from './find/FindPage';
 // import ResourcesTable from './search/ResourcesTable';
 import { round } from './utils/index';
-import whiteLabel from './utils/whitelabel';
+import whitelabel from './utils/whitelabel';
 import 'react-select/dist/react-select.css';
 import config from './config';
 import HamburgerMenu from './components/ui/HamburgerMenu';
@@ -19,13 +19,13 @@ import Routes from './routes';
 import MetaImage from './assets/img/sfsg-preview.png';
 
 const {
-  intercom,
+  intercomAppID,
   showBanner,
   showSearch,
   siteUrl,
   title,
-  userWay,
-} = whiteLabel;
+  userWayAppID,
+} = whitelabel;
 
 const coordsInSanFrancisco = (coords: any) => {
   // These are conservative bounds, extending into the ocean, the Bay, and Daly
@@ -160,8 +160,8 @@ class App extends Component {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
-        {intercom && config.INTERCOM_APP_ID && <Intercom appID={config.INTERCOM_APP_ID} />}
+        {userWayAppID && <UserWay appID={userWayAppID!} />}
+        {intercomAppID && <Intercom appID={intercomAppID!} />}
         <HamburgerMenu
           isOpen={hamburgerMenuIsOpen}
           outerContainerId={outerContainerId}
