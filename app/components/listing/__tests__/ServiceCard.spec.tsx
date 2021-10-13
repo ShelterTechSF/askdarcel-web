@@ -2,14 +2,15 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import ServiceCard from '../ServiceCard';
+import { ServiceCard } from '../ServiceCard';
+import { Service } from '../../../models';
 
 describe('<ServiceCard />', () => {
-  const validService = {
+  const validService: Service = {
     id: 2,
     name: 'Test Service',
     long_description: 'This valuable service does things',
-  };
+  } as any;
 
   it('checks a valid user should render the appropriate fields in the right place', () => {
     const card = shallow(<ServiceCard service={validService} />);

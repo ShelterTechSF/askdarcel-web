@@ -9,7 +9,7 @@ import * as Sentry from '@sentry/browser';
 import configureStore, { history } from './store/configureStore';
 import config from './config';
 import App from './App';
-import ScrollToTop from './components/layout/ScrollToTop';
+import ScrollToTop from './components/ui/ScrollToTop';
 
 require('instantsearch.css/themes/reset.css');
 require('./styles/main.scss');

@@ -4,14 +4,15 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import {
   ActionSidebar,
-  ServiceAttribution,
-  TableOfContactInfo,
-  TableOfOpeningTimes,
+  ListingTitleLink,
   MobileActionBar,
   MOHCDBadge,
+  ServiceAttribution,
+  ServiceCard,
+  TableOfContactInfo,
+  TableOfOpeningTimes,
 } from 'components/listing';
 import { Datatable, Loader } from 'components/ui';
-import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { MapOfLocations } from 'components/maps';
 import whiteLabel from '../utils/whitelabel';
 import {
