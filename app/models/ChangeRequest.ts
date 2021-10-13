@@ -1,4 +1,4 @@
-import { ScheduleDay } from './Meta';
+import { ScheduleDay } from './Schedule';
 
 export interface ChangeRequest {
   id: number;

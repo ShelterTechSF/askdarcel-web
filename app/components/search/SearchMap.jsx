@@ -4,6 +4,7 @@ import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
 import SearchEntry from './SearchEntry';
 import config from '../../config';
+import 'react-tippy/dist/tippy.css';
 import './SearchMap.scss';
 
 function createMapOptions(maps) {

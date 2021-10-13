@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import 'react-tippy/dist/tippy.css';
 import {
   ActionSidebar,
   ServiceAttribution,
@@ -29,9 +28,10 @@ const { title: whiteLabelTitle } = whiteLabel;
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
+  const details = useMemo(() => (service ? generateServiceDetails(service) : []), [service]);
 
   useEffect(() => {
-    fetchService(id as any)
+    fetchService(id)
       .then(s => setService(s));
     // TODO Handle Errors
   }, [id]);
@@ -69,12 +69,25 @@ export const ServiceListingPage = () => {
               />
             </ServiceListingSection>
 
-            <ServiceDetailsTableSection service={service} />
+            {details.length > 0 && (
+            <ServiceListingSection title="Service Details" data-cy="service-details-section">
+              <Datatable
+                rowRenderer={(d: { title: string; value: string }) => (
+                  <tr key={d.title}>
+                    <th>{d.title}</th>
+                    <td><ReactMarkdown className="rendered-markdown">{d.value}</ReactMarkdown></td>
+                  </tr>
+                )}
+                rows={details}
+              />
+            </ServiceListingSection>
+            )}
 
             <ServiceListingSection title="Contact Info" data-cy="service-contact-section">
               <TableOfContactInfo item={service} />
             </ServiceListingSection>
 
+            {locations.length > 0 && (
             <ServiceListingSection title="Location and Hours" data-cy="service-loc-hours-section">
               <MapOfLocations
                 locations={locations}
@@ -84,15 +97,16 @@ export const ServiceListingPage = () => {
               />
               {/* TODO Transport Options */}
             </ServiceListingSection>
+            )}
 
-            {resource.services.length > 1 && (
-              <ServiceListingSection title="Other Services at this Location" data-cy="service-other-section">
-                {resource.services
-                  .filter(srv => srv.id !== service.id)
-                  .map(srv => (
-                    <ServiceCard service={srv} key={srv.id} />
-                  ))}
-              </ServiceListingSection>
+            {resource.services.length > 0 && (
+            <ServiceListingSection title="Other Services at this Location" data-cy="service-other-section">
+              {resource.services
+                .filter(srv => srv.id !== service.id)
+                .map(srv => (
+                  <ServiceCard service={srv} key={srv.id} />
+                ))}
+            </ServiceListingSection>
             )}
 
             {/* TODO Need an API to get similar services, maybe same category for now? */}
@@ -110,12 +124,14 @@ export const ServiceListingPage = () => {
   );
 };
 
-type ServiceListingSectionProps = { title: string } & React.HTMLProps<HTMLDivElement>
+type ServiceListingSectionProps = {
+  title: string;
+} & React.HTMLProps<HTMLDivElement>
 
 // A title with the content of a section
-export const ServiceListingSection = (
-  { children, title, ...props }: ServiceListingSectionProps,
-) => (
+export const ServiceListingSection = ({
+  children, title, ...props
+}: ServiceListingSectionProps) => (
   <section {...props}>
     <h2>{title}</h2>
     {children}
@@ -134,22 +150,3 @@ export const ServiceProgramDetails = ({ service, organization }: ServiceProgramD
     <ListingTitleLink type="org" listing={organization} />
   </p>
 );
-
-// Shows a section with relevant service fields in a table
-export const ServiceDetailsTableSection = ({ service }: { service: Service }) => {
-  const details = useMemo(() => generateServiceDetails(service), [service]);
-
-  return details.length ? (
-    <ServiceListingSection title="Service Details" data-cy="service-details-section">
-      <Datatable
-        rowRenderer={(d: { title: string; value: string }) => (
-          <tr key={d.title}>
-            <th>{d.title}</th>
-            <td><ReactMarkdown className="rendered-markdown">{d.value}</ReactMarkdown></td>
-          </tr>
-        )}
-        rows={details}
-      />
-    </ServiceListingSection>
-  ) : null;
-};

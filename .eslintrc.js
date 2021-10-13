@@ -58,6 +58,7 @@ module.exports = {
         '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
         'no-use-before-define': 'off',
+        'react/require-default-props': 'off',
         'spaced-comment': ['error', 'always', { markers: ['/'] }],
       },
     },

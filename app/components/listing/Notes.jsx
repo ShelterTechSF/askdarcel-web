@@ -19,6 +19,7 @@ const Notes = ({ id, notes }) => (
   <section
     className="service--section"
     id={id}
+    data-cy="notes-section"
   >
     <header className="service--section--header">
       <h4>Notes</h4>

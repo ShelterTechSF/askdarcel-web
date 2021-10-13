@@ -4,7 +4,8 @@ export {
   User,
 };
 
-export * from './Organization';
-export * from './Service';
-export * from './Meta';
 export * from './ChangeRequest';
+export * from './Meta';
+export * from './Organization';
+export * from './Schedule';
+export * from './Service';

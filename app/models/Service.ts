@@ -1,14 +1,14 @@
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import type { Organization } from './Organization';
+import { Schedule, ScheduleParams } from './Schedule';
+import { RecurringSchedule } from './RecurringSchedule';
 import {
   Address,
   Category,
   Eligibility,
   Note,
   Program,
-  Schedule,
-  shouldInheritSchedule,
 } from './Meta';
 
 // A Service is provided by an Organization
@@ -31,7 +31,7 @@ export interface Service {
   long_description: string;
   notes: Note[];
   program: Program | null;
-  recurringSchedule: any[]; // TODO Move RecurringSchedule to models
+  recurringSchedule: RecurringSchedule;
   required_documents: any;
   resource: Organization;
   schedule: Schedule;
@@ -40,6 +40,12 @@ export interface Service {
   url: string | null;
   verified_at: any;
   wait_time: any;
+}
+
+export interface ServiceParams extends Omit<Partial<Service>, 'notes'|'schedule'> {
+  shouldInheritScheduleFromParent: boolean;
+  notes?: Partial<Note>[];
+  schedule?: ScheduleParams;
 }
 
 // TODO This should be serviceAtLocation
@@ -75,15 +81,20 @@ export const generateServiceDetails = (service: Service): ({ title: string; valu
 ].filter(row => row[1])
   .map(row => ({ title: row[0], value: row[1] }));
 
+// Determine if a service has its own schedule, or should inherit
+export const shouldServiceInheritScheduleFromOrg = (service: Service) => (
+  service.schedule && service.schedule.schedule_days.length > 0
+);
+
 /**
  * Return a Promise with the fetched Service.
  *
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const fetchService = (id: number): Promise<Service> => get(`/api/services/${id}`)
+export const fetchService = (id: string): Promise<Service> => get(`/api/services/${id}`)
   .then(({ service }) => {
-    const recurringSchedule = shouldInheritSchedule(service)
+    const recurringSchedule = shouldServiceInheritScheduleFromOrg(service)
       ? parseAPISchedule(service.schedule)
       : parseAPISchedule(service.resource.schedule);
     return { ...service, recurringSchedule };
