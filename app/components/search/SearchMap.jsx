@@ -5,6 +5,7 @@ import SearchEntry from './SearchEntry';
 import config from '../../config';
 import 'react-tippy/dist/tippy.css';
 import './SearchMap.scss';
+import { useAppContext } from 'utils';
 
 function createMapOptions(maps) {
   return {
@@ -27,9 +28,7 @@ function UserLocationMarker() {
   );
 }
 
-function CustomMarker({
-  hit, index, page, hitsPerPage,
-}) {
+function CustomMarker({ hit, index, page, hitsPerPage }) {
   const hitNumber = page * hitsPerPage + index + 1;
 
   const getPopoverHtml = () => {
@@ -77,9 +76,9 @@ function CustomMarker({
   );
 }
 
-export const SearchMap = ({
-  hits, userLocation, page, hitsPerPage,
-}) => {
+export const SearchMap = ({ hits, hitsPerPage, page }) => {
+  const { userLocation } = useAppContext()
+
   if (!hits || !hits.length) {
     return null;
   }
@@ -119,9 +118,3 @@ export const SearchMap = ({
     </div>
   );
 };
-
-// function mapStateToProps(state) {
-//   return {
-//     userLocation: state.user.location,
-//   };
-// }

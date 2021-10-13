@@ -23,6 +23,7 @@ import {
  */
 export const parseConcatenatedIntegerTime = integerTime => {
   try {
+    if (integerTime === null) { return null; }
     // This algorithm is super hacky and slow, as it uses strings to separate the
     // hours digits from the minutes digits.
     const timeString = integerTime.toString();
@@ -42,7 +43,7 @@ const parseAPIScheduleDay = apiScheduleDay => {
   const opensAtTime = parseConcatenatedIntegerTime(apiScheduleDay.opens_at);
   const closesAtTime = parseConcatenatedIntegerTime(apiScheduleDay.closes_at);
   if (opensAtTime === null || closesAtTime === null) {
-    Sentry.captureMessage(`ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`);
+    // Sentry.captureMessage(`ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`);
     return null;
   }
 

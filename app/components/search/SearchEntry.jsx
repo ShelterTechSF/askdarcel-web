@@ -7,7 +7,7 @@ import './SearchEntry.scss';
 
 const { appImages: { mohcdSeal } } = whiteLabel;
 
-export class SearchEntry extends Component {
+export default class SearchEntry extends Component {
   renderAddressMetadata() {
     const { hit } = this.props;
     const { addresses: rawAddresses } = hit;

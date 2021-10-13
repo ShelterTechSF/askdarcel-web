@@ -18,7 +18,7 @@ import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects'
 import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
-import { SearchResultsPage } from './pages/SearchPage';
+import { SearchResultsPage } from './pages/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import OrganizationEditPage from './pages/OrganizationEditPage';
@@ -40,14 +40,13 @@ export const App = () => {
   const history = useHistory()
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({ message: '', visible: false, type: 'success' });
-  const [userLocation, setUserLocation] = useState<any>(null);
+  const [userLocation, setUserLocation] = useState<any>(COORDS_MID_SAN_FRANCISCO);
 
   useEffect(() => {
     getLocation()
       .then(loc => setUserLocation(loc))
       .catch(err => {
         console.log('Could not obtain location, defaulting to San Francisco.', err); // eslint-disable-line no-console
-        setUserLocation(COORDS_MID_SAN_FRANCISCO);
       });
 
     ReactGA.initialize(config.GOOGLE_ANALYTICS_ID);
