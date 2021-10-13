@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Banner.scss';
+import styles from './Banner.module.scss';
 
 export const Banner = () => (
   <div className={styles.bannerContainer}>

@@ -1,7 +1,7 @@
 import React, { FormEvent, Fragment, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import whiteLabel from '../../utils/whitelabel';
-import styles from './Navigation.scss';
+import styles from './Navigation.module.scss';
 
 const {
   appImages: {

@@ -4,6 +4,7 @@ import { useHistory, Redirect, Route, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactGA from 'react-ga';
 import Intercom from 'react-intercom';
+
 import { getLocation, COORDS_MID_SAN_FRANCISCO, AppContext, whiteLabel } from './utils';
 import { Banner, PopUpMessage, PopupMessageProp, HamburgerMenu, Navigation, UserWay } from './components/ui';
 import config from './config';
