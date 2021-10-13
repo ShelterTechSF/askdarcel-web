@@ -15,7 +15,10 @@ const {
   title,
 } = whiteLabel;
 
-export const Navigation = ({ showSearch, toggleHamburgerMenu }: { showSearch: boolean; toggleHamburgerMenu: () => void }) => {
+export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
+  showSearch: boolean;
+  toggleHamburgerMenu: () => void;
+}) => {
   const history = useHistory();
   const { search } = useLocation();
   const [query, setQuery] = useState('');

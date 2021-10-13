@@ -1,12 +1,18 @@
 // import { hot } from 'react-hot-loader/root';
 import React, { useEffect, useState } from 'react';
-import { useHistory, Redirect, Route, Switch } from 'react-router-dom';
+import {
+  useHistory, Redirect, Route, Switch,
+} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ReactGA from 'react-ga';
 import Intercom from 'react-intercom';
 
-import { getLocation, COORDS_MID_SAN_FRANCISCO, AppContext, whiteLabel } from './utils';
-import { Banner, PopUpMessage, PopupMessageProp, HamburgerMenu, Navigation, UserWay } from './components/ui';
+import {
+  getLocation, COORDS_MID_SAN_FRANCISCO, GeoCoordinates, AppContext, whiteLabel,
+} from './utils';
+import {
+  Banner, PopUpMessage, PopupMessageProp, HamburgerMenu, Navigation, UserWay,
+} from './components/ui';
 import config from './config';
 import MetaImage from './assets/img/sfsg-preview.png';
 
@@ -16,7 +22,7 @@ import { CovidPage } from './pages/CovidPage';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
-import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects'
+import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects';
 import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { SearchResultsPage } from './pages/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
@@ -37,10 +43,10 @@ const outerContainerId = 'outer-container';
 const pageWrapId = 'page-wrap';
 
 export const App = () => {
-  const history = useHistory()
+  const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({ message: '', visible: false, type: 'success' });
-  const [userLocation, setUserLocation] = useState<any>(COORDS_MID_SAN_FRANCISCO);
+  const [userLocation, setUserLocation] = useState<GeoCoordinates>(COORDS_MID_SAN_FRANCISCO);
 
   useEffect(() => {
     getLocation()
@@ -50,12 +56,12 @@ export const App = () => {
       });
 
     ReactGA.initialize(config.GOOGLE_ANALYTICS_ID);
-    return history.listen((loc) => {
+    return history.listen(loc => {
       const page = loc.pathname + loc.search;
       ReactGA.set({ page });
       ReactGA.pageview(loc.pathname);
       window.scrollTo(0, 0); // TODO Is this necessary anymore?
-    })
+    });
   }, []);
 
   return (

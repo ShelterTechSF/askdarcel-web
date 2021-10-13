@@ -1,11 +1,11 @@
 import React from 'react';
 import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
 import SearchEntry from './SearchEntry';
 import config from '../../config';
-import 'react-tippy/dist/tippy.css';
 import './SearchMap.scss';
-import { useAppContext } from 'utils';
+import { useAppContext } from '../../utils';
 
 function createMapOptions(maps) {
   return {
@@ -28,7 +28,9 @@ function UserLocationMarker() {
   );
 }
 
-function CustomMarker({ hit, index, page, hitsPerPage }) {
+function CustomMarker({
+  hit, index, page, hitsPerPage,
+}) {
   const hitNumber = page * hitsPerPage + index + 1;
 
   const getPopoverHtml = () => {
@@ -77,7 +79,7 @@ function CustomMarker({ hit, index, page, hitsPerPage }) {
 }
 
 export const SearchMap = ({ hits, hitsPerPage, page }) => {
-  const { userLocation } = useAppContext()
+  const { userLocation } = useAppContext();
 
   if (!hits || !hits.length) {
     return null;
