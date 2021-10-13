@@ -11,8 +11,7 @@ import qs from 'qs';
 import SearchResultsContainer from '../components/search/SearchResultsContainer';
 import config from '../config';
 
-
-class SearchPage extends Component {
+export class SearchResultsPage extends Component {
   constructor(props) {
     super(props);
 
@@ -87,10 +86,8 @@ class SearchPage extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    userLocation: state.user.location,
-  };
-}
-
-export const SearchResultsPage = withRouter(connect(mapStateToProps)(SearchPage));
+// function mapStateToProps(state) {
+//   return {
+//     userLocation: state.user.location,
+//   };
+// }

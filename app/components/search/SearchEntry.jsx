@@ -7,7 +7,7 @@ import './SearchEntry.scss';
 
 const { appImages: { mohcdSeal } } = whiteLabel;
 
-class SearchEntry extends Component {
+export class SearchEntry extends Component {
   renderAddressMetadata() {
     const { hit } = this.props;
     const { addresses: rawAddresses } = hit;
@@ -95,11 +95,8 @@ class SearchEntry extends Component {
 }
 
 
-function mapStateToProps(state) {
-  return {
-    userLocation: state.user.location,
-  };
-}
-
-
-export default connect(mapStateToProps)(SearchEntry);
+// function mapStateToProps(state) {
+//   return {
+//     userLocation: state.user.location,
+//   };
+// }

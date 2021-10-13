@@ -13,15 +13,15 @@ import MetaImage from './assets/img/sfsg-preview.png';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { CovidPage } from './pages/CovidPage';
-import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
-import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
-import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
-import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects'
-import OrganizationEditPage from './pages/OrganizationEditPage';
 import { OrganizationListingPage } from './pages/OrganizationListingPage';
+import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
+import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects'
+import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { SearchResultsPage } from './pages/SearchPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
+import { TermsOfServicePage } from './pages/legal/TermsOfService';
+import OrganizationEditPage from './pages/OrganizationEditPage';
 import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
 import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
 

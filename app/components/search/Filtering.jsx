@@ -5,7 +5,7 @@ import { eligibilitiesMapping, categoriesMapping } from '../../utils/refinementM
 import filters_icon from '../../assets/img/filters-icon.png';
 import './Filtering.scss';
 
-class Filtering extends Component {
+export default class Filtering extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,10 +51,8 @@ class Filtering extends Component {
 }
 
 
-function mapStateToProps(state) {
-  return {
-    userLocation: state.user.location,
-  };
-}
-
-export default connect(mapStateToProps)(Filtering);
+// function mapStateToProps(state) {
+//   return {
+//     userLocation: state.user.location,
+//   };
+// }

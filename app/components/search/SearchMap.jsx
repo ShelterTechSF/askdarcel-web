@@ -77,7 +77,7 @@ function CustomMarker({
   );
 }
 
-const SearchMap = ({
+export const SearchMap = ({
   hits, userLocation, page, hitsPerPage,
 }) => {
   if (!hits || !hits.length) {
@@ -120,11 +120,8 @@ const SearchMap = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    userLocation: state.user.location,
-  };
-}
-
-
-export default connect(mapStateToProps)(SearchMap);
+// function mapStateToProps(state) {
+//   return {
+//     userLocation: state.user.location,
+//   };
+// }
