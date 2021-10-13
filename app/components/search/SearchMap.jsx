@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
 import SearchEntry from './SearchEntry';

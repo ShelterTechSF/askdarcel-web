@@ -55,7 +55,7 @@ export const App = () => {
       const page = loc.pathname + loc.search;
       ReactGA.set({ page });
       ReactGA.pageview(loc.pathname);
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 0); // TODO Is this necessary anymore?
     })
   }, []);
 

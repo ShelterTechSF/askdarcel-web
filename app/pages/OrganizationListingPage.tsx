@@ -32,7 +32,7 @@ export const OrganizationListingPage = () => {
     // TODO Handle Errors
   }, [id]);
 
-  if (!org || !(window as any).google) { return <Loader />; }
+  if (!org) { return <Loader />; }
 
   const orgLocations = getResourceLocations(org);
 

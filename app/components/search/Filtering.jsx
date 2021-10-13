@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import FacetRefinementList from './FacetRefinementList';
 import OpenNowRefinementList from './OpenNowRefinementList';
 import { eligibilitiesMapping, categoriesMapping } from '../../utils/refinementMappings';
