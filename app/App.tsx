@@ -66,7 +66,7 @@ export const App = () => {
 
   return (
     <div id={outerContainerId}>
-      <AppContext.Provider value={{ setPopUpMessage, userLocation }}>
+      <AppContext.Provider value={{ userLocation }}>
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
@@ -103,8 +103,8 @@ export const App = () => {
               <Route exact path="/covid" component={CovidPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
               <Route exact path="/organizations/:id" component={OrganizationListingPage} />
-              <Route exact path="/organizations/:id/edit" component={OrganizationEditPage} />
-              <Route exact path="/organizations/new" component={OrganizationEditPage} />
+              <Route exact path="/organizations/:id/edit" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
+              <Route exact path="/organizations/new" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
               <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
               <Route exact path="/resource-guides" component={ResourceGuides} />
               <Route exact path="/resource-guides/:id" component={ResourceGuide} />
