@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import whiteLabel from '../../../utils/whitelabel';
+import whiteLabel from '../../utils/whitelabel';
 import './Footer.scss';
 
-function Footer() {
+export const Footer = () => {
   const { title } = whiteLabel;
 
   return (
@@ -52,6 +52,4 @@ function Footer() {
       </div>
     </footer>
   );
-}
-
-export default Footer;
+};

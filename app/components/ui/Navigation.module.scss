@@ -1,8 +1,5 @@
 @import '../../styles/utils/_helpers.scss';
 
-////////////////////////////////////////////////////////////////////////////////////////
-// NAVIGATION
-
 @mixin siteNavShared {
   position: sticky;
   top: 0;
@@ -53,7 +50,7 @@
 }
 
 @mixin navLogoShared {
-  display: inline-block;
+  // display: inline-block;
   vertical-align: top;
 }
 
@@ -77,9 +74,9 @@
 
 .navSearch {
   display: inline-block;
-  @include r_max($break-tablet-s) {
-    display: none !important;  // !important is needed to override .form-row
-  }
+  // @include r_max($break-tablet-s) {
+  //   display: none !important;  
+  // }
   .searchField {
     $font-size: calc-em(15px);
     background-repeat: no-repeat;
@@ -100,12 +97,18 @@
   }
 }
 
+.navSearchFull {
+  @include r_max($break-tablet-s) {
+    display: none !important; // !important is needed to override .form-row
+  }
+}
+
 .mobileNavigation {
   align-items: center;
   display: flex;
 
   @include r_min($break-tablet-s) {
-    display: none;
+    display: none !important;  // !important is needed to override .form-row
   }
 }
 

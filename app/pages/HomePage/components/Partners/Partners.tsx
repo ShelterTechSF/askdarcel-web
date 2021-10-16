@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import './Partners.scss';
 import STLogo from './assets/STLogo.png';
 import MOHCDLogo from './assets/MOHCDLogo.png';
@@ -8,7 +9,7 @@ import BenetechLogo from './assets/BenetechLogo.png';
 import SFFamiliesLogo from './assets/SFFamiliesLogo.png';
 import BridgeLogo from './assets/BridgeLogo.png';
 
-const Partners = () => (
+export const Partners = () => (
   <div className="partners">
     <ul>
       <li>
@@ -49,5 +50,3 @@ const Partners = () => (
     <Link to="/about">View all our strategic partners</Link>
   </div>
 );
-
-export default Partners;

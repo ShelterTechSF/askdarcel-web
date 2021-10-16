@@ -86,7 +86,7 @@ export const App = () => {
         <HamburgerMenu
           isOpen={hamburgerOpen}
           outerContainerId={outerContainerId}
-          onStateChange={(s: any) => setHamburgerOpen(s)}
+          onStateChange={(s: any) => setHamburgerOpen(s.isOpen)}
           pageWrapId={pageWrapId}
           toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
         />

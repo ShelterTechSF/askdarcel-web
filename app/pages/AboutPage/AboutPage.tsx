@@ -1,8 +1,7 @@
 import React from 'react';
-import Footer from '../../components/ui/Footer/Footer';
+import { Footer } from '../../components/ui';
 
 import styles from './AboutPage.module.scss';
-
 import STLogo from './assets/STLogo.png';
 import MOHCDLogo from './assets/MOHCDLogo.png';
 import JDCLogo from './assets/JDCLogo.png';
