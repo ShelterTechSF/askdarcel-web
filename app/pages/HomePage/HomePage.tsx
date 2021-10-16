@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
 
-import { Footer } from '../../components/ui';
-import { Partners } from './components/Partners/Partners';
 import { getResourceCount } from 'utils/DataService';
+import { Footer } from 'components/ui';
+import { Partners } from './components/Partners/Partners';
 import SearchBar from './components/SearchBar';
 import Section from './components/Section';
 import ResourceList from './components/ResourceList/ResourceList';
