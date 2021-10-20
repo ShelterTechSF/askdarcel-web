@@ -49,10 +49,3 @@ export default class Filtering extends Component {
     );
   }
 }
-
-
-// function mapStateToProps(state) {
-//   return {
-//     userLocation: state.user.location,
-//   };
-// }

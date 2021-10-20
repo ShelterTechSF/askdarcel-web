@@ -32,6 +32,7 @@ ul.accordion {
     }
 
     section {
+      margin: 0;
       padding: 0;
       height: 0;
       overflow: hidden;
@@ -53,10 +54,6 @@ ul.accordion {
         height: auto;
         padding: $padding-default;
       }
-    }
-
-    &:nth-of-type(2n) {
-      // background: $color-grey1;
     }
   }
 }
