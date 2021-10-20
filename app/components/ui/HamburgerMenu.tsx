@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { push as Menu } from 'react-burger-menu';
+import { push as Menu, State } from 'react-burger-menu';
 import styles from './HamburgerMenu.module.scss';
 
 const burgerStyles = {
@@ -39,7 +39,7 @@ export const HamburgerMenu = ({
   toggleHamburgerMenu,
 }: {
   isOpen: boolean;
-  onStateChange: (s: any) => void;
+  onStateChange: (s: State) => void;
   outerContainerId: string;
   pageWrapId: string;
   toggleHamburgerMenu: () => void;

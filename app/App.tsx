@@ -1,4 +1,3 @@
-// import { hot } from 'react-hot-loader/root';
 import React, { useEffect, useState } from 'react';
 import {
   useHistory, Redirect, Route, Switch,
@@ -86,7 +85,7 @@ export const App = () => {
         <HamburgerMenu
           isOpen={hamburgerOpen}
           outerContainerId={outerContainerId}
-          onStateChange={(s: any) => setHamburgerOpen(s.isOpen)}
+          onStateChange={s => setHamburgerOpen(s.isOpen)}
           pageWrapId={pageWrapId}
           toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
         />
