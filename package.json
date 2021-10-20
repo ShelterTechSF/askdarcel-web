@@ -32,7 +32,6 @@
     "react-intercom": "^1.0.15",
     "react-markdown": "^3.3.2",
     "react-modal": "^3.12.1",
-    "react-redux": "^6.0.1",
     "react-router-dom": "^5.1.2",
     "react-select": "^1.0.0-rc.5",
     "react-tippy": "^1.2.2",
