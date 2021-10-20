@@ -13,9 +13,6 @@ import EditPhones from '../components/edit/EditPhones';
 import EditSidebar from '../components/edit/EditSidebar';
 import { buildScheduleDays } from '../components/edit/ProvidedService';
 import * as dataService from '../utils/DataService';
-
-// import { withPopUpMessages } from '../actions/popUpMessageActions';
-
 import './OrganizationEditPage.scss';
 
 const ACTION_INSERT = 'insert';

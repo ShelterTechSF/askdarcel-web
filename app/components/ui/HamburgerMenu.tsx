@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import { push as Menu, State } from 'react-burger-menu';
 import styles from './HamburgerMenu.module.scss';
@@ -68,7 +68,12 @@ export const HamburgerMenu = ({
 
 const MenuItem = ({
   children, onClick, to, exact,
-}: { children: any; onClick: () => void; to: string; exact: boolean }) => (
+}: {
+  children: ReactNode;
+  onClick: () => void;
+  to: string;
+  exact: boolean;
+}) => (
   (to.startsWith('http') || to.startsWith('mailto:'))
     ? <a className={styles.menuItem} href={to}>{children}</a>
     : (

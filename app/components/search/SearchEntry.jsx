@@ -93,10 +93,3 @@ export default class SearchEntry extends Component {
     );
   }
 }
-
-
-// function mapStateToProps(state) {
-//   return {
-//     userLocation: state.user.location,
-//   };
-// }

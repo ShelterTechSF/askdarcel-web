@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Service } from '../../models';
-// import StreetViewImage from 'components/maps/StreetViewImage';
 
 export const ServiceCard = ({ service }: { service: Service }) => {
   const { id, name, long_description } = service;

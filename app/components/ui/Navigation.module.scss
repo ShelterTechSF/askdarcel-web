@@ -50,7 +50,6 @@
 }
 
 @mixin navLogoShared {
-  // display: inline-block;
   vertical-align: top;
 }
 
@@ -74,9 +73,7 @@
 
 .navSearch {
   display: inline-block;
-  // @include r_max($break-tablet-s) {
-  //   display: none !important;  
-  // }
+
   .searchField {
     $font-size: calc-em(15px);
     background-repeat: no-repeat;
