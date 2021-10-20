@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useHistory, Redirect, Route, Switch,
-} from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import ReactGA from 'react-ga';
 import Intercom from 'react-intercom';
+import { Helmet } from 'react-helmet-async';
+import {
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+} from 'react-router-dom';
 
 import {
-  getLocation, COORDS_MID_SAN_FRANCISCO, GeoCoordinates, AppContext, whiteLabel,
+  AppContext,
+  COORDS_MID_SAN_FRANCISCO,
+  GeoCoordinates,
+  getLocation,
+  whiteLabel,
 } from './utils';
 import {
-  Banner, PopUpMessage, PopupMessageProp, HamburgerMenu, Navigation, UserWay,
+  Banner,
+  HamburgerMenu,
+  Navigation,
+  PopUpMessage,
+  PopupMessageProp,
+  UserWay,
 } from './components/ui';
 import config from './config';
 import MetaImage from './assets/img/sfsg-preview.png';
