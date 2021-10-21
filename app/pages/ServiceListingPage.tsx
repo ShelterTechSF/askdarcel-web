@@ -4,14 +4,15 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import {
   ActionSidebar,
-  ServiceAttribution,
-  TableOfContactInfo,
-  TableOfOpeningTimes,
+  ListingTitleLink,
   MobileActionBar,
   MOHCDBadge,
+  ServiceAttribution,
+  ServiceCard,
+  TableOfContactInfo,
+  TableOfOpeningTimes,
 } from 'components/listing';
 import { Datatable, Loader } from 'components/ui';
-import { ServiceCard, ListingTitleLink } from 'components/layout';
 import { MapOfLocations } from 'components/maps';
 import whiteLabel from '../utils/whitelabel';
 import {
@@ -72,7 +73,7 @@ export const ServiceListingPage = () => {
             {details.length > 0 && (
             <ServiceListingSection title="Service Details" data-cy="service-details-section">
               <Datatable
-                rowRenderer={(d: { title: string; value: string }) => (
+                rowRenderer={d => (
                   <tr key={d.title}>
                     <th>{d.title}</th>
                     <td><ReactMarkdown className="rendered-markdown">{d.value}</ReactMarkdown></td>
@@ -143,10 +144,10 @@ type ServiceProgramDetailsProps = { service: Service; organization: Organization
 // TODO Implement rendering/popover when programs exist
 // Details if the service is part of a larger program, and the organization that provides it
 export const ServiceProgramDetails = ({ service, organization }: ServiceProgramDetailsProps) => (
-  <p>
+  <span>
     A service
     { service.program ? ` in the ${service.program.name} program` : null }
     { ' offered by ' }
     <ListingTitleLink type="org" listing={organization} />
-  </p>
+  </span>
 );

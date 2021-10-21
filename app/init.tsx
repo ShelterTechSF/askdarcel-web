@@ -1,15 +1,12 @@
 import React from 'react';
-import ReactGA from 'react-ga';
 import ReactDOM from 'react-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import ReactModal from 'react-modal';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import * as Sentry from '@sentry/browser';
-import configureStore, { history } from './store/configureStore';
+
 import config from './config';
-import App from './App';
-import ScrollToTop from './components/layout/ScrollToTop';
+import { App } from './App';
 
 require('instantsearch.css/themes/reset.css');
 require('./styles/main.scss');
@@ -21,27 +18,13 @@ if (process.env.NODE_ENV === 'production') {
   (Sentry as any).captureMessage = (m: any) => console.error(m);
 }
 
-const store = (configureStore as any)();
-const googleAnalyticsId = (process.env.NODE_ENV === 'production' || window.location.host === 'www.askdarcel.org') ? 'UA-116318550-1' : 'UA-116318550-2';
-
-ReactGA.initialize(googleAnalyticsId);
-history.listen(loc => {
-  const page = loc.pathname + loc.search;
-  ReactGA.set({ page });
-  ReactGA.pageview(loc.pathname);
-});
-
 const rootElement = document.getElementById('root')!;
 ReactModal.setAppElement(rootElement);
 
 ReactDOM.render((
-  <Provider store={store} key="provider">
-    <ConnectedRouter history={history}>
-      <ScrollToTop>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </ScrollToTop>
-    </ConnectedRouter>
-  </Provider>
+  <BrowserRouter>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </BrowserRouter>
 ), rootElement);

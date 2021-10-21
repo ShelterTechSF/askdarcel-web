@@ -8,3 +8,6 @@ export { default as Services } from './Services';
 export * from './RelativeOpeningTime';
 export * from './TableOfOpeningTimes';
 export * from './ResourceInfos';
+export * from './ListingTitleLink';
+export * from './ServiceCard';
+export * from './OrganizationCard';

@@ -4,10 +4,9 @@ import { connectStateResults } from 'react-instantsearch/connectors';
 import { Loader } from 'components/ui';
 import Filtering from './Filtering';
 import SearchTable from './SearchTable';
-import SearchMap from './SearchMap';
+import { SearchMap } from './SearchMap';
 import './SearchResultsContainer.scss';
 import { parseAlgoliaSchedule } from '../../utils/transformSchedule';
-
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -24,7 +23,6 @@ const transformHits = hits => hits.map(hit => {
   );
   return { ...hit, recurringSchedule };
 });
-
 
 const SearchResultsContainer = ({ searchState, searchResults, searching }) => {
   let output = null;

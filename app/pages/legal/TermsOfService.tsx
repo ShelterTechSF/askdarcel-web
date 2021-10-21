@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import Footer from '../../components/ui/Footer/Footer';
+import { Footer } from '../../components/ui';
 
 const termsOfServiceContent = `
 # SF Service Guide Terms of Service

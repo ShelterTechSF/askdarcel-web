@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import whiteLabel from '../../utils/whitelabel';
@@ -8,7 +7,7 @@ import './SearchEntry.scss';
 
 const { appImages: { mohcdSeal } } = whiteLabel;
 
-class SearchEntry extends Component {
+export default class SearchEntry extends Component {
   renderAddressMetadata() {
     const { hit } = this.props;
     const { addresses: rawAddresses } = hit;
@@ -94,13 +93,3 @@ class SearchEntry extends Component {
     );
   }
 }
-
-
-function mapStateToProps(state) {
-  return {
-    userLocation: state.user.location,
-  };
-}
-
-
-export default connect(mapStateToProps)(SearchEntry);

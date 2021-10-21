@@ -6,7 +6,7 @@ import SFServiceLogo from '../assets/img/sf-service.svg';
 import SFSeal from '../assets/img/sf-seal.png';
 import LinkSFLogo from '../assets/img/link-sf.png';
 import config from '../config';
-import styles from '../components/ui/Navigation/Navigation.module.scss';
+import styles from '../components/ui/Navigation.module.scss';
 
 // Include new white label here
 type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF';
@@ -81,7 +81,7 @@ const SFServiceGuide: WhiteLabelSite = {
   showBanner: true,
   showMobileNav: true,
   showSearch: true,
-  siteNavStyle: styles.navLogo,
+  siteNavStyle: styles.siteNav,
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
   userWay: false,
@@ -101,7 +101,7 @@ const LinkSF: WhiteLabelSite = {
   showBanner: true,
   showMobileNav: true,
   showSearch: true,
-  siteNavStyle: styles.navLogo,
+  siteNavStyle: styles.siteNav,
   siteUrl: 'https://linksf.sfserviceguide.org',
   title: 'Link SF',
   userWay: false,
@@ -122,7 +122,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   showBanner: true,
   showMobileNav: true,
   showSearch: true,
-  siteNavStyle: styles.navLogo,
+  siteNavStyle: styles.siteNav,
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
   userWay: false,

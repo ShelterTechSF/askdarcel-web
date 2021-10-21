@@ -60,8 +60,7 @@ class MapOfLocations extends React.Component {
               { locations.map((loc, i) => (
                 <AccordionItem
                   key={loc.address.id}
-                  title={loc.address.address_1}
-                  headerRenderer={title => (
+                  headerRenderer={(
                     <div>
                       <table>
                         <tbody>
@@ -70,7 +69,7 @@ class MapOfLocations extends React.Component {
                               {i + 1}
                               .
                             </td>
-                            <td><strong>{title}</strong></td>
+                            <td><strong>{loc.address.address_1}</strong></td>
                             <td className="iconcell">
                               <div className="selector">
                                 <i className="material-icons">keyboard_arrow_down</i>
