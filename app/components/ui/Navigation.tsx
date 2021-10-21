@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import cn from 'classnames';
+import qs from 'qs';
 import whiteLabel from '../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
@@ -95,15 +96,10 @@ const SiteSearch = ({ query, setQuery, extraClasses }: {
   setQuery: (q: string) => void;
 }) => {
   const history = useHistory();
-  const { search } = useLocation();
-
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
     if (query) {
-      const qp = new URLSearchParams(search);
-      qp.append('query', query);
-      history.push(`/search?${qp.toString()}`);
-      window.location.reload();
+      history.push(`/search?${qs.stringify({ query })}`);
     }
     return false;
   };

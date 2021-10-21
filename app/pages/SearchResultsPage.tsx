@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, Configure, SearchBox } from 'react-instantsearch/dom';
 import qs from 'qs';
@@ -15,9 +15,10 @@ const searchClient = algoliasearch(
 
 export const SearchResultsPage = () => {
   const history = useHistory();
+  const { search } = useLocation();
   const { userLocation } = useAppContext();
-  const [searchState, setSearchState] = useState({});
   const [lastPush, setLastPush] = useState(Date.now());
+  const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
 
   return (
     <div className="search-page-container">
@@ -28,14 +29,12 @@ export const SearchResultsPage = () => {
         onSearchStateChange={(nextSearchState: any) => {
           const THRESHOLD = 700;
           const newPush = Date.now();
-          setSearchState(nextSearchState);
           setLastPush(newPush);
-          const newParams = new URLSearchParams(nextSearchState);
-
+          const newUrl = nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '';
           if (lastPush && newPush - lastPush <= THRESHOLD) {
-            history.replace(nextSearchState ? `search?${newParams.toString()}` : '');
+            history.replace(newUrl);
           } else {
-            history.push(nextSearchState ? `search?${newParams.toString()}` : '');
+            history.push(newUrl);
           }
         }}
         createURL={(state: any) => `search?${qs.stringify(state)}`}
