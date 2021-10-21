@@ -5,7 +5,7 @@ interface DatatableProps<T = any> {
   rowRenderer: (row: T) => JSX.Element;
 }
 
-export const Datatable = ({ rows, rowRenderer }: DatatableProps) => (
+export const Datatable = <T extends unknown>({ rows, rowRenderer }: DatatableProps<T>) => (
   <table>
     <tbody>
       { rows.map(row => rowRenderer(row)) }

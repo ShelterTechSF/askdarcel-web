@@ -73,7 +73,7 @@ export const ServiceListingPage = () => {
             {details.length > 0 && (
             <ServiceListingSection title="Service Details" data-cy="service-details-section">
               <Datatable
-                rowRenderer={(d: { title: string; value: string }) => (
+                rowRenderer={d => (
                   <tr key={d.title}>
                     <th>{d.title}</th>
                     <td><ReactMarkdown className="rendered-markdown">{d.value}</ReactMarkdown></td>

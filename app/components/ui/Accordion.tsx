@@ -22,14 +22,13 @@ export const Accordion = ({ children }: { children: JSX.Element[] }) => {
 };
 
 // TODO Enforcing the user to add their own dropdown with a custom renderer is a bit clunky
-export const AccordionItem = ({ children, headerRenderer, title }: {
-  title: string;
+export const AccordionItem = ({ children, headerRenderer }: {
   headerRenderer?: JSX.Element;
   children: JSX.Element;
 }) => (
   <div>
     <header>
-      { headerRenderer || title }
+      { headerRenderer }
     </header>
     <section>{ children }</section>
   </div>

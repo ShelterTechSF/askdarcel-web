@@ -60,7 +60,6 @@ class MapOfLocations extends React.Component {
               { locations.map((loc, i) => (
                 <AccordionItem
                   key={loc.address.id}
-                  title={loc.address.address_1}
                   headerRenderer={(
                     <div>
                       <table>
