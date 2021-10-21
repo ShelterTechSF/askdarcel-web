@@ -1,3 +1,6 @@
+import { Schedule } from './Schedule';
+import { RecurringSchedule } from './RecurringSchedule';
+
 export interface Address {
   id: number;
   attention: string;
@@ -12,6 +15,14 @@ export interface Address {
   country: string;
   latitude: string;
   longitude: string;
+}
+
+export interface LocationDetails {
+  id: number;
+  address: Address;
+  name: string;
+  recurringSchedule: RecurringSchedule;
+  inherited: boolean | Schedule;
 }
 
 export interface PhoneNumber {

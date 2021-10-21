@@ -7,6 +7,7 @@ import {
   Address,
   Category,
   Eligibility,
+  LocationDetails,
   Note,
   Program,
 } from './Meta';
@@ -53,7 +54,7 @@ export const getServiceLocations = (
   service: Service,
   resource: Organization,
   recurringSchedule: any,
-) => {
+): LocationDetails[] => {
   let addresses: Address[];
   if (service.addresses && service.addresses.length > 0) {
     ({ addresses } = service);

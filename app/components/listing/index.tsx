@@ -11,3 +11,5 @@ export * from './ResourceInfos';
 export * from './ListingTitleLink';
 export * from './ServiceCard';
 export * from './OrganizationCard';
+export * from './MapOfLocations';
+export * from './StreetViewImage';

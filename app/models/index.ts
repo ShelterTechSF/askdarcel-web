@@ -4,6 +4,7 @@ export {
   User,
 };
 
+export * from './SearchHits';
 export * from './ChangeRequest';
 export * from './Meta';
 export * from './Organization';

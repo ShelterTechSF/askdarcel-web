@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   ActionSidebar,
   ListingTitleLink,
+  MapOfLocations,
   MobileActionBar,
   MOHCDBadge,
   ServiceAttribution,
@@ -13,7 +14,6 @@ import {
   TableOfOpeningTimes,
 } from 'components/listing';
 import { Datatable, Loader } from 'components/ui';
-import { MapOfLocations } from 'components/maps';
 import whiteLabel from '../utils/whitelabel';
 import {
   fetchService,

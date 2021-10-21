@@ -26,11 +26,8 @@ export default class SearchEntry extends Component {
   }
 
   render() {
-    const {
-      hit, index, page, hitsPerPage,
-    } = this.props;
+    const { hit, hitNumber } = this.props;
     const description = hit.long_description || 'No description, yet...';
-    const hitNumber = page * hitsPerPage + index + 1;
     const { recurringSchedule, type } = hit;
 
     // handle resources and services slightly differently.
