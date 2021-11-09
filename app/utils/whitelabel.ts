@@ -95,7 +95,7 @@ const LinkSF: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  intercom: true,
+  intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
