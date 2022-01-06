@@ -70,7 +70,7 @@ export const LinkSfJsx = () => (
 
         <div className={styles.aboutRow}>
           <a
-            href="https://www.stanthonysf.org/techlab/"
+            href="https://www.stanthonysf.org/services/tech-lab/"
             rel="noopener norefferer"
             className={styles.imageContainer}
           >
@@ -79,7 +79,7 @@ export const LinkSfJsx = () => (
           <p>
             St. Anthony’s
             <a
-              href="https://www.stanthonysf.org/techlab/"
+              href="https://www.stanthonysf.org/services/tech-lab/"
               rel="noopener norefferer"
             >
 
