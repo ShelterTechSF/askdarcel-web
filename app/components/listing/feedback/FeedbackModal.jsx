@@ -40,7 +40,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     setReview(e.target.value);
   };
 
-  const isDownVote = vote === DOWNVOTE
+  const isDownVote = vote === DOWNVOTE;
 
   const handleNextStep = () => (
     (isDownVote && step === 'start') ? setStep('tags') : setStep('review')
