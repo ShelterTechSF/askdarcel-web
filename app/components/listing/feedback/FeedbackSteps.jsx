@@ -52,7 +52,7 @@ export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
   </div>
 );
 
-export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
+export const Review = ({ reviewValue, onReviewChange }) => (
   <div className={styles.feedbackReview}>
     <div className={styles.stepsPrompt}>
       Please provide your feedback below:
@@ -60,9 +60,7 @@ export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
     <textarea
       className={styles.feedbackTextarea}
       type="text"
-      placeholder={`Type your feedback here ${
-        !isReviewRequired ? '(optional)' : ''
-      }`}
+      placeholder="Type your feedback here(optional)"
       value={reviewValue}
       onChange={onReviewChange}
     />
@@ -89,7 +87,6 @@ export const NavigationButtons = ({
   onPrevStep,
   onNextStep,
   onSubmit,
-  isReviewRequired,
   isSubmitted,
 }) => (
   <div className={styles.navButtonsContainer}>
@@ -102,7 +99,7 @@ export const NavigationButtons = ({
       <button
         type="button"
         className={styles.navButtons}
-        disabled={isReviewRequired || isSubmitted === 'submitting'}
+        disabled={isSubmitted === 'submitting'}
         onClick={onSubmit}
       >
         {isSubmitted === 'submitting' ? 'Submitting...' : 'Submit'}
