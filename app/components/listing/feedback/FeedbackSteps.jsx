@@ -60,7 +60,7 @@ export const Review = ({ reviewValue, onReviewChange }) => (
     <textarea
       className={styles.feedbackTextarea}
       type="text"
-      placeholder="Type your feedback here(optional)"
+      placeholder="Type your feedback here (optional)"
       value={reviewValue}
       onChange={onReviewChange}
     />
