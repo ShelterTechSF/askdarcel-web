@@ -6,6 +6,7 @@ on:
       - '*'
 
 env:
+  NODE_VERSION: 10.x
   DOCKER_REPO: sheltertechsf/askdarcel-web
 
 jobs:
