@@ -21,14 +21,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      - run: npm ci
+      - run: yarn install --immutable
       - run: cp config.example.yml config.yml
-      - run: npm run lint
+      - run: yarn lint
 
   test_unit:
     runs-on: ubuntu-latest
@@ -37,14 +32,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      - run: npm ci
+      - run: yarn install --immutable
       - run: cp config.example.yml config.yml
-      - run: npm run test
+      - run: yarn test
 
   test_e2e:
     runs-on: ubuntu-latest
@@ -53,14 +43,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      - run: npm ci
+      - run: yarn install --immutable
       - run: cp config.example.yml config.yml
-      - run: npm run build
+      - run: yarn build
       - run: docker-compose -f docker-compose.test.yml up -d db api frontend
       - run: sleep 30
       - run: yarn cypress run
@@ -84,14 +69,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      - run: npm ci
+      - run: yarn install --immutable
       - run: cp config.example.yml config.yml
-      - run: CONFIG_YAML=config.docker.yml npm run build
+      - run: CONFIG_YAML=config.docker.yml yarn build
       - run: touch version.json
       - uses: docker/build-push-action@v2
         with:

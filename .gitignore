@@ -9,7 +9,6 @@ app/utils/config.js
 .env
 config.yml
 .DS_Store
-yarn.lock
 
 cypress/videos/**
 cypress/screenshots/**

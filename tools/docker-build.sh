@@ -26,7 +26,7 @@ echo "{
   \"build\": \"$TRAVIS_BUILD_NUMBER\"
 }" > version.json
 
-CONFIG_YAML=config.docker.yml npm run build
+CONFIG_YAML=config.docker.yml yarn build
 
 docker build -f Dockerfile -t $REPO:$TAG .
 echo "Pushing tags for '$TAG'"

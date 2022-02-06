@@ -51,10 +51,10 @@ $ cp config.example.yml config.yml
 
 ```sh
 # Install node dependencies
-$ docker-compose run --rm web npm install
+$ docker-compose run --rm web yarn
 
 # Build static assets bundle
-$ docker-compose run --rm web npm run build
+$ docker-compose run --rm web yarn build
 
 # Run dev server
 $ docker-compose up
@@ -117,15 +117,15 @@ $ nvm install  # Reads from .nvmrc
 ### Installing npm dependencies
 To install the dependencies, from the top directory run
 ```sh
-npm install
+yarn
 ```
 To build the bundled script with webpack run
 ```sh
-npm run build
+yarn build
 ```
 And to run the dev server, run
 ```sh
-npm run dev
+yarn dev
 ```
 
 
@@ -142,14 +142,14 @@ It's essentially an alternative to writing Selenium tests, and I've found it nic
 
 If you are not using Docker and all the services are bound to localhost, then you should just be able to run:
 ```
-$ npm run testcafe -- --skip-js-errors chrome testcafe/*.js
+$ yarn testcafe -- --skip-js-errors chrome testcafe/*.js
 ```
 
-Note: Make sure you have the dev server running (`npm run dev`) before you try running the above
+Note: Make sure you have the dev server running (`yarn dev`) before you try running the above
 
 If you are using Docker, then you'll need to run it somewhat like this:
 
 ```
-$ docker-compose run --rm -p 1337:1337 -e BASE_URL=http://web:8080 web npm run testcafe -- --skip-js-errors remote --skip-js-errors --hostname localhost --ports 1337,1338 ./testcafe/
+$ docker-compose run --rm -p 1337:1337 -e BASE_URL=http://web:8080 web yarn testcafe -- --skip-js-errors remote --skip-js-errors --hostname localhost --ports 1337,1338 ./testcafe/
 ```
 This will spin up a web server at http://localhost:1337/ and print out a URL to use. You should manually enter it into your browser to start the tests.
