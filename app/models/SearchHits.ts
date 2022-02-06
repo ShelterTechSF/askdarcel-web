@@ -27,13 +27,13 @@ export const transformHits = (hits: SearchHit[]) => hits.map(hit => {
         ...hit,
         recurringSchedule: hit.schedule?.length ? parseAlgoliaSchedule(hit.schedule) : null,
       };
-    case 'service':
-      // eslint-disable-next-line no-case-declarations
+    case 'service': {
       const schedule = hit.schedule || hit.resource_schedule;
       return {
         ...hit,
         recurringSchedule: schedule?.length ? parseAlgoliaSchedule(schedule) : null,
       };
+    }
     default:
       return null;
   }
