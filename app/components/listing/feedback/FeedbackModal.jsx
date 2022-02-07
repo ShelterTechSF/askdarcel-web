@@ -18,6 +18,7 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
   const [review, setReview] = useState('');
   const [step, setStep] = useState('start');
   const [isSubmitted, setIsSubmitted] = useState(null);
+
   const handleVoteChange = voteType => {
     setStep('start');
     setVote(voteType);
@@ -39,19 +40,22 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     setReview(e.target.value);
   };
 
+  const isDownVote = vote === DOWNVOTE;
+
   const handleNextStep = () => (
-    (vote === DOWNVOTE && step === 'start') ? setStep('tags') : setStep('review')
+    (isDownVote && step === 'start') ? setStep('tags') : setStep('review')
   );
 
   const handlePrevStep = () => (
-    (vote === DOWNVOTE && step === 'review') ? setStep('tags') : setStep('start')
+    (isDownVote && step === 'review') ? setStep('tags') : setStep('start')
   );
 
   const handleSubmit = () => {
     setIsSubmitted('submitting');
-    const tags = tagOptions
-      .filter(({ selected }) => selected)
-      .map(({ tag }) => tag);
+
+    const tags = isDownVote
+      ? tagOptions.filter(({ selected }) => selected).map(({ tag }) => tag)
+      : [];
 
     const feedback = {
       rating: vote,
@@ -70,11 +74,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
       .catch(err => console.log(err));
   };
 
-  const isReviewRequired = (
-    tagOptions.some(({ tag, selected }) => tag === 'Other' && selected)
-    && vote === DOWNVOTE
-  );
-
   const STEPS = {
     tags: (
       <FeedbackTags tagOptions={tagOptions} onSelectTag={toggleSelectedTag} />
@@ -82,7 +81,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     review: (
       <Review
         reviewValue={review}
-        isReviewRequired={isReviewRequired}
         onReviewChange={handleReviewChange}
       />
     ),
@@ -102,9 +100,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
         <img src={icon('feedback-blue-header')} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
-      <div className={styles.feedbackSubheader}>
-        The team usually replies within a day.
-      </div>
       {isSubmitted === 'submitted' ? (
         <SubmitMessage closeModal={closeModal} />
       ) : (
@@ -117,7 +112,6 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
             onPrevStep={handlePrevStep}
             onNextStep={handleNextStep}
             onSubmit={handleSubmit}
-            isReviewRequired={isReviewRequired}
             isSubmitted={isSubmitted}
           />
         </div>
