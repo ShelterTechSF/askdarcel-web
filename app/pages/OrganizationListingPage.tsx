@@ -3,21 +3,21 @@ import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
-  AddressInfo,
-  PhoneNumber,
-  ResourceCategories,
-  Website,
-  Email,
   ActionSidebar,
+  AddressInfo,
+  Email,
+  MapOfLocations,
   MobileActionBar,
   MOHCDBadge,
-  RelativeOpeningTime,
   Notes,
+  PhoneNumber,
+  RelativeOpeningTime,
+  ResourceCategories,
   Services,
   TableOfOpeningTimes,
-} from 'components/listing';
-import { MapOfLocations } from 'components/maps';
-import { Loader } from 'components/ui';
+  Website,
+} from '../components/listing';
+import { Loader } from '../components/ui';
 import whitelabel from '../utils/whitelabel';
 import { fetchOrganization, getResourceLocations, Organization } from '../models';
 

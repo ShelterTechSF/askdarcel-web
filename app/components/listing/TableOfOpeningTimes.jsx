@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { RecurringSchedule } from '../../models/RecurringSchedule';
 
-
 // TODO order with current day first
 // TODO Show relativeOpeningTime for current day
 // TODO Show days without entries in the schedule as closed
