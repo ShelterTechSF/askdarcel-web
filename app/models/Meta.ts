@@ -22,7 +22,6 @@ export interface LocationDetails {
   address: Address;
   name: string;
   recurringSchedule: RecurringSchedule;
-  inherited: boolean | Schedule;
 }
 
 export interface PhoneNumber {

@@ -72,6 +72,5 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
     address,
     name: org.name,
     recurringSchedule: org.recurringSchedule,
-    inherited: false,
   }));
 };

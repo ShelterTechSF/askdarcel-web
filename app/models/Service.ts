@@ -68,8 +68,6 @@ export const getServiceLocations = (
     address,
     name: service.name,
     recurringSchedule,
-    // Just to make it clear this is inherited from the resource
-    inherited: !recurringSchedule && resource.schedule,
   }));
 };
 

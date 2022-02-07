@@ -49,6 +49,8 @@ export const SearchMap = ({ hits, hitsPerPage, page }: {
   );
 };
 
+// The GoogleMap component expects children to be passed lat/long,
+// even though we don't use them here.
 // eslint-disable-next-line react/no-unused-prop-types
 const SearchHitMarker = ({ hit, tag }: { lat: any; lng: any; hit: SearchHit; tag: string }) => (
   <Tooltip

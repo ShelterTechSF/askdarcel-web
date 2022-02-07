@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import config from '../../config';
 import { Address } from '../../models';
 
-export const StreetViewImage = ({ address, size = null }: { address: Address; size?: any }) => {
+export const StreetViewImage = ({ address, size = 'auto' }: { address: Address; size?: string }) => {
   const imageUrl = useMemo(() => {
     // TODO We should be able to look up an address without lat/long here
     // TODO (Plus lat long doesn't give enough info to actually look at the right building)
