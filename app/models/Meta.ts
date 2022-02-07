@@ -1,4 +1,3 @@
-import { Schedule } from './Schedule';
 import { RecurringSchedule } from './RecurringSchedule';
 
 export interface Address {
