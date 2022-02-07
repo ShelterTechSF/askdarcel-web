@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Organization } from '../../models';
 import MOHCDFunded from '../../assets/img/ic-mohcd-funded-services.svg';
 

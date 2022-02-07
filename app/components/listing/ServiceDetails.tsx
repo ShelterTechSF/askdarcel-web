@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Notes } from './Notes'
+import { Notes } from './Notes';
 import { Service, RecurringSchedule } from '../../models';
 
 import ServiceVerified from '../../assets/img/ic-attributed-record.svg';
 import './ServiceDetails.scss';
 
 export const ServiceDetails = ({ service }: { service: Service }) => {
-  const [infoHidden, setInfoHidden] = useState(true)
-  const toggleInfoHidden = () => setInfoHidden(!infoHidden)
+  const [infoHidden, setInfoHidden] = useState(true);
+  const toggleInfoHidden = () => setInfoHidden(!infoHidden);
 
   return (
     <li className="service" id={`service-${service.id}`} data-cy="service-list-item">
@@ -77,7 +77,10 @@ const WeeklyHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedu
   </li>
 );
 
-const ServiceContactDetails = ({ email, website }: { email?: string|null; website?: string|null }) => {
+const ServiceContactDetails = ({ email, website }: {
+  email?: string|null;
+  website?: string|null;
+}) => {
   if (!(email || website)) {
     return null;
   }
@@ -102,12 +105,15 @@ const ServiceContactDetails = ({ email, website }: { email?: string|null; websit
   );
 };
 
-const ServiceEligibility = ({ result, subject }: { result: string|null; subject: string }) => result ? (
+const ServiceEligibility = ({ result, subject }: {
+  result: string|null;
+  subject: string;
+}) => (result ? (
   <li className="service--details--item">
     <header>{subject}</header>
     <ReactMarkdown className="rendered-markdown service--details--item--info">{result}</ReactMarkdown>
   </li>
-) : null;
+) : null);
 
 const DetailedHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) => (
   <span className="weekly-hours-list">
