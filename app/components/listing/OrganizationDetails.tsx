@@ -1,30 +1,17 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { Address, Category, PhoneNumber } from '../../models';
 
-const Category = ({ category }) => <p>{category}</p>;
+const CategoryRenderer = ({ category }: { category: string }) => <p>{category}</p>;
 
-Category.propTypes = {
-  category: PropTypes.string.isRequired,
-};
-
-
-const ResourceCategories = ({ categories }) => {
+export const ResourceCategories = ({ categories }: { categories: Category[] }) => {
   const uniqueCategories = _.uniqBy(categories, 'id');
   return categories?.length ? (
     <span className="categories">
-      {uniqueCategories.map(cat => <Category key={cat.id} category={cat.name} />)}
+      {uniqueCategories.map(cat => <CategoryRenderer key={cat.id} category={cat.name} />)}
     </span>
   ) : null;
 };
-
-ResourceCategories.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
-};
-
 
 // Given an address object, returns a React DOM element that displays the
 // address on up to three lines:
@@ -44,8 +31,8 @@ ResourceCategories.propTypes = {
 //   567 Eighth Street, Suite 201
 //   San Francisco, CA, 94115
 //
-const buildLocation = address => {
-  const fieldsOnEachLine = [
+const buildLocation = (address: Address) => {
+  const fieldsOnEachLine: (keyof Address)[][] = [
     ['name'],
     ['address_1', 'address_2'],
     ['city', 'state_province', 'postal_code'],
@@ -69,25 +56,13 @@ const buildLocation = address => {
   });
 };
 
-const AddressInfo = ({ address }) => (
+export const AddressInfoRenderer = ({ address }: { address: Address }) => (
   <span className="address">
     {buildLocation(address)}
   </span>
 );
 
-const AddressType = PropTypes.shape({
-  address_1: PropTypes.string,
-  address_2: PropTypes.string,
-  city: PropTypes.string,
-  state: PropTypes.string,
-  postal_code: PropTypes.string,
-});
-
-AddressInfo.propTypes = {
-  address: AddressType.isRequired,
-};
-
-const PhoneNumber = ({ phones }) => (
+export const PhoneNumberRenderer = ({ phones }: { phones: PhoneNumber[] }) => (
   <span className="phone">
     { phones.map(phone => (
       <p key={phone.id}>
@@ -98,51 +73,19 @@ const PhoneNumber = ({ phones }) => (
   </span>
 );
 
-PhoneNumber.propTypes = {
-  phones: PropTypes.arrayOf(PropTypes.shape({
-    country_code: PropTypes.string,
-    extension: PropTypes.string,
-    id: PropTypes.number.isRequired,
-    number: PropTypes.string.isRequired,
-    service_type: PropTypes.string,
-  })).isRequired,
-};
-
-
-const ExternalLink = ({ children, to }) => (
+const ExternalLink = ({ children, to }: { children: any; to: string }) => (
   <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>
 );
 
-ExternalLink.propTypes = {
-  to: PropTypes.string.isRequired,
-};
 
-
-const Website = ({ website }) => (
+export const WebsiteRenderer = ({ website }: { website: string }) => (
   <span className="website">
     <ExternalLink to={website}>{website}</ExternalLink>
   </span>
 );
 
-Website.propTypes = {
-  website: PropTypes.string.isRequired,
-};
-
-
-const Email = ({ email }) => (
+export const EmailRenderer = ({ email }: { email: string }) => (
   <span className="email">
     <ExternalLink to={`mailto:${email}`}>{email}</ExternalLink>
   </span>
 );
-
-Email.propTypes = {
-  email: PropTypes.string.isRequired,
-};
-
-export {
-  ResourceCategories,
-  AddressInfo,
-  PhoneNumber,
-  Website,
-  Email,
-};

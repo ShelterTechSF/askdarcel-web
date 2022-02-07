@@ -4,18 +4,18 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
   ActionSidebar,
-  AddressInfo,
-  Email,
+  AddressInfoRenderer,
+  EmailRenderer,
   MapOfLocations,
   MobileActionBar,
   MOHCDBadge,
   Notes,
-  PhoneNumber,
+  PhoneNumberRenderer,
   RelativeOpeningTime,
   ResourceCategories,
-  Services,
+  ServiceList,
   TableOfOpeningTimes,
-  Website,
+  WebsiteRenderer,
 } from '../components/listing';
 import { Loader } from '../components/ui';
 import whitelabel from '../utils/whitelabel';
@@ -58,7 +58,7 @@ export const OrganizationListingPage = () => {
               { org.phones.length > 0
                 && (
                   <div className="org--main--header--phone">
-                    <PhoneNumber phones={org.phones} />
+                    <PhoneNumberRenderer phones={org.phones} />
                   </div>
                 )
               }
@@ -71,7 +71,7 @@ export const OrganizationListingPage = () => {
             </OrganizationListingSection>
 
             <OrganizationSubheaderSection title="Services" className="service--section" data-cy="org-services-section">
-              <Services services={org.services} />
+              <ServiceList services={org.services} />
             </OrganizationSubheaderSection>
 
             <Notes notes={org.notes} id="notes" />
@@ -81,11 +81,11 @@ export const OrganizationListingPage = () => {
                 <div className="info--column">
                   <ResourceCategories categories={org.categories} />
                   {(org.addresses || []).map(address => (
-                    <AddressInfo address={address} key={address.id} />
+                    <AddressInfoRenderer address={address} key={address.id} />
                   ))}
-                  {org.phones.length > 0 && <PhoneNumber phones={org.phones} />}
-                  {org.website && <Website website={org.website} />}
-                  {org.email && <Email email={org.email} />}
+                  {org.phones.length > 0 && <PhoneNumberRenderer phones={org.phones} />}
+                  {org.website && <WebsiteRenderer website={org.website} />}
+                  {org.email && <EmailRenderer email={org.email} />}
                 </div>
               </ul>
             </OrganizationSubheaderSection>

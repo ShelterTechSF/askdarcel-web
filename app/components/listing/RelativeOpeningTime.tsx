@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import moment, { Moment } from 'moment';
 import { Duration, RecurringSchedule, RecurringTime } from '../../models/RecurringSchedule';
 
 const STATUS_CLOSED = 'status-red';
@@ -14,7 +13,7 @@ const STATUS_CAUTION = 'status-amber';
  * @param {moment} currentDate
  * @return {RelativeOpeningTime}
  */
-const getRelativeOpeningTime = (recurringSchedule, currentDate) => {
+const getRelativeOpeningTime = (recurringSchedule: RecurringSchedule, currentDate: Moment) => {
   if (!recurringSchedule) return { text: '', classes: '' };
   if (!recurringSchedule.hoursKnown) {
     return { text: 'Call for Hours', classes: STATUS_CAUTION };
@@ -59,40 +58,22 @@ const getRelativeOpeningTime = (recurringSchedule, currentDate) => {
   return { text: 'Closed Today', classes: STATUS_CLOSED };
 };
 
-export class RelativeOpeningTime extends React.Component {
-  constructor(props) {
-    super(props);
-    this.tick = null;
-    this.state = {};
-  }
+export const RelativeOpeningTime = ({ recurringSchedule, currentDate = moment() }: {
+  recurringSchedule: RecurringSchedule;
+  currentDate?: Moment;
+}) => {
+  const [steps, setSteps] = useState(0);
+  const { text, classes } = getRelativeOpeningTime(recurringSchedule, currentDate);
 
-  componentWillMount() {
-    this.tick = setInterval(() => this.setState(({ state }) => state), 60000);
-  }
+  useEffect(() => {
+    // Just to force re-render this component every minute
+    const tick = setInterval(() => setSteps(steps + 1));
+    return () => clearInterval(tick);
+  }, []);
 
-  componentWillUnmount() {
-    clearInterval(this.tick);
-  }
-
-  render() {
-    const { currentDate, recurringSchedule } = this.props;
-    const { text, classes } = getRelativeOpeningTime(
-      recurringSchedule,
-      currentDate,
-    );
-    return (
-      <span className={`relative-opening-time ${classes}`}>
-        { text }
-      </span>
-    );
-  }
-}
-
-RelativeOpeningTime.propTypes = {
-  recurringSchedule: PropTypes.instanceOf(RecurringSchedule).isRequired,
-  currentDate: PropTypes.object,
-};
-
-RelativeOpeningTime.defaultProps = {
-  currentDate: moment(),
+  return (
+    <span className={`relative-opening-time ${classes}`}>
+      { text }
+    </span>
+  );
 };

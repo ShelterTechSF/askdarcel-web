@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Note } from '../../models';
 
-const NotesList = ({ notes }) => (
+const NotesList = ({ notes }: { notes: Note[] }) => (
   <ul className="service--section--list">
     {
       notes.map(noteObj => (
@@ -15,7 +16,7 @@ const NotesList = ({ notes }) => (
   </ul>
 );
 
-const Notes = ({ id, notes }) => (
+export const Notes = ({ id, notes }: { id?: string; notes: Note[] }) => (
   <section
     className="service--section"
     id={id}
@@ -27,9 +28,3 @@ const Notes = ({ id, notes }) => (
     <NotesList notes={notes} />
   </section>
 );
-
-Notes.defaultProps = {
-  id: null,
-};
-
-export default Notes;

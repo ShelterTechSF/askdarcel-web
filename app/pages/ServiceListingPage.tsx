@@ -85,7 +85,7 @@ export const ServiceListingPage = () => {
             )}
 
             <ServiceListingSection title="Contact Info" data-cy="service-contact-section">
-              <TableOfContactInfo item={service} />
+              <TableOfContactInfo service={service} />
             </ServiceListingSection>
 
             {locations.length > 0 && (
