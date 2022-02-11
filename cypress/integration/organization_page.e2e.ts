@@ -83,12 +83,12 @@ describe('Organization Page', () => {
         },
       ];
 
-      // Intercept client's AJAX request to services endpoint and alias as "getServiceData". Pass
+      // Intercept client's AJAX request to services endpoint and alias as "getResourceData". Pass
       // the alias to #wait method below to delay test execution until the request has returned
-      cy.intercept('GET', `/api/resources/${orgId}`).as('getServiceData');
+      cy.intercept('GET', `/api/resources/${orgId}`).as('getResourceData');
       cy.request<{ services: Service[] }>('POST', `/api/resources/${orgId}/services`, { services: newServices }).its('status').should('eq', 201);
       cy.reload(true)
-        .wait('@getServiceData').its('response.statusCode').should('eq', 200)
+        .wait('@getResourceData').its('response.statusCode').should('eq', 200)
         .get(page.ORG_SERVICES_SECTION).should('contain.text', 'Services')
         .get(page.ORG_SERVICES_LIST).should('exist')
         .get(page.ORG_SERVICES_LIST_ITEM).should(items => {
