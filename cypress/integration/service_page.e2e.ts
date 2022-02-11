@@ -39,8 +39,12 @@ describe('Service Page', () => {
 
   it('should render the locations and hours section, then add and remove a schedule_day', () => {
     // Check the hours section renders, and that a newly added schedule shows up
-    cy.visit(page.url(serviceId))
-      .request(`/api/services/${serviceId}`).should((res: Cypress.Response<{ service: Service }>) => {
+    cy.visit(page.url(serviceId));
+      // Intercept client's AJAX request to services endpoint and alias as "getServiceData". Pass
+      // the alias to #wait method below to delay test execution until the request has returned
+      cy.intercept('GET', `/api/services/${serviceId}`).as('getServiceData');
+
+      cy.request(`/api/services/${serviceId}`).should((res: Cypress.Response<{ service: Service }>) => {
         expect(res.status).to.eq(200);
         const { service } = res.body;
 
@@ -53,11 +57,12 @@ describe('Service Page', () => {
           service.schedule.id,
           { opens_at: 800, closes_at: 1000, day: 'Sunday' },
         );
+
         cy.request('POST', '/api/change_requests', cr).its('status').should('eq', 201)
-          .visit(page.url(serviceId))
+          .reload(true)
+          .wait('@getServiceData').its('response.statusCode').should('eq', 200)
           .get(page.SECTION_HOURS).should('exist')
           .get(page.SECTION_HOURS_ROWS)
-            // .should('have.length', service.schedule?.schedule_days?.length + 1)
             .should('contain.text', 'Sunday')
             .should('contain.text', '8:00 AM - 10:00 AM');
       });
@@ -77,7 +82,8 @@ describe('Service Page', () => {
           });
 
         // Confirm we no longer show any Sundays or 8:00 to 10:00 times
-        cy.visit(page.url(serviceId))
+        cy.reload(true)
+          .wait('@getServiceData').its('response.statusCode').should('eq', 200)
           .get(page.SECTION_HOURS).should('exist')
           .get(page.SECTION_HOURS_ROWS)
             .should('not.contain.text', 'Sunday')
