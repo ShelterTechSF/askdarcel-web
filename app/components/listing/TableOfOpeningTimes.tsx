@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { RecurringSchedule } from '../../models/RecurringSchedule';
 
 // TODO order with current day first
 // TODO Show relativeOpeningTime for current day
 // TODO Show days without entries in the schedule as closed
 // TODO Order with current day at top
-export const TableOfOpeningTimes = ({ recurringSchedule }) => (
+export const TableOfOpeningTimes = ({ recurringSchedule }: {
+  recurringSchedule: RecurringSchedule;
+}) => (
   <table className="compact">
     <tbody>
       {
@@ -26,7 +27,3 @@ export const TableOfOpeningTimes = ({ recurringSchedule }) => (
     </tbody>
   </table>
 );
-
-TableOfOpeningTimes.propTypes = {
-  recurringSchedule: PropTypes.instanceOf(RecurringSchedule).isRequired,
-};
