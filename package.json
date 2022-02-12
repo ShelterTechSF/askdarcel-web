@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Web Version",
   "engines": {
-    "node": ">=4.2.4",
+    "node": ">=16.14.x",
     "npm": ">=3.3 <4"
   },
   "browser": "app/init.jsx",
