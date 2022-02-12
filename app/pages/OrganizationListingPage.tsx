@@ -3,21 +3,21 @@ import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
-  AddressInfo,
-  PhoneNumber,
-  ResourceCategories,
-  Website,
-  Email,
   ActionSidebar,
+  AddressInfoRenderer,
+  EmailRenderer,
+  MapOfLocations,
   MobileActionBar,
   MOHCDBadge,
-  RelativeOpeningTime,
   Notes,
-  Services,
+  PhoneNumberRenderer,
+  RelativeOpeningTime,
+  ResourceCategories,
+  ServiceList,
   TableOfOpeningTimes,
-} from 'components/listing';
-import { MapOfLocations } from 'components/maps';
-import { Loader } from 'components/ui';
+  WebsiteRenderer,
+} from '../components/listing';
+import { Loader } from '../components/ui';
 import whitelabel from '../utils/whitelabel';
 import { fetchOrganization, getResourceLocations, Organization } from '../models';
 
@@ -58,7 +58,7 @@ export const OrganizationListingPage = () => {
               { org.phones.length > 0
                 && (
                   <div className="org--main--header--phone">
-                    <PhoneNumber phones={org.phones} />
+                    <PhoneNumberRenderer phones={org.phones} />
                   </div>
                 )
               }
@@ -71,7 +71,7 @@ export const OrganizationListingPage = () => {
             </OrganizationListingSection>
 
             <OrganizationSubheaderSection title="Services" className="service--section" data-cy="org-services-section">
-              <Services services={org.services} />
+              <ServiceList services={org.services} />
             </OrganizationSubheaderSection>
 
             <Notes notes={org.notes} id="notes" />
@@ -81,11 +81,11 @@ export const OrganizationListingPage = () => {
                 <div className="info--column">
                   <ResourceCategories categories={org.categories} />
                   {(org.addresses || []).map(address => (
-                    <AddressInfo address={address} key={address.id} />
+                    <AddressInfoRenderer address={address} key={address.id} />
                   ))}
-                  {org.phones.length > 0 && <PhoneNumber phones={org.phones} />}
-                  {org.website && <Website website={org.website} />}
-                  {org.email && <Email email={org.email} />}
+                  {org.phones.length > 0 && <PhoneNumberRenderer phones={org.phones} />}
+                  {org.website && <WebsiteRenderer website={org.website} />}
+                  {org.email && <EmailRenderer email={org.email} />}
                 </div>
               </ul>
             </OrganizationSubheaderSection>

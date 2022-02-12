@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   ActionSidebar,
   ListingTitleLink,
+  MapOfLocations,
   MobileActionBar,
   MOHCDBadge,
   ServiceAttribution,
@@ -13,7 +14,6 @@ import {
   TableOfOpeningTimes,
 } from 'components/listing';
 import { Datatable, Loader } from 'components/ui';
-import { MapOfLocations } from 'components/maps';
 import whiteLabel from '../utils/whitelabel';
 import {
   fetchService,
@@ -85,7 +85,7 @@ export const ServiceListingPage = () => {
             )}
 
             <ServiceListingSection title="Contact Info" data-cy="service-contact-section">
-              <TableOfContactInfo item={service} />
+              <TableOfContactInfo service={service} />
             </ServiceListingSection>
 
             {locations.length > 0 && (

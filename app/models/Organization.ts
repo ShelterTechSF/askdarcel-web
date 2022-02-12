@@ -5,6 +5,7 @@ import { Schedule } from './Schedule';
 import {
   Address,
   Category,
+  LocationDetails,
   Note,
   PhoneNumber,
 } from './Meta';
@@ -62,7 +63,7 @@ export const fetchOrganization = (id: string): Promise<Organization> => get(`/ap
     };
   });
 
-export const getResourceLocations = (org: Organization) => {
+export const getResourceLocations = (org: Organization): LocationDetails[] => {
   const { addresses } = org;
   if (!addresses || !addresses.length) return [];
 

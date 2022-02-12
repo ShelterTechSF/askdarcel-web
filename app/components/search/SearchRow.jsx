@@ -4,13 +4,14 @@ import SearchEntry from './SearchEntry';
 const SearchRow = ({
   hit, index, page, hitsPerPage,
 }) => {
+  const hitNumber = `${page * hitsPerPage + index + 1}`;
   let entry = null;
   switch (hit.type) {
     case 'service':
-      entry = <SearchEntry page={page} hitsPerPage={hitsPerPage} hit={hit} index={index} />;
+      entry = <SearchEntry hitNumber={hitNumber} hit={hit} />;
       break;
     case 'resource':
-      entry = <SearchEntry page={page} hitsPerPage={hitsPerPage} hit={hit} index={index} />;
+      entry = <SearchEntry hitNumber={hitNumber} hit={hit} />;
       break;
     default:
     // eslint-disable-next-line no-console

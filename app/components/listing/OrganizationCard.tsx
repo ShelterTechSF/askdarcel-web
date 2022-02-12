@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import StreetViewImage from 'components/maps/StreetViewImage';
+import { StreetViewImage } from './StreetViewImage';
 import { Organization } from '../../models';
 
 export const OrganizationCard = ({ org }: { org: Organization }) => {
