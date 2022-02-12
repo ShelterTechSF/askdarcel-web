@@ -25,12 +25,12 @@ Alternatively, you can start a new project based on RSK right from
 [WebStorm IDE](https://www.jetbrains.com/webstorm/help/create-new-project-react-starter-kit.html),
 or by using [Yeoman generator](https://www.npmjs.com/package/generator-react-fullstack).
 
-#### 2. Run `npm install`
+#### 2. Run `yarn`
 
 This will install both run-time project dependencies and developer tools listed
 in [package.json](../package.json) file.
 
-#### 3. Run `npm start`
+#### 3. Run `yarn build`
 
 This command will build the app from the source files (`/src`) into the output
 `/build` folder. As soon as the initial build completes, it will start the
@@ -63,13 +63,13 @@ $ npm start -- --release
 If you need just to build the app (without running a dev server), simply run:
 
 ```shell
-$ npm run build
+$ yarn build
 ```
 
 or, for a production build:
 
 ```shell
-$ npm run build -- --release
+$ yarn build -- --release
 ```
 
 After running this command, the `/build` folder will contain the compiled
@@ -79,13 +79,13 @@ running `node build/server.js`.
 To check the source code for syntax errors and potential issues run:
 
 ```shell
-$ npm run lint
+$ yarn lint
 ```
 
 To launch unit tests:
 
 ```shell
-$ npm test
+$ yarn test
 ```
 
 Test any javascript module by creating a `__tests__/` directory where
@@ -95,7 +95,7 @@ the file is. Append `-test.js` to the filename and
 To deploy the app, run:
 
 ```shell
-$ npm run deploy
+$ yarn deploy
 ```
 
 The deployment script `tools/deploy.js` is configured to push the contents of
@@ -115,5 +115,5 @@ back into your own project by running:
 $ git checkout master
 $ git fetch react-starter-kit
 $ git merge react-starter-kit/master
-$ npm install
+$ yarn
 ```

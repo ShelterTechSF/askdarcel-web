@@ -101,12 +101,12 @@ application first before running the `docker-compose down` command above.
 
 ## Non-Docker Development Environment
 
-### Installing Node.js and npm
+### Installing Node.js
 We recommend using [nvm](https://github.com/creationix/nvm) (Node Version
 Manager) or Docker to ensure that the versions of Node.js and npm are the same
 across development, Travis CI, staging, and production environments.
 
-After installing nvm, to install both Node.js and npm run from the top of the
+After installing nvm, to install Node.js run from the top of the
 git repo:
 
 ```sh

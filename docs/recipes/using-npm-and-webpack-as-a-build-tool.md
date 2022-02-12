@@ -31,7 +31,7 @@ Add a new command line to `package.json/scripts`:
 And execute it by running:
 
 ```shell
-$ npm run lint         # npm run <script-name>
+$ yarn lint         # yarn <script-name>
 ```
 
 Which will be the same as running `./node_modules/bin/eslint src && ./node_modules/bin/jscs src`,
@@ -89,5 +89,5 @@ The `npm` script for it may look like this:
 You can run it as follows:
 
 ```shell
-$ npm run build
+$ yarn build
 ```
