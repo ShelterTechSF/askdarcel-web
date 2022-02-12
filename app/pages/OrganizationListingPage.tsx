@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
   ActionSidebar,
+  ActionSidebarMobile,
   AddressInfoRenderer,
   EmailRenderer,
   MapOfLocations,
-  MobileActionBar,
   MOHCDBadge,
   Notes,
   PhoneNumberRenderer,
@@ -64,7 +64,7 @@ export const OrganizationListingPage = () => {
               }
             </header>
 
-            <MobileActionBar resource={org} />
+            <ActionSidebarMobile organization={org} />
 
             <OrganizationListingSection title="About This Organization" className="org--main--header--description" data-cy="org-about-section">
               <ReactMarkdown className="rendered-markdown" source={org.long_description || org.short_description || 'No Description available'} />
@@ -104,7 +104,7 @@ export const OrganizationListingPage = () => {
           </div>
 
           <div className="org--aside">
-            <ActionSidebar resource={org} />
+            <ActionSidebar organization={org} />
           </div>
         </div>
       </article>

@@ -6,7 +6,7 @@ import {
   ActionSidebar,
   ListingTitleLink,
   MapOfLocations,
-  MobileActionBar,
+  ActionSidebarMobile,
   MOHCDBadge,
   ServiceAttribution,
   ServiceCard,
@@ -60,7 +60,7 @@ export const ServiceListingPage = () => {
               <ServiceProgramDetails service={service} organization={resource} />
             </header>
 
-            <MobileActionBar resource={resource} service={service} />
+            <ActionSidebarMobile organization={resource} service={service} />
 
             <ServiceListingSection title="About This Service" data-cy="service-about-section">
               <ReactMarkdown className="rendered-markdown" source={service.long_description} />
@@ -117,7 +117,7 @@ export const ServiceListingPage = () => {
             */}
           </div>
           <div className="listing--aside">
-            <ActionSidebar resource={resource} service={service} />
+            <ActionSidebar organization={resource} service={service} />
           </div>
         </div>
       </article>
