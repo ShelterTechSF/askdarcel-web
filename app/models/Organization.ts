@@ -91,9 +91,9 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
 //     .then(response => {
 //       // TODO: Do not use alert() for user notifications.
 //       if (response.ok) {
-//         alert(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} verified. Thanks!`); // eslint-disable-line no-alert
+//         alert(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} verified. Thanks!`);
 //       } else {
-//         alert(`Issue verifying ${itemType}. Please try again.`); // eslint-disable-line no-alert
+//         alert(`Issue verifying ${itemType}. Please try again.`);
 //       }
 //     });
 // };
