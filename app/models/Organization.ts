@@ -84,6 +84,7 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
   }));
 };
 
+// TODO Can we remove this?
 // const verifyItem = (item: Organization|Service, itemType: string) => {
 //   const { id } = item;
 //   const changeRequest = { verified_at: new Date().toISOString() };
@@ -107,6 +108,7 @@ export const getResourceActions = (
   const latitude = _.get(resource, 'addresses[0].latitude');
   const longitude = _.get(resource, 'addresses[0].longitude');
 
+  // TODO Can we remove these unused items?
   const actions: OrganizationAction[] = [
     // {
     //   name: 'Edit',
