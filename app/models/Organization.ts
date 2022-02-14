@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
@@ -42,6 +43,14 @@ export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'>
   notes?: Partial<Note>[];
 }
 
+export interface OrganizationAction {
+  name: string;
+  icon: string;
+  to?: string;
+  link?: string;
+  handler?: () => void;
+}
+
 /**
  * Return a Promise with the fetched Resource.
  *
@@ -73,4 +82,73 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
     name: org.name,
     recurringSchedule: org.recurringSchedule,
   }));
+};
+
+// const verifyItem = (item: Organization|Service, itemType: string) => {
+//   const { id } = item;
+//   const changeRequest = { verified_at: new Date().toISOString() };
+//   return post(`/api/${itemType}s/${id}/change_requests`, { change_request: changeRequest })
+//     .then(response => {
+//       // TODO: Do not use alert() for user notifications.
+//       if (response.ok) {
+//         alert(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} verified. Thanks!`); // eslint-disable-line no-alert
+//       } else {
+//         alert(`Issue verifying ${itemType}. Please try again.`); // eslint-disable-line no-alert
+//       }
+//     });
+// };
+
+export const getResourceActions = (
+  resource: Organization,
+  service?: Service,
+  filterActions?: string[],
+) => {
+  const phoneNumber = _.get(resource, 'phones[0].number');
+  const latitude = _.get(resource, 'addresses[0].latitude');
+  const longitude = _.get(resource, 'addresses[0].longitude');
+
+  const actions: OrganizationAction[] = [
+    // {
+    //   name: 'Edit',
+    //   icon: 'edit',
+    //   to: `/organizations/${resource.id}/edit`,
+    // },
+    {
+      name: 'Print',
+      icon: 'print',
+      handler: () => { window.print(); },
+    },
+    // {
+    //   name: 'Mark Correct',
+    //   icon: 'verify',
+    //   handler: () => (service
+    //      ? verifyItem(service, 'service')
+    //      : verifyItem(resource, 'resource')
+    //   ),
+    // },
+    {
+      name: 'Share Feedback',
+      icon: 'feedback',
+    },
+  ];
+
+  if (phoneNumber) {
+    actions.push({
+      name: 'Call',
+      icon: 'phone',
+      link: `tel:${phoneNumber}`,
+    });
+  }
+
+  if (latitude && longitude) {
+    actions.push({
+      name: 'Directions',
+      icon: 'directions',
+      link: `http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+    });
+  }
+
+  return filterActions
+    ? actions.filter(a => filterActions.indexOf(a.icon) > -1)
+    : actions;
 };

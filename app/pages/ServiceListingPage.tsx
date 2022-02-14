@@ -3,10 +3,12 @@ import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import {
+  ActionBarMobile,
+  ActionBarProps,
   ActionSidebar,
+  FeedbackModal,
   ListingTitleLink,
   MapOfLocations,
-  ActionSidebarMobile,
   MOHCDBadge,
   ServiceAttribution,
   ServiceCard,
@@ -29,6 +31,7 @@ const { title: whiteLabelTitle } = whiteLabel;
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const details = useMemo(() => (service ? generateServiceDetails(service) : []), [service]);
 
   useEffect(() => {
@@ -41,6 +44,19 @@ export const ServiceListingPage = () => {
 
   const { resource, recurringSchedule } = service;
   const locations = getServiceLocations(service, resource, recurringSchedule);
+  const actionBarProps: ActionBarProps = {
+    organization: resource,
+    service,
+    onClickAction: action => {
+      switch (action.icon) {
+        case 'feedback':
+          setFeedbackModalOpen(true);
+          break;
+        default:
+          break;
+      }
+    },
+  };
 
   return (
     <div className="listing-container">
@@ -60,7 +76,7 @@ export const ServiceListingPage = () => {
               <ServiceProgramDetails service={service} organization={resource} />
             </header>
 
-            <ActionSidebarMobile organization={resource} service={service} />
+            <ActionBarMobile {...actionBarProps} />
 
             <ServiceListingSection title="About This Service" data-cy="service-about-section">
               <ReactMarkdown className="rendered-markdown" source={service.long_description} />
@@ -115,9 +131,17 @@ export const ServiceListingPage = () => {
                 <h2>Similar Services Near You</h2>
               </section>
             */}
+
+            <FeedbackModal
+              isOpen={feedbackModalOpen}
+              setIsOpen={setFeedbackModalOpen}
+              service={service}
+              organization={resource}
+            />
+
           </div>
           <div className="listing--aside">
-            <ActionSidebar organization={resource} service={service} />
+            <ActionSidebar {...actionBarProps} />
           </div>
         </div>
       </article>

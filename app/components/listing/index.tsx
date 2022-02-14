@@ -1,5 +1,5 @@
-export * from './ActionSidebar';
-export * from './ActionSidebarMobile';
+export * from './ActionBar';
+export * from './FeedbackModal';
 export * from './ListingTitleLink';
 export * from './MapOfLocations';
 export * from './MOHCDBadge';

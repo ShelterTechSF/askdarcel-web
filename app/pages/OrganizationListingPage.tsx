@@ -3,9 +3,11 @@ import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
+  ActionBarMobile,
+  ActionBarProps,
   ActionSidebar,
-  ActionSidebarMobile,
   AddressInfoRenderer,
+  FeedbackModal,
   EmailRenderer,
   MapOfLocations,
   MOHCDBadge,
@@ -25,6 +27,7 @@ import { fetchOrganization, getResourceLocations, Organization } from '../models
 export const OrganizationListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [org, setOrg] = useState<Organization|null>(null);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
   useEffect(() => {
     fetchOrganization(id)
@@ -35,6 +38,18 @@ export const OrganizationListingPage = () => {
   if (!org) { return <Loader />; }
 
   const orgLocations = getResourceLocations(org);
+  const actionBarProps: ActionBarProps = {
+    organization: org,
+    onClickAction: action => {
+      switch (action.icon) {
+        case 'feedback':
+          setFeedbackModalOpen(true);
+          break;
+        default:
+          break;
+      }
+    },
+  };
 
   return (
     <div className="org-container">
@@ -64,7 +79,7 @@ export const OrganizationListingPage = () => {
               }
             </header>
 
-            <ActionSidebarMobile organization={org} />
+            <ActionBarMobile {...actionBarProps} />
 
             <OrganizationListingSection title="About This Organization" className="org--main--header--description" data-cy="org-about-section">
               <ReactMarkdown className="rendered-markdown" source={org.long_description || org.short_description || 'No Description available'} />
@@ -101,10 +116,16 @@ export const OrganizationListingPage = () => {
             </OrganizationSubheaderSection>
             )}
 
+            <FeedbackModal
+              isOpen={feedbackModalOpen}
+              setIsOpen={setFeedbackModalOpen}
+              organization={org}
+            />
+
           </div>
 
           <div className="org--aside">
-            <ActionSidebar organization={org} />
+            <ActionSidebar {...actionBarProps} />
           </div>
         </div>
       </article>
