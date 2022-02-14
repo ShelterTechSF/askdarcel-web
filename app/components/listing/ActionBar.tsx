@@ -14,7 +14,7 @@ const ActionButton = ({
 }: {
   action: OrganizationAction;
   iconColor: string;
-  listItemClass: string;
+  listItemClass?: string;
   onClickAction: (a: OrganizationAction) => void;
 }) => {
   const {
@@ -62,7 +62,6 @@ export const ActionSidebar = ({ organization, service, onClickAction }: ActionBa
           action={action}
           iconColor="gray"
           key={action.name}
-          listItemClass=""
           onClickAction={onClickAction}
         />
       ))}
