@@ -126,6 +126,6 @@ export const getResourceActions = (
   }
 
   return filterActions
-    ? actions.filter(a => filterActions.indexOf(a.icon) > -1)
+    ? actions.filter(a => filterActions.includes(a.icon))
     : actions;
 };
