@@ -87,7 +87,7 @@ export const getResourceActions = (
   resource: Organization,
   service?: Service,
   filterActions?: string[],
-) => {
+): OrganizationAction[] => {
   const phoneNumber = resource?.phones?.[0]?.number;
   const latitude = resource?.addresses?.[0]?.latitude;
   const longitude = resource?.addresses?.[0]?.longitude;
