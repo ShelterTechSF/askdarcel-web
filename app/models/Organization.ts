@@ -84,21 +84,6 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
   }));
 };
 
-// TODO Can we remove this?
-// const verifyItem = (item: Organization|Service, itemType: string) => {
-//   const { id } = item;
-//   const changeRequest = { verified_at: new Date().toISOString() };
-//   return post(`/api/${itemType}s/${id}/change_requests`, { change_request: changeRequest })
-//     .then(response => {
-//       // TODO: Do not use alert() for user notifications.
-//       if (response.ok) {
-//         alert(`${itemType.charAt(0).toUpperCase() + itemType.slice(1)} verified. Thanks!`);
-//       } else {
-//         alert(`Issue verifying ${itemType}. Please try again.`);
-//       }
-//     });
-// };
-
 export const getResourceActions = (
   resource: Organization,
   service?: Service,
