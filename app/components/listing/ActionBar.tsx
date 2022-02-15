@@ -18,7 +18,7 @@ const ActionButton = ({
   onClickAction: (a: OrganizationAction) => void;
 }) => {
   const {
-    handler, icon, link, name, to,
+    icon, link, name, to,
   } = action;
   const linkClass = `action-sidebar--${name.toLowerCase()}`;
   const content = (
@@ -40,7 +40,7 @@ const ActionButton = ({
         <a
           className={linkClass}
           href={link}
-          onClick={() => { onClickAction(action); handler?.(); }}
+          onClick={() => { onClickAction(action); }}
           rel="noopener noreferrer"
           target="_blank"
         >

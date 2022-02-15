@@ -21,6 +21,7 @@ import {
   fetchService,
   generateServiceDetails,
   getServiceLocations,
+  handleResourceActionClick,
   Organization,
   Service,
 } from '../models';
@@ -53,6 +54,7 @@ export const ServiceListingPage = () => {
           setFeedbackModalOpen(true);
           break;
         default:
+          handleResourceActionClick(action);
           break;
       }
     },

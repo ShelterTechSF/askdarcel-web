@@ -47,7 +47,6 @@ export interface OrganizationAction {
   icon: string;
   to?: string;
   link?: string;
-  handler?: () => void;
 }
 
 /**
@@ -101,7 +100,6 @@ export const getResourceActions = (
     {
       name: 'Print',
       icon: 'print',
-      handler: () => { window.print(); },
     },
     {
       name: 'Share Feedback',
@@ -128,4 +126,14 @@ export const getResourceActions = (
   return filterActions
     ? actions.filter(a => filterActions.indexOf(a.icon) > -1)
     : actions;
+};
+
+export const handleResourceActionClick = (action: OrganizationAction) => {
+  switch (action.icon) {
+    case 'print':
+      window.print();
+      break;
+    default:
+      break;
+  }
 };

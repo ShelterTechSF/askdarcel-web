@@ -21,7 +21,7 @@ import {
 } from '../components/listing';
 import { Loader } from '../components/ui';
 import whitelabel from '../utils/whitelabel';
-import { fetchOrganization, getResourceLocations, Organization } from '../models';
+import { fetchOrganization, getResourceLocations, handleResourceActionClick, Organization } from '../models';
 
 // Page at /organization/123
 export const OrganizationListingPage = () => {
@@ -46,6 +46,7 @@ export const OrganizationListingPage = () => {
           setFeedbackModalOpen(true);
           break;
         default:
+          handleResourceActionClick(action);
           break;
       }
     },
