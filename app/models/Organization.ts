@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { get } from '../utils/DataService';
 import { parseAPISchedule } from '../utils/transformSchedule';
 import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
@@ -89,11 +88,10 @@ export const getResourceActions = (
   service?: Service,
   filterActions?: string[],
 ) => {
-  const phoneNumber = _.get(resource, 'phones[0].number');
-  const latitude = _.get(resource, 'addresses[0].latitude');
-  const longitude = _.get(resource, 'addresses[0].longitude');
+  const phoneNumber = resource?.phones?.[0]?.number;
+  const latitude = resource?.addresses?.[0]?.latitude;
+  const longitude = resource?.addresses?.[0]?.longitude;
 
-  // TODO Can we remove these unused items?
   const actions: OrganizationAction[] = [
     // {
     //   name: 'Edit',
@@ -105,14 +103,6 @@ export const getResourceActions = (
       icon: 'print',
       handler: () => { window.print(); },
     },
-    // {
-    //   name: 'Mark Correct',
-    //   icon: 'verify',
-    //   handler: () => (service
-    //      ? verifyItem(service, 'service')
-    //      : verifyItem(resource, 'resource')
-    //   ),
-    // },
     {
       name: 'Share Feedback',
       icon: 'feedback',
