@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import {
   ActionBarMobile,
-  ActionBarProps,
   ActionSidebar,
   FeedbackModal,
   ListingTitleLink,
@@ -20,9 +19,10 @@ import whiteLabel from '../utils/whitelabel';
 import {
   fetchService,
   generateServiceDetails,
+  getOrganizationActions,
   getServiceLocations,
-  handleResourceActionClick,
   Organization,
+  OrganizationAction,
   Service,
 } from '../models';
 
@@ -45,19 +45,20 @@ export const ServiceListingPage = () => {
 
   const { resource, recurringSchedule } = service;
   const locations = getServiceLocations(service, resource, recurringSchedule);
-  const actionBarProps: ActionBarProps = {
-    organization: resource,
-    service,
-    onClickAction: action => {
-      switch (action.icon) {
-        case 'feedback':
-          setFeedbackModalOpen(true);
-          break;
-        default:
-          handleResourceActionClick(action);
-          break;
-      }
-    },
+  const allActions = getOrganizationActions(resource);
+  const sidebarActions = allActions.filter(a => ['print', 'directions', 'feedback'].includes(a.icon));
+  const mobileActions = allActions.filter(a => ['phone', 'directions', 'feedback'].includes(a.icon));
+  const onClickAction = (action: OrganizationAction) => {
+    switch (action.icon) {
+      case 'feedback':
+        setFeedbackModalOpen(true);
+        break;
+      case 'print':
+        window.print();
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -78,7 +79,7 @@ export const ServiceListingPage = () => {
               <ServiceProgramDetails service={service} organization={resource} />
             </header>
 
-            <ActionBarMobile {...actionBarProps} />
+            <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
 
             <ServiceListingSection title="About This Service" data-cy="service-about-section">
               <ReactMarkdown className="rendered-markdown" source={service.long_description} />
@@ -143,7 +144,7 @@ export const ServiceListingPage = () => {
 
           </div>
           <div className="listing--aside">
-            <ActionSidebar {...actionBarProps} />
+            <ActionSidebar actions={sidebarActions} onClickAction={onClickAction} />
           </div>
         </div>
       </article>

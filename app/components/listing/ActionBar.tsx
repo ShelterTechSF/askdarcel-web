@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { icon as iconPath } from '../../assets';
-import {
-  Organization, Service, getResourceActions, OrganizationAction,
-} from '../../models';
+import { OrganizationAction } from '../../models';
 import './ActionBar.scss';
 
 const ActionButton = ({
@@ -52,43 +50,34 @@ const ActionButton = ({
 };
 
 
-export const ActionSidebar = ({ organization, service, onClickAction }: ActionBarProps) => {
-  const actions = getResourceActions(organization, service, ['print', 'directions', 'feedback']);
+export const ActionSidebar = ({ actions, onClickAction }: ActionBarProps) => (
+  <ul className="action-sidebar">
+    {actions.map(action => (
+      <ActionButton
+        action={action}
+        iconColor="gray"
+        key={action.name}
+        onClickAction={onClickAction}
+      />
+    ))}
+  </ul>
+);
 
-  return (
-    <ul className="action-sidebar">
-      {actions.map(action => (
-        <ActionButton
-          action={action}
-          iconColor="gray"
-          key={action.name}
-          onClickAction={onClickAction}
-        />
-      ))}
-    </ul>
-  );
-};
-
-export const ActionBarMobile = ({ organization, service, onClickAction }: ActionBarProps) => {
-  const actions = getResourceActions(organization, service, ['phone', 'directions', 'feedback']);
-
-  return (
-    <ul className="mobile-action-bar">
-      {actions.map(action => (
-        <ActionButton
-          action={action}
-          iconColor="blue"
-          key={action.name}
-          listItemClass="mobile-action-bar--listitem"
-          onClickAction={onClickAction}
-        />
-      ))}
-    </ul>
-  );
-};
+export const ActionBarMobile = ({ actions, onClickAction }: ActionBarProps) => (
+  <ul className="mobile-action-bar">
+    {actions.map(action => (
+      <ActionButton
+        action={action}
+        iconColor="blue"
+        key={action.name}
+        listItemClass="mobile-action-bar--listitem"
+        onClickAction={onClickAction}
+      />
+    ))}
+  </ul>
+);
 
 export interface ActionBarProps {
-  organization: Organization;
-  service?: Service;
+  actions: OrganizationAction[];
   onClickAction: (action: OrganizationAction) => void;
 }

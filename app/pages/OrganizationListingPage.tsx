@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
   ActionBarMobile,
-  ActionBarProps,
   ActionSidebar,
   AddressInfoRenderer,
   FeedbackModal,
@@ -21,7 +20,13 @@ import {
 } from '../components/listing';
 import { Loader } from '../components/ui';
 import whitelabel from '../utils/whitelabel';
-import { fetchOrganization, getResourceLocations, handleResourceActionClick, Organization } from '../models';
+import {
+  fetchOrganization,
+  getOrganizationActions,
+  getOrganizationLocations,
+  Organization,
+  OrganizationAction,
+} from '../models';
 
 // Page at /organization/123
 export const OrganizationListingPage = () => {
@@ -37,19 +42,21 @@ export const OrganizationListingPage = () => {
 
   if (!org) { return <Loader />; }
 
-  const orgLocations = getResourceLocations(org);
-  const actionBarProps: ActionBarProps = {
-    organization: org,
-    onClickAction: action => {
-      switch (action.icon) {
-        case 'feedback':
-          setFeedbackModalOpen(true);
-          break;
-        default:
-          handleResourceActionClick(action);
-          break;
-      }
-    },
+  const orgLocations = getOrganizationLocations(org);
+  const allActions = getOrganizationActions(org);
+  const sidebarActions = allActions.filter(a => ['print', 'directions', 'feedback'].includes(a.icon));
+  const mobileActions = allActions.filter(a => ['phone', 'directions', 'feedback'].includes(a.icon));
+  const onClickAction = (action: OrganizationAction) => {
+    switch (action.icon) {
+      case 'feedback':
+        setFeedbackModalOpen(true);
+        break;
+      case 'print':
+        window.print();
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -80,7 +87,7 @@ export const OrganizationListingPage = () => {
               }
             </header>
 
-            <ActionBarMobile {...actionBarProps} />
+            <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
 
             <OrganizationListingSection title="About This Organization" className="org--main--header--description" data-cy="org-about-section">
               <ReactMarkdown className="rendered-markdown" source={org.long_description || org.short_description || 'No Description available'} />
@@ -126,7 +133,7 @@ export const OrganizationListingPage = () => {
           </div>
 
           <div className="org--aside">
-            <ActionSidebar {...actionBarProps} />
+            <ActionSidebar actions={sidebarActions} onClickAction={onClickAction} />
           </div>
         </div>
       </article>

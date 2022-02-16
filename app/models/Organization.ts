@@ -70,7 +70,7 @@ export const fetchOrganization = (id: string): Promise<Organization> => get(`/ap
     };
   });
 
-export const getResourceLocations = (org: Organization): LocationDetails[] => {
+export const getOrganizationLocations = (org: Organization): LocationDetails[] => {
   const { addresses } = org;
   if (!addresses || !addresses.length) return [];
 
@@ -82,14 +82,10 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
   }));
 };
 
-export const getResourceActions = (
-  resource: Organization,
-  service?: Service,
-  filterActions?: string[],
-): OrganizationAction[] => {
-  const phoneNumber = resource?.phones?.[0]?.number;
-  const latitude = resource?.addresses?.[0]?.latitude;
-  const longitude = resource?.addresses?.[0]?.longitude;
+export const getOrganizationActions = (org: Organization): OrganizationAction[] => {
+  const phoneNumber = org?.phones?.[0]?.number;
+  const latitude = org?.addresses?.[0]?.latitude;
+  const longitude = org?.addresses?.[0]?.longitude;
 
   const actions: OrganizationAction[] = [
     // {
@@ -123,17 +119,5 @@ export const getResourceActions = (
     });
   }
 
-  return filterActions
-    ? actions.filter(a => filterActions.includes(a.icon))
-    : actions;
-};
-
-export const handleResourceActionClick = (action: OrganizationAction) => {
-  switch (action.icon) {
-    case 'print':
-      window.print();
-      break;
-    default:
-      break;
-  }
+  return actions;
 };
