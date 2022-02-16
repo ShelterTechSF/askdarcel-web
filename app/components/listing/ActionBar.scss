@@ -11,7 +11,7 @@
 
     a {
       color: $color-textfade;
-      padding: $padding-xlarge 0;
+      padding: $padding-default 0;
       display: flex;
       flex-direction: column;
       width: 128px;
@@ -21,7 +21,9 @@
         display: block;
         margin: $padding-default $padding-default $padding-large;
         font-size: $padding-xxlarge;
+        max-height: 72px;
       }
+
       span {
         font-size: $padding-large;
       }
@@ -65,4 +67,24 @@
 
 .feedback-modal {
   display: none;
+}
+
+.mobile-action-bar {
+  display: none;
+  @include r_max($break-tablet-s) {
+    display: flex;
+    justify-content: space-between;
+    padding: calc-em(16px) calc-em(4px);
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+  }
+  &--listitem {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+
+    .action-sidebar--icon {
+      margin-right: calc-em(8px);
+    }
+  }
 }

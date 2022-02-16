@@ -3,11 +3,12 @@ import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
+  ActionBarMobile,
   ActionSidebar,
   AddressInfoRenderer,
+  FeedbackModal,
   EmailRenderer,
   MapOfLocations,
-  MobileActionBar,
   MOHCDBadge,
   Notes,
   PhoneNumberRenderer,
@@ -19,12 +20,19 @@ import {
 } from '../components/listing';
 import { Loader } from '../components/ui';
 import whitelabel from '../utils/whitelabel';
-import { fetchOrganization, getResourceLocations, Organization } from '../models';
+import {
+  fetchOrganization,
+  getOrganizationActions,
+  getOrganizationLocations,
+  Organization,
+  OrganizationAction,
+} from '../models';
 
 // Page at /organization/123
 export const OrganizationListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [org, setOrg] = useState<Organization|null>(null);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
 
   useEffect(() => {
     fetchOrganization(id)
@@ -34,7 +42,22 @@ export const OrganizationListingPage = () => {
 
   if (!org) { return <Loader />; }
 
-  const orgLocations = getResourceLocations(org);
+  const orgLocations = getOrganizationLocations(org);
+  const allActions = getOrganizationActions(org);
+  const sidebarActions = allActions.filter(a => ['print', 'directions', 'feedback'].includes(a.icon));
+  const mobileActions = allActions.filter(a => ['phone', 'directions', 'feedback'].includes(a.icon));
+  const onClickAction = (action: OrganizationAction) => {
+    switch (action.icon) {
+      case 'feedback':
+        setFeedbackModalOpen(true);
+        break;
+      case 'print':
+        window.print();
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="org-container">
@@ -64,7 +87,7 @@ export const OrganizationListingPage = () => {
               }
             </header>
 
-            <MobileActionBar resource={org} />
+            <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
 
             <OrganizationListingSection title="About This Organization" className="org--main--header--description" data-cy="org-about-section">
               <ReactMarkdown className="rendered-markdown" source={org.long_description || org.short_description || 'No Description available'} />
@@ -101,10 +124,16 @@ export const OrganizationListingPage = () => {
             </OrganizationSubheaderSection>
             )}
 
+            <FeedbackModal
+              isOpen={feedbackModalOpen}
+              setIsOpen={setFeedbackModalOpen}
+              organization={org}
+            />
+
           </div>
 
           <div className="org--aside">
-            <ActionSidebar resource={org} />
+            <ActionSidebar actions={sidebarActions} onClickAction={onClickAction} />
           </div>
         </div>
       </article>

@@ -10,9 +10,9 @@ import {
   SubmitMessage,
   NavigationButtons,
 } from './FeedbackSteps';
-import styles from './FeedbackModal.module.scss';
+import styles from './FeedbackForm.module.scss';
 
-const FeedbackModal = ({ service, resource, closeModal }) => {
+export const FeedbackForm = ({ service, resource, closeModal }) => {
   const [vote, setVote] = useState('neither');
   const [tagOptions, setTags] = useState(TAG_LIST);
   const [review, setReview] = useState('');
@@ -125,5 +125,3 @@ const FeedbackModal = ({ service, resource, closeModal }) => {
     </div>
   );
 };
-
-export default FeedbackModal;

@@ -3,10 +3,11 @@ import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import {
+  ActionBarMobile,
   ActionSidebar,
+  FeedbackModal,
   ListingTitleLink,
   MapOfLocations,
-  MobileActionBar,
   MOHCDBadge,
   ServiceAttribution,
   ServiceCard,
@@ -18,8 +19,10 @@ import whiteLabel from '../utils/whitelabel';
 import {
   fetchService,
   generateServiceDetails,
+  getOrganizationActions,
   getServiceLocations,
   Organization,
+  OrganizationAction,
   Service,
 } from '../models';
 
@@ -29,6 +32,7 @@ const { title: whiteLabelTitle } = whiteLabel;
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const details = useMemo(() => (service ? generateServiceDetails(service) : []), [service]);
 
   useEffect(() => {
@@ -41,6 +45,21 @@ export const ServiceListingPage = () => {
 
   const { resource, recurringSchedule } = service;
   const locations = getServiceLocations(service, resource, recurringSchedule);
+  const allActions = getOrganizationActions(resource);
+  const sidebarActions = allActions.filter(a => ['print', 'directions', 'feedback'].includes(a.icon));
+  const mobileActions = allActions.filter(a => ['phone', 'directions', 'feedback'].includes(a.icon));
+  const onClickAction = (action: OrganizationAction) => {
+    switch (action.icon) {
+      case 'feedback':
+        setFeedbackModalOpen(true);
+        break;
+      case 'print':
+        window.print();
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="listing-container">
@@ -60,7 +79,7 @@ export const ServiceListingPage = () => {
               <ServiceProgramDetails service={service} organization={resource} />
             </header>
 
-            <MobileActionBar resource={resource} service={service} />
+            <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
 
             <ServiceListingSection title="About This Service" data-cy="service-about-section">
               <ReactMarkdown className="rendered-markdown" source={service.long_description} />
@@ -115,9 +134,17 @@ export const ServiceListingPage = () => {
                 <h2>Similar Services Near You</h2>
               </section>
             */}
+
+            <FeedbackModal
+              isOpen={feedbackModalOpen}
+              setIsOpen={setFeedbackModalOpen}
+              service={service}
+              organization={resource}
+            />
+
           </div>
           <div className="listing--aside">
-            <ActionSidebar resource={resource} service={service} />
+            <ActionSidebar actions={sidebarActions} onClickAction={onClickAction} />
           </div>
         </div>
       </article>

@@ -42,6 +42,13 @@ export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'>
   notes?: Partial<Note>[];
 }
 
+export interface OrganizationAction {
+  name: string;
+  icon: string;
+  to?: string;
+  link?: string;
+}
+
 /**
  * Return a Promise with the fetched Resource.
  *
@@ -63,7 +70,7 @@ export const fetchOrganization = (id: string): Promise<Organization> => get(`/ap
     };
   });
 
-export const getResourceLocations = (org: Organization): LocationDetails[] => {
+export const getOrganizationLocations = (org: Organization): LocationDetails[] => {
   const { addresses } = org;
   if (!addresses || !addresses.length) return [];
 
@@ -73,4 +80,44 @@ export const getResourceLocations = (org: Organization): LocationDetails[] => {
     name: org.name,
     recurringSchedule: org.recurringSchedule,
   }));
+};
+
+export const getOrganizationActions = (org: Organization): OrganizationAction[] => {
+  const phoneNumber = org?.phones?.[0]?.number;
+  const latitude = org?.addresses?.[0]?.latitude;
+  const longitude = org?.addresses?.[0]?.longitude;
+
+  const actions: OrganizationAction[] = [
+    // {
+    //   name: 'Edit',
+    //   icon: 'edit',
+    //   to: `/organizations/${resource.id}/edit`,
+    // },
+    {
+      name: 'Print',
+      icon: 'print',
+    },
+    {
+      name: 'Share Feedback',
+      icon: 'feedback',
+    },
+  ];
+
+  if (phoneNumber) {
+    actions.push({
+      name: 'Call',
+      icon: 'phone',
+      link: `tel:${phoneNumber}`,
+    });
+  }
+
+  if (latitude && longitude) {
+    actions.push({
+      name: 'Directions',
+      icon: 'directions',
+      link: `http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+    });
+  }
+
+  return actions;
 };
