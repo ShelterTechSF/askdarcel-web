@@ -82,13 +82,13 @@ const parseAPIScheduleDay = (apiScheduleDay: ScheduleDay) => {
   return new RecurringInterval({ opensAt, closesAt });
 };
 
-const parseValidAPIScheduleDays = (apiScheduleDays: ScheduleDay[]): RecurringInterval[] => {
-  return apiScheduleDays.reduce((acc: RecurringInterval[], apiScheduleDay) => {
-    const interval = parseAPIScheduleDay(apiScheduleDay);
-    if (interval) { acc.push(interval); }
-    return acc;
-  }, []);
-};
+const parseValidAPIScheduleDays = (
+  apiScheduleDays: ScheduleDay[],
+): RecurringInterval[] => apiScheduleDays.reduce((acc: RecurringInterval[], apiScheduleDay) => {
+  const interval = parseAPIScheduleDay(apiScheduleDay);
+  if (interval) { acc.push(interval); }
+  return acc;
+}, []);
 
 /** Transform API Schedule into a RecurringSchedule. */
 export const parseAPISchedule = (apiSchedule: Schedule) => new RecurringSchedule({
