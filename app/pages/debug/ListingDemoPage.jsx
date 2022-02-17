@@ -1,6 +1,11 @@
 import React from 'react';
 import { RelativeOpeningTime } from '../../components/listing/RelativeOpeningTime';
-import { RecurringInterval, RecurringSchedule, RecurringTime, parseConcatenatedIntegerTime } from '../../models';
+import {
+  RecurringInterval,
+  RecurringSchedule,
+  RecurringTime,
+  parseConcatenatedIntegerTime,
+} from '../../models';
 import './ListingDemoPage.scss';
 
 // Is sorted so that the first day is today
