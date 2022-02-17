@@ -226,7 +226,7 @@ export class RecurringInterval {
 }
 
 
-type RecurringScheduleOptions = { intervals: RecurringInterval[]; hoursKnown: boolean};
+type RecurringScheduleOptions = { intervals: RecurringInterval[]; hoursKnown?: boolean};
 
 export class RecurringSchedule {
   intervals: RecurringInterval[];

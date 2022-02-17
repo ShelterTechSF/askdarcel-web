@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
-import { parseAlgoliaSchedule } from 'utils/transformSchedule';
 import { icon } from 'assets';
 import styles from './SearchResults.module.scss';
+import { parseAlgoliaSchedule } from '../../../models';
 import Texting from '../../../components/Texting';
 
 /**

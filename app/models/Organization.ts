@@ -1,7 +1,6 @@
 import { get } from '../utils/DataService';
-import { parseAPISchedule } from '../utils/transformSchedule';
 import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
-import { Schedule } from './Schedule';
+import { Schedule, parseAPISchedule } from './Schedule';
 import {
   Address,
   Category,

@@ -1,7 +1,6 @@
 import { get } from '../utils/DataService';
-import { parseAPISchedule } from '../utils/transformSchedule';
 import type { Organization } from './Organization';
-import { Schedule, ScheduleParams } from './Schedule';
+import { Schedule, ScheduleParams, parseAPISchedule } from './Schedule';
 import { RecurringSchedule } from './RecurringSchedule';
 import {
   Address,
