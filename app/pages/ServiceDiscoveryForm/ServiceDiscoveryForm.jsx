@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, useHistory } from 'react-router-dom';
 import qs from 'qs';
+import ReactGA from 'react-ga';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
@@ -99,6 +100,15 @@ const InnerServiceDiscoveryForm = ({
               .map(c => c.name),
           },
         };
+
+        const categoriesRefinements = searchState?.refinementList?.categories?.join('; ') || 'NONE';
+        const eligibilitiesRefinements = searchState?.refinementList?.eligibilities?.join('; ') || 'NONE';
+        ReactGA.event({
+          category: 'Resource Inquiry',
+          action: 'Refined Resource Inquiry',
+          label: `${categorySlug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
+        });
+
         const search = qs.stringify(searchState, { encodeValuesOnly: true });
         return (
           <Redirect

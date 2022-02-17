@@ -70,8 +70,7 @@ export const App = () => {
     return history.listen(loc => {
       const page = loc.pathname + loc.search;
       ReactGA.set({ page });
-      ReactGA.pageview(loc.pathname);
-      window.scrollTo(0, 0); // TODO Is this necessary anymore?
+      ReactGA.pageview(page);
     });
   }, []);
 
