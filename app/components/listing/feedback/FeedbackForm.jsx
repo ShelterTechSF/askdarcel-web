@@ -67,7 +67,7 @@ export const FeedbackForm = ({ service, resource, closeModal }) => {
       .then(() => {
         setIsSubmitted('submitted');
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); // eslint-disable-line no-console
   };
 
   const isReviewRequired = (

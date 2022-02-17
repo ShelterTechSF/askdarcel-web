@@ -14,8 +14,10 @@ require('./styles/main.scss');
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({ dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}` });
 } else {
+  /* eslint-disable no-console */
   (Sentry as any).captureException = (e: any) => console.error(e);
   (Sentry as any).captureMessage = (m: any) => console.error(m);
+  /* eslint-enable no-console */
 }
 
 const rootElement = document.getElementById('root')!;

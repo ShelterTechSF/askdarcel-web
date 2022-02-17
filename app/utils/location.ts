@@ -34,16 +34,16 @@ export const getLocationBrowser = () => new Promise<GeoCoordinates>((resolve, re
         resolve(coords);
       } else {
         const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
-        console.log(msg);
+        console.log(msg); // eslint-disable-line no-console
         reject(msg);
       }
     }, error => {
-      console.log(error);
+      console.log(error); // eslint-disable-line no-console
       reject(error);
     });
   } else {
     const msg = 'Geolocation is not supported by this browser.';
-    console.log(msg);
+    console.log(msg); // eslint-disable-line no-console
     reject(msg);
   }
 });
@@ -64,7 +64,7 @@ export const getLocationGoogle = () => new Promise<GeoCoordinates>((resolve, rej
         resolve(data.location);
       } else {
         const msg = 'User location out of bounds';
-        console.log(msg);
+        console.log(msg); // eslint-disable-line no-console
         reject(msg);
       }
     })

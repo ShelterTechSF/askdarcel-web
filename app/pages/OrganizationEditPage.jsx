@@ -869,15 +869,15 @@ class OrganizationEditPage extends React.Component {
     dataService.post(requestString, { resources: [newResource] })
       .then(response => {
         if (response.ok) {
-          alert('Resource successfuly created. Thanks!');
+          alert('Resource successfuly created. Thanks!'); // eslint-disable-line no-alert
           response.json().then(res => history.push(`/organizations/${res.resources[0].resource.id}`));
         } else {
           Promise.reject(response);
         }
       })
       .catch(error => {
-        alert('Issue creating resource, please try again.');
-        console.log(error);
+        alert('Issue creating resource, please try again.'); // eslint-disable-line no-alert
+        console.log(error); // eslint-disable-line no-console
         setNotSubmitting();
       });
   }
@@ -962,7 +962,7 @@ class OrganizationEditPage extends React.Component {
         message: 'Successfully saved your changes.',
       });
     }).catch(err => {
-      console.log(err);
+      console.log(err); // eslint-disable-line no-console
       showPopUpMessage({
         type: 'error',
         message: 'Sorry! An error occurred.',
@@ -981,8 +981,8 @@ class OrganizationEditPage extends React.Component {
       confirmMessage = 'Are you sure you want to remove this service?';
       path = `/api/services/${id}`;
     }
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm(confirmMessage) === true) {
+    // eslint-disable-next-line no-alert
+    if (window.confirm(confirmMessage) === true) {
       if (id < 0) {
         this.setState(({ deactivatedServiceIds }) => {
           const newDeactivatedServiceIds = new Set(deactivatedServiceIds);
@@ -992,7 +992,7 @@ class OrganizationEditPage extends React.Component {
       } else {
         dataService.APIDelete(path, { change_request: { status: '2' } })
           .then(() => {
-            alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.');
+            alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.'); // eslint-disable-line no-alert
             if (type === 'resource') {
               // Resource successfully deactivated. Redirect to home.
               history.push({ pathname: '/' });
