@@ -1,7 +1,6 @@
 import { Service } from './Service';
 import { Organization } from './Organization';
-import { ScheduleDay } from './Schedule';
-import { parseAlgoliaSchedule } from '../utils/transformSchedule';
+import { ScheduleDay, parseAlgoliaSchedule } from './Schedule';
 
 export interface ServiceHit extends Omit<Service, 'schedule'> {
   type: 'service';
