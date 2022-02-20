@@ -101,8 +101,8 @@ const InnerServiceDiscoveryForm = ({
           },
         };
 
-        const categoriesRefinements = searchState?.refinementList?.categories?.join('; ') || 'NONE';
-        const eligibilitiesRefinements = searchState?.refinementList?.eligibilities?.join('; ') || 'NONE';
+        const categoriesRefinements = searchState.refinementList.categories.join('; ') || 'NONE';
+        const eligibilitiesRefinements = searchState.refinementList.eligibilities.join('; ') || 'NONE';
         ReactGA.event({
           category: 'Resource Inquiry',
           action: 'Refined Resource Inquiry',
