@@ -2,17 +2,20 @@ import React, { ReactElement } from 'react';
 import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-import SearchEntry from './SearchEntry';
+import SearchEntry from 'components/search/SearchEntry';
+import { useAppContext } from 'utils';
+import { SearchHit } from '../../models';
 import config from '../../config';
 import './SearchMap.scss';
-import { useAppContext } from '../../utils';
 import { createMapOptions, UserLocationMarker, CustomMarker } from '../ui/MapElements';
-import { SearchHit } from '../../models';
 
-export const SearchMap = ({ hits, hitsPerPage, page }: {
-  hits: SearchHit[];
-  hitsPerPage: number;
-  page: number;
+export const SearchMap = ({
+  hits, hitsPerPage, page, setMapObject,
+}: {
+    hits: SearchHit[];
+    hitsPerPage: number;
+    page: number;
+    setMapObject: any;
 }) => {
   const { userLocation: { lat, lng } } = useAppContext();
   if (!hits || !hits.length) { return null; }
@@ -25,19 +28,32 @@ export const SearchMap = ({ hits, hitsPerPage, page }: {
             key: config.GOOGLE_API_KEY,
           }}
           defaultCenter={{ lat, lng }}
-          defaultZoom={15}
+          defaultZoom={14}
+          onGoogleApiLoaded={({ map }) => {
+            setMapObject(map);
+          }}
           options={createMapOptions}
         >
           <UserLocationMarker lat={lat} lng={lng} key={1} />
-          { hits.reduce((markers, hit, i) => {
-            const hitNumber = `${page * hitsPerPage + i + 1}`;
+          { hits.reduce((markers, hit, index) => {
             // Add a marker for each address of each hit
-            hit.addresses?.forEach((addr: any) => {
+            hit.addresses?.forEach((addr: any, i: number) => {
+              const appendAddressLabel = () => {
+                // Appends letter to index number if there are multiple addresses per service
+                let tag = `${page * hitsPerPage + index + 1}`;
+                if (i > 0) {
+                  const alphabeticalIndex = (i + 9).toString(36).toUpperCase();
+                  tag += alphabeticalIndex;
+                }
+
+                return tag;
+              };
+
               markers.push(<SearchHitMarker
-                key={hit.id}
+                key={`${hit.id}.${i}`} // eslint-disable-line react/no-array-index-key
                 lat={addr.latitude}
                 lng={addr.longitude}
-                tag={hitNumber}
+                tag={appendAddressLabel()}
                 hit={hit}
               />);
             });

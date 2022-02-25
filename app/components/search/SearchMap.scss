@@ -1,9 +1,10 @@
 .results-map {
-  flex: 1 1 auto;
-  position: relative;
-  width: 45vw;
+  position: sticky;
+  top: 4.375rem;
+  width: 40%;
+  height: calc(100vh - 4.375rem);
   @media screen and ( min-width: 1440px ){
-    width: 55vw;
+
   }
   @media screen and ( max-width: 767px ) {
     display: none;
@@ -11,7 +12,6 @@
 }
 
 .results-map-inner {
-  position: fixed;
   width: 100%;
 }
 
@@ -33,10 +33,8 @@
 }
 
 .map-wrapper {
-  width: 44vw;
   height: 100%;
-  position: fixed;
   @media screen and ( min-width: 1440px ){
-    width: 60vw;
+
   }
 }

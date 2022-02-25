@@ -1,10 +1,15 @@
 @import '../../../styles/utils/_helpers.scss';
 
+.searchMapContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 .searchResultsContainer {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 60%;
   height: 100%;
   overflow-y: scroll;
 }
@@ -16,8 +21,8 @@
   padding-top: 21px;
   padding-bottom: 24px;
   padding-left: 24px;
-  border-left: 1px solid #F4F4F4;
-  border-bottom: 1px solid #F4F4F4;
+  border-left: 1px solid $color-grey3;
+  border-bottom: 1px solid $color-grey3;
 
   @media screen and (max-width: 1120px) {
     flex-direction: column;
@@ -25,6 +30,21 @@
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
+  }
+
+  h3 {
+    font-weight: 700;
+    font-size: 18px;
+    padding-bottom: 24px;
+  }
+
+  &_address {
+    border-bottom: 1px solid $color-grey3;
+    padding: 24px 0;
+  }
+
+  &_addressLast {
+    padding-top: 24px;
   }
 }
 
@@ -73,7 +93,7 @@
 .sideLinks {
   flex-shrink: 0;
   width: 250px;
-  margin: 0 100px;
+  margin-left: 30px;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
@@ -107,5 +127,15 @@
     padding: 0 8px;
     white-space: nowrap;
     overflow: auto;
+  }
+}
+
+.resultsMap {
+  flex: 1 1 auto;
+  position: relative;
+  width: 33vw;
+  margin-top: -15px;
+  @media screen and ( max-width: 767px ) {
+    display: none;
   }
 }

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { icon } from 'assets';
+import { SearchMap } from 'components/search/SearchMap';
 import styles from './SearchResults.module.scss';
 import { parseAlgoliaSchedule } from '../../../models';
 import Texting from '../../../components/Texting';
@@ -26,21 +27,44 @@ const transformHits = hits => hits.map(hit => {
 
 const SearchResults = ({ searchResults }) => {
   if (!searchResults) return null;
-
+  const [centerCoords, setCenterCoords] = useState(null);
+  const [googleMapObject, setMapObject] = useState(null);
   const hits = transformHits(searchResults.hits);
 
+  useEffect(() => {
+    if (centerCoords) {
+      googleMapObject.setCenter(centerCoords);
+    }
+    // todo check if place center coords here
+  }, [centerCoords]);
+
   return (
-    <div className={styles.searchResultsContainer}>
-      <div>
-        { hits.map((hit, index) => <SearchResult hit={hit} index={index} key={hit.id} />) }
+    <div className={styles.searchMapContainer}>
+      <div className={styles.searchResultsContainer}>
+        { hits.map((hit, index) => (
+          <SearchResult
+            hit={hit}
+            index={index}
+            setCenterCoords={setCenterCoords}
+            key={hit.id}
+          />
+        ))}
       </div>
+      <SearchMap
+        className={styles.resultsMap}
+        hits={hits}
+        page={0}
+        hitsPerPage={hits.length}
+        setMapObject={setMapObject}
+      />
     </div>
   );
 };
 
 
-const SearchResult = ({ hit, index }) => {
+const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
+
   const service = {
     serviceName: hit.name,
     serviceId: hit.service_id,
@@ -56,16 +80,44 @@ const SearchResult = ({ hit, index }) => {
   );
 
   const renderAddressMetadata = hit_ => {
-    if (!hit_.addresses || hit_.addresses.length === 0) {
+    const { addresses } = hit_;
+    const hasNoAddress = !addresses || !addresses[0].address_1;
+    if (hasNoAddress) {
       return <span>No address found</span>;
     }
-    if (hit_.addresses.length > 1) {
-      return <span>Multiple locations</span>;
-    }
-    if (hit_.addresses[0].address_1) {
-      return <span>{hit_.addresses[0].address_1}</span>;
-    }
-    return <span>No address found</span>;
+
+    const addressMarkup = addresses.map((address, i) => {
+      const isLastAddress = (i + 1) === addresses.length;
+      const isSecondAddress = i === 1;
+
+      return (
+        <div
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${address.address_1}.${i}`}
+          className={isLastAddress ? styles.searchResult_addressLast : styles.searchResult_address}
+        >
+          {isSecondAddress && <h3>Other Locations</h3>}
+          <p>{address.address_1}</p>
+          { i > 0 && (
+            <div className={styles.sideLink}>
+              <button
+                type="button"
+                className={styles.sideLinkText}
+                onClick={() => {
+                  setCenterCoords({ lat: address.latitude, lng: address.longitude });
+                }}
+              >
+                <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+                Show on map
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    });
+
+    addressMarkup.unshift(<h3 key={hit_.id}>Location & Hours</h3>);
+    return addressMarkup;
   };
 
   const phoneNumber = _get(hit, 'phones[0].number');
@@ -85,8 +137,8 @@ const SearchResult = ({ hit, index }) => {
         <div className={styles.serviceOf}>
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
-        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
+        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
       </div>
       <div className={styles.sideLinks}>
         {
