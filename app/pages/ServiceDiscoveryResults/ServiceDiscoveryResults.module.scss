@@ -5,23 +5,54 @@
 }
 
 .header {
+  display: flex;
   padding: 15px 35px;
   border-bottom: 1px solid $color-grey3;
-  .title {
-    text-align: left;
-    font-weight: bold;
-    font-size: 26px;
-
-    @media screen and (max-width: 600px) {
-      font-size: 21px;
-      line-height: 20px;
-    }
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: $break-tablet-s) {
+    padding: 14px 14px 0px 19px;
   }
+}
+
+.title {
+  text-align: left;
+  font-weight: bold;
+  font-size: 26px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 21px;
+    line-height: 20px;
+  }
+}
+
+.mapIcon,
+.listIcon {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-size: 205%;
+  background-position: 36px 36px;
+  &.activeView {
+    background-position: -1px 36px;
+  }
+}
+
+.mapIcon {
+  background-image: url(../../assets/img/ic-map.png);
+}
+
+.listIcon {
+  background-image: url(../../assets/img/ic-list.png);
 }
 
 .flexContainer {
   display: flex;
   width: 100%;
+
+  @media screen and (max-width: $break-tablet-s) {
+    flex-direction: column;
+  }
 }
 
 .sidebar {
@@ -31,49 +62,56 @@
   border-right: 1px solid $color-grey3;
   padding: 20px 30px;
   position: sticky;
-  top: 4.375rem;
+  top: $header-height;
 
-  .filterResourcesTitle {
-    font-weight: bold;
-    font-size: 18px;
-  }
-
-  .clearAll {
-    font-size: 16px;
-    padding: 8px 0;
-    color: $color-brand;
-    cursor: pointer;
-  }
-
-  .filterGroup {
-    margin-top: 12px;
-  }
-
-  .filterTitle {
-    font-size: 16px;
-    font-weight: bold;
-    padding: 16px 0;
-  }
-
-  .checkBox {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    color: $color-grey5;
-    padding: 8px 0;
-    cursor: pointer;
-  }
-
-  .checkBox input[type="checkbox"] {
+  @media screen and (max-width: $break-tablet-s) {
+    position: relative;
     width: auto;
-    margin-right: 10px;
-    margin-left: 0;
-    cursor: pointer;
+    top: 0;
+    padding: 10px 18px;
+    border-right: none;
   }
+}
 
-  @media screen and (max-width: 600px) {
+.filtersContainer {
+  @media screen and (max-width: $break-tablet-s) {
+    display: none;
+    &.showFilters {
+      display: block;
+    }
+  }
+}
+
+.filterIconContainer {
+  display: none;
+  @media screen and (max-width: $break-tablet-s) {
+    display: block;
+  }
+}
+
+.filterResourcesTitle {
+  font-weight: bold;
+  font-size: 18px;
+  @media screen and (max-width: $break-tablet-s) {
     display: none;
   }
+}
+
+.clearAll {
+  font-size: 16px;
+  padding: 8px 0;
+  color: $color-brand;
+  cursor: pointer;
+}
+
+.filterGroup {
+  margin-top: 12px;
+}
+
+.filterTitle {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px 0;
 }
 
 .results {

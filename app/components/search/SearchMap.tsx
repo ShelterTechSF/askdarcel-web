@@ -50,7 +50,9 @@ export const SearchMap = ({
               };
 
               markers.push(<SearchHitMarker
-                key={`${hit.id}.${i}`} // eslint-disable-line react/no-array-index-key
+                // The array members aren't editable so using array index shouldn't be a problem
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${hit.id}.${i}`}
                 lat={addr.latitude}
                 lng={addr.longitude}
                 tag={appendAddressLabel()}

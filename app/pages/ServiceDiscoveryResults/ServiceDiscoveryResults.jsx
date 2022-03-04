@@ -14,7 +14,11 @@ import ClearAllFilters from './ClearAllFilters';
 import OpenNowFilter from './OpenNowFilter';
 import RefinementListFilter from './RefinementListFilter';
 import SearchResults from './SearchResults/SearchResults';
-import styles from './ServiceDiscoveryResults.module.scss';
+
+import filtersIcon from '../../assets/img/filters-icon.png';
+import styles from './ServiceDiscoveryResults.module.scss';;
+import '../../components/search/ResultsPagination.scss';
+import '../../components/search/Filtering.scss';
 
 
 const createURL = state => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
@@ -90,11 +94,24 @@ const InnerServiceDiscoveryResults = ({
   onSearchStateChange,
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
+  const [filterActive, setFilterActive] = useState(false);
+  const [expandList, setExpandList] = useState(false);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>{categoryName}</h1>
+        <div>
+          <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`}
+            aria-label="list icon"
+            onClick={() => setExpandList(true)}>
+          </span>
+          <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`}
+            role="img"
+            aria-label="map icon"
+            onClick={() => setExpandList(false)}>
+          </span>
+        </div>
       </div>
       <InstantSearch
         appId={config.ALGOLIA_APPLICATION_ID}
@@ -106,47 +123,64 @@ const InnerServiceDiscoveryResults = ({
         <Configure filters={`categories:'${algoliaCategoryName}'`} />
         <div className={styles.flexContainer}>
           <div className={styles.sidebar}>
-            <div className={styles.filterResourcesTitle}>Filter Resources</div>
-            <ClearAllFilters />
-            <div className={styles.filterGroup}>
-              <div className={styles.filterTitle}>Availability</div>
-              <OpenNowFilter attribute="open_times" />
+            <div className={styles.filterIconContainer}>
+              <img
+                src={filtersIcon}
+                alt="filters icon"
+                className="filters-icon"
+              />
+              <button
+                className={`refine-btn ${filterActive ? 'active' : ''}`}
+                onClick={() => setFilterActive(!filterActive)}
+                type="button"
+              >
+                Filters
+              </button>
             </div>
-
-            {!!eligibilities.length && (
+            <div className={`${styles.filtersContainer} ${filterActive ? styles.showFilters : ''}`}>
+              <div className={styles.filterResourcesTitle}>Filter Resources</div>
+              <ClearAllFilters />
               <div className={styles.filterGroup}>
-                <div className={styles.filterTitle}>Eligibilities</div>
-                <RefinementListFilter
-                  attribute="eligibilities"
-                  transformItems={items => _.sortBy(items, ['label'])}
-                />
+                <div className={styles.filterTitle}>Availability</div>
+                <OpenNowFilter attribute="open_times" />
               </div>
-            )}
 
-            {!!subcategories.length && (
-              <div className={styles.filterGroup}>
-                <div className={styles.filterTitle}>Categories</div>
-                <RefinementListFilter
-                  attribute="categories"
-                  transformItems={items => {
-                    // Note that in Algolia, the categories attribute is for all
-                    // categories, but for this page, we only want to display
-                    // the specific subcategories of the target category, not
-                    // all categories that the services are tagged with.
-                    // We filter down the categories list from Algolia to just
-                    // the subcategories.
-                    const subcategoryItems = items.filter(
-                      item => subcategoryNames.includes(item.label),
-                    );
-                    return _.sortBy(subcategoryItems, ['label']);
-                  }}
-                />
-              </div>
-            )}
+              {!!eligibilities.length && (
+                <div className={styles.filterGroup}>
+                  <div className={styles.filterTitle}>Eligibilities</div>
+                  <RefinementListFilter
+                    attribute="eligibilities"
+                    transformItems={items => _.sortBy(items, ['label'])}
+                  />
+                </div>
+              )}
 
+              {!!subcategories.length && (
+                <div className={styles.filterGroup}>
+                  <div className={styles.filterTitle}>Categories</div>
+                  <RefinementListFilter
+                    attribute="categories"
+                    transformItems={items => {
+                      // Note that in Algolia, the categories attribute is for all
+                      // categories, but for this page, we only want to display
+                      // the specific subcategories of the target category, not
+                      // all categories that the services are tagged with.
+                      // We filter down the categories list from Algolia to just
+                      // the subcategories.
+                      const subcategoryItems = items.filter(
+                        item => subcategoryNames.includes(item.label),
+                      );
+                      return _.sortBy(subcategoryItems, ['label']);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <div className={styles.results}>
-            <SearchResults />
+            <SearchResults
+            setExpandList={setExpandList}
+            expandList={expandList}/>
           </div>
         </div>
       </InstantSearch>

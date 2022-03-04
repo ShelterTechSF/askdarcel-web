@@ -1,13 +1,16 @@
+@import '../../styles/utils/_helpers.scss';
+
 .results-map {
   position: sticky;
-  top: 4.375rem;
-  width: 40%;
-  height: calc(100vh - 4.375rem);
-  @media screen and ( min-width: 1440px ){
-
-  }
-  @media screen and ( max-width: 767px ) {
-    display: none;
+  top: $header-height;
+  width: 42%;
+  height: calc(100vh - $header-height);
+  @media screen and (max-width: $break-tablet-s) {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 50vh;
+    min-height: 250px;
   }
 }
 
@@ -34,7 +37,4 @@
 
 .map-wrapper {
   height: 100%;
-  @media screen and ( min-width: 1440px ){
-
-  }
 }

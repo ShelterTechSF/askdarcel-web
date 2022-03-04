@@ -25,22 +25,23 @@ const transformHits = hits => hits.map(hit => {
   return { ...hit, recurringSchedule };
 });
 
-const SearchResults = ({ searchResults }) => {
+const SearchResults = ({ searchResults, props }) => {
   if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
+  const {setExpandList, expandList} = props;
   const hits = transformHits(searchResults.hits);
 
   useEffect(() => {
     if (centerCoords) {
       googleMapObject.setCenter(centerCoords);
     }
-    // todo check if place center coords here
   }, [centerCoords]);
 
   return (
     <div className={styles.searchMapContainer}>
-      <div className={styles.searchResultsContainer}>
+      <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
+        <div onClick={() => setExpandList(!expandList)}> SLIDER HERE</div>
         { hits.map((hit, index) => (
           <SearchResult
             hit={hit}
@@ -79,7 +80,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     </div>
   );
 
-  const renderAddressMetadata = hit_ => {
+  const renderAddressMetadata = (hit_, index) => {
     const { addresses } = hit_;
     const hasNoAddress = !addresses || !addresses[0].address_1;
     if (hasNoAddress) {
@@ -89,15 +90,23 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     const addressMarkup = addresses.map((address, i) => {
       const isLastAddress = (i + 1) === addresses.length;
       const isSecondAddress = i === 1;
+      const setAddressLabel = (serviceIndex, addressIndex) => {
+        if (addressIndex > 0) {
+          return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
+        }
+        return '';
+      }
 
       return (
         <div
+          // todo: this may not be true due to filtering....
+          // The array members aren't editable so using array index shouldn't be a problem
           // eslint-disable-next-line react/no-array-index-key
           key={`${address.address_1}.${i}`}
           className={isLastAddress ? styles.searchResult_addressLast : styles.searchResult_address}
         >
           {isSecondAddress && <h3>Other Locations</h3>}
-          <p>{address.address_1}</p>
+          <p><a className={styles.addressLabel}>{setAddressLabel(index, i)}</a> {address.address_1}</p>
           { i > 0 && (
             <div className={styles.sideLink}>
               <button
@@ -138,7 +147,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
-        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
+        <div className={styles.address}>{renderAddressMetadata(hit, index)}</div>
       </div>
       <div className={styles.sideLinks}>
         {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
 import { getCurrentDayTime } from '../../utils/index';
-import styles from './ServiceDiscoveryResults.module.scss';
+import styles from './RefinementFilters.module.scss';
 
 
 /**
@@ -35,7 +35,7 @@ const OpenNowFilter = ({ currentRefinement, refine }) => {
   return (
     <label key="openNow" className={styles.checkBox}>
       Open Now
-      <input type="checkbox" name="openNow" id="openNow" value={isActive} checked={isActive} onChange={toggleRefinement} />
+      <input type="checkbox" name="openNow" id="openNow" className={styles.refinementInput} value={isActive} checked={isActive} onChange={toggleRefinement} />
     </label>
   );
 };

@@ -23,7 +23,7 @@
 .primaryRow {
   @extend %flex-row;
   @include navRow;
-  height: calc-em(70px);
+  height: $header-height;
   justify-content: space-between;
   padding: calc-em(10px) calc-em(30px);
   @include r_max($break-tablet-s) {

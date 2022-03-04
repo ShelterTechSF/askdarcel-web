@@ -1,0 +1,17 @@
+@import '../../styles/utils/_helpers.scss';
+
+.checkBox {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  color: $color-grey5;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.refinementInput {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 0;
+  cursor: pointer;
+}

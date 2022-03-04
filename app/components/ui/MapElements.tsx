@@ -2,13 +2,11 @@ import React from 'react';
 
 export const createMapOptions = (maps: any) => ({
   zoomControlOptions: {
+    position: maps.ControlPosition.TOP_LEFT,
+  },
+  fullscreenControlOptions: {
     position: maps.ControlPosition.LEFT_TOP,
-    style: maps.ZoomControlStyle.SMALL,
   },
-  mapTypeControlOptions: {
-    position: maps.ControlPosition.TOP_RIGHT,
-  },
-  mapTypeControl: true,
 });
 
 // eslint-disable-next-line react/no-unused-prop-types, no-empty-pattern

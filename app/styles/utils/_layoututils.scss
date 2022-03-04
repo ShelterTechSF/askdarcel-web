@@ -14,6 +14,7 @@ $padding-xlarge: 26px;
 $padding-xxlarge: 36px;
 $max-container-width: 1280px;
 
+$header-height: 70px;
 
 %flex-row {
   @include display(flex);
