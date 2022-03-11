@@ -37,7 +37,7 @@ ServiceDiscoveryForm.propTypes = {
 
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
-  steps, categorySlug, eligibilities, subcategories, subcategorySubheading
+  steps, categorySlug, eligibilities, subcategories, subcategorySubheading,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedEligibilities, setSelectedEligibilities] = useState({});
