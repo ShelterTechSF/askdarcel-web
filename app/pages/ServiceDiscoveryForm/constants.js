@@ -4,6 +4,8 @@ export const STEPS = {
   RESULTS: 'results',
 };
 
+const defaultSubheading = 'What are you currently looking for? Select all that apply.';
+
 export const CATEGORIES = [
   {
     algoliaCategoryName: 'Covid-food',
@@ -11,6 +13,7 @@ export const CATEGORIES = [
     name: 'Food resources',
     slug: 'food-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-hygiene',
@@ -18,6 +21,7 @@ export const CATEGORIES = [
     name: 'Hygiene resources',
     slug: 'hygiene-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-health',
@@ -25,6 +29,7 @@ export const CATEGORIES = [
     name: 'Medical Services',
     slug: 'medical-services-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-domesticviolence',
@@ -32,6 +37,7 @@ export const CATEGORIES = [
     name: 'Domestic Violence',
     slug: 'domestic-violence-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-internet',
@@ -39,6 +45,7 @@ export const CATEGORIES = [
     name: 'Internet Access',
     slug: 'internet-access-resources',
     steps: [STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-finance',
@@ -46,6 +53,7 @@ export const CATEGORIES = [
     name: 'Financial',
     slug: 'financial-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-jobs',
@@ -53,6 +61,7 @@ export const CATEGORIES = [
     name: 'Job Assistance',
     slug: 'job-assistance-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-housing',
@@ -60,6 +69,7 @@ export const CATEGORIES = [
     name: 'Rental Assistance',
     slug: 'rental-assistance-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-lgbtqa',
@@ -67,6 +77,7 @@ export const CATEGORIES = [
     name: 'LGBTQ Resources',
     slug: 'lgbtq-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Covid-shelter',
@@ -74,5 +85,6 @@ export const CATEGORIES = [
     name: 'Shelter resources',
     slug: 'shelter-resources',
     steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
 ];
