@@ -146,12 +146,19 @@
   }
 }
 
+.expandListSlider {
+  display: none;
+  @media screen and ( max-width: $break-tablet-s) {
+    display: block;
+  }
+}
+
 .resultsMap {
   flex: 1 1 auto;
   position: relative;
   width: 33vw;
   margin-top: -15px;
-  @media screen and ( max-width: 767px ) {
+  @media screen and ( max-width: $break-tablet-s) {
     display: none;
   }
 }

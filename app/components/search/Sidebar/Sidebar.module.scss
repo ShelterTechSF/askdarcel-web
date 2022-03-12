@@ -1,0 +1,80 @@
+@import "~styles/utils/_helpers.scss";
+
+.sidebar {
+  flex-shrink: 0;
+  overflow-y: scroll;
+  width: 300px;
+  height: calc(100vh - $header-height);
+  border-right: 1px solid $color-grey3;
+  padding: 20px 30px 50px;
+  position: sticky;
+  top: $header-height;
+
+  @media screen and (max-width: $break-tablet-s) {
+    position: relative;
+    width: auto;
+    top: 0;
+    padding: 10px 18px;
+    border-right: none;
+  }
+}
+
+.filtersContainer {
+  @media screen and (max-width: $break-tablet-s) {
+    display: none;
+    &.showFilters {
+      display: block;
+    }
+  }
+}
+
+.filterIconContainer {
+  display: none;
+  @media screen and (max-width: $break-tablet-s) {
+    display: block;
+  }
+}
+
+.filtersIcon {
+  height: 15px;
+  padding: 0 3px 3px 0;
+}
+
+.filterResourcesTitle {
+  font-weight: bold;
+  font-size: 18px;
+  @media screen and (max-width: $break-tablet-s) {
+    display: none;
+  }
+}
+
+.refineBtn {
+  background: none;
+  border: none;
+  padding: 5px 10px 5px 0;
+  color: #276ce5;
+  font-weight: 400;
+  font-size: 15px;
+
+  &:active, &:focus, &:hover {
+    box-shadow: none;
+  }
+
+  &:hover {
+    color: $color-brand-dark;
+  }
+
+  &.active {
+    font-weight: 500;
+  }
+}
+
+.filterGroup {
+  margin-top: 12px;
+}
+
+.filterTitle {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px 0;
+}

@@ -1,18 +1,5 @@
-@import '../../styles/utils/_colors';
+@import '~styles/utils/_colors';
 
-.filter-container {
-  padding: 15px 30px;
-  height: 60px;
-  border-bottom: 1px solid #E0E0E0;
-  @media screen and (max-width: 600px ) {
-    padding: 15px 20px;
-  }
-}
-
-// Filtering styles //
-.filter-container.flex-height {
-  height: auto;
-}
 .filters-icon {
   height: 15px;
   padding: 0 3px 3px 0;

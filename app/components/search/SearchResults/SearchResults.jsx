@@ -4,10 +4,10 @@ import ReactMarkdown from 'react-markdown';
 import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { icon } from 'assets';
-import { SearchMap } from 'components/search/SearchMap';
+import { SearchMap } from 'components/search/SearchMap/SearchMap';
 import styles from './SearchResults.module.scss';
 import { parseAlgoliaSchedule } from '../../../models';
-import Texting from '../../../components/Texting';
+import Texting from '../../Texting';
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -29,7 +29,8 @@ const SearchResults = ({ searchResults, props }) => {
   if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
-  const {setExpandList, expandList} = props;
+  // eslint-disable-next-line no-unused-vars
+  const { setExpandList, expandList } = props;
   const hits = transformHits(searchResults.hits);
 
   useEffect(() => {
@@ -41,7 +42,11 @@ const SearchResults = ({ searchResults, props }) => {
   return (
     <div className={styles.searchMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
-        <div onClick={() => setExpandList(!expandList)}> SLIDER HERE</div>
+        {/*
+        // todo: to be included as part of next stage of multiple location work
+        <button className={styles.expandListSlider} onClick={() => setExpandList(!expandList)}>
+          SLIDER HERE
+        </button> */}
         { hits.map((hit, index) => (
           <SearchResult
             hit={hit}
@@ -62,7 +67,7 @@ const SearchResults = ({ searchResults, props }) => {
   );
 };
 
-
+// eslint-disable-next-line no-unused-vars
 const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
 
@@ -80,54 +85,72 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     </div>
   );
 
-  const renderAddressMetadata = (hit_, index) => {
-    const { addresses } = hit_;
-    const hasNoAddress = !addresses || !addresses[0].address_1;
-    if (hasNoAddress) {
+  const renderAddressMetadata = hit_ => {
+    if (!hit_.addresses || hit_.addresses.length === 0) {
       return <span>No address found</span>;
     }
-
-    const addressMarkup = addresses.map((address, i) => {
-      const isLastAddress = (i + 1) === addresses.length;
-      const isSecondAddress = i === 1;
-      const setAddressLabel = (serviceIndex, addressIndex) => {
-        if (addressIndex > 0) {
-          return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
-        }
-        return '';
-      }
-
-      return (
-        <div
-          // todo: this may not be true due to filtering....
-          // The array members aren't editable so using array index shouldn't be a problem
-          // eslint-disable-next-line react/no-array-index-key
-          key={`${address.address_1}.${i}`}
-          className={isLastAddress ? styles.searchResult_addressLast : styles.searchResult_address}
-        >
-          {isSecondAddress && <h3>Other Locations</h3>}
-          <p><a className={styles.addressLabel}>{setAddressLabel(index, i)}</a> {address.address_1}</p>
-          { i > 0 && (
-            <div className={styles.sideLink}>
-              <button
-                type="button"
-                className={styles.sideLinkText}
-                onClick={() => {
-                  setCenterCoords({ lat: address.latitude, lng: address.longitude });
-                }}
-              >
-                <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
-                Show on map
-              </button>
-            </div>
-          )}
-        </div>
-      );
-    });
-
-    addressMarkup.unshift(<h3 key={hit_.id}>Location & Hours</h3>);
-    return addressMarkup;
+    if (hit_.addresses.length > 1) {
+      return <span>Multiple locations</span>;
+    }
+    if (hit_.addresses[0].address_1) {
+      return <span>{hit_.addresses[0].address_1}</span>;
+    }
+    return <span>No address found</span>;
   };
+
+  // Todo: to be included with next stage of multiple location work
+  // const renderAddressMetadata = (hit_, hitIndex) => {
+  //   const { addresses } = hit_;
+  //   const hasNoAddress = !addresses || !addresses[0].address_1;
+  //   if (hasNoAddress) {
+  //     return <span>No address found</span>;
+  //   }
+
+  //   const addressMarkup = addresses.map((address, i) => {
+  //     const isLastAddress = (i + 1) === addresses.length;
+  //     const isSecondAddress = i === 1;
+  //     const setAddressLabel = (serviceIndex, addressIndex) => {
+  //       if (addressIndex > 0) {
+  //         return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
+  //       }
+  //       return '';
+  //     };
+
+  //     return (
+  //       <div
+  //         // todo: this may not be true due to filtering....
+  //         // The array members aren't editable so using array index shouldn't be a problem
+  //         // eslint-disable-next-line react/no-array-index-key
+  //         key={`${address.address_1}.${i}`}
+  //         className={isLastAddress ? styles.searchResult_addressLast
+  //          : styles.searchResult_address}
+  //       >
+  //         {isSecondAddress && <h3>Other Locations</h3>}
+  //         <p>
+  //           <a className={styles.addressLabel}>{setAddressLabel(hitIndex, i)}</a>
+  //           {address.address_1}
+  //         </p>
+  //         { i > 0 && (
+  //           <div className={styles.sideLink}>
+  //             <button
+  //               type="button"
+  //               className={styles.sideLinkText}
+  //               onClick={() => {
+  //                 setCenterCoords({ lat: address.latitude, lng: address.longitude });
+  //               }}
+  //             >
+  //               <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+  //               Show on map
+  //             </button>
+  //           </div>
+  //         )}
+  //       </div>
+  //     );
+  //   });
+
+  //   addressMarkup.unshift(<h3 key={hit_.id}>Location & Hours</h3>);
+  //   return addressMarkup;
+  // };
 
   const phoneNumber = _get(hit, 'phones[0].number');
   const url = hit.url || hit.website;
@@ -146,8 +169,8 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <div className={styles.serviceOf}>
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
+        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
-        <div className={styles.address}>{renderAddressMetadata(hit, index)}</div>
       </div>
       <div className={styles.sideLinks}>
         {

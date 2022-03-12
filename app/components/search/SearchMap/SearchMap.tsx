@@ -2,12 +2,12 @@ import React, { ReactElement } from 'react';
 import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-import SearchEntry from 'components/search/SearchEntry';
+import SearchEntry from 'components/search/SearchMap/SearchEntry';
 import { useAppContext } from 'utils';
-import { SearchHit } from '../../models';
-import config from '../../config';
+import { SearchHit } from '../../../models';
+import config from '../../../config';
 import './SearchMap.scss';
-import { createMapOptions, UserLocationMarker, CustomMarker } from '../ui/MapElements';
+import { createMapOptions, UserLocationMarker, CustomMarker } from '../../ui/MapElements';
 
 export const SearchMap = ({
   hits, hitsPerPage, page, setMapObject,
@@ -28,7 +28,7 @@ export const SearchMap = ({
             key: config.GOOGLE_API_KEY,
           }}
           defaultCenter={{ lat, lng }}
-          defaultZoom={14}
+          defaultZoom={15}
           onGoogleApiLoaded={({ map }) => {
             setMapObject(map);
           }}

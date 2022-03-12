@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import whiteLabel from '../../utils/whitelabel';
-import { RelativeOpeningTime } from '../listing/RelativeOpeningTime';
+import whiteLabel from '../../../utils/whitelabel';
+import { RelativeOpeningTime } from '../../listing/RelativeOpeningTime';
 import './SearchEntry.scss';
 
 const { appImages: { mohcdSeal } } = whiteLabel;
