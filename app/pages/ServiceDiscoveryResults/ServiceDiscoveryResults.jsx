@@ -30,6 +30,7 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
   const eligibilities = useEligibilitiesForCategory(category.id);
   const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
+  const [expandList, setExpandList] = useState(false);
 
   const onSearchStateChange = nextSearchState => {
     setSearchState(nextSearchState);
@@ -59,6 +60,8 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
       algoliaCategoryName={parentCategory.name}
       searchState={searchState}
       onSearchStateChange={onSearchStateChange}
+      expandList={expandList}
+      setExpandList={setExpandList}
     />
   );
 };
@@ -85,9 +88,11 @@ const InnerServiceDiscoveryResults = ({
   algoliaCategoryName,
   searchState,
   onSearchStateChange,
+  expandList,
+  setExpandList
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
-  const [expandList, setExpandList] = useState(false);
+  const searchResultsProps = {setExpandList, expandList};
 
   return (
     <div className={styles.container}>
@@ -97,14 +102,14 @@ const InnerServiceDiscoveryResults = ({
           <span
             className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`}
             role="button"
-            tabIndex="0"
+            tabIndex={0}
             aria-label="list icon"
             onClick={() => setExpandList(true)}
           />
           <span
             className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`}
             role="button"
-            tabIndex="0"
+            tabIndex={0}
             aria-label="map icon"
             onClick={() => setExpandList(false)}
           />
@@ -120,16 +125,16 @@ const InnerServiceDiscoveryResults = ({
         <Configure filters={`categories:'${algoliaCategoryName}'`} />
         <div className={styles.flexContainer}>
           <Sidebar
-            isSearchPage={false}
+            isSearchResultsPage={false}
             eligibilities={eligibilities}
             subcategories={subcategories}
             subcategoryNames={subcategoryNames}
           />
 
           <div className={styles.results}>
-            <SearchResults
-              setExpandList={setExpandList}
-              expandList={expandList}
+          <SearchResults
+              props
+              {...searchResultsProps}
             />
           </div>
         </div>

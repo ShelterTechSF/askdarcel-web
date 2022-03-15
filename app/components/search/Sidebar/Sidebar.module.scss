@@ -13,6 +13,7 @@
   @media screen and (max-width: $break-tablet-s) {
     position: relative;
     width: auto;
+    height: auto;
     top: 0;
     padding: 10px 18px;
     border-right: none;
@@ -28,7 +29,7 @@
   }
 }
 
-.filterIconContainer {
+.filtersIconContainer {
   display: none;
   @media screen and (max-width: $break-tablet-s) {
     display: block;

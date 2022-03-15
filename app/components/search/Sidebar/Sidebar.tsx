@@ -8,23 +8,29 @@ import FacetRefinementList from 'components/search/Refinements/FacetRefinementLi
 
 import filtersIcon from 'assets/img/filters-icon.png';
 import styles from './Sidebar.module.scss';
-import 'components/search/Refinements/Filtering.scss';
 
 const Sidebar = ({
-  isSearchPage, eligibilities = [], subcategories = [], subcategoryNames = [],
+  isSearchResultsPage, eligibilities = [], subcategories = [], subcategoryNames = [],
 }: {
-  isSearchPage: boolean; eligibilities?: any; subcategories?: any; subcategoryNames?: Array<string>;
+  isSearchResultsPage: boolean;
+  eligibilities?: Array<object>;
+  subcategories?: Array<object>;
+  subcategoryNames?: Array<string>;
 }) => {
   const [filterActive, setFilterActive] = useState(false);
   const transformItems = (items: any): any => items.sort((a:{label: string},
     b:{label: string}) => a.label.localeCompare(b.label));
-
   let categoryRefinementJsx = null;
   let eligibilityRefinementJsx = null;
-  if (isSearchPage) {
+
+  // Currently, the Search Results Page uses generic categories/eligibilities while the
+  // Service Results Page uses COVID-specific categories. This logic determines which
+  // of these to use as based on the page
+  if (isSearchResultsPage) {
     categoryRefinementJsx = <FacetRefinementList attribute="categories" limit={100} mapping={categoriesMapping} />;
     eligibilityRefinementJsx = <FacetRefinementList attribute="eligibilities" limit={100} mapping={eligibilitiesMapping} />;
   } else {
+    // Service Results Page
     if (eligibilities.length) {
       eligibilityRefinementJsx = <RefinementListFilter attribute="eligibilities" transformItems={transformItems} />;
     }
@@ -44,11 +50,11 @@ const Sidebar = ({
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.filterIconContainer}>
+      <div className={styles.filtersIconContainer}>
         <img
           src={filtersIcon}
-          alt="filters icon"
-          className={styles.filterIcon}
+          alt="search filters"
+          className={styles.filtersIcon}
         />
         <button
           className={`${styles.refineBtn} ${filterActive ? 'active' : ''}`}

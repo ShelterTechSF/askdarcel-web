@@ -4,16 +4,16 @@ import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch, Configure, SearchBox, Pagination,
 } from 'react-instantsearch/dom';
-import qs from 'qs';
+import qs, { ParsedQs } from 'qs';
 
-import { useAppContext } from 'utils';
+import { GeoCoordinates, useAppContext } from 'utils';
 import config from '../../config';
 
-import SearchResults from '../../components/search/SearchResults/SearchResults';
-import Sidebar from '../../components/search/Sidebar/Sidebar';
+import SearchResults from 'components/search/SearchResults/SearchResults';
+import Sidebar from 'components/search/Sidebar/Sidebar';
 
 import styles from './SearchResults.module.scss';
-import '../../components/search/ResultsPagination.scss';
+import 'components/search/ResultsPagination.scss';
 
 
 const searchClient = algoliasearch(
@@ -21,20 +21,61 @@ const searchClient = algoliasearch(
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
 
-export const SearchResultsPage = () => <InnerServiceDiscoveryResults />;
-
-/** Stateless inner component that just handles presentation. */
-const InnerServiceDiscoveryResults = () => {
-  const history = useHistory();
-  const { search } = useLocation();
+/** Wrapper component that handles state management, URL parsing, and external API requests. */
+export const SearchResultsPage = () => {
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
+  const { search } = useLocation();
+  const [expandList, setExpandList] = useState(false);
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
+
+  return (
+    <InnerSearchReslts
+      history={useHistory()}
+      userLocation={userLocation}
+      lastPush={lastPush}
+      setLastPush={setLastPush}
+      expandList={expandList}
+      setExpandList={setExpandList}
+      searchState={searchState}
+    />
+  );
+}
+
+/** Stateless inner component that just handles presentation. */
+const InnerSearchReslts = ({
+  history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState
+}: {
+  history: any
+  userLocation: GeoCoordinates,
+  lastPush: number,
+  setLastPush: Function,
+  expandList: boolean,
+  setExpandList: Function,
+  searchState: ParsedQs
+}) => {
+  const searchResultsProps = {setExpandList, expandList};
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>{searchState.query}</h1>
+        <div className={styles.mapListToggler}>
+          <span
+            className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-label="list icon"
+            onClick={() => setExpandList(true)}
+          />
+          <span
+            className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-label="map icon"
+            onClick={() => setExpandList(false)}
+          />
+        </div>
       </div>
       <InstantSearch
         searchClient={searchClient}
@@ -58,18 +99,19 @@ const InnerServiceDiscoveryResults = () => {
         ) : (
           <Configure aroundLatLngViaIP aroundRadius="all" />
         )}
-        <div className={styles.searchBox}>
+        {/* <div className={styles.searchBox}>
+          todo: part of the next stage of multiple location development
           <SearchBox />
-        </div>
+        </div> */}
         <div className={styles.flexContainer}>
-
           <Sidebar
-            isSearchPage
+            isSearchResultsPage
           />
 
           <div className={styles.results}>
             <SearchResults
               props
+              {...searchResultsProps}
             />
           </div>
         </div>
