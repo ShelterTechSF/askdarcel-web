@@ -2,9 +2,10 @@
 
 .results-map {
   position: sticky;
-  top: $header-height;
-  width: 42%;
+  width: 39%;
   height: calc(100vh - $header-height);
+  top: $header-height;
+  margin-left: auto;
   @media screen and (max-width: $break-tablet-s) {
     position: relative;
     top: 0;

@@ -10,7 +10,7 @@ import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
 import SearchResults from '../../components/search/SearchResults/SearchResults';
-import Sidebar from '../../components/search/Sidebar/Sidebar';
+import Sidebar from 'components/search/Sidebar/Sidebar';
 
 import styles from './ServiceDiscoveryResults.module.scss';
 
@@ -115,6 +115,8 @@ const InnerServiceDiscoveryResults = ({
           />
         </div>
       </div>
+      <div className={styles.filterToggler}></div>
+
       <InstantSearch
         appId={config.ALGOLIA_APPLICATION_ID}
         apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
@@ -138,6 +140,7 @@ const InnerServiceDiscoveryResults = ({
             />
           </div>
         </div>
+
       </InstantSearch>
     </div>
   );

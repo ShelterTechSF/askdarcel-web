@@ -3,25 +3,60 @@
 .sidebar {
   flex-shrink: 0;
   overflow-y: scroll;
-  width: 300px;
-  height: calc(100vh - $header-height);
+  width: 295px;
   border-right: 1px solid $color-grey3;
   padding: 20px 30px 50px;
-  position: sticky;
-  top: $header-height;
+  @media screen and (max-width: $break-desktop) {
+    padding: 0 30px;
+    top: 70px;
+    background: #fff;
+  }
+
+  @media screen and (max-width: $break-tablet-l) {
+    position: sticky;
+    width: 39%;
+    margin-top: -44px;
+    z-index: 1;
+    align-self: flex-end;
+    background-color: #fff;
+    border-right: 0;
+    &.showFilters {
+      position: fixed;
+      height: 100vh;
+      top: 0;
+      margin-top: 0;
+      overflow: scroll;
+      box-shadow: 0px 0 20px rgb(0 0 0 / 55%);
+      animation-duration: 200ms;
+      animation-name: slideIn;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
 
   @media screen and (max-width: $break-tablet-s) {
-    position: relative;
+    // position: sticky;
     width: auto;
     height: auto;
     top: 0;
-    padding: 10px 18px;
-    border-right: none;
+    padding: 0 14px;
+    // border-right: none;
   }
 }
 
 .filtersContainer {
-  @media screen and (max-width: $break-tablet-s) {
+  // @media screen and (max-width: $break-tablet-s) {
+  //   display: none;
+  // }
+  @media screen and (max-width: $break-tablet-l) {
     display: none;
     &.showFilters {
       display: block;
@@ -31,9 +66,34 @@
 
 .filtersIconContainer {
   display: none;
-  @media screen and (max-width: $break-tablet-s) {
+  // @media screen and (max-width: $break-tablet-s) {
+  //   display: block;
+  // }
+  @media screen and (max-width: $break-tablet-l) {
     display: block;
+    text-align: right;
+    transition: display 550ms;
+    &.hideIcon {
+      .filtersIcon {
+        display: none;
+        transition: display 550ms;
+      }
+
+      .closeIcon {
+        display: inline-block;
+      }
+
+      span {
+        display: none;
+        transition: display 550ms;
+      }
+    }
   }
+}
+
+.closeIcon {
+  height: 25px;
+  display: none;
 }
 
 .filtersIcon {

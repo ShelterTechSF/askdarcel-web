@@ -11,7 +11,7 @@
   justify-content: space-between;
   align-items: center;
   @media screen and (max-width: $break-tablet-s) {
-    padding: 14px 14px 5px 19px;
+    padding: 14px 14px 5px;
   }
 }
 
@@ -47,12 +47,12 @@
 .mapIcon,
 .listIcon {
   display: inline-block;
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   background-size: 205%;
-  background-position: 36px 36px;
+  background-position: 33px 33px;
   &.activeView {
-    background-position: -1px 36px;
+    background-position: 1px 33px;
   }
 }
 
@@ -74,7 +74,7 @@
   display: flex;
   width: 100%;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-l) {
     flex-direction: column;
   }
 }

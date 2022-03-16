@@ -8,6 +8,8 @@ import { SearchMap } from 'components/search/SearchMap/SearchMap';
 import styles from './SearchResults.module.scss';
 import { parseAlgoliaSchedule } from '../../../models';
 import Texting from '../../Texting';
+import ResultsPagination from 'components/search/Pagination/ResultsPagination';
+
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -42,6 +44,7 @@ const SearchResults = ({ searchResults, props }) => {
   return (
     <div className={styles.searchMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
+        {/* <div className={styles.searchResultsTopShadow}></div> */}
         {/*
         // todo: to be included as part of next stage of multiple location work
         <button className={styles.expandListSlider} onClick={() => setExpandList(!expandList)}>
@@ -55,6 +58,7 @@ const SearchResults = ({ searchResults, props }) => {
             key={hit.id}
           />
         ))}
+        <ResultsPagination />
       </div>
       <SearchMap
         className={styles.resultsMap}
@@ -153,6 +157,18 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   // };
 
   const phoneNumber = _get(hit, 'phones[0].number');
+  const formatPhoneNumber = (phoneNumber) => {
+    // Function edited slightly for our needs from https://stackoverflow.com/a/8358141
+    // Takes  9 or 10 digit phone number input and outputs xxx-xxx-xxxx
+    // If the input doesn't match regex, function returns its original value
+    const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return [match[2], '-', match[3], '-', match[4]].join('');
+    }
+    return phoneNumber;
+  }
+
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
@@ -178,7 +194,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           && (
             <div className={styles.sideLink}>
               <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
-              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
+              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
             </div>
           )
         }

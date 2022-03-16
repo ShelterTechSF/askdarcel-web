@@ -7,6 +7,7 @@ import RefinementListFilter from 'components/search/Refinements/RefinementListFi
 import FacetRefinementList from 'components/search/Refinements/FacetRefinementList';
 
 import filtersIcon from 'assets/img/filters-icon.png';
+import closeIcon from 'assets/img/ic-close.svg';
 import styles from './Sidebar.module.scss';
 
 const Sidebar = ({
@@ -49,23 +50,28 @@ const Sidebar = ({
   }
 
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.filtersIconContainer}>
-        <img
-          src={filtersIcon}
-          alt="search filters"
-          className={styles.filtersIcon}
-        />
+    <div className={`${styles.sidebar} ${filterActive ? styles.showFilters : ''}`}>
+      <div className={`${styles.filtersIconContainer} ${filterActive ? styles.hideIcon : ''}`}>
         <button
           className={`${styles.refineBtn} ${filterActive ? 'active' : ''}`}
           onClick={() => setFilterActive(!filterActive)}
           type="button"
         >
-          Filters
+          <img
+            src={filtersIcon}
+            alt="search filters"
+            className={styles.filtersIcon}
+          />
+          <span>Filters</span>
+          <img
+            src={closeIcon}
+            alt="close filters"
+            className={styles.closeIcon}
+          />
         </button>
       </div>
       <div className={`${styles.filtersContainer} ${filterActive ? styles.showFilters : ''}`}>
-        <div className={styles.filterResourcesTitle}>Filter Resources</div>
+        <div className={styles.filterResourcesTitle}>Filters</div>
         <ClearAllFilters />
         <div className={styles.filterGroup}>
           <div className={styles.filterTitle}>Availability</div>

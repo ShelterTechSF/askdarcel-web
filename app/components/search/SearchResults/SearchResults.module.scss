@@ -1,4 +1,4 @@
-@import '../../../styles/utils/_helpers.scss';
+@import '~styles/utils/_helpers.scss';
 
 .searchMapContainer {
   position: relative;
@@ -13,20 +13,28 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 59%;
   height: 100%;
   overflow-y: scroll;
   @media screen and (max-width: $break-tablet-s) {
     width: 100%;
+    position: relative;
     z-index: 1;
-    border-radius: 10px;
+    top: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     box-shadow: 0px 0 20px rgb(0 0 0 / 55%);
     background: #fff;
-    transition: top 4s;
+    transition: top 200ms ease-in-out;
     &.expandList {
-      position: absolute;
-      top: 20px;
+      top: calc(-50vh + 20px);
     }
+  }
+}
+
+.searchResultsTopShadow {
+  @media screen and (max-width: $break-tablet-s) {
+    box-shadow: 0px 0 20px rgb(0 0 0 / 55%);
   }
 }
 
@@ -40,7 +48,7 @@
   border-left: 1px solid $color-grey3;
   border-bottom: 1px solid $color-grey3;
 
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: $break-desktop) {
     flex-direction: column;
   }
 
@@ -97,7 +105,7 @@
   .serviceOf {
     font-size: 18px;
     font-style: italic;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 
     @media screen and (max-width: 600px) {
       font-size: 16px;
@@ -108,14 +116,13 @@
 
 .sideLinks {
   flex-shrink: 0;
-  width: 250px;
+  width: 215px;
   margin-left: 30px;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
-  padding-top: 32px;
 
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: $break-desktop) {
     flex-direction: column;
     margin-left: 0;
     margin-right: 0;
@@ -127,38 +134,27 @@
     margin-top: 0;
     font-size: 16px;
   }
+}
 
-  .sideLink {
-    display: flex;
-    align-items: center;
-    margin: 24px 0;
-    cursor: pointer;
-  }
+.sideLink {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
 
-  .sideLinkIcon {
-    width: 24px;
-  }
+.sideLinkIcon {
+  width: 24px;
+}
 
-  .sideLinkText {
-    padding: 0 8px;
-    white-space: nowrap;
-    overflow: auto;
-  }
+.sideLinkText {
+  padding: 0 8px;
+  overflow: auto;
 }
 
 .expandListSlider {
   display: none;
   @media screen and ( max-width: $break-tablet-s) {
     display: block;
-  }
-}
-
-.resultsMap {
-  flex: 1 1 auto;
-  position: relative;
-  width: 33vw;
-  margin-top: -15px;
-  @media screen and ( max-width: $break-tablet-s) {
-    display: none;
   }
 }

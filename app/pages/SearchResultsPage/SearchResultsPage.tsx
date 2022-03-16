@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import algoliasearch from 'algoliasearch/lite';
 import {
-  InstantSearch, Configure, SearchBox, Pagination,
+  InstantSearch, Configure
 } from 'react-instantsearch/dom';
 import qs, { ParsedQs } from 'qs';
 
@@ -13,8 +13,6 @@ import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
 
 import styles from './SearchResults.module.scss';
-import 'components/search/ResultsPagination.scss';
-
 
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
@@ -55,6 +53,7 @@ const InnerSearchReslts = ({
   searchState: ParsedQs
 }) => {
   const searchResultsProps = {setExpandList, expandList};
+
 
   return (
     <div className={styles.container}>
@@ -114,17 +113,6 @@ const InnerSearchReslts = ({
               {...searchResultsProps}
             />
           </div>
-        </div>
-        <div className="results-pagination">
-          <Pagination
-            padding={2}
-            showLast={false}
-            showFirst={false}
-            translations={{
-              previous: 'Prev',
-              next: 'Next',
-            }}
-          />
         </div>
       </InstantSearch>
     </div>
