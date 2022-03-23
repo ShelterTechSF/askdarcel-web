@@ -4,10 +4,10 @@ import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import SearchEntry from 'components/search/SearchMap/SearchEntry';
 import { useAppContext } from 'utils';
+import { createMapOptions, UserLocationMarker, CustomMarker } from 'components/ui/MapElements';
+import './SearchMap.scss';
 import { SearchHit } from '../../../models';
 import config from '../../../config';
-import './SearchMap.scss';
-import { createMapOptions, UserLocationMarker, CustomMarker } from '../../ui/MapElements';
 
 export const SearchMap = ({
   hits, hitsPerPage, page, setMapObject,
@@ -28,8 +28,10 @@ export const SearchMap = ({
             key: config.GOOGLE_API_KEY,
           }}
           defaultCenter={{ lat, lng }}
-          defaultZoom={15}
+          defaultZoom={14}
           onGoogleApiLoaded={({ map }) => {
+            // SetMapObject shares the Google Map object across parent/sibliing components
+            // so that they can adjustments to markers, coordinates, layout, etc.,
             setMapObject(map);
           }}
           options={createMapOptions}
@@ -50,7 +52,6 @@ export const SearchMap = ({
               };
 
               markers.push(<SearchHitMarker
-                // The array members aren't editable so using array index shouldn't be a problem
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${hit.id}.${i}`}
                 lat={addr.latitude}

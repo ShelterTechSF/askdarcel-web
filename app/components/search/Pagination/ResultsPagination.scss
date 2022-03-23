@@ -1,3 +1,6 @@
+// This cannot be a Sass module as it styles elements
+// included by Pagination, a 3rd party component
+
 @import '~styles/utils/_helpers.scss';
 
 .pagination-container {
@@ -20,10 +23,12 @@
   margin: 0 3px;
   text-align: center;
 }
+
 .ais-Pagination-item--selected {
   font-weight: 900;
   font-size: 18px;
 }
+
 .ais-Pagination-item--nextPage, .ais-Pagination-item--previousPage {
   border: 1px solid rgba(0,0,0,0.2);
   border-radius: 3px;

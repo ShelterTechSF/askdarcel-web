@@ -2,10 +2,10 @@
 // CALCULATE EMS
 
 @function calc-em($target-px, $context:$font-size) {
-    // todo: This should be entitled calc-rem, if not deleted altogether as it is misleading.
-    // It returns a rem value rather than an em value. Thus the size that it outputs will always
-    // be relative to the HTML (root element's) font-size rather than the context value that is passed in
-    @return ($target-px / $context) * 1rem;
+    // Todo: All instances of this function should eventually be removed as it is misleading.
+    // It returns a rem value rather than an em value. Thus the $context value is spurious --
+    // the outputted value is relative to the HTML's (Root Element) font-size rather than $context
+    @return calc(($target-px / $context) * 1rem);
 }
 
 
@@ -282,4 +282,13 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 
   // 2011 (IE 10)
   -ms-flex-line-pack: $value-2011;
+}
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  &::-webkit-scrollbar {     /* WebKit */
+    width: 0;
+    height: 0;
+  }
 }

@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { InstantSearch, Configure } from 'react-instantsearch/dom';
 import qs from 'qs';
 
-import config from '../../config';
-import { Loader } from '../../components/ui';
-import * as dataService from '../../utils/DataService';
-import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
-import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
+import config from 'app/config';
+import * as dataService from 'utils/DataService';
+import { useEligibilitiesForCategory, useSubcategoriesForCategory } from 'app/hooks/APIHooks';
 
-import SearchResults from '../../components/search/SearchResults/SearchResults';
+import { Loader } from 'components/ui';
+import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
 
+import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import styles from './ServiceDiscoveryResults.module.scss';
 
 const createURL = state => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
@@ -89,10 +89,10 @@ const InnerServiceDiscoveryResults = ({
   searchState,
   onSearchStateChange,
   expandList,
-  setExpandList
+  setExpandList,
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
-  const searchResultsProps = {setExpandList, expandList};
+  const searchResultsProps = { setExpandList, expandList };
 
   return (
     <div className={styles.container}>
@@ -115,7 +115,7 @@ const InnerServiceDiscoveryResults = ({
           />
         </div>
       </div>
-      <div className={styles.filterToggler}></div>
+      <div className={styles.filterToggler} />
 
       <InstantSearch
         appId={config.ALGOLIA_APPLICATION_ID}
@@ -134,7 +134,7 @@ const InnerServiceDiscoveryResults = ({
           />
 
           <div className={styles.results}>
-          <SearchResults
+            <SearchResults
               props
               {...searchResultsProps}
             />

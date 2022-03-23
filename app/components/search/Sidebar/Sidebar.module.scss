@@ -1,82 +1,92 @@
 @import "~styles/utils/_helpers.scss";
 
-.sidebar {
-  flex-shrink: 0;
-  overflow-y: scroll;
-  width: 295px;
-  border-right: 1px solid $color-grey3;
-  padding: 20px 30px 50px;
-  @media screen and (max-width: $break-desktop) {
-    padding: 0 30px;
-    top: 70px;
-    background: #fff;
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
   }
 
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(70px);
+  }
+}
+
+.sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  height: calc(100vh - 70px);
+  width: 290px;
+  top: $header-height;
+  border-right: 1px solid $color-grey3;
+  padding: 20px 25px 50px 30px;
+  overflow-y: scroll;
+  @include hide-scrollbar;
+
   @media screen and (max-width: $break-tablet-l) {
-    position: sticky;
-    width: 39%;
+    height: auto;
+    width: 59%;
     margin-top: -44px;
-    z-index: 1;
-    align-self: flex-end;
-    background-color: #fff;
+    padding: 0 30px 0 20px;
+    z-index: 2;
+    align-self: flex-start;
     border-right: 0;
+    background-color: #fff;
     &.showFilters {
+      z-index: 4;
       position: fixed;
       height: 100vh;
       top: 0;
       margin-top: 0;
-      overflow: scroll;
+      overflow-y: auto;
       box-shadow: 0px 0 20px rgb(0 0 0 / 55%);
       animation-duration: 200ms;
-      animation-name: slideIn;
-    }
-  }
-
-  @keyframes slideIn {
-    from {
-      transform: translateX(100%);
-    }
-
-    to {
-      transform: translateX(0);
+      animation-name: slideRight;
     }
   }
 
   @media screen and (max-width: $break-tablet-s) {
-    // position: sticky;
-    width: auto;
-    height: auto;
-    top: 0;
+    width: 100%;
+    top: $header-mobile-height;
+    margin: 0;
     padding: 0 14px;
-    // border-right: none;
+    &.showFilters {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      animation-name: slideUp;
+      transform: translateY(70px);
+      height: calc(100vh - 70px);
+    }
   }
 }
 
 .filtersContainer {
-  // @media screen and (max-width: $break-tablet-s) {
-  //   display: none;
-  // }
   @media screen and (max-width: $break-tablet-l) {
     display: none;
     &.showFilters {
       display: block;
+      height: auto;
+      padding-bottom: 70px;
     }
   }
 }
 
 .filtersIconContainer {
   display: none;
-  // @media screen and (max-width: $break-tablet-s) {
-  //   display: block;
-  // }
   @media screen and (max-width: $break-tablet-l) {
     display: block;
-    text-align: right;
-    transition: display 550ms;
     &.hideIcon {
+      text-align: right;
       .filtersIcon {
         display: none;
-        transition: display 550ms;
       }
 
       .closeIcon {
@@ -85,7 +95,6 @@
 
       span {
         display: none;
-        transition: display 550ms;
       }
     }
   }
@@ -109,11 +118,11 @@
   }
 }
 
-.refineBtn {
+.filterBtn {
   background: none;
   border: none;
   padding: 5px 10px 5px 0;
-  color: #276ce5;
+  color: $color-brand;
   font-weight: 400;
   font-size: 15px;
 
@@ -126,7 +135,11 @@
   }
 
   &.active {
-    font-weight: 500;
+    padding-right: 0;
+  }
+
+  @media screen and (max-width: $break-tablet-l) {
+    padding: 0;
   }
 }
 

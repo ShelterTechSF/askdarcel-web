@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
 import styles from './RefinementFilters.module.scss';
 
+// Todo: This component could potentially be consolidated with the the Refinement List Filter
+// component when categories/eligibilities are standardized across the homepage Service
+// Pathways results and the Search Results pages
 class FacetRefinementList extends Component {
   constructor(props) {
     super(props);

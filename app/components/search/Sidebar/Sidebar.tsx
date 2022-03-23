@@ -26,7 +26,7 @@ const Sidebar = ({
 
   // Currently, the Search Results Page uses generic categories/eligibilities while the
   // Service Results Page uses COVID-specific categories. This logic determines which
-  // of these to use as based on the page
+  // of these to use as based on the isSearchResultsPage value
   if (isSearchResultsPage) {
     categoryRefinementJsx = <FacetRefinementList attribute="categories" limit={100} mapping={categoriesMapping} />;
     eligibilityRefinementJsx = <FacetRefinementList attribute="eligibilities" limit={100} mapping={eligibilitiesMapping} />;
@@ -53,7 +53,7 @@ const Sidebar = ({
     <div className={`${styles.sidebar} ${filterActive ? styles.showFilters : ''}`}>
       <div className={`${styles.filtersIconContainer} ${filterActive ? styles.hideIcon : ''}`}>
         <button
-          className={`${styles.refineBtn} ${filterActive ? 'active' : ''}`}
+          className={`${styles.filterBtn} ${filterActive ? styles.active : ''}`}
           onClick={() => setFilterActive(!filterActive)}
           type="button"
         >

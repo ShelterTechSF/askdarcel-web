@@ -49,12 +49,20 @@
   display: inline-block;
   width: 32px;
   height: 32px;
-  background-size: 205%;
-  background-position: 33px 33px;
+  background-size: 207%;
   &.activeView {
-    background-position: 1px 33px;
+    background-position: -1px 33px;
   }
 }
+
+.listIcon {
+  background-position: 33px 33px;
+}
+
+.mapIcon {
+  background-position: 32px 33px;
+}
+
 
 .mapListToggler {
   @media screen and (min-width: $min-tablet-p) {

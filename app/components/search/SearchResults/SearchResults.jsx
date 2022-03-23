@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { icon } from 'assets';
 import { SearchMap } from 'components/search/SearchMap/SearchMap';
-import styles from './SearchResults.module.scss';
-import { parseAlgoliaSchedule } from '../../../models';
-import Texting from '../../Texting';
 import ResultsPagination from 'components/search/Pagination/ResultsPagination';
+import { parseAlgoliaSchedule } from 'app/models';
+import Texting from 'components/Texting';
+import styles from './SearchResults.module.scss';
 
 
 /**
@@ -31,6 +30,8 @@ const SearchResults = ({ searchResults, props }) => {
   if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
+
+  // Todo: setExpandList will be used as part of next stage of multiple location work
   // eslint-disable-next-line no-unused-vars
   const { setExpandList, expandList } = props;
   const hits = transformHits(searchResults.hits);
@@ -122,8 +123,6 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
 
   //     return (
   //       <div
-  //         // todo: this may not be true due to filtering....
-  //         // The array members aren't editable so using array index shouldn't be a problem
   //         // eslint-disable-next-line react/no-array-index-key
   //         key={`${address.address_1}.${i}`}
   //         className={isLastAddress ? styles.searchResult_addressLast
@@ -156,18 +155,22 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   //   return addressMarkup;
   // };
 
-  const phoneNumber = _get(hit, 'phones[0].number');
-  const formatPhoneNumber = (phoneNumber) => {
-    // Function edited slightly for our needs from https://stackoverflow.com/a/8358141
-    // Takes  9 or 10 digit phone number input and outputs xxx-xxx-xxxx
-    // If the input doesn't match regex, function returns its original value
-    const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+  const phoneNumber = hit?.phones?.[0]?.number;
+  const formatPhoneNumber = number => {
+    // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
+    // If the input doesn't match regex, function returns number's original value
+    if (!number) {
+      return '';
+    }
+
+    const cleaned = (number.toString()).replace(/\D/g, '');
     const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
     if (match) {
       return [match[2], '-', match[3], '-', match[4]].join('');
     }
-    return phoneNumber;
-  }
+
+    return number;
+  };
 
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;

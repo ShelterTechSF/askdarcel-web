@@ -3,7 +3,7 @@
 @mixin siteNavShared {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 3;
 }
 
 .siteNav {
@@ -28,7 +28,7 @@
   padding: calc-em(10px) calc-em(30px);
   @include r_max($break-tablet-s) {
     padding: 0 13px;
-    height: 50px;
+    height: $header-mobile-height;
   }
 }
 

@@ -2,16 +2,16 @@ import React, { useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import algoliasearch from 'algoliasearch/lite';
 import {
-  InstantSearch, Configure
+  InstantSearch, Configure,
 } from 'react-instantsearch/dom';
 import qs, { ParsedQs } from 'qs';
 
 import { GeoCoordinates, useAppContext } from 'utils';
-import config from '../../config';
 
 import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
 
+import config from '../../config';
 import styles from './SearchResults.module.scss';
 
 const searchClient = algoliasearch(
@@ -38,22 +38,21 @@ export const SearchResultsPage = () => {
       searchState={searchState}
     />
   );
-}
+};
 
 /** Stateless inner component that just handles presentation. */
 const InnerSearchReslts = ({
-  history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState
+  history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState,
 }: {
-  history: any
-  userLocation: GeoCoordinates,
-  lastPush: number,
-  setLastPush: Function,
-  expandList: boolean,
-  setExpandList: Function,
-  searchState: ParsedQs
+  history: any;
+  userLocation: GeoCoordinates;
+  lastPush: number;
+  setLastPush: Function;
+  expandList: boolean;
+  setExpandList: Function;
+  searchState: ParsedQs;
 }) => {
-  const searchResultsProps = {setExpandList, expandList};
-
+  const searchResultsProps = { setExpandList, expandList };
 
   return (
     <div className={styles.container}>

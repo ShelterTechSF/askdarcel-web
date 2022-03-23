@@ -10,15 +10,15 @@
 }
 
 .searchResultsContainer {
-  position: relative;
   display: flex;
   flex-direction: column;
-  width: 59%;
+  flex-grow: 1;
+  position: relative;
+  width: 60%;
   height: 100%;
-  overflow-y: scroll;
+  margin-right: 15px;
   @media screen and (max-width: $break-tablet-s) {
     width: 100%;
-    position: relative;
     z-index: 1;
     top: 0;
     border-top-left-radius: 12px;
@@ -42,6 +42,7 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  justify-content: space-between;
   padding-top: 21px;
   padding-bottom: 24px;
   padding-left: 24px;
@@ -74,50 +75,52 @@
 
 .searchText {
   flex-grow: 2;
+}
 
-  .title {
-    font-weight: bold;
-    font-size: 20px;
+.title {
+  font-weight: bold;
+  font-size: 20px;
 
-    @media screen and (max-width: 600px) {
-      font-size: 18px;
-    }
-  }
-
-  .address {
+  @media screen and (max-width: 600px) {
     font-size: 18px;
-    margin-top: 12px;
-
-    @media screen and (max-width: 600px) {
-      font-size: 16px;
-    }
   }
+}
 
-  .description {
-    font-size: 18px;
-    margin: 32px 0;
+.address {
+  font-size: 18px;
+  margin-top: 12px;
 
-    @media screen and (max-width: 600px) {
-      font-size: 16px;
-    }
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
   }
+}
 
-  .serviceOf {
-    font-size: 18px;
-    font-style: italic;
-    margin-bottom: 20px;
+.description {
+  font-size: 18px;
+  margin: 32px 0;
+  a {
+    word-break: break-word;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+  }
+}
 
-    @media screen and (max-width: 600px) {
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
+.serviceOf {
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+    margin-bottom: 16px;
   }
 }
 
 .sideLinks {
   flex-shrink: 0;
-  width: 215px;
-  margin-left: 30px;
+  width: auto;
+  margin-left: 25px;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
