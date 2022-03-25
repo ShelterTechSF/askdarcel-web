@@ -29,9 +29,6 @@
 .geosearchBox {
   padding: 16px 35px;
   border-bottom: 1px solid $color-grey3;
-  @media screen and (max-width: $break-tablet-s) {
-
-  }
 }
 
 .searchField {
@@ -57,10 +54,12 @@
 
 .listIcon {
   background-position: 33px 33px;
+  background-image: url(../../assets/img/ic-map.png);
 }
 
 .mapIcon {
   background-position: 32px 33px;
+  background-image: url(../../assets/img/ic-list.png);
 }
 
 
@@ -68,14 +67,6 @@
   @media screen and (min-width: $min-tablet-p) {
     display: none;
   }
-}
-
-.mapIcon {
-  background-image: url(../../assets/img/ic-map.png);
-}
-
-.listIcon {
-  background-image: url(../../assets/img/ic-list.png);
 }
 
 .flexContainer {

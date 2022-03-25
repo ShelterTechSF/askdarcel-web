@@ -23,7 +23,7 @@
     top: 0;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    box-shadow: 0px 0 20px rgb(0 0 0 / 55%);
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
     background: #fff;
     transition: top 200ms ease-in-out;
     &.expandList {
@@ -34,7 +34,7 @@
 
 .searchResultsTopShadow {
   @media screen and (max-width: $break-tablet-s) {
-    box-shadow: 0px 0 20px rgb(0 0 0 / 55%);
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
   }
 }
 
@@ -52,6 +52,11 @@
   @media screen and (max-width: $break-desktop) {
     flex-direction: column;
   }
+
+  @media screen and (max-width: $break-tablet-l) {
+    padding-left: 30px;
+  }
+
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
