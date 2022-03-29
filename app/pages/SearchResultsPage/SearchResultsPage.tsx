@@ -5,8 +5,8 @@ import { InstantSearch, Configure, SearchBox } from 'react-instantsearch/dom';
 import qs from 'qs';
 
 import { useAppContext } from 'utils';
-import SearchResultsContainer from '../components/search/SearchResultsContainer';
-import config from '../config';
+import SearchResultsContainer from '../../components/search/SearchResultsContainer';
+import config from '../../config';
 
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,

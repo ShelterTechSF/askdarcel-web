@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
-import styles from './ServiceDiscoveryResults.module.scss';
+import styles from './RefinementFilters.module.scss';
 
 const RefinementListFilter = ({ items, refine }) => (
   <ul>

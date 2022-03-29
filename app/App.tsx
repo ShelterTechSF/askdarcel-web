@@ -35,7 +35,7 @@ import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
 import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects';
 import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
-import { SearchResultsPage } from './pages/SearchResultsPage';
+import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import OrganizationEditPage from './pages/OrganizationEditPage';

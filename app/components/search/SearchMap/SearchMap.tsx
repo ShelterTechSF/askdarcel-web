@@ -3,11 +3,11 @@ import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import SearchEntry from './SearchEntry';
-import config from '../../config';
+import config from '../../../config';
 import './SearchMap.scss';
-import { useAppContext } from '../../utils';
-import { createMapOptions, UserLocationMarker, CustomMarker } from '../ui/MapElements';
-import { SearchHit } from '../../models';
+import { useAppContext } from '../../../utils';
+import { createMapOptions, UserLocationMarker, CustomMarker } from '../../ui/MapElements';
+import { SearchHit } from '../../../models';
 
 export const SearchMap = ({ hits, hitsPerPage, page }: {
   hits: SearchHit[];
