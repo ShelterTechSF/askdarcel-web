@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchEntry from './SearchEntry';
+import SearchEntry from './SearchMap/SearchEntry';
 
 const SearchRow = ({
   hit, index, page, hitsPerPage,

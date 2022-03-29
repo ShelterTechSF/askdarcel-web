@@ -10,10 +10,10 @@ import * as dataService from '../../utils/DataService';
 import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
-import ClearAllFilters from './ClearAllFilters';
-import OpenNowFilter from './OpenNowFilter';
-import RefinementListFilter from './RefinementListFilter';
-import SearchResults from './SearchResults/SearchResults';
+import ClearAllFilters from '../../components/search/Refinements/ClearAllFilters';
+import OpenNowFilter from '../../components/search/Refinements/OpenNowFilter';
+import RefinementListFilter from '../../components/search/Refinements/RefinementListFilter';
+import SearchResults from '../../components/search/SearchResults/SearchResults';
 import styles from './ServiceDiscoveryResults.module.scss';
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FacetRefinementList from './FacetRefinementList';
-import OpenNowRefinementList from './OpenNowRefinementList';
+import FacetRefinementList from './Refinements/FacetRefinementList';
+import OpenNowRefinementList from './Refinements/OpenNowRefinementList';
 import { eligibilitiesMapping, categoriesMapping } from '../../utils/refinementMappings';
 import filters_icon from '../../assets/img/filters-icon.png';
 import './Filtering.scss';

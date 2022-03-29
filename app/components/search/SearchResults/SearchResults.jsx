@@ -6,7 +6,7 @@ import { connectStateResults } from 'react-instantsearch/connectors';
 import { icon } from 'assets';
 import styles from './SearchResults.module.scss';
 import { parseAlgoliaSchedule } from '../../../models';
-import Texting from '../../../components/Texting';
+import Texting from '../../Texting';
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { Loader } from 'components/ui';
 import Filtering from './Filtering';
-import SearchTable from './SearchTable';
-import { SearchMap } from './SearchMap';
+import SearchTable from './Pagination/ResultsPagination';
+import { SearchMap } from './SearchMap/SearchMap';
 import { transformHits } from '../../models';
 import './SearchResultsContainer.scss';
 

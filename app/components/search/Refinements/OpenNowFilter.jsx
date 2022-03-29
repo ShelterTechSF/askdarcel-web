@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
-import { getCurrentDayTime } from '../../utils/index';
-import styles from './ServiceDiscoveryResults.module.scss';
-
+import { getCurrentDayTime } from '../../../utils/index';
+import styles from './RefinementFilters.module.scss';
 
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
