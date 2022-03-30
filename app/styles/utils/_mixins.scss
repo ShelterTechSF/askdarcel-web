@@ -283,12 +283,3 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
   // 2011 (IE 10)
   -ms-flex-line-pack: $value-2011;
 }
-
-@mixin hide-scrollbar {
-  scrollbar-width: none;     /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  &::-webkit-scrollbar {     /* WebKit */
-    width: 0;
-    height: 0;
-  }
-}

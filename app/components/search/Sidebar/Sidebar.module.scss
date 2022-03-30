@@ -28,8 +28,7 @@
   top: $header-height;
   border-right: 1px solid $color-grey3;
   padding: 20px 25px 50px 30px;
-  overflow-y: scroll;
-  @include hide-scrollbar;
+  overflow-y: auto;
 
   @media screen and (max-width: $break-tablet-l) {
     height: auto;

@@ -3,15 +3,14 @@ import { Pagination } from 'react-instantsearch/dom';
 import { Link } from 'react-router-dom';
 import whiteLabel from 'utils/whitelabel';
 
-// This cannot be a Sass module as it styles elements included by Pagination, a 3rd party component
-import './ResultsPagination.scss';
+import styles from './ResultsPagination.module.scss';
 
 const { appImages: { algolia } } = whiteLabel;
 
 const ResultsPagination = () => (
   <div>
-    <div className="pagination-container">
-      <div className="results-pagination">
+    <div className={styles.paginationContainer}>
+      <div className={styles.resultsPagination}>
         <Pagination
           padding={2}
           showLast={false}
@@ -22,13 +21,13 @@ const ResultsPagination = () => (
           }}
         />
       </div>
-      <div className="algolia-img-wrapper">
+      <div className={styles.algoliaImgWrapper}>
         <img src={algolia} alt="Search by Algolia" />
       </div>
     </div>
-    <div className="addResource">
+    <div className={styles.addResource}>
       Can&apos;t find the organization you&apos;re looking for?
-      <Link to="/organizations/new" className="addResourceButton">
+      <Link to="/organizations/new" className={styles.addResourceButton}>
         <i className="material-icons">add_circle</i>
         {' '}
         Add an organization

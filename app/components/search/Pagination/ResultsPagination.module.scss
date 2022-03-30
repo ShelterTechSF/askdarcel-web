@@ -1,0 +1,81 @@
+@import '~styles/utils/_helpers.scss';
+
+.paginationContainer {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  background-color: $color-grey2;
+
+  :global(.ais-Pagination-link) {
+    display: inline-block;
+    width: 35px;
+    margin: 0 3px;
+    text-align: center;
+  }
+
+  :global(.ais-Pagination-item--selected) {
+    font-weight: 900;
+    font-size: 18px;
+  }
+
+  :global(.ais-Pagination-item--nextPage), :global(.ais-Pagination-item--previousPage) {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    padding: 13px 8px;
+    margin: 0 3px;
+    font-size: 0.87rem;
+    &:hover, &:active {
+      border: 1px solid #276ce5;
+    }
+  }
+
+  :global(.ais-Pagination-item--disabled) {
+    opacity: 0.5;
+    border: 0;
+  }
+
+}
+
+.resultsPagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.algoliaImgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 0;
+
+  & > img {
+    height: 16px;
+  }
+}
+
+.addResource {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  margin: 20px 0 30px;
+  font-size: 0.87rem;
+  @media screen and (max-width: $break-tablet-s) {
+    margin: 20px 0 30px;
+  }
+}
+
+.addResourceButton {
+  display: block;
+  padding: 11px 14px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 3px;
+  color: #666;
+  margin-top: 15px;
+  &:hover, &:active {
+    border: 1px solid #276ce5;
+    color: #276ce5;
+  }
+}
