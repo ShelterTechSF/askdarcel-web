@@ -22,6 +22,7 @@ const ServiceDiscoveryForm = ({ match }) => {
       eligibilities={eligibilities}
       subcategories={subcategories}
       steps={category.steps}
+      subcategorySubheading={category.subcategorySubheading}
     />
   );
 };
@@ -36,7 +37,7 @@ ServiceDiscoveryForm.propTypes = {
 
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
-  steps, categorySlug, eligibilities, subcategories,
+  steps, categorySlug, eligibilities, subcategories, subcategorySubheading,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedEligibilities, setSelectedEligibilities] = useState({});
@@ -81,7 +82,7 @@ const InnerServiceDiscoveryForm = ({
         return (
           <FormStep
             heading="Tell us more about you"
-            subheading="What are you currently looking for? Select all that apply."
+            subheading={subcategorySubheading}
             options={subcategories}
             selectedOptions={selectedSubcategories}
             toggleOption={handleSubcategoryClick}
