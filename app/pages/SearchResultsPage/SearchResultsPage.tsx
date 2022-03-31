@@ -51,69 +51,58 @@ const InnerSearchReslts = ({
   expandList: boolean;
   setExpandList: Function;
   searchState: ParsedQs;
-}) => {
-  const searchResultsProps = { setExpandList, expandList };
+}) => (
+  <div className={styles.container}>
+    <div className={styles.header}>
+      <h1 className={styles.title}>{searchState.query}</h1>
+      <div className={styles.mapListToggleContainer}>
+        <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
+          <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
+        </button>
+        <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
+          <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
+        </button>
+      </div>
+    </div>
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{searchState.query}</h1>
-        <div className={styles.mapListToggler}>
-          <span
-            className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`}
-            role="button"
-            tabIndex={0}
-            aria-label="list icon"
-            onClick={() => setExpandList(true)}
-          />
-          <span
-            className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`}
-            role="button"
-            tabIndex={0}
-            aria-label="map icon"
-            onClick={() => setExpandList(false)}
+    <InstantSearch
+      searchClient={searchClient}
+      indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
+      searchState={searchState}
+      onSearchStateChange={(nextSearchState: any) => {
+        const THRESHOLD = 700;
+        const newPush = Date.now();
+        setLastPush(newPush);
+        const newUrl = nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '';
+        if (lastPush && newPush - lastPush <= THRESHOLD) {
+          history.replace(newUrl);
+        } else {
+          history.push(newUrl);
+        }
+      }}
+      createURL={(state: any) => `search?${qs.stringify(state)}`}
+    >
+      {userLocation ? (
+        <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} />
+      ) : (
+        <Configure aroundLatLngViaIP aroundRadius="all" />
+      )}
+      {/* <div className={styles.searchBox}>
+        todo: part of the next stage of multiple location development
+        <SearchBox />
+      </div> */}
+      <div className={styles.flexContainer}>
+        <Sidebar
+          isSearchResultsPage
+        />
+
+        <div className={styles.results}>
+          <SearchResults
+            expandList={expandList}
+            setExpandList={setExpandList}
           />
         </div>
       </div>
-      <InstantSearch
-        searchClient={searchClient}
-        indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
-        searchState={searchState}
-        onSearchStateChange={(nextSearchState: any) => {
-          const THRESHOLD = 700;
-          const newPush = Date.now();
-          setLastPush(newPush);
-          const newUrl = nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '';
-          if (lastPush && newPush - lastPush <= THRESHOLD) {
-            history.replace(newUrl);
-          } else {
-            history.push(newUrl);
-          }
-        }}
-        createURL={(state: any) => `search?${qs.stringify(state)}`}
-      >
-        {userLocation ? (
-          <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} />
-        ) : (
-          <Configure aroundLatLngViaIP aroundRadius="all" />
-        )}
-        {/* <div className={styles.searchBox}>
-          todo: part of the next stage of multiple location development
-          <SearchBox />
-        </div> */}
-        <div className={styles.flexContainer}>
-          <Sidebar
-            isSearchResultsPage
-          />
-
-          <div className={styles.results}>
-            <SearchResults
-              props
-              {...searchResultsProps}
-            />
-          </div>
-        </div>
-      </InstantSearch>
-    </div>
-  );
-};
+    </InstantSearch>
+  </div>
+);

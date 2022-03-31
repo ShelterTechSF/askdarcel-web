@@ -92,30 +92,20 @@ const InnerServiceDiscoveryResults = ({
   setExpandList,
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
-  const searchResultsProps = { setExpandList, expandList };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>{categoryName}</h1>
-        <div className={styles.mapListToggler}>
-          <span
-            className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`}
-            role="button"
-            tabIndex={0}
-            aria-label="list icon"
-            onClick={() => setExpandList(true)}
-          />
-          <span
-            className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`}
-            role="button"
-            tabIndex={0}
-            aria-label="map icon"
-            onClick={() => setExpandList(false)}
-          />
+        <div className={styles.mapListToggleContainer}>
+          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
+            <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
+          </button>
+          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
+            <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
+          </button>
         </div>
       </div>
-      <div className={styles.filterToggler} />
 
       <InstantSearch
         appId={config.ALGOLIA_APPLICATION_ID}
@@ -135,8 +125,8 @@ const InnerServiceDiscoveryResults = ({
 
           <div className={styles.results}>
             <SearchResults
-              props
-              {...searchResultsProps}
+              expandList={expandList}
+              setExpandList={setExpandList}
             />
           </div>
         </div>

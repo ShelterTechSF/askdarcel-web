@@ -41,29 +41,40 @@
   height: auto;
 }
 
+.mapListToggleBtn {
+  background: 0;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  &:focus, &:active, &:hover {
+    box-shadow: none;
+
+  }
+}
+
 .mapIcon,
 .listIcon {
   display: inline-block;
   width: 32px;
   height: 32px;
-  background-size: 207%;
+  background-size: 200%;
+  background-position-x: 0;
   &.activeView {
-    background-position: -1px 33px;
+    background-position-x: -32px;
   }
 }
 
 .listIcon {
-  background-position: 33px 33px;
-  background-image: url(../../assets/img/ic-map.png);
+  background-image: url(../../assets/img/ic-list.svg);
 }
 
 .mapIcon {
-  background-position: 32px 33px;
-  background-image: url(../../assets/img/ic-list.png);
+  background-image: url(../../assets/img/ic-map.svg);
 }
 
 
-.mapListToggler {
+.mapListToggleContainer {
   @media screen and (min-width: $min-tablet-p) {
     display: none;
   }

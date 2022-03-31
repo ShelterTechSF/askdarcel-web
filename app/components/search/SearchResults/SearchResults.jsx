@@ -26,14 +26,12 @@ const transformHits = hits => hits.map(hit => {
   return { ...hit, recurringSchedule };
 });
 
-const SearchResults = ({ searchResults, props }) => {
+// Todo: setExpandList will be used as part of next stage of multiple location work
+// eslint-disable-next-line no-unused-vars
+const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
-
-  // Todo: setExpandList will be used as part of next stage of multiple location work
-  // eslint-disable-next-line no-unused-vars
-  const { setExpandList, expandList } = props;
   const hits = transformHits(searchResults.hits);
 
   useEffect(() => {
