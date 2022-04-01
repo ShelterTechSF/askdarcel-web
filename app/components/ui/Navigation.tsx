@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Translate from './Translate';
 import cn from 'classnames';
 import qs from 'qs';
 import whiteLabel from '../../utils/whitelabel';
@@ -86,6 +87,9 @@ const SiteLinks = () => (
       <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
         Contact Us
       </a>
+    </li>
+    <li>
+      <Translate />
     </li>
   </ul>
 );
