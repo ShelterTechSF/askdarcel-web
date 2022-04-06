@@ -41,7 +41,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   }, [centerCoords]);
 
   return (
-    <div className={styles.searchMapContainer}>
+    <div className={styles.searchResultsAndMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
         {/* <div className={styles.searchResultsTopShadow}></div> */}
         {/*
@@ -60,7 +60,6 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
         <ResultsPagination />
       </div>
       <SearchMap
-        className={styles.resultsMap}
         hits={hits}
         page={0}
         hitsPerPage={hits.length}

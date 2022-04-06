@@ -18,11 +18,10 @@ const Sidebar = ({
   subcategories?: Array<object>;
   subcategoryNames?: Array<string>;
 }) => {
-  const [filterActive, setFilterActive] = useState(false);
-  const transformItems = (items: any): any => items.sort((a:{label: string},
-    b:{label: string}) => a.label.localeCompare(b.label));
+  const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   let categoryRefinementJsx = null;
   let eligibilityRefinementJsx = null;
+  const orderByLabel = (a:{label: string}, b:{label: string}) => a.label.localeCompare(b.label);
 
   // Currently, the Search Results Page uses generic categories/eligibilities while the
   // Service Results Page uses COVID-specific categories. This logic determines which
@@ -33,16 +32,16 @@ const Sidebar = ({
   } else {
     // Service Results Page
     if (eligibilities.length) {
-      eligibilityRefinementJsx = <RefinementListFilter attribute="eligibilities" transformItems={transformItems} />;
+      eligibilityRefinementJsx = <RefinementListFilter attribute="eligibilities" transformItems={(items) => items.sort(orderByLabel)} />;
     }
     if (subcategories.length) {
       categoryRefinementJsx = (
         <RefinementListFilter
           attribute="categories"
           transformItems={(items: any) => {
-            const subcategoryItems = items.filter((item: any) => subcategoryNames
-              .includes(item.label));
-            return transformItems(subcategoryItems);
+            return items
+              .filter((item: any) => subcategoryNames.includes(item.label))
+              .sort(orderByLabel)
           }}
         />
       );
@@ -50,11 +49,11 @@ const Sidebar = ({
   }
 
   return (
-    <div className={`${styles.sidebar} ${filterActive ? styles.showFilters : ''}`}>
-      <div className={`${styles.filtersIconContainer} ${filterActive ? styles.hideIcon : ''}`}>
+    <div className={styles.sidebar}>
+      <div className={styles.filtersIconContainer}>
         <button
-          className={`${styles.filterBtn} ${filterActive ? styles.active : ''}`}
-          onClick={() => setFilterActive(!filterActive)}
+          className={styles.filterBtn}
+          onClick={() => setfilterMenuVisible(!filterMenuVisible)}
           type="button"
         >
           <img
@@ -63,14 +62,22 @@ const Sidebar = ({
             className={styles.filtersIcon}
           />
           <span>Filters</span>
-          <img
-            src={closeIcon}
-            alt="close filters"
-            className={styles.closeIcon}
-          />
         </button>
       </div>
-      <div className={`${styles.filtersContainer} ${filterActive ? styles.showFilters : ''}`}>
+      <div className={`${styles.filtersContainer} ${filterMenuVisible ? styles.showFilters : ''}`}>
+        <div className={styles.closeBtnContainer}>
+          <button
+            className={styles.filterBtn}
+            onClick={() => setfilterMenuVisible(!filterMenuVisible)}
+            type="button"
+          >
+            <img
+              src={closeIcon}
+              alt="close filters"
+              className={styles.closeIcon}
+            />
+          </button>
+        </div>
         <div className={styles.filterResourcesTitle}>Filters</div>
         <ClearAllFilters />
         <div className={styles.filterGroup}>

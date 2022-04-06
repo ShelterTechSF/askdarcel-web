@@ -1,26 +1,25 @@
 @import '~styles/utils/_helpers.scss';
 
-.searchMapContainer {
-  position: relative;
-  display: flex;
-  flex-direction: row;
+.searchResultsAndMapContainer {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  grid-template-areas: "results map";
+  grid-column-gap: 15px;
+
   @media screen and (max-width: $break-tablet-s) {
-    flex-flow: column-reverse;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "map"
+      "results";
   }
 }
 
 .searchResultsContainer {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  position: relative;
-  width: 60%;
-  height: 100%;
-  margin-right: 15px;
+  grid-area: results;
   @media screen and (max-width: $break-tablet-s) {
-    width: 100%;
-    z-index: 1;
     top: 0;
+    position: relative;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     box-shadow: 0 0 20px rgb(0 0 0 / 55%);
@@ -28,8 +27,13 @@
     transition: top 200ms ease-in-out;
     &.expandList {
       top: calc(-50vh + 20px);
+      z-index: 1;
     }
   }
+}
+
+:global(.results-map) {
+  grid-area: map;
 }
 
 .searchResultsTopShadow {
@@ -73,9 +77,10 @@
     padding: 24px 0;
   }
 
-  &_addressLast {
-    padding-top: 24px;
-  }
+  // Todo: Look into replacing this with :last-child
+  // &_addressLast {
+  //   padding-top: 24px;
+  // }
 }
 
 .searchText {

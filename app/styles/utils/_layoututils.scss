@@ -6,6 +6,7 @@ $break-tablet-s: 767px;
 $min-tablet-p: 768px;
 $break-tablet-p: 960px;
 $break-tablet-l: 1140px;
+$min-desktop: 1141px;
 $break-desktop: 1439px;
 $break-desktop-l: 1600px;
 $break-desktop-xl: 2000px;
@@ -17,6 +18,10 @@ $max-container-width: 1280px;
 
 $header-height: 70px;
 $header-mobile-height: 50px;
+
+// Z-Index values
+$z-index-site-nav: 3;
+$z-index-filters-menu: 4;
 
 %flex-row {
   @include display(flex);

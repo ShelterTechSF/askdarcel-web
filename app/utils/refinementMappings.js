@@ -15,9 +15,9 @@ export const eligibilitiesMapping = {
 
 export const categoriesMapping = {
   'Basic Needs & Shelter': ['Basic Needs & Shelter'],
+  Employment: ['Employment'],
   'Eviction Prevention': ['Eviction Prevention'],
   'Health & Medical': ['Health & Medical'],
   Housing: ['Housing'],
   Legal: ['Legal'],
-  Employment: ['Employment'],
 };

@@ -16,14 +16,14 @@
   }
 
   to {
-    transform: translateY(70px);
+    transform: translateY(0);
   }
 }
 
 .sidebar {
   flex-shrink: 0;
   position: sticky;
-  height: calc(100vh - 70px);
+  height: calc(100vh - $header-height);
   width: 290px;
   top: $header-height;
   border-right: 1px solid $color-grey3;
@@ -33,78 +33,63 @@
   @media screen and (max-width: $break-tablet-l) {
     height: auto;
     width: 60%;
-    padding: 0 30px;
-    z-index: 2;
+    padding: 0;
+    z-index: $z-index-filters-menu;
     align-self: flex-start;
     border-right: 0;
     background-color: #fff;
-    &.showFilters {
-      z-index: 4;
-      position: fixed;
-      height: 100vh;
-      top: 0;
-      overflow-y: auto;
-      box-shadow: 0 0 20px rgb(0 0 0 / 55%);
-      animation-duration: 200ms;
-      animation-name: slideRight;
-    }
   }
 
   @media screen and (max-width: $break-tablet-s) {
     width: 100%;
     top: $header-mobile-height;
     margin: 0;
-    padding: 0 14px;
-    &.showFilters {
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      animation-name: slideUp;
-      transform: translateY(70px);
-      height: calc(100vh - 70px);
-    }
   }
 }
 
 .filtersContainer {
   @media screen and (max-width: $break-tablet-l) {
     display: none;
+    position: fixed;
+    height: 100vh;
+    width: 42%;
+    top: 0;
+    padding: 0 20px 65px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+    background-color: #fff;
+    animation-duration: 200ms;
+    animation-name: slideRight;
     &.showFilters {
       display: block;
-      height: auto;
-      padding-bottom: 70px;
     }
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    top: 65px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    animation-name: slideUp;
+    height: calc(100vh - 65px);
   }
 }
 
-.filtersIconContainer {
-  display: none;
-  @media screen and (max-width: $break-tablet-l) {
-    display: block;
-    &.hideIcon {
-      text-align: right;
-      .filtersIcon {
-        display: none;
-      }
-
-      .closeIcon {
-        display: inline-block;
-      }
-
-      span {
-        display: none;
-      }
-    }
+.closeBtnContainer {
+  text-align: right;
+  @media screen and (min-width: $min-desktop) {
+    display: none;
   }
 }
 
-.closeIcon {
-  height: 25px;
-  display: none;
+.filterGroup {
+  margin-top: 12px;
 }
 
-.filtersIcon {
-  height: 15px;
-  padding: 0 3px 3px 0;
+.filterTitle {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px 0;
 }
 
 .filterResourcesTitle {
@@ -113,6 +98,27 @@
   @media screen and (max-width: $break-tablet-s) {
     display: none;
   }
+}
+
+.filtersIconContainer {
+  display: none;
+  @media screen and (max-width: $break-tablet-l) {
+    display: block;
+    padding-left: 30px;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding-left: 14px;
+  }
+}
+
+.closeIcon {
+  height: 25px;
+}
+
+.filtersIcon {
+  height: 15px;
+  padding: 0 3px 3px 0;
 }
 
 .filterBtn {
@@ -131,21 +137,7 @@
     color: $color-brand-dark;
   }
 
-  &.active {
-    padding-right: 0;
-  }
-
   @media screen and (max-width: $break-tablet-l) {
     padding: 0;
   }
-}
-
-.filterGroup {
-  margin-top: 12px;
-}
-
-.filterTitle {
-  font-size: 16px;
-  font-weight: bold;
-  padding: 16px 0;
 }

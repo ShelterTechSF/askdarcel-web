@@ -40,23 +40,19 @@ export const SearchMap = ({
           { hits.reduce((markers, hit, index) => {
             // Add a marker for each address of each hit
             hit.addresses?.forEach((addr: any, i: number) => {
-              const appendAddressLabel = () => {
-                // Appends letter to index number if there are multiple addresses per service
-                let tag = `${page * hitsPerPage + index + 1}`;
-                if (i > 0) {
-                  const alphabeticalIndex = (i + 9).toString(36).toUpperCase();
-                  tag += alphabeticalIndex;
-                }
-
-                return tag;
-              };
+              // Append letter to index number if there are multiple addresses per service
+              let tag = `${page * hitsPerPage + index + 1}`;
+              if (i > 0) {
+                const alphabeticalIndex = (i + 9).toString(36).toUpperCase();
+                tag += alphabeticalIndex;
+              }
 
               markers.push(<SearchHitMarker
                 // eslint-disable-next-line react/no-array-index-key
                 key={`${hit.id}.${i}`}
                 lat={addr.latitude}
                 lng={addr.longitude}
-                tag={appendAddressLabel()}
+                tag={tag}
                 hit={hit}
               />);
             });
