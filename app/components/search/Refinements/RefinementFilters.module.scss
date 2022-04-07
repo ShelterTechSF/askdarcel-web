@@ -2,17 +2,21 @@
 
 .clearAll {
   font-size: 16px;
-  padding: 8px 0;
   color: $color-brand;
   cursor: pointer;
+  margin-top: 32px;
+  @media screen and (min-width: $min-desktop) {
+    margin-top: 13px;
+  }
 }
 
 .checkBox {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
+  align-items: center;
+  margin-top: 13px;
   color: $color-grey5;
-  padding: 8px 0;
   cursor: pointer;
   &.disabled {
     color: $color-grey4;

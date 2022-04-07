@@ -7,7 +7,6 @@ import RefinementListFilter from 'components/search/Refinements/RefinementListFi
 import FacetRefinementList from 'components/search/Refinements/FacetRefinementList';
 
 import filtersIcon from 'assets/img/filters-icon.png';
-import closeIcon from 'assets/img/ic-close.svg';
 import styles from './Sidebar.module.scss';
 
 const Sidebar = ({
@@ -32,17 +31,16 @@ const Sidebar = ({
   } else {
     // Service Results Page
     if (eligibilities.length) {
-      eligibilityRefinementJsx = <RefinementListFilter attribute="eligibilities" transformItems={(items) => items.sort(orderByLabel)} />;
+      eligibilityRefinementJsx = <RefinementListFilter attribute="eligibilities" transformItems={items => items.sort(orderByLabel)} />;
     }
     if (subcategories.length) {
       categoryRefinementJsx = (
         <RefinementListFilter
           attribute="categories"
-          transformItems={(items: any) => {
-            return items
-              .filter((item: any) => subcategoryNames.includes(item.label))
-              .sort(orderByLabel)
-          }}
+          transformItems={(items: any) => items
+            .filter((item: any) => subcategoryNames.includes(item.label))
+            .sort(orderByLabel)
+          }
         />
       );
     }
@@ -65,32 +63,29 @@ const Sidebar = ({
         </button>
       </div>
       <div className={`${styles.filtersContainer} ${filterMenuVisible ? styles.showFilters : ''}`}>
-        <div className={styles.closeBtnContainer}>
+        <div className={styles.filterResourcesHeaderMobile}>
+          <span className={styles.filterResourcesTitle}>Filters</span>
           <button
-            className={styles.filterBtn}
+            className={`${styles.filterBtn} ${styles.filterResourcesBtn}`}
             onClick={() => setfilterMenuVisible(!filterMenuVisible)}
             type="button"
           >
-            <img
-              src={closeIcon}
-              alt="close filters"
-              className={styles.closeIcon}
-            />
+            Close
           </button>
         </div>
-        <div className={styles.filterResourcesTitle}>Filters</div>
+        <span className={styles.filterResourcesTitleDesktop}>Filter Resources</span>
         <ClearAllFilters />
         <div className={styles.filterGroup}>
           <div className={styles.filterTitle}>Availability</div>
           <OpenNowFilter attribute="open_times" />
         </div>
 
-        <div className={styles.filterGroup}>
+        <div className={`${styles.filterGroup} ${eligibilityRefinementJsx ? '' : styles.hideFilterGroup} `}>
           <div className={styles.filterTitle}>Eligibilities</div>
           {eligibilityRefinementJsx}
         </div>
 
-        <div className={styles.filterGroup}>
+        <div className={`${styles.filterGroup} ${categoryRefinementJsx ? '' : styles.hideFilterGroup}`}>
           <div className={styles.filterTitle}>Categories</div>
           {categoryRefinementJsx}
         </div>

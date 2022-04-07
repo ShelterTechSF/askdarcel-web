@@ -48,8 +48,7 @@ export const SearchMap = ({
               }
 
               markers.push(<SearchHitMarker
-                // eslint-disable-next-line react/no-array-index-key
-                key={`${hit.id}.${i}`}
+                key={`${hit.id}.${addr.latitude}.${addr.longitude}.${addr.address_1}.${addr.address_2 || ''}`}
                 lat={addr.latitude}
                 lng={addr.longitude}
                 tag={tag}

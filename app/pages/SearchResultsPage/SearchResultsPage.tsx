@@ -47,9 +47,9 @@ const InnerSearchReslts = ({
   history: any;
   userLocation: GeoCoordinates;
   lastPush: number;
-  setLastPush: Function;
+  setLastPush: (time: number) => void;
   expandList: boolean;
-  setExpandList: Function;
+  setExpandList: (listExpanded: boolean) => void;
   searchState: ParsedQs;
 }) => (
   <div className={styles.container}>

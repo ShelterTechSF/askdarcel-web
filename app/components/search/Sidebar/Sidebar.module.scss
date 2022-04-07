@@ -83,21 +83,43 @@
 }
 
 .filterGroup {
-  margin-top: 12px;
+  margin-top: 32px;
+}
+
+.hideFilterGroup {
+  display: none;
 }
 
 .filterTitle {
   font-size: 16px;
   font-weight: bold;
-  padding: 16px 0;
 }
 
+.filterResourcesHeaderMobile {
+  position: relative;
+  padding-top: 10px;
+  text-align: center;
+  @media screen and (min-width: $min-desktop) {
+    display: none;
+  }
+}
+
+.filterResourcesTitleDesktop,
 .filterResourcesTitle {
   font-weight: bold;
   font-size: 18px;
-  @media screen and (max-width: $break-tablet-s) {
+}
+
+.filterResourcesTitleDesktop {
+  @media screen and (max-width: $break-tablet-l) {
     display: none;
   }
+}
+
+.filterResourcesBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .filtersIconContainer {
