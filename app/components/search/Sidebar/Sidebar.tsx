@@ -13,9 +13,9 @@ const Sidebar = ({
   isSearchResultsPage, eligibilities = [], subcategories = [], subcategoryNames = [],
 }: {
   isSearchResultsPage: boolean;
-  eligibilities?: Array<object>;
-  subcategories?: Array<object>;
-  subcategoryNames?: Array<string>;
+  eligibilities?: object[];
+  subcategories?: object[];
+  subcategoryNames?: string[];
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   let categoryRefinementJsx = null;

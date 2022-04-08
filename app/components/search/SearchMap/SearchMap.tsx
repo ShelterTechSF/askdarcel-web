@@ -15,7 +15,7 @@ export const SearchMap = ({
     hits: SearchHit[];
     hitsPerPage: number;
     page: number;
-    setMapObject: Function;
+    setMapObject: (map: any) => void;
 }) => {
   const { userLocation: { lat, lng } } = useAppContext();
   if (!hits || !hits.length) { return null; }
