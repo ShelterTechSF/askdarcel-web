@@ -38,5 +38,5 @@ jobs:
         with:
           push: true
           context: .
-          tags: ${{ env.DOCKER_REPO }}:qa-one
+          tags: ${{ env.DOCKER_REPO }}:${{ github.ref }}
       - run: echo ${{ steps.docker_build.outputs.digest }}
