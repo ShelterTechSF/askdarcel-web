@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { InstantSearch, Configure } from 'react-instantsearch/dom';
-import _ from 'lodash';
 import qs from 'qs';
 
-import config from '../../config';
-import { Loader } from '../../components/ui';
-import * as dataService from '../../utils/DataService';
+import config from 'app/config';
+import * as dataService from 'utils/DataService';
+import { useEligibilitiesForCategory, useSubcategoriesForCategory } from 'app/hooks/APIHooks';
+
+import { Loader } from 'components/ui';
+import SearchResults from 'components/search/SearchResults/SearchResults';
+import Sidebar from 'components/search/Sidebar/Sidebar';
+
 import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
-import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
-
-import ClearAllFilters from '../../components/search/Refinements/ClearAllFilters';
-import OpenNowFilter from '../../components/search/Refinements/OpenNowFilter';
-import RefinementListFilter from '../../components/search/Refinements/RefinementListFilter';
-import SearchResults from '../../components/search/SearchResults/SearchResults';
 import styles from './ServiceDiscoveryResults.module.scss';
-
 
 const createURL = state => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
 
@@ -33,6 +30,7 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
   const eligibilities = useEligibilitiesForCategory(category.id);
   const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
+  const [expandList, setExpandList] = useState(false);
 
   const onSearchStateChange = nextSearchState => {
     setSearchState(nextSearchState);
@@ -62,6 +60,8 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
       algoliaCategoryName={parentCategory.name}
       searchState={searchState}
       onSearchStateChange={onSearchStateChange}
+      expandList={expandList}
+      setExpandList={setExpandList}
     />
   );
 };
@@ -88,6 +88,8 @@ const InnerServiceDiscoveryResults = ({
   algoliaCategoryName,
   searchState,
   onSearchStateChange,
+  expandList,
+  setExpandList,
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
 
@@ -95,7 +97,16 @@ const InnerServiceDiscoveryResults = ({
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>{categoryName}</h1>
+        <div className={styles.mapListToggleContainer}>
+          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
+            <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
+          </button>
+          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
+            <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
+          </button>
+        </div>
       </div>
+
       <InstantSearch
         appId={config.ALGOLIA_APPLICATION_ID}
         apiKey={config.ALGOLIA_READ_ONLY_API_KEY}
@@ -105,50 +116,21 @@ const InnerServiceDiscoveryResults = ({
       >
         <Configure filters={`categories:'${algoliaCategoryName}'`} />
         <div className={styles.flexContainer}>
-          <div className={styles.sidebar}>
-            <div className={styles.filterResourcesTitle}>Filter Resources</div>
-            <ClearAllFilters />
-            <div className={styles.filterGroup}>
-              <div className={styles.filterTitle}>Availability</div>
-              <OpenNowFilter attribute="open_times" />
-            </div>
+          <Sidebar
+            isSearchResultsPage={false}
+            eligibilities={eligibilities}
+            subcategories={subcategories}
+            subcategoryNames={subcategoryNames}
+          />
 
-            {!!eligibilities.length && (
-              <div className={styles.filterGroup}>
-                <div className={styles.filterTitle}>Eligibilities</div>
-                <RefinementListFilter
-                  attribute="eligibilities"
-                  transformItems={items => _.sortBy(items, ['label'])}
-                />
-              </div>
-            )}
-
-            {!!subcategories.length && (
-              <div className={styles.filterGroup}>
-                <div className={styles.filterTitle}>Categories</div>
-                <RefinementListFilter
-                  attribute="categories"
-                  transformItems={items => {
-                    // Note that in Algolia, the categories attribute is for all
-                    // categories, but for this page, we only want to display
-                    // the specific subcategories of the target category, not
-                    // all categories that the services are tagged with.
-                    // We filter down the categories list from Algolia to just
-                    // the subcategories.
-                    const subcategoryItems = items.filter(
-                      item => subcategoryNames.includes(item.label),
-                    );
-                    return _.sortBy(subcategoryItems, ['label']);
-                  }}
-                />
-              </div>
-            )}
-
-          </div>
           <div className={styles.results}>
-            <SearchResults />
+            <SearchResults
+              expandList={expandList}
+              setExpandList={setExpandList}
+            />
           </div>
         </div>
+
       </InstantSearch>
     </div>
   );

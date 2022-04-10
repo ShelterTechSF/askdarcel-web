@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { get as _get } from 'lodash';
 import { connectStateResults } from 'react-instantsearch/connectors';
 import { icon } from 'assets';
+import { SearchMap } from 'components/search/SearchMap/SearchMap';
+import ResultsPagination from 'components/search/Pagination/ResultsPagination';
+import { parseAlgoliaSchedule } from 'app/models';
+import Texting from 'components/Texting';
 import styles from './SearchResults.module.scss';
-import { parseAlgoliaSchedule } from '../../../models';
-import Texting from '../../Texting';
+
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -24,23 +26,53 @@ const transformHits = hits => hits.map(hit => {
   return { ...hit, recurringSchedule };
 });
 
-const SearchResults = ({ searchResults }) => {
+// Todo: setExpandList will be used as part of next stage of multiple location work
+// eslint-disable-next-line no-unused-vars
+const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   if (!searchResults) return null;
-
+  const [centerCoords, setCenterCoords] = useState(null);
+  const [googleMapObject, setMapObject] = useState(null);
   const hits = transformHits(searchResults.hits);
 
+  useEffect(() => {
+    if (centerCoords) {
+      googleMapObject.setCenter(centerCoords);
+    }
+  }, [centerCoords]);
+
   return (
-    <div className={styles.searchResultsContainer}>
-      <div>
-        { hits.map((hit, index) => <SearchResult hit={hit} index={index} key={hit.id} />) }
+    <div className={styles.searchResultsAndMapContainer}>
+      <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
+        {/* <div className={styles.searchResultsTopShadow}></div> */}
+        {/*
+        // todo: to be included as part of next stage of multiple location work
+        <button className={styles.expandListSlider} onClick={() => setExpandList(!expandList)}>
+          SLIDER HERE
+        </button> */}
+        { hits.map((hit, index) => (
+          <SearchResult
+            hit={hit}
+            index={index}
+            setCenterCoords={setCenterCoords}
+            key={hit.id}
+          />
+        ))}
+        <ResultsPagination />
       </div>
+      <SearchMap
+        hits={hits}
+        page={0}
+        hitsPerPage={hits.length}
+        setMapObject={setMapObject}
+      />
     </div>
   );
 };
 
-
-const SearchResult = ({ hit, index }) => {
+// eslint-disable-next-line no-unused-vars
+const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
+
   const service = {
     serviceName: hit.name,
     serviceId: hit.service_id,
@@ -68,7 +100,75 @@ const SearchResult = ({ hit, index }) => {
     return <span>No address found</span>;
   };
 
-  const phoneNumber = _get(hit, 'phones[0].number');
+  // Todo: to be included with next stage of multiple location work
+  // const renderAddressMetadata = (hit_, hitIndex) => {
+  //   const { addresses } = hit_;
+  //   const hasNoAddress = !addresses || !addresses[0].address_1;
+  //   if (hasNoAddress) {
+  //     return <span>No address found</span>;
+  //   }
+
+  //   const addressMarkup = addresses.map((address, i) => {
+  //     const isLastAddress = (i + 1) === addresses.length;
+  //     const isSecondAddress = i === 1;
+  //     const setAddressLabel = (serviceIndex, addressIndex) => {
+  //       if (addressIndex > 0) {
+  //         return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
+  //       }
+  //       return '';
+  //     };
+
+  //     return (
+  //       <div
+  //         // eslint-disable-next-line react/no-array-index-key
+  //         key={`${address.address_1}.${i}`}
+  //         className={isLastAddress ? styles.searchResult_addressLast
+  //          : styles.searchResult_address}
+  //       >
+  //         {isSecondAddress && <h3>Other Locations</h3>}
+  //         <p>
+  //           <a className={styles.addressLabel}>{setAddressLabel(hitIndex, i)}</a>
+  //           {address.address_1}
+  //         </p>
+  //         { i > 0 && (
+  //           <div className={styles.sideLink}>
+  //             <button
+  //               type="button"
+  //               className={styles.sideLinkText}
+  //               onClick={() => {
+  //                 setCenterCoords({ lat: address.latitude, lng: address.longitude });
+  //               }}
+  //             >
+  //               <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+  //               Show on map
+  //             </button>
+  //           </div>
+  //         )}
+  //       </div>
+  //     );
+  //   });
+
+  //   addressMarkup.unshift(<h3 key={hit_.id}>Location & Hours</h3>);
+  //   return addressMarkup;
+  // };
+
+  const phoneNumber = hit?.phones?.[0]?.number;
+  const formatPhoneNumber = number => {
+    // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
+    // If the input doesn't match regex, function returns number's original value
+    if (!number) {
+      return '';
+    }
+
+    const cleaned = (number.toString()).replace(/\D/g, '');
+    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return [match[2], '-', match[3], '-', match[4]].join('');
+    }
+
+    return number;
+  };
+
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
@@ -94,7 +194,7 @@ const SearchResult = ({ hit, index }) => {
           && (
             <div className={styles.sideLink}>
               <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
-              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${phoneNumber}`}</a>
+              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
             </div>
           )
         }

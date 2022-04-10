@@ -1,85 +1,141 @@
-@import '../../../styles/utils/_helpers.scss';
+@import '~styles/utils/_helpers.scss';
+
+.searchResultsAndMapContainer {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  grid-template-areas: "results map";
+  grid-column-gap: 15px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "map"
+      "results";
+  }
+}
 
 .searchResultsContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
+  grid-area: results;
+  @media screen and (max-width: $break-tablet-s) {
+    top: 0;
+    position: relative;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+    background: #fff;
+    transition: top 200ms ease-in-out;
+    &.expandList {
+      top: calc(-50vh + 20px);
+      z-index: 1;
+    }
+  }
+}
+
+:global(.results-map) {
+  grid-area: map;
+}
+
+.searchResultsTopShadow {
+  @media screen and (max-width: $break-tablet-s) {
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+  }
 }
 
 .searchResult {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  justify-content: space-between;
   padding-top: 21px;
   padding-bottom: 24px;
   padding-left: 24px;
-  border-left: 1px solid #F4F4F4;
-  border-bottom: 1px solid #F4F4F4;
+  border-left: 1px solid $color-grey3;
+  border-bottom: 1px solid $color-grey3;
 
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: $break-desktop) {
     flex-direction: column;
   }
+
+  @media screen and (max-width: $break-tablet-l) {
+    padding-left: 30px;
+  }
+
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
   }
+
+  h3 {
+    font-weight: 700;
+    font-size: 18px;
+    padding-bottom: 24px;
+  }
+
+  &_address {
+    border-bottom: 1px solid $color-grey3;
+    padding: 24px 0;
+  }
+
+  // Todo: Look into replacing this with :last-child
+  // &_addressLast {
+  //   padding-top: 24px;
+  // }
 }
 
 .searchText {
   flex-grow: 2;
+}
 
-  .title {
-    font-weight: bold;
-    font-size: 20px;
+.title {
+  font-weight: bold;
+  font-size: 20px;
 
-    @media screen and (max-width: 600px) {
-      font-size: 18px;
-    }
-  }
-
-  .address {
+  @media screen and (max-width: 600px) {
     font-size: 18px;
-    margin-top: 12px;
-
-    @media screen and (max-width: 600px) {
-      font-size: 16px;
-    }
   }
+}
 
-  .description {
-    font-size: 18px;
-    margin: 32px 0;
+.address {
+  font-size: 18px;
+  margin-top: 12px;
 
-    @media screen and (max-width: 600px) {
-      font-size: 16px;
-    }
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
   }
+}
 
-  .serviceOf {
-    font-size: 18px;
-    font-style: italic;
-    margin-bottom: 24px;
+.description {
+  font-size: 18px;
+  margin: 32px 0;
+  a {
+    word-break: break-word;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+  }
+}
 
-    @media screen and (max-width: 600px) {
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
+.serviceOf {
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+    margin-bottom: 16px;
   }
 }
 
 .sideLinks {
   flex-shrink: 0;
-  width: 250px;
-  margin: 0 100px;
+  width: auto;
+  margin-left: 25px;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
-  padding-top: 32px;
 
-  @media screen and (max-width: 1120px) {
+  @media screen and (max-width: $break-desktop) {
     flex-direction: column;
     margin-left: 0;
     margin-right: 0;
@@ -91,21 +147,27 @@
     margin-top: 0;
     font-size: 16px;
   }
+}
 
-  .sideLink {
-    display: flex;
-    align-items: center;
-    margin: 24px 0;
-    cursor: pointer;
-  }
+.sideLink {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
 
-  .sideLinkIcon {
-    width: 24px;
-  }
+.sideLinkIcon {
+  width: 24px;
+}
 
-  .sideLinkText {
-    padding: 0 8px;
-    white-space: nowrap;
-    overflow: auto;
+.sideLinkText {
+  padding: 0 8px;
+  overflow: auto;
+}
+
+.expandListSlider {
+  display: none;
+  @media screen and ( max-width: $break-tablet-s) {
+    display: block;
   }
 }

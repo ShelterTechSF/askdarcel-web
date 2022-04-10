@@ -2,7 +2,10 @@
 // CALCULATE EMS
 
 @function calc-em($target-px, $context:$font-size) {
-    @return ($target-px / $context) * 1rem;
+    // Todo: All instances of this function should eventually be removed as it is misleading.
+    // It returns a rem value rather than an em value. Thus the $context value is spurious --
+    // the outputted value is relative to the HTML's (Root Element) font-size rather than $context
+    @return calc(($target-px / $context) * 1rem);
 }
 
 

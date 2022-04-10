@@ -1,0 +1,94 @@
+@import '~styles/utils/_helpers.scss';
+
+.container {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  padding: 15px 35px;
+  border-bottom: 1px solid $color-grey3;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: $break-tablet-l) {
+    padding: 15px 30px;
+  }
+  @media screen and (max-width: $break-tablet-s) {
+    padding: 14px 14px 5px;
+  }
+}
+
+.title {
+  text-align: left;
+  font-weight: bold;
+  font-size: 26px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 21px;
+    line-height: 20px;
+  }
+}
+
+.geosearchBox {
+  padding: 16px 35px;
+  border-bottom: 1px solid $color-grey3;
+}
+
+.searchField {
+  max-width: 650px;
+}
+
+.searchBtn {
+  background-color: $color-brand;
+  padding: 15px 25px;
+  height: auto;
+}
+
+.mapListToggleBtn {
+  // Button default style overrides
+  background: 0;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  &:focus, &:active, &:hover {
+    box-shadow: none;
+  }
+  // End Button default overrrides
+}
+
+.mapIcon,
+.listIcon {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-size: 200%;
+  background-position-x: 0;
+  &.activeView {
+    background-position-x: -32px;
+  }
+}
+
+.listIcon {
+  background-image: url(../../assets/img/ic-list.svg);
+}
+
+.mapIcon {
+  background-image: url(../../assets/img/ic-map.svg);
+}
+
+
+.mapListToggleContainer {
+  @media screen and (min-width: $min-tablet-p) {
+    display: none;
+  }
+}
+
+.flexContainer {
+  display: flex;
+  width: 100%;
+
+  @media screen and (max-width: $break-tablet-l) {
+    flex-direction: column;
+  }
+}
