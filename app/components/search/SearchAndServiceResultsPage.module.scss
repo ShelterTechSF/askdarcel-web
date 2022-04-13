@@ -92,3 +92,9 @@
     flex-direction: column;
   }
 }
+
+.results {
+  // This style is set so that the results container will fill the width of the page
+  // even when there are no search results
+  flex-grow: 1;
+}

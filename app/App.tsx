@@ -58,11 +58,16 @@ export const App = () => {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({ message: '', visible: false, type: 'success' });
   const [userLocation, setUserLocation] = useState<GeoCoordinates>(COORDS_MID_SAN_FRANCISCO);
+  const [userLocationPromiseReturned, setUserLocationPromiseReturned] = useState(false);
 
   useEffect(() => {
     getLocation()
-      .then(loc => setUserLocation(loc))
+      .then(loc => {
+        setUserLocation(loc);
+        setUserLocationPromiseReturned(true);
+      })
       .catch(err => {
+        setUserLocationPromiseReturned(true);
         console.log('Could not obtain location, defaulting to San Francisco.', err); // eslint-disable-line no-console
       });
 
@@ -76,7 +81,7 @@ export const App = () => {
 
   return (
     <div id={outerContainerId}>
-      <AppContext.Provider value={{ userLocation }}>
+      <AppContext.Provider value={{ userLocation, userLocationPromiseReturned }}>
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />

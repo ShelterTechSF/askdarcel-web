@@ -4,6 +4,7 @@ import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import SearchEntry from 'components/search/SearchMap/SearchEntry';
 import { useAppContext } from 'utils';
+import { Loader } from 'components/ui';
 import { createMapOptions, UserLocationMarker, CustomMarker } from 'components/ui/MapElements';
 import './SearchMap.scss';
 import { SearchHit } from '../../../models';
@@ -17,8 +18,10 @@ export const SearchMap = ({
     page: number;
     setMapObject: (map: any) => void;
 }) => {
-  const { userLocation: { lat, lng } } = useAppContext();
-  if (!hits || !hits.length) { return null; }
+  const { userLocationPromiseReturned, userLocation: { lat, lng } } = useAppContext();
+  if (!userLocationPromiseReturned) {
+    return <div className="mapLoaderContainer"><Loader /></div>;
+  }
 
   return (
     <div className="results-map">
@@ -27,7 +30,7 @@ export const SearchMap = ({
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
           }}
-          defaultCenter={{ lat, lng }}
+          center={{ lat, lng }}
           defaultZoom={14}
           onGoogleApiLoaded={({ map }) => {
             // SetMapObject shares the Google Map object across parent/sibliing components

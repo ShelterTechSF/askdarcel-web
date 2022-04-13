@@ -5,6 +5,7 @@ import qs from 'qs';
 
 import config from 'app/config';
 import * as dataService from 'utils/DataService';
+import { useAppContext } from 'utils';
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from 'app/hooks/APIHooks';
 
 import { Loader } from 'components/ui';
@@ -31,6 +32,8 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
   const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
   const [expandList, setExpandList] = useState(false);
+  const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius || 'all');
+  const appContext = useAppContext();
 
   const onSearchStateChange = nextSearchState => {
     setSearchState(nextSearchState);
@@ -60,11 +63,15 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
       algoliaCategoryName={parentCategory.name}
       searchState={searchState}
       onSearchStateChange={onSearchStateChange}
+      searchRadius={searchRadius}
+      setSearchRadius={setSearchRadius}
       expandList={expandList}
       setExpandList={setExpandList}
+      userLatLng={`${appContext.userLocation.lat}, ${appContext.userLocation.lng}`}
     />
   );
 };
+
 ServiceDiscoveryResults.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.shape({
@@ -88,8 +95,11 @@ const InnerServiceDiscoveryResults = ({
   algoliaCategoryName,
   searchState,
   onSearchStateChange,
+  searchRadius,
+  setSearchRadius,
   expandList,
   setExpandList,
+  userLatLng,
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
 
@@ -114,9 +124,12 @@ const InnerServiceDiscoveryResults = ({
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
-        <Configure filters={`categories:'${algoliaCategoryName}'`} />
+
+        <Configure filters={`categories:'${algoliaCategoryName}'`} aroundLatLng={userLatLng} aroundRadius={searchRadius} />
         <div className={styles.flexContainer}>
           <Sidebar
+            setSearchRadius={setSearchRadius}
+            searchRadius={searchRadius}
             isSearchResultsPage={false}
             eligibilities={eligibilities}
             subcategories={subcategories}

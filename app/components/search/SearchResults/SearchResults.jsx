@@ -39,10 +39,13 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
       googleMapObject.setCenter(centerCoords);
     }
   }, [centerCoords]);
-
   return (
     <div className={styles.searchResultsAndMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
+        <div className={`${styles.noResultsFound} ${(!hits || !hits.length) ? styles.showNoResultsMsg : ''}`}>
+          No results found in your area. Try a different location, category, or search term.
+        </div>
+
         {/* <div className={styles.searchResultsTopShadow}></div> */}
         {/*
         // todo: to be included as part of next stage of multiple location work
@@ -57,7 +60,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
             key={hit.id}
           />
         ))}
-        <ResultsPagination />
+        <ResultsPagination noResults={(!hits || !hits.length)} />
       </div>
       <SearchMap
         hits={hits}

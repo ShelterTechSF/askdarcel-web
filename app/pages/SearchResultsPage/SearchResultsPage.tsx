@@ -12,7 +12,7 @@ import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
 
 import config from '../../config';
-import styles from './SearchResults.module.scss';
+import styles from './SearchResultsPage.module.scss';
 
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
@@ -25,10 +25,25 @@ export const SearchResultsPage = () => {
   const [lastPush, setLastPush] = useState(Date.now());
   const { search } = useLocation();
   const [expandList, setExpandList] = useState(false);
-  const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
+
+  // Todo: I'm not sure if this is the greatest solution; querying the searchState
+  // for the configure.aroundRadius property causes a TS type warning unless I
+  // define the interfaces below
+  interface ConfigureState {
+    aroundRadius?: any;
+    [key: string]: any;
+  }
+
+  interface SearchState {
+    configure?: ConfigureState;
+    [key: string]: any;
+  }
+
+  const searchState: SearchState = useMemo(() => qs.parse(search.slice(1)), [search]);
+  const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius || 'all');
 
   return (
-    <InnerSearchReslts
+    <InnerSearchResults
       history={useHistory()}
       userLocation={userLocation}
       lastPush={lastPush}
@@ -36,13 +51,16 @@ export const SearchResultsPage = () => {
       expandList={expandList}
       setExpandList={setExpandList}
       searchState={searchState}
+      searchRadius={searchRadius}
+      setSearchRadius={setSearchRadius}
     />
   );
 };
 
 /** Stateless inner component that just handles presentation. */
-const InnerSearchReslts = ({
+const InnerSearchResults = ({
   history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState,
+  searchRadius, setSearchRadius,
 }: {
   history: any;
   userLocation: GeoCoordinates;
@@ -51,6 +69,8 @@ const InnerSearchReslts = ({
   expandList: boolean;
   setExpandList: (listExpanded: boolean) => void;
   searchState: ParsedQs;
+  searchRadius: number | string;
+  setSearchRadius: (radius: any) => void;
 }) => (
   <div className={styles.container}>
     <div className={styles.header}>
@@ -82,17 +102,16 @@ const InnerSearchReslts = ({
       }}
       createURL={(state: any) => `search?${qs.stringify(state)}`}
     >
-      {userLocation ? (
-        <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} />
-      ) : (
-        <Configure aroundLatLngViaIP aroundRadius="all" />
-      )}
+
+      <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} aroundRadius={searchRadius} />
       {/* <div className={styles.searchBox}>
         todo: part of the next stage of multiple location development
         <SearchBox />
       </div> */}
       <div className={styles.flexContainer}>
         <Sidebar
+          setSearchRadius={setSearchRadius}
+          searchRadius={searchRadius}
           isSearchResultsPage
         />
 
