@@ -30,7 +30,7 @@ export const SearchResultsPage = () => {
   // for the configure.aroundRadius property causes a TS type warning unless I
   // define the interfaces below
   interface ConfigureState {
-    aroundRadius?: any;
+    aroundRadius?: string;
     [key: string]: any;
   }
 
@@ -69,7 +69,7 @@ const InnerSearchResults = ({
   expandList: boolean;
   setExpandList: (listExpanded: boolean) => void;
   searchState: ParsedQs;
-  searchRadius: number | string;
+  searchRadius: string;
   setSearchRadius: (radius: any) => void;
 }) => (
   <div className={styles.container}>

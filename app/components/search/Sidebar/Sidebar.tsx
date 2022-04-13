@@ -14,7 +14,7 @@ const Sidebar = ({
   eligibilities = [], subcategories = [], subcategoryNames = [],
 }: {
   setSearchRadius: (radius: any) => void;
-  searchRadius: any;
+  searchRadius: string;
   isSearchResultsPage: boolean;
   eligibilities?: object[];
   subcategories?: object[];
@@ -96,19 +96,19 @@ const Sidebar = ({
           {categoryRefinementJsx}
         </div>
 
-        <div className={styles.filterGroup} onChange={onChangeValue}>
+        <div className={styles.filterGroup}>
           <div className={styles.filterTitle}>Distance</div>
           <label className={styles.checkBox}>
             Within 4 blocks
-            <input type="radio" name="searchRadius" value="400" checked={searchRadius === '400'} className={styles.refinementInput} />
+            <input type="radio" name="searchRadius" onChange={onChangeValue} value="400" checked={searchRadius === '400'} className={styles.refinementInput} />
           </label>
           <label className={styles.checkBox}>
             Walking distance (1 mi.)
-            <input type="radio" name="searchRadius" value="1600" checked={searchRadius === '1600'} className={styles.refinementInput} />
+            <input type="radio" name="searchRadius" onChange={onChangeValue} value="1600" checked={searchRadius === '1600'} className={styles.refinementInput} />
           </label>
           <label className={styles.checkBox}>
             Biking distance (3 mi.)
-            <input type="radio" name="searchRadius" value="4828" checked={searchRadius === '4828'} className={styles.refinementInput} />
+            <input type="radio" name="searchRadius" onChange={onChangeValue} value="4828" checked={searchRadius === '4828'} className={styles.refinementInput} />
           </label>
         </div>
 
