@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import algoliasearch from 'algoliasearch/lite';
 import {
-  InstantSearch, Configure,
+  InstantSearch, Configure, SearchBox,
 } from 'react-instantsearch/dom';
 import qs, { ParsedQs } from 'qs';
 
@@ -121,6 +121,11 @@ const InnerSearchResults = ({
             setExpandList={setExpandList}
           />
         </div>
+      </div>
+      <div className={styles.hiddenSearchBox}>
+        {/* The SearchBox component needs to be insde the InstantSearch component for the
+        search query term to be passed to InstantSearch internals but it can be hidden */}
+        <SearchBox />
       </div>
     </InstantSearch>
   </div>
