@@ -33,7 +33,7 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
   const [searchState, setSearchState] = useState(urlToSearchState(location));
   const [expandList, setExpandList] = useState(false);
   const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius || 'all');
-  const appContext = useAppContext();
+  const { userLocation } = useAppContext();
 
   const onSearchStateChange = nextSearchState => {
     setSearchState(nextSearchState);
@@ -49,7 +49,8 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
 
   const isLoading = (parentCategory === null)
     || (eligibilities === null)
-    || (subcategories === null);
+    || (subcategories === null)
+    || (userLocation === null);
 
   if (isLoading) {
     return <Loader />;
@@ -67,7 +68,7 @@ const ServiceDiscoveryResults = ({ history, location, match }) => {
       setSearchRadius={setSearchRadius}
       expandList={expandList}
       setExpandList={setExpandList}
-      userLatLng={`${appContext.userLocation.lat}, ${appContext.userLocation.lng}`}
+      userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
     />
   );
 };
@@ -125,7 +126,7 @@ const InnerServiceDiscoveryResults = ({
         onSearchStateChange={onSearchStateChange}
       >
 
-        <Configure filters={`categories:'${algoliaCategoryName}'`} aroundLatLng={userLatLng} aroundRadius={searchRadius} />
+        <Configure filters={`categories:'${algoliaCategoryName}'`} aroundLatLng={userLatLng} aroundRadius={searchRadius} aroundPrecision={1600} />
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}

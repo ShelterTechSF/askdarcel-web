@@ -1,7 +1,7 @@
 import { round } from './numbers';
 import config from '../config';
 
-export type GeoCoordinates = { lat: number; lng: number }
+export type GeoCoordinates = { lat: number; lng: number };
 
 export const COORDS_MID_SAN_FRANCISCO: GeoCoordinates = { lat: 37.7749, lng: -122.4194 };
 
@@ -71,6 +71,10 @@ export const getLocationGoogle = () => new Promise<GeoCoordinates>((resolve, rej
     .catch(reject);
 });
 
+export const useDefaultSanFranciscoLocation = () => new Promise<GeoCoordinates>(resolve => {
+  resolve(COORDS_MID_SAN_FRANCISCO);
+});
+
 /**
  * Get user location.
  *
@@ -84,4 +88,5 @@ export const getLocationGoogle = () => new Promise<GeoCoordinates>((resolve, rej
  * `lng` properties or an error if location is unavaible or out of bounds.
  */
 export const getLocation = () => getLocationBrowser()
-  .catch(() => getLocationGoogle());
+  .catch(() => getLocationGoogle())
+  .catch(() => useDefaultSanFranciscoLocation());

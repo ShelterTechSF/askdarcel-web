@@ -18,10 +18,11 @@ export const SearchMap = ({
     page: number;
     setMapObject: (map: any) => void;
 }) => {
-  const { userLocationPromiseReturned, userLocation: { lat, lng } } = useAppContext();
-  if (!userLocationPromiseReturned) {
+  const { userLocation } = useAppContext();
+  if (userLocation === null) {
     return <div className="mapLoaderContainer"><Loader /></div>;
   }
+  const { lat, lng } = userLocation;
 
   return (
     <div className="results-map">

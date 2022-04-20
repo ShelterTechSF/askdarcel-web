@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import GoogleMap from 'google-map-react';
 import config from '../../config';
 import { LocationDetails } from '../../models';
+import { Loader } from '../ui';
 import { Accordion, AccordionItem } from '../ui/Accordion';
 import { createMapOptions, CustomMarker, UserLocationMarker } from '../ui/MapElements';
 import { useAppContext } from '../../utils';
@@ -10,7 +11,11 @@ export const MapOfLocations = ({ locationRenderer, locations }: {
   locations: LocationDetails[];
   locationRenderer: (loc: LocationDetails) => ReactElement;
 }) => {
-  const { userLocation: { lat, lng } } = useAppContext();
+  const { userLocation } = useAppContext();
+  if (userLocation === null) {
+    return <Loader />;
+  }
+  const { lat, lng } = userLocation;
 
   return (
     <div>
