@@ -32,12 +32,11 @@
   }
 }
 
-.noResultsFound {
-  display: none;
-  &.showNoResultsMsg {
-    display: block;
-    margin: 35px auto 65px;
-    text-align: center;
+.noResultsMessage {
+  margin: 35px auto 65px;
+  text-align: center;
+  &.hidden {
+    display: none;
   }
 }
 

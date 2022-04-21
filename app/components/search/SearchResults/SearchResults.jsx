@@ -42,7 +42,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   return (
     <div className={styles.searchResultsAndMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
-        <div className={`${styles.noResultsFound} ${(!hits || !hits.length) ? styles.showNoResultsMsg : ''}`}>
+        <div className={`${styles.noResultsMessage} ${(hits && hits.length) ? styles.hidden : ''}`}>
           No results found in your area. Try a different location, category, or search term.
         </div>
 

@@ -39,7 +39,7 @@ export const SearchResultsPage = () => {
   }
 
   const searchState: SearchState = useMemo(() => qs.parse(search.slice(1)), [search]);
-  const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius || 'all');
+  const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius ?? 'all');
 
   return (
     <InnerSearchResults
@@ -69,7 +69,7 @@ const InnerSearchResults = ({
   setExpandList: (listExpanded: boolean) => void;
   searchState: ParsedQs;
   searchRadius: string;
-  setSearchRadius: (radius: any) => void;
+  setSearchRadius: (radius: string) => void;
 }) => {
   if (userLocation === null) {
     return <Loader />;
