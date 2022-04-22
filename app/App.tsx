@@ -11,7 +11,6 @@ import {
 
 import {
   AppContext,
-  COORDS_MID_SAN_FRANCISCO,
   GeoCoordinates,
   getLocation,
   whiteLabel,
@@ -57,11 +56,13 @@ export const App = () => {
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({ message: '', visible: false, type: 'success' });
-  const [userLocation, setUserLocation] = useState<GeoCoordinates>(COORDS_MID_SAN_FRANCISCO);
+  const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
 
   useEffect(() => {
     getLocation()
-      .then(loc => setUserLocation(loc))
+      .then(loc => {
+        setUserLocation(loc);
+      })
       .catch(err => {
         console.log('Could not obtain location, defaulting to San Francisco.', err); // eslint-disable-line no-console
       });

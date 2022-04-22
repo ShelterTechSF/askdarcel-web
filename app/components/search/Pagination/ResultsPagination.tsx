@@ -7,9 +7,9 @@ import styles from './ResultsPagination.module.scss';
 
 const { appImages: { algolia } } = whiteLabel;
 
-const ResultsPagination = () => (
+const ResultsPagination = ({ noResults }: {noResults: boolean}) => (
   <div>
-    <div className={styles.paginationContainer}>
+    <div className={`${styles.paginationContainer} ${noResults ? styles.hidePagination : ''}`}>
       <div className={styles.resultsPagination}>
         <Pagination
           padding={2}

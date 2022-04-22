@@ -32,6 +32,14 @@
   }
 }
 
+.noResultsMessage {
+  margin: 35px auto 65px;
+  text-align: center;
+  &.hidden {
+    display: none;
+  }
+}
+
 :global(.results-map) {
   grid-area: map;
 }
