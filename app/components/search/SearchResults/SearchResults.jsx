@@ -90,70 +90,68 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     </div>
   );
 
-  const renderAddressMetadata = hit_ => {
-    if (!hit_.addresses || hit_.addresses.length === 0) {
-      return <span>No address found</span>;
-    }
-    if (hit_.addresses.length > 1) {
-      return <span>Multiple locations</span>;
-    }
-    if (hit_.addresses[0].address_1) {
-      return <span>{hit_.addresses[0].address_1}</span>;
-    }
-    return <span>No address found</span>;
-  };
-
-  // Todo: to be included with next stage of multiple location work
-  // const renderAddressMetadata = (hit_, hitIndex) => {
-  //   const { addresses } = hit_;
-  //   const hasNoAddress = !addresses || !addresses[0].address_1;
-  //   if (hasNoAddress) {
+  // const renderAddressMetadata = hit_ => {
+  //   if (!hit_.addresses || hit_.addresses.length === 0) {
   //     return <span>No address found</span>;
   //   }
-
-  //   const addressMarkup = addresses.map((address, i) => {
-  //     const isLastAddress = (i + 1) === addresses.length;
-  //     const isSecondAddress = i === 1;
-  //     const setAddressLabel = (serviceIndex, addressIndex) => {
-  //       if (addressIndex > 0) {
-  //         return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
-  //       }
-  //       return '';
-  //     };
-
-  //     return (
-  //       <div
-  //         // eslint-disable-next-line react/no-array-index-key
-  //         key={`${address.address_1}.${i}`}
-  //         className={isLastAddress ? styles.searchResult_addressLast
-  //          : styles.searchResult_address}
-  //       >
-  //         {isSecondAddress && <h3>Other Locations</h3>}
-  //         <p>
-  //           <a className={styles.addressLabel}>{setAddressLabel(hitIndex, i)}</a>
-  //           {address.address_1}
-  //         </p>
-  //         { i > 0 && (
-  //           <div className={styles.sideLink}>
-  //             <button
-  //               type="button"
-  //               className={styles.sideLinkText}
-  //               onClick={() => {
-  //                 setCenterCoords({ lat: address.latitude, lng: address.longitude });
-  //               }}
-  //             >
-  //               <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
-  //               Show on map
-  //             </button>
-  //           </div>
-  //         )}
-  //       </div>
-  //     );
-  //   });
-
-  //   addressMarkup.unshift(<h3 key={hit_.id}>Location & Hours</h3>);
-  //   return addressMarkup;
+  //   if (hit_.addresses.length > 1) {
+  //     return <span>Multiple locations</span>;
+  //   }
+  //   if (hit_.addresses[0].address_1) {
+  //     return <span>{hit_.addresses[0].address_1}</span>;
+  //   }
+  //   return <span>No address found</span>;
   // };
+
+  // Todo: to be included with next stage of multiple location work
+  const renderAddressMetadata = (hit_, hitIndex) => {
+    const { addresses } = hit_;
+    const hasNoAddress = !addresses || !addresses[0].address_1;
+    if (hasNoAddress) {
+      return <span>No address found</span>;
+    }
+
+    const addressMarkup = addresses.map((address, i) => {
+      const isLastAddress = (i + 1) === addresses.length;
+      const isSecondAddress = i === 1;
+      const setAddressLabel = (serviceIndex, addressIndex) => {
+        if (addressIndex > 0) {
+          return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
+        }
+        return '';
+      };
+
+      return (
+        <div
+          key={`${hit_.id}.${address.latitude}.${address.longitude}.${address.address_1}.${address.address_2 || ''}`}
+          className={styles.searchResult_address}
+        >
+          {isSecondAddress && <h3 className={styles.otherLocationsTitle}>Other Locations</h3>}
+          <p>
+            <a className={styles.addressLabel}>{setAddressLabel(hitIndex, i)}</a>
+            {address.address_1}
+          </p>
+          { i > 0 && (
+            <div className={styles.sideLink}>
+              <button
+                type="button"
+                className={styles.sideLinkText}
+                onClick={() => {
+                  setCenterCoords({ lat: address.latitude, lng: address.longitude });
+                }}
+              >
+                <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+                Show on map
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    });
+
+    addressMarkup.unshift(<h3 key={hit_.id} className={styles.locationsTitle}>Location & Hours</h3>);
+    return addressMarkup;
+  };
 
   const phoneNumber = hit?.phones?.[0]?.number;
   const formatPhoneNumber = number => {
@@ -188,8 +186,8 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <div className={styles.serviceOf}>
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
-        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
+        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
       </div>
       <div className={styles.sideLinks}>
         {

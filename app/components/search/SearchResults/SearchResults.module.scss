@@ -74,21 +74,55 @@
     padding: 18px 20px;
   }
 
-  h3 {
-    font-weight: 700;
-    font-size: 18px;
-    padding-bottom: 24px;
-  }
-
   &_address {
     border-bottom: 1px solid $color-grey3;
-    padding: 24px 0;
+    padding-bottom: 24px;
+    div:last-child {
+      border-bottom: 0;
+      color: red;
+    }
+    div {
+      color: blue;
+    }
   }
 
   // Todo: Look into replacing this with :last-child
   // &_addressLast {
   //   padding-top: 24px;
   // }
+}
+
+.searchResult_address {
+  border-bottom: 1px solid $color-grey3;
+  padding-bottom: 24px;
+  color: blanchedalmond;
+  div:last-child {
+    border-bottom: 0;
+    color: red;
+  }
+  div {
+    color: blue;
+  }
+}
+
+.searchResult_address div {
+  color: red;
+  padding: 20px;
+}
+
+div {
+  color: blue;
+}
+
+.locationsTitle {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.otherLocationsTitle {
+  margin-top: 24px;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .searchText {
