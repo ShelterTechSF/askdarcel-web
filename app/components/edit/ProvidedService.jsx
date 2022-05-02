@@ -347,7 +347,6 @@ ProvidedService.propTypes = {
     categories: PropTypes.array,
     notes: PropTypes.array,
     schedule: PropTypes.object,
-    eligibility: PropTypes.bool,
     eligibilities: PropTypes.array,
     email: PropTypes.string,
     name: PropTypes.string,
