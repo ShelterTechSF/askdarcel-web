@@ -43,7 +43,6 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
           <ul className="service--details">
             <ServiceContactDetails email={service.email} website={service.url} />
             <ServiceEligibility subject="How to apply" result={service.application_process} />
-            <ServiceEligibility subject="Eligibilities" result={service.eligibility} />
             <ServiceEligibility subject="Required documents" result={service.required_documents} />
             <ServiceEligibility subject="Fees" result={service.fee} />
             {service.notes.length ? <Notes notes={service.notes} /> : null }
