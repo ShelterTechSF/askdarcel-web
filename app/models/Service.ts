@@ -23,7 +23,6 @@ export interface Service {
   certified_at: string | null;
   certified: boolean;
   eligibilities: Eligibility[];
-  eligibility: string;
   email: string | null;
   featured: boolean | null;
   fee: string | null;
