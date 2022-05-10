@@ -175,6 +175,13 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
+  // Href structure varies depending on whether the hit is a resource or location
+  let basePath = 'organizations';
+  let entryId = resourceId;
+  if (hit.type === 'service') {
+    basePath = 'services';
+    entryId = serviceId;
+  }
 
   return (
     <div className={styles.searchResult}>
@@ -183,7 +190,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       }
       <div className={styles.searchText}>
         <div className={styles.title}>
-          <Link to={`/services/${serviceId}`}>{`${index + 1}. ${hit.name}`}</Link>
+          <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>
         </div>
         <div className={styles.serviceOf}>
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
