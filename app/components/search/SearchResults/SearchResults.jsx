@@ -78,7 +78,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
 
   const service = {
     serviceName: hit.name,
-    serviceId: serviceId,
+    serviceId: hit.service_id,
   };
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
