@@ -78,7 +78,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
 
   const service = {
     serviceName: hit.name,
-    serviceId: hit.service_id,
+    serviceId: serviceId,
   };
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
@@ -175,14 +175,12 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
-  const { type } = hit;
-
   // Href structure varies depending on whether the hit is a resource or location
   let basePath = 'organizations';
-  let entryId = hit.resource_id;
-  if (type === 'service') {
+  let entryId = resourceId;
+  if (hit.type === 'service') {
     basePath = 'services';
-    entryId = hit.service_id;
+    entryId = serviceId;
   }
 
   return (
