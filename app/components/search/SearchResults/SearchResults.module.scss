@@ -74,44 +74,10 @@
     padding: 18px 20px;
   }
 
-  &_address {
+  &_location {
     border-bottom: 1px solid $color-grey3;
     padding-bottom: 24px;
-    div:last-child {
-      border-bottom: 0;
-      color: red;
-    }
-    div {
-      color: blue;
-    }
   }
-
-  // Todo: Look into replacing this with :last-child
-  // &_addressLast {
-  //   padding-top: 24px;
-  // }
-}
-
-.searchResult_address {
-  border-bottom: 1px solid $color-grey3;
-  padding-bottom: 24px;
-  color: blanchedalmond;
-  div:last-child {
-    border-bottom: 0;
-    color: red;
-  }
-  div {
-    color: blue;
-  }
-}
-
-.searchResult_address div {
-  color: red;
-  padding: 20px;
-}
-
-div {
-  color: blue;
 }
 
 .locationsTitle {
@@ -138,12 +104,51 @@ div {
   }
 }
 
+.locationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .address {
   font-size: 18px;
   margin-top: 12px;
 
+  div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
   @media screen and (max-width: 600px) {
     font-size: 16px;
+  }
+}
+
+.additionalLocation {
+  // todo these rules should only apply to the 2nd+n addl addresses
+  // margin: 10px 0;
+  .addressLabelBtn {
+    display: inline;
+    margin-right: 5px;
+  }
+
+  .locationContainer {
+    margin: 15px 0 10px;
+  }
+}
+
+.addressLabelBtn {
+  display: none;
+}
+
+.addressLabelBtn,
+.goToAddressBtn {
+  color: $color-brand;
+  background-color: transparent;
+  height: auto;
+  padding: 0;
+  &:active, &:hover, &:focus {
+    box-shadow: none;
   }
 }
 
@@ -204,6 +209,7 @@ div {
 
 .sideLinkText {
   padding: 0 8px;
+  font-size: 18px;
   overflow: auto;
 }
 

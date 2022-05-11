@@ -112,7 +112,6 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     }
 
     const addressMarkup = addresses.map((address, i) => {
-      const isLastAddress = (i + 1) === addresses.length;
       const isSecondAddress = i === 1;
       const setAddressLabel = (serviceIndex, addressIndex) => {
         if (addressIndex > 0) {
@@ -124,27 +123,34 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       return (
         <div
           key={`${hit_.id}.${address.latitude}.${address.longitude}.${address.address_1}.${address.address_2 || ''}`}
-          className={styles.searchResult_address}
+          className={`${styles.searchResult_location} ${i > 0 ? styles.additionalLocation : ''}`}
         >
           {isSecondAddress && <h3 className={styles.otherLocationsTitle}>Other Locations</h3>}
-          <p>
-            <a className={styles.addressLabel}>{setAddressLabel(hitIndex, i)}</a>
-            {address.address_1}
-          </p>
-          { i > 0 && (
-            <div className={styles.sideLink}>
-              <button
-                type="button"
-                className={styles.sideLinkText}
+          <div className={styles.locationContainer}>
+            <span>
+              <button 
+                className={styles.addressLabelBtn}
                 onClick={() => {
                   setCenterCoords({ lat: address.latitude, lng: address.longitude });
                 }}
               >
-                <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
-                Show on map
+                {setAddressLabel(hitIndex, i)}
               </button>
-            </div>
+              <span>{address.address_1}</span>
+            </span>
+            
+            { i > 0 && (
+            <button
+              className={styles.goToAddressBtn}
+              onClick={() => {
+                setCenterCoords({ lat: address.latitude, lng: address.longitude });
+              }}
+            >
+              <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+              <span className={styles.sideLinkText}>Show on map</span>
+            </button>
           )}
+          </div>
         </div>
       );
     });
@@ -187,7 +193,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
-        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
+        <div className={styles.address}>{renderAddressMetadata(hit, index)}</div>
       </div>
       <div className={styles.sideLinks}>
         {
