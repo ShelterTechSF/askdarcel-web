@@ -88,9 +88,7 @@ const SiteLinks = () => (
         Contact Us
       </a>
     </li>
-    <li>
-      <Translate />
-    </li>
+    <Translate />
   </ul>
 );
 
