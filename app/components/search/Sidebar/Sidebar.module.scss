@@ -1,0 +1,166 @@
+@import "~styles/utils/_helpers.scss";
+@import "../Refinements/RefinementFilters.module.scss";
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  height: calc(100vh - $header-height);
+  width: 290px;
+  top: $header-height;
+  border-right: 1px solid $color-grey3;
+  padding: 20px 25px 50px 30px;
+  overflow-y: auto;
+
+  @media screen and (max-width: $break-tablet-l) {
+    height: auto;
+    width: 60%;
+    padding: 0;
+    z-index: $z-index-filters-menu;
+    align-self: flex-start;
+    border-right: 0;
+    background-color: #fff;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    top: $header-mobile-height;
+    margin: 0;
+  }
+}
+
+.filtersContainer {
+  @media screen and (max-width: $break-tablet-l) {
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 42%;
+    top: 0;
+    padding: 0 20px 65px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+    background-color: #fff;
+    animation-duration: 200ms;
+    animation-name: slideRight;
+    &.showFilters {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    top: 65px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    animation-name: slideUp;
+    height: calc(100vh - 65px);
+  }
+}
+
+.closeBtnContainer {
+  text-align: right;
+  @media screen and (min-width: $min-desktop) {
+    display: none;
+  }
+}
+
+.filterGroup {
+  margin-top: 32px;
+}
+
+.hideFilterGroup {
+  display: none;
+}
+
+.filterTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.filterResourcesHeaderMobile {
+  position: relative;
+  padding-top: 10px;
+  text-align: center;
+  @media screen and (min-width: $min-desktop) {
+    display: none;
+  }
+}
+
+.filterResourcesTitleDesktop,
+.filterResourcesTitle {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.filterResourcesTitleDesktop {
+  @media screen and (max-width: $break-tablet-l) {
+    display: none;
+  }
+}
+
+.filterResourcesBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.filtersIconContainer {
+  display: none;
+  @media screen and (max-width: $break-tablet-l) {
+    display: block;
+    padding-left: 30px;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding-left: 14px;
+  }
+}
+
+.closeIcon {
+  height: 25px;
+}
+
+.filtersIcon {
+  height: 15px;
+  padding: 0 3px 3px 0;
+}
+
+.filterBtn {
+  background: none;
+  border: none;
+  padding: 5px 10px 5px 0;
+  color: $color-brand;
+  font-weight: 400;
+  font-size: 15px;
+
+  &:active, &:focus, &:hover {
+    box-shadow: none;
+  }
+
+  &:hover {
+    color: $color-brand-dark;
+  }
+
+  @media screen and (max-width: $break-tablet-l) {
+    padding: 0;
+  }
+}

@@ -2,20 +2,27 @@ import React, { ReactElement } from 'react';
 import GoogleMap from 'google-map-react';
 import { Tooltip } from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-import SearchEntry from './SearchEntry';
-import config from '../../../config';
+import SearchEntry from 'components/search/SearchMap/SearchEntry';
+import { useAppContext } from 'utils';
+import { Loader } from 'components/ui';
+import { createMapOptions, UserLocationMarker, CustomMarker } from 'components/ui/MapElements';
 import './SearchMap.scss';
-import { useAppContext } from '../../../utils';
-import { createMapOptions, UserLocationMarker, CustomMarker } from '../../ui/MapElements';
 import { SearchHit } from '../../../models';
+import config from '../../../config';
 
-export const SearchMap = ({ hits, hitsPerPage, page }: {
-  hits: SearchHit[];
-  hitsPerPage: number;
-  page: number;
+export const SearchMap = ({
+  hits, hitsPerPage, page, setMapObject,
+}: {
+    hits: SearchHit[];
+    hitsPerPage: number;
+    page: number;
+    setMapObject: (map: any) => void;
 }) => {
-  const { userLocation: { lat, lng } } = useAppContext();
-  if (!hits || !hits.length) { return null; }
+  const { userLocation } = useAppContext();
+  if (userLocation === null) {
+    return <div className="mapLoaderContainer"><Loader /></div>;
+  }
+  const { lat, lng } = userLocation;
 
   return (
     <div className="results-map">
@@ -24,20 +31,31 @@ export const SearchMap = ({ hits, hitsPerPage, page }: {
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
           }}
-          defaultCenter={{ lat, lng }}
-          defaultZoom={15}
+          center={{ lat, lng }}
+          defaultZoom={14}
+          onGoogleApiLoaded={({ map }) => {
+            // SetMapObject shares the Google Map object across parent/sibliing components
+            // so that they can adjustments to markers, coordinates, layout, etc.,
+            setMapObject(map);
+          }}
           options={createMapOptions}
         >
           <UserLocationMarker lat={lat} lng={lng} key={1} />
-          { hits.reduce((markers, hit, i) => {
-            const hitNumber = `${page * hitsPerPage + i + 1}`;
+          { hits.reduce((markers, hit, index) => {
             // Add a marker for each address of each hit
-            hit.addresses?.forEach((addr: any) => {
+            hit.addresses?.forEach((addr: any, i: number) => {
+              // Append letter to index number if there are multiple addresses per service
+              let tag = `${page * hitsPerPage + index + 1}`;
+              if (i > 0) {
+                const alphabeticalIndex = (i + 9).toString(36).toUpperCase();
+                tag += alphabeticalIndex;
+              }
+
               markers.push(<SearchHitMarker
-                key={hit.id}
+                key={`${hit.id}.${addr.latitude}.${addr.longitude}.${addr.address_1}.${addr.address_2 || ''}`}
                 lat={addr.latitude}
                 lng={addr.longitude}
-                tag={hitNumber}
+                tag={tag}
                 hit={hit}
               />);
             });

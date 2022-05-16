@@ -103,7 +103,9 @@ const SiteSearch = ({ query, setQuery, extraClasses }: {
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
     if (query) {
-      history.push(`/search?${qs.stringify({ query })}`);
+      const searchState = qs.parse(window.location.search.slice(1));
+      searchState.query = query;
+      history.push(`/search?${qs.stringify(searchState)}`);
     }
     return false;
   };

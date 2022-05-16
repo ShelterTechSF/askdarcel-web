@@ -9,6 +9,7 @@ const RefinementListFilter = ({ items, refine }) => (
       <label key={item.label} className={styles.checkBox}>
         {item.label}
         <input
+          className={styles.refinementInput}
           type="checkbox"
           checked={item.isRefined}
           onChange={e => {

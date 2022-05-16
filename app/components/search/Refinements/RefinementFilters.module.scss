@@ -1,1 +1,31 @@
-// temporarily empty file for purposes of PR
+@import '~styles/utils/_helpers.scss';
+
+.clearAll {
+  font-size: 16px;
+  color: $color-brand;
+  cursor: pointer;
+  margin-top: 32px;
+  @media screen and (min-width: $min-desktop) {
+    margin-top: 13px;
+  }
+}
+
+.checkBox {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 13px;
+  color: $color-grey5;
+  cursor: pointer;
+  &.disabled {
+    color: $color-grey4;
+  }
+}
+
+.refinementInput {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+@use '~components/search/SearchAndServiceResultsPage.module.scss';
+
+.hiddenSearchBox {
+  // Hides the SearchBox component. Though we are not explicitly using it,
+  // the component needs to be present within the InstantSearch parent component
+  // for the query to be passed to the Algolia Instant Search internals.
+  display: none;
+}

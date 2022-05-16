@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
+import styles from './RefinementFilters.module.scss';
 
+// Todo: This component could potentially be consolidated with the the Refinement List Filter
+// component when categories/eligibilities are standardized across the homepage Service
+// Pathways results and the Search Results pages
 class FacetRefinementList extends Component {
   constructor(props) {
     super(props);
@@ -66,39 +70,31 @@ class FacetRefinementList extends Component {
   render() {
     const { isChecked } = this.state;
     const { mapping } = this.props;
-    const { attribute } = this.props;
     const mapKeys = Object.keys(mapping);
-    const title = attribute === 'eligibilities' ? 'Eligibilities' : 'Categories';
+
     return (
-      <div className="refinement-wrapper">
-        <p className="refinement-title">{title}</p>
-        <ul className="refinement-ul">
-          {mapKeys.map(key => {
-            const refinementHasResults = this.refinementHasResults(key);
-            // for each map key, display it as a filtering option
-            // for onClick of each option, call refine on the values of the key
-            // eslint-disable-next-line prefer-template
-            return (
-              <li
-                key={key}
-                className={`refine-li ${isChecked[key] ? 'active' : ''
-                }${!refinementHasResults ? 'refine-li-disabled' : ''}`}
-              >
-                <label>
-                  <input
-                    type="checkbox"
-                    className="refine-checkbox"
-                    onChange={this.changeRefinement.bind(this, key)}
-                    checked={isChecked[key]}
-                    disabled={!refinementHasResults}
-                  />
-                  {key}
-                </label>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <ul>
+        {mapKeys.map(key => {
+          const refinementHasResults = this.refinementHasResults(key);
+          // for each map key, display it as a filtering option
+          // for onClick of each option, call refine on the values of the key
+          // eslint-disable-next-line prefer-template
+          return (
+            <li key={key}>
+              <label className={`${styles.checkBox} ${!refinementHasResults ? styles.disabled : ''}`}>
+                {key}
+                <input
+                  type="checkbox"
+                  className={styles.refinementInput}
+                  onChange={this.changeRefinement.bind(this, key)}
+                  checked={isChecked[key]}
+                  disabled={!refinementHasResults}
+                />
+              </label>
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 }
