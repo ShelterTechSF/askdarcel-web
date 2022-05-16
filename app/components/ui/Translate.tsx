@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
 // 127.0.0.1       staging.sfserviceguide.org
 // Then, navigate to http://staging.sfserviceguide.org:8080 to see the widget.
 //
-// Note: At least while testing, this is an <li> element as it strictly goes within the
+// Note: At least while testing, this is a <li> element as it goes within the
 // nav <ul> site links element.
 
 const Translate = () => {
@@ -19,19 +19,21 @@ const Translate = () => {
         {/* todo: When we go live with Google Translate OR we have a dedicated test environment,
                   the scripts within this Helmet snippet should be moved to index.html  */}
         <Helmet>
-          <script type="text/javascript">{`
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es,tl,zh-TW'}, 'google_translate_element');
-            }
-          `}</script>
-          <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+          <script type="text/javascript">
+            {`
+              function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es,tl,zh-TW'}, 'google_translate_element');
+              }
+            `}
+          </script>
+          <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
         </Helmet>
-        <div id="google_translate_element"></div>
+        <div id="google_translate_element" />
       </li>
     );
   }
 
-  return null
+  return null;
 };
 
 export default Translate;
