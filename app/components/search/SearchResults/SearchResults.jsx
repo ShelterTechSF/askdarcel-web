@@ -128,7 +128,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           {isSecondAddress && <h3 className={styles.otherLocationsTitle}>Other Locations</h3>}
           <div className={styles.locationContainer}>
             <span>
-              <button 
+              <button
                 className={styles.addressLabelBtn}
                 onClick={() => {
                   setCenterCoords({ lat: address.latitude, lng: address.longitude });
@@ -138,7 +138,6 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
               </button>
               <span>{address.address_1}</span>
             </span>
-            
             { i > 0 && (
             <button
               className={styles.goToAddressBtn}
@@ -149,7 +148,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
               <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
               <span className={styles.sideLinkText}>Show on map</span>
             </button>
-          )}
+            )}
           </div>
         </div>
       );
