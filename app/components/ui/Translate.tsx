@@ -3,10 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 // This is a prototype component for testing out the Google Translate widget. The logic below
 // dictates that this component only be displayed on staging; i.e. the widget will be displayed IF
-// location.hostname === 'staging.sfserviceguide.org'. To test locally point
-// staging.sfserviceguide.org to your local host IP in your /etc/hosts file; i.e.,
-// 127.0.0.1       staging.sfserviceguide.org
-// Then, navigate to http://staging.sfserviceguide.org:8080 to see the widget.
+// location.hostname === 'staging.sfserviceguide.org'.
 //
 // Note: At least while testing, this is a <li> element as it goes within the
 // nav <ul> site links element.
@@ -16,8 +13,8 @@ const Translate = () => {
   if (isStaging) {
     return (
       <li className="googleTranslateContainer">
-        {/* todo: When we go live with Google Translate OR we have a dedicated test environment,
-                  the scripts within this Helmet snippet should be moved to index.html  */}
+        {/* todo: When we go live with Google Translate the scripts within this Helmet snippet
+         /* maybe should be moved to index.html, depending on specific whitelabel needs too  */}
         <Helmet>
           <script type="text/javascript">
             {`
