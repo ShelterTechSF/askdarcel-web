@@ -1,0 +1,15 @@
+@import '~styles/utils/_helpers.scss';
+
+.inputDefaults {
+  width: auto;
+  &:active, &:hover, &:focus {
+    box-shadow: none;
+  }
+}
+
+.inputDefaults {
+  &[type=checkbox] {
+    cursor: pointer;
+    transform: scale(1.66);
+  }
+}
