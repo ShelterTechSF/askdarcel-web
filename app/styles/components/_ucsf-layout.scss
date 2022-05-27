@@ -1,0 +1,17 @@
+@import '~styles/utils/_helpers.scss';
+
+.ucsfHomePage {
+  margin: 100px auto 0;
+  width: 90%;
+}
+
+.title {
+  @extend %font-size-large;
+  color: $color-title;
+}
+
+.subTitle {
+  @extend %font-size-medium;
+  color: $color-grey6;
+  margin: 12px 0 22px;
+}

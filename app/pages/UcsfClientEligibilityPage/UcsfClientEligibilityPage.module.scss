@@ -1,67 +1,5 @@
 @import '~styles/utils/_helpers.scss';
-
-.ucsfHomePage {
-  margin: 100px auto 0;
-  width: 90%;
-}
-
-.title {
-  @extend %font-size-large;
-  color: $color-title;
-}
-
-.subTitle {
-  @extend %font-size-medium;
-  color: $color-grey6;
-  margin: 12px 0 22px;
-}
-
-.serviceList {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 30px;
-  @media screen and (max-width: $break-tablet-s) {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.serviceItem {
-  width: 160px;
-  height: 160px;
-  margin: 0 15px 15px 0;
-  border-radius: 5px;
-  box-shadow: 0 0px 4px rgb(0 0 0 / 20%);
-  &.isChecked {
-    box-shadow: none;
-    border: solid 1px $color-brand;
-  }
-  @media screen and (max-width: $break-tablet-s) {
-    margin-right: 0;
-  }
-}
-
-.serviceLabel {
-  height: 100%;
-  width: 100%;
-  margin-top: -10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  cursor: pointer;
-  img {
-    height: 60px;
-    margin-bottom: 10px;
-  }
-}
-
-.serviceCheckbox {
-  align-self: end;
-  margin: 0 10px 10px 0px;
-}
+@import '~styles/components/_ucsf-layout.scss';
 
 .eligibilitiesContainer {
   display: grid;
@@ -106,6 +44,10 @@
   list-style: decimal;
 }
 
+.eligibilityListItem {
+  display: list-item;
+}
+
 .eligibilityLabel {
   cursor: pointer;
 }
@@ -128,29 +70,12 @@
   }
 }
 
-.buttonContainer {
-  text-align: right;
-  margin-top: 200px;
-  @media screen and (max-width: $break-tablet-s) {
-    text-align: center;
-    margin: 50px auto;
-  }
-}
-
 .button {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  width: 120px;
-  height: 50px;
+  @include buttonMedium();
 }
 
 .buttonLarge {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  width: 225px;
-  height: 50px;
+  @include buttonLarge();
   margin-left: 10px;
 }
 

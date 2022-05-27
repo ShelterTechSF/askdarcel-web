@@ -19,7 +19,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  id: string,
+  id: string;
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;

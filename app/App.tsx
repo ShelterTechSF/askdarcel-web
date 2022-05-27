@@ -56,14 +56,13 @@ const outerContainerId = 'outer-container';
 const pageWrapId = 'page-wrap';
 
 export const App = () => {
-  const isTargetWhiteLabelPage = (targetWhiteLabelId: string) => {
-    return targetWhiteLabelId === whiteLabelId;
-  };
+  const checkWhiteLabelPage = (targetWhiteLabelId: string) => targetWhiteLabelId
+    === whiteLabelId;
 
   let homePageComponent = HomePage;
-  if (isTargetWhiteLabelPage('ucsf')) {
+  if (checkWhiteLabelPage('ucsf')) {
     homePageComponent = UcsfHomePage;
-  };
+  }
 
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -138,7 +137,7 @@ export const App = () => {
               <Route exact path="/:categorySlug/results" component={ServiceDiscoveryResults} />
 
               {/* UCSF white label paths */}
-              {isTargetWhiteLabelPage('ucsf') && <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />}
+              {checkWhiteLabelPage('ucsf') && <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />}
 
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />

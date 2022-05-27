@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from "./Input.module.scss";
+import styles from './Input.module.scss';
 
 type InputProps = {
   name?: string;
@@ -22,19 +22,17 @@ const Input = ({
   addClass,
   id,
   type,
-}: InputProps) => {
-  return (
-    <input
-      name={name}
-      placeholder={placeholderText}
-      onChange={onChange}
-      value={value}
-      checked={checked}
-      className={`${styles.inputDefaults} ${addClass ? addClass : ''}`}
-      id={id}
-      type={type}
-    />
-  );
-};
+}: InputProps) => (
+  <input
+    name={name}
+    placeholder={placeholderText}
+    onChange={onChange}
+    value={value}
+    checked={checked}
+    className={`${styles.inputDefaults} ${addClass || ''}`}
+    id={id}
+    type={type}
+  />
+);
 
 export default Input;

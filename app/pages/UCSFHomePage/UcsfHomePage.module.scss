@@ -1,21 +1,5 @@
 @import '~styles/utils/_helpers.scss';
-
-.ucsfHomePage {
-  margin: 100px auto 0;
-  width: 90%;
-}
-
-
-.title {
-  @extend %font-size-large;
-  color: $color-title;
-}
-
-.subTitle {
-  @extend %font-size-medium;
-  color: $color-grey6;
-  margin: 12px 0 22px;
-}
+@import '~styles/components/_ucsf-layout.scss';
 
 .resourceList {
   display: flex;
@@ -64,71 +48,6 @@
   margin: 0 10px 10px 0px;
 }
 
-.eligibilitiesContainer {
-  display: grid;
-  grid-template-columns: 1fr 365px;
-  gap: 15px;
-
-  @media screen and (max-width: $break-tablet-p) {
-    grid-template-columns: none;
-  }
-
-  @media screen and (max-width: $break-tablet-s) {
-    margin: auto;
-    grid-template-columns: none;
-  }
-}
-
-.eligibilitiesBox {
-  display: flex;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 3px;
-  box-shadow: 0px 0.5px 2px rgb(0 0 0 / 20%);
-
-  @media screen and (max-width: $break-tablet-s) {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  &_title {
-    color: $color-brand;
-    @extend %font-size-large;
-    width: 4em;
-    margin-right: 25px;
-    @media screen and (max-width: $break-tablet-s) {
-      width: auto;
-      margin: auto auto 15px;
-    }
-  }
-}
-
-.eligibilitiesLabels {
-  list-style: decimal;
-}
-
-.eligibilityLabel {
-  cursor: pointer;
-}
-
-.eligibilityItem {
-  margin-bottom: 8px;
-  input {
-    margin-right: 10px;
-  }
-}
-
-.listContainer {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 15px;
-  margin-bottom: 15px;
-
-  @media screen and (max-width: $break-tablet-p) {
-    grid-template-columns: none;
-  }
-}
-
 .buttonContainer {
   text-align: right;
   margin-top: 200px;
@@ -139,29 +58,5 @@
 }
 
 .button {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  width: 120px;
-  height: 50px;
-}
-
-.buttonLarge {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  width: 225px;
-  height: 50px;
-  margin-left: 10px;
-}
-
-.eligibilitiesBtns {
-  align-self: end;
-  @media screen and (max-width: $break-tablet-p) {
-    text-align: right;
-  }
-
-  @media screen and (max-width: $break-tablet-s) {
-    text-align: center;
-  }
+  @include buttonMedium();
 }
