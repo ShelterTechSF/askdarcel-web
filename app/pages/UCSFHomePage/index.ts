@@ -1,1 +1,1 @@
-export * from './UcsfHomePage';
+export { default } from './UcsfHomePage';

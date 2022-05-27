@@ -8,7 +8,7 @@ type InputProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   checked?: boolean;
-  classesString?: string;
+  addClass?: string;
   id?: string;
   type: string;
 };
@@ -19,7 +19,7 @@ const Input = ({
   onChange,
   value,
   checked,
-  classesString,
+  addClass,
   id,
   type,
 }: InputProps) => {
@@ -30,7 +30,7 @@ const Input = ({
       onChange={onChange}
       value={value}
       checked={checked}
-      className={`${styles.inputDefaults} ${classesString}`}
+      className={`${styles.inputDefaults} ${addClass ? addClass : ''}`}
       id={id}
       type={type}
     />

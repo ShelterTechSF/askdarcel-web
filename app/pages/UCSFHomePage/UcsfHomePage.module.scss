@@ -5,6 +5,7 @@
   width: 90%;
 }
 
+
 .title {
   @extend %font-size-large;
   color: $color-title;
@@ -16,7 +17,7 @@
   margin: 12px 0 22px;
 }
 
-.serviceList {
+.resourceList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -27,7 +28,7 @@
   }
 }
 
-.serviceItem {
+.resourceItem {
   width: 160px;
   height: 160px;
   margin: 0 15px 15px 0;
@@ -42,7 +43,7 @@
   }
 }
 
-.itemLabel {
+.resourceLabel {
   height: 100%;
   width: 100%;
   margin-top: -10px;
@@ -56,6 +57,11 @@
     height: 60px;
     margin-bottom: 10px;
   }
+}
+
+.resourceCheckbox {
+  align-self: end;
+  margin: 0 10px 10px 0px;
 }
 
 .eligibilitiesContainer {

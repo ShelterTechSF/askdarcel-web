@@ -1,15 +1,15 @@
-import AskDarcelImage from '../assets/img/askdarcel.svg';
 import BackgroundImage from '../assets/img/bg.png';
 import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
 import SFFamiliesLogo from '../assets/img/sf-families.svg';
 import SFServiceLogo from '../assets/img/sf-service.svg';
+import UcsfServiceLogo from '../assets/img/ucsf-logo.svg';
 import SFSeal from '../assets/img/sf-seal.png';
 import LinkSFLogo from '../assets/img/link-sf.png';
 import config from '../config';
 import styles from '../components/ui/Navigation.module.scss';
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF';
+type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
 
 interface WhiteLabelSite {
   appImages: {
@@ -19,6 +19,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
+  id: string,
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
@@ -56,6 +57,7 @@ const SFFamilies: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
+  id: 'sfFamilies',
   intercom: false,
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
@@ -76,6 +78,7 @@ const SFServiceGuide: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
+  id: 'sfServiceGuide',
   intercom: true,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
@@ -96,6 +99,7 @@ const LinkSF: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
+  id: 'linkSf',
   intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
@@ -112,11 +116,12 @@ const LinkSF: WhiteLabelSite = {
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
     background: BackgroundImage,
-    logoLarge: AskDarcelImage,
-    logoSmall: AskDarcelImage,
+    logoLarge: SFServiceLogo,
+    logoSmall: SFServiceLogo,
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
+  id: 'defaultWhiteLabel',
   intercom: true,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
@@ -129,6 +134,27 @@ const defaultWhiteLabel: WhiteLabelSite = {
   userWay: false,
 } as const;
 
+const Ucsf: WhiteLabelSite = {
+  appImages: {
+    background: BackgroundImage,
+    logoLarge: UcsfServiceLogo,
+    logoSmall: UcsfServiceLogo,
+    algolia: SearchByAlgoliaImage,
+    mohcdSeal: SFSeal,
+  },
+  id: 'ucsf',
+  intercom: false,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: false,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.siteNav,
+  siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
+  title: 'UCSF Outpatient Services',
+  userWay: false,
+} as const;
+
 /*
   whiteLabel made Readonly to force developer to modify whiteLabel object in this file.
   Disallow changes at compile time.
@@ -137,6 +163,7 @@ const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
   SFFamilies,
   SFServiceGuide,
   LinkSF,
+  Ucsf,
   defaultWhiteLabel,
 } as const;
 
