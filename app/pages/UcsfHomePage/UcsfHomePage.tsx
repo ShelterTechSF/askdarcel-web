@@ -7,7 +7,7 @@ import Input from 'components/ui/inline/Input';
 import styles from './UcsfHomePage.module.scss';
 
 
-const UcsfHomePage = () => {
+export const UcsfHomePage = () => {
   // Store resourceList on state so as to model checked resource list items.
   const [resourceList, setResourceList] = useState(resourceListArray);
 
@@ -37,7 +37,6 @@ const UcsfHomePage = () => {
   );
 };
 
-export default UcsfHomePage;
 
 // Todo: Once the API is wired up, resourceListArray may change; it's a placeholder for development
 interface resourceListItem {

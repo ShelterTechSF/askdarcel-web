@@ -6,7 +6,7 @@ import Input from 'components/ui/inline/Input';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
 
-const UcsfClientEligibilityPage = () => {
+export const UcsfClientEligibilityPage = () => {
   const history = useHistory();
 
   // todo: Use this data to make request to API for eligibilities
@@ -41,8 +41,6 @@ const UcsfClientEligibilityPage = () => {
     </div>
   );
 };
-
-export default UcsfClientEligibilityPage;
 
 
 // Todo: This is dummy data for development. It will be replaced by data returned by an API request

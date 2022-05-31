@@ -37,11 +37,12 @@ import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
+import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/UcsfClientEligibilityPage';
+import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
 import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
 import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
-import UcsfHomePage from './pages/UcsfHomePage';
-import UcsfClientEligibilityPage from './pages/UcsfClientEligibilityPage';
+
 
 const {
   id: whiteLabelId,
