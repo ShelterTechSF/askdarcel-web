@@ -1,3 +1,13 @@
+export interface IServiceCategory {
+  algoliaCategoryName: string;
+  id: string;
+  name: string;
+  slug: string;
+  steps: string[];
+  subcategorySubheading: string;
+  [key: string]: any;
+}
+
 export const STEPS = {
   ELIGIBILITIES: 'eligibilities',
   SUBCATEGORIES: 'subcategories',
@@ -6,7 +16,7 @@ export const STEPS = {
 
 const defaultSubheading = 'What are you currently looking for? Select all that apply.';
 
-export const CATEGORIES = [
+export const CATEGORIES: IServiceCategory[] = [
   {
     algoliaCategoryName: 'Covid-food',
     id: '1000001',
