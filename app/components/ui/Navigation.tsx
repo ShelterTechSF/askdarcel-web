@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import qs from 'qs';
+import Translate from './Translate';
 import whiteLabel from '../../utils/whitelabel';
 import styles from './Navigation.module.scss';
 
@@ -87,6 +88,7 @@ const SiteLinks = () => (
         Contact Us
       </a>
     </li>
+    <Translate />
   </ul>
 );
 
