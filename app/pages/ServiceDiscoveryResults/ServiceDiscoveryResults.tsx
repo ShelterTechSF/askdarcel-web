@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, Configure } from 'react-instantsearch/dom';
-import { SearchState } from 'react-instantsearch-core';
 import qs from 'qs';
 
-import { match, RouteComponentProps } from 'react-router-dom';
+import { match as Match, RouteComponentProps } from 'react-router-dom';
 
 import * as dataService from 'utils/DataService';
 import { useAppContext } from 'utils';
@@ -20,26 +19,33 @@ import styles from './ServiceDiscoveryResults.module.scss';
 
 type MatchParams = { categorySlug: string };
 type RouterLocation = RouteComponentProps['location'];
+type SearchState = {
+  configure?: {
+    aroundRadius?: string;
+  };
+};
+
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
 
 const createURL = (state: SearchState) => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
-const searchStateToURL = (location: RouterLocation, searchState: SearchState) => (searchState ?
-  `${location.pathname}${createURL(searchState)}` : ''
+const searchStateToURL = (location: RouterLocation, searchState: SearchState) => (searchState
+  ? `${location.pathname}${createURL(searchState)}` : ''
 );
-const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(location.search.slice(1));
+const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(
+  location.search.slice(1),
+);
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 const ServiceDiscoveryResults = ({
-    history, location, match
+  history, location, match,
 }: {
-    history: RouteComponentProps['history'],
-    location: RouteComponentProps['location'],
-    match: match<MatchParams>,
+  history: RouteComponentProps['history'];
+  location: RouteComponentProps['location'];
+  match: Match<MatchParams>;
 }) => {
-
   const { categorySlug } = match.params;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (category === undefined) { throw new Error(`Unknown category slug ${categorySlug}`); }
@@ -59,36 +65,33 @@ const ServiceDiscoveryResults = ({
   // TODO: Handle failure?
   useEffect(() => {
     dataService.get(`/api/categories/${category.id}`).then(response => {
-    setParentCategory(response.category);
+      setParentCategory(response.category);
     });
   }, [category.id]);
 
-  // Todo: Is there a way for TS to honor these various
-  // null checks in the code below?
-  const isLoading = (parentCategory === null)
-    || (eligibilities === null)
-    || (subcategories === null)
-    || (userLocation === null);
-
-  if (isLoading) {
-    return <Loader />;
+  // TS compiler requires explict null type checks
+  if (parentCategory !== null
+      && eligibilities !== null
+      && subcategories !== null
+      && userLocation !== null) {
+    return (
+      <InnerServiceDiscoveryResults
+        eligibilities={eligibilities}
+        subcategories={subcategories}
+        categoryName={category.name}
+        algoliaCategoryName={parentCategory.name}
+        searchState={searchState}
+        onSearchStateChange={onSearchStateChange}
+        searchRadius={searchRadius}
+        setSearchRadius={setSearchRadius}
+        expandList={expandList}
+        setExpandList={setExpandList}
+        userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
+      />
+    );
   }
 
-  return (
-    <InnerServiceDiscoveryResults
-      eligibilities={eligibilities}
-      subcategories={subcategories}
-      categoryName={category.name}
-      algoliaCategoryName={parentCategory.name}
-      searchState={searchState}
-      onSearchStateChange={onSearchStateChange}
-      searchRadius={searchRadius}
-      setSearchRadius={setSearchRadius}
-      expandList={expandList}
-      setExpandList={setExpandList}
-      userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
-    />
-  );
+  return <Loader />;
 };
 
 export default ServiceDiscoveryResults;
@@ -99,8 +102,8 @@ const InnerServiceDiscoveryResults = ({
   eligibilities, subcategories, categoryName, algoliaCategoryName, searchState,
   onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
 }: {
-  eligibilities: object[] | undefined;
-  subcategories: IServiceCategory[] | undefined;
+  eligibilities: object[];
+  subcategories: IServiceCategory[];
   categoryName: string;
   algoliaCategoryName: string;
   searchState: SearchState;
@@ -108,7 +111,7 @@ const InnerServiceDiscoveryResults = ({
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
   expandList: boolean;
-  setExpandList: (expandList: boolean) => void;
+  setExpandList: (_expandList: boolean) => void;
   userLatLng: string;
 }) => {
   // Todo: There is a null check for subcategories in ServiceDiscoveryResults function above;
