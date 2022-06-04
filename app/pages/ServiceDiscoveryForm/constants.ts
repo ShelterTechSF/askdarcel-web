@@ -5,7 +5,6 @@ export interface IServiceCategory {
   slug: string;
   steps: string[];
   subcategorySubheading: string;
-  [key: string]: any;
 }
 
 export const STEPS = {

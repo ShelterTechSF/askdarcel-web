@@ -114,9 +114,7 @@ const InnerServiceDiscoveryResults = ({
   setExpandList: (_expandList: boolean) => void;
   userLatLng: string;
 }) => {
-  // Todo: There is a null check for subcategories in ServiceDiscoveryResults function above;
-  // is there a way for TS to recognize that?
-  const subcategoryNames = subcategories?.map(c => c.name);
+  const subcategoryNames = subcategories.map(c => c.name);
   return (
     <div className={styles.container}>
       <div className={styles.header}>
