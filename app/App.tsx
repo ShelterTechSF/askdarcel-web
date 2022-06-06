@@ -138,7 +138,8 @@ export const App = () => {
               <Route exact path="/:categorySlug/results" component={ServiceDiscoveryResults} />
 
               {/* UCSF white label paths */}
-              {checkWhiteLabelPage('ucsf') && <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />}
+              <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
+              <Route exact path="/suggested-resources" component={ServiceDiscoveryResults} />
 
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />

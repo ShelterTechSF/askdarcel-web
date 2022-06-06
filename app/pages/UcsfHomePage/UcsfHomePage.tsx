@@ -7,19 +7,35 @@ import Input from 'components/ui/inline/Input';
 import styles from './UcsfHomePage.module.scss';
 
 
-export const UcsfHomePage = () => {
-  // Store resourceList on state so as to model checked resource list items.
-  const [resourceList, setResourceList] = useState(resourceListArray);
+interface resourceListItem {
+  id: string;
+  name: string;
+  icon: string;
+  checked: boolean;
+}
 
+// Todo: the UCSF Categories/Resources are not set up yet. For now, we're defaulting
+// the below resources to Covid-* category resource IDs for development purposes only
+// (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
+const ucsfResources = [
+  {
+    id: '1000010', name: 'Shelter', icon: 'bed', checked: false,
+  },
+  {
+    id: '1000001', name: 'Substance Use', icon: 'hospital', checked: false,
+  },
+  {
+    id: '1000002', name: 'Mental Health', icon: 'smiley-face', checked: false,
+  },
+];
+
+export const UcsfHomePage = () => {
+  const [resourceList, setResourceList] = useState(ucsfResources);
   const history = useHistory();
 
   const goToEligibilitiesStep = () => {
-    const checkedResources: any = {};
-    resourceList.forEach(resource => {
-      checkedResources[resource.name] = resource.checked;
-    });
-
-    history.push('/client-identity', checkedResources);
+    const selectedResources = resourceList.filter(resource => resource.checked);
+    history.push('/client-identity', { selectedResources });
   };
 
   return (
@@ -38,33 +54,12 @@ export const UcsfHomePage = () => {
 };
 
 
-// Todo: Once the API is wired up, resourceListArray may change; it's a placeholder for development
-interface resourceListItem {
-  name: string;
-  icon: string;
-  checked: boolean;
-}
-
-const resourceListArray = [{
-  name: 'Shelter',
-  icon: 'bed',
-  checked: false,
-}, {
-  name: 'Substance Use',
-  icon: 'hospital',
-  checked: false,
-}, {
-  name: 'Mental Health',
-  icon: 'smiley-face',
-  checked: false,
-}];
-
 const ResourceListComponent = ({ resourceList, setResourceList }: {
   resourceList: resourceListItem[];
   setResourceList: (resourcesArray: resourceListItem[]) => void;
 }) => {
   const updateCheckedResources = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = resourceList.map((item) => {
+    const newList = resourceList.map(item => {
       if (item.name === evt.target.name) {
         const updatedItem = {
           ...item,

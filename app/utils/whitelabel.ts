@@ -39,6 +39,9 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
   if (subdomain === String(config.SFFAMILIES_DOMAIN) || subdomain === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
   if (subdomain === String(config.MOHCD_DOMAIN) || domain === `staging.${String(config.MOHCD_DOMAIN)}.org`) return 'SFServiceGuide';
   if (subdomain === String(config.LINKSF_DOMAIN) || subdomain === `${String(config.LINKSF_DOMAIN)}-staging`) return 'LinkSF';
+  // QA One domain
+  if (subdomain === 'qaone') return 'Ucsf';
+
   return 'defaultWhiteLabel';
 }
 
