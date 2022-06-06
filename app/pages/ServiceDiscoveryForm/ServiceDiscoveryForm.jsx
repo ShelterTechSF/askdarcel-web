@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
-import { CATEGORIES, STEPS } from './constants';
+import { CATEGORIES } from './constants';
 import styles from './ServiceDiscoveryForm.module.scss';
 
 
@@ -68,7 +68,7 @@ const InnerServiceDiscoveryForm = ({
 
   const Content = () => {
     switch (steps[currentStep]) {
-      case STEPS.ELIGIBILITIES:
+      case 'eligibilities':
         return (
           <FormStep
             heading="Tell us more about you"
@@ -78,7 +78,7 @@ const InnerServiceDiscoveryForm = ({
             toggleOption={handleEligibilityClick}
           />
         );
-      case STEPS.SUBCATEGORIES:
+      case 'subcategories':
         return (
           <FormStep
             heading="Tell us more about you"
@@ -88,7 +88,7 @@ const InnerServiceDiscoveryForm = ({
             toggleOption={handleSubcategoryClick}
           />
         );
-      case STEPS.RESULTS:
+      case 'results':
       default:
       {
         const searchState = {

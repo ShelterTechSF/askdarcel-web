@@ -1,27 +1,23 @@
-export interface IServiceCategory {
-  algoliaCategoryName: string;
-  id: string;
-  name: string;
-  slug: string;
-  steps: string[];
-  subcategorySubheading: string;
-}
+type Step = 'eligibilities' | 'subcategories' | 'results';
 
-export const STEPS = {
-  ELIGIBILITIES: 'eligibilities',
-  SUBCATEGORIES: 'subcategories',
-  RESULTS: 'results',
-};
+export interface ServiceCategory {
+   readonly algoliaCategoryName: string;
+   readonly id: string;
+   readonly name: string;
+   readonly slug: string;
+   readonly steps: Step[];
+   readonly subcategorySubheading: string;
+}
 
 const defaultSubheading = 'What are you currently looking for? Select all that apply.';
 
-export const CATEGORIES: IServiceCategory[] = [
+export const CATEGORIES: readonly ServiceCategory[] = [
   {
     algoliaCategoryName: 'Covid-food',
     id: '1000001',
     name: 'Food resources',
     slug: 'food-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -29,7 +25,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000002',
     name: 'Hygiene resources',
     slug: 'hygiene-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -37,7 +33,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000005',
     name: 'Medical Services',
     slug: 'medical-services-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -45,7 +41,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000006',
     name: 'Domestic Violence',
     slug: 'domestic-violence-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -53,7 +49,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000007',
     name: 'Internet Access',
     slug: 'internet-access-resources',
-    steps: [STEPS.RESULTS],
+    steps: ['results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -61,7 +57,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000003',
     name: 'Financial',
     slug: 'financial-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -69,7 +65,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000009',
     name: 'Job Assistance',
     slug: 'job-assistance-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -77,7 +73,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000004',
     name: 'Rental Assistance',
     slug: 'rental-assistance-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -85,7 +81,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000008',
     name: 'LGBTQ Resources',
     slug: 'lgbtq-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -93,7 +89,7 @@ export const CATEGORIES: IServiceCategory[] = [
     id: '1000010',
     name: 'Shelter resources',
     slug: 'shelter-resources',
-    steps: [STEPS.SUBCATEGORIES, STEPS.RESULTS],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
 ];

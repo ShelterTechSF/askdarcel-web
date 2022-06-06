@@ -14,7 +14,7 @@ import Sidebar from 'components/search/Sidebar/Sidebar';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 import config from '../../config';
-import { CATEGORIES, IServiceCategory } from '../ServiceDiscoveryForm/constants';
+import { CATEGORIES, ServiceCategory } from '../ServiceDiscoveryForm/constants';
 import styles from './ServiceDiscoveryResults.module.scss';
 
 type MatchParams = { categorySlug: string };
@@ -49,7 +49,7 @@ const ServiceDiscoveryResults = ({
   const { categorySlug } = match.params;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (category === undefined) { throw new Error(`Unknown category slug ${categorySlug}`); }
-  const [parentCategory, setParentCategory] = useState<IServiceCategory | null>(null);
+  const [parentCategory, setParentCategory] = useState<ServiceCategory | null>(null);
   const eligibilities = useEligibilitiesForCategory(category.id);
   const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
@@ -103,7 +103,7 @@ const InnerServiceDiscoveryResults = ({
   onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
 }: {
   eligibilities: object[];
-  subcategories: IServiceCategory[];
+  subcategories: ServiceCategory[];
   categoryName: string;
   algoliaCategoryName: string;
   searchState: SearchState;
