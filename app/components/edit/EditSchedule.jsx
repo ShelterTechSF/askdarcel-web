@@ -75,11 +75,12 @@ EditSchedule.propTypes = {
   shouldInheritFromParent: PropTypes.bool.isRequired,
   setShouldInheritFromParent: PropTypes.func,
   handleScheduleChange: PropTypes.func.isRequired,
-  scheduleId: PropTypes.number.isRequired,
+  scheduleId: PropTypes.number,
 };
 
 EditSchedule.defaultProps = {
   setShouldInheritFromParent: null,
+  scheduleId: null,
 };
 
 export default EditSchedule;
