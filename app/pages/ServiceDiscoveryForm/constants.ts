@@ -1,17 +1,17 @@
 type Step = 'eligibilities' | 'subcategories' | 'results';
 
 export interface ServiceCategory {
-   readonly algoliaCategoryName: string;
-   readonly id: string;
-   readonly name: string;
-   readonly slug: string;
-   readonly steps: Step[];
-   readonly subcategorySubheading: string;
+  algoliaCategoryName: string;
+  id: string;
+  name: string;
+  slug: string;
+  steps: Step[];
+  subcategorySubheading: string;
 }
 
 const defaultSubheading = 'What are you currently looking for? Select all that apply.';
 
-export const CATEGORIES: readonly ServiceCategory[] = [
+export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Covid-food',
     id: '1000001',
