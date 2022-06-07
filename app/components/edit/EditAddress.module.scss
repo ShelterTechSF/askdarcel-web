@@ -1,4 +1,4 @@
-@import 'app/styles/utils/_colors.scss';
+@import 'app/styles/utils/_helpers.scss';
 
 // react-modal styles
 
@@ -21,6 +21,7 @@
   right: 0;
   top: 0;
   overflow: auto;
+  z-index: $z-index-edit-address-modal;
 }
 
 // Layout/container styles

@@ -113,9 +113,13 @@ export const App = () => {
               <Route exact path="/about" component={AboutPage} />
               <Route exact path="/covid" component={CovidPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
+
+              {/* NB: /organizations/new must be listed before /organizations/:id or else the "/new" step
+                will be interpreted as an ID and will thus break the OrganizationEditPage */}
+              <Route exact path="/organizations/new" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
               <Route exact path="/organizations/:id" component={OrganizationListingPage} />
               <Route exact path="/organizations/:id/edit" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
-              <Route exact path="/organizations/new" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
+
               <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
               <Route exact path="/resource-guides" component={ResourceGuides} />
               <Route exact path="/resource-guides/:id" component={ResourceGuide} />
