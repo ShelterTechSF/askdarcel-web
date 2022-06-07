@@ -80,6 +80,7 @@ EditSchedule.propTypes = {
 
 EditSchedule.defaultProps = {
   setShouldInheritFromParent: null,
+  scheduleId: null,
 };
 
 export default EditSchedule;
