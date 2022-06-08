@@ -3,28 +3,32 @@ import React from 'react';
 import styles from './TileButton.module.scss';
 
 /**
- * A larger than normal button. It currently uses default colors
- * and two sizes, but this can be expanded in the future.
+ * A wider than normal button. Currently, this component only has two sizes (medium, large) and
+ * sets the background and font color by default. This can be expanded/parameterized in the future.
  */
 
 type Size = 'medium' | 'large';
-
-type Props = {
-  text: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  size?: Size;
-  addClass?: string;
-};
+type ButtonType = 'button' | 'submit' | 'reset';
 
 const TileButton = ({
   text,
   onClick,
+  buttonType = 'button',
   size,
   addClass,
-}: Props) => (
+}: {
+  text: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  readonly buttonType?: ButtonType;
+  size?: Size;
+  addClass?: string;
+}) => (
   <button
     onClick={onClick}
-    className={`${size ? styles[size] : ''} ${addClass || ''}`}>
+    /* eslint-disable-next-line react/button-has-type */
+    type={buttonType}
+    className={`${size ? styles[size] : ''} ${addClass || ''}`}
+  >
     {text}
   </button>
 );

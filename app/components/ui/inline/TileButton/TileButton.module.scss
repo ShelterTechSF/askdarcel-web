@@ -4,7 +4,8 @@
   border-radius: 8px;
   color: $color-white;
   background-color: $color-brand;
-  height: 50px;
+  height: 56px;
+  padding: 0;
 }
 
 .medium {
@@ -14,5 +15,5 @@
 
 .large {
   @include buttonBasic;
-  width: 225px;
+  width: 218px;
 }

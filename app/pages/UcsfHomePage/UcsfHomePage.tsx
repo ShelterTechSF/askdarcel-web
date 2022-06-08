@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { icon as assetIcon } from 'assets';
 import Checkbox from 'components/ui/inline/Checkbox';
+import TileButton from 'components/ui/inline/TileButton';
 
 import styles from './UcsfHomePage.module.scss';
 
@@ -47,7 +48,11 @@ export const UcsfHomePage = () => {
       </h2>
       <ResourceListComponent resourceList={resourceList} setResourceList={setResourceList} />
       <div className={styles.buttonContainer}>
-        <button type="button" className={styles.button} onClick={goToEligibilitiesStep}>Next</button>
+        <TileButton
+          text="Next"
+          size="medium"
+          onClick={goToEligibilitiesStep}
+        />
       </div>
     </div>
   );

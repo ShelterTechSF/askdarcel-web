@@ -1,24 +1,26 @@
 @import 'app/styles/utils/_helpers.scss';
 
+// Largely borrowed from https://moderncss.dev/pure-css-custom-checkbox-style/
+
 .inputDefaults {
-  display: inline-grid;
   appearance: none;
-  background-color: #fff;
-  box-shadow: none;
+  display: inline-grid;
   width: 24px;
   height: 24px;
   padding: 0;
   margin: 0;
-  border: 1px solid $color-grey4;
-  border-radius: 3px;
   place-content: center;
-  cursor: pointer;
   vertical-align: bottom;
+  border: 2.5px solid #9E9E9E;
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: none;
   transition: none;
+  cursor: pointer;
 
   &::after, &::before {
     content: "";
-    display: none;
+    transform: scale(0);
   }
 
   &::before {
@@ -38,13 +40,13 @@
     border: 0;
 
     &::before {
-      display: block;
+      transform: scale(1);
       background-color: #fff;
       clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
     }
 
     &::after {
-      display: block;
+      transform: scale(1);
       background-color: $color-brand;
     }
   }

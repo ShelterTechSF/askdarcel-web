@@ -10,7 +10,7 @@ import styles from '../components/ui/Navigation.module.scss';
 
 // Include new white label here
 type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
-type homepageEnums = 'HomePage' | 'UcsfHomePage';
+type homepageComponentEnums = 'HomePage' | 'UcsfHomePage';
 
 interface WhiteLabelSite {
   appImages: {
@@ -20,7 +20,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  homePageComponent: homepageEnums,
+  homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
