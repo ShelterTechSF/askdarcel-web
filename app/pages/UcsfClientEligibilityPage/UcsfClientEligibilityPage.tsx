@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Input from 'components/ui/inline/Input';
+import Checkbox from 'components/ui/inline/Checkbox';
+import TileButton from 'components/ui/inline/TileButton';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
 // import { useEligibilitiesForCategory } from '../../hooks/APIHooks';
@@ -43,7 +44,7 @@ export const UcsfClientEligibilityPage = () => {
     });
   */
 
-  const goToResources = () => {
+  const goToResourceResults = () => {
     // Todo: We will need to alter the Service Discovery Results file to honor requests
     // that can include more than one resource (e.g. substance abuse AND mental health)
     // before successfully navigating to the suggested-resources page
@@ -63,8 +64,17 @@ export const UcsfClientEligibilityPage = () => {
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities />
         <div className={styles.eligibilitiesBtns}>
-          <button type="button" className={styles.button} onClick={backToResourceSelection}>Back</button>
-          <button type="button" className={styles.buttonLarge} onClick={goToResources}>Next: Service Capacity</button>
+          <TileButton
+            text="Back"
+            size="medium"
+            onClick={backToResourceSelection}
+          />
+          <TileButton
+            text="Next: Service Capacity"
+            size="large"
+            onClick={goToResourceResults}
+            addClass={styles.goToResultsBtn}
+          />
         </div>
       </div>
     </div>
@@ -117,9 +127,8 @@ const ClientEligibilities = () => {
             <ul className={styles.eligibilitiesList}>
               {eligibilityItem.eligibilities.map(eligibility => (
                 <li key={`${eligibilityItem.label}-${eligibility.name}`} className={styles.eligibilityItem}>
-                  <Input
+                  <Checkbox
                     onChange={evt => updateCheckedEligibilities(evt, eligibilityItem.label)}
-                    type="checkbox"
                     name={eligibility.name}
                     id={`${eligibilityItem.label}-${eligibility.name}`}
                     checked={eligibility.checked}

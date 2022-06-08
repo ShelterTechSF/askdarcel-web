@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { icon as assetIcon } from 'assets';
-import Input from 'components/ui/inline/Input';
+import Checkbox from 'components/ui/inline/Checkbox';
 
 import styles from './UcsfHomePage.module.scss';
 
@@ -84,9 +84,8 @@ const ResourceListComponent = ({ resourceList, setResourceList }: {
           ${resource.checked ? styles.isChecked : ''}`}
         >
           <label className={styles.resourceLabel} htmlFor={resource.name}>
-            <Input
+            <Checkbox
               onChange={updateCheckedResources}
-              type="checkbox"
               name={resource.name}
               id={resource.name}
               checked={resource.checked}

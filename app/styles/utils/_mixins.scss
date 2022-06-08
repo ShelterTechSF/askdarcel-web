@@ -283,20 +283,3 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
   // 2011 (IE 10)
   -ms-flex-line-pack: $value-2011;
 }
-
-@mixin buttonBasic($color: $color-white, $bgColor: $color-brand) {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  height: 50px;
-}
-
-@mixin buttonMedium($color: $color-white, $bgColor: $color-brand) {
-  @include buttonBasic($color, $bgColor);
-  width: 120px;
-}
-
-@mixin buttonLarge($color: $color-white, $bgColor: $color-brand) {
-  @include buttonBasic($color, $bgColor);
-  width: 225px;
-}

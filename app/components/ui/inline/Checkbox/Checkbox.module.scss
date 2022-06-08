@@ -1,0 +1,55 @@
+@import 'app/styles/utils/_helpers.scss';
+
+.inputDefaults {
+  display: inline-grid;
+  appearance: none;
+  background-color: #fff;
+  box-shadow: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid $color-grey4;
+  border-radius: 3px;
+  place-content: center;
+  cursor: pointer;
+  vertical-align: bottom;
+  transition: none;
+
+  &::after, &::before {
+    content: "";
+    display: none;
+  }
+
+  &::before {
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+  }
+
+  &::after {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+  }
+
+  &:checked {
+    border: 0;
+
+    &::before {
+      display: block;
+      background-color: #fff;
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+
+    &::after {
+      display: block;
+      background-color: $color-brand;
+    }
+  }
+
+  &:active, &:hover, &:focus {
+    box-shadow: initial;
+  }
+}

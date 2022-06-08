@@ -45,7 +45,7 @@ import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
 
 
 const {
-  id: whiteLabelId,
+  homePageComponent,
   intercom,
   showBanner,
   showSearch,
@@ -57,13 +57,10 @@ const outerContainerId = 'outer-container';
 const pageWrapId = 'page-wrap';
 
 export const App = () => {
-  const checkWhiteLabelPage = (targetWhiteLabelId: string) => targetWhiteLabelId
-    === whiteLabelId;
-
-  let homePageComponent = HomePage;
-  if (checkWhiteLabelPage('ucsf')) {
-    homePageComponent = UcsfHomePage;
-  }
+  const homePageDictionary = {
+    HomePage,
+    UcsfHomePage,
+  };
 
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
@@ -121,7 +118,7 @@ export const App = () => {
           {showBanner && <Banner />}
           <div className="container">
             <Switch>
-              <Route exact path="/" component={homePageComponent} />
+              <Route exact path="/" component={homePageDictionary[homePageComponent]} />
               <Route exact path="/about" component={AboutPage} />
               <Route exact path="/covid" component={CovidPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />

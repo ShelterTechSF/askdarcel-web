@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './Input.module.scss';
+import styles from './Checkbox.module.scss';
 
-type InputProps = {
+type CheckboxProps = {
   name?: string;
   placeholderText?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -10,7 +10,6 @@ type InputProps = {
   checked?: boolean;
   addClass?: string;
   id?: string;
-  type: string;
 };
 
 const Input = ({
@@ -21,8 +20,7 @@ const Input = ({
   checked,
   addClass,
   id,
-  type,
-}: InputProps) => (
+}: CheckboxProps) => (
   <input
     name={name}
     placeholder={placeholderText}
@@ -31,7 +29,7 @@ const Input = ({
     checked={checked}
     className={`${styles.inputDefaults} ${addClass || ''}`}
     id={id}
-    type={type}
+    type="checkbox"
   />
 );
 

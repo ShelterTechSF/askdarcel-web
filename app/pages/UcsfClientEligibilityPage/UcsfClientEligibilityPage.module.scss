@@ -50,6 +50,7 @@
 
 .eligibilityLabel {
   cursor: pointer;
+  vertical-align: top;
 }
 
 .eligibilityItem {
@@ -74,12 +75,7 @@
   }
 }
 
-.button {
-  @include buttonMedium();
-}
-
-.buttonLarge {
-  @include buttonLarge();
+.goToResultsBtn {
   margin-left: 10px;
 }
 

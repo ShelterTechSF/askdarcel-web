@@ -23,11 +23,6 @@ input, textarea {
   &:disabled {
     box-shadow: none;
   }
-  &.defaultNoHover {
-    &:active, &:hover, &:focus {
-      box-shadow: none;
-    }
-  }
 }
 
 textarea {

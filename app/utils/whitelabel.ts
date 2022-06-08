@@ -10,6 +10,7 @@ import styles from '../components/ui/Navigation.module.scss';
 
 // Include new white label here
 type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
+type homepageEnums = 'HomePage' | 'UcsfHomePage';
 
 interface WhiteLabelSite {
   appImages: {
@@ -19,7 +20,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  id: string;
+  homePageComponent: homepageEnums,
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
@@ -42,7 +43,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
   // QA One domain
   if (subdomain === 'qaone') return 'Ucsf';
 
-  return 'defaultWhiteLabel';
+  return 'Ucsf';
 }
 
 const configKey = determineWhiteLabelSite();
@@ -60,7 +61,7 @@ const SFFamilies: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  id: 'sfFamilies',
+  homePageComponent: 'HomePage',
   intercom: false,
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
@@ -81,7 +82,7 @@ const SFServiceGuide: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  id: 'sfServiceGuide',
+  homePageComponent: 'HomePage',
   intercom: true,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
@@ -102,7 +103,7 @@ const LinkSF: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  id: 'linkSf',
+  homePageComponent: 'HomePage',
   intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
@@ -124,7 +125,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  id: 'defaultWhiteLabel',
+  homePageComponent: 'HomePage',
   intercom: true,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
@@ -145,7 +146,7 @@ const Ucsf: WhiteLabelSite = {
     algolia: SearchByAlgoliaImage,
     mohcdSeal: SFSeal,
   },
-  id: 'ucsf',
+  homePageComponent: 'UcsfHomePage',
   intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
