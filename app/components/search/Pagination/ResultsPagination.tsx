@@ -25,14 +25,6 @@ const ResultsPagination = ({ noResults }: {noResults: boolean}) => (
         <img src={algolia} alt="Search by Algolia" />
       </div>
     </div>
-    <div className={styles.addResource}>
-      Can&apos;t find the organization you&apos;re looking for?
-      <Link to="/organizations/new" className={styles.addResourceButton}>
-        <i className="material-icons">add_circle</i>
-        {' '}
-        Add an organization
-      </Link>
-    </div>
   </div>
 );
 

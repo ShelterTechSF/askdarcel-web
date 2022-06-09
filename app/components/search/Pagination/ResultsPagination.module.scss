@@ -56,29 +56,3 @@
     height: 16px;
   }
 }
-
-.addResource {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  margin: 20px 0 30px;
-  font-size: 0.87rem;
-  @media screen and (max-width: $break-tablet-s) {
-    margin: 20px 0 30px;
-  }
-}
-
-.addResourceButton {
-  display: block;
-  padding: 11px 14px;
-  border: 1px solid rgba(0,0,0,0.2);
-  border-radius: 3px;
-  color: #666;
-  margin-top: 15px;
-  &:hover, &:active {
-    border: 1px solid #276ce5;
-    color: #276ce5;
-  }
-}
