@@ -1,6 +1,5 @@
 import React from 'react';
 import { Pagination } from 'react-instantsearch/dom';
-import { Link } from 'react-router-dom';
 import whiteLabel from 'utils/whitelabel';
 
 import styles from './ResultsPagination.module.scss';
