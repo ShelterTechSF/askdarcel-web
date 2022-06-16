@@ -1,10 +1,28 @@
 @import '~styles/utils/_helpers.scss';
-@import '~styles/components/_ucsf-layout.scss';
+
+.eligibilityPage {
+  grid-column: 2 / 13;
+  @media screen and (max-width: 1350px) {
+    grid-column: 2/11;
+  }
+
+  @media screen and (max-width: $break-tablet-p) {
+    grid-column: 2/12;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    grid-column: 1/13;
+  }
+}
 
 .eligibilitiesContainer {
   display: grid;
-  grid-template-columns: 1fr 365px;
-  gap: 15px;
+  grid-template-columns: repeat(22, 1fr);
+  gap: 25px;
+
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: 1fr;
+  }
 
   @media screen and (max-width: $break-tablet-p) {
     grid-template-columns: none;
@@ -17,11 +35,16 @@
 }
 
 .eligibilitiesBox {
+  grid-column: 1 / 16;
   display: flex;
   margin-top: 20px;
   padding: 20px;
   border-radius: 3px;
   box-shadow: 0 0.5px 2px rgb(0 0 0 / 20%);
+
+  @media screen and (max-width: 1350px) {
+    grid-column: 1;
+  }
 
   @media screen and (max-width: $break-tablet-s) {
     flex-direction: column;
@@ -32,12 +55,31 @@
     color: $color-brand;
     @extend %font-size-large;
     width: 4em;
-    margin-right: 25px;
+    margin-right: 35px;
     @media screen and (max-width: $break-tablet-s) {
       width: auto;
       margin: auto auto 15px;
     }
   }
+}
+
+.eligibilitiesBtns {
+  grid-column: 16 / 23;
+  align-self: end;
+
+  @media screen and (max-width: 1350px) {
+    justify-self: end;
+    grid-column: 1;
+  }
+
+  @media screen and (max-width: $break-tablet-p) {
+    justify-self: center;
+    margin-bottom: 100px;
+  }
+}
+
+.goToResultsBtn {
+  margin-left: 8px;
 }
 
 .eligibilitiesLabels {
@@ -51,7 +93,7 @@
 .eligibilityLabel {
   cursor: pointer;
   vertical-align: top;
-  padding-left: 10px;
+  padding-left: 8px;
 }
 
 .eligibilityItem {
@@ -70,20 +112,5 @@
 
   @media screen and (max-width: $break-tablet-p) {
     grid-template-columns: none;
-  }
-}
-
-.goToResultsBtn {
-  margin-left: 10px;
-}
-
-.eligibilitiesBtns {
-  align-self: end;
-  @media screen and (max-width: $break-tablet-p) {
-    text-align: right;
-  }
-
-  @media screen and (max-width: $break-tablet-s) {
-    text-align: center;
   }
 }

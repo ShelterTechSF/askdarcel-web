@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 
 import Checkbox from 'components/ui/inline/Checkbox';
 import TileButton from 'components/ui/inline/TileButton';
+import Section from 'components/ucsf/Section';
+import Layout from 'components/ucsf/Layout';
+
 import styles from './UcsfClientEligibilityPage.module.scss';
 
 // import { useEligibilitiesForCategory } from '../../hooks/APIHooks';
@@ -15,7 +18,7 @@ const clientEligibilitiesList = [
   { label: 'Health Related', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'HIV' }, { checked: false, name: 'Dual Diagnosis' }] },
 ];
 
-export const UcsfClientEligibilityPage = () => {
+const Page = () => {
   const history = useHistory();
 
   /**
@@ -58,10 +61,10 @@ export const UcsfClientEligibilityPage = () => {
   };
 
   return (
-    <div className={styles.ucsfHomePage}>
-      <h2 className={styles.title}>
-        Step 2: Can you tell us more about your client and their needs?
-      </h2>
+    <div className={styles.eligibilityPage}>
+      <Section
+        title="Step 2: Can you tell us more about your client and their needs?"
+      />
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities />
         <div className={styles.eligibilitiesBtns}>
@@ -146,3 +149,9 @@ const ClientEligibilities = () => {
     </div>
   );
 };
+
+export const UcsfClientEligibilityPage = () => (
+  <Layout>
+    <Page />
+  </Layout>
+);
