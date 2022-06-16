@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import styles from './Layout.module.scss';
 
-const Section = ({ children }: {
+const Layout = ({ children }: {
   children: ReactNode;
 }) => (
   <div className={styles.grid}>
@@ -10,4 +10,4 @@ const Section = ({ children }: {
   </div>
 );
 
-export default Section;
+export default Layout;
