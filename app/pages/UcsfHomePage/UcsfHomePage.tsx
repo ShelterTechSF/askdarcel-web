@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { icon as assetIcon } from 'assets';
 import Checkbox from 'components/ui/inline/Checkbox';
 import TileButton from 'components/ui/inline/TileButton';
+import Section from 'components/ucsf/Section';
+import Layout from 'components/ucsf/Layout';
 
 import styles from './UcsfHomePage.module.scss';
 
@@ -30,7 +32,7 @@ const ucsfResources = [
   },
 ];
 
-export const UcsfHomePage = () => {
+const Page = () => {
   const [resourceList, setResourceList] = useState(ucsfResources);
   const history = useHistory();
 
@@ -41,11 +43,13 @@ export const UcsfHomePage = () => {
 
   return (
     <div className={styles.ucsfHomePage}>
-      <h2 className={styles.title}>For Clinicians</h2>
-      <p className={styles.subTitle}>Lorem Ipsum Dolorum</p>
-      <h2 className={styles.title}>
-        Step 1: What kind of assistance does your client need? Select all that apply.
-      </h2>
+      <Section
+        title="For Clinicians"
+        body="Lorem Ipsum Dolorum"
+      />
+      <Section
+        title="Step 1: What kind of assistance does your client need? Select all that apply."
+      />
       <ResourceListComponent resourceList={resourceList} setResourceList={setResourceList} />
       <div className={styles.buttonContainer}>
         <TileButton
@@ -58,49 +62,52 @@ export const UcsfHomePage = () => {
   );
 };
 
-
 const ResourceListComponent = ({ resourceList, setResourceList }: {
   resourceList: resourceListItem[];
   setResourceList: (resourcesArray: resourceListItem[]) => void;
 }) => {
-  const updateCheckedResources = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = resourceList.map(item => {
-      if (item.name === evt.target.name) {
-        const updatedItem = {
-          ...item,
-          checked: !item.checked,
-        };
-
-        return updatedItem;
-      }
-
-      return item;
-    });
+  const setResourceItem = (index: number, newResource: resourceListItem) => {
+    const newList = [
+      ...resourceList.slice(0, index),
+      newResource,
+      ...resourceList.slice(index + 1),
+    ];
 
     setResourceList(newList);
   };
 
+  const toggleChecked = (resource: resourceListItem) => ({
+    ...resource,
+    checked: !resource.checked,
+  });
+
   return (
     <ul className={styles.resourceList}>
-      {resourceList.map((resource: resourceListItem) => (
+      {resourceList.map((resource: resourceListItem, i: number) => (
         <li
-          key={resource.name}
+          key={resource.id}
           className={`${styles.resourceItem}
           ${resource.checked ? styles.isChecked : ''}`}
         >
-          <label className={styles.resourceLabel} htmlFor={resource.name}>
+          <label className={styles.resourceLabel} htmlFor={resource.id}>
             <Checkbox
-              onChange={updateCheckedResources}
+              onChange={() => setResourceItem(i, toggleChecked(resource))}
               name={resource.name}
-              id={resource.name}
+              id={resource.id}
               checked={resource.checked}
               addClass={styles.resourceCheckbox}
             />
             <img src={assetIcon(resource.icon)} alt={resource.name} className={styles.icon} />
-            <p>{resource.name}</p>
+            <p className={styles.resourceName}>{resource.name}</p>
           </label>
         </li>
       ))}
     </ul>
   );
 };
+
+export const UcsfHomePage = () => (
+  <Layout>
+    <Page />
+  </Layout>
+);
