@@ -1,12 +1,17 @@
 @import 'app/styles/utils/_helpers.scss';
 
 .title {
-  @extend %font-size-large;
-  color: $color-title;
+  font-size: 26px;
+  color: #000;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #000;
 }
 
 .body {
-  @extend %font-size-medium;
-  color: $color-grey6;
-  margin: 12px 0 22px;
+  font-size: 16px;
+  color: #404040;
+  margin-top: 8px;
 }

@@ -48,7 +48,8 @@ const Page = () => {
         body="Lorem Ipsum Dolorum"
       />
       <Section
-        title="Step 1: What kind of assistance does your client need? Select all that apply."
+        addClass={styles.subtitleMargin}
+        subtitle="Step 1: What kind of assistance does your client need? Select all that apply."
       />
       <ResourceListComponent resourceList={resourceList} setResourceList={setResourceList} />
       <div className={styles.buttonContainer}>

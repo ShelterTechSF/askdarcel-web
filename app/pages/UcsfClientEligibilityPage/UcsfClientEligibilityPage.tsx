@@ -11,7 +11,6 @@ import styles from './UcsfClientEligibilityPage.module.scss';
 // import { useEligibilitiesForCategory } from '../../hooks/APIHooks';
 
 // Todo: This is dummy data for development. It will be replaced by data returned by API request(s)
-// Todo: Will "See all" be blue; See open figma question
 const clientEligibilitiesList = [
   { label: 'Age and Dependents', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'Under 18' }, { checked: false, name: 'I am a single adult and need shelter' }] },
   { label: 'Gender Identity', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'Woman' }, { checked: false, name: 'Man' }, { checked: false, name: 'Transgender' }] },
@@ -63,6 +62,7 @@ const Page = () => {
   return (
     <div className={styles.eligibilityPage}>
       <Section
+        addClass={styles.subtitleMargin}
         title="Step 2: Can you tell us more about your client and their needs?"
       />
       <div className={styles.eligibilitiesContainer}>
