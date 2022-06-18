@@ -11,7 +11,18 @@ import styles from './UcsfClientEligibilityPage.module.scss';
 // import { useEligibilitiesForCategory } from '../../hooks/APIHooks';
 
 // Todo: This is dummy data for development. It will be replaced by data returned by API request(s)
-const clientEligibilitiesList = [
+
+interface clientEligibility {
+  checked: boolean;
+  name: string;
+}
+
+interface clientEligibilityItem {
+  label: string;
+  eligibilities: clientEligibility[];
+}
+
+const clientEligibilitiesList: clientEligibilityItem[] = [
   { label: 'Age and Dependents', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'Under 18' }, { checked: false, name: 'I am a single adult and need shelter' }] },
   { label: 'Gender Identity', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'Woman' }, { checked: false, name: 'Man' }, { checked: false, name: 'Transgender' }] },
   { label: 'Health Related', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'HIV' }, { checked: false, name: 'Dual Diagnosis' }] },
@@ -63,7 +74,7 @@ const Page = () => {
     <div className={styles.eligibilityPage}>
       <Section
         addClass={styles.subtitleMargin}
-        title="Step 2: Can you tell us more about your client and their needs?"
+        subtitle="Step 2: Can you tell us more about your client and their needs?"
       />
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities />
@@ -87,34 +98,36 @@ const Page = () => {
 
 const ClientEligibilities = () => {
   const [eligibilityList, setEligibilityList] = useState(clientEligibilitiesList);
-  const updateCheckedEligibilities = (evt: React.ChangeEvent<HTMLInputElement>, label: string) => {
-    const newList = eligibilityList.map(eligibilityItem => {
-      if (eligibilityItem.label === label) {
-        const updatedEligibilities = eligibilityItem.eligibilities.map(eligibility => {
-          if (eligibility.name === evt.target.name) {
-            const updatedEligibility = {
-              ...eligibility,
-              checked: !eligibility.checked,
-            };
 
-            return updatedEligibility;
-          }
-
-          return eligibility;
-        });
-
-        const updatedItem = {
-          ...eligibilityItem,
-          eligibilities: updatedEligibilities,
-        };
-
-        return updatedItem;
-      }
-
-      return eligibilityItem;
-    });
+  // Todo: This setEligibilityItem and toggleChecked logic could change pretty drastically
+  // once the API returns eligibility data. The shape of that data is still under discussion
+  // between product and dev
+  const setEligibilityItem = (index: number, newEligibilityItem: clientEligibilityItem) => {
+    const newList = [
+      ...eligibilityList.slice(0, index),
+      newEligibilityItem,
+      ...eligibilityList.slice(index + 1),
+    ];
 
     setEligibilityList(newList);
+  };
+
+  const toggleChecked = (eligibilityItem: clientEligibilityItem, eligibilityIndex: number) => {
+    const newEligibility = {
+      ...eligibilityItem.eligibilities[eligibilityIndex],
+      checked: !eligibilityItem.eligibilities[eligibilityIndex].checked,
+    };
+
+    const updatedEligibilities = [
+      ...eligibilityItem.eligibilities.slice(0, eligibilityIndex),
+      newEligibility,
+      ...eligibilityItem.eligibilities.slice(eligibilityIndex + 1),
+    ];
+
+    return {
+      ...eligibilityItem,
+      eligibilities: updatedEligibilities,
+    };
   };
 
   return (
@@ -123,16 +136,16 @@ const ClientEligibilities = () => {
       <ol className={styles.eligibilitiesLabels}>
 
         {/* Todo: This list rendering logic will be refactored when the API is setup */}
-        {eligibilityList.map(eligibilityItem => (
+        {eligibilityList.map((eligibilityItem, index) => (
           <li key={eligibilityItem.label} className={styles.listContainer}>
             <span className={styles.eligibilityListItem}>
               {eligibilityItem.label}
             </span>
             <ul className={styles.eligibilitiesList}>
-              {eligibilityItem.eligibilities.map(eligibility => (
+              {eligibilityItem.eligibilities.map((eligibility, i) => (
                 <li key={`${eligibilityItem.label}-${eligibility.name}`} className={styles.eligibilityItem}>
                   <Checkbox
-                    onChange={evt => updateCheckedEligibilities(evt, eligibilityItem.label)}
+                    onChange={() => setEligibilityItem(index, toggleChecked(eligibilityItem, i))}
                     name={eligibility.name}
                     id={`${eligibilityItem.label}-${eligibility.name}`}
                     checked={eligibility.checked}

@@ -4,7 +4,6 @@ import styles from './Checkbox.module.scss';
 
 type CheckboxProps = {
   name?: string;
-  placeholderText?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   checked?: boolean;
@@ -14,7 +13,6 @@ type CheckboxProps = {
 
 const Input = ({
   name,
-  placeholderText,
   onChange,
   value,
   checked,
@@ -23,7 +21,6 @@ const Input = ({
 }: CheckboxProps) => (
   <input
     name={name}
-    placeholder={placeholderText}
     onChange={onChange}
     value={value}
     checked={checked}

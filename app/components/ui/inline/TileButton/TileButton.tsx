@@ -25,7 +25,9 @@ const TileButton = ({
 }) => (
   <button
     onClick={onClick}
-    /* eslint-disable-next-line react/button-has-type */
+     // ES Lint complains about the type attr being set dynamically, but given that type attr is
+     // limited to ButtonType enums, commenting this out should be safe
+     /* eslint-disable-next-line react/button-has-type */
     type={buttonType}
     className={`${size ? styles[size] : ''} ${addClass || ''}`}
   >
