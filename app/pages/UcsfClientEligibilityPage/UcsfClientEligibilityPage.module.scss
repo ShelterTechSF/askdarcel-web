@@ -1,44 +1,18 @@
 @import '~styles/utils/_helpers.scss';
 
 .eligibilityPage {
-  grid-column: 2 / 13;
-  @media screen and (max-width: 1370px) {
-    grid-column: 2/11;
-  }
-
-  @media screen and (max-width: $break-tablet-p) {
-    grid-column: 2/12;
-  }
+  grid-column: 2 / span 10;
 
   @media screen and (max-width: $break-tablet-s) {
-    grid-column: 1/13;
+    grid-column: 1 / span 12;
   }
-}
-
-.eligibilitiesContainer {
-  display: grid;
-  grid-template-columns: repeat(22, 1fr);
-  gap: 35px;
-
-  @media screen and (max-width: 1370px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.subtitleMargin {
-  margin-bottom: 13px;
 }
 
 .eligibilitiesBox {
-  grid-column: 1 / 16;
   display: flex;
-  margin-top: 13px;
+  margin: 16px 0;
   padding: 32px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 0px 4px rgba(0, 0, 0, 0.1);
-
-  @media screen and (max-width: 1370px) {
-    grid-column: 1;
-  }
 
   @media screen and (max-width: $break-tablet-s) {
     flex-direction: column;
@@ -49,7 +23,8 @@
     color: $color-brand;
     @extend %font-size-large;
     width: 86px;
-    margin-right: 46px;
+    margin-right: 26px;
+
     @media screen and (max-width: $break-tablet-s) {
       width: auto;
       margin: auto auto 15px;
@@ -65,16 +40,15 @@
 .eligibilitiesLabels {
   display: grid;
   gap: 45px;
-  list-style: decimal;
+  list-style: decimal inside;
 }
 
-.eligibilityListItem {
+.eligibilityGroupLabel {
   display: list-item;
 }
 
 .eligibilityLabel {
   cursor: pointer;
-  vertical-align: top;
   padding-left: 8px;
 }
 
@@ -89,17 +63,14 @@
 }
 
 .eligibilitiesBtns {
-  grid-column: 16 / 23;
-  align-self: end;
-
-  @media screen and (max-width: 1370px) {
-    justify-self: end;
-    grid-column: 1;
-  }
+  text-align: right;
 
   @media screen and (max-width: $break-tablet-p) {
-    justify-self: center;
     margin-bottom: 100px;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    text-align: center;
   }
 }
 

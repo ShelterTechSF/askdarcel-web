@@ -1,19 +1,19 @@
 @import 'app/styles/utils/_helpers.scss';
 
-@mixin buttonBasic {
+
+.button {
   border-radius: 8px;
   color: $color-white;
   background-color: $color-brand;
+  min-width: 120px;
   height: 56px;
-  padding: 0;
+  padding: 0 18px;
 }
 
 .medium {
-  @include buttonBasic;
   width: 120px;
 }
 
 .large {
-  @include buttonBasic;
   width: 218px;
 }

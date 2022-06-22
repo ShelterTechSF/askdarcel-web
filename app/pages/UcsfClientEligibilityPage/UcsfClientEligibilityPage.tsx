@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Checkbox from 'components/ui/inline/Checkbox';
-import TileButton from 'components/ui/inline/TileButton';
+import Button from 'components/ui/inline/Button';
 import Section from 'components/ucsf/Section';
 import Layout from 'components/ucsf/Layout';
 
@@ -10,23 +10,111 @@ import styles from './UcsfClientEligibilityPage.module.scss';
 
 // import { useEligibilitiesForCategory } from '../../hooks/APIHooks';
 
-// Todo: This is dummy data for development. It will be replaced by data returned by API request(s)
-
 interface clientEligibility {
   checked: boolean;
   name: string;
 }
 
-interface clientEligibilityItem {
+interface clientEligibilityGroup {
   label: string;
   eligibilities: clientEligibility[];
 }
 
-const clientEligibilitiesList: clientEligibilityItem[] = [
-  { label: 'Age and Dependents', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'Under 18' }, { checked: false, name: 'I am a single adult and need shelter' }] },
-  { label: 'Gender Identity', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'Woman' }, { checked: false, name: 'Man' }, { checked: false, name: 'Transgender' }] },
-  { label: 'Health Related', eligibilities: [{ checked: false, name: 'See all' }, { checked: false, name: 'HIV' }, { checked: false, name: 'Dual Diagnosis' }] },
+// Todo: This is dummy data for development. It will be replaced by data returned by API request(s)
+const clientEligibilityGroupData: clientEligibilityGroup[] = [
+  {
+    label: 'Age and Dependents',
+    eligibilities: [
+      { checked: false, name: 'See all' },
+      { checked: false, name: 'Under 18' },
+      { checked: false, name: 'I am a single adult and need shelter' },
+    ],
+  },
+  {
+    label: 'Gender Identity',
+    eligibilities: [
+      { checked: false, name: 'See all' },
+      { checked: false, name: 'Woman' },
+      { checked: false, name: 'Man' },
+      { checked: false, name: 'Transgender' },
+    ],
+  },
+  {
+    label: 'Health Related',
+    eligibilities: [
+      { checked: false, name: 'See all' },
+      { checked: false, name: 'HIV' },
+      { checked: false, name: 'Dual Diagnosis' },
+    ],
+  },
 ];
+
+const ClientEligibilities = () => {
+  const [eligibilityGroupList, setEligibilityGroupList] = useState(clientEligibilityGroupData);
+
+  // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
+  // once the API returns eligibility data. The shape of that data is still under discussion
+  // between product and dev
+  const setEligibilityGroup = (index: number, updatedEligibilityGroup: clientEligibilityGroup) => {
+    const updatedList = [
+      ...eligibilityGroupList.slice(0, index),
+      updatedEligibilityGroup,
+      ...eligibilityGroupList.slice(index + 1),
+    ];
+
+    setEligibilityGroupList(updatedList);
+  };
+
+  const toggleChecked = (eligibilityGroup: clientEligibilityGroup, eligibilityIndex: number) => {
+    const updatedEligibility = {
+      ...eligibilityGroup.eligibilities[eligibilityIndex],
+      checked: !eligibilityGroup.eligibilities[eligibilityIndex].checked,
+    };
+
+    const updatedEligibilities = [
+      ...eligibilityGroup.eligibilities.slice(0, eligibilityIndex),
+      updatedEligibility,
+      ...eligibilityGroup.eligibilities.slice(eligibilityIndex + 1),
+    ];
+
+    return {
+      ...eligibilityGroup,
+      eligibilities: updatedEligibilities,
+    };
+  };
+
+  return (
+    <div className={styles.eligibilitiesBox}>
+      <div className={styles.eligibilitiesBox_title}>Client Identity</div>
+      <ol className={styles.eligibilitiesLabels}>
+
+        {/* Todo: This list rendering logic will be refactored when the API is setup */}
+        {eligibilityGroupList.map((eligibilityGroup, index) => (
+          <li key={eligibilityGroup.label} className={styles.listContainer}>
+            <span className={styles.eligibilityGroupLabel}>
+              {eligibilityGroup.label}
+            </span>
+            <ul className={styles.eligibilitiesList}>
+              {eligibilityGroup.eligibilities.map((eligibility, i) => (
+                <li key={`${eligibilityGroup.label}-${eligibility.name}`} className={styles.eligibilityGroup}>
+                  <Checkbox
+                    onChange={() => setEligibilityGroup(index, toggleChecked(eligibilityGroup, i))}
+                    name={eligibilityGroup.label}
+                    id={`${eligibilityGroup.label}-${eligibility.name}`}
+                    checked={eligibility.checked}
+                  />
+                  <label className={styles.eligibilityLabel} htmlFor={`${eligibilityGroup.label}-${eligibility.name}`}>
+                    {eligibility.name}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+};
 
 const Page = () => {
   const history = useHistory();
@@ -79,86 +167,17 @@ const Page = () => {
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities />
         <div className={styles.eligibilitiesBtns}>
-          <TileButton
+          <Button
             text="Back"
-            size="medium"
             onClick={backToResourceSelection}
           />
-          <TileButton
+          <Button
             text="Next: Service Capacity"
-            size="large"
             onClick={goToResourceResults}
             addClass={styles.goToResultsBtn}
           />
         </div>
       </div>
-    </div>
-  );
-};
-
-const ClientEligibilities = () => {
-  const [eligibilityList, setEligibilityList] = useState(clientEligibilitiesList);
-
-  // Todo: This setEligibilityItem and toggleChecked logic could change pretty drastically
-  // once the API returns eligibility data. The shape of that data is still under discussion
-  // between product and dev
-  const setEligibilityItem = (index: number, newEligibilityItem: clientEligibilityItem) => {
-    const newList = [
-      ...eligibilityList.slice(0, index),
-      newEligibilityItem,
-      ...eligibilityList.slice(index + 1),
-    ];
-
-    setEligibilityList(newList);
-  };
-
-  const toggleChecked = (eligibilityItem: clientEligibilityItem, eligibilityIndex: number) => {
-    const newEligibility = {
-      ...eligibilityItem.eligibilities[eligibilityIndex],
-      checked: !eligibilityItem.eligibilities[eligibilityIndex].checked,
-    };
-
-    const updatedEligibilities = [
-      ...eligibilityItem.eligibilities.slice(0, eligibilityIndex),
-      newEligibility,
-      ...eligibilityItem.eligibilities.slice(eligibilityIndex + 1),
-    ];
-
-    return {
-      ...eligibilityItem,
-      eligibilities: updatedEligibilities,
-    };
-  };
-
-  return (
-    <div className={styles.eligibilitiesBox}>
-      <span className={styles.eligibilitiesBox_title}>Client Identity</span>
-      <ol className={styles.eligibilitiesLabels}>
-
-        {/* Todo: This list rendering logic will be refactored when the API is setup */}
-        {eligibilityList.map((eligibilityItem, index) => (
-          <li key={eligibilityItem.label} className={styles.listContainer}>
-            <span className={styles.eligibilityListItem}>
-              {eligibilityItem.label}
-            </span>
-            <ul className={styles.eligibilitiesList}>
-              {eligibilityItem.eligibilities.map((eligibility, i) => (
-                <li key={`${eligibilityItem.label}-${eligibility.name}`} className={styles.eligibilityItem}>
-                  <Checkbox
-                    onChange={() => setEligibilityItem(index, toggleChecked(eligibilityItem, i))}
-                    name={eligibility.name}
-                    id={`${eligibilityItem.label}-${eligibility.name}`}
-                    checked={eligibility.checked}
-                  />
-                  <label className={styles.eligibilityLabel} htmlFor={`${eligibilityItem.label}-${eligibility.name}`}>
-                    {eligibility.name}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { icon as assetIcon } from 'assets';
 import Checkbox from 'components/ui/inline/Checkbox';
-import TileButton from 'components/ui/inline/TileButton';
+import Button from 'components/ui/inline/Button';
 import Section from 'components/ucsf/Section';
 import Layout from 'components/ucsf/Layout';
 
@@ -16,52 +16,6 @@ interface resourceListItem {
   icon: string;
   checked: boolean;
 }
-
-// Todo: the UCSF Categories/Resources are not set up yet. For now, we're defaulting
-// the below resources to Covid-* category resource IDs for development purposes only
-// (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
-const ucsfResources = [
-  {
-    id: '1000010', name: 'Shelter', icon: 'bed', checked: false,
-  },
-  {
-    id: '1000001', name: 'Substance Use', icon: 'hospital', checked: false,
-  },
-  {
-    id: '1000002', name: 'Mental Health', icon: 'smiley-face', checked: false,
-  },
-];
-
-const Page = () => {
-  const [resourceList, setResourceList] = useState(ucsfResources);
-  const history = useHistory();
-
-  const goToEligibilitiesStep = () => {
-    const selectedResources = resourceList.filter(resource => resource.checked);
-    history.push('/client-identity', { selectedResources });
-  };
-
-  return (
-    <div className={styles.ucsfHomePage}>
-      <Section
-        title="For Clinicians"
-        body="Lorem Ipsum Dolorum"
-      />
-      <Section
-        addClass={styles.subtitleMargin}
-        subtitle="Step 1: What kind of assistance does your client need? Select all that apply."
-      />
-      <ResourceListComponent resourceList={resourceList} setResourceList={setResourceList} />
-      <div className={styles.buttonContainer}>
-        <TileButton
-          text="Next"
-          size="medium"
-          onClick={goToEligibilitiesStep}
-        />
-      </div>
-    </div>
-  );
-};
 
 const ResourceListComponent = ({ resourceList, setResourceList }: {
   resourceList: resourceListItem[];
@@ -90,11 +44,11 @@ const ResourceListComponent = ({ resourceList, setResourceList }: {
           className={`${styles.resourceItem}
           ${resource.checked ? styles.isChecked : ''}`}
         >
-          <label className={styles.resourceLabel} htmlFor={resource.id}>
+          <label className={styles.resourceLabel} htmlFor={`ucsf-home-checkbox-${resource.id}`}>
             <Checkbox
               onChange={() => setResourceItem(i, toggleChecked(resource))}
-              name={resource.name}
-              id={resource.id}
+              name="ucsf-resources"
+              id={`ucsf-home-checkbox-${resource.id}`}
               checked={resource.checked}
               addClass={styles.resourceCheckbox}
             />
@@ -104,6 +58,51 @@ const ResourceListComponent = ({ resourceList, setResourceList }: {
         </li>
       ))}
     </ul>
+  );
+};
+
+const Page = () => {
+  // Todo: the UCSF Categories/Resources are not set up yet. For now, we're defaulting
+  // the below resources to Covid-* category resource IDs for development purposes only
+  // (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
+  const ucsfResources = [
+    {
+      id: '1000010', name: 'Shelter', icon: 'bed', checked: false,
+    },
+    {
+      id: '1000001', name: 'Substance Use', icon: 'hospital', checked: false,
+    },
+    {
+      id: '1000002', name: 'Mental Health', icon: 'smiley-face', checked: false,
+    },
+  ];
+
+  const [resourceList, setResourceList] = useState(ucsfResources);
+  const history = useHistory();
+
+  const goToEligibilitiesStep = () => {
+    const selectedResources = resourceList.filter(resource => resource.checked);
+    history.push('/client-identity', { selectedResources });
+  };
+
+  return (
+    <div className={styles.ucsfHomePage}>
+      <Section
+        title="For Clinicians"
+        body="Lorem Ipsum Dolorum"
+      />
+      <Section
+        addClass={styles.subtitleMargin}
+        subtitle="Step 1: What kind of assistance does your client need? Select all that apply."
+      />
+      <ResourceListComponent resourceList={resourceList} setResourceList={setResourceList} />
+      <div className={styles.buttonContainer}>
+        <Button
+          text="Next"
+          onClick={goToEligibilitiesStep}
+        />
+      </div>
+    </div>
   );
 };
 

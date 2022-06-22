@@ -5,5 +5,10 @@
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 16px;
   max-width: 1450px;
-  margin: (200px - $header-height) 50px 0;
+  margin: (200px - $header-height) auto 0;
+  padding: 0 48px;
+  @media screen and (max-width: $break-tablet-s) {
+    margin-top: 25px;
+    padding: 0 20px;
+  }
 }
