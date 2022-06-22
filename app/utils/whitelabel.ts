@@ -43,7 +43,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
   // QA One domain
   if (subdomain === 'qaone') return 'Ucsf';
 
-  return 'Ucsf';
+  return 'defaultWhiteLabel';
 }
 
 const configKey = determineWhiteLabelSite();
