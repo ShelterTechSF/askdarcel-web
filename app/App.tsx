@@ -37,11 +37,15 @@ import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
+import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/UcsfClientEligibilityPage';
+import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
 import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
 import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
 
+
 const {
+  homePageComponent,
   intercom,
   showBanner,
   showSearch,
@@ -53,6 +57,11 @@ const outerContainerId = 'outer-container';
 const pageWrapId = 'page-wrap';
 
 export const App = () => {
+  const homePageDictionary = {
+    HomePage,
+    UcsfHomePage,
+  };
+
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({ message: '', visible: false, type: 'success' });
@@ -109,7 +118,7 @@ export const App = () => {
           {showBanner && <Banner />}
           <div className="container">
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <Route exact path="/" component={homePageDictionary[homePageComponent]} />
               <Route exact path="/about" component={AboutPage} />
               <Route exact path="/covid" component={CovidPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
@@ -128,6 +137,10 @@ export const App = () => {
               <Route exact path="/terms-of-service" component={TermsOfServicePage} />
               <Route exact path="/:categorySlug/form" component={ServiceDiscoveryForm} />
               <Route exact path="/:categorySlug/results" component={ServiceDiscoveryResults} />
+
+              {/* UCSF white label paths */}
+              <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
+              <Route exact path="/suggested-resources" component={ServiceDiscoveryResults} />
 
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />
