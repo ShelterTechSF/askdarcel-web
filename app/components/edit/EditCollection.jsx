@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, FC } from 'react';
 
 /**
  *
- * @param {Component} ResourceObjectItem individual component to have a collection for
+ * @param {Component | FC<Props>} ResourceObjectItem individual component to have a collection for
  * @param {string} label title field for items
  * @param {Object} blankTemplateObj blank template to fill new items in the collection with
  */

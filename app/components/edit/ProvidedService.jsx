@@ -5,6 +5,7 @@ import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
 import { AddressListItem } from './EditAddress';
+import EditPatientHandouts from './EditPatientHandouts';
 
 import s from './ProvidedService.module.scss';
 
@@ -100,6 +101,14 @@ InputField.defaultProps = {
   value: '',
 };
 
+// Todo: mock data until we get this back from the service
+const patientHandoutData = [
+  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
+  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
+  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
+  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
+  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
+];
 
 const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
   const selectableOptions = resourceAddresses
@@ -276,6 +285,11 @@ const ProvidedService = ({
             />
           </li>
         ))}
+
+        <EditPatientHandouts
+          collection={patientHandoutData}
+          handleChange={value => handleChange('handouts', value)}
+        />
 
         <li className="edit--section--list--item">
           <MultiSelectDropdown
