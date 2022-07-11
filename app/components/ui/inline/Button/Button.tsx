@@ -12,6 +12,7 @@ export const Button = ({
   addClass,
   styleType,
   tabIndex,
+  disabled,
 }: {
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -19,6 +20,7 @@ export const Button = ({
   addClass?: string;
   styleType?: StyleType;
   tabIndex?: number;
+  disabled?: boolean;
 }) => {
   let buttonClass;
   if (styleType === 'transparent') {
@@ -36,6 +38,7 @@ export const Button = ({
       type={buttonType}
       tabIndex={tabIndex}
       className={`${buttonClass} ${addClass || ''}`}
+      disabled={disabled}
     >
       {children}
     </button>

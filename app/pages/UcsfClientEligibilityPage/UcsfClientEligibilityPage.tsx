@@ -1,56 +1,30 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Checkbox } from 'components/ui/inline/Checkbox';
-import { Button } from 'components/ui/inline/Button';
-import { Section } from 'components/ucsf/Section';
-import { Layout } from 'components/ucsf/Layout';
+import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
+import { Button } from 'components/ui/inline/Button/Button';
+import { Section } from 'components/ucsf/Section/Section';
+import { Layout } from 'components/ucsf/Layout/Layout';
 
+import { eligibilityData } from './ucsfEligibilities';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
-// import { useEligibilitiesForCategory } from '../../hooks/APIHooks';
+const ClientEligibilities = ({ eligibilities, resourceSlug }: {
+  eligibilities: any;
+  resourceSlug: string;
+}) => {
+  const resourceEligibilities = eligibilities[resourceSlug];
+  const [eligibilityGroupList, setEligibilityGroupList] = useState(resourceEligibilities);
 
-interface clientEligibility {
-  checked: boolean;
-  name: string;
-}
+  interface clientEligibility {
+    checked: boolean;
+    name: string;
+  }
 
-interface clientEligibilityGroup {
-  label: string;
-  eligibilities: clientEligibility[];
-}
-
-// Todo: This is dummy data for development. It will be replaced by data returned by API request(s)
-const clientEligibilityGroupData: clientEligibilityGroup[] = [
-  {
-    label: 'Age and Dependents',
-    eligibilities: [
-      { checked: false, name: 'See all' },
-      { checked: false, name: 'Under 18' },
-      { checked: false, name: 'I am a single adult and need shelter' },
-    ],
-  },
-  {
-    label: 'Gender Identity',
-    eligibilities: [
-      { checked: false, name: 'See all' },
-      { checked: false, name: 'Woman' },
-      { checked: false, name: 'Man' },
-      { checked: false, name: 'Transgender' },
-    ],
-  },
-  {
-    label: 'Health Related',
-    eligibilities: [
-      { checked: false, name: 'See all' },
-      { checked: false, name: 'HIV' },
-      { checked: false, name: 'Dual Diagnosis' },
-    ],
-  },
-];
-
-const ClientEligibilities = () => {
-  const [eligibilityGroupList, setEligibilityGroupList] = useState(clientEligibilityGroupData);
+  interface clientEligibilityGroup {
+    label: string;
+    eligibilities: clientEligibility[];
+  }
 
   // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
   // once the API returns eligibility data. The shape of that data is still under discussion
@@ -89,7 +63,7 @@ const ClientEligibilities = () => {
       <ol className={styles.eligibilitiesLabels}>
 
         {/* Todo: This list rendering logic will be refactored when the API is setup */}
-        {eligibilityGroupList.map((eligibilityGroup, index) => (
+        {eligibilityGroupList.map((eligibilityGroup: clientEligibilityGroup, index: number) => (
           <li key={eligibilityGroup.label} className={styles.listContainer}>
             <span className={styles.eligibilityGroupLabel}>
               {eligibilityGroup.label}
@@ -116,42 +90,17 @@ const ClientEligibilities = () => {
   );
 };
 
-const Page = () => {
+const Page = ({ eligibilities }: {
+  eligibilities: any;
+}) => {
   const history = useHistory();
+  interface LocationState {
+    selectedResourceSlug: string;
+  }
 
-  /**
-   * Todo: The below is a general sketch of how we will fetch eligibility data using the category
-   * IDs of the selected UCSF resources. Before we can do this, UCSF resources in our DB will need
-   * to have associated eligibilities and category IDs
-
-    interface resourceListItem {
-      id: string;
-      name: string;
-      icon: string;
-      checked: boolean;
-    }
-
-    // const location = useLocation();
-    interface stateType {
-      selectedResources: resourceListItem[];
-    }
-
-    const { state } = useLocation<stateType>();
-    const selectedResources = state.selectedResources;
-    const resourceEligibilities: object[] = [];
-
-    selectedResources.forEach((resource) => {
-      const eligibilities = useEligibilitiesForCategory(resource.id) || [];
-      resourceEligibilities.push(...eligibilities);
-    });
-  */
-
+  const state = history.location.state as LocationState;
   const goToResourceResults = () => {
-    // Todo: We will need to alter the Service Discovery Results file to honor requests
-    // that can include more than one resource (e.g. substance abuse AND mental health)
-    // before successfully navigating to the suggested-resources page
-    alert('Navigate to target resources'); // eslint-disable-line no-alert
-    // history.push('/suggested-resources', {selectedResources: selectedResources});
+    history.push(`/${state.selectedResourceSlug}/results`);
   };
 
   const backToResourceSelection = () => {
@@ -165,7 +114,10 @@ const Page = () => {
         subtitle="Step 2: Can you tell us more about your client and their needs?"
       />
       <div className={styles.eligibilitiesContainer}>
-        <ClientEligibilities />
+        <ClientEligibilities
+          eligibilities={eligibilities}
+          resourceSlug={state.selectedResourceSlug}
+        />
         <div className={styles.eligibilitiesBtns}>
           <Button
             onClick={backToResourceSelection}
@@ -186,6 +138,35 @@ const Page = () => {
 
 export const UcsfClientEligibilityPage = () => (
   <Layout>
-    <Page />
+    <Page
+      eligibilities={eligibilityData}
+    />
   </Layout>
 );
+
+/**
+ * Todo: The below is a general sketch of how we will fetch eligibility data using the category
+ * IDs of the selected UCSF resources. Before we can do this, UCSF resources in our DB will need
+ * to have associated eligibilities and category IDs
+
+  interface resourceListItem {
+    id: string;
+    name: string;
+    icon: string;
+    checked: boolean;
+  }
+
+  // const location = useLocation();
+  interface stateType {
+    selectedResources: resourceListItem[];
+  }
+
+  const { state } = useLocation<stateType>();
+  const selectedResources = state.selectedResources;
+  const resourceEligibilities: object[] = [];
+
+  selectedResources.forEach((resource) => {
+    const eligibilities = useEligibilitiesForCategory(resource.id) || [];
+    resourceEligibilities.push(...eligibilities);
+  });
+*/
