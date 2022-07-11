@@ -92,4 +92,20 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     steps: ['subcategories', 'results'],
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
+  {
+    algoliaCategoryName: 'Ucsf-substance-use',
+    id: '1000010',
+    name: 'Substance use resources',
+    slug: 'substance-use-resources',
+    steps: ['subcategories', 'results'],
+    subcategorySubheading: defaultSubheading,
+  },
+  {
+    algoliaCategoryName: 'Ucsf-mental-health',
+    id: '1000010',
+    name: 'Mental health resources',
+    slug: 'mental-health-resources',
+    steps: ['subcategories', 'results'],
+    subcategorySubheading: defaultSubheading,
+  },
 ];

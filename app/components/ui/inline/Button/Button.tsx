@@ -14,11 +14,13 @@ export const Button = ({
   onClick,
   buttonType = 'button',
   addClass,
+  disabled,
 }: {
   text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   readonly buttonType?: ButtonType;
   addClass?: string;
+  disabled?: boolean;
 }) => (
   <button
     onClick={onClick}
@@ -27,6 +29,7 @@ export const Button = ({
      /* eslint-disable-next-line react/button-has-type */
     type={buttonType}
     className={`${styles.button} ${addClass || ''}`}
+    disabled={disabled}
   >
     {text}
   </button>

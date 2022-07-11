@@ -8,6 +8,10 @@
   min-width: 120px;
   height: 56px;
   padding: 0 18px;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .medium {
