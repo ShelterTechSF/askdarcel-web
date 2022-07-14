@@ -5,7 +5,8 @@ import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
 import { AddressListItem } from './EditAddress';
-import EditPatientHandouts from './EditPatientHandouts';
+import EditPatientHandout from './EditPatientHandout';
+import { EditServiceChildCollection } from './EditServiceChildCollection';
 
 import s from './ProvidedService.module.scss';
 
@@ -100,15 +101,6 @@ InputField.defaultProps = {
   type: 'text',
   value: '',
 };
-
-// Todo: mock data until we get this back from the service
-const patientHandoutData = [
-  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
-  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
-  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
-  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
-  {link: 'https://ucsf.box.com/s/neclsmnj03wj4xc39iv00erhd7tnv7po'},
-];
 
 const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
   const selectableOptions = resourceAddresses
@@ -286,10 +278,18 @@ const ProvidedService = ({
           </li>
         ))}
 
-        <EditPatientHandouts
-          collection={patientHandoutData}
-          handleChange={value => handleChange('handouts', value)}
-        />
+        <li className="edit--section--list--item">
+          {/* Todo: When service is returning patient handouts, confirm that prop name is "patientHandouts" */}
+          <EditServiceChildCollection
+            initialCollectionData={service.patientHandouts}
+            handleCollectionChange={handleChange}
+            ResourceObjectItem={EditPatientHandout}
+            label="Patient Handouts"
+            buttonText="Add Handout"
+            blankTemplateObj={{}}
+            propertyKeyName="patientHandouts"
+          />
+        </li>
 
         <li className="edit--section--list--item">
           <MultiSelectDropdown
