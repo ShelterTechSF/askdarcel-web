@@ -4,10 +4,12 @@ import React, {
 
 /**
  * Renders a child property collection of a Service as a list of individual components,
- * called ResourceObjectItem. Enables the user to add, modify, and delete individual
- * components and save to the DB. This component could possibly be abstracted to replace
- * the EditCollection HOC class-based component that does essentially the same thing
- * for child property collections of Resources
+ * called ResourceObjectItem. Enables the user to add, modify, and delete members of
+ * the collection and save to the DB.
+ *
+ * In the future, this component could possibly be abstracted to replace the
+ * EditCollection HOC class-based JSX component that does essentially the same thing
+ * for child property collections of Resources.
  */
 interface componentProps {
   index: number;
@@ -43,8 +45,8 @@ export const EditServiceChildCollection = ({
     }
 
     if (updateParentService.current) {
-      // We only want to update the parent service when an already existing item is deleted or
-      // modified; we don't want to call update when an empty template has been added or removed
+      // We only want to update the parent service when an item is deleted or modified;
+      // we don't want to call update when an empty template has been added
       handleCollectionChange(propertyKeyName, resourceCollection);
     }
   }, [resourceCollection]);

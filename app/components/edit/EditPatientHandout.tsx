@@ -4,7 +4,7 @@ interface patientHandout {
   id: string;
   language: string;
   link: string;
-  [key: string]: string | boolean;
+  [key: string]: string;
 }
 
 const EditPatientHandout = ({ index, item, handleItemChange }: {
