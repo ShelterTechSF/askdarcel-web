@@ -279,7 +279,8 @@ const ProvidedService = ({
         ))}
 
         <li className="edit--section--list--item">
-          {/* Todo: When service is returning patient handouts, confirm that prop name is "patientHandouts" */}
+          {/* Todo: When service is returning patient handouts,
+            confirm that prop name is "patientHandouts" */}
           <EditServiceChildCollection
             initialCollectionData={service.patientHandouts}
             handleCollectionChange={handleChange}

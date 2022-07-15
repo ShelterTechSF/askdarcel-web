@@ -1,5 +1,4 @@
-import React, { FC } from 'react';
-import _ from 'lodash';
+import React from 'react';
 
 interface patientHandout {
   id: string;
@@ -8,34 +7,37 @@ interface patientHandout {
   [key: string]: string | boolean;
 }
 
-const EditPatientHandout = ({index, item, handleItemChange}: {
+const EditPatientHandout = ({ index, item, handleItemChange }: {
   index: number;
   item: patientHandout;
-  handleItemChange: (index: number, handout: patientHandout) => null;
+  handleItemChange: (handoutIndex: number, handout: patientHandout) => null;
 }) => {
   const handleFieldChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    handout: patientHandout) => {
-      const { value } = e.target;
-      const { field }  = e.target.dataset;
-      if (field) {
-        if (handout[field] || value !== item[field]) {
-          handout[field] = value;
-          handleItemChange(index, handout);
-        }
+    handout: patientHandout,
+  ) => {
+    const { value } = e.target;
+    const { field } = e.target.dataset;
+    if (field) {
+      if (handout[field] || value !== item[field]) {
+        const newHandout = {
+          ...handout,
+        };
+        newHandout[field] = value;
+        handleItemChange(index, newHandout);
       }
-  }
+    }
+  };
 
   return (
-    <li key={item.id}
-        className="edit--section--list--item tel">
+    <div className="edit--section--list--item">
       <input
         type="string"
         className="input"
-        placeholder="Handout Langauage"
+        placeholder="Handout Language"
         data-field="language"
         defaultValue={item.language}
-        onChange={(e) => { handleFieldChange(e, item)}}
+        onChange={e => { handleFieldChange(e, item); }}
       />
       <input
         type="string"
@@ -43,11 +45,10 @@ const EditPatientHandout = ({index, item, handleItemChange}: {
         placeholder="Handout Link"
         data-field="link"
         defaultValue={item.link}
-        onChange={(e) => { handleFieldChange(e, item)}}
+        onChange={e => { handleFieldChange(e, item); }}
       />
-    </li>
+    </div>
   );
 };
 
 export default EditPatientHandout;
-
