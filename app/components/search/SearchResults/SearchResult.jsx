@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { icon } from 'assets';
 import Texting from 'components/Texting';
-import styles from './SearchResults.module.scss';
+import { StreetViewImage } from 'components/listing';
+import Modal from 'react-modal';
+import styles from './SearchResult.module.scss';
+
+const StreetView = ({ address }) => <StreetViewImage address={address} size="100%" />;
 
 // eslint-disable-next-line no-unused-vars
 export const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
+  const [svIsOpen, setSvIsOpen] = useState(false);
 
   const service = {
     serviceName: hit.name,
@@ -121,6 +126,26 @@ export const SearchResult = ({ hit, index, setCenterCoords }) => {
       { textingIsOpen
         && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />
       }
+      {
+        svIsOpen && (
+          <Modal
+            isOpen={svIsOpen}
+            className={styles.streetViewModal}
+            overlayClassName="feedback__Overlay"
+            onRequestClose={() => setSvIsOpen(false)}
+          >
+            <div
+              className={styles.closeModal}
+              role="button"
+              tabIndex="0"
+              onClick={() => setSvIsOpen(false)}
+            >
+              <img src={icon('close')} alt="close" />
+            </div>
+            <StreetView address={hit.addresses[0]} />
+          </Modal>
+        )
+      }
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>
@@ -152,6 +177,10 @@ export const SearchResult = ({ hit, index, setCenterCoords }) => {
           )
         }
         { texting }
+        <div className={styles.sideLink} role="button" tabIndex={-1} onClick={() => setSvIsOpen(true)}>
+          <img src={icon('text-message')} alt="chat-bubble" className={styles.sideLinkIcon} />
+          <div className={styles.sideLinkText}>Street View</div>
+        </div>
       </div>
     </div>
   );
