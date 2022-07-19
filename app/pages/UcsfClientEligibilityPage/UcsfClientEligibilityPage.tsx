@@ -6,11 +6,11 @@ import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
 
-import { ucsfEligibilityData } from './ucsfEligibilities';
+import { eligibilityData } from './ucsfEligibilities';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
-const ClientEligibilities = ({ eligibilityData, resourceSlug }: {
-  eligibilityData: any;
+const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
+  rawEligibilityData: any;
   resourceSlug: string;
 }) => {
   interface clientEligibility {
@@ -23,7 +23,7 @@ const ClientEligibilities = ({ eligibilityData, resourceSlug }: {
     eligibilities: clientEligibility[];
   }
 
-  const resourceEligibilityGroup = eligibilityData[resourceSlug];
+  const resourceEligibilityGroup = rawEligibilityData[resourceSlug];
   const [eligibilityGroupList, setEligibilityGroupList] = useState(resourceEligibilityGroup);
 
   // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
@@ -45,7 +45,10 @@ const ClientEligibilities = ({ eligibilityData, resourceSlug }: {
     let updatedEligibilities;
 
     if (targetEligibility.name === 'See all') {
-      updatedEligibilities = massToggleGroup(eligibilityGroup.eligibilities, targetToggleState);
+      updatedEligibilities = massToggleGroupEligibilities(
+        eligibilityGroup.eligibilities,
+        targetToggleState,
+      );
     } else {
       const seeAllEligibility = eligibilityGroup.eligibilities[0];
       if (!targetToggleState) {
@@ -71,7 +74,10 @@ const ClientEligibilities = ({ eligibilityData, resourceSlug }: {
     };
   };
 
-  const massToggleGroup = (eligibilities: clientEligibility[], toggleState: boolean) => (
+  const massToggleGroupEligibilities = (
+    eligibilities: clientEligibility[],
+    toggleState: boolean,
+  ) => (
     eligibilities.map((eligibility: clientEligibility) => ({
       ...eligibility,
       checked: toggleState,
@@ -111,9 +117,7 @@ const ClientEligibilities = ({ eligibilityData, resourceSlug }: {
   );
 };
 
-const Page = ({ eligibilityData }: {
-  eligibilityData: any;
-}) => {
+const Page = () => {
   const history = useHistory();
   interface LocationState {
     selectedResourceSlug: string;
@@ -136,7 +140,7 @@ const Page = ({ eligibilityData }: {
       />
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities
-          eligibilityData={eligibilityData}
+          rawEligibilityData={eligibilityData}
           resourceSlug={state.selectedResourceSlug}
         />
         <div className={styles.eligibilitiesBtns}>
@@ -159,9 +163,7 @@ const Page = ({ eligibilityData }: {
 
 export const UcsfClientEligibilityPage = () => (
   <Layout>
-    <Page
-      eligibilityData={ucsfEligibilityData}
-    />
+    <Page />
   </Layout>
 );
 

@@ -95,8 +95,8 @@ const Page = () => {
     },
   ];
 
-  // Todo: setResourceList var will be used when we allow for multiple checked resources
-  // eslint-disable-next-line no-unused-vars
+  // todo: setResourceList will be used when we allow multiple selected resources
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [resourceList, setResourceList] = useState(ucsfResources);
 
   const [selectedResource, setSelectedResource] = useState<resourceListItem>();

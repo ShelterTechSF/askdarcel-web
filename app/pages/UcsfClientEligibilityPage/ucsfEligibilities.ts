@@ -5,7 +5,7 @@ export interface ucsfEligibilityDictionary {
   [key: string]: object;
 }
 
-export const ucsfEligibilityData: ucsfEligibilityDictionary = {
+export const eligibilityData: ucsfEligibilityDictionary = {
   'mental-health-resources': [
     {
       label: 'Age and Dependents',
