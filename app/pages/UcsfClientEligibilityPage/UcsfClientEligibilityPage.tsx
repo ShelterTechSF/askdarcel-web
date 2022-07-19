@@ -6,16 +6,13 @@ import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
 
-import { eligibilityData } from './ucsfEligibilities';
+import { ucsfEligibilityData } from './ucsfEligibilities';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
-const ClientEligibilities = ({ eligibilities, resourceSlug }: {
-  eligibilities: any;
+const ClientEligibilities = ({ eligibilityData, resourceSlug }: {
+  eligibilityData: any;
   resourceSlug: string;
 }) => {
-  const resourceEligibilities = eligibilities[resourceSlug];
-  const [eligibilityGroupList, setEligibilityGroupList] = useState(resourceEligibilities);
-
   interface clientEligibility {
     checked: boolean;
     name: string;
@@ -25,6 +22,9 @@ const ClientEligibilities = ({ eligibilities, resourceSlug }: {
     label: string;
     eligibilities: clientEligibility[];
   }
+
+  const resourceEligibilityGroup = eligibilityData[resourceSlug];
+  const [eligibilityGroupList, setEligibilityGroupList] = useState(resourceEligibilityGroup);
 
   // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
   // once the API returns eligibility data. The shape of that data is still under discussion
@@ -40,22 +40,43 @@ const ClientEligibilities = ({ eligibilities, resourceSlug }: {
   };
 
   const toggleChecked = (eligibilityGroup: clientEligibilityGroup, eligibilityIndex: number) => {
-    const updatedEligibility = {
-      ...eligibilityGroup.eligibilities[eligibilityIndex],
-      checked: !eligibilityGroup.eligibilities[eligibilityIndex].checked,
-    };
+    const targetEligibility = eligibilityGroup.eligibilities[eligibilityIndex];
+    const targetToggleState = !targetEligibility.checked;
+    let updatedEligibilities;
 
-    const updatedEligibilities = [
-      ...eligibilityGroup.eligibilities.slice(0, eligibilityIndex),
-      updatedEligibility,
-      ...eligibilityGroup.eligibilities.slice(eligibilityIndex + 1),
-    ];
+    if (targetEligibility.name === 'See all') {
+      updatedEligibilities = massToggleGroup(eligibilityGroup.eligibilities, targetToggleState);
+    } else {
+      const seeAllEligibility = eligibilityGroup.eligibilities[0];
+      if (!targetToggleState) {
+        seeAllEligibility.checked = false;
+      }
+
+      const updatedEligibility = {
+        ...targetEligibility,
+        checked: !eligibilityGroup.eligibilities[eligibilityIndex].checked,
+      };
+
+      updatedEligibilities = [
+        { ...seeAllEligibility },
+        ...eligibilityGroup.eligibilities.slice(1, eligibilityIndex),
+        updatedEligibility,
+        ...eligibilityGroup.eligibilities.slice(eligibilityIndex + 1),
+      ];
+    }
 
     return {
       ...eligibilityGroup,
       eligibilities: updatedEligibilities,
     };
   };
+
+  const massToggleGroup = (eligibilities: clientEligibility[], toggleState: boolean) => (
+    eligibilities.map((eligibility: clientEligibility) => ({
+      ...eligibility,
+      checked: toggleState,
+    }))
+  );
 
   return (
     <div className={styles.eligibilitiesBox}>
@@ -90,8 +111,8 @@ const ClientEligibilities = ({ eligibilities, resourceSlug }: {
   );
 };
 
-const Page = ({ eligibilities }: {
-  eligibilities: any;
+const Page = ({ eligibilityData }: {
+  eligibilityData: any;
 }) => {
   const history = useHistory();
   interface LocationState {
@@ -115,7 +136,7 @@ const Page = ({ eligibilities }: {
       />
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities
-          eligibilities={eligibilities}
+          eligibilityData={eligibilityData}
           resourceSlug={state.selectedResourceSlug}
         />
         <div className={styles.eligibilitiesBtns}>
@@ -139,7 +160,7 @@ const Page = ({ eligibilities }: {
 export const UcsfClientEligibilityPage = () => (
   <Layout>
     <Page
-      eligibilities={eligibilityData}
+      eligibilityData={ucsfEligibilityData}
     />
   </Layout>
 );

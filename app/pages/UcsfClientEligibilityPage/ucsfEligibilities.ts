@@ -5,46 +5,46 @@ export interface ucsfEligibilityDictionary {
   [key: string]: object;
 }
 
-export const eligibilityData: ucsfEligibilityDictionary = {
+export const ucsfEligibilityData: ucsfEligibilityDictionary = {
   'mental-health-resources': [
     {
       label: 'Age and Dependents',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'Elderly Adolescents', checked: false },
-        { name: 'Families with children (<18yo)', checked: false },
-        { name: 'Young adults (20-30 yo)', checked: false },
-        { name: 'Pregnant', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'Elderly Adolescents', checked: true },
+        { name: 'Families with children (<18yo)', checked: true },
+        { name: 'Young adults (20-30 yo)', checked: true },
+        { name: 'Pregnant', checked: true },
       ],
     },
     {
       label: 'Gender',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'Women', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'Women', checked: true },
       ],
     },
     {
       label: 'Health Related',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'HIV', checked: false },
-        { name: 'Dual Diagnosis', checked: false },
-        { name: 'People who use drugs', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'HIV', checked: true },
+        { name: 'Dual Diagnosis', checked: true },
+        { name: 'People who use drugs', checked: true },
       ],
     },
     {
       label: 'Other identities/categories',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'LGBTQ+', checked: false },
-        { name: 'SF Residents', checked: false },
-        { name: 'Uninsured', checked: false },
-        { name: 'Transgender', checked: false },
-        { name: 'Sex worker', checked: false },
-        { name: 'Veterans', checked: false },
-        { name: 'Latinx', checked: false },
-        { name: 'Homeless', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'LGBTQ+', checked: true },
+        { name: 'SF Residents', checked: true },
+        { name: 'Uninsured', checked: true },
+        { name: 'Transgender', checked: true },
+        { name: 'Sex worker', checked: true },
+        { name: 'Veterans', checked: true },
+        { name: 'Latinx', checked: true },
+        { name: 'Homeless', checked: true },
       ],
     },
   ],
@@ -53,38 +53,38 @@ export const eligibilityData: ucsfEligibilityDictionary = {
     {
       label: 'Age and Dependents',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'Families with children (<18yo)', checked: false },
-        { name: 'Age 12-17', checked: false },
-        { name: 'Age 18-24', checked: false },
-        { name: 'Pregnant', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'Families with children (<18yo)', checked: true },
+        { name: 'Age 12-17', checked: true },
+        { name: 'Age 18-24', checked: true },
+        { name: 'Pregnant', checked: true },
       ],
     },
     {
       label: 'Gender',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'Women', checked: false },
-        { name: 'Men', checked: false },
-        { name: 'Non-binary', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'Women', checked: true },
+        { name: 'Men', checked: true },
+        { name: 'Non-binary', checked: true },
       ],
     },
     {
       label: 'Health Related',
       eligibilities: [
-        { name: 'See all', checked: false },
-        { name: 'Dual Diagnosis', checked: false },
+        { name: 'See all', checked: true },
+        { name: 'Dual Diagnosis', checked: true },
       ],
     },
     {
       label: 'Other identities/categories',
       eligibilities: [
         { name: 'See all', checked: true },
-        { name: 'Low-income Homeless', checked: false },
-        { name: 'Abuse or neglect survivors', checked: false },
-        { name: 'Domestic violence survivors', checked: false },
-        { name: 'LGBTQ+', checked: false },
-        { name: 'Veterans', checked: false },
+        { name: 'Low-income Homeless', checked: true },
+        { name: 'Abuse or neglect survivors', checked: true },
+        { name: 'Domestic violence survivors', checked: true },
+        { name: 'LGBTQ+', checked: true },
+        { name: 'Veterans', checked: true },
       ],
     },
   ],
@@ -94,7 +94,7 @@ export const eligibilityData: ucsfEligibilityDictionary = {
       label: 'Age and Dependents',
       eligibilities: [
         { name: 'See all', checked: true },
-        { name: 'Pregnant', checked: false },
+        { name: 'Pregnant', checked: true },
       ],
     },
   ],
