@@ -6,7 +6,7 @@ import { Button } from 'components/ui/inline/Button';
 import { Section } from 'components/ucsf/Section';
 import { Layout } from 'components/ucsf/Layout';
 
-import { eligibilities as eligibilityData } from './ucsfEligibilities';
+import { eligibilityData } from './ucsfEligibilities';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
 const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
