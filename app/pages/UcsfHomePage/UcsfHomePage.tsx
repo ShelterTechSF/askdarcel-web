@@ -56,7 +56,7 @@ const ResourceListComponent = ({ resourceList, setSelectedResource, setDisableNe
 
   return (
     <ul className={styles.resourceList}>
-      {resourceList.map((resource: resourceListItem, i: number) => (
+      {resourceList.map((resource: resourceListItem) => (
         <li
           key={resource.id}
           className={`${styles.resourceItem}
@@ -85,16 +85,18 @@ const Page = () => {
   // (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
   const ucsfResources = [
     {
-      id: '1000010', name: 'Shelter', icon: 'bed', checked: false, slug: 'shelter-resources'
+      id: '1000010', name: 'Shelter', icon: 'bed', checked: false, slug: 'shelter-resources',
     },
     {
-      id: '1000001', name: 'Substance Use', icon: 'hospital', checked: false, slug: 'substance-use-resources'
+      id: '1000001', name: 'Substance Use', icon: 'hospital', checked: false, slug: 'substance-use-resources',
     },
     {
-      id: '1000002', name: 'Mental Health', icon: 'smiley-face', checked: false, slug: 'mental-health-resources'
+      id: '1000002', name: 'Mental Health', icon: 'smiley-face', checked: false, slug: 'mental-health-resources',
     },
   ];
 
+  // todo: setResourceList will be used when we allow multiple selected resources
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [resourceList, setResourceList] = useState(ucsfResources);
   const [selectedResource, setSelectedResource] = useState<resourceListItem>();
   const [disableNextButton, setDisableNextButton] = useState(true);
