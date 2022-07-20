@@ -44,12 +44,17 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
     const targetToggleState = !targetEligibility.checked;
     let updatedEligibilities;
 
+    // If a user toggles "See all", we (un)check all of the eligibilities accordingly
     if (targetEligibility.name === 'See all') {
       updatedEligibilities = massToggleGroupEligibilities(
         eligibilityGroup.eligibilities,
         targetToggleState,
       );
     } else {
+      // If a user untoggles a specific eligiblity, this code also untoggles "See all"
+      // Currently, there is no logic to toggle "See all" if a user toggles all individual
+      // eligibilities given that this is somewhat of an implicit understanding; however, this
+      // can be added in the future
       const seeAllEligibility = eligibilityGroup.eligibilities[0];
       if (!targetToggleState) {
         seeAllEligibility.checked = false;
@@ -74,6 +79,7 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
     };
   };
 
+  // Toggles all eligibilities in accordance with the toggleState argument
   const massToggleGroupEligibilities = (
     eligibilities: clientEligibility[],
     toggleState: boolean,
