@@ -11,6 +11,7 @@ import { GeoCoordinates, useAppContext } from 'utils';
 import { Loader } from 'components/ui';
 import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
+import Header from 'components/search/Header/Header';
 import config from '../../config';
 import styles from './SearchResultsPage.module.scss';
 
@@ -21,24 +22,23 @@ const searchClient = algoliasearch(
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
+interface ConfigureState {
+  aroundRadius?: string;
+  [key: string]: any;
+}
+
+interface SearchState extends ParsedQs {
+  configure?: ConfigureState;
+  query?: string;
+  [key: string]: any;
+}
+
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const SearchResultsPage = () => {
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
   const { search } = useLocation();
   const [expandList, setExpandList] = useState(false);
-
-  // These interfaces are defined to avoid a type warning caused by querying the
-  // configure.aroundRadius property
-  interface ConfigureState {
-    aroundRadius?: string;
-    [key: string]: any;
-  }
-
-  interface SearchState {
-    configure?: ConfigureState;
-    [key: string]: any;
-  }
 
   const searchState: SearchState = useMemo(() => qs.parse(search.slice(1)), [search]);
   const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius ?? 'all');
@@ -69,7 +69,7 @@ const InnerSearchResults = ({
   setLastPush: (time: number) => void;
   expandList: boolean;
   setExpandList: (listExpanded: boolean) => void;
-  searchState: ParsedQs;
+  searchState: SearchState;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
 }) => {
@@ -79,17 +79,11 @@ const InnerSearchResults = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{searchState.query}</h1>
-        <div className={styles.mapListToggleContainer}>
-          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
-            <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
-          </button>
-          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
-            <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
-          </button>
-        </div>
-      </div>
+      <Header
+        resultsTitle={searchState.query || ''}
+        expandList={expandList}
+        setExpandList={setExpandList}
+      />
 
       <InstantSearch
         searchClient={searchClient}
