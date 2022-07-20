@@ -19,6 +19,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "prop-types": "^15.5.10",
+    "qrcode.react": "^3.0.2",
     "qs": "^6.5.1",
     "react": "^16.8.6",
     "react-burger-menu": "^2.6.0",

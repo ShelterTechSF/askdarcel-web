@@ -2,34 +2,44 @@ import React from 'react';
 
 import styles from './Button.module.scss';
 
-/**
- * A wider than normal button. Currently, this component only has two sizes (medium, large) and
- * sets the background and font color by default. This can be expanded/parameterized in the future.
- */
-
 type ButtonType = 'button' | 'submit' | 'reset';
+type StyleType = 'transparent';
 
 const Button = ({
-  text,
+  children,
   onClick,
   buttonType = 'button',
   addClass,
+  styleType,
+  tabIndex,
 }: {
-  text: string;
+  children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   readonly buttonType?: ButtonType;
   addClass?: string;
-}) => (
-  <button
-    onClick={onClick}
-     // ES Lint complains about the type attr being set dynamically, but given that type attr is
-     // limited to ButtonType enums, commenting this out should be safe
-     /* eslint-disable-next-line react/button-has-type */
-    type={buttonType}
-    className={`${styles.button} ${addClass || ''}`}
-  >
-    {text}
-  </button>
-);
+  styleType?: StyleType;
+  tabIndex?: number;
+}) => {
+  let buttonClass;
+  if (styleType === 'transparent') {
+    buttonClass = styles.buttonTransparent;
+  } else {
+    buttonClass = styles.button;
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      // ES Lint complains about the type attr being set dynamically, but given that type attr is
+      // limited to ButtonType enums, commenting this out should be safe
+      /* eslint-disable-next-line react/button-has-type */
+      type={buttonType}
+      tabIndex={tabIndex}
+      className={`${buttonClass} ${addClass || ''}`}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default Button;
