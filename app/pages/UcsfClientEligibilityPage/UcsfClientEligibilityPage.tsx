@@ -168,11 +168,11 @@ const Page = () => {
         <ClientEligibilities />
         <div className={styles.eligibilitiesBtns}>
           <Button
-            text="Back"
+            children="Back"
             onClick={backToResourceSelection}
           />
           <Button
-            text="Next: Service Capacity"
+            children="Next: Service Capacity"
             onClick={goToResourceResults}
             addClass={styles.goToResultsBtn}
           />
