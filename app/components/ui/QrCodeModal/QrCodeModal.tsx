@@ -14,7 +14,7 @@ const QrCodeModal = ({
   setIsOpen: (val: boolean) => void;
 }) => {
   const closeModal = () => {
-    setIsOpen(false)
+    setIsOpen(false);
   };
 
   return (
@@ -24,24 +24,30 @@ const QrCodeModal = ({
       overlayClassName={styles.qrCodeModalOverlay}
       onRequestClose={closeModal}
     >
-      <img
-        src={icon('close')}
-        alt="close"
-        className={styles.closeModal}
+      <div
         role="button"
         tabIndex={0}
         onClick={closeModal}
-      />
+      >
+        <img
+          src={icon('close')}
+          alt="close"
+          className={styles.closeModal}
+        />
+      </div>
       <h2 className={styles.title}>Resource Code</h2>
-      <p className={styles.body}>Show this QR code to your client so that they may open this page on their phone.</p>
+      <p className={styles.body}>
+        Show this QR code to your client so that they may open this page on their phone.
+      </p>
       <QRCodeSVG value={window.location.href} size={235} />
       <div>
         <Button
-          children="CLOSE"
           onClick={closeModal}
           addClass={styles.closeBtn}
           tabIndex={0}
-        />
+        >
+          CLOSE
+        </Button>
       </div>
     </Modal>
   );
