@@ -78,6 +78,7 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
     };
   };
 
+  // Toggles all eligibilities in accordance with the toggleState argument
   const massToggleGroupEligibilities = (
     eligibilities: clientEligibility[],
     toggleState: boolean,
