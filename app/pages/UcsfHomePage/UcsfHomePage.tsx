@@ -98,9 +98,10 @@ const Page = () => {
       <ResourceListComponent resourceList={resourceList} setResourceList={setResourceList} />
       <div className={styles.buttonContainer}>
         <Button
-          children="Next"
           onClick={goToEligibilitiesStep}
-        />
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
