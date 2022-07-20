@@ -21,35 +21,32 @@ const Header = ({
     setQrCodeModalOpen(!qrCodeModalOpen);
   };
 
-  const qrBtnJsx = (
-    <>
-      <img src={assetIcon('qr-code')} alt="QR Code" className={styles.qrCodeIcon} />
-      <span className={styles.qrCodeBtnText}>Resource List QR Code</span>
-    </>
-  );
-
   return (
     <div className={styles.header}>
-    <h1 className={styles.title}>{resultsTitle}</h1>
-    <Button
-      children={qrBtnJsx}
-      onClick={toggleQrCodeModal}
-      addClass={styles.qrCodeBtn}
-      styleType="transparent"
-    />
-    <QrCodeModal
-      isOpen={qrCodeModalOpen}
-      setIsOpen={setQrCodeModalOpen}
-    />
-    <div className={styles.mapListToggleContainer}>
-      <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
-        <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
-      </button>
-      <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
-        <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
-      </button>
+      <h1 className={styles.title}>{resultsTitle}</h1>
+      <Button
+        onClick={toggleQrCodeModal}
+        addClass={styles.qrCodeBtn}
+        styleType="transparent"
+      >
+        <>
+          <img src={assetIcon('qr-code')} alt="QR Code" className={styles.qrCodeIcon} />
+          <span className={styles.qrCodeBtnText}>Resource List QR Code</span>
+        </>
+      </Button>
+      <QrCodeModal
+        isOpen={qrCodeModalOpen}
+        setIsOpen={setQrCodeModalOpen}
+      />
+      <div className={styles.mapListToggleContainer}>
+        <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
+          <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
+        </button>
+        <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
+          <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
+        </button>
+      </div>
     </div>
-  </div>
   );
 };
 
