@@ -17,15 +17,11 @@ const Header = ({
 }) => {
   const [qrCodeModalOpen, setQrCodeModalOpen] = useState(false);
 
-  const toggleQrCodeModal = () => {
-    setQrCodeModalOpen(!qrCodeModalOpen);
-  };
-
   return (
     <div className={styles.header}>
       <h1 className={styles.title}>{resultsTitle}</h1>
       <Button
-        onClick={toggleQrCodeModal}
+        onClick={() => { setQrCodeModalOpen(true); }}
         addClass={styles.qrCodeBtn}
         styleType="transparent"
       >
