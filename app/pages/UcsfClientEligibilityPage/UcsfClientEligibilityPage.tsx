@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Checkbox from 'components/ui/inline/Checkbox';
-import Button from 'components/ui/inline/Button';
-import Section from 'components/ucsf/Section';
-import Layout from 'components/ucsf/Layout';
+import { Checkbox } from 'components/ui/inline/Checkbox';
+import { Button } from 'components/ui/inline/Button';
+import { Section } from 'components/ucsf/Section';
+import { Layout } from 'components/ucsf/Layout';
 
 import styles from './UcsfClientEligibilityPage.module.scss';
 
@@ -49,7 +49,7 @@ const clientEligibilityGroupData: clientEligibilityGroup[] = [
   },
 ];
 
-const ClientEligibilities = () => {
+function ClientEligibilities() {
   const [eligibilityGroupList, setEligibilityGroupList] = useState(clientEligibilityGroupData);
 
   // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
@@ -114,9 +114,9 @@ const ClientEligibilities = () => {
       </ol>
     </div>
   );
-};
+}
 
-const Page = () => {
+function Page() {
   const history = useHistory();
 
   /**
@@ -150,7 +150,7 @@ const Page = () => {
     // Todo: We will need to alter the Service Discovery Results file to honor requests
     // that can include more than one resource (e.g. substance abuse AND mental health)
     // before successfully navigating to the suggested-resources page
-    alert('Navigate to target resources');
+    alert('Navigate to target resources'); // eslint-disable-line no-alert
     // history.push('/suggested-resources', {selectedResources: selectedResources});
   };
 
@@ -180,10 +180,12 @@ const Page = () => {
       </div>
     </div>
   );
-};
+}
 
-export const UcsfClientEligibilityPage = () => (
-  <Layout>
-    <Page />
-  </Layout>
-);
+export function UcsfClientEligibilityPage() {
+  return (
+    <Layout>
+      <Page />
+    </Layout>
+  );
+}

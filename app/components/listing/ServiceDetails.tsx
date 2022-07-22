@@ -6,7 +6,7 @@ import { Service, RecurringSchedule } from '../../models';
 import ServiceVerified from '../../assets/img/ic-attributed-record.svg';
 import './ServiceDetails.scss';
 
-export const ServiceDetails = ({ service }: { service: Service }) => {
+export function ServiceDetails({ service }: { service: Service }) {
   const [infoHidden, setInfoHidden] = useState(true);
   const toggleInfoHidden = () => setInfoHidden(!infoHidden);
 
@@ -34,8 +34,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
               More Info
               <i className="material-icons">keyboard_arrow_down</i>
             </span>
-          )
-        }
+          )}
       </div>
 
       { !infoHidden && (
@@ -61,25 +60,26 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
             </span>
           </div>
         </div>
-      )
-      }
+      )}
     </li>
   );
-};
+}
 
-const WeeklyHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) => (
-  <li className="service--details--item">
-    <header>Hours</header>
-    <div className="service--details--item--info">
-      <DetailedHours recurringSchedule={recurringSchedule} />
-    </div>
-  </li>
-);
+function WeeklyHours({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) {
+  return (
+    <li className="service--details--item">
+      <header>Hours</header>
+      <div className="service--details--item--info">
+        <DetailedHours recurringSchedule={recurringSchedule} />
+      </div>
+    </li>
+  );
+}
 
-const ServiceContactDetails = ({ email, website }: {
+function ServiceContactDetails({ email, website }: {
   email?: string|null;
   website?: string|null;
-}) => {
+}) {
   if (!(email || website)) {
     return null;
   }
@@ -102,21 +102,24 @@ const ServiceContactDetails = ({ email, website }: {
       </div>
     </li>
   );
-};
+}
 
-const ServiceEligibility = ({ result, subject }: {
+function ServiceEligibility({ result, subject }: {
   result: string|null;
   subject: string;
-}) => (result ? (
-  <li className="service--details--item">
-    <header>{subject}</header>
-    <ReactMarkdown className="rendered-markdown service--details--item--info">{result}</ReactMarkdown>
-  </li>
-) : null);
+}) {
+  return result ? (
+    <li className="service--details--item">
+      <header>{subject}</header>
+      <ReactMarkdown className="rendered-markdown service--details--item--info">{result}</ReactMarkdown>
+    </li>
+  ) : null;
+}
 
-const DetailedHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) => (
-  <span className="weekly-hours-list">
-    {
+function DetailedHours({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) {
+  return (
+    <span className="weekly-hours-list">
+      {
       (
         recurringSchedule.hoursKnown
           ? (recurringSchedule.intervals.map(interval => (
@@ -125,21 +128,21 @@ const DetailedHours = ({ recurringSchedule }: { recurringSchedule: RecurringSche
               <span className="weekly-hours-list--item--hours">
                 { interval.is24Hours()
                   ? '24 Hours'
-                  : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`
-                }
+                  : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`}
               </span>
             </div>
           )))
           : (<div className="weekly-hours-list--item">Call for Hours</div>)
       )
     }
-  </span>
-);
+    </span>
+  );
+}
 
-export const ServiceAttribution = ({ attribution, status }: {
+export function ServiceAttribution({ attribution, status }: {
   attribution: string;
   status: string;
-}) => {
+}) {
   const benetechLink = 'https://medium.com/@Shelter_Tech/sheltertech-is-participating-'
   + 'in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6';
   const isServiceNetAttribution = attribution === 'service_net' && status === 'approved';
@@ -161,4 +164,4 @@ export const ServiceAttribution = ({ attribution, status }: {
       </p>
     </div>
   ) : null;
-};
+}

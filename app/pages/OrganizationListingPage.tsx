@@ -29,7 +29,7 @@ import {
 } from '../models';
 
 // Page at /organization/123
-export const OrganizationListingPage = () => {
+export function OrganizationListingPage() {
   const { id } = useParams<{ id: string }>();
   const [org, setOrg] = useState<Organization|null>(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
@@ -83,8 +83,7 @@ export const OrganizationListingPage = () => {
                   <div className="org--main--header--phone">
                     <PhoneNumberRenderer phones={org.phones} />
                   </div>
-                )
-              }
+                )}
             </header>
 
             <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
@@ -139,30 +138,34 @@ export const OrganizationListingPage = () => {
       </article>
     </div>
   );
-};
+}
 
 type OrganizationListingSectionProps = {
   title: string;
 } & React.HTMLProps<HTMLDivElement>
 
 // A title with the content of a section
-export const OrganizationListingSection = ({
+export function OrganizationListingSection({
   children, title, ...props
-}: OrganizationListingSectionProps) => (
-  <section {...props}>
-    <h2>{title}</h2>
-    {children}
-  </section>
-);
+}: OrganizationListingSectionProps) {
+  return (
+    <section {...props}>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
 
 // A subtitle with the content of a section
-export const OrganizationSubheaderSection = ({
+export function OrganizationSubheaderSection({
   children, title, ...props
-}: OrganizationListingSectionProps) => (
-  <section {...props}>
-    <header className="service--section--header">
-      <h4>{title}</h4>
-    </header>
-    {children}
-  </section>
-);
+}: OrganizationListingSectionProps) {
+  return (
+    <section {...props}>
+      <header className="service--section--header">
+        <h4>{title}</h4>
+      </header>
+      {children}
+    </section>
+  );
+}

@@ -67,25 +67,26 @@ const buildScheduleDays = schedule => {
       }
     });
   }
-  finalSchedule = Object.assign({}, tempSchedule, currSchedule);
+  finalSchedule = { ...tempSchedule, ...currSchedule };
   return finalSchedule;
 };
 export { buildScheduleDays };
 
-
-const InputField = ({
+function InputField({
   type, label, placeholder, value, setValue,
-}) => (
-  <Fragment>
-    <label htmlFor="input">{label}</label>
-    <input
-      type={type}
-      placeholder={placeholder}
-      value={value || ''}
-      onChange={evt => setValue(evt.target.value)}
-    />
-  </Fragment>
-);
+}) {
+  return (
+    <>
+      <label htmlFor="input">{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value || ''}
+        onChange={evt => setValue(evt.target.value)}
+      />
+    </>
+  );
+}
 
 InputField.propTypes = {
   type: PropTypes.string,
@@ -100,8 +101,7 @@ InputField.defaultProps = {
   value: '',
 };
 
-
-const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
+function EditAddresses({ service, resourceAddresses, handleChange }) {
   const selectableOptions = resourceAddresses
     .flatMap((address, handle) => {
       // Don't include addresses that have already been added to the service
@@ -150,8 +150,7 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
       </div>
     </li>
   );
-};
-
+}
 
 const TEXT_AREAS = [
   {
@@ -178,10 +177,9 @@ const TEXT_AREAS = [
   },
 ];
 
-
-const ProvidedService = ({
+function ProvidedService({
   editServiceById, handleDeactivation, index, service, resourceAddresses,
-}) => {
+}) {
   const handleChange = (field, value) => {
     const { id } = service;
     editServiceById(id, { id, [field]: value });
@@ -338,7 +336,7 @@ const ProvidedService = ({
       </ul>
     </li>
   );
-};
+}
 
 ProvidedService.propTypes = {
   service: PropTypes.shape({

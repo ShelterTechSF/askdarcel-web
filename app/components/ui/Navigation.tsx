@@ -18,10 +18,10 @@ const {
   title,
 } = whiteLabel;
 
-export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
+export function Navigation({ showSearch, toggleHamburgerMenu }: {
   showSearch: boolean;
   toggleHamburgerMenu: () => void;
-}) => {
+}) {
   const [query, setQuery] = useState('');
   const [showSecondarySearch, setShowSecondarySearch] = useState(false);
   const searchProps = { query, setQuery };
@@ -42,8 +42,8 @@ export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
 
         {showMobileNav && (
           <div className={styles.mobileNavigation}>
-            <button type="button" className={styles.searchButton} onClick={() => setShowSecondarySearch(!showSecondarySearch)} />
-            <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
+            <button type="button" aria-label="search for a service" className={styles.searchButton} onClick={() => setShowSecondarySearch(!showSecondarySearch)} />
+            <button type="button" aria-label="navigation menu" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
           </div>
         )}
       </div>
@@ -57,46 +57,50 @@ export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
       )}
     </nav>
   );
-};
+}
 
-const SiteLogo = () => (/^https?:\/\//.test(logoLinkDestination)
-  ? (
-    <a className={`${navLogoStyle} ${styles.navLogo}`} href={siteUrl}>
-      <img src={logoSmall} alt={title} />
-    </a>
-  )
-  : (
-    <Link className={`${navLogoStyle} ${styles.navLogo}`} to="/">
-      <img src={logoSmall} alt={title} />
-    </Link>
-  ));
-
-const SiteLinks = () => (
-  <ul className={styles.navRight}>
-    <li>
-      <Link to="/about">
-        About
+function SiteLogo() {
+  return /^https?:\/\//.test(logoLinkDestination)
+    ? (
+      <a className={`${navLogoStyle} ${styles.navLogo}`} href={siteUrl}>
+        <img src={logoSmall} alt={title} />
+      </a>
+    )
+    : (
+      <Link className={`${navLogoStyle} ${styles.navLogo}`} to="/">
+        <img src={logoSmall} alt={title} />
       </Link>
-    </li>
-    <li>
-      <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
-        FAQ
-      </a>
-    </li>
-    <li>
-      <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
-        Contact Us
-      </a>
-    </li>
-    <Translate />
-  </ul>
-);
+    );
+}
 
-const SiteSearch = ({ query, setQuery, extraClasses }: {
+function SiteLinks() {
+  return (
+    <ul className={styles.navRight}>
+      <li>
+        <Link to="/about">
+          About
+        </Link>
+      </li>
+      <li>
+        <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
+          FAQ
+        </a>
+      </li>
+      <li>
+        <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
+          Contact Us
+        </a>
+      </li>
+      <Translate />
+    </ul>
+  );
+}
+
+function SiteSearch({ query, setQuery, extraClasses }: {
   extraClasses?: string;
   query: string;
   setQuery: (q: string) => void;
-}) => {
+}) {
   const history = useHistory();
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -125,4 +129,4 @@ const SiteSearch = ({ query, setQuery, extraClasses }: {
       />
     </form>
   );
-};
+}

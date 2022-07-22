@@ -25,10 +25,12 @@ type SearchState = {
   };
 };
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 const createURL = (state: SearchState) => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
 const searchStateToURL = (location: RouterLocation, searchState: SearchState) => (searchState
@@ -39,13 +41,13 @@ const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(
 );
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-const ServiceDiscoveryResults = ({
+export function ServiceDiscoveryResults({
   history, location, match,
 }: {
   history: RouteComponentProps['history'];
   location: RouteComponentProps['location'];
   match: Match<MatchParams>;
-}) => {
+}) {
   const { categorySlug } = match.params;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (category === undefined) { throw new Error(`Unknown category slug ${categorySlug}`); }
@@ -64,8 +66,8 @@ const ServiceDiscoveryResults = ({
 
   // TODO: Handle failure?
   useEffect(() => {
-    dataService.get(`/api/categories/${category.id}`).then(response => {
-      setParentCategory(response.category);
+    dataService.get(`/api/categories/${category.id}`).then(({ category: serviceCategory }: { category: ServiceCategory }) => {
+      setParentCategory(serviceCategory);
     });
   }, [category.id]);
 
@@ -92,13 +94,10 @@ const ServiceDiscoveryResults = ({
   }
 
   return <Loader />;
-};
-
-export default ServiceDiscoveryResults;
-
+}
 
 /** Stateless inner component that just handles presentation. */
-const InnerServiceDiscoveryResults = ({
+function InnerServiceDiscoveryResults({
   eligibilities, subcategories, categoryName, algoliaCategoryName, searchState,
   onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
 }: {
@@ -113,7 +112,7 @@ const InnerServiceDiscoveryResults = ({
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
   userLatLng: string;
-}) => {
+}) {
   const subcategoryNames = subcategories.map(c => c.name);
   return (
     <div className={styles.container}>
@@ -158,4 +157,4 @@ const InnerServiceDiscoveryResults = ({
       </InstantSearch>
     </div>
   );
-};
+}

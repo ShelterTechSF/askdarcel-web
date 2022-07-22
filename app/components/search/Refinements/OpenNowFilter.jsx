@@ -4,7 +4,6 @@ import { connectRefinementList } from 'react-instantsearch/connectors';
 import { getCurrentDayTime } from 'utils/index';
 import styles from './RefinementFilters.module.scss';
 
-
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
  * Now checkbos.
@@ -22,7 +21,7 @@ import styles from './RefinementFilters.module.scss';
  * filter should filter for organizations or services which have 'Su-10:00' in
  * the open_times array.
  */
-const OpenNowFilter = ({ currentRefinement, refine }) => {
+function OpenNowFilter({ currentRefinement, refine }) {
   const isActive = currentRefinement.length !== 0;
   const toggleRefinement = () => {
     if (isActive) {
@@ -38,7 +37,7 @@ const OpenNowFilter = ({ currentRefinement, refine }) => {
       <input type="checkbox" name="openNow" id="openNow" className={styles.refinementInput} value={isActive} checked={isActive} onChange={toggleRefinement} />
     </label>
   );
-};
+}
 
 OpenNowFilter.propTypes = {
   currentRefinement: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Service } from '../../models';
 
-export const ServiceCard = ({ service }: { service: Service }) => {
+export function ServiceCard({ service }: { service: Service }) {
   const { id, name, long_description } = service;
   return (
     <Link to={{ pathname: `/services/${id}` }} className="card">
@@ -12,4 +12,4 @@ export const ServiceCard = ({ service }: { service: Service }) => {
       </header>
     </Link>
   );
-};
+}

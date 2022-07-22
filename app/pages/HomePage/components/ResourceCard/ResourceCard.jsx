@@ -16,7 +16,7 @@ const openTypeform = (event, link) => {
   typeformReference.open();
 };
 
-const ResourceCard = ({ resource }) => {
+function ResourceCard({ resource }) {
   const {
     link = '', name = '', icon = '', categorySlug, isTypeform = false,
   } = resource;
@@ -51,6 +51,6 @@ const ResourceCard = ({ resource }) => {
       <span className={styles.name}>{name}</span>
     </a>
   );
-};
+}
 
 export default ResourceCard;

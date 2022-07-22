@@ -5,12 +5,13 @@ import { RecurringSchedule } from '../../models/RecurringSchedule';
 // TODO Show relativeOpeningTime for current day
 // TODO Show days without entries in the schedule as closed
 // TODO Order with current day at top
-export const TableOfOpeningTimes = ({ recurringSchedule }: {
+export function TableOfOpeningTimes({ recurringSchedule }: {
   recurringSchedule: RecurringSchedule;
-}) => (
-  <table className="compact">
-    <tbody>
-      {
+}) {
+  return (
+    <table className="compact">
+      <tbody>
+        {
         (recurringSchedule.hoursKnown
           && recurringSchedule.intervals.map(interval => {
             const opensAt = interval.opensAt.timeString();
@@ -24,6 +25,7 @@ export const TableOfOpeningTimes = ({ recurringSchedule }: {
           }))
         || <tr><th>Call for Hours</th></tr>
       }
-    </tbody>
-  </table>
-);
+      </tbody>
+    </table>
+  );
+}

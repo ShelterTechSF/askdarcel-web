@@ -4,18 +4,20 @@ import { withRouter } from 'react-router-dom';
 
 import styles from './EditSidebar.module.scss';
 
-const SaveButton = ({ children, disabled, onClick }) => (
-  <button
-    type="button"
-    className={styles.actionButton}
-    disabled={disabled}
-    onClick={onClick}
-  >
-    {children}
-  </button>
-);
+function SaveButton({ children, disabled, onClick }) {
+  return (
+    <button
+      type="button"
+      className={styles.actionButton}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}
 
-const EditSidebar = ({
+function EditSidebar({
   addService,
   certifyHAP,
   createResource,
@@ -26,7 +28,7 @@ const EditSidebar = ({
   newServices,
   resource,
   submitting,
-}) => {
+}) {
   let actionButtons = [
     <SaveButton
       key="submit"
@@ -128,7 +130,7 @@ const EditSidebar = ({
       </div>
     </nav>
   );
-};
+}
 
 EditSidebar.defaultProps = {
   newServices: {},

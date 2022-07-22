@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   extends: [
     'airbnb',
@@ -14,8 +16,12 @@ module.exports = {
     browser: true,
   },
   settings: {
-    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
-    'import/resolver': 'webpack',
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        paths: [path.resolve(__dirname, 'app')],
+      },
+    },
   },
   rules: {
     'arrow-parens': ['warn', 'as-needed'],
@@ -63,6 +69,9 @@ module.exports = {
         'no-unused-vars': 'off',
         'no-use-before-define': 'off',
         'react/require-default-props': 'off',
+        'react/no-unstable-nested-components': 'off',
+        'react/jsx-props-no-spreading': 'off',
+        'max-classes-per-file': 'off',
         'spaced-comment': ['error', 'always', { markers: ['/'] }],
       },
     },
@@ -82,6 +91,9 @@ module.exports = {
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
+        'react/jsx-props-no-spreading': 'off',
+        'max-classes-per-file': 'off',
+        'default-param-last': 'off',
       },
     },
     // Mocha Tests

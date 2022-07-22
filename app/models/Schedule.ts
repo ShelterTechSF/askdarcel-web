@@ -43,11 +43,11 @@ export const parseConcatenatedIntegerTime = (integerTime: any) => {
   try {
     // This algorithm is super hacky and slow, as it uses strings to separate the
     // hours digits from the minutes digits.
-    const timeString = integerTime.toString();
-    const hourString = timeString.substring(0, timeString.length - 2);
-    const minuteString = timeString.substring(timeString.length - 2, timeString.length);
-    const hour = hourString.length ? parseInt(hourString, 10) : 0;
-    const minute = parseInt(minuteString, 10);
+    const timeString: string = integerTime.toString();
+    const hourString: string = timeString.substring(0, timeString.length - 2);
+    const minuteString: string = timeString.substring(timeString.length - 2, timeString.length);
+    const hour: number = hourString.length ? parseInt(hourString, 10) : 0;
+    const minute: number = parseInt(minuteString, 10);
     return { hour, minute };
   } catch (e) {
     Sentry.captureException(e);

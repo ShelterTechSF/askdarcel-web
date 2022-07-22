@@ -3,14 +3,13 @@ import { icon } from 'assets';
 import styles from './ErrorView.module.scss';
 
 // Error View: show Alert graphic and a friendly message
-const ErrorView = () => (
-  <div className={styles.errorDiv}>
-    <img className={styles.responseIcon} src={icon('emergency')} alt="error" />
-    <div className={styles.errorText}>
-      Sorry, something went wrong, please try again later.
+export function ErrorView() {
+  return (
+    <div className={styles.errorDiv}>
+      <img className={styles.responseIcon} src={icon('emergency')} alt="error" />
+      <div className={styles.errorText}>
+        Sorry, something went wrong, please try again later.
+      </div>
     </div>
-  </div>
-
-);
-
-export default ErrorView;
+  );
+}

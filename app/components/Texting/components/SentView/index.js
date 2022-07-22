@@ -1,1 +1,1 @@
-export { default } from './SentView';
+export { SentView } from './SentView';

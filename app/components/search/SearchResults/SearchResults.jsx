@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { connectStateResults } from 'react-instantsearch/connectors';
-import { icon } from 'assets';
 import { SearchMap } from 'components/search/SearchMap/SearchMap';
 import ResultsPagination from 'components/search/Pagination/ResultsPagination';
-import { parseAlgoliaSchedule } from 'app/models';
-import Texting from 'components/Texting';
+import { Texting } from 'components/Texting';
+import { icon } from '../../../assets';
+import { parseAlgoliaSchedule } from '../../../models';
 import styles from './SearchResults.module.scss';
-
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -28,7 +27,7 @@ const transformHits = hits => hits.map(hit => {
 
 // Todo: setExpandList will be used as part of next stage of multiple location work
 // eslint-disable-next-line no-unused-vars
-const SearchResults = ({ searchResults, expandList, setExpandList }) => {
+function SearchResults({ searchResults, expandList, setExpandList }) {
   if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
@@ -70,10 +69,10 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
       />
     </div>
   );
-};
+}
 
 // eslint-disable-next-line no-unused-vars
-const SearchResult = ({ hit, index, setCenterCoords }) => {
+function SearchResult({ hit, index, setCenterCoords }) {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
 
   const service = {
@@ -186,8 +185,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   return (
     <div className={styles.searchResult}>
       { textingIsOpen
-        && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />
-      }
+        && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />}
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>
@@ -222,7 +220,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       </div>
     </div>
   );
-};
+}
 
 // Connects the Algolia searchState and searchResults to this component
 // Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html

@@ -31,7 +31,7 @@ const links = [
   { to: '/privacy-policy', text: 'Privacy Policy' },
 ];
 
-export const HamburgerMenu = ({
+export function HamburgerMenu({
   isOpen,
   onStateChange,
   outerContainerId,
@@ -43,38 +43,40 @@ export const HamburgerMenu = ({
   outerContainerId: string;
   pageWrapId: string;
   toggleHamburgerMenu: () => void;
-}) => (
-  <Menu
-    isOpen={isOpen}
-    onStateChange={onStateChange}
-    outerContainerId={outerContainerId}
-    pageWrapId={pageWrapId}
-    right
-    styles={burgerStyles}
-    width="275px"
-  >
-    {links.map(({ to, text, exact = false }) => (
-      <MenuItem
-        key={to}
-        to={to}
-        onClick={toggleHamburgerMenu}
-        exact={exact}
-      >
-        {text}
-      </MenuItem>
-    ))}
-  </Menu>
-);
+}) {
+  return (
+    <Menu
+      isOpen={isOpen}
+      onStateChange={onStateChange}
+      outerContainerId={outerContainerId}
+      pageWrapId={pageWrapId}
+      right
+      styles={burgerStyles}
+      width="275px"
+    >
+      {links.map(({ to, text, exact = false }) => (
+        <MenuItem
+          key={to}
+          to={to}
+          onClick={toggleHamburgerMenu}
+          exact={exact}
+        >
+          {text}
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+}
 
-const MenuItem = ({
+function MenuItem({
   children, onClick, to, exact,
 }: {
   children: ReactNode;
   onClick: () => void;
   to: string;
   exact: boolean;
-}) => (
-  (to.startsWith('http') || to.startsWith('mailto:'))
+}) {
+  return (to.startsWith('http') || to.startsWith('mailto:'))
     ? <a className={styles.menuItem} href={to}>{children}</a>
     : (
       <NavLink
@@ -86,5 +88,5 @@ const MenuItem = ({
       >
         {children}
       </NavLink>
-    )
-);
+    );
+}

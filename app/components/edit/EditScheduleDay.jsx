@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { stringToTime, timeToTimeInputValue } from '../../utils/time';
 
-const TimeInputRow = ({
+function TimeInputRow({
   dayOfWeekAbbrev, index, scheduleDay, is24Hours, setScheduleDay,
-}) => {
+}) {
   const removeTime = () => {
     const newScheduleDay = {
       ...scheduleDay,
@@ -72,11 +72,10 @@ const TimeInputRow = ({
               </button>
             )}
           </div>
-        )
-      }
+        )}
     </li>
   );
-};
+}
 
 const DAYS_OF_WEEK = Object.freeze({
   Monday: 'M',

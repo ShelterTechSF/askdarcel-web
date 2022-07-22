@@ -1,7 +1,7 @@
 import React from 'react';
 import { Service } from '../../models';
 
-export const TableOfContactInfo = ({ service }: { service: Service }) => {
+export function TableOfContactInfo({ service }: { service: Service }) {
   // TODO May break for non services, need a better check for inheritance
   const website = service.url || service.resource?.website;
   const email = service.email || service.resource?.email;
@@ -37,8 +37,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
                 <a href={website}>{website}</a>
               </td>
             </tr>
-          ) : null
-          }
+          ) : null}
 
         { email
           ? (
@@ -48,8 +47,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
                 <a href={`mailto:${email}`}>{email}</a>
               </td>
             </tr>
-          ) : null
-          }
+          ) : null}
 
         { phones.length
           ? (
@@ -71,11 +69,10 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
                 </ul>
               </td>
             </tr>
-          ) : null
-          }
+          ) : null}
 
         {/* TODO Contact Person */}
       </tbody>
     </table>
   );
-};
+}

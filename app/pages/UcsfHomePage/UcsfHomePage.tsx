@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { icon as assetIcon } from 'assets';
-import Checkbox from 'components/ui/inline/Checkbox';
-import Button from 'components/ui/inline/Button';
-import Section from 'components/ucsf/Section';
-import Layout from 'components/ucsf/Layout';
+import { Checkbox } from 'components/ui/inline/Checkbox';
+import { Button } from 'components/ui/inline/Button';
+import { Section } from 'components/ucsf/Section';
+import { Layout } from 'components/ucsf/Layout';
 
 import styles from './UcsfHomePage.module.scss';
-
 
 interface resourceListItem {
   id: string;
@@ -17,10 +16,10 @@ interface resourceListItem {
   checked: boolean;
 }
 
-const ResourceListComponent = ({ resourceList, setResourceList }: {
+function ResourceListComponent({ resourceList, setResourceList }: {
   resourceList: resourceListItem[];
   setResourceList: (resourcesArray: resourceListItem[]) => void;
-}) => {
+}) {
   const setResourceItem = (index: number, newResource: resourceListItem) => {
     const newList = [
       ...resourceList.slice(0, index),
@@ -59,9 +58,9 @@ const ResourceListComponent = ({ resourceList, setResourceList }: {
       ))}
     </ul>
   );
-};
+}
 
-const Page = () => {
+function Page() {
   // Todo: the UCSF Categories/Resources are not set up yet. For now, we're defaulting
   // the below resources to Covid-* category resource IDs for development purposes only
   // (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
@@ -104,10 +103,12 @@ const Page = () => {
       </div>
     </div>
   );
-};
+}
 
-export const UcsfHomePage = () => (
-  <Layout>
-    <Page />
-  </Layout>
-);
+export function UcsfHomePage() {
+  return (
+    <Layout>
+      <Page />
+    </Layout>
+  );
+}

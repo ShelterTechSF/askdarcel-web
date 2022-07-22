@@ -58,10 +58,10 @@ const getRelativeOpeningTime = (recurringSchedule: RecurringSchedule, currentDat
   return { text: 'Closed Today', classes: STATUS_CLOSED };
 };
 
-export const RelativeOpeningTime = ({ recurringSchedule, currentDate = moment() }: {
+export function RelativeOpeningTime({ recurringSchedule, currentDate = moment() }: {
   recurringSchedule: RecurringSchedule;
   currentDate?: Moment;
-}) => {
+}) {
   const [steps, setSteps] = useState(0);
   const { text, classes } = getRelativeOpeningTime(recurringSchedule, currentDate);
 
@@ -76,4 +76,4 @@ export const RelativeOpeningTime = ({ recurringSchedule, currentDate = moment() 
       { text }
     </span>
   );
-};
+}

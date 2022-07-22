@@ -116,7 +116,6 @@ const LinkSF: WhiteLabelSite = {
   userWay: false,
 } as const;
 
-
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
     background: BackgroundImage,

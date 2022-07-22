@@ -1,1 +1,1 @@
-export { default } from './FoodMap';
+export { FoodMap } from './FoodMap';

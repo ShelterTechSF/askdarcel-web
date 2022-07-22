@@ -12,7 +12,7 @@ import {
 } from './FeedbackSteps';
 import styles from './FeedbackForm.module.scss';
 
-export const FeedbackForm = ({ service, resource, closeModal }) => {
+export function FeedbackForm({ service, resource, closeModal }) {
   const [vote, setVote] = useState('neither');
   const [tagOptions, setTags] = useState(TAG_LIST);
   const [review, setReview] = useState('');
@@ -124,4 +124,4 @@ export const FeedbackForm = ({ service, resource, closeModal }) => {
       )}
     </div>
   );
-};
+}

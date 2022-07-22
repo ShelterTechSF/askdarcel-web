@@ -1,1 +1,1 @@
-export { default } from './ServiceDiscoveryResults';
+export { ServiceDiscoveryResults } from './ServiceDiscoveryResults';

@@ -4,7 +4,7 @@ import MOHCDFunded from '../../assets/img/ic-mohcd-funded-services.svg';
 
 import styles from './MOHCDBadge.module.scss';
 
-export const MOHCDBadge = ({ resource }: { resource: Organization }) => {
+export function MOHCDBadge({ resource }: { resource: Organization }) {
   const isMOHCDFunded: boolean = resource?.categories.some(category => category.name === 'MOHCD Funded');
 
   return isMOHCDFunded ? (
@@ -13,4 +13,4 @@ export const MOHCDBadge = ({ resource }: { resource: Organization }) => {
       <span className={styles.mohcdIconTitle}>Funded by MOHCD</span>
     </div>
   ) : null;
-};
+}

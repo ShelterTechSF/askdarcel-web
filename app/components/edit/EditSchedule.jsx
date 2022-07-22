@@ -42,8 +42,7 @@ class EditSchedule extends Component {
                 Inherit schedule from parent organization
               </label>
             </div>
-          )
-        }
+          )}
         {!shouldInheritFromParent && (
           <div>
             <span className="label open-24-label">24 hrs?</span>

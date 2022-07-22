@@ -64,13 +64,15 @@ ShelterTech
 <info@sheltertech.org>
 `;
 
-export const PrivacyPolicyPage = () => (
-  <div className="listing-container">
-    <article className="text-page listing" id="privacyPolict">
-      <div className="listing--main">
-        <ReactMarkdown className="rendered-markdown" source={privacyPolicyContent} />
-      </div>
-    </article>
-    <Footer />
-  </div>
-);
+export function PrivacyPolicyPage() {
+  return (
+    <div className="listing-container">
+      <article className="text-page listing" id="privacyPolict">
+        <div className="listing--main">
+          <ReactMarkdown className="rendered-markdown" source={privacyPolicyContent} />
+        </div>
+      </article>
+      <Footer />
+    </div>
+  );
+}

@@ -1,5 +1,3 @@
-
-
 /**
  * Round numbers to a specified decimal place.
  *

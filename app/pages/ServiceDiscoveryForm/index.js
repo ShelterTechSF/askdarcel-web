@@ -1,1 +1,1 @@
-export { default } from './ServiceDiscoveryForm';
+export { ServiceDiscoveryForm } from './ServiceDiscoveryForm';

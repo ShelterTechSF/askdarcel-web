@@ -11,23 +11,23 @@ type CheckboxProps = {
   id?: string;
 };
 
-const Input = ({
+export function Checkbox({
   name,
   onChange,
   value,
   checked,
   addClass,
   id,
-}: CheckboxProps) => (
-  <input
-    name={name}
-    onChange={onChange}
-    value={value}
-    checked={checked}
-    className={`${styles.inputDefaults} ${addClass || ''}`}
-    id={id}
-    type="checkbox"
-  />
-);
-
-export default Input;
+}: CheckboxProps) {
+  return (
+    <input
+      name={name}
+      onChange={onChange}
+      value={value}
+      checked={checked}
+      className={`${styles.inputDefaults} ${addClass || ''}`}
+      id={id}
+      type="checkbox"
+    />
+  );
+}

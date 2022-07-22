@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { StreetViewImage } from './StreetViewImage';
 import { Organization } from '../../models';
 
-export const OrganizationCard = ({ org }: { org: Organization }) => {
+export function OrganizationCard({ org }: { org: Organization }) {
   const address = org.addresses[0];
   const shortDescription = useMemo(() => org.short_description || org.long_description?.split('\n')[0], [org]);
   const maxHeight = '106px';
@@ -22,4 +22,4 @@ export const OrganizationCard = ({ org }: { org: Organization }) => {
       </header>
     </Link>
   );
-};
+}

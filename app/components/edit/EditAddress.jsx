@@ -14,9 +14,9 @@ import s from './EditAddress.module.scss';
  * "Cancel" button. Therefore, we have chosen to implement the form inputs as
  * uncontrolled components.
  */
-const EditAddressModal = ({
+function EditAddressModal({
   isOpen, onRequestClose, defaultData, onSave,
-}) => {
+}) {
   const isEdit = !!defaultData.id;
   const title = isEdit ? 'Edit Address' : 'Add New Address';
   const submitButtonText = isEdit ? 'Save Address' : 'Add New Address';
@@ -121,7 +121,7 @@ const EditAddressModal = ({
       </form>
     </ReactModal>
   );
-};
+}
 
 EditAddressModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -137,38 +137,40 @@ const compactAddressDisplay = ({
   return lines.filter(x => x).join(', ');
 };
 
-export const AddressListItem = ({
+export function AddressListItem({
   displayIndex, address, onEdit, onRemove,
-}) => (
-  <div className={s.listItemContainer}>
-    <div className={s.listItemIndex}>
-      {`${displayIndex}.`}
-    </div>
-    <div className={s.listItemName}>{address.name}</div>
-    <div className={s.listItemAddress}>{compactAddressDisplay(address)}</div>
-    <div className={s.listItemEdit}>
-      {onEdit && (
+}) {
+  return (
+    <div className={s.listItemContainer}>
+      <div className={s.listItemIndex}>
+        {`${displayIndex}.`}
+      </div>
+      <div className={s.listItemName}>{address.name}</div>
+      <div className={s.listItemAddress}>{compactAddressDisplay(address)}</div>
+      <div className={s.listItemEdit}>
+        {onEdit && (
         <button className={s.listItemButton} type="button" onClick={onEdit}>
           <RiEditBoxLine />
           Edit
         </button>
-      )}
+        )}
+      </div>
+      <div className={s.listItemRemove}>
+        <button className={s.listItemButton} type="button" onClick={onRemove}>
+          <RiDeleteBin5Line />
+          Remove
+        </button>
+      </div>
     </div>
-    <div className={s.listItemRemove}>
-      <button className={s.listItemButton} type="button" onClick={onRemove}>
-        <RiDeleteBin5Line />
-        Remove
-      </button>
-    </div>
-  </div>
-);
+  );
+}
 
 // Main component
 
 // For when we actually add TypeScript support
 // type ModalState = { type: "closed" } | { type: "add" } | { type: "edit"; editingIndex: number };
 
-const EditAddresses = ({ addresses, setAddresses }) => {
+function EditAddresses({ addresses, setAddresses }) {
   const [modalState, setModalState] = useState({ type: 'closed' });
 
   const closeModal = () => setModalState({ type: 'closed' });
@@ -247,7 +249,7 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       </button>
     </li>
   );
-};
+}
 
 EditAddresses.propTypes = {
   addresses: PropTypes.arrayOf(PropTypes.object).isRequired,

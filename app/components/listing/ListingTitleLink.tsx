@@ -6,10 +6,10 @@ import { OrganizationCard } from './OrganizationCard';
 import { ServiceCard } from './ServiceCard';
 import { Service, Organization } from '../../models';
 
-export const ListingTitleLink = ({ listing, type }: { listing: Service; type: 'service' } | { listing: Organization; type: 'org' }) => {
+export function ListingTitleLink({ listing, type }: { listing: Service; type: 'service' } | { listing: Organization; type: 'org' }) {
   const isService = type === 'service';
   const to = isService ? `/services/${listing.id}` : `/organizations/${listing.id}`;
-  const summaryCard = type === 'service' ? <ServiceCard service={listing as Service} /> : <OrganizationCard org={listing as Organization} />;
+  const summaryCard = type === 'service' ? <ServiceCard service={listing} /> : <OrganizationCard org={listing} />;
 
   return (
     <Tooltip
@@ -22,4 +22,4 @@ export const ListingTitleLink = ({ listing, type }: { listing: Service; type: 's
       <Link to={to}>{listing.name}</Link>
     </Tooltip>
   );
-};
+}

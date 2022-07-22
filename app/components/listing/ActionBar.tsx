@@ -4,7 +4,7 @@ import { icon as iconPath } from '../../assets';
 import { OrganizationAction } from '../../models';
 import './ActionBar.scss';
 
-const ActionButton = ({
+function ActionButton({
   action,
   onClickAction,
   iconColor,
@@ -14,7 +14,7 @@ const ActionButton = ({
   iconColor: string;
   listItemClass?: string;
   onClickAction: (a: OrganizationAction) => void;
-}) => {
+}) {
   const {
     icon, link, name, to,
   } = action;
@@ -47,35 +47,38 @@ const ActionButton = ({
       )}
     </li>
   );
-};
+}
 
+export function ActionSidebar({ actions, onClickAction }: ActionBarProps) {
+  return (
+    <ul className="action-sidebar">
+      {actions.map(action => (
+        <ActionButton
+          action={action}
+          iconColor="gray"
+          key={action.name}
+          onClickAction={onClickAction}
+        />
+      ))}
+    </ul>
+  );
+}
 
-export const ActionSidebar = ({ actions, onClickAction }: ActionBarProps) => (
-  <ul className="action-sidebar">
-    {actions.map(action => (
-      <ActionButton
-        action={action}
-        iconColor="gray"
-        key={action.name}
-        onClickAction={onClickAction}
-      />
-    ))}
-  </ul>
-);
-
-export const ActionBarMobile = ({ actions, onClickAction }: ActionBarProps) => (
-  <ul className="mobile-action-bar">
-    {actions.map(action => (
-      <ActionButton
-        action={action}
-        iconColor="blue"
-        key={action.name}
-        listItemClass="mobile-action-bar--listitem"
-        onClickAction={onClickAction}
-      />
-    ))}
-  </ul>
-);
+export function ActionBarMobile({ actions, onClickAction }: ActionBarProps) {
+  return (
+    <ul className="mobile-action-bar">
+      {actions.map(action => (
+        <ActionButton
+          action={action}
+          iconColor="blue"
+          key={action.name}
+          listItemClass="mobile-action-bar--listitem"
+          onClickAction={onClickAction}
+        />
+      ))}
+    </ul>
+  );
+}
 
 export interface ActionBarProps {
   actions: OrganizationAction[];

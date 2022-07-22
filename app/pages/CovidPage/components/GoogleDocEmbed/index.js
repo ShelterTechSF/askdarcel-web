@@ -1,1 +1,1 @@
-export { default } from './GoogleDocEmbed';
+export { GoogleDocEmbed } from './GoogleDocEmbed';

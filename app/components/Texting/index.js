@@ -1,1 +1,1 @@
-export { default } from './Texting';
+export { Texting } from './Texting';

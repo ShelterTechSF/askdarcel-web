@@ -14,13 +14,15 @@ import Sidebar from 'components/search/Sidebar/Sidebar';
 import config from '../../config';
 import styles from './SearchResultsPage.module.scss';
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-export const SearchResultsPage = () => {
+export function SearchResultsPage() {
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
   const { search } = useLocation();
@@ -54,10 +56,10 @@ export const SearchResultsPage = () => {
       setSearchRadius={setSearchRadius}
     />
   );
-};
+}
 
 /** Stateless inner component that just handles presentation. */
-const InnerSearchResults = ({
+function InnerSearchResults({
   history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState,
   searchRadius, setSearchRadius,
 }: {
@@ -70,7 +72,7 @@ const InnerSearchResults = ({
   searchState: ParsedQs;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
-}) => {
+}) {
   if (userLocation === null) {
     return <Loader />;
   }
@@ -134,4 +136,4 @@ const InnerSearchResults = ({
       </InstantSearch>
     </div>
   );
-};
+}

@@ -3,27 +3,27 @@ import PropTypes from 'prop-types';
 
 import styles from './Section.module.scss';
 
-const Section = ({
+export function HomePageSection({
   title, description, children,
-}) => (
-  <section className={styles.section}>
-    <div className={styles.content}>
-      <h1 className={styles.title}>{ title }</h1>
-      <div className={styles.description}>{ description }</div>
-      { children }
-    </div>
-  </section>
-);
+}) {
+  return (
+    <section className={styles.section}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>{ title }</h1>
+        <div className={styles.description}>{ description }</div>
+        { children }
+      </div>
+    </section>
+  );
+}
 
-Section.propTypes = {
+HomePageSection.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   children: PropTypes.node,
 };
 
-Section.defaultProps = {
+HomePageSection.defaultProps = {
   description: undefined,
   children: undefined,
 };
-
-export default Section;

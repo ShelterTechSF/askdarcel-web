@@ -2,16 +2,18 @@ import React, { Fragment } from 'react';
 import _ from 'lodash';
 import { Address, Category, PhoneNumber } from '../../models';
 
-const CategoryRenderer = ({ category }: { category: string }) => <p>{category}</p>;
+function CategoryRenderer({ category }: { category: string }) {
+  return <p>{category}</p>;
+}
 
-export const ResourceCategories = ({ categories }: { categories: Category[] }) => {
+export function ResourceCategories({ categories }: { categories: Category[] }) {
   const uniqueCategories = _.uniqBy(categories, 'id');
   return categories?.length ? (
     <span className="categories">
       {uniqueCategories.map(cat => <CategoryRenderer key={cat.id} category={cat.name} />)}
     </span>
   ) : null;
-};
+}
 
 // Given an address object, returns a React DOM element that displays the
 // address on up to three lines:
@@ -56,36 +58,43 @@ const buildLocation = (address: Address) => {
   });
 };
 
-export const AddressInfoRenderer = ({ address }: { address: Address }) => (
-  <span className="address">
-    {buildLocation(address)}
-  </span>
-);
+export function AddressInfoRenderer({ address }: { address: Address }) {
+  return (
+    <span className="address">
+      {buildLocation(address)}
+    </span>
+  );
+}
 
-export const PhoneNumberRenderer = ({ phones }: { phones: PhoneNumber[] }) => (
-  <span className="phone">
-    { phones.map(phone => (
-      <p key={phone.id}>
-        <a href={`tel:${phone.number}`}>{phone.number}</a>
-        {` ${phone.service_type}`}
-      </p>
-    )) }
-  </span>
-);
+export function PhoneNumberRenderer({ phones }: { phones: PhoneNumber[] }) {
+  return (
+    <span className="phone">
+      { phones.map(phone => (
+        <p key={phone.id}>
+          <a href={`tel:${phone.number}`}>{phone.number}</a>
+          {` ${phone.service_type}`}
+        </p>
+      )) }
+    </span>
+  );
+}
 
-const ExternalLink = ({ children, to }: { children: any; to: string }) => (
-  <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>
-);
+function ExternalLink({ children, to }: { children: any; to: string }) {
+  return <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>;
+}
 
+export function WebsiteRenderer({ website }: { website: string }) {
+  return (
+    <span className="website">
+      <ExternalLink to={website}>{website}</ExternalLink>
+    </span>
+  );
+}
 
-export const WebsiteRenderer = ({ website }: { website: string }) => (
-  <span className="website">
-    <ExternalLink to={website}>{website}</ExternalLink>
-  </span>
-);
-
-export const EmailRenderer = ({ email }: { email: string }) => (
-  <span className="email">
-    <ExternalLink to={`mailto:${email}`}>{email}</ExternalLink>
-  </span>
-);
+export function EmailRenderer({ email }: { email: string }) {
+  return (
+    <span className="email">
+      <ExternalLink to={`mailto:${email}`}>{email}</ExternalLink>
+    </span>
+  );
+}

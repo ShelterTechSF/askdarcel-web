@@ -74,13 +74,15 @@ PLEASE READ THE FOLLOWING TERMS OF USE (“TERMS”) CAREFULLY BEFORE USING SF S
 
 `;
 
-export const TermsOfServicePage = () => (
-  <div className="listing-container">
-    <article className="text-page listing" id="privacyPolict">
-      <div className="listing--main">
-        <ReactMarkdown className="rendered-markdown" source={termsOfServiceContent} />
-      </div>
-    </article>
-    <Footer />
-  </div>
-);
+export function TermsOfServicePage() {
+  return (
+    <div className="listing-container">
+      <article className="text-page listing" id="privacyPolict">
+        <div className="listing--main">
+          <ReactMarkdown className="rendered-markdown" source={termsOfServiceContent} />
+        </div>
+      </article>
+      <Footer />
+    </div>
+  );
+}

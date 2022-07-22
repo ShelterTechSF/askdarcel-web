@@ -29,7 +29,7 @@ import {
 const { title: whiteLabelTitle } = whiteLabel;
 
 // Page at /services/123
-export const ServiceListingPage = () => {
+export function ServiceListingPage() {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
@@ -150,31 +150,35 @@ export const ServiceListingPage = () => {
       </article>
     </div>
   );
-};
+}
 
 type ServiceListingSectionProps = {
   title: string;
 } & React.HTMLProps<HTMLDivElement>
 
 // A title with the content of a section
-export const ServiceListingSection = ({
+export function ServiceListingSection({
   children, title, ...props
-}: ServiceListingSectionProps) => (
-  <section {...props}>
-    <h2>{title}</h2>
-    {children}
-  </section>
-);
+}: ServiceListingSectionProps) {
+  return (
+    <section {...props}>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
 
 type ServiceProgramDetailsProps = { service: Service; organization: Organization }
 
 // TODO Implement rendering/popover when programs exist
 // Details if the service is part of a larger program, and the organization that provides it
-export const ServiceProgramDetails = ({ service, organization }: ServiceProgramDetailsProps) => (
-  <span>
-    A service
-    { service.program ? ` in the ${service.program.name} program` : null }
-    { ' offered by ' }
-    <ListingTitleLink type="org" listing={organization} />
-  </span>
-);
+export function ServiceProgramDetails({ service, organization }: ServiceProgramDetailsProps) {
+  return (
+    <span>
+      A service
+      { service.program ? ` in the ${service.program.name} program` : null }
+      { ' offered by ' }
+      <ListingTitleLink type="org" listing={organization} />
+    </span>
+  );
+}
