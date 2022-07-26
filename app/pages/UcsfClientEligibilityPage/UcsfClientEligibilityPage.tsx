@@ -130,13 +130,20 @@ const Page = () => {
   }
 
   const state = history.location.state as LocationState;
-  const goToResourceResults = () => {
-    history.push(`/${state.selectedResourceSlug}/results`);
+  const selectedResourceSlug = state && state.selectedResourceSlug;
+  const goToServiceTypePage = (slug: string) => {
+    history.push('/service-type', { selectedResourceSlug: slug });
   };
 
   const backToResourceSelection = () => {
     history.push('/');
   };
+
+  if (!selectedResourceSlug) {
+    // User has navigated to page directly without selecting a resource
+    history.push('/');
+    return null;
+  }
 
   return (
     <div className={styles.eligibilityPage}>
@@ -156,7 +163,7 @@ const Page = () => {
             Back
           </Button>
           <Button
-            onClick={goToResourceResults}
+            onClick={() => { goToServiceTypePage(selectedResourceSlug); }}
             addClass={styles.goToResultsBtn}
           >
             Next: Service Capacity

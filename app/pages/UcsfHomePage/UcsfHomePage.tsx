@@ -115,11 +115,10 @@ const Page = () => {
     <div className={styles.ucsfHomePage}>
       <Section
         title="For Clinicians"
-        body="Lorem Ipsum Dolorum"
       />
       <Section
         addClass={styles.subtitleMargin}
-        subtitle="Step 1: What kind of assistance does your client need? Select all that apply."
+        subtitle="Step 1: What kind of assistance does your client need?"
       />
       <ResourceListComponent
         resourceList={resourceList}
