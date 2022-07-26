@@ -39,6 +39,7 @@ import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/UcsfClientEligibilityPage';
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
+import { UcsfServiceTypePage } from './pages/UcsfServiceTypePage/UcsfServiceTypePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
 import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
 import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
@@ -140,6 +141,7 @@ export const App = () => {
 
               {/* UCSF white label paths */}
               <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
+              <Route exact path="/service-type" component={UcsfServiceTypePage} />
               <Route exact path="/suggested-resources" component={ServiceDiscoveryResults} />
 
               {/* Legacy redirects */}

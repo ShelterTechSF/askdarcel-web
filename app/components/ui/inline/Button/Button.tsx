@@ -12,15 +12,15 @@ type ButtonType = 'button' | 'submit' | 'reset';
 export const Button = ({
   text,
   onClick,
-  buttonType = 'button',
-  addClass,
   disabled,
+  addClass,
+  buttonType = 'button',
 }: {
   text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  readonly buttonType?: ButtonType;
-  addClass?: string;
   disabled?: boolean;
+  addClass?: string;
+  readonly buttonType?: ButtonType;
 }) => (
   <button
     onClick={onClick}
