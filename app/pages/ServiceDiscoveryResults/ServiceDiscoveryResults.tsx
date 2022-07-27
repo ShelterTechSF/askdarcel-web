@@ -41,13 +41,13 @@ const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(
 );
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-export function ServiceDiscoveryResults({
+export const ServiceDiscoveryResults = ({
   history, location, match,
 }: {
   history: RouteComponentProps['history'];
   location: RouteComponentProps['location'];
   match: Match<MatchParams>;
-}) {
+}) => {
   const { categorySlug } = match.params;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (category === undefined) { throw new Error(`Unknown category slug ${categorySlug}`); }
@@ -94,10 +94,10 @@ export function ServiceDiscoveryResults({
   }
 
   return <Loader />;
-}
+};
 
 /** Stateless inner component that just handles presentation. */
-function InnerServiceDiscoveryResults({
+const InnerServiceDiscoveryResults = ({
   eligibilities, subcategories, categoryName, algoliaCategoryName, searchState,
   onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
 }: {
@@ -112,7 +112,7 @@ function InnerServiceDiscoveryResults({
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
   userLatLng: string;
-}) {
+}) => {
   const subcategoryNames = subcategories.map(c => c.name);
   return (
     <div className={styles.container}>
@@ -157,4 +157,4 @@ function InnerServiceDiscoveryResults({
       </InstantSearch>
     </div>
   );
-}
+};

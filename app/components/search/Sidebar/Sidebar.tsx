@@ -9,7 +9,7 @@ import FacetRefinementList from 'components/search/Refinements/FacetRefinementLi
 import filtersIcon from 'assets/img/filters-icon.png';
 import styles from './Sidebar.module.scss';
 
-function Sidebar({
+const Sidebar = ({
   setSearchRadius, searchRadius, isSearchResultsPage,
   eligibilities = [], subcategories = [], subcategoryNames = [],
 }: {
@@ -19,7 +19,7 @@ function Sidebar({
   eligibilities?: object[];
   subcategories?: object[];
   subcategoryNames?: string[];
-}) {
+}) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   let categoryRefinementJsx = null;
   let eligibilityRefinementJsx = null;
@@ -114,6 +114,6 @@ function Sidebar({
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
 // Note: At least while testing, this is a <li> element as it goes within the
 // nav <ul> site links element.
 
-function Translate() {
+const Translate = () => {
   const isStaging = window.location.hostname === 'staging.sfserviceguide.org';
   if (isStaging) {
     return (
@@ -31,6 +31,6 @@ function Translate() {
   }
 
   return null;
-}
+};
 
 export default Translate;

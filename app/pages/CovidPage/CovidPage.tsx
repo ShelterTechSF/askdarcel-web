@@ -7,7 +7,7 @@ import { FoodMap } from './components/FoodMap';
 import { SimpleGuide } from './components/SimpleGuide';
 import styles from './CovidPage.module.scss';
 
-function CovidRoutes() {
+const CovidRoutes = () => {
   const { path } = useRouteMatch();
   return (
     <Switch>
@@ -73,15 +73,13 @@ function CovidRoutes() {
       </Route>
     </Switch>
   );
-}
+};
 
-export function CovidPage() {
-  return (
-    <>
-      <div className={styles.page}>
-        <CovidRoutes />
-      </div>
-      <Footer />
-    </>
-  );
-}
+export const CovidPage = () => (
+  <>
+    <div className={styles.page}>
+      <CovidRoutes />
+    </div>
+    <Footer />
+  </>
+);

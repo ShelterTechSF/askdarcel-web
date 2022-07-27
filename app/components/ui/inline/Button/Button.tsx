@@ -9,7 +9,7 @@ import styles from './Button.module.scss';
 
 type ButtonType = 'button' | 'submit' | 'reset';
 
-export function Button({
+export const Button = ({
   text,
   onClick,
   buttonType = 'button',
@@ -19,17 +19,15 @@ export function Button({
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   readonly buttonType?: ButtonType;
   addClass?: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
+}) => (
+  <button
+    onClick={onClick}
      // ES Lint complains about the type attr being set dynamically, but given that type attr is
      // limited to ButtonType enums, commenting this out should be safe
      /* eslint-disable-next-line react/button-has-type */
-      type={buttonType}
-      className={`${styles.button} ${addClass || ''}`}
-    >
-      {text}
-    </button>
-  );
-}
+    type={buttonType}
+    className={`${styles.button} ${addClass || ''}`}
+  >
+    {text}
+  </button>
+);

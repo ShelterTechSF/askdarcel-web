@@ -7,10 +7,10 @@ import { Accordion, AccordionItem } from '../ui/Accordion';
 import { createMapOptions, CustomMarker, UserLocationMarker } from '../ui/MapElements';
 import { useAppContext } from '../../utils';
 
-export function MapOfLocations({ locationRenderer, locations }: {
+export const MapOfLocations = ({ locationRenderer, locations }: {
   locations: LocationDetails[];
   locationRenderer: (loc: LocationDetails) => ReactElement;
-}) {
+}) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
     return <Loader />;
@@ -78,4 +78,4 @@ export function MapOfLocations({ locationRenderer, locations }: {
       </table> */}
     </div>
   );
-}
+};

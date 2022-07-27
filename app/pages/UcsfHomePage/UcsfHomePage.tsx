@@ -16,10 +16,10 @@ interface resourceListItem {
   checked: boolean;
 }
 
-function ResourceListComponent({ resourceList, setResourceList }: {
+const ResourceListComponent = ({ resourceList, setResourceList }: {
   resourceList: resourceListItem[];
   setResourceList: (resourcesArray: resourceListItem[]) => void;
-}) {
+}) => {
   const setResourceItem = (index: number, newResource: resourceListItem) => {
     const newList = [
       ...resourceList.slice(0, index),
@@ -58,9 +58,9 @@ function ResourceListComponent({ resourceList, setResourceList }: {
       ))}
     </ul>
   );
-}
+};
 
-function Page() {
+const Page = () => {
   // Todo: the UCSF Categories/Resources are not set up yet. For now, we're defaulting
   // the below resources to Covid-* category resource IDs for development purposes only
   // (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
@@ -103,12 +103,10 @@ function Page() {
       </div>
     </div>
   );
-}
+};
 
-export function UcsfHomePage() {
-  return (
-    <Layout>
-      <Page />
-    </Layout>
-  );
-}
+export const UcsfHomePage = () => (
+  <Layout>
+    <Page />
+  </Layout>
+);

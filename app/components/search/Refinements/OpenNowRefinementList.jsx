@@ -20,7 +20,7 @@ import { getCurrentDayTime } from 'utils/index';
  * filter should filter for organizations or services which have 'Su-10:00' in
  * the open_times array.
  */
-function OpenNowRefinementList({ currentRefinement, refine }) {
+const OpenNowRefinementList = ({ currentRefinement, refine }) => {
   const isActive = currentRefinement.length !== 0;
   const toggleRefinement = () => {
     if (isActive) {
@@ -38,7 +38,7 @@ function OpenNowRefinementList({ currentRefinement, refine }) {
       Open now
     </button>
   );
-}
+};
 
 OpenNowRefinementList.propTypes = {
   currentRefinement: PropTypes.arrayOf(PropTypes.string).isRequired,

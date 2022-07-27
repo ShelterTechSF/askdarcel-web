@@ -11,7 +11,7 @@ import { ErrorView } from './components/ErrorView';
 
 // Text resource informations to the user phone
 
-export function Texting({ closeModal, service, isShowing }) {
+export const Texting = ({ closeModal, service, isShowing }) => {
   const [view, setView] = useState('');
 
   // Send data to backend
@@ -68,7 +68,7 @@ export function Texting({ closeModal, service, isShowing }) {
       { activeView }
     </ReactModal>
   );
-}
+};
 
 Texting.propTypes = {
   service: PropTypes.shape({

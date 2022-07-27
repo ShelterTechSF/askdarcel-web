@@ -10,14 +10,14 @@ import './SearchMap.scss';
 import { SearchHit } from '../../../models';
 import config from '../../../config';
 
-export function SearchMap({
+export const SearchMap = ({
   hits, hitsPerPage, page, setMapObject,
 }: {
     hits: SearchHit[];
     hitsPerPage: number;
     page: number;
     setMapObject: (map: any) => void;
-}) {
+}) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
     return <div className="mapLoaderContainer"><Loader /></div>;
@@ -65,23 +65,21 @@ export function SearchMap({
       </div>
     </div>
   );
-}
+};
 
 // The GoogleMap component expects children to be passed lat/long,
 // even though we don't use them here.
 // eslint-disable-next-line react/no-unused-prop-types
-function SearchHitMarker({ hit, tag }: { lat: any; lng: any; hit: SearchHit; tag: string }) {
-  return (
-    <Tooltip
-      arrow
-      html={(<SearchEntry hitNumber={tag} hit={hit} />)}
-      interactive
-      position="bottom"
-      theme="light"
-      trigger="click"
-      useContext
-    >
-      <CustomMarker text={tag} />
-    </Tooltip>
-  );
-}
+const SearchHitMarker = ({ hit, tag }: { lat: any; lng: any; hit: SearchHit; tag: string }) => (
+  <Tooltip
+    arrow
+    html={(<SearchEntry hitNumber={tag} hit={hit} />)}
+    interactive
+    position="bottom"
+    theme="light"
+    trigger="click"
+    useContext
+  >
+    <CustomMarker text={tag} />
+  </Tooltip>
+);

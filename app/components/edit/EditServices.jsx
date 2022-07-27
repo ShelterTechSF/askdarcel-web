@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProvidedService from './ProvidedService';
 
-function EditServices({
+const EditServices = ({
   addService, editServiceById, handleDeactivation, services, resourceAddresses,
-}) {
-  return (
-    <li className="edit--section--list--item">
-      <ul className="edit--section--list--item--sublist edit--service--list">
-        {
+}) => (
+  <li className="edit--section--list--item">
+    <ul className="edit--section--list--item--sublist edit--service--list">
+      {
         services.map((service, index) => (
           <ProvidedService
             key={`${service.id}`}
@@ -20,19 +19,18 @@ function EditServices({
           />
         ))
       }
-      </ul>
-      <button
-        type="button"
-        className="edit--section--list--item--button new-service"
-        id="new-service-button"
-        onClick={addService}
-      >
-        <i className="material-icons">add_box</i>
-        Add New Service
-      </button>
-    </li>
-  );
-}
+    </ul>
+    <button
+      type="button"
+      className="edit--section--list--item--button new-service"
+      id="new-service-button"
+      onClick={addService}
+    >
+      <i className="material-icons">add_box</i>
+      Add New Service
+    </button>
+  </li>
+);
 
 EditServices.propTypes = {
   handleDeactivation: PropTypes.func.isRequired,

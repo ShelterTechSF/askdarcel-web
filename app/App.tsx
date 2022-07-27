@@ -55,7 +55,7 @@ const {
 const outerContainerId = 'outer-container';
 const pageWrapId = 'page-wrap';
 
-export function App() {
+export const App = () => {
   const homePageDictionary = {
     HomePage,
     UcsfHomePage,
@@ -155,4 +155,4 @@ export function App() {
       </AppContext.Provider>
     </div>
   );
-}
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Service } from '../../models';
 
-export function TableOfContactInfo({ service }: { service: Service }) {
+export const TableOfContactInfo = ({ service }: { service: Service }) => {
   // TODO May break for non services, need a better check for inheritance
   const website = service.url || service.resource?.website;
   const email = service.email || service.resource?.email;
@@ -75,4 +75,4 @@ export function TableOfContactInfo({ service }: { service: Service }) {
       </tbody>
     </table>
   );
-}
+};

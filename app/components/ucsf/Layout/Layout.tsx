@@ -2,12 +2,10 @@ import React, { ReactNode } from 'react';
 
 import styles from './Layout.module.scss';
 
-export function Layout({ children }: {
+export const Layout = ({ children }: {
   children: ReactNode;
-}) {
-  return (
-    <div className={styles.grid}>
-      {children}
-    </div>
-  );
-}
+}) => (
+  <div className={styles.grid}>
+    {children}
+  </div>
+);

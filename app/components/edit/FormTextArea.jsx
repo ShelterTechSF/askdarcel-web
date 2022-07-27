@@ -1,20 +1,18 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-function FormTextArea({
+const FormTextArea = ({
   label, placeholder, value, setValue,
-}) {
-  return (
-    <>
-      <label htmlFor="textarea">{label}</label>
-      <textarea
-        placeholder={placeholder}
-        value={value}
-        onChange={evt => setValue(evt.target.value)}
-      />
-    </>
-  );
-}
+}) => (
+  <>
+    <label htmlFor="textarea">{label}</label>
+    <textarea
+      placeholder={placeholder}
+      value={value}
+      onChange={evt => setValue(evt.target.value)}
+    />
+  </>
+);
 
 FormTextArea.propTypes = {
   label: PropTypes.string.isRequired,

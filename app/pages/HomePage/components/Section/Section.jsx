@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 
 import styles from './Section.module.scss';
 
-export function HomePageSection({
+export const HomePageSection = ({
   title, description, children,
-}) {
-  return (
-    <section className={styles.section}>
-      <div className={styles.content}>
-        <h1 className={styles.title}>{ title }</h1>
-        <div className={styles.description}>{ description }</div>
-        { children }
-      </div>
-    </section>
-  );
-}
+}) => (
+  <section className={styles.section}>
+    <div className={styles.content}>
+      <h1 className={styles.title}>{ title }</h1>
+      <div className={styles.description}>{ description }</div>
+      { children }
+    </div>
+  </section>
+);
 
 HomePageSection.propTypes = {
   title: PropTypes.string.isRequired,

@@ -51,7 +51,7 @@ const generalResources = [{
   isTypeform: true,
 }];
 
-export function HomePage() {
+export const HomePage = () => {
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState('');
   const history = useHistory();
@@ -95,4 +95,4 @@ export function HomePage() {
       <Footer />
     </div>
   );
-}
+};

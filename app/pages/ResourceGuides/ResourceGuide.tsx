@@ -4,7 +4,7 @@ import styles from './ResourceGuides.module.scss';
 import { Footer } from '../../components/ui';
 import { ResourceGuidesLookup } from './data';
 
-export function ResourceGuide() {
+export const ResourceGuide = () => {
   const { id } = useParams<{ id: string }>();
   const guide = ResourceGuidesLookup[id];
   // const guide = useMemo(() => ResourceGuidesData.find(g => g.id === id) || null, [id]);
@@ -28,8 +28,6 @@ export function ResourceGuide() {
       <Footer />
     </>
   );
-}
+};
 
-export function ResourceGuideIFrame({ path, title }: { path: string; title: string }) {
-  return <iframe className={styles.resourceFrame} title={title} src={path} height="100%" />;
-}
+export const ResourceGuideIFrame = ({ path, title }: { path: string; title: string }) => <iframe className={styles.resourceFrame} title={title} src={path} height="100%" />;

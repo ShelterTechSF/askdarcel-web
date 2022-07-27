@@ -11,7 +11,7 @@ const initialState = {
   agreed: false,
 };
 
-export function FormView({ service, handleSubmit, closeModal }) {
+export const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
   const { serviceName, serviceId } = service;
@@ -78,7 +78,7 @@ export function FormView({ service, handleSubmit, closeModal }) {
       <Privacy />
     </div>
   );
-}
+};
 
 FormView.propTypes = {
   service: PropTypes.shape({

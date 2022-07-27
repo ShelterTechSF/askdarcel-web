@@ -5,12 +5,10 @@ interface DatatableProps<T = any> {
   rowRenderer: (row: T) => JSX.Element;
 }
 
-export function Datatable<T extends unknown>({ rows, rowRenderer }: DatatableProps<T>) {
-  return (
-    <table>
-      <tbody>
-        { rows.map(row => rowRenderer(row)) }
-      </tbody>
-    </table>
-  );
-}
+export const Datatable = <T extends unknown>({ rows, rowRenderer }: DatatableProps<T>) => (
+  <table>
+    <tbody>
+      { rows.map(row => rowRenderer(row)) }
+    </tbody>
+  </table>
+);

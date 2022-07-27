@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Accordion.scss';
 
-export function Accordion({ children }: { children: JSX.Element[] }) {
+export const Accordion = ({ children }: { children: JSX.Element[] }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -19,19 +19,17 @@ export function Accordion({ children }: { children: JSX.Element[] }) {
       }
     </ul>
   );
-}
+};
 
 // TODO Enforcing the user to add their own dropdown with a custom renderer is a bit clunky
-export function AccordionItem({ children, headerRenderer }: {
+export const AccordionItem = ({ children, headerRenderer }: {
   headerRenderer?: JSX.Element;
   children: JSX.Element;
-}) {
-  return (
-    <div>
-      <header>
-        { headerRenderer }
-      </header>
-      <section>{ children }</section>
-    </div>
-  );
-}
+}) => (
+  <div>
+    <header>
+      { headerRenderer }
+    </header>
+    <section>{ children }</section>
+  </div>
+);

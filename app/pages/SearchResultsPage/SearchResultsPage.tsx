@@ -22,7 +22,7 @@ const searchClient = algoliasearch(
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-export function SearchResultsPage() {
+export const SearchResultsPage = () => {
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
   const { search } = useLocation();
@@ -56,10 +56,10 @@ export function SearchResultsPage() {
       setSearchRadius={setSearchRadius}
     />
   );
-}
+};
 
 /** Stateless inner component that just handles presentation. */
-function InnerSearchResults({
+const InnerSearchResults = ({
   history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState,
   searchRadius, setSearchRadius,
 }: {
@@ -72,7 +72,7 @@ function InnerSearchResults({
   searchState: ParsedQs;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
-}) {
+}) => {
   if (userLocation === null) {
     return <Loader />;
   }
@@ -136,4 +136,4 @@ function InnerSearchResults({
       </InstantSearch>
     </div>
   );
-}
+};

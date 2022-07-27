@@ -7,14 +7,12 @@ import { GoogleDocEmbed } from '../GoogleDocEmbed';
 /** A simple guide page that only consists of the common header and Google Doc
  * embed.
  */
-export function SimpleGuide({ pageHeader, googleDocURL }) {
-  return (
-    <article>
-      <CovidHeader headerText={pageHeader} />
-      <GoogleDocEmbed title={pageHeader} embedURL={googleDocURL} />
-    </article>
-  );
-}
+export const SimpleGuide = ({ pageHeader, googleDocURL }) => (
+  <article>
+    <CovidHeader headerText={pageHeader} />
+    <GoogleDocEmbed title={pageHeader} embedURL={googleDocURL} />
+  </article>
+);
 
 SimpleGuide.propTypes = {
   pageHeader: PropTypes.string.isRequired,

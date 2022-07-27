@@ -18,10 +18,10 @@ const {
   title,
 } = whiteLabel;
 
-export function Navigation({ showSearch, toggleHamburgerMenu }: {
+export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
   showSearch: boolean;
   toggleHamburgerMenu: () => void;
-}) {
+}) => {
   const [query, setQuery] = useState('');
   const [showSecondarySearch, setShowSecondarySearch] = useState(false);
   const searchProps = { query, setQuery };
@@ -57,50 +57,46 @@ export function Navigation({ showSearch, toggleHamburgerMenu }: {
       )}
     </nav>
   );
-}
+};
 
-function SiteLogo() {
-  return /^https?:\/\//.test(logoLinkDestination)
-    ? (
-      <a className={`${navLogoStyle} ${styles.navLogo}`} href={siteUrl}>
-        <img src={logoSmall} alt={title} />
-      </a>
-    )
-    : (
-      <Link className={`${navLogoStyle} ${styles.navLogo}`} to="/">
-        <img src={logoSmall} alt={title} />
+const SiteLogo = () => (/^https?:\/\//.test(logoLinkDestination)
+  ? (
+    <a className={`${navLogoStyle} ${styles.navLogo}`} href={siteUrl}>
+      <img src={logoSmall} alt={title} />
+    </a>
+  )
+  : (
+    <Link className={`${navLogoStyle} ${styles.navLogo}`} to="/">
+      <img src={logoSmall} alt={title} />
+    </Link>
+  ));
+
+const SiteLinks = () => (
+  <ul className={styles.navRight}>
+    <li>
+      <Link to="/about">
+        About
       </Link>
-    );
-}
+    </li>
+    <li>
+      <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
+        FAQ
+      </a>
+    </li>
+    <li>
+      <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
+        Contact Us
+      </a>
+    </li>
+    <Translate />
+  </ul>
+);
 
-function SiteLinks() {
-  return (
-    <ul className={styles.navRight}>
-      <li>
-        <Link to="/about">
-          About
-        </Link>
-      </li>
-      <li>
-        <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
-          FAQ
-        </a>
-      </li>
-      <li>
-        <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
-          Contact Us
-        </a>
-      </li>
-      <Translate />
-    </ul>
-  );
-}
-
-function SiteSearch({ query, setQuery, extraClasses }: {
+const SiteSearch = ({ query, setQuery, extraClasses }: {
   extraClasses?: string;
   query: string;
   setQuery: (q: string) => void;
-}) {
+}) => {
   const history = useHistory();
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -129,4 +125,4 @@ function SiteSearch({ query, setQuery, extraClasses }: {
       />
     </form>
   );
-}
+};

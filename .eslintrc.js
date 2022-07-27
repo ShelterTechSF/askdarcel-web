@@ -42,6 +42,7 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
     'react/prop-types': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
+    'react/function-component-definition': ['error', { namedComponents: 'arrow-function' }],
   },
   overrides: [
     {

@@ -49,7 +49,7 @@ const clientEligibilityGroupData: clientEligibilityGroup[] = [
   },
 ];
 
-function ClientEligibilities() {
+const ClientEligibilities = () => {
   const [eligibilityGroupList, setEligibilityGroupList] = useState(clientEligibilityGroupData);
 
   // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
@@ -114,9 +114,9 @@ function ClientEligibilities() {
       </ol>
     </div>
   );
-}
+};
 
-function Page() {
+const Page = () => {
   const history = useHistory();
 
   /**
@@ -180,12 +180,10 @@ function Page() {
       </div>
     </div>
   );
-}
+};
 
-export function UcsfClientEligibilityPage() {
-  return (
-    <Layout>
-      <Page />
-    </Layout>
-  );
-}
+export const UcsfClientEligibilityPage = () => (
+  <Layout>
+    <Page />
+  </Layout>
+);

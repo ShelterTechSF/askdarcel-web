@@ -27,7 +27,7 @@ const transformHits = hits => hits.map(hit => {
 
 // Todo: setExpandList will be used as part of next stage of multiple location work
 // eslint-disable-next-line no-unused-vars
-function SearchResults({ searchResults, expandList, setExpandList }) {
+const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
@@ -69,10 +69,10 @@ function SearchResults({ searchResults, expandList, setExpandList }) {
       />
     </div>
   );
-}
+};
 
 // eslint-disable-next-line no-unused-vars
-function SearchResult({ hit, index, setCenterCoords }) {
+const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
 
   const service = {
@@ -220,7 +220,7 @@ function SearchResult({ hit, index, setCenterCoords }) {
       </div>
     </div>
   );
-}
+};
 
 // Connects the Algolia searchState and searchResults to this component
 // Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html

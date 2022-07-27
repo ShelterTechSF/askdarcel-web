@@ -2,19 +2,17 @@ import React from 'react';
 
 import styles from './Section.module.scss';
 
-export function Section({
+export const Section = ({
   title, subtitle, body, addClass,
 }: {
   title?: string;
   subtitle?: string;
   body?: string;
   addClass?: string;
-}) {
-  return (
-    <section className={`${addClass || ''}`}>
-      {title && <h1 className={styles.title}>{ title }</h1>}
-      {subtitle && <h2 className={styles.subtitle}>{ subtitle }</h2>}
-      {body && <p className={styles.body}>{ body }</p>}
-    </section>
-  );
-}
+}) => (
+  <section className={`${addClass || ''}`}>
+    {title && <h1 className={styles.title}>{ title }</h1>}
+    {subtitle && <h2 className={styles.subtitle}>{ subtitle }</h2>}
+    {body && <p className={styles.body}>{ body }</p>}
+  </section>
+);
