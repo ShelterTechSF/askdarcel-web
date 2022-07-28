@@ -207,7 +207,7 @@ const FormStep = ({
             <label>
               <input
                 type="checkbox"
-                checked={selectedOptions[option.id]}
+                checked={selectedOptions[option.id] || ''}
                 onChange={() => toggleOption(option.id)}
               />
               <span>{option.name}</span>
