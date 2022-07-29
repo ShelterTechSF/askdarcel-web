@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connectRefinementList } from 'react-instantsearch/connectors';
 import { getCurrentDayTime } from 'utils/index';
 
-
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
  * Now button.

@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { icon as assetIcon } from 'assets';
-import Checkbox from 'components/ui/inline/Checkbox';
-import Button from 'components/ui/inline/Button';
-import Section from 'components/ucsf/Section';
-import Layout from 'components/ucsf/Layout';
+import { Checkbox } from 'components/ui/inline/Checkbox';
+import { Button } from 'components/ui/inline/Button';
+import { Section } from 'components/ucsf/Section';
+import { Layout } from 'components/ucsf/Layout';
 
 import styles from './UcsfHomePage.module.scss';
-
 
 interface resourceListItem {
   id: string;

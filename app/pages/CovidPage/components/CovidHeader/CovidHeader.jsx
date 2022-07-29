@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import styles from './CovidHeader.module.scss';
 
-
 /** Common header shared across all COVID pages. */
-const CovidHeader = ({ headerText }) => (
+export const CovidHeader = ({ headerText }) => (
   <header className={styles.header}>
     <h1>
       {headerText}
@@ -26,5 +25,3 @@ const CovidHeader = ({ headerText }) => (
 CovidHeader.propTypes = {
   headerText: PropTypes.string.isRequired,
 };
-
-export default CovidHeader;

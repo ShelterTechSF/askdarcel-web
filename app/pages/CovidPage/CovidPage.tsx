@@ -2,11 +2,10 @@ import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { Footer } from '../../components/ui';
-import FoodList from './components/FoodList';
-import FoodMap from './components/FoodMap';
-import SimpleGuide from './components/SimpleGuide';
+import { FoodList } from './components/FoodList';
+import { FoodMap } from './components/FoodMap';
+import { SimpleGuide } from './components/SimpleGuide';
 import styles from './CovidPage.module.scss';
-
 
 const CovidRoutes = () => {
   const { path } = useRouteMatch();
@@ -77,10 +76,10 @@ const CovidRoutes = () => {
 };
 
 export const CovidPage = () => (
-  <React.Fragment>
+  <>
     <div className={styles.page}>
       <CovidRoutes />
     </div>
     <Footer />
-  </React.Fragment>
+  </>
 );

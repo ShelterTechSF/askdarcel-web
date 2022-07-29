@@ -4,7 +4,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const CONFIG_YAML = process.env.CONFIG_YAML || 'config.yml';
 
@@ -75,9 +76,12 @@ module.exports = {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     }),
     new ForkTsCheckerWebpackPlugin(),
-    new CopyWebpackPlugin([
-      { from: 'public' },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public', to: path.resolve(__dirname, 'public') },
+      ],
+    }),
+    new NodePolyfillPlugin(),
   ],
   devtool: 'source-map',
   module: {
@@ -101,7 +105,7 @@ module.exports = {
               importLoaders: 1,
               modules: {
                 auto: true,
-                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                localIdentName: '[path][name]__[local]--[contenthash:base64:5]',
               },
             },
           },
@@ -110,24 +114,18 @@ module.exports = {
       },
       {
         test: /\.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name].[ext]',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]',
+        },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: '[name]-[contenthash][ext]',
+        },
         use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name]-[sha512:hash:hex:8].[ext]',
-            },
-          },
           {
             loader: 'image-webpack-loader',
             options: {
@@ -144,15 +142,13 @@ module.exports = {
       },
       {
         test: /\.pdf$/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[name][ext]',
+        },
         include: [
           path.resolve(__dirname, 'app/assets'),
         ],
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          },
-        }],
       },
     ],
   },

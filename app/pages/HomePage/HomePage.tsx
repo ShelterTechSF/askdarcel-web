@@ -5,8 +5,8 @@ import qs from 'qs';
 import { getResourceCount } from 'utils/DataService';
 import { Footer } from 'components/ui';
 import { Partners } from './components/Partners/Partners';
-import SearchBar from './components/SearchBar';
-import Section from './components/Section';
+import { SearchBar } from './components/SearchBar';
+import { HomePageSection } from './components/Section';
 import ResourceList from './components/ResourceList/ResourceList';
 
 const covidResources = [
@@ -64,33 +64,33 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    getResourceCount().then(count => setResourceCount(count));
+    getResourceCount().then((count: number) => setResourceCount(count));
   }, []);
 
   return (
     <div className="find-page">
-      <Section
+      <HomePageSection
         title="Find essential services in San Francisco"
       >
         <ResourceList resources={covidResources} />
-      </Section>
-      <Section
+      </HomePageSection>
+      <HomePageSection
         title="Get step-by-step help"
         description="Get guided help with many of the most common issues people are facing in San Francisco."
       >
         <ResourceList resources={generalResources} />
-      </Section>
-      <Section
+      </HomePageSection>
+      <HomePageSection
         title="Browse Directory"
         description="Search the directory for a specific social service provider or browse by category."
       >
         <SearchBar
           placeholder={`Search ${resourceCount || ''} resources in San Francisco`}
           onSubmit={submitSearch}
-          onChange={newSearchValue => setSearchValue(newSearchValue)}
+          onChange={(newSearchValue: string) => setSearchValue(newSearchValue)}
           value={searchValue}
         />
-      </Section>
+      </HomePageSection>
       <Partners />
       <Footer />
     </div>

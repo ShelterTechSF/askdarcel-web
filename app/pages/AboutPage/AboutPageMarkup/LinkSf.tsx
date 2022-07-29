@@ -49,7 +49,7 @@ export const LinkSfJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="http://sheltertech.org"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={STLogo} alt="ShelterTech" />
@@ -59,7 +59,7 @@ export const LinkSfJsx = () => (
             501c(3) non-profit that builds tech products for homeless and at
             risk communities.
             {' '}
-            <a href="http://sheltertech.org" rel="noopener norefferer">
+            <a href="http://sheltertech.org" rel="noopener">
               Learn more here.
             </a>
           </p>
@@ -71,7 +71,7 @@ export const LinkSfJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="https://www.stanthonysf.org/services/tech-lab/"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={TLTechLabLogo} alt="MOHCD" />
@@ -80,7 +80,7 @@ export const LinkSfJsx = () => (
             St. Anthony’s
             <a
               href="https://www.stanthonysf.org/services/tech-lab/"
-              rel="noopener norefferer"
+              rel="noopener"
             >
 
               {' '}
@@ -100,7 +100,7 @@ export const LinkSfJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="https://www.zendesk.com/"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={ZenDeskLogo} alt="MOHCD" />
@@ -123,7 +123,7 @@ export const LinkSfJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="https://sfmohcd.org/"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={MOHCDLogo} alt="MOHCD" />
@@ -136,7 +136,7 @@ export const LinkSfJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="http://www.sfbar.org/jdc/legal-services/hap/"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={JDCLogo} alt="JDC" />
@@ -151,32 +151,32 @@ export const LinkSfJsx = () => (
         <h3>Strategic partners:</h3>
         <ul className={styles.partnersList}>
           <li>
-            <a href="https://larkinstreetyouth.org/" rel="noopener norefferer">
+            <a href="https://larkinstreetyouth.org/" rel="noopener">
               <img src={LarkinLogo} alt="Larkin Street Youth Services" />
             </a>
           </li>
           <li>
-            <a href="http://evictiondefense.org/" rel="noopener norefferer">
+            <a href="http://evictiondefense.org/" rel="noopener">
               <img src={EDCLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a href="https://homeownershipsf.org/" rel="noopener norefferer">
+            <a href="https://homeownershipsf.org/" rel="noopener">
               <img src={HomeownershipSFLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a href="https://www.compass-sf.org/" rel="noopener norefferer">
+            <a href="https://www.compass-sf.org/" rel="noopener">
               <img src={CompassLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a href="https://benetech.org/" rel="noopener norefferer">
+            <a href="https://benetech.org/" rel="noopener">
               <img src={BenetechLogo} alt="Benetech" />
             </a>
           </li>
           <li>
-            <a href="https://www.sffamilies.org/" rel="noopener norefferer">
+            <a href="https://www.sffamilies.org/" rel="noopener">
               <img src={SFFamiliesLogo} alt="SF Families" />
             </a>
           </li>
@@ -184,7 +184,7 @@ export const LinkSfJsx = () => (
             <img src={BridgeLogo} alt="Bridge" />
           </li>
           <li>
-            <a href="https://www.wework.com" rel="noopener norefferer">
+            <a href="https://www.wework.com" rel="noopener">
               <img src={WeworkLogo} alt="WeWork" />
             </a>
           </li>

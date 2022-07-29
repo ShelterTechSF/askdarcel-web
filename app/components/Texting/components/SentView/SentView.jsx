@@ -3,7 +3,7 @@ import { icon } from 'assets';
 import styles from './SentView.module.scss';
 
 // Success sending view
-const SentView = () => (
+export const SentView = () => (
   <div className={styles.successDiv}>
     <div className={styles.circle}>
       <img className={styles.responseIcon} src={icon('check-mark')} alt="Success" />
@@ -11,5 +11,3 @@ const SentView = () => (
     </div>
   </div>
 );
-
-export default SentView;

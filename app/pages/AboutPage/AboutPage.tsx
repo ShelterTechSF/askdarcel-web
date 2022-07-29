@@ -3,7 +3,6 @@ import whiteLabel from '../../utils/whitelabel';
 import { LinkSfJsx } from './AboutPageMarkup/LinkSf';
 import { SfServiceGuideJsx } from './AboutPageMarkup/SfServiceGuide';
 
-
 // Disable max line length rule, since this file is mostly just text-heavy HTML content.
 /* eslint-disable max-len */
 

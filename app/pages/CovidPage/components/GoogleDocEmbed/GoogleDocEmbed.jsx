@@ -4,8 +4,7 @@ import Iframe from 'react-iframe';
 
 import styles from './GoogleDocEmbed.module.scss';
 
-
-const GoogleDocEmbed = ({ title, embedURL }) => (
+export const GoogleDocEmbed = ({ title, embedURL }) => (
   <section>
     <Iframe
       title={title}
@@ -23,5 +22,3 @@ GoogleDocEmbed.propTypes = {
   title: PropTypes.string.isRequired,
   embedURL: PropTypes.string.isRequired,
 };
-
-export default GoogleDocEmbed;

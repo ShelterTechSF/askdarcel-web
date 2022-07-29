@@ -14,10 +14,12 @@ import Sidebar from 'components/search/Sidebar/Sidebar';
 import config from '../../config';
 import styles from './SearchResultsPage.module.scss';
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const SearchResultsPage = () => {

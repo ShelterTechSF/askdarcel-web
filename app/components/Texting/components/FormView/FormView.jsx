@@ -11,7 +11,7 @@ const initialState = {
   agreed: false,
 };
 
-const FormView = ({ service, handleSubmit, closeModal }) => {
+export const FormView = ({ service, handleSubmit, closeModal }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
   const { serviceName, serviceId } = service;
@@ -88,5 +88,3 @@ FormView.propTypes = {
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
-
-export default FormView;

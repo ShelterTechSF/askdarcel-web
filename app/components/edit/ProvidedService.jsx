@@ -67,16 +67,15 @@ const buildScheduleDays = schedule => {
       }
     });
   }
-  finalSchedule = Object.assign({}, tempSchedule, currSchedule);
+  finalSchedule = { ...tempSchedule, ...currSchedule };
   return finalSchedule;
 };
 export { buildScheduleDays };
 
-
 const InputField = ({
   type, label, placeholder, value, setValue,
 }) => (
-  <Fragment>
+  <>
     <label htmlFor="input">{label}</label>
     <input
       type={type}
@@ -84,7 +83,7 @@ const InputField = ({
       value={value || ''}
       onChange={evt => setValue(evt.target.value)}
     />
-  </Fragment>
+  </>
 );
 
 InputField.propTypes = {
@@ -99,7 +98,6 @@ InputField.defaultProps = {
   type: 'text',
   value: '',
 };
-
 
 const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
   const selectableOptions = resourceAddresses
@@ -152,7 +150,6 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
   );
 };
 
-
 const TEXT_AREAS = [
   {
     label: 'Service Description',
@@ -177,7 +174,6 @@ const TEXT_AREAS = [
     field: 'interpretation_services',
   },
 ];
-
 
 const ProvidedService = ({
   editServiceById, handleDeactivation, index, service, resourceAddresses,

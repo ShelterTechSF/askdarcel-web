@@ -19,7 +19,6 @@ export const areCoordsInSanFrancisco = (coords: GeoCoordinates): boolean => {
     && coords.lng < bb.right;
 };
 
-
 /**
  * Get location via HTML5 Geolocation API.
  */
@@ -48,7 +47,6 @@ export const getLocationBrowser = () => new Promise<GeoCoordinates>((resolve, re
   }
 });
 
-
 /**
  * Get location via the Google Maps Geolocation API.
  */
@@ -59,9 +57,9 @@ export const getLocationGoogle = () => new Promise<GeoCoordinates>((resolve, rej
     url += `?key=${config.GOOGLE_API_KEY}`;
   }
   fetch(url, { method: 'post' }).then(r => r.json())
-    .then(data => {
-      if (areCoordsInSanFrancisco(data.location)) {
-        resolve(data.location);
+    .then(({ location }: { location: GeoCoordinates }) => {
+      if (areCoordsInSanFrancisco(location)) {
+        resolve(location);
       } else {
         const msg = 'User location out of bounds';
         console.log(msg); // eslint-disable-line no-console

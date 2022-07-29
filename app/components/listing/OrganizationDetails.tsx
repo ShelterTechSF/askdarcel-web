@@ -73,10 +73,7 @@ export const PhoneNumberRenderer = ({ phones }: { phones: PhoneNumber[] }) => (
   </span>
 );
 
-const ExternalLink = ({ children, to }: { children: any; to: string }) => (
-  <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>
-);
-
+const ExternalLink = ({ children, to }: { children: any; to: string }) => <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>;
 
 export const WebsiteRenderer = ({ website }: { website: string }) => (
   <span className="website">

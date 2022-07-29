@@ -6,7 +6,7 @@ import styles from './FoodMap.module.scss';
 
 import ImgSFGovLogo from './assets/SFGovLogo.png';
 
-const FoodMap = () => (
+export const FoodMap = () => (
   <div>
     <article className={styles.mapContainer}>
       <div className={styles.foodMapBannerCredit}>
@@ -36,5 +36,3 @@ const FoodMap = () => (
     </div>
   </div>
 );
-
-export default FoodMap;

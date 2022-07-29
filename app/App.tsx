@@ -40,9 +40,8 @@ import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/UcsfClientEligibilityPage';
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
-import ServiceDiscoveryForm from './pages/ServiceDiscoveryForm';
-import ServiceDiscoveryResults from './pages/ServiceDiscoveryResults';
-
+import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
+import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
 
 const {
   homePageComponent,
@@ -86,6 +85,7 @@ export const App = () => {
 
   return (
     <div id={outerContainerId}>
+      { /* eslint-disable-next-line react/jsx-no-constructed-context-values */ }
       <AppContext.Provider value={{ userLocation }}>
         <Helmet>
           <title>{title}</title>
@@ -125,9 +125,9 @@ export const App = () => {
 
               {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
                 step will be interpreted as an ID and will thus break the OrganizationEditPage */}
-              <Route exact path="/organizations/new" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
+              <Route exact path="/organizations/new" render={props => <OrganizationEditPage {...props} showPopUpMessage={setPopUpMessage} />} />
               <Route exact path="/organizations/:id" component={OrganizationListingPage} />
-              <Route exact path="/organizations/:id/edit" component={() => <OrganizationEditPage showPopUpMessage={setPopUpMessage} />} />
+              <Route exact path="/organizations/:id/edit" render={props => <OrganizationEditPage {...props} showPopUpMessage={setPopUpMessage} />} />
 
               <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
               <Route exact path="/resource-guides" component={ResourceGuides} />

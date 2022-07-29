@@ -1,1 +1,1 @@
-export { default } from './SimpleGuide';
+export { SimpleGuide } from './SimpleGuide';

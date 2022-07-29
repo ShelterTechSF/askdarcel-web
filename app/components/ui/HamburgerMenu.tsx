@@ -73,18 +73,16 @@ const MenuItem = ({
   onClick: () => void;
   to: string;
   exact: boolean;
-}) => (
-  (to.startsWith('http') || to.startsWith('mailto:'))
-    ? <a className={styles.menuItem} href={to}>{children}</a>
-    : (
-      <NavLink
-        className={styles.menuItem}
-        activeClassName={styles.active}
-        to={to}
-        onClick={onClick}
-        exact={exact}
-      >
-        {children}
-      </NavLink>
-    )
-);
+}) => ((to.startsWith('http') || to.startsWith('mailto:'))
+  ? <a className={styles.menuItem} href={to}>{children}</a>
+  : (
+    <NavLink
+      className={styles.menuItem}
+      activeClassName={styles.active}
+      to={to}
+      onClick={onClick}
+      exact={exact}
+    >
+      {children}
+    </NavLink>
+  ));

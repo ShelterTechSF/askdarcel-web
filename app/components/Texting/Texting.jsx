@@ -4,20 +4,18 @@ import ReactModal from 'react-modal';
 import { icon } from 'assets';
 import styles from './Texting.module.scss';
 import * as dataService from '../../utils/DataService';
-import FormView from './components/FormView';
+import { FormView } from './components/FormView';
 import { Loader } from '../ui';
-import SentView from './components/SentView';
-import ErrorView from './components/ErrorView';
+import { SentView } from './components/SentView';
+import { ErrorView } from './components/ErrorView';
 
 // Text resource informations to the user phone
 
-const Texting = ({ closeModal, service, isShowing }) => {
+export const Texting = ({ closeModal, service, isShowing }) => {
   const [view, setView] = useState('');
 
   // Send data to backend
-  const sendData = data => dataService.post(
-    '/api/textings', { data },
-  ).then(response => {
+  const sendData = data => dataService.post('/api/textings', { data }).then(response => {
     if (response.ok) {
       setView('sentView');
     }
@@ -80,5 +78,3 @@ Texting.propTypes = {
   closeModal: PropTypes.func.isRequired,
   isShowing: PropTypes.bool.isRequired,
 };
-
-export default Texting;

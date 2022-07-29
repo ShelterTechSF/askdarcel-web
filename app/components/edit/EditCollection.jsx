@@ -6,10 +6,12 @@ import React, { Component } from 'react';
  * @param {string} label title field for items
  * @param {Object} blankTemplateObj blank template to fill new items in the collection with
  */
-export default function editCollectionHOC(ResourceObjectItem,
+export default function editCollectionHOC(
+  ResourceObjectItem,
   label,
   blankTemplateObj,
-  buttonText) {
+  buttonText,
+) {
   return class EditCollection extends Component {
     constructor(props) {
       super(props);

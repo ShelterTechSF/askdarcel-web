@@ -48,8 +48,7 @@ export default class SearchEntry extends Component {
                 <img src={mohcdSeal} alt="MOHCD seal" />
                 <p>Funded by MOHCD</p>
               </div>
-              )
-              }
+              )}
             </div>
             {type === 'service' && (
             <p className="entry-meta">
@@ -63,8 +62,7 @@ export default class SearchEntry extends Component {
                     <span className="entry-schedule">
                       <RelativeOpeningTime recurringSchedule={recurringSchedule} />
                     </span>
-                  )
-              }
+                  )}
             </p>
             <div className="entry-body">
               <ReactMarkdown className="rendered-markdown search-entry-body" source={description} />

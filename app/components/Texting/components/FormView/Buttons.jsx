@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './Form.module.scss';
 
-
 const Buttons = ({ closeModal, onSubmit, disabled }) => (
   <div className={styles.buttons}>
     <button

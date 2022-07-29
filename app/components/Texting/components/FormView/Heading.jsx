@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Form.module.scss';
 
-
 const Heading = ({ serviceName }) => (
   <div>
     <h1 className={styles.title}>

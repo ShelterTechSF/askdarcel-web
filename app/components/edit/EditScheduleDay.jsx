@@ -72,8 +72,7 @@ const TimeInputRow = ({
               </button>
             )}
           </div>
-        )
-      }
+        )}
     </li>
   );
 };

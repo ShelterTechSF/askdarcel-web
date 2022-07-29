@@ -9,7 +9,7 @@ import styles from './Button.module.scss';
 
 type ButtonType = 'button' | 'submit' | 'reset';
 
-const Button = ({
+export const Button = ({
   text,
   onClick,
   buttonType = 'button',
@@ -31,5 +31,3 @@ const Button = ({
     {text}
   </button>
 );
-
-export default Button;

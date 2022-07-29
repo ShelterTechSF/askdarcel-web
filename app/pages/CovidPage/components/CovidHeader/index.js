@@ -1,1 +1,1 @@
-export { default } from './CovidHeader';
+export { CovidHeader } from './CovidHeader';

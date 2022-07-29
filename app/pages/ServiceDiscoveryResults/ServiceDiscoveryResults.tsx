@@ -25,10 +25,12 @@ type SearchState = {
   };
 };
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 const createURL = (state: SearchState) => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
 const searchStateToURL = (location: RouterLocation, searchState: SearchState) => (searchState
@@ -39,7 +41,7 @@ const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(
 );
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-const ServiceDiscoveryResults = ({
+export const ServiceDiscoveryResults = ({
   history, location, match,
 }: {
   history: RouteComponentProps['history'];
@@ -64,8 +66,8 @@ const ServiceDiscoveryResults = ({
 
   // TODO: Handle failure?
   useEffect(() => {
-    dataService.get(`/api/categories/${category.id}`).then(response => {
-      setParentCategory(response.category);
+    dataService.get(`/api/categories/${category.id}`).then(({ category: serviceCategory }: { category: ServiceCategory }) => {
+      setParentCategory(serviceCategory);
     });
   }, [category.id]);
 
@@ -93,9 +95,6 @@ const ServiceDiscoveryResults = ({
 
   return <Loader />;
 };
-
-export default ServiceDiscoveryResults;
-
 
 /** Stateless inner component that just handles presentation. */
 const InnerServiceDiscoveryResults = ({

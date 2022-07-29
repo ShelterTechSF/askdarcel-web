@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import CovidHeader from '../CovidHeader';
-import GoogleDocEmbed from '../GoogleDocEmbed';
+import { CovidHeader } from '../CovidHeader';
+import { GoogleDocEmbed } from '../GoogleDocEmbed';
 import styles from './FoodList.module.scss';
 
-
-const FoodList = () => (
+export const FoodList = () => (
   <article>
     <CovidHeader headerText="Food resources for Individuals-In-Need" />
     <div className={styles.foodBannerContainer}>
@@ -20,5 +19,3 @@ const FoodList = () => (
     />
   </article>
 );
-
-export default FoodList;
