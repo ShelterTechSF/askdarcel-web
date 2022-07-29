@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Checkbox from 'components/ui/inline/Checkbox';
-import Button from 'components/ui/inline/Button';
-import Section from 'components/ucsf/Section';
-import Layout from 'components/ucsf/Layout';
+import { Checkbox } from 'components/ui/inline/Checkbox';
+import { Button } from 'components/ui/inline/Button';
+import { Section } from 'components/ucsf/Section';
+import { Layout } from 'components/ucsf/Layout';
 
 import { serviceTypeData } from './ucsfServiceTypes';
 import styles from './UcsfServiceTypePage.module.scss';
@@ -19,7 +19,6 @@ const ClientEligibilities = ({ rawServiceData, resourceSlug }: {
   }
 
   const resourceServiceList = rawServiceData[resourceSlug];
-  const serviceTypeLabel = resourceServiceList.label;
   const [serviceTypeList, setServiceTypeList] = useState(resourceServiceList.types);
 
   // Todo: This setServiceType and toggleChecked logic could change pretty drastically
@@ -150,7 +149,6 @@ export const UcsfServiceTypePage = () => (
     <Page />
   </Layout>
 );
-
 
 /**
  * Todo: The below is a general sketch of how we will fetch eligibility data using the category

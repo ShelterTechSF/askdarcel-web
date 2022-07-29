@@ -1,4 +1,3 @@
-
 // We are hardcoding the eligibility data as it currently exists on the design specs.
 // When content has entered UCSF specific eligibilities, will we fetch that data from the API
 

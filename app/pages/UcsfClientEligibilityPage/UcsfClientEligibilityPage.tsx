@@ -46,9 +46,8 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
 
     // If a user toggles "See all", we (un)check all of the eligibilities accordingly
     if (targetEligibility.name === 'See all') {
-      updatedEligibilities = massToggleGroupEligibilities(
-        eligibilityGroup.eligibilities, targetToggleState,
-      );
+      const { eligibilities } = eligibilityGroup;
+      updatedEligibilities = massToggleGroupEligibilities(eligibilities, targetToggleState);
     } else {
       // If a user untoggles a specific eligiblity, this code also untoggles "See all"
       // Currently, there is no logic to toggle "See all" if a user toggles all individual
@@ -176,7 +175,6 @@ export const UcsfClientEligibilityPage = () => (
     <Page />
   </Layout>
 );
-
 
 /**
  * Todo: The below is a general sketch of how we will fetch eligibility data using the category

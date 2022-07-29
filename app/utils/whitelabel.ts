@@ -86,7 +86,7 @@ const SFServiceGuide: WhiteLabelSite = {
   intercom: true,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
-  showBanner: false,
+  showBanner: true,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
@@ -107,7 +107,7 @@ const LinkSF: WhiteLabelSite = {
   intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
-  showBanner: false,
+  showBanner: true,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
@@ -115,6 +115,7 @@ const LinkSF: WhiteLabelSite = {
   title: 'Link SF',
   userWay: false,
 } as const;
+
 
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
@@ -128,7 +129,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   intercom: true,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
-  showBanner: false,
+  showBanner: true,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
