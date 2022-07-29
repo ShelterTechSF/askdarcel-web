@@ -1,20 +1,33 @@
-import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Redirect, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect, useHistory, useRouteMatch } from 'react-router-dom';
 import qs from 'qs';
 import ReactGA from 'react-ga';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
-import { CATEGORIES } from './constants';
+import { CATEGORIES, Step } from './constants';
 import styles from './ServiceDiscoveryForm.module.scss';
 
+interface categoryRefinement {
+  name: string;
+  id: number;
+}
+
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-export const ServiceDiscoveryForm = ({ match }) => {
-  const { categorySlug } = match.params;
+export const ServiceDiscoveryForm = () => {
+  const match = useRouteMatch();
+  interface matchParams {
+    categorySlug: string;
+  }
+
+  const { categorySlug } = match.params as matchParams;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
-  const eligibilities = useEligibilitiesForCategory(category.id) || [];
-  const subcategories = useSubcategoriesForCategory(category.id) || [];
+  if (!category) {
+    return <Redirect push to={{ pathname: '/' }} />;
+  }
+
+  const eligibilities: categoryRefinement[] = useEligibilitiesForCategory(category.id) || [];
+  const subcategories: categoryRefinement[] = useSubcategoriesForCategory(category.id) || [];
   return (
     <InnerServiceDiscoveryForm
       categorySlug={category.slug}
@@ -25,17 +38,16 @@ export const ServiceDiscoveryForm = ({ match }) => {
     />
   );
 };
-ServiceDiscoveryForm.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      categorySlug: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
   steps, eligibilities, subcategories, categorySlug, subcategorySubheading,
+}: {
+  steps: Step[];
+  eligibilities: categoryRefinement[];
+  subcategories: categoryRefinement[];
+  categorySlug: string;
+  subcategorySubheading: string;
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -67,24 +79,35 @@ const InnerServiceDiscoveryForm = ({
 
 const Content = ({
   steps, currentStep, eligibilities, subcategories, categorySlug, subcategorySubheading,
+}: {
+  steps: Step[];
+  currentStep: number;
+  eligibilities: categoryRefinement[];
+  subcategories: categoryRefinement[];
+  categorySlug: string;
+  subcategorySubheading: string;
 }) => {
-  const [selectedEligibilities, setSelectedEligibilities] = useState({});
-  const [selectedSubcategories, setSelectedSubcategories] = useState({});
+  interface selectedResource {
+    [key: number]: boolean;
+  }
 
-  const handleEligibilityClick = optionId => {
+  const [selectedEligibilities, setSelectedEligibilities] = useState<selectedResource>({});
+  const [selectedSubcategories, setSelectedSubcategories] = useState<selectedResource>({});
+
+  const handleEligibilityClick = (targetEligibilityId: number) => {
     setSelectedEligibilities(
       {
         ...selectedEligibilities,
-        [optionId]: !selectedEligibilities[optionId],
+        [targetEligibilityId]: !selectedEligibilities[targetEligibilityId],
       },
     );
   };
 
-  const handleSubcategoryClick = optionId => {
+  const handleSubcategoryClick = (targetCategoryId: number) => {
     setSelectedSubcategories(
       {
         ...selectedSubcategories,
-        [optionId]: !selectedSubcategories[optionId],
+        [targetCategoryId]: !selectedSubcategories[targetCategoryId],
       },
     );
   };
@@ -148,9 +171,11 @@ const Content = ({
 
 // Stateless components that only handle presentation.
 
-const Header = ({ onGoBack }) => (
+const Header = ({ onGoBack }: {
+  onGoBack: any;
+}) => (
   <div className={styles.header}>
-    <div className={styles.backButton} role="button" onClick={onGoBack} tabIndex="0">
+    <div className={styles.backButton} role="button" onClick={onGoBack} tabIndex={0}>
       <i className="material-icons">keyboard_arrow_left</i>
       All resource guides
     </div>
@@ -159,6 +184,11 @@ const Header = ({ onGoBack }) => (
 
 const Footer = ({
   onGoBack, onNextStep, currentStep, numSteps,
+}: {
+  onGoBack: any;
+  onNextStep: any;
+  currentStep: number;
+  numSteps: number;
 }) => (
   <div className={styles.footer}>
     <div className={styles.progressBarContainer}>
@@ -181,7 +211,10 @@ const Footer = ({
   </div>
 );
 
-const ProgressBar = ({ currentNumber, totalNumber }) => (
+const ProgressBar = ({ currentNumber, totalNumber }: {
+  currentNumber: number;
+  totalNumber: number;
+}) => (
   <div className={styles.progressBar}>
     {totalNumber > 1 && (
       <>
@@ -196,6 +229,12 @@ const ProgressBar = ({ currentNumber, totalNumber }) => (
 
 const FormStep = ({
   heading, subheading, options, selectedOptions, toggleOption,
+}: {
+  heading: string;
+  subheading: string;
+  options: categoryRefinement[];
+  selectedOptions: any;
+  toggleOption: any;
 }) => (
   <div className={styles.body}>
     <div className={styles.contentContainer}>
