@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { QRCodeSVG } from 'qrcode.react';
 
 import { icon } from 'assets';
-import Button from 'components/ui/inline/Button';
+import { Button } from 'components/ui/inline/Button';
 
 import styles from './QrCodeModal.module.scss';
 

@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 type ButtonType = 'button' | 'submit' | 'reset';
 type StyleType = 'transparent';
 
-const Button = ({
+export const Button = ({
   children,
   onClick,
   buttonType = 'button',
@@ -41,5 +41,3 @@ const Button = ({
     </button>
   );
 };
-
-export default Button;

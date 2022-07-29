@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Button from 'components/ui/inline/Button';
+import { Button } from 'components/ui/inline/Button';
 import { icon as assetIcon } from 'assets';
 import QrCodeModal from 'components/ui/QrCodeModal/QrCodeModal';
 
