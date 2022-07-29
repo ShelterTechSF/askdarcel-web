@@ -8,26 +8,32 @@ import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../
 import { CATEGORIES, Step } from './constants';
 import styles from './ServiceDiscoveryForm.module.scss';
 
-interface categoryRefinement {
+interface CategoryRefinement {
   name: string;
   id: number;
+}
+
+interface SelectedResources {
+  [key: number]: boolean;
 }
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const ServiceDiscoveryForm = () => {
   const match = useRouteMatch();
-  interface matchParams {
+  interface MatchParams {
     categorySlug: string;
   }
 
-  const { categorySlug } = match.params as matchParams;
+  const { categorySlug } = match.params as MatchParams;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (!category) {
+    // Category does not exist; user may have entered the category in the URL bar
+    // or there is an error in our code
     return <Redirect push to={{ pathname: '/' }} />;
   }
 
-  const eligibilities: categoryRefinement[] = useEligibilitiesForCategory(category.id) || [];
-  const subcategories: categoryRefinement[] = useSubcategoriesForCategory(category.id) || [];
+  const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(category.id) || [];
+  const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(category.id) || [];
   return (
     <InnerServiceDiscoveryForm
       categorySlug={category.slug}
@@ -44,8 +50,8 @@ const InnerServiceDiscoveryForm = ({
   steps, eligibilities, subcategories, categorySlug, subcategorySubheading,
 }: {
   steps: Step[];
-  eligibilities: categoryRefinement[];
-  subcategories: categoryRefinement[];
+  eligibilities: CategoryRefinement[];
+  subcategories: CategoryRefinement[];
   categorySlug: string;
   subcategorySubheading: string;
 }) => {
@@ -82,17 +88,13 @@ const Content = ({
 }: {
   steps: Step[];
   currentStep: number;
-  eligibilities: categoryRefinement[];
-  subcategories: categoryRefinement[];
+  eligibilities: CategoryRefinement[];
+  subcategories: CategoryRefinement[];
   categorySlug: string;
   subcategorySubheading: string;
 }) => {
-  interface selectedResource {
-    [key: number]: boolean;
-  }
-
-  const [selectedEligibilities, setSelectedEligibilities] = useState<selectedResource>({});
-  const [selectedSubcategories, setSelectedSubcategories] = useState<selectedResource>({});
+  const [selectedEligibilities, setSelectedEligibilities] = useState<SelectedResources>({});
+  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedResources>({});
 
   const handleEligibilityClick = (targetEligibilityId: number) => {
     setSelectedEligibilities(
@@ -172,7 +174,7 @@ const Content = ({
 // Stateless components that only handle presentation.
 
 const Header = ({ onGoBack }: {
-  onGoBack: any;
+  onGoBack: () => void;
 }) => (
   <div className={styles.header}>
     <div className={styles.backButton} role="button" onClick={onGoBack} tabIndex={0}>
@@ -185,8 +187,8 @@ const Header = ({ onGoBack }: {
 const Footer = ({
   onGoBack, onNextStep, currentStep, numSteps,
 }: {
-  onGoBack: any;
-  onNextStep: any;
+  onGoBack: () => void;
+  onNextStep: () => void;
   currentStep: number;
   numSteps: number;
 }) => (
@@ -232,9 +234,9 @@ const FormStep = ({
 }: {
   heading: string;
   subheading: string;
-  options: categoryRefinement[];
-  selectedOptions: any;
-  toggleOption: any;
+  options: CategoryRefinement[];
+  selectedOptions: SelectedResources;
+  toggleOption: (targetId: number) => void;
 }) => (
   <div className={styles.body}>
     <div className={styles.contentContainer}>
@@ -246,7 +248,7 @@ const FormStep = ({
             <label>
               <input
                 type="checkbox"
-                checked={selectedOptions[option.id] || ''}
+                checked={selectedOptions[option.id] || false}
                 onChange={() => toggleOption(option.id)}
               />
               <span>{option.name}</span>
