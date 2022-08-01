@@ -11,7 +11,7 @@ import { GeoCoordinates, useAppContext } from 'utils';
 import { Loader } from 'components/ui';
 import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
-import Header from 'components/search/Header/Header';
+import { Header } from 'components/search/Header/Header';
 import config from '../../config';
 import styles from './SearchResultsPage.module.scss';
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import Button from 'components/ui/inline/Button';
+import { Button } from 'components/ui/inline/Button';
 import { icon as assetIcon } from 'assets';
-import QrCodeModal from 'components/ui/QrCodeModal/QrCodeModal';
+import { QrCodeModal } from 'components/ui/QrCodeModal/QrCodeModal';
 
 import styles from './Header.module.scss';
 
-const Header = ({
+export const Header = ({
   resultsTitle,
   expandList,
   setExpandList,
@@ -45,5 +45,3 @@ const Header = ({
     </div>
   );
 };
-
-export default Header;

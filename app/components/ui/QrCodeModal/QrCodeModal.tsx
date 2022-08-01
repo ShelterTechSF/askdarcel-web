@@ -3,11 +3,11 @@ import Modal from 'react-modal';
 import { QRCodeSVG } from 'qrcode.react';
 
 import { icon } from 'assets';
-import Button from 'components/ui/inline/Button';
+import { Button } from 'components/ui/inline/Button';
 
 import styles from './QrCodeModal.module.scss';
 
-const QrCodeModal = ({
+export const QrCodeModal = ({
   isOpen, setIsOpen,
 }: {
   isOpen: boolean;
@@ -37,7 +37,7 @@ const QrCodeModal = ({
       </div>
       <h2 className={styles.title}>Resource Code</h2>
       <p className={styles.body}>
-        Show this QR code to your client so that they may open this page on their phone.
+        Scan this QR code with a mobile phone to open this page.
       </p>
       <QRCodeSVG value={window.location.href} size={235} />
       <div>
@@ -52,5 +52,3 @@ const QrCodeModal = ({
     </Modal>
   );
 };
-
-export default QrCodeModal;
