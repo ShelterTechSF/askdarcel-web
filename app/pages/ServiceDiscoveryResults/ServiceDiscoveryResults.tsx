@@ -11,6 +11,7 @@ import { useAppContext } from 'utils';
 import { Loader } from 'components/ui';
 import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
+import { Header } from 'components/search/Header/Header';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 import config from '../../config';
@@ -114,19 +115,14 @@ const InnerServiceDiscoveryResults = ({
   userLatLng: string;
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{categoryName}</h1>
-        <div className={styles.mapListToggleContainer}>
-          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
-            <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
-          </button>
-          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
-            <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
-          </button>
-        </div>
-      </div>
+      <Header
+        resultsTitle={categoryName}
+        expandList={expandList}
+        setExpandList={setExpandList}
+      />
 
       <InstantSearch
         searchClient={searchClient}

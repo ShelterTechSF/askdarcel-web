@@ -168,14 +168,16 @@ const Page = () => {
         <ClientEligibilities />
         <div className={styles.eligibilitiesBtns}>
           <Button
-            text="Back"
             onClick={backToResourceSelection}
-          />
+          >
+            Back
+          </Button>
           <Button
-            text="Next: Service Capacity"
             onClick={goToResourceResults}
             addClass={styles.goToResultsBtn}
-          />
+          >
+            Next: Service Capacity
+          </Button>
         </div>
       </div>
     </div>
