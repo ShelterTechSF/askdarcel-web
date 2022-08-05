@@ -5,8 +5,8 @@ import qs from 'qs';
 import { getResourceCount } from 'utils/DataService';
 import { Footer } from 'components/ui';
 import { Partners } from './components/Partners/Partners';
-import { SearchBar } from './components/SearchBar';
-import { HomePageSection } from './components/Section';
+import { SearchBar } from './components/SearchBar/SearchBar';
+import { HomePageSection } from './components/Section/Section';
 import ResourceList from './components/ResourceList/ResourceList';
 
 const covidResources = [
@@ -20,6 +20,9 @@ const covidResources = [
   { name: 'Resources for Domestic Violence Survivors', icon: 'warning', categorySlug: 'domestic-violence-resources' },
   { name: 'LGBTQ+ Resources', icon: 'community', categorySlug: 'lgbtq-resources' },
   { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' },
+  // Todo: Use long term housing icon when it is available. Change category slug when LTH
+  // when b/e work is completed
+  { name: 'Long-term Housing', icon: 'bed', categorySlug: 'longterm-housing-resources' },
 ];
 
 const generalResources = [{

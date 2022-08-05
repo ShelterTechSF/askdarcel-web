@@ -38,6 +38,10 @@
     }
 }
 
+.contentText {
+    hyphens: none;
+}
+
 .listOption {
     height: 75px;
     background-color: $color-grey1;

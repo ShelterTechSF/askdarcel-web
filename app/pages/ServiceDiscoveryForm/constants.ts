@@ -1,4 +1,23 @@
-export type Step = 'eligibilities' | 'subcategories' | 'results';
+export type Step = 'housingStatus' | 'longTermHousingOptions' | 'eligibilities' | 'subcategories' | 'results';
+
+/* Todo: The CustomRefinement and CustomStepMethods interfaces/properties were created to finish a
+   time-sensitive project to complete the Long Term Housing tile pathway. The LTH pathway has more
+   complex refinement options than our existing tiles do. This code and the step data struture
+   can/should be refactored and improved to more broadly support more complex refinement pathways
+**/
+
+export interface CustomRefinements {
+  [key: string]: CustomRefinement[];
+}
+
+export interface CustomRefinement {
+  id: number;
+  name: string;
+}
+
+export interface CustomStepMethods {
+  [key: string]: Function;
+}
 
 export interface ServiceCategory {
   algoliaCategoryName: string;
@@ -7,6 +26,8 @@ export interface ServiceCategory {
   slug: string;
   steps: Step[];
   subcategorySubheading: string;
+  customRefinements?: CustomRefinements;
+  customStepMethods?: CustomStepMethods;
 }
 
 const defaultSubheading = 'What are you currently looking for? Select all that apply.';
@@ -90,6 +111,43 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: 'Shelter resources',
     slug: 'shelter-resources',
     steps: ['subcategories', 'results'],
+    subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
+  },
+  {
+    algoliaCategoryName: 'Covid-shelter',
+    id: '1000010',
+    name: 'Long-term Housing',
+    slug: 'longterm-housing-resources',
+    steps: ['housingStatus', 'longTermHousingOptions', 'subcategories', 'results'],
+    customRefinements: {
+      housingStatus: [
+        { id: 1, name: 'I am experiencing homelessness and I need immediate help finding shelter.' },
+        { id: 2, name: 'I am experiencing homelessness (on the street, couchsurfing, or other) and I need long-term housing assistance.' },
+        { id: 3, name: 'I am not currently experiencing homelessness, but I am looking for a long-term affordable housing unit.' },
+      ],
+      longTermHousingOptions: [
+        { id: 1, name: 'I am looking to rent a home.' },
+        { id: 2, name: 'I am looking to buy a home.' },
+      ],
+    },
+    customStepMethods: {
+      housingStatus: (
+        selectedRefinement: any,
+        history: any,
+        _setCurrentStep: (targetStep: number) => void,
+      ) => {
+        if (selectedRefinement === 1) {
+          // Todo: switch this to shelter
+          history.push('/shelter-resources/form');
+        } else if (selectedRefinement === 2) {
+          // Go to subcagtegories step
+          _setCurrentStep(2);
+        } else if (selectedRefinement === 3) {
+          // Go to long term housing options step
+          _setCurrentStep(1);
+        }
+      },
+    },
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
 ];
