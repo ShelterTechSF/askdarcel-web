@@ -1,4 +1,4 @@
-type Step = 'eligibilities' | 'subcategories' | 'results';
+export type Step = 'eligibilities' | 'subcategories' | 'results';
 
 export interface ServiceCategory {
   algoliaCategoryName: string;
