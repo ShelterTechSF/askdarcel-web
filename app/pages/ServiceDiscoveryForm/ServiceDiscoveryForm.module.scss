@@ -36,6 +36,10 @@
         color: $color-grey9;
         margin: 20px 0;
     }
+
+    @media screen and (max-width: $break-tablet-s) {
+        padding: 48px 20px 60px;
+    }
 }
 
 .contentText {
@@ -61,6 +65,10 @@
         color: $color-brand;
         font-weight: 600;
     }
+
+    @media screen and (max-width: $break-tablet-s) {
+        height: 110px;
+    }
 }
 
 
@@ -74,6 +82,15 @@
     border-top: 1px solid $color-grey3;
     background-color: $color-white;
     padding: 18px 35px;
+    @media screen and (max-width: $break-tablet-s) {
+        justify-content: center;
+    }
+}
+
+.progressBar {
+    @media screen and (max-width: $break-tablet-l) {
+        display: none;
+    }
 }
 
 .progressBarMeter {
@@ -118,13 +135,30 @@
 
         &:not(:last-child) {
             margin-right: 30px;
+            @media screen and (max-width: $break-tablet-s) {
+                margin-right: 0;
+            }
+        }
+
+        @media screen and (max-width: $break-tablet-s) {
+            width: 250px;
         }
     }
+
     .actionBack {
         background-color: transparent;
         color: $color-brand;
     }
+
     .actionSubmit {
         background-color: $color-brand;
+        @media screen and (max-width: $break-tablet-s) {
+            margin-bottom: 8px;
+        }
+    }
+
+    @media screen and (max-width: $break-tablet-s) {
+        justify-content: center;
+        flex-direction: column-reverse;
     }
 }
