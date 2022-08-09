@@ -11,18 +11,16 @@ import ResourceList from './components/ResourceList/ResourceList';
 
 const covidResources = [
   { name: 'Food', icon: 'food', categorySlug: 'food-resources' },
-  { name: 'Shelters', icon: 'bed', categorySlug: 'shelter-resources' },
-  { name: 'Showers, Hygiene and other Services', icon: 'shower', categorySlug: 'hygiene-resources' },
   { name: 'Health and COVID-19', icon: 'hospital', categorySlug: 'medical-services-resources' },
+  { name: 'Showers, Hygiene and other Services', icon: 'shower', categorySlug: 'hygiene-resources' },
+  { name: 'Shelters', icon: 'bed', categorySlug: 'shelter-resources' },
+  { name: 'Long-term Housing', icon: 'longterm-housing', categorySlug: 'longterm-housing-resources' },
+  { name: 'Rental Assistance and Eviction Prevention', icon: 'housing-1', categorySlug: 'rental-assistance-resources' },
   { name: 'Financial Assistance', icon: 'wallet', categorySlug: 'financial-resources' },
   { name: 'Jobs', icon: 'employment', categorySlug: 'job-assistance-resources' },
-  { name: 'Rental Assistance and Eviction Prevention', icon: 'housing-1', categorySlug: 'rental-assistance-resources' },
-  { name: 'Resources for Domestic Violence Survivors', icon: 'warning', categorySlug: 'domestic-violence-resources' },
-  { name: 'LGBTQ+ Resources', icon: 'community', categorySlug: 'lgbtq-resources' },
   { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' },
-  // Todo: Use long term housing icon when it is available. Change category slug when LTH
-  // when b/e work is completed
-  { name: 'Long-term Housing', icon: 'bed', categorySlug: 'longterm-housing-resources' },
+  { name: 'LGBTQ+ Resources', icon: 'community', categorySlug: 'lgbtq-resources' },
+  { name: 'Resources for Domestic Violence Survivors', icon: 'warning', categorySlug: 'domestic-violence-resources' },
 ];
 
 const generalResources = [{

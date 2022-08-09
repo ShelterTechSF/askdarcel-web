@@ -8,7 +8,6 @@ import {
   CATEGORIES,
   Step,
   CustomStepMethods,
-  CustomRefinements,
 } from './constants';
 
 import styles from './ServiceDiscoveryForm.module.scss';
@@ -24,21 +23,24 @@ interface SelectedRefinements {
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const ServiceDiscoveryForm = () => {
-  const match = useRouteMatch();
   interface MatchParams {
     categorySlug: string;
   }
 
+  const match = useRouteMatch();
   const { categorySlug } = match.params as MatchParams;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
   if (!category) {
     // Category does not exist; user may have entered the category in the URL bar
-    // or there is an error in our code
     return <Redirect push to={{ pathname: '/' }} />;
   }
 
-  const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(category.id) || [];
-  const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(category.id) || [];
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(category.id);
+
+  const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(selectedCategoryId)
+    || [];
+  const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(selectedCategoryId)
+    || [];
 
   return (
     <InnerServiceDiscoveryForm
@@ -47,8 +49,8 @@ export const ServiceDiscoveryForm = () => {
       subcategories={subcategories}
       steps={category.steps}
       subcategorySubheading={category.subcategorySubheading}
-      customRefinements={category.customRefinements}
       customNextMethods={category.customStepMethods}
+      setSelectedCategoryId={setSelectedCategoryId}
     />
   );
 };
@@ -56,28 +58,21 @@ export const ServiceDiscoveryForm = () => {
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
   steps, eligibilities, subcategories, categorySlug, subcategorySubheading,
-  customRefinements, customNextMethods,
+  customNextMethods, setSelectedCategoryId,
 }: {
   steps: Step[];
   eligibilities: CategoryRefinement[];
   subcategories: CategoryRefinement[];
   categorySlug: string;
   subcategorySubheading: string;
-  customRefinements?: CustomRefinements;
   customNextMethods?: CustomStepMethods;
+  setSelectedCategoryId?: (targetCategoryId: string) => void;
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedRadioItem, setSelectedRadioItem] = useState(-1);
   const history = useHistory();
   const goBack = () => {
-    if (currentStep > 0) {
-      // Move user back to first step if they are on step 1 or above;
-      // Sending a user back one step may not make sense considering that
-      // some of the step pathways may not be strictly sequential
-      setCurrentStep(0);
-    } else {
-      history.goBack();
-    }
+    history.push('/');
   };
 
   let goToNextStep;
@@ -88,12 +83,10 @@ const InnerServiceDiscoveryForm = ({
       nextMethod(
         selectedRadioItem,
         history,
+        setSelectedCategoryId,
         setCurrentStep,
       );
     };
-  } else if (steps[currentStep] === 'longTermHousingOptions') {
-    // User is ready for results; skip the subcategories step and go to the results step
-    goToNextStep = () => setCurrentStep(steps.length - 1);
   } else {
     goToNextStep = () => setCurrentStep(currentStep + 1);
   }
@@ -109,7 +102,6 @@ const InnerServiceDiscoveryForm = ({
         categorySlug={categorySlug}
         subcategorySubheading={subcategorySubheading}
         setSelectedRadioItem={setSelectedRadioItem}
-        customRefinements={customRefinements}
       />
       <Footer
         onGoBack={goBack}
@@ -122,7 +114,7 @@ const InnerServiceDiscoveryForm = ({
 };
 
 const Content = ({
-  steps, currentStep, eligibilities, subcategories, customRefinements, categorySlug,
+  steps, currentStep, eligibilities, subcategories, categorySlug,
   subcategorySubheading, setSelectedRadioItem,
 }: {
   steps: Step[];
@@ -132,7 +124,6 @@ const Content = ({
   categorySlug: string;
   subcategorySubheading: string;
   setSelectedRadioItem: (targetItemId: number) => void;
-  customRefinements?: CustomRefinements;
 }) => {
   const [selectedEligibilities, setSelectedEligibilities] = useState<SelectedRefinements>({});
   const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedRefinements>({});
@@ -155,23 +146,19 @@ const Content = ({
     );
   };
 
+  const handleRadioSelect = (targetCategoryId: number) => {
+    setSelectedSubcategories({ [targetCategoryId]: true });
+    setSelectedRadioItem(targetCategoryId);
+  };
+
   switch (steps[currentStep]) {
     case 'housingStatus':
       return (
         <RadioFormStep
           heading="Which of the following best describes your current housing situation?"
           subheading="Select the option most relevant to you."
-          setSelectedRadioItem={setSelectedRadioItem}
-          refinements={customRefinements?.housingStatus || []}
-        />
-      );
-    case 'longTermHousingOptions':
-      return (
-        <RadioFormStep
-          heading="Tell us more about your needs."
-          subheading="Select the option most relevant to you."
-          setSelectedRadioItem={setSelectedRadioItem}
-          refinements={customRefinements?.longTermHousingOptions || []}
+          handleRadioSelect={handleRadioSelect}
+          refinements={subcategories}
         />
       );
     case 'eligibilities':
@@ -192,6 +179,15 @@ const Content = ({
           refinements={subcategories}
           selectedRefinements={selectedSubcategories}
           toggleRefinement={handleSubcategoryClick}
+        />
+      );
+    case 'subcategoriesRadio':
+      return (
+        <RadioFormStep
+          heading="Tell us more about your needs"
+          subheading="Select the option most relevant to you."
+          handleRadioSelect={handleRadioSelect}
+          refinements={subcategories}
         />
       );
     case 'results':
@@ -325,11 +321,11 @@ interface RadioRefinementType {
 }
 
 const RadioFormStep = ({
-  heading, subheading, setSelectedRadioItem, refinements,
+  heading, subheading, handleRadioSelect, refinements,
 }: {
   heading: string;
   subheading: string;
-  setSelectedRadioItem: (targetItemId: number) => void;
+  handleRadioSelect: (targetItemId: number) => void;
   refinements: RadioRefinementType[];
 }) => (
   <div className={styles.body}>
@@ -341,7 +337,7 @@ const RadioFormStep = ({
           <li className={styles.listOption} key={refinement.id}>
             <label>
               <input
-                onChange={() => (setSelectedRadioItem(refinement.id))}
+                onChange={() => (handleRadioSelect(refinement.id))}
                 name="refinement"
                 type="radio"
                 value={refinement.id}

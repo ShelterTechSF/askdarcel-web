@@ -1,4 +1,4 @@
-export type Step = 'housingStatus' | 'longTermHousingOptions' | 'eligibilities' | 'subcategories' | 'results';
+export type Step = 'housingStatus' | 'subcategoriesRadio' | 'eligibilities' | 'subcategories' | 'results';
 
 /* Todo: The CustomRefinement and CustomStepMethods interfaces/properties were created to finish a
    time-sensitive project to complete the Long Term Housing tile pathway. The LTH pathway has more
@@ -114,36 +114,25 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   {
-    algoliaCategoryName: 'Covid-shelter',
-    id: '1000010',
+    algoliaCategoryName: 'Covid-longterm-housing',
+    id: '1000011',
     name: 'Long-term Housing',
     slug: 'longterm-housing-resources',
-    steps: ['housingStatus', 'longTermHousingOptions', 'subcategories', 'results'],
-    customRefinements: {
-      housingStatus: [
-        { id: 1, name: 'I am experiencing homelessness and I need immediate help finding shelter.' },
-        { id: 2, name: 'I am experiencing homelessness (on the street, couchsurfing, or other) and I need long-term housing assistance.' },
-        { id: 3, name: 'I am not currently experiencing homelessness, but I am looking for a long-term affordable housing unit.' },
-      ],
-      longTermHousingOptions: [
-        { id: 1, name: 'I am looking to rent a home.' },
-        { id: 2, name: 'I am looking to buy a home.' },
-      ],
-    },
+    steps: ['housingStatus', 'subcategoriesRadio', 'results'],
     customStepMethods: {
       housingStatus: (
-        selectedRefinement: any,
+        targetRefinementId: number,
         history: any,
+        setSelectedCategoryId: (targetCategoryId: number) => void,
         _setCurrentStep: (targetStep: number) => void,
       ) => {
-        if (selectedRefinement === 1) {
-          // Todo: switch this to shelter
+        if (targetRefinementId === 1100045) {
+          // User has selected first option which should redirect user to the shelter resources form
+          setSelectedCategoryId(1000010);
           history.push('/shelter-resources/form');
-        } else if (selectedRefinement === 2) {
+        } else {
+          setSelectedCategoryId(targetRefinementId - 100000);
           // Go to subcagtegories step
-          _setCurrentStep(2);
-        } else if (selectedRefinement === 3) {
-          // Go to long term housing options step
           _setCurrentStep(1);
         }
       },
