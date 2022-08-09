@@ -36,7 +36,6 @@ export const ServiceDiscoveryForm = () => {
   }
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(category.id);
-
   const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(selectedCategoryId)
     || [];
   const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(selectedCategoryId)
@@ -71,26 +70,25 @@ const InnerServiceDiscoveryForm = ({
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedRadioItem, setSelectedRadioItem] = useState(-1);
   const history = useHistory();
+  const stepName = steps[currentStep];
+  const disableNextButton = selectedRadioItem === -1 && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
   const goBack = () => {
     history.push('/');
   };
 
   let goToNextStep;
-  const stepName = steps[currentStep];
   if (customNextMethods?.[stepName]) {
     goToNextStep = () => {
-      if (selectedRadioItem <= 0) {
-        return;
-      }
-
       const nextMethod = customNextMethods[stepName];
       nextMethod(
         selectedRadioItem,
         history,
         setSelectedCategoryId,
+        setCurrentStep,
       );
 
-      setCurrentStep(currentStep + 1);
+      // Reset radio item for next step
+      setSelectedRadioItem(-1);
     };
   } else {
     goToNextStep = () => setCurrentStep(currentStep + 1);
@@ -113,6 +111,7 @@ const InnerServiceDiscoveryForm = ({
         onNextStep={goToNextStep}
         currentStep={currentStep}
         numSteps={steps.length}
+        disableNextButton={disableNextButton}
       />
     </>
   );
@@ -245,20 +244,21 @@ const Header = ({ onGoBack }: {
 );
 
 const Footer = ({
-  onGoBack, onNextStep, currentStep, numSteps,
+  onGoBack, onNextStep, currentStep, numSteps, disableNextButton,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
   currentStep: number;
   numSteps: number;
+  disableNextButton?: boolean;
 }) => (
   <div className={styles.footer}>
     <div className={styles.progressBarContainer}>
       {
         /*
-         * Add 1 to current step because it is 0-indexed.
-         * Subtract 1 from numSteps because we shouldn't include the RESULT step.
-         */
+        * Add 1 to current step because it is 0-indexed.
+        * Subtract 1 from numSteps because we shouldn't include the RESULT step.
+        */
       }
       <ProgressBar currentNumber={currentStep + 1} totalNumber={numSteps - 1} />
     </div>
@@ -266,7 +266,12 @@ const Footer = ({
       <button type="button" className={`${styles.button} ${styles.actionBack}`} onClick={onGoBack}>
         Back
       </button>
-      <button type="button" className={`${styles.button} ${styles.actionSubmit}`} onClick={onNextStep}>
+      <button
+        type="button"
+        className={`${styles.button} ${styles.actionSubmit}`}
+        onClick={onNextStep}
+        disabled={disableNextButton}
+      >
         Next
       </button>
     </div>

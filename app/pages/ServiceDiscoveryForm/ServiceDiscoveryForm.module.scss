@@ -132,6 +132,11 @@
         width: 188px;
         border: 1px solid $color-brand;
         border-radius: 3px;
+        &:disabled {
+            background: $color-brand-light;
+            cursor: not-allowed;
+            border: none;
+        }
 
         &:not(:last-child) {
             margin-right: 30px;

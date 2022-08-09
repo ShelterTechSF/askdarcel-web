@@ -124,15 +124,17 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
         targetRefinementId: number,
         history: any,
         setSelectedCategoryId: (targetCategoryId: number) => void,
+        setCurrentStep: (targetStep: number) => void,
       ) => {
         if (targetRefinementId === 1100045) {
           // User has selected first option. Redirect user to the shelter resources form.
           setSelectedCategoryId(1000010);
-          history.push('/shelter-resources/form');
+          history.replace('/shelter-resources/form');
         } else {
           // todo: API is currently returning subcategories with incorrects IDs;
           // they are 100,000 higher than they should be; thus the subtraction below
           setSelectedCategoryId(targetRefinementId - 100000);
+          setCurrentStep(1);
         }
       },
     },
