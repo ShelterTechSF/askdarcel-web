@@ -79,13 +79,18 @@ const InnerServiceDiscoveryForm = ({
   const stepName = steps[currentStep];
   if (customNextMethods?.[stepName]) {
     goToNextStep = () => {
+      if (selectedRadioItem <= 0) {
+        return;
+      }
+
       const nextMethod = customNextMethods[stepName];
       nextMethod(
         selectedRadioItem,
         history,
         setSelectedCategoryId,
-        setCurrentStep,
       );
+
+      setCurrentStep(currentStep + 1);
     };
   } else {
     goToNextStep = () => setCurrentStep(currentStep + 1);
