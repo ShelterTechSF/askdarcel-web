@@ -1,11 +1,14 @@
 @import '../../styles/utils/_helpers.scss';
 
 .bannerContainer {
+  display: grid;
+  align-items: center;
   width: 100%;
+  min-height: 98px;
   padding: calc-em(16px) calc-em(28px);
   color: black;
   background-color: $color-yellow;
-  font-size: calc-em(24px);
+  font-size: calc-em(22px);
   text-align: center;
   strong {
     font-weight: bold;
@@ -15,8 +18,15 @@
   }
 }
 
+.alertIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 22px;
+}
+
 .bannerLink {
-  font-weight: bold;
   text-decoration: underline;
-  color: black;
+  &:hover, &:active, &:focus {
+    text-decoration: underline;
+  }
 }
