@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface patientHandout {
+interface PatientHandout {
   id: string;
   language: string;
   link: string;

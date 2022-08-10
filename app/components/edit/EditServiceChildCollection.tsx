@@ -11,7 +11,7 @@ import React, {
  * EditCollection HOC class-based JSX component that does essentially the same thing
  * for child property collections of Resources.
  */
-interface componentProps {
+interface ComponentProps {
   index: number;
   item: any;
   handleItemChange: any;
@@ -82,7 +82,7 @@ export const EditServiceChildCollection = ({
     setResourceCollection(newCollection);
   };
 
-  interface resourceItem {
+  interface ResourceItem {
     id: string;
     keyId: number;
   }
