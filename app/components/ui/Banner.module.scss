@@ -9,19 +9,32 @@
   color: black;
   background-color: $color-yellow;
   font-size: calc-em(22px);
-  text-align: center;
   strong {
     font-weight: bold;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $break-tablet-s) {
     font-size: calc-em(16px);
+    padding: calc-em(10px)
+  }
+}
+
+.bannerContent {
+  width: 90%;
+  max-width: 1160px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 30px;
+  align-items: center;
+  @media screen and (max-width: $break-tablet-s) {
+    width: 96%;
+    gap: 12px;
   }
 }
 
 .alertIcon {
   width: 24px;
   height: 24px;
-  margin-right: 22px;
 }
 
 .bannerLink {
@@ -29,4 +42,8 @@
   &:hover, &:active, &:focus {
     text-decoration: underline;
   }
+}
+
+.linkInfo {
+  white-space: nowrap;
 }
