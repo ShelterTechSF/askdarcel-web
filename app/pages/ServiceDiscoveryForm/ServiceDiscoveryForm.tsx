@@ -7,7 +7,7 @@ import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../
 import {
   CATEGORIES,
   Step,
-  CustomStepMethods,
+  ServiceCategory,
 } from './constants';
 
 import styles from './ServiceDiscoveryForm.module.scss';
@@ -35,60 +35,75 @@ export const ServiceDiscoveryForm = () => {
     return <Redirect push to={{ pathname: '/' }} />;
   }
 
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(category.id);
-  const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(selectedCategoryId)
-    || [];
-  const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(selectedCategoryId)
-    || [];
-
   return (
     <InnerServiceDiscoveryForm
-      categorySlug={category.slug}
-      eligibilities={eligibilities}
-      subcategories={subcategories}
-      steps={category.steps}
+      category={category}
       subcategorySubheading={category.subcategorySubheading}
-      customNextMethods={category.customStepMethods}
-      setSelectedCategoryId={setSelectedCategoryId}
     />
   );
 };
 
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
-  steps, eligibilities, subcategories, categorySlug, subcategorySubheading,
-  customNextMethods, setSelectedCategoryId,
+  category, subcategorySubheading,
 }: {
-  steps: Step[];
-  eligibilities: CategoryRefinement[];
-  subcategories: CategoryRefinement[];
-  categorySlug: string;
+  category: ServiceCategory;
   subcategorySubheading: string;
-  customNextMethods?: CustomStepMethods;
-  setSelectedCategoryId?: (targetCategoryId: string) => void;
 }) => {
+  const {
+    steps,
+    id,
+    slug: categorySlug,
+  } = category;
+
+  // The activeCategoryId is updated if the user proceeds to a further step that has child
+  // subcategories to be displayed. When it is set, the target subcategory refinements are
+  // fetched and rendered in place of the previous refinements
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(id);
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedRadioItem, setSelectedRadioItem] = useState(-1);
+  // Add the selectedRadioItem to state so that when a user clicks the next button
+  // the selectedRadioItem can be passed to the goToNextStep function
+  const [selectedRadioItem, setSelectedRadioItem] = useState<number | null>(null);
   const history = useHistory();
+
+  const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(activeCategoryId)
+  || [];
+  const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(activeCategoryId)
+  || [];
+
+  let goToNextStep;
   const stepName = steps[currentStep];
-  const disableNextButton = selectedRadioItem === -1 && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
+  const disableNextBtn = selectedRadioItem === null && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
+  // TODO: Should goBack go back to the previous step?
   const goBack = () => {
     history.push('/');
   };
 
-  let goToNextStep;
-  if (customNextMethods?.[stepName]) {
+  if (stepName === 'housingStatus') {
+    // TODO: If we have more categories that have custom pathway actions, will we want to
+    // store custom methods as children of the categories in the constants.ts file?
     goToNextStep = () => {
-      const nextMethod = customNextMethods[stepName];
-      nextMethod(
-        selectedRadioItem,
-        history,
-        setSelectedCategoryId,
-        setCurrentStep,
-      );
+      if (!selectedRadioItem) {
+        return;
+      }
 
-      // Reset radio item for next step
-      setSelectedRadioItem(-1);
+      // TODO: The category endpoint is currently returning LTH child subcategories with ID props
+      // that are 100,000 too high. Thus, we need to subtract by 100,000 when fetching the target
+      // subcategory's child subcategories and eligibilities. When this is fixed we will need to
+      // do concurrent deploys to ensure that the backend fix doesn't break this code
+      if (selectedRadioItem === 1100045) {
+        // User has selected first option in Long Term Housing step 1. Set category ID to Shelter
+        // ID and redirect user to the Shelter resources form.
+        setActiveCategoryId('1000010');
+        history.replace('/shelter-resources/form');
+      } else {
+        const targetCategoryId = (selectedRadioItem - 100000);
+        // Set active category to be the subcategory that the user has selected
+        setActiveCategoryId(targetCategoryId.toString());
+        // Reset radio selection to prepare for next step
+        setSelectedRadioItem(null);
+        setCurrentStep(currentStep + 1);
+      }
     };
   } else {
     goToNextStep = () => setCurrentStep(currentStep + 1);
@@ -111,7 +126,7 @@ const InnerServiceDiscoveryForm = ({
         onNextStep={goToNextStep}
         currentStep={currentStep}
         numSteps={steps.length}
-        disableNextButton={disableNextButton}
+        disableNextBtn={disableNextBtn}
       />
     </>
   );
@@ -244,13 +259,13 @@ const Header = ({ onGoBack }: {
 );
 
 const Footer = ({
-  onGoBack, onNextStep, currentStep, numSteps, disableNextButton,
+  onGoBack, onNextStep, currentStep, numSteps, disableNextBtn,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
   currentStep: number;
   numSteps: number;
-  disableNextButton?: boolean;
+  disableNextBtn?: boolean;
 }) => (
   <div className={styles.footer}>
     <div className={styles.progressBarContainer}>
@@ -270,7 +285,7 @@ const Footer = ({
         type="button"
         className={`${styles.button} ${styles.actionSubmit}`}
         onClick={onNextStep}
-        disabled={disableNextButton}
+        disabled={disableNextBtn}
       >
         Next
       </button>
@@ -307,7 +322,7 @@ const FormStep = ({
     <div className={styles.contentContainer}>
       <h1 className={styles.contentText}>{heading}</h1>
       <h2 className={styles.contentText}>{subheading}</h2>
-      <ul>
+      <ul className={styles.refinementList}>
         {refinements.map(refinement => (
           <li className={styles.listOption} key={refinement.id}>
             <label>
@@ -331,18 +346,18 @@ interface RadioRefinementType {
 }
 
 const RadioFormStep = ({
-  heading, subheading, handleRadioSelect, refinements,
+  heading, subheading, refinements, handleRadioSelect,
 }: {
   heading: string;
   subheading: string;
-  handleRadioSelect: (targetItemId: number) => void;
   refinements: RadioRefinementType[];
+  handleRadioSelect: (targetItemId: number) => void;
 }) => (
   <div className={styles.body}>
     <div className={styles.contentContainer}>
       <h1 className={styles.contentText}>{heading}</h1>
       <h2 className={styles.contentText}>{subheading}</h2>
-      <ul>
+      <ul className={styles.refinementList}>
         {refinements.map(refinement => (
           <li className={styles.listOption} key={refinement.id}>
             <label>

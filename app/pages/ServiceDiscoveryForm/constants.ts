@@ -1,24 +1,5 @@
 export type Step = 'housingStatus' | 'subcategoriesRadio' | 'eligibilities' | 'subcategories' | 'results';
 
-/* Todo: The CustomRefinement and CustomStepMethods interfaces/properties were created to finish a
-   time-sensitive project to complete the Long Term Housing tile pathway. The LTH pathway has more
-   complex refinement options than our existing tiles do. This code and the step data struture
-   can/should be refactored and improved to more broadly support more complex refinement pathways
-**/
-
-export interface CustomRefinements {
-  [key: string]: CustomRefinement[];
-}
-
-export interface CustomRefinement {
-  id: number;
-  name: string;
-}
-
-export interface CustomStepMethods {
-  [key: string]: Function;
-}
-
 export interface ServiceCategory {
   algoliaCategoryName: string;
   id: string;
@@ -26,8 +7,6 @@ export interface ServiceCategory {
   slug: string;
   steps: Step[];
   subcategorySubheading: string;
-  customRefinements?: CustomRefinements;
-  customStepMethods?: CustomStepMethods;
 }
 
 const defaultSubheading = 'What are you currently looking for? Select all that apply.';
@@ -119,25 +98,6 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: 'Long-term Housing',
     slug: 'longterm-housing-resources',
     steps: ['housingStatus', 'subcategoriesRadio', 'results'],
-    customStepMethods: {
-      housingStatus: (
-        targetRefinementId: number,
-        history: any,
-        setSelectedCategoryId: (targetCategoryId: number) => void,
-        setCurrentStep: (targetStep: number) => void,
-      ) => {
-        if (targetRefinementId === 1100045) {
-          // User has selected first option. Redirect user to the shelter resources form.
-          setSelectedCategoryId(1000010);
-          history.replace('/shelter-resources/form');
-        } else {
-          // todo: API is currently returning subcategories with incorrects IDs;
-          // they are 100,000 higher than they should be; thus the subtraction below
-          setSelectedCategoryId(targetRefinementId - 100000);
-          setCurrentStep(1);
-        }
-      },
-    },
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
 ];
