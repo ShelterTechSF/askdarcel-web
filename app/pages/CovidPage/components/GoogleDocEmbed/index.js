@@ -1,1 +1,0 @@
-export { GoogleDocEmbed } from './GoogleDocEmbed';

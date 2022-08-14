@@ -19,54 +19,6 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- service guides -->
-
-    <url>
-        <loc>https://sfserviceguide.org/covid/shelteraccess</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/foodmap</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/hygiene</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/medicalservices</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/domesticviolence</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/internet</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/financialassistance</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/rentalassistance</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sfserviceguide.org/covid/lgbtq</loc>
-        <lastmod>2020-06-15T00:48:02+00:00</lastmod>
-        <priority>0.8</priority>
-    </url>
-
     <!-- services -->
 
     <url>

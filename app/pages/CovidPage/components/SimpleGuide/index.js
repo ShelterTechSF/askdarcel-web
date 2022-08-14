@@ -1,1 +1,0 @@
-export { SimpleGuide } from './SimpleGuide';
