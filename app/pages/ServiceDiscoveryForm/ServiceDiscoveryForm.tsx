@@ -35,42 +35,53 @@ export const ServiceDiscoveryForm = () => {
     return <Redirect push to={{ pathname: '/' }} />;
   }
 
-  return (
-    <InnerServiceDiscoveryForm
-      category={category}
-      subcategorySubheading={category.subcategorySubheading}
-    />
-  );
-};
-
-/** Main component that handles form data and advancing steps. */
-const InnerServiceDiscoveryForm = ({
-  category, subcategorySubheading,
-}: {
-  category: ServiceCategory;
-  subcategorySubheading: string;
-}) => {
-  const {
-    steps,
-    id,
-    slug: categorySlug,
-  } = category;
-
   // The activeCategoryId is updated if the user proceeds to a further step that has child
   // subcategories to be displayed. When it is set, the target subcategory refinements are
   // fetched and rendered in place of the previous refinements
-  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(id);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(category.id);
+
   // Add the selectedRadioItem to state so that when a user clicks the next button
   // the selectedRadioItem can be passed to the goToNextStep function
   const [selectedRadioItem, setSelectedRadioItem] = useState<number | null>(null);
-  const history = useHistory();
 
   const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(activeCategoryId)
   || [];
   const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(activeCategoryId)
   || [];
 
+  return (
+    <InnerServiceDiscoveryForm
+      category={category}
+      subcategorySubheading={category.subcategorySubheading}
+      eligibilities={eligibilities}
+      subcategories={subcategories}
+      setActiveCategoryId={setActiveCategoryId}
+      selectedRadioItem={selectedRadioItem}
+      setSelectedRadioItem={setSelectedRadioItem}
+    />
+  );
+};
+
+/** Main component that handles form data and advancing steps. */
+const InnerServiceDiscoveryForm = ({
+  category, subcategorySubheading, eligibilities, subcategories,
+  setActiveCategoryId, selectedRadioItem, setSelectedRadioItem,
+}: {
+  category: ServiceCategory;
+  subcategorySubheading: string;
+  eligibilities: CategoryRefinement[];
+  subcategories: CategoryRefinement[];
+  setActiveCategoryId: (id: string | null) => void;
+  selectedRadioItem: number | null;
+  setSelectedRadioItem: (item: number | null) => void;
+}) => {
+  const {
+    steps,
+    slug: categorySlug,
+  } = category;
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const history = useHistory();
   let goToNextStep;
   const stepName = steps[currentStep];
   const disableNextBtn = selectedRadioItem === null && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
