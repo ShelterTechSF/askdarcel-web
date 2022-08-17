@@ -28,7 +28,6 @@ import MetaImage from './assets/img/sfsg-preview.png';
 
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
-import { CovidPage } from './pages/CovidPage';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
@@ -120,7 +119,6 @@ export const App = () => {
             <Switch>
               <Route exact path="/" component={homePageDictionary[homePageComponent]} />
               <Route exact path="/about" component={AboutPage} />
-              <Route exact path="/covid" component={CovidPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
 
               {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
