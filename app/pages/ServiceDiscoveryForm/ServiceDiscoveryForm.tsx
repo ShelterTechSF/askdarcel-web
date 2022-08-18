@@ -98,17 +98,13 @@ const InnerServiceDiscoveryForm = ({
         return;
       }
 
-      // TODO: The category endpoint is currently returning LTH child subcategories with ID props
-      // that are 100,000 too high. Thus, we need to subtract by 100,000 when fetching the target
-      // subcategory's child subcategories and eligibilities. When this is fixed we will need to
-      // do concurrent deploys to ensure that the backend fix doesn't break this code
       if (selectedRadioItem === 1100045) {
         // User has selected first option in Long Term Housing step 1. Set category ID to Shelter
         // ID and redirect user to the Shelter resources form.
         setActiveCategoryId('1000010');
         history.replace('/shelter-resources/form');
       } else {
-        const targetCategoryId = (selectedRadioItem - 100000);
+        const targetCategoryId = (selectedRadioItem);
         // Set active category to be the subcategory that the user has selected
         setActiveCategoryId(targetCategoryId.toString());
         // Reset radio selection to prepare for next step
