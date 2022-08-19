@@ -9,7 +9,7 @@ import { Layout } from 'components/ucsf/Layout/Layout';
 import { serviceTypeData } from './ucsfServiceTypes';
 import styles from './UcsfServiceTypePage.module.scss';
 
-const ClientEligibilities = ({ rawServiceData, resourceSlug }: {
+const ServiceTypes = ({ rawServiceData, resourceSlug }: {
   rawServiceData: any;
   resourceSlug: string;
 }) => {
@@ -124,7 +124,7 @@ const Page = () => {
         subtitle="Step 3: Can you tell us more about the services that your client is looking for?"
       />
       <div className={styles.serviceTypeContainer}>
-        <ClientEligibilities
+        <ServiceTypes
           rawServiceData={serviceTypeData}
           resourceSlug={state.selectedResourceSlug}
         />

@@ -1,11 +1,11 @@
 // We are hardcoding the eligibility data as it currently exists on the design specs.
 // When content has entered UCSF specific eligibilities, will we fetch that data from the API
 
-export interface ucsfServiceTypeDictionary {
+export interface UcsfServiceTypeDictionary {
   [key: string]: object;
 }
 
-const serviceTypeData: ucsfServiceTypeDictionary = {
+const serviceTypeData: UcsfServiceTypeDictionary = {
   'mental-health-resources': {
     label: 'Mental Health',
     types: [
