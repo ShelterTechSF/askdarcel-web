@@ -28,7 +28,6 @@ import MetaImage from './assets/img/sfsg-preview.png';
 
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
-import { CovidPage } from './pages/CovidPage';
 import { ListingDebugPage } from './pages/debug/ListingDemoPage';
 import { OrganizationListingPage } from './pages/OrganizationListingPage';
 import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
@@ -39,6 +38,7 @@ import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/UcsfClientEligibilityPage';
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
+import { UcsfServiceTypePage } from './pages/UcsfServiceTypePage/UcsfServiceTypePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
 import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
 import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
@@ -120,7 +120,6 @@ export const App = () => {
             <Switch>
               <Route exact path="/" component={homePageDictionary[homePageComponent]} />
               <Route exact path="/about" component={AboutPage} />
-              <Route exact path="/covid" component={CovidPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
 
               {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
@@ -140,6 +139,7 @@ export const App = () => {
 
               {/* UCSF white label paths */}
               <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
+              <Route exact path="/service-type" component={UcsfServiceTypePage} />
               <Route exact path="/suggested-resources" component={ServiceDiscoveryResults} />
 
               {/* Legacy redirects */}

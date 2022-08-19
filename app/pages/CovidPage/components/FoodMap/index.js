@@ -1,1 +1,0 @@
-export { FoodMap } from './FoodMap';
