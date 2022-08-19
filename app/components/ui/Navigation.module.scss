@@ -163,7 +163,7 @@
     #f9f9f9;
   color: #888888;
   font-size: $font-size;
-  line-height: (26 / 18);
+  line-height: calc(26 / 18);
   padding: 9px 22px 9px 43px;
 
   &::placeholder {

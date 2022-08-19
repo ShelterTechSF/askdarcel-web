@@ -44,9 +44,8 @@ const Sidebar = ({
         <RefinementListFilter
           attribute="categories"
           transformItems={(items: any) => items
-            .filter((item: any) => subcategoryNames.includes(item.label))
-            .sort(orderByLabel)
-          }
+            .filter(({ label }: { label: string }) => subcategoryNames.includes(label))
+            .sort(orderByLabel)}
         />
       );
     }

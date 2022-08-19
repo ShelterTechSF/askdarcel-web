@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './SearchBar.module.scss';
 
-const SearchBar = ({
+export const SearchBar = ({
   onChange, onSubmit, placeholder, value,
 }) => (
   <form
@@ -39,5 +39,3 @@ SearchBar.defaultProps = {
   onSubmit: () => {},
   placeholder: undefined,
 };
-
-export default SearchBar;

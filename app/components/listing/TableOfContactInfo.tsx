@@ -37,8 +37,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
                 <a href={website}>{website}</a>
               </td>
             </tr>
-          ) : null
-          }
+          ) : null}
 
         { email
           ? (
@@ -48,8 +47,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
                 <a href={`mailto:${email}`}>{email}</a>
               </td>
             </tr>
-          ) : null
-          }
+          ) : null}
 
         { phones.length
           ? (
@@ -71,8 +69,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
                 </ul>
               </td>
             </tr>
-          ) : null
-          }
+          ) : null}
 
         {/* TODO Contact Person */}
       </tbody>

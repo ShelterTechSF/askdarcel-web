@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Section.module.scss';
 
-const Section = ({
+export const Section = ({
   title, subtitle, body, addClass,
 }: {
   title?: string;
@@ -16,5 +16,3 @@ const Section = ({
     {body && <p className={styles.body}>{ body }</p>}
   </section>
 );
-
-export default Section;

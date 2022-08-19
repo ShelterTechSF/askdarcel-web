@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProvidedService from './ProvidedService';
 
-
 const EditServices = ({
   addService, editServiceById, handleDeactivation, services, resourceAddresses,
 }) => (

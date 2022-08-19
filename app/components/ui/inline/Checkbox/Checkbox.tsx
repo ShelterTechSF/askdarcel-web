@@ -11,7 +11,7 @@ type CheckboxProps = {
   id?: string;
 };
 
-const Input = ({
+export const Checkbox = ({
   name,
   onChange,
   value,
@@ -29,5 +29,3 @@ const Input = ({
     type="checkbox"
   />
 );
-
-export default Input;

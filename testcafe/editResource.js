@@ -9,7 +9,6 @@ const servicePage = new ServicePage();
 fixture`Edit Resource`
   .page(ResourcePage.url(1));
 
-
 async function testEditTextProperty(t, showPageSelector, editPageSelector, newValue) {
   await t
     .navigateTo(editResourcePage.url(1))
@@ -22,7 +21,6 @@ async function testEditTextProperty(t, showPageSelector, editPageSelector, newVa
 test('Edit resource name', async t => {
   await testEditTextProperty(t, resourcePage.resourceName, editResourcePage.name, 'New Resource Name');
 });
-
 
 test('Edit resource address', async t => {
   await t.navigateTo(editResourcePage.url(1));
@@ -40,7 +38,9 @@ test('Edit resource address', async t => {
   await t.click(EditResourcePage.getAddressEditButton(0));
   await Object.keys(newProps).reduce(
     (_t, prop) => _t.typeText(
-      editResourcePage.addressModal[prop], newProps[prop], { replace: true },
+      editResourcePage.addressModal[prop],
+      newProps[prop],
+      { replace: true },
     ),
     t,
   );
@@ -64,7 +64,6 @@ test('Edit resource address', async t => {
   );
 });
 
-
 test('Edit resource phone number', async t => {
   const newNumber = '415-555-5555';
   const newFormattedNumber = '(415) 555-5555';
@@ -83,7 +82,6 @@ test('Edit resource phone number', async t => {
     .expect(resourcePage.phones.parent().textContent).contains(newFormattedNumber)
     .expect(resourcePage.phones.parent().textContent).contains(newServiceType);
 });
-
 
 test('Add resource phone number', async t => {
   const newNumber = '415-555-5556';
@@ -307,7 +305,6 @@ test('Add new service', async t => {
   // Cost should be displayed
   await t.expect(servicePage.cost.textContent).eql(SERVICE_DATA.COST);
 });
-
 
 test('Delete a service', async t => {
   // Wait for page to load before counting services by using hover action.

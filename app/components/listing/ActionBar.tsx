@@ -49,7 +49,6 @@ const ActionButton = ({
   );
 };
 
-
 export const ActionSidebar = ({ actions, onClickAction }: ActionBarProps) => (
   <ul className="action-sidebar">
     {actions.map(action => (

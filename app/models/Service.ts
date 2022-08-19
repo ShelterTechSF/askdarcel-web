@@ -90,7 +90,7 @@ export const shouldServiceInheritScheduleFromOrg = (service: Service) => (
  * into a nicer-to-use data model of RecurringSchedules.
  */
 export const fetchService = (id: string): Promise<Service> => get(`/api/services/${id}`)
-  .then(({ service }) => {
+  .then(({ service }: { service: Service }) => {
     const recurringSchedule = shouldServiceInheritScheduleFromOrg(service)
       ? parseAPISchedule(service.schedule)
       : parseAPISchedule(service.resource.schedule);

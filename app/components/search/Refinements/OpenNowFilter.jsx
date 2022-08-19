@@ -4,7 +4,6 @@ import { connectRefinementList } from 'react-instantsearch/connectors';
 import { getCurrentDayTime } from 'utils/index';
 import styles from './RefinementFilters.module.scss';
 
-
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
  * Now checkbos.

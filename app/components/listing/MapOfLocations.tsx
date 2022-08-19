@@ -62,11 +62,9 @@ export const MapOfLocations = ({ locationRenderer, locations }: {
               >
                 { locationRenderer(loc) }
               </AccordionItem>
-            ))
-            }
+            ))}
           </Accordion>
-        )
-      }
+        )}
       {/* <table>
         <tbody>
           { locations.map((loc, i) => (

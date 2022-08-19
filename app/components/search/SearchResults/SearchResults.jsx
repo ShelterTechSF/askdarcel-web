@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { connectStateResults } from 'react-instantsearch/connectors';
-import { icon } from 'assets';
 import { SearchMap } from 'components/search/SearchMap/SearchMap';
 import ResultsPagination from 'components/search/Pagination/ResultsPagination';
-import { parseAlgoliaSchedule } from 'app/models';
-import Texting from 'components/Texting';
+import { Texting } from 'components/Texting';
+import { icon } from '../../../assets';
+import { parseAlgoliaSchedule } from '../../../models';
 import styles from './SearchResults.module.scss';
-
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -186,8 +185,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   return (
     <div className={styles.searchResult}>
       { textingIsOpen
-        && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />
-      }
+        && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />}
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>

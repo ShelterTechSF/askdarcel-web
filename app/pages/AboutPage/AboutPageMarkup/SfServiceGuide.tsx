@@ -38,7 +38,7 @@ export const SfServiceGuideJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="http://sheltertech.org"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={STLogo} alt="ShelterTech" />
@@ -48,7 +48,7 @@ export const SfServiceGuideJsx = () => (
             ShelterTech, a volunteer-only 501c(3) non-profit that builds
             tech products for homeless and at risk communities.
             {' '}
-            <a href="http://sheltertech.org" rel="noopener norefferer">
+            <a href="http://sheltertech.org" rel="noopener">
               Learn more here.
             </a>
           </p>
@@ -59,7 +59,7 @@ export const SfServiceGuideJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="https://sfmohcd.org/"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={MOHCDLogo} alt="MOHCD" />
@@ -72,7 +72,7 @@ export const SfServiceGuideJsx = () => (
         <div className={styles.aboutRow}>
           <a
             href="http://www.sfbar.org/jdc/legal-services/hap/"
-            rel="noopener norefferer"
+            rel="noopener"
             className={styles.imageContainer}
           >
             <img src={JDCLogo} alt="JDC" />
@@ -89,7 +89,7 @@ export const SfServiceGuideJsx = () => (
           <li>
             <a
               href="https://larkinstreetyouth.org/"
-              rel="noopener norefferer"
+              rel="noopener"
             >
               <img src={LarkinLogo} alt="Larkin Street Youth Services" />
             </a>
@@ -97,7 +97,7 @@ export const SfServiceGuideJsx = () => (
           <li>
             <a
               href="http://evictiondefense.org/"
-              rel="noopener norefferer"
+              rel="noopener"
             >
               <img src={EDCLogo} alt="WeWork" />
             </a>
@@ -105,7 +105,7 @@ export const SfServiceGuideJsx = () => (
           <li>
             <a
               href="https://homeownershipsf.org/"
-              rel="noopener norefferer"
+              rel="noopener"
             >
               <img src={HomeownershipSFLogo} alt="WeWork" />
             </a>
@@ -113,20 +113,20 @@ export const SfServiceGuideJsx = () => (
           <li>
             <a
               href="https://www.compass-sf.org/"
-              rel="noopener norefferer"
+              rel="noopener"
             >
               <img src={CompassLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a href="https://benetech.org/" rel="noopener norefferer">
+            <a href="https://benetech.org/" rel="noopener">
               <img src={BenetechLogo} alt="Benetech" />
             </a>
           </li>
           <li>
             <a
               href="https://www.sffamilies.org/"
-              rel="noopener norefferer"
+              rel="noopener"
             >
               <img src={SFFamiliesLogo} alt="SF Families" />
             </a>
@@ -135,7 +135,7 @@ export const SfServiceGuideJsx = () => (
             <img src={BridgeLogo} alt="Bridge" />
           </li>
           <li>
-            <a href="https://www.wework.com" rel="noopener norefferer">
+            <a href="https://www.wework.com" rel="noopener">
               <img src={WeworkLogo} alt="WeWork" />
             </a>
           </li>

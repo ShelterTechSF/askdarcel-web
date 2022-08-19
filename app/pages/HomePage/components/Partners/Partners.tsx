@@ -14,31 +14,31 @@ export const Partners = () => (
     <ul>
       <li>
         <header>Powered By:</header>
-        <a href="http://sheltertech.org" rel="noopener norefferer" className="image-container">
+        <a href="http://sheltertech.org" rel="noopener" className="image-container">
           <img src={STLogo} alt="ShelterTech" />
         </a>
       </li>
       <li>
         <header>In Partnership With:</header>
-        <a href="https://sfmohcd.org/" rel="noopener norefferer" className="image-container">
+        <a href="https://sfmohcd.org/" rel="noopener" className="image-container">
           <img src={MOHCDLogo} alt="MOHCD" />
         </a>
       </li>
       <li>
         <header />
-        <a href="http://www.sfbar.org/jdc/legal-services/hap/" rel="noopener norefferer" className="image-container">
+        <a href="http://www.sfbar.org/jdc/legal-services/hap/" rel="noopener" className="image-container">
           <img src={JDCLogo} alt="JDC" />
         </a>
       </li>
       <li>
         <header />
-        <a href="https://benetech.org/" rel="noopener norefferer">
+        <a href="https://benetech.org/" rel="noopener">
           <img src={BenetechLogo} alt="Benetech" />
         </a>
       </li>
       <li>
         <header />
-        <a href="https://www.sffamilies.org/" rel="noopener norefferer">
+        <a href="https://www.sffamilies.org/" rel="noopener">
           <img src={SFFamiliesLogo} alt="SF Families" />
         </a>
       </li>

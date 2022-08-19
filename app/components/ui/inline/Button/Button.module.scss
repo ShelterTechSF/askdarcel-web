@@ -1,6 +1,5 @@
 @import 'app/styles/utils/_helpers.scss';
 
-
 .button {
   border-radius: 8px;
   color: $color-white;
@@ -8,6 +7,21 @@
   min-width: 120px;
   height: 56px;
   padding: 0 18px;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+  }
+}
+
+.buttonTransparent {
+  border-radius: 3px;
+  color: $color-brand;
+  background-color: transparent;
+  min-width: 120px;
+  height: 42px;
+  padding: 0 18px;
+  border: 1px solid $color-brand;
 }
 
 .medium {

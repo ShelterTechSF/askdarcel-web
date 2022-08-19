@@ -23,7 +23,6 @@ export const MINUTES_IN_HOUR = 60;
 
 const MINUTES_IN_WEEK = MINUTES_IN_HOUR * HOURS_IN_DAY * DAYS_IN_WEEK;
 
-
 /**
  * Return new array with RecurringIntervals sorted by opening time, with Sunday
  * midnight as the earliest time.
@@ -35,7 +34,6 @@ const sortIntervals = (intervals: RecurringInterval[]): RecurringInterval[] => (
     i => i.opensAt.minute,
   ])
 );
-
 
 /**
  * Models a time duration, such as 2 days, 1 hour, 30 minutes.
@@ -74,7 +72,6 @@ export class Duration {
     return `${this.asMinutes()} minutes`;
   }
 }
-
 
 type RecurringTimeOptions = { day: number; hour: number; minute: number};
 
@@ -160,7 +157,6 @@ export class RecurringTime {
   }
 }
 
-
 type RecurringIntervalOptions = { opensAt: RecurringTime; closesAt: RecurringTime };
 
 export class RecurringInterval {
@@ -224,7 +220,6 @@ export class RecurringInterval {
     return this.opensAt.key();
   }
 }
-
 
 type RecurringScheduleOptions = { intervals: RecurringInterval[]; hoursKnown?: boolean};
 

@@ -43,7 +43,7 @@ class MultiSelectDropdown extends Component {
     const { options, selectedValues } = this.state;
     const { label } = this.props;
     return (
-      <Fragment>
+      <>
         <label htmlFor="categoryDropdown">{label}</label>
         <Select
           id="categoryDropdown"
@@ -52,7 +52,7 @@ class MultiSelectDropdown extends Component {
           options={options}
           onChange={this.handleChange}
         />
-      </Fragment>
+      </>
     );
   }
 }

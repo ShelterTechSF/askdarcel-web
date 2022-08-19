@@ -22,7 +22,6 @@ const burgerStyles = {
 const links = [
   { to: '/', text: 'Home', exact: true },
   { to: '/about', text: 'About' },
-  { to: '/covid', text: 'Coronavirus' },
   { to: 'https://help.sfserviceguide.org', text: 'FAQ' },
   { to: 'https://help.sfserviceguide.org/en/collections/1719243-contact-us', text: 'Contact Us' },
   { to: 'https://www.facebook.com/ShelterTechOrg/', text: 'Facebook' },
@@ -73,18 +72,16 @@ const MenuItem = ({
   onClick: () => void;
   to: string;
   exact: boolean;
-}) => (
-  (to.startsWith('http') || to.startsWith('mailto:'))
-    ? <a className={styles.menuItem} href={to}>{children}</a>
-    : (
-      <NavLink
-        className={styles.menuItem}
-        activeClassName={styles.active}
-        to={to}
-        onClick={onClick}
-        exact={exact}
-      >
-        {children}
-      </NavLink>
-    )
-);
+}) => ((to.startsWith('http') || to.startsWith('mailto:'))
+  ? <a className={styles.menuItem} href={to}>{children}</a>
+  : (
+    <NavLink
+      className={styles.menuItem}
+      activeClassName={styles.active}
+      to={to}
+      onClick={onClick}
+      exact={exact}
+    >
+      {children}
+    </NavLink>
+  ));

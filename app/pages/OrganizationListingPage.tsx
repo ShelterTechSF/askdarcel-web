@@ -83,8 +83,7 @@ export const OrganizationListingPage = () => {
                   <div className="org--main--header--phone">
                     <PhoneNumberRenderer phones={org.phones} />
                   </div>
-                )
-              }
+                )}
             </header>
 
             <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />

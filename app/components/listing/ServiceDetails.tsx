@@ -34,8 +34,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
               More Info
               <i className="material-icons">keyboard_arrow_down</i>
             </span>
-          )
-        }
+          )}
       </div>
 
       { !infoHidden && (
@@ -61,8 +60,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
             </span>
           </div>
         </div>
-      )
-      }
+      )}
     </li>
   );
 };
@@ -125,8 +123,7 @@ const DetailedHours = ({ recurringSchedule }: { recurringSchedule: RecurringSche
               <span className="weekly-hours-list--item--hours">
                 { interval.is24Hours()
                   ? '24 Hours'
-                  : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`
-                }
+                  : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`}
               </span>
             </div>
           )))

@@ -42,8 +42,8 @@ export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
 
         {showMobileNav && (
           <div className={styles.mobileNavigation}>
-            <button type="button" className={styles.searchButton} onClick={() => setShowSecondarySearch(!showSecondarySearch)} />
-            <button type="button" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
+            <button type="button" aria-label="search for a service" className={styles.searchButton} onClick={() => setShowSecondarySearch(!showSecondarySearch)} />
+            <button type="button" aria-label="navigation menu" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
           </div>
         )}
       </div>

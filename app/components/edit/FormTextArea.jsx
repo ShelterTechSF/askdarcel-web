@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 const FormTextArea = ({
   label, placeholder, value, setValue,
 }) => (
-  <Fragment>
+  <>
     <label htmlFor="textarea">{label}</label>
     <textarea
       placeholder={placeholder}
       value={value}
       onChange={evt => setValue(evt.target.value)}
     />
-  </Fragment>
+  </>
 );
 
 FormTextArea.propTypes = {

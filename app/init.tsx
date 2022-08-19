@@ -23,10 +23,12 @@ if (process.env.NODE_ENV === 'production') {
 const rootElement = document.getElementById('root')!;
 ReactModal.setAppElement(rootElement);
 
-ReactDOM.render((
-  <BrowserRouter>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
-  </BrowserRouter>
-), rootElement);
+ReactDOM.render(
+  (
+    <BrowserRouter>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </BrowserRouter>
+  ), rootElement,
+);

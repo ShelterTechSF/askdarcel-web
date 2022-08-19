@@ -23,6 +23,7 @@ $header-mobile-height: 50px;
 $z-index-edit-address-modal: 1;
 $z-index-site-nav: 3;
 $z-index-filters-menu: 4;
+$z-index-modal: 5;
 
 %flex-row {
   @include display(flex);

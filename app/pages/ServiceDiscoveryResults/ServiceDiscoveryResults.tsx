@@ -11,6 +11,7 @@ import { useAppContext } from 'utils';
 import { Loader } from 'components/ui';
 import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
+import { Header } from 'components/search/Header/Header';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 import config from '../../config';
@@ -25,10 +26,12 @@ type SearchState = {
   };
 };
 
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY,
 );
+/* eslint-enable @typescript-eslint/no-unsafe-argument */
 
 const createURL = (state: SearchState) => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
 const searchStateToURL = (location: RouterLocation, searchState: SearchState) => (searchState
@@ -39,7 +42,7 @@ const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(
 );
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-const ServiceDiscoveryResults = ({
+export const ServiceDiscoveryResults = ({
   history, location, match,
 }: {
   history: RouteComponentProps['history'];
@@ -64,8 +67,8 @@ const ServiceDiscoveryResults = ({
 
   // TODO: Handle failure?
   useEffect(() => {
-    dataService.get(`/api/categories/${category.id}`).then(response => {
-      setParentCategory(response.category);
+    dataService.get(`/api/categories/${category.id}`).then(({ category: serviceCategory }: { category: ServiceCategory }) => {
+      setParentCategory(serviceCategory);
     });
   }, [category.id]);
 
@@ -94,9 +97,6 @@ const ServiceDiscoveryResults = ({
   return <Loader />;
 };
 
-export default ServiceDiscoveryResults;
-
-
 /** Stateless inner component that just handles presentation. */
 const InnerServiceDiscoveryResults = ({
   eligibilities, subcategories, categoryName, algoliaCategoryName, searchState,
@@ -115,19 +115,14 @@ const InnerServiceDiscoveryResults = ({
   userLatLng: string;
 }) => {
   const subcategoryNames = subcategories.map(c => c.name);
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{categoryName}</h1>
-        <div className={styles.mapListToggleContainer}>
-          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
-            <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
-          </button>
-          <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
-            <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
-          </button>
-        </div>
-      </div>
+      <Header
+        resultsTitle={categoryName}
+        expandList={expandList}
+        setExpandList={setExpandList}
+      />
 
       <InstantSearch
         searchClient={searchClient}

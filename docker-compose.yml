@@ -9,7 +9,7 @@ services:
       ALGOLIA_READ_ONLY_API_KEY:
       TESTCAFE_RUNNING:
       IS_PRODUCTION:
-    image: node:10.15
+    image: node:18.4
     networks:
       - askdarcel
     ports:
