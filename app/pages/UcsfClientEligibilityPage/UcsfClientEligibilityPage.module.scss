@@ -63,18 +63,11 @@
 }
 
 .eligibilitiesBtns {
-  text-align: right;
-  margin-bottom: 20px;
-
-  @media screen and (max-width: $break-tablet-p) {
-    margin-bottom: 100px;
-  }
+  display: flex;
+  justify-content: right;
+  column-gap: 8px;
 
   @media screen and (max-width: $break-tablet-s) {
-    text-align: center;
+    justify-content: center;
   }
-}
-
-.goToResultsBtn {
-  margin-left: 8px;
 }

@@ -1,6 +1,6 @@
 @import '~styles/utils/_helpers.scss';
 
-.eligibilityPage {
+.serviceTypePage {
   grid-column: 2 / span 10;
 
   @media screen and (max-width: $break-tablet-s) {
@@ -8,7 +8,7 @@
   }
 }
 
-.eligibilitiesBox {
+.serviceTypeBox {
   display: flex;
   margin: 16px 0;
   padding: 32px;
@@ -32,22 +32,22 @@
   }
 }
 
-.eligibilitiesList {
+.serviceTypeList {
   display: grid;
   gap: 8px;
 }
 
-.eligibilitiesLabels {
+.serviceTypeLabels {
   display: grid;
   gap: 45px;
   list-style: decimal inside;
 }
 
-.eligibilityGroupLabel {
+.serviceTypeGroupLabel {
   display: list-item;
 }
 
-.eligibilityLabel {
+.serviceTypeLabel {
   cursor: pointer;
   padding-left: 8px;
 }
@@ -62,7 +62,7 @@
   }
 }
 
-.eligibilitiesBtns {
+.serviceTypeBtns {
   text-align: right;
   margin-bottom: 20px;
 

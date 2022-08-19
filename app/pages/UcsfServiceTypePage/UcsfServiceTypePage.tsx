@@ -72,20 +72,20 @@ const ClientEligibilities = ({ rawServiceData, resourceSlug }: {
   );
 
   return (
-    <div className={styles.eligibilitiesBox}>
-      <div className={styles.eligibilitiesBox_title}>Service Type</div>
+    <div className={styles.serviceTypeBox}>
+      <div className={styles.serviceTypeBox_title}>Service Type</div>
 
-      <ul className={styles.eligibilitiesList}>
+      <ul className={styles.serviceTypeList}>
         {/* Todo: This list rendering logic will be refactored when the API is setup */}
         {serviceTypeList.map((item: serviceTypeItem, index: number) => (
-          <li key={item.name} className={styles.eligibilityGroup}>
+          <li key={item.name} className={styles.serviceTypeGroup}>
             <Checkbox
               onChange={() => setServiceTypes(index, toggleChecked(item))}
               name="serviceTypes"
               id={item.name}
               checked={item.checked}
             />
-            <label className={styles.eligibilityLabel} htmlFor={item.name}>
+            <label className={styles.serviceTypeLabel} htmlFor={item.name}>
               {item.name}
             </label>
           </li>
@@ -118,17 +118,17 @@ const Page = () => {
   }
 
   return (
-    <div className={styles.eligibilityPage}>
+    <div className={styles.serviceTypePage}>
       <Section
         addClass={styles.subtitleMargin}
         subtitle="Step 3: Can you tell us more about the services that your client is looking for?"
       />
-      <div className={styles.eligibilitiesContainer}>
+      <div className={styles.serviceTypeContainer}>
         <ClientEligibilities
           rawServiceData={serviceTypeData}
           resourceSlug={state.selectedResourceSlug}
         />
-        <div className={styles.eligibilitiesBtns}>
+        <div className={styles.serviceTypeBtns}>
           <Button
             onClick={() => { backToEligibilityPage(selectedResourceSlug); }}
           >

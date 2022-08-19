@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
@@ -6,30 +6,30 @@ import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
 
-import { eligibilityData } from './ucsfEligibilities';
+import {
+  eligibilityData,
+  UcsfEligibilityDictionary,
+  Eligibility,
+  EligibilityGroup,
+} from './ucsfEligibilities';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
 const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
-  rawEligibilityData: any;
+  rawEligibilityData: UcsfEligibilityDictionary;
   resourceSlug: string;
 }) => {
-  interface clientEligibility {
-    checked: boolean;
-    name: string;
-  }
+  useEffect(() => {
+    setEligibilityGroupList(rawEligibilityData[resourceSlug]);
+  }, [resourceSlug]);
 
-  interface clientEligibilityGroup {
-    label: string;
-    eligibilities: clientEligibility[];
-  }
-
-  const resourceEligibilityGroup = rawEligibilityData[resourceSlug];
-  const [eligibilityGroupList, setEligibilityGroupList] = useState(resourceEligibilityGroup);
+  const [eligibilityGroupList, setEligibilityGroupList] = useState<EligibilityGroup[]>(
+    rawEligibilityData[resourceSlug],
+  );
 
   // Todo: This setEligibilityGroup and toggleChecked logic could change pretty drastically
   // once the API returns eligibility data. The shape of that data is still under discussion
   // between product and dev
-  const setEligibilityGroup = (index: number, updatedEligibilityGroup: clientEligibilityGroup) => {
+  const setEligibilityGroup = (index: number, updatedEligibilityGroup: EligibilityGroup) => {
     const updatedList = [
       ...eligibilityGroupList.slice(0, index),
       updatedEligibilityGroup,
@@ -39,7 +39,7 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
     setEligibilityGroupList(updatedList);
   };
 
-  const toggleChecked = (eligibilityGroup: clientEligibilityGroup, eligibilityIndex: number) => {
+  const toggleChecked = (eligibilityGroup: EligibilityGroup, eligibilityIndex: number) => {
     const targetEligibility = eligibilityGroup.eligibilities[eligibilityIndex];
     const targetToggleState = !targetEligibility.checked;
     let updatedEligibilities;
@@ -81,10 +81,10 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
 
   // Toggles all eligibilities in accordance with the toggleState argument
   const massToggleGroupEligibilities = (
-    eligibilities: clientEligibility[],
+    eligibilities: Eligibility[],
     toggleState: boolean,
   ) => (
-    eligibilities.map((eligibility: clientEligibility) => ({
+    eligibilities.map((eligibility: Eligibility) => ({
       ...eligibility,
       checked: toggleState,
     }))
@@ -96,7 +96,7 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
       <ol className={styles.eligibilitiesLabels}>
 
         {/* Todo: This list rendering logic will be refactored when the API is setup */}
-        {eligibilityGroupList.map((eligibilityGroup: clientEligibilityGroup, index: number) => (
+        {eligibilityGroupList.map((eligibilityGroup, index) => (
           <li key={eligibilityGroup.label} className={styles.listContainer}>
             <span className={styles.eligibilityGroupLabel}>
               {eligibilityGroup.label}
@@ -124,12 +124,12 @@ const ClientEligibilities = ({ rawEligibilityData, resourceSlug }: {
 };
 
 const Page = () => {
-  const history = useHistory();
   interface LocationState {
     selectedResourceSlug: string;
   }
 
-  const state = history.location.state as LocationState;
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
   const selectedResourceSlug = state && state.selectedResourceSlug;
   const goToServiceTypePage = (slug: string) => {
     history.push('/service-type', { selectedResourceSlug: slug });
@@ -164,7 +164,6 @@ const Page = () => {
           </Button>
           <Button
             onClick={() => { goToServiceTypePage(selectedResourceSlug); }}
-            addClass={styles.goToResultsBtn}
           >
             Next: Service Capacity
           </Button>

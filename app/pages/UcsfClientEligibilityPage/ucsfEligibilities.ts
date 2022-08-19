@@ -1,11 +1,21 @@
 // We are hardcoding the eligibility data as it currently exists on the design specs.
 // When content has entered UCSF specific eligibilities, will we fetch that data from the API
 
-export interface ucsfEligibilityDictionary {
-  [key: string]: object;
+export interface Eligibility {
+  checked: boolean;
+  name: string;
 }
 
-export const eligibilityData: ucsfEligibilityDictionary = {
+export interface EligibilityGroup {
+  label: string;
+  eligibilities: Eligibility[];
+}
+
+export interface UcsfEligibilityDictionary {
+  [key: string]: EligibilityGroup[];
+}
+
+export const eligibilityData: UcsfEligibilityDictionary = {
   'mental-health-resources': [
     {
       label: 'Age and Dependents',
