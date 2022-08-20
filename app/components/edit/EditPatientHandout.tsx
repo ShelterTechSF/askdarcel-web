@@ -9,21 +9,21 @@ interface PatientHandout {
 
 const EditPatientHandout = ({ index, item, handleItemChange }: {
   index: number;
-  item: patientHandout;
-  handleItemChange: (handoutIndex: number, handout: patientHandout) => null;
+  item: PatientHandout;
+  handleItemChange: (handoutIndex: number, handout: PatientHandout) => void;
 }) => {
   const handleFieldChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    handout: patientHandout,
   ) => {
     const { value } = e.target;
     const { field } = e.target.dataset;
     if (field) {
-      if (handout[field] || value !== item[field]) {
+      if (item[field] || value !== item[field]) {
         const newHandout = {
-          ...handout,
+          ...item,
+          [field]: value,
         };
-        newHandout[field] = value;
+
         handleItemChange(index, newHandout);
       }
     }
@@ -37,7 +37,7 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
         placeholder="Handout Language"
         data-field="language"
         defaultValue={item.language}
-        onChange={e => { handleFieldChange(e, item); }}
+        onChange={handleFieldChange}
       />
       <input
         type="string"
@@ -45,7 +45,7 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
         placeholder="Handout Link"
         data-field="link"
         defaultValue={item.link}
-        onChange={e => { handleFieldChange(e, item); }}
+        onChange={handleFieldChange}
       />
     </div>
   );
