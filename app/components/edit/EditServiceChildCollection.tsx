@@ -1,6 +1,4 @@
-import React, {
-  FC, useState, useRef, useEffect,
-} from 'react';
+import React, { FC, useState } from 'react';
 
 /**
  * Renders a child property collection of a Service as a list of individual components,
@@ -17,7 +15,12 @@ interface ComponentProps {
   handleItemChange: any;
 }
 
-export const EditServiceChildCollection = ({
+interface ResourceItem {
+  keyId?: number;
+  id?: string | number;
+}
+
+export const EditServiceChildCollection = <T extends ResourceItem> ({
   initialCollectionData,
   handleCollectionChange,
   ResourceObjectItem,
@@ -27,32 +30,18 @@ export const EditServiceChildCollection = ({
   propertyKeyName,
 }: {
   initialCollectionData: any[];
-  handleCollectionChange: (field: any, value: any) => null;
-  ResourceObjectItem: FC<componentProps>;
+  handleCollectionChange: (field: string, value: T[]) => void;
+  ResourceObjectItem: FC<ComponentProps>;
   label: string;
-  blankTemplateObj: object;
+  blankTemplateObj: T;
   buttonText: string;
   propertyKeyName: string;
 }) => {
-  const [resourceCollection, setResourceCollection] = useState(initialCollectionData || []);
-  const firstUpdate = useRef(true);
-  const updateParentService = useRef(true);
-
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-
-    if (updateParentService.current) {
-      // We only want to update the parent service when an item is deleted or modified;
-      // we don't want to call update when an empty template has been added
-      handleCollectionChange(propertyKeyName, resourceCollection);
-    }
-  }, [resourceCollection]);
+  const [resourceCollection, setResourceCollection] = useState<T[]>(
+    initialCollectionData || [],
+  );
 
   const addItem = () => {
-    updateParentService.current = false;
     const newItem = {
       ...blankTemplateObj,
       keyId: Math.random(),
@@ -62,32 +51,27 @@ export const EditServiceChildCollection = ({
   };
 
   const handleItemChange = (index: number, item: any) => {
-    updateParentService.current = true;
-    const newCollection = [
+    const newCollection: T[] = [
       ...resourceCollection.slice(0, index),
       item,
       ...resourceCollection.slice(index + 1),
     ];
 
     setResourceCollection(newCollection);
+    handleCollectionChange(propertyKeyName, newCollection);
   };
 
   const removeItem = (index: number) => {
-    updateParentService.current = true;
     const newCollection = [
       ...resourceCollection.slice(0, index),
       ...resourceCollection.slice(index + 1),
     ];
 
     setResourceCollection(newCollection);
+    handleCollectionChange(propertyKeyName, newCollection);
   };
 
-  interface ResourceItem {
-    id: string;
-    keyId: number;
-  }
-
-  const createItemComponents = (itemComponentCollection: resourceItem[]) => (
+  const createItemComponents = (itemComponentCollection: T[]) => (
     itemComponentCollection.map((item, index) => (
       <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
         <ResourceObjectItem
