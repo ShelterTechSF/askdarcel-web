@@ -27,6 +27,7 @@ interface WhiteLabelSite {
   showBanner: boolean;
   showMobileNav: boolean;
   showSearch: boolean;
+  showClinicianAction: boolean;
   siteNavStyle: string;
   siteUrl: string;
   title: string;
@@ -68,6 +69,7 @@ const SFFamilies: WhiteLabelSite = {
   showBanner: false,
   showMobileNav: false,
   showSearch: false,
+  showClinicianAction: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
@@ -89,6 +91,7 @@ const SFServiceGuide: WhiteLabelSite = {
   showBanner: true,
   showMobileNav: true,
   showSearch: true,
+  showClinicianAction: false,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
@@ -110,6 +113,7 @@ const LinkSF: WhiteLabelSite = {
   showBanner: true,
   showMobileNav: true,
   showSearch: true,
+  showClinicianAction: false,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://linksf.sfserviceguide.org',
   title: 'Link SF',
@@ -131,6 +135,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   showBanner: true,
   showMobileNav: true,
   showSearch: true,
+  showClinicianAction: false,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
@@ -152,6 +157,7 @@ const Ucsf: WhiteLabelSite = {
   showBanner: false,
   showMobileNav: true,
   showSearch: true,
+  showClinicianAction: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
   title: 'UCSF Outpatient Services',

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { connectStateResults } from 'react-instantsearch/connectors';
+import { whiteLabel } from 'utils';
 import { SearchMap } from 'components/search/SearchMap/SearchMap';
 import ResultsPagination from 'components/search/Pagination/ResultsPagination';
 import { Texting } from 'components/Texting';
+import { ClinicianActions } from 'components/ucsf/ClinicianActions/ClinicianActions';
 import { icon } from '../../../assets';
 import { parseAlgoliaSchedule } from '../../../models';
 import styles from './SearchResults.module.scss';
@@ -74,6 +76,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
 // eslint-disable-next-line no-unused-vars
 const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
+  const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
 
   const service = {
     serviceName: hit.name,
@@ -89,6 +92,15 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     </div>
   );
 
+  const toggleClinicianActionsModal = () => {setClinicianActionsIsOpen(!clinicianActionsIsOpen)};
+
+  const clinicianAction = (
+    <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleClinicianActionsModal}>
+      <img src={icon('clinician-action')} alt="clinician action" className={styles.sideLinkIcon} />
+      <div className={styles.sideLinkText}>Clinician Action</div>
+    </div>
+  );
+
   const renderAddressMetadata = hit_ => {
     if (!hit_.addresses || hit_.addresses.length === 0) {
       return <span>No address found</span>;
@@ -101,58 +113,6 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     }
     return <span>No address found</span>;
   };
-
-  // Todo: to be included with next stage of multiple location work
-  // const renderAddressMetadata = (hit_, hitIndex) => {
-  //   const { addresses } = hit_;
-  //   const hasNoAddress = !addresses || !addresses[0].address_1;
-  //   if (hasNoAddress) {
-  //     return <span>No address found</span>;
-  //   }
-
-  //   const addressMarkup = addresses.map((address, i) => {
-  //     const isLastAddress = (i + 1) === addresses.length;
-  //     const isSecondAddress = i === 1;
-  //     const setAddressLabel = (serviceIndex, addressIndex) => {
-  //       if (addressIndex > 0) {
-  //         return ((serviceIndex + 1) + (addressIndex + 9).toString(36).toUpperCase());
-  //       }
-  //       return '';
-  //     };
-
-  //     return (
-  //       <div
-  //         // eslint-disable-next-line react/no-array-index-key
-  //         key={`${address.address_1}.${i}`}
-  //         className={isLastAddress ? styles.searchResult_addressLast
-  //          : styles.searchResult_address}
-  //       >
-  //         {isSecondAddress && <h3>Other Locations</h3>}
-  //         <p>
-  //           <a className={styles.addressLabel}>{setAddressLabel(hitIndex, i)}</a>
-  //           {address.address_1}
-  //         </p>
-  //         { i > 0 && (
-  //           <div className={styles.sideLink}>
-  //             <button
-  //               type="button"
-  //               className={styles.sideLinkText}
-  //               onClick={() => {
-  //                 setCenterCoords({ lat: address.latitude, lng: address.longitude });
-  //               }}
-  //             >
-  //               <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
-  //               Show on map
-  //             </button>
-  //           </div>
-  //         )}
-  //       </div>
-  //     );
-  //   });
-
-  //   addressMarkup.unshift(<h3 key={hit_.id}>Location & Hours</h3>);
-  //   return addressMarkup;
-  // };
 
   const phoneNumber = hit?.phones?.[0]?.number;
   const formatPhoneNumber = number => {
@@ -186,6 +146,13 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     <div className={styles.searchResult}>
       { textingIsOpen
         && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />}
+      { clinicianActionsIsOpen
+      && (
+        <ClinicianActions
+          isOpen={clinicianActionsIsOpen}
+          setIsOpen={toggleClinicianActionsModal}
+        />
+      )}
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>
@@ -197,6 +164,10 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
       </div>
       <div className={styles.sideLinks}>
+        <div className={styles.sideLink}>
+          <img src={icon('print-blue')} alt="website" className={styles.sideLinkIcon} />
+          <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Print</a>
+        </div>
         {
           phoneNumber
           && (
@@ -217,6 +188,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           )
         }
         { texting }
+        { whiteLabel.showClinicianAction && clinicianAction }
       </div>
     </div>
   );

@@ -1,0 +1,62 @@
+@import '~styles/utils/_helpers.scss';
+
+.clinicianActionsOverlay {
+  position: fixed;
+  z-index: $z-index-modal;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background: rgba(14, 14, 14, 0.45);
+}
+
+.clinicianActions {
+  position: absolute;
+  margin: 0 auto;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  width: 500px;
+  padding: 67px 32px;
+  background-color: $color-white;
+  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  text-align: center;
+  @media screen and (max-width: $break-tablet-s ) {
+    top: 5vh;
+    width: 100%;
+    height: 95vh;
+  }
+}
+
+.closeModal {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  height: 12px;
+  width: 12px;
+  color: #000;
+  cursor: pointer;
+  @media screen and (max-width: $break-tablet-s ){
+    top: 45px;
+  }
+}
+
+.title {
+  font-size: 26px;
+  color: #000;
+}
+
+.body {
+  font-size: 18px;
+  color: #000;
+  margin: 20px 0 60px;
+}
+
+.closeBtn {
+  margin-top: 60px;
+  border-radius: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
