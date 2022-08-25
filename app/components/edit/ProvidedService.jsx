@@ -6,6 +6,7 @@ import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
 import { AddressListItem } from './EditAddress';
 import EditPatientHandout from './EditPatientHandout';
+import EditClinicianAction from './EditClinicianAction';
 import { EditServiceChildCollection } from './EditServiceChildCollection';
 
 import s from './ProvidedService.module.scss';
@@ -286,6 +287,34 @@ const ProvidedService = ({
             buttonText="Add Handout"
             blankTemplateObj={{}}
             propertyKeyName="patientHandouts"
+          />
+        </li>
+
+        <li className="edit--section--list--item">
+          {/* Todo: When service is returning clinician actions,
+            confirm that prop name is "clinicianActions" */}
+          <EditServiceChildCollection
+            initialCollectionData={service.clinicianActions}
+            handleCollectionChange={handleChange}
+            ResourceObjectItem={EditClinicianAction}
+            label="Clinician Actions"
+            buttonText="Add Clinician Action"
+            blankTemplateObj={{ isCovidAction: false }}
+            propertyKeyName="clinicianActions"
+          />
+        </li>
+
+        <li className="edit--section--list--item">
+          {/* Todo: When service is returning clinician actions,
+            confirm that prop name is "clinicianCovidActions" */}
+          <EditServiceChildCollection
+            initialCollectionData={service.clinicianActions}
+            handleCollectionChange={handleChange}
+            ResourceObjectItem={EditClinicianAction}
+            label="Clinician Covid Actions"
+            buttonText="Add Clinician Covid Action"
+            blankTemplateObj={{}}
+            propertyKeyName="clinicianActions"
           />
         </li>
 

@@ -7,8 +7,10 @@ type CheckboxProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   checked?: boolean;
+  defaultChecked?: boolean;
   addClass?: string;
   id?: string;
+  dataField?: string;
 };
 
 export const Checkbox = ({
@@ -16,16 +18,20 @@ export const Checkbox = ({
   onChange,
   value,
   checked,
+  defaultChecked,
   addClass,
   id,
+  dataField,
 }: CheckboxProps) => (
   <input
     name={name}
     onChange={onChange}
     value={value}
     checked={checked}
+    defaultChecked={defaultChecked}
     className={`${styles.inputDefaults} ${addClass || ''}`}
     id={id}
+    data-field={dataField}
     type="checkbox"
   />
 );

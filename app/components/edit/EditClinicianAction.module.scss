@@ -1,0 +1,6 @@
+// The parent selector is necessary here to override label styles set in the
+// OrganizationEditPage.scss file
+:global(.edit--section--list--item) label.covidActionLabel {
+  display: inline-grid;
+  cursor: pointer;
+}

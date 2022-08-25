@@ -30,7 +30,7 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
   };
 
   return (
-    <div className="edit--section--list--item">
+    <>
       <input
         type="string"
         className="input"
@@ -47,7 +47,7 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
         defaultValue={item.link}
         onChange={handleFieldChange}
       />
-    </div>
+    </>
   );
 };
 
