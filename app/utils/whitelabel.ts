@@ -25,9 +25,10 @@ interface WhiteLabelSite {
   logoLinkDestination: string;
   navLogoStyle: string;
   showBanner: boolean;
+  showClinicianAction: boolean;
+  showHeaderQrCode: boolean;
   showMobileNav: boolean;
   showSearch: boolean;
-  showClinicianAction: boolean;
   siteNavStyle: string;
   siteUrl: string;
   title: string;
@@ -67,9 +68,10 @@ const SFFamilies: WhiteLabelSite = {
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
+  showClinicianAction: false,
+  showHeaderQrCode: false,
   showMobileNav: false,
   showSearch: false,
-  showClinicianAction: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
   title: 'SF Families',
@@ -89,9 +91,10 @@ const SFServiceGuide: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
+  showClinicianAction: false,
+  showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
-  showClinicianAction: false,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
@@ -111,9 +114,10 @@ const LinkSF: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
+  showClinicianAction: false,
+  showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
-  showClinicianAction: false,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://linksf.sfserviceguide.org',
   title: 'Link SF',
@@ -133,9 +137,10 @@ const defaultWhiteLabel: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
+  showClinicianAction: false,
+  showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
-  showClinicianAction: false,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
@@ -155,9 +160,10 @@ const Ucsf: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: false,
+  showClinicianAction: true,
+  showHeaderQrCode: true,
   showMobileNav: true,
   showSearch: true,
-  showClinicianAction: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
   title: 'UCSF Outpatient Services',

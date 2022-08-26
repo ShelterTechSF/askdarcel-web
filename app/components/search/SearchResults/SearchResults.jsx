@@ -92,7 +92,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     </div>
   );
 
-  const toggleClinicianActionsModal = () => {setClinicianActionsIsOpen(!clinicianActionsIsOpen)};
+  const toggleClinicianActionsModal = () => { setClinicianActionsIsOpen(!clinicianActionsIsOpen); };
 
   const clinicianAction = (
     <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleClinicianActionsModal}>
@@ -164,10 +164,6 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
-        <div className={styles.sideLink}>
-          <img src={icon('print-blue')} alt="website" className={styles.sideLinkIcon} />
-          <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Print</a>
-        </div>
         {
           phoneNumber
           && (

@@ -26,8 +26,12 @@
 }
 
 .qrCodeBtn {
-  // Todo: add UCSF specific class to show this button
-  // display: none;
+  display: none;
+
+  &.showQrCode {
+    display: block;
+  }
+
   @media screen and (max-width: $break-tablet-s) {
     display: none;
   }

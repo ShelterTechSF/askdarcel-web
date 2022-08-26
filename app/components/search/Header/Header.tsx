@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
+import whiteLabel from 'utils/whitelabel';
 import { Button } from 'components/ui/inline/Button/Button';
 import { icon as assetIcon } from 'assets';
 import { QrCodeModal } from 'components/ui/QrCodeModal/QrCodeModal';
 
 import styles from './Header.module.scss';
+
+const { showHeaderQrCode } = whiteLabel;
 
 export const Header = ({
   resultsTitle,
@@ -22,7 +25,7 @@ export const Header = ({
       <h1 className={styles.title}>{resultsTitle}</h1>
       <Button
         onClick={() => { setQrCodeModalOpen(true); }}
-        addClass={styles.qrCodeBtn}
+        addClass={`${styles.qrCodeBtn} ${showHeaderQrCode ? styles.showQrCode : ''}`}
         styleType="transparent"
       >
         <>
