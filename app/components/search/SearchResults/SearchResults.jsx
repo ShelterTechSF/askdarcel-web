@@ -161,7 +161,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
         </div>
         <div className={styles.address}>{renderAddressMetadata(hit)}</div>
-        <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} />
+        <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
         <div className={styles.sideLink}>
