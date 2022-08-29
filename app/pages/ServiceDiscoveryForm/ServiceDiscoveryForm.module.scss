@@ -36,15 +36,29 @@
         color: $color-grey9;
         margin: 20px 0;
     }
+
+    @media screen and (max-width: $break-tablet-s) {
+        padding: 48px 20px 60px;
+    }
+}
+
+.contentText {
+    hyphens: none;
+}
+
+.refinementList {
+    display: grid;
+    grid-auto-rows: 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .listOption {
-    height: 75px;
+    min-height: 75px;
     background-color: $color-grey1;
     display: flex;
     align-items: center;
-    padding: 0 10px;
-    margin: 12px 0;
+    padding: 15px 10px;
     label {
         display: flex;
         cursor: pointer;
@@ -56,6 +70,10 @@
     span {
         color: $color-brand;
         font-weight: 600;
+    }
+
+    @media screen and (max-width: $break-tablet-s) {
+        min-height: 90px;
     }
 }
 
@@ -70,6 +88,15 @@
     border-top: 1px solid $color-grey3;
     background-color: $color-white;
     padding: 18px 35px;
+    @media screen and (max-width: $break-tablet-s) {
+        justify-content: center;
+    }
+}
+
+.progressBar {
+    @media screen and (max-width: $break-tablet-l) {
+        display: none;
+    }
 }
 
 .progressBarMeter {
@@ -111,16 +138,36 @@
         width: 188px;
         border: 1px solid $color-brand;
         border-radius: 3px;
+        &:disabled {
+            background: $color-brand-light;
+            cursor: not-allowed;
+            border: none;
+        }
 
         &:not(:last-child) {
             margin-right: 30px;
+            @media screen and (max-width: $break-tablet-s) {
+                margin-right: 0;
+            }
+        }
+
+        @media screen and (max-width: $break-tablet-s) {
+            width: 250px;
         }
     }
+
     .actionBack {
         background-color: transparent;
         color: $color-brand;
     }
+
     .actionSubmit {
         background-color: $color-brand;
+    }
+
+    @media screen and (max-width: $break-tablet-s) {
+        justify-content: center;
+        flex-direction: column-reverse;
+        gap: 16px;
     }
 }
