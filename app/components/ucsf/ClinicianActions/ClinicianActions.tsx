@@ -77,7 +77,7 @@ export const ClinicianActions = ({
             addClass={styles.closeBtn}
             tabIndex={0}
           >
-            CLOSE
+            Close
           </Button>
         </div>
       </div>
