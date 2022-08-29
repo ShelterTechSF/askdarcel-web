@@ -163,13 +163,11 @@
 
     .actionSubmit {
         background-color: $color-brand;
-        @media screen and (max-width: $break-tablet-s) {
-            margin-bottom: 8px;
-        }
     }
 
     @media screen and (max-width: $break-tablet-s) {
         justify-content: center;
         flex-direction: column-reverse;
+        gap: 16px;
     }
 }

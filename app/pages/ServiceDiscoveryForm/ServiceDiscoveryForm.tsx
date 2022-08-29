@@ -40,9 +40,9 @@ export const ServiceDiscoveryForm = () => {
   // fetched and rendered in place of the previous refinements
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(category.id);
 
-  // Add the selectedRadioItem to state so that when a user clicks the next button
-  // the selectedRadioItem can be passed to the goToNextStep function
-  const [selectedRadioItem, setSelectedRadioItem] = useState<number | null>(null);
+  // The selectedSubcategory represents the single subcategory selected by the user in
+  // the RadioFormStep component
+  const [selectedSubcategory, setSelectedSubcategory] = useState<number | null>(null);
 
   const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(activeCategoryId)
   || [];
@@ -56,8 +56,8 @@ export const ServiceDiscoveryForm = () => {
       eligibilities={eligibilities}
       subcategories={subcategories}
       setActiveCategoryId={setActiveCategoryId}
-      selectedRadioItem={selectedRadioItem}
-      setSelectedRadioItem={setSelectedRadioItem}
+      selectedSubcategory={selectedSubcategory}
+      setSelectedSubcategory={setSelectedSubcategory}
     />
   );
 };
@@ -65,15 +65,15 @@ export const ServiceDiscoveryForm = () => {
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
   category, subcategorySubheading, eligibilities, subcategories,
-  setActiveCategoryId, selectedRadioItem, setSelectedRadioItem,
+  setActiveCategoryId, selectedSubcategory, setSelectedSubcategory,
 }: {
   category: ServiceCategory;
   subcategorySubheading: string;
   eligibilities: CategoryRefinement[];
   subcategories: CategoryRefinement[];
   setActiveCategoryId: (id: string | null) => void;
-  selectedRadioItem: number | null;
-  setSelectedRadioItem: (item: number | null) => void;
+  selectedSubcategory: number | null;
+  setSelectedSubcategory: (item: number | null) => void;
 }) => {
   const {
     steps,
@@ -82,39 +82,36 @@ const InnerServiceDiscoveryForm = ({
 
   const [currentStep, setCurrentStep] = useState(0);
   const history = useHistory();
-  let goToNextStep;
   const stepName = steps[currentStep];
-  const disableNextBtn = selectedRadioItem === null && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
-  // TODO: Should goBack go back to the previous step?
-  const goBack = () => {
-    history.push('/');
-  };
-
-  if (stepName === 'housingStatus') {
-    // TODO: If we have more categories that have custom pathway actions, will we want to
-    // store custom methods as children of the categories in the constants.ts file?
-    goToNextStep = () => {
-      if (!selectedRadioItem) {
+  const disableNextBtn = selectedSubcategory === null && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
+  const goToNextStep = () => {
+    if (stepName === 'housingStatus') {
+      if (!selectedSubcategory) {
         return;
       }
 
-      if (selectedRadioItem === 1100045) {
+      if (selectedSubcategory === 1100045) {
         // User has selected first option in Long Term Housing step 1. Set category ID to Shelter
         // ID and redirect user to the Shelter resources form.
         setActiveCategoryId('1000010');
         history.replace('/shelter-resources/form');
       } else {
-        const targetCategoryId = (selectedRadioItem);
+        const targetCategoryId = selectedSubcategory;
         // Set active category to be the subcategory that the user has selected
         setActiveCategoryId(targetCategoryId.toString());
         // Reset radio selection to prepare for next step
-        setSelectedRadioItem(null);
+        setSelectedSubcategory(null);
         setCurrentStep(currentStep + 1);
       }
-    };
-  } else {
-    goToNextStep = () => setCurrentStep(currentStep + 1);
-  }
+    } else {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  // TODO: Should goBack go back to the previous step?
+  const goBack = () => {
+    history.push('/');
+  };
 
   return (
     <>
@@ -126,7 +123,7 @@ const InnerServiceDiscoveryForm = ({
         subcategories={subcategories}
         categorySlug={categorySlug}
         subcategorySubheading={subcategorySubheading}
-        setSelectedRadioItem={setSelectedRadioItem}
+        setSelectedSubcategory={setSelectedSubcategory}
       />
       <Footer
         onGoBack={goBack}
@@ -141,7 +138,7 @@ const InnerServiceDiscoveryForm = ({
 
 const Content = ({
   steps, currentStep, eligibilities, subcategories, categorySlug,
-  subcategorySubheading, setSelectedRadioItem,
+  subcategorySubheading, setSelectedSubcategory,
 }: {
   steps: Step[];
   currentStep: number;
@@ -149,7 +146,7 @@ const Content = ({
   subcategories: CategoryRefinement[];
   categorySlug: string;
   subcategorySubheading: string;
-  setSelectedRadioItem: (targetItemId: number) => void;
+  setSelectedSubcategory: (targetItemId: number) => void;
 }) => {
   const [selectedEligibilities, setSelectedEligibilities] = useState<SelectedRefinements>({});
   const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedRefinements>({});
@@ -174,7 +171,7 @@ const Content = ({
 
   const handleRadioSelect = (targetCategoryId: number) => {
     setSelectedSubcategories({ [targetCategoryId]: true });
-    setSelectedRadioItem(targetCategoryId);
+    setSelectedSubcategory(targetCategoryId);
   };
 
   switch (steps[currentStep]) {
@@ -277,10 +274,10 @@ const Footer = ({
   <div className={styles.footer}>
     <div className={styles.progressBarContainer}>
       {
-        /*
-        * Add 1 to current step because it is 0-indexed.
-        * Subtract 1 from numSteps because we shouldn't include the RESULT step.
-        */
+      /*
+      * Add 1 to current step because it is 0-indexed.
+      * Subtract 1 from numSteps because we shouldn't include the RESULT step.
+      */
       }
       <ProgressBar currentNumber={currentStep + 1} totalNumber={numSteps - 1} />
     </div>
