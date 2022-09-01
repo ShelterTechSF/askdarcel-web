@@ -26,9 +26,9 @@ interface WhiteLabelSite {
   navLogoStyle: string;
   showBanner: boolean;
   showClinicianAction: boolean;
+  showHandoutsIcon: boolean;
   showHeaderQrCode: boolean;
   showMobileNav: boolean;
-  showHandoutsIcon: boolean;
   showSearch: boolean;
   siteNavStyle: string;
   siteUrl: string;
@@ -70,9 +70,9 @@ const SFFamilies: WhiteLabelSite = {
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
   showClinicianAction: false,
+  showHandoutsIcon: false,
   showHeaderQrCode: false,
   showMobileNav: false,
-  showHandoutsIcon: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
@@ -94,9 +94,9 @@ const SFServiceGuide: WhiteLabelSite = {
   navLogoStyle: styles.siteNav,
   showBanner: true,
   showClinicianAction: false,
+  showHandoutsIcon: false,
   showHeaderQrCode: false,
   showMobileNav: true,
-  showHandoutsIcon: false,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://sfserviceguide.org',
@@ -118,9 +118,9 @@ const LinkSF: WhiteLabelSite = {
   navLogoStyle: styles.siteNav,
   showBanner: true,
   showClinicianAction: false,
+  showHandoutsIcon: false,
   showHeaderQrCode: false,
   showMobileNav: true,
-  showHandoutsIcon: false,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://linksf.sfserviceguide.org',
@@ -142,9 +142,9 @@ const defaultWhiteLabel: WhiteLabelSite = {
   navLogoStyle: styles.siteNav,
   showBanner: true,
   showClinicianAction: false,
+  showHandoutsIcon: false,
   showHeaderQrCode: false,
   showMobileNav: true,
-  showHandoutsIcon: false,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://askdarcel.org',
@@ -166,9 +166,9 @@ const Ucsf: WhiteLabelSite = {
   navLogoStyle: styles.siteNav,
   showBanner: false,
   showClinicianAction: true,
+  showHandoutsIcon: true,
   showHeaderQrCode: true,
   showMobileNav: true,
-  showHandoutsIcon: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF

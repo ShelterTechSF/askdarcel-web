@@ -1,39 +1,8 @@
 @import '~styles/utils/_helpers.scss';
 
-$max-modal-width: 500px;
-
-.qrCodeModalOverlay {
-  position: fixed;
-  z-index: $z-index-modal;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  overflow: auto;
-  background: rgba(14, 14, 14, 0.45);
-}
-
 .qrCodeModal {
-  position: relative;
-  width: $max-modal-width;
+  width: 500px;
   padding: 50px 32px;
-  background-color: $color-white;
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.2);
-  border-radius: 16px;
-  @media screen and (max-width: $break-tablet-s ) {
-    width: 100vw;
-    max-width: $max-modal-width;
-  }
-}
-
-.closeModal {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  cursor: pointer;
 }
 
 .modalContent {
