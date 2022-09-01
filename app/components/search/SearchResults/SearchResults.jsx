@@ -7,6 +7,7 @@ import { SearchMap } from 'components/search/SearchMap/SearchMap';
 import ResultsPagination from 'components/search/Pagination/ResultsPagination';
 import { Texting } from 'components/Texting';
 import { ClinicianActions } from 'components/ucsf/ClinicianActions/ClinicianActions';
+import { ClientHandouts } from 'components/ui/ClientHandoutsModal/ClientHandouts';
 import { icon } from '../../../assets';
 import { parseAlgoliaSchedule } from '../../../models';
 import styles from './SearchResults.module.scss';
@@ -77,6 +78,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
 const SearchResult = ({ hit, index, setCenterCoords }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
+  const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
 
   const service = {
     serviceName: hit.name,
@@ -93,11 +95,19 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   );
 
   const toggleClinicianActionsModal = () => { setClinicianActionsIsOpen(!clinicianActionsIsOpen); };
+  const toggleHandoutModal = () => { setHandoutModalIsOpen(!handoutModalIsOpen); };
 
-  const clinicianAction = (
+  const clinicianActionsLink = (
     <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleClinicianActionsModal}>
       <img src={icon('clinician-action')} alt="clinician action" className={styles.sideLinkIcon} />
       <div className={styles.sideLinkText}>Clinician Action</div>
+    </div>
+  );
+
+  const handoutsLink = (
+    <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleHandoutModal}>
+      <img src={icon('print-blue')} alt="printout icon" className={styles.sideLinkIcon} />
+      <div className={styles.sideLinkText}>Client handouts</div>
     </div>
   );
 
@@ -142,6 +152,15 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     entryId = serviceId;
   }
 
+  // Todo: mock data until API returns handouts on the service model
+  const handoutCollection = [
+    { id: '1', description: 'English', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
+    { id: '2', description: 'Cantonese', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
+    { id: '3', description: 'Mandarin', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
+    { id: '4', description: 'Filipino', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
+    { id: '5', description: 'Spanish', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
+  ];
+
   return (
     <div className={styles.searchResult}>
       { textingIsOpen
@@ -153,6 +172,11 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           setIsOpen={toggleClinicianActionsModal}
         />
       )}
+      <ClientHandouts
+        isOpen={handoutModalIsOpen}
+        setIsOpen={toggleHandoutModal}
+        handoutCollection={handoutCollection}
+      />
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>
@@ -164,6 +188,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
+        { whiteLabel.showPrintoutsIcon && handoutsLink }
         {
           phoneNumber
           && (
@@ -184,7 +209,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           )
         }
         { texting }
-        { whiteLabel.showClinicianAction && clinicianAction }
+        { whiteLabel.showClinicianAction && clinicianActionsLink }
       </div>
     </div>
   );

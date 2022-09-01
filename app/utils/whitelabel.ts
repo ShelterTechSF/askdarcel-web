@@ -28,6 +28,7 @@ interface WhiteLabelSite {
   showClinicianAction: boolean;
   showHeaderQrCode: boolean;
   showMobileNav: boolean;
+  showHandoutsIcon: boolean;
   showSearch: boolean;
   siteNavStyle: string;
   siteUrl: string;
@@ -71,6 +72,7 @@ const SFFamilies: WhiteLabelSite = {
   showClinicianAction: false,
   showHeaderQrCode: false,
   showMobileNav: false,
+  showHandoutsIcon: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
@@ -94,6 +96,7 @@ const SFServiceGuide: WhiteLabelSite = {
   showClinicianAction: false,
   showHeaderQrCode: false,
   showMobileNav: true,
+  showHandoutsIcon: false,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://sfserviceguide.org',
@@ -117,6 +120,7 @@ const LinkSF: WhiteLabelSite = {
   showClinicianAction: false,
   showHeaderQrCode: false,
   showMobileNav: true,
+  showHandoutsIcon: false,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://linksf.sfserviceguide.org',
@@ -140,6 +144,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   showClinicianAction: false,
   showHeaderQrCode: false,
   showMobileNav: true,
+  showHandoutsIcon: false,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://askdarcel.org',
@@ -163,6 +168,7 @@ const Ucsf: WhiteLabelSite = {
   showClinicianAction: true,
   showHeaderQrCode: true,
   showMobileNav: true,
+  showHandoutsIcon: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
   siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
