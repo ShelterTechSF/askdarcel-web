@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from 'react-modal';
 import { QRCodeSVG } from 'qrcode.react';
 
 import { icon } from 'assets';
+import { Modal } from 'components/ui/Modal/Modal';
 import { Button } from 'components/ui/inline/Button/Button';
 
 import styles from './QrCodeModal.module.scss';
@@ -20,21 +20,9 @@ export const QrCodeModal = ({
   return (
     <Modal
       isOpen={isOpen}
-      className={styles.qrCodeModal}
-      overlayClassName={styles.qrCodeModalOverlay}
-      onRequestClose={closeModal}
+      addModalClass={styles.qrCodeModal}
+      closeModal={closeModal}
     >
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={closeModal}
-      >
-        <img
-          src={icon('close')}
-          alt="close"
-          className={styles.closeModal}
-        />
-      </div>
       <div className={styles.modalContent}>
         <div className={styles.description}>
           <h2 className={styles.title}>Resource Code</h2>
