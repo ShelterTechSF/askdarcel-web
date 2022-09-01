@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Modal } from 'components/ui/Modal/Modal';
-import { Button } from 'components/ui/inline/Button/Button';
 
 import styles from './ClientHandouts.module.scss';
 

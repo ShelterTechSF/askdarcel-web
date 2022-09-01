@@ -1,39 +1,8 @@
 @import '~styles/utils/_helpers.scss';
 
-$max-modal-width: 850px;
-
-.clinicianActionsOverlay {
-  position: fixed;
-  z-index: $z-index-modal;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  overflow: auto;
-  background: rgba(14, 14, 14, 0.45);
-}
-
 .clinicianActions {
   position: relative;
-  width: $max-modal-width;
-  padding: 50px;
-  background-color: $color-white;
-  box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.2);
-  border-radius: 16px;
-  @media screen and (max-width: $break-tablet-p ) {
-    width: 100vw;
-    max-width: $max-modal-width;
-  }
-}
-
-.closeModal {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  cursor: pointer;
+  width: 850px;
 }
 
 .title {

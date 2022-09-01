@@ -163,15 +163,11 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
 
   return (
     <div className={styles.searchResult}>
-      { textingIsOpen
-        && <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />}
-      { clinicianActionsIsOpen
-      && (
-        <ClinicianActions
-          isOpen={clinicianActionsIsOpen}
-          setIsOpen={toggleClinicianActionsModal}
-        />
-      )}
+      <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />
+      <ClinicianActions
+        isOpen={clinicianActionsIsOpen}
+        setIsOpen={toggleClinicianActionsModal}
+      />
       <ClientHandouts
         isOpen={handoutModalIsOpen}
         setIsOpen={toggleHandoutModal}
@@ -188,7 +184,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
-        { whiteLabel.showPrintoutsIcon && handoutsLink }
+        { whiteLabel.showHandoutsIcon && handoutsLink }
         {
           phoneNumber
           && (
