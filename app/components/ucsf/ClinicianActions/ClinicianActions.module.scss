@@ -24,7 +24,7 @@ $max-modal-width: 850px;
   box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.2);
   border-radius: 16px;
   @media screen and (max-width: $break-tablet-p ) {
-    width: 100%;
+    width: 100vw;
     max-width: $max-modal-width;
   }
 }

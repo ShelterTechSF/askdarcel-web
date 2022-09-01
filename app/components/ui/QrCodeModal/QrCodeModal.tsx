@@ -35,19 +35,25 @@ export const QrCodeModal = ({
           className={styles.closeModal}
         />
       </div>
-      <h2 className={styles.title}>Resource Code</h2>
-      <p className={styles.body}>
-        Scan this QR code with a mobile phone to open this page.
-      </p>
-      <QRCodeSVG value={window.location.href} size={235} />
-      <div>
-        <Button
-          onClick={closeModal}
-          addClass={styles.closeBtn}
-          tabIndex={0}
-        >
-          CLOSE
-        </Button>
+      <div className={styles.modalContent}>
+        <div className={styles.description}>
+          <h2 className={styles.title}>Resource Code</h2>
+          <p className={styles.body}>
+            Scan this QR code with a mobile phone
+            <br />
+            to open this page.
+          </p>
+        </div>
+        <QRCodeSVG value={window.location.href} size={235} />
+        <div>
+          <Button
+            onClick={closeModal}
+            addClass={styles.closeBtn}
+            tabIndex={0}
+          >
+            CLOSE
+          </Button>
+        </div>
       </div>
     </Modal>
   );
