@@ -1,9 +1,7 @@
 @import '~styles/utils/_helpers.scss';
 
-$max-modal-width: 500px;
-
 .clientHandoutModal {
-  width: $max-modal-width;
+  width: 500px;
 }
 
 .title {
