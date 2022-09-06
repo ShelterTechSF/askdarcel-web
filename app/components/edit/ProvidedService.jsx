@@ -6,7 +6,6 @@ import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
 import { AddressListItem } from './EditAddress';
 import EditPatientHandout from './EditPatientHandout';
-import EditClinicianAction from './EditClinicianAction';
 import { EditServiceChildCollection } from './EditServiceChildCollection';
 
 import s from './ProvidedService.module.scss';
@@ -291,30 +290,11 @@ const ProvidedService = ({
         </li>
 
         <li className="edit--section--list--item">
-          {/* Todo: When service is returning clinician actions,
-            confirm that prop name is "clinicianActions" */}
-          <EditServiceChildCollection
-            initialCollectionData={service.clinicianActions}
-            handleCollectionChange={handleChange}
-            ResourceObjectItem={EditClinicianAction}
-            label="Clinician Actions"
-            buttonText="Add Clinician Action"
-            blankTemplateObj={{ isCovidAction: false }}
-            propertyKeyName="clinicianActions"
-          />
-        </li>
-
-        <li className="edit--section--list--item">
-          {/* Todo: When service is returning clinician actions,
-            confirm that prop name is "clinicianCovidActions" */}
-          <EditServiceChildCollection
-            initialCollectionData={service.clinicianActions}
-            handleCollectionChange={handleChange}
-            ResourceObjectItem={EditClinicianAction}
-            label="Clinician Covid Actions"
-            buttonText="Add Clinician Covid Action"
-            blankTemplateObj={{}}
-            propertyKeyName="clinicianActions"
+          <FormTextArea
+            label="Clinician Actions (Include any COVID Actions)"
+            placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral"
+            value={service.instructions || ''}
+            setValue={value => handleChange('instructions', value)}
           />
         </li>
 
