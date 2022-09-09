@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { icon } from 'assets';
+
 import { Modal } from 'components/ui/Modal/Modal';
+import { Button } from 'components/ui/inline/Button/Button';
 
 import styles from './ClientHandouts.module.scss';
 
@@ -25,15 +28,22 @@ export const ClientHandouts = ({
         <h2 className={styles.title}>Print Handout</h2>
         {handoutCollection.map(handout => (
           <a href={handout.link} target="_blank" rel="noreferrer" className={styles.handoutLink} key={handout.id}>
-            {handout.description}
-            {' '}
-            - PDF
+            <img src={icon('pdf-red')} alt="PDF icon" className={styles.sideLinkIcon} />
+            <span>
+              {handout.description}
+              {' '}
+              - PDF
+            </span>
           </a>
         ))}
 
-        <button onClick={closeModal} className={styles.closeBtn} tabIndex={0} type="button">
+        <Button
+          onClick={closeModal}
+          addClass={styles.closeBtn}
+          tabIndex={0}
+        >
           Close
-        </button>
+        </Button>
       </div>
     </Modal>
   );

@@ -17,8 +17,11 @@
 }
 
 .handoutLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.33;
   padding: 10px 16px;
   width: 400px;
@@ -39,14 +42,9 @@
 }
 
 .closeBtn {
-  font-size: 16px;
-  font-weight: 600;
-  color: $color-brand;
-  border-radius: 3px;
-  width: 72px;
+  width: 128px;
   height: 53px;
-  padding: 10px 14px;
-  justify-self: end;
-  background-color: #fff;
-  border: solid 1px $color-brand;
+  border-radius: 3px;
+  font-size: 16px;
+  justify-self: right;
 }

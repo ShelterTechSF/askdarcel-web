@@ -38,7 +38,7 @@ export const QrCodeModal = ({
             addClass={styles.closeBtn}
             tabIndex={0}
           >
-            CLOSE
+            Close
           </Button>
         </div>
       </div>
