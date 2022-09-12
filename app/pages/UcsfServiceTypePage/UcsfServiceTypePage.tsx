@@ -6,84 +6,67 @@ import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
 
-import { serviceTypeData } from './ucsfServiceTypes';
+import { constants } from './constants';
 import styles from './UcsfServiceTypePage.module.scss';
 
-const ServiceTypes = ({ rawServiceData, resourceSlug }: {
-  rawServiceData: any;
-  resourceSlug: string;
+import { useSubcategoriesForCategory } from '../../hooks/APIHooks';
+
+interface SubcategoryRefinement {
+  name: string;
+  id: number;
+}
+
+const ServiceTypes = ({ subcategories }: {
+  subcategories: SubcategoryRefinement[];
 }) => {
-  interface serviceTypeItem {
-    checked: boolean;
-    name: string;
+  interface SelectedRefinements {
+    [key: number]: boolean;
   }
 
-  const resourceServiceList = rawServiceData[resourceSlug];
-  const [serviceTypeList, setServiceTypeList] = useState(resourceServiceList.types);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedRefinements>({});
 
-  // Todo: This setServiceType and toggleChecked logic could change pretty drastically
-  // once the API returns service type data. The shape of that data is still under discussion
-  // between product and dev
-  const setServiceTypes = (index: number, updatedServiceType: serviceTypeItem) => {
-    let updatedList;
-    if (updatedServiceType.name === 'See all') {
-      updatedList = serviceTypeList.map((item: serviceTypeItem) => (
-        {
-          ...item,
-          checked: updatedServiceType.checked,
-        }
-      ));
-      updatedList = massToggleServiceList(serviceTypeList as [], updatedServiceType.checked);
+  const handleSubcategoryClick = (targetSubcategoryId: number) => {
+    const seeAllIsTarget = targetSubcategoryId === -1;
+    const targetValue = !selectedSubcategories[targetSubcategoryId];
+    if (seeAllIsTarget) {
+      // Check or uncheck all boxes in accordance with "See all" checked value
+      massUpdateSelectedSubcategories(targetValue);
     } else {
-      const seeAllServiceItem = serviceTypeList[0];
-      if (!updatedServiceType.checked) {
-        seeAllServiceItem.checked = false;
+      const updatedSubcategories: SelectedRefinements = {
+        ...selectedSubcategories,
+        [targetSubcategoryId]: targetValue,
+      };
+
+      // If target checked value is false, uncheck "See all" box as well
+      if (!targetValue) {
+        updatedSubcategories[-1] = false;
       }
 
-      updatedList = [
-        seeAllServiceItem,
-        ...serviceTypeList.slice(1, index),
-        updatedServiceType,
-        ...serviceTypeList.slice(index + 1),
-      ];
+      setSelectedSubcategories(updatedSubcategories);
     }
-
-    setServiceTypeList(updatedList);
   };
 
-  const toggleChecked = (targetItem: serviceTypeItem) => {
-    const targetToggleState = !targetItem.checked;
+  const massUpdateSelectedSubcategories = (targetValue: boolean) => {
+    const massUpdatedSubcategories: SelectedRefinements = {};
+    subcategories.forEach(category => {
+      massUpdatedSubcategories[category.id] = targetValue;
+    });
 
-    return {
-      ...targetItem,
-      checked: targetToggleState,
-    };
+    setSelectedSubcategories(massUpdatedSubcategories);
   };
-
-  // Toggles all eligibilities in accordance with the toggleState argument
-  const massToggleServiceList = (
-    list: serviceTypeItem[],
-    toggleState: boolean,
-  ) => (
-    list.map((item: serviceTypeItem) => ({
-      ...item,
-      checked: toggleState,
-    }))
-  );
 
   return (
     <div className={styles.serviceTypeBox}>
       <div className={styles.serviceTypeBox_title}>Service Type</div>
 
       <ul className={styles.serviceTypeList}>
-        {/* Todo: This list rendering logic will be refactored when the API is setup */}
-        {serviceTypeList.map((item: serviceTypeItem, index: number) => (
+        {subcategories.map(item => (
           <li key={item.name} className={styles.serviceTypeGroup}>
             <Checkbox
-              onChange={() => setServiceTypes(index, toggleChecked(item))}
+              onChange={() => handleSubcategoryClick(item.id)}
               name="serviceTypes"
               id={item.name}
-              checked={item.checked}
+              checked={selectedSubcategories[item.id] || false}
             />
             <label className={styles.serviceTypeLabel} htmlFor={item.name}>
               {item.name}
@@ -112,9 +95,17 @@ const Page = () => {
   };
 
   if (!selectedResourceSlug) {
-    // User has navigated to page directly without selecting a resource
     history.push('/');
     return null;
+  }
+
+  const subcategories: SubcategoryRefinement[] = useSubcategoriesForCategory(
+    constants[selectedResourceSlug].id,
+  ) || [];
+
+  // Add generic "See all" element to subcategory array if it is not there yet
+  if (subcategories.length > 0 && subcategories[0].id !== -1) {
+    subcategories.unshift({ id: -1, name: 'See all' });
   }
 
   return (
@@ -125,8 +116,7 @@ const Page = () => {
       />
       <div className={styles.serviceTypeContainer}>
         <ServiceTypes
-          rawServiceData={serviceTypeData}
-          resourceSlug={state.selectedResourceSlug}
+          subcategories={subcategories}
         />
         <div className={styles.serviceTypeBtns}>
           <Button
@@ -151,30 +141,3 @@ export const UcsfServiceTypePage = () => (
     <Page />
   </Layout>
 );
-
-/**
- * Todo: The below is a general sketch of how we will fetch eligibility data using the category
- * IDs of the selected UCSF resources. Before we can do this, UCSF resources in our DB will need
- * to have associated eligibilities and category IDs
-
-  interface resourceListItem {
-    id: string;
-    name: string;
-    icon: string;
-    checked: boolean;
-  }
-
-  // const location = useLocation();
-  interface stateType {
-    selectedResources: resourceListItem[];
-  }
-
-  const { state } = useLocation<stateType>();
-  const selectedResources = state.selectedResources;
-  const resourceEligibilities: object[] = [];
-
-  selectedResources.forEach((resource) => {
-    const eligibilities = useEligibilitiesForCategory(resource.id) || [];
-    resourceEligibilities.push(...eligibilities);
-  });
-*/
