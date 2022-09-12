@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import qs from 'qs';
+import ReactGA from 'react-ga';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
 import { Button } from 'components/ui/inline/Button/Button';
@@ -16,15 +18,15 @@ interface SubcategoryRefinement {
   id: number;
 }
 
-const ServiceTypes = ({ subcategories }: {
+interface SelectedSubcategories {
+  [key: number]: boolean;
+}
+
+const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcategories }: {
   subcategories: SubcategoryRefinement[];
+  selectedSubcategories: SelectedSubcategories;
+  setSelectedSubcategories: (categories: SelectedSubcategories) => void;
 }) => {
-  interface SelectedRefinements {
-    [key: number]: boolean;
-  }
-
-  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedRefinements>({});
-
   const handleSubcategoryClick = (targetSubcategoryId: number) => {
     const seeAllIsTarget = targetSubcategoryId === -1;
     const targetValue = !selectedSubcategories[targetSubcategoryId];
@@ -32,7 +34,7 @@ const ServiceTypes = ({ subcategories }: {
       // Check or uncheck all boxes in accordance with "See all" checked value
       massUpdateSelectedSubcategories(targetValue);
     } else {
-      const updatedSubcategories: SelectedRefinements = {
+      const updatedSubcategories = {
         ...selectedSubcategories,
         [targetSubcategoryId]: targetValue,
       };
@@ -47,7 +49,7 @@ const ServiceTypes = ({ subcategories }: {
   };
 
   const massUpdateSelectedSubcategories = (targetValue: boolean) => {
-    const massUpdatedSubcategories: SelectedRefinements = {};
+    const massUpdatedSubcategories: SelectedSubcategories = {};
     subcategories.forEach(category => {
       massUpdatedSubcategories[category.id] = targetValue;
     });
@@ -79,15 +81,35 @@ const ServiceTypes = ({ subcategories }: {
 };
 
 const Page = () => {
-  const history = useHistory();
-  interface locationState {
+  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedSubcategories>({});
+  interface LocationState {
     selectedResourceSlug: string;
   }
 
-  const state = history.location.state as locationState;
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
   const selectedResourceSlug = state && state.selectedResourceSlug;
+
   const goToResourceResults = (slug: string) => {
-    history.push(`/${slug}/results`);
+    const searchState = {
+      refinementList: {
+        categories: subcategories
+          .filter(c => selectedSubcategories[c.id])
+          .map(c => c.name),
+      },
+    };
+
+    const categoriesRefinements = searchState.refinementList.categories.join('; ') || 'NONE';
+    const search = qs.stringify(searchState, { encodeValuesOnly: true });
+
+    // Todo add eligibilities refinements to tracking
+    ReactGA.event({
+      category: 'UCSF Resource Inquiry',
+      action: 'Refined UCSF Resource Inquiry',
+      label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements}`,
+    });
+
+    history.push(`/${slug}/results?search=${search}`);
   };
 
   const backToEligibilityPage = (slug: string) => {
@@ -117,6 +139,8 @@ const Page = () => {
       <div className={styles.serviceTypeContainer}>
         <ServiceTypes
           subcategories={subcategories}
+          selectedSubcategories={selectedSubcategories}
+          setSelectedSubcategories={setSelectedSubcategories}
         />
         <div className={styles.serviceTypeBtns}>
           <Button
