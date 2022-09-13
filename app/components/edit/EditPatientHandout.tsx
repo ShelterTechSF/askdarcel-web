@@ -7,6 +7,11 @@ interface PatientHandout {
   [key: string]: string;
 }
 
+// Todo: Once the API work is finished, we will need to tidy up how we are managing API
+// requests involving patient handout data (called "documents") on the Service model as
+// this PR was built prior to the development of the API. There will also need to be
+// changes to the OrganizationEditPage#handleSubmit method to include a handout specific
+// request in the manner of how we update service.notes.
 const EditPatientHandout = ({ index, item, handleItemChange }: {
   index: number;
   item: PatientHandout;
@@ -26,6 +31,8 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
 
         handleItemChange(index, newHandout);
       }
+    } else {
+      throw new Error('Dataset "field" attribute is false or undefined.');
     }
   };
 
@@ -44,7 +51,7 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
         className="input"
         placeholder="Handout Link"
         data-field="link"
-        defaultValue={item.link}
+        defaultValue={item.url}
         onChange={handleFieldChange}
       />
     </div>

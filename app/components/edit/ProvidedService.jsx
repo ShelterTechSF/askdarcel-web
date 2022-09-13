@@ -276,10 +276,8 @@ const ProvidedService = ({
         ))}
 
         <li className="edit--section--list--item">
-          {/* Todo: When service is returning patient handouts,
-            confirm that prop name is "patientHandouts" */}
           <EditServiceChildCollection
-            initialCollectionData={service.patientHandouts}
+            initialCollectionData={service.documents}
             handleCollectionChange={handleChange}
             ResourceObjectItem={EditPatientHandout}
             label="Patient Handouts"

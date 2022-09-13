@@ -71,30 +71,28 @@ export const EditServiceChildCollection = <T extends ResourceItem> ({
     handleCollectionChange(propertyKeyName, newCollection);
   };
 
-  const createItemComponents = (itemComponentCollection: T[]) => (
-    itemComponentCollection.map((item, index) => (
-      <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
-        <ResourceObjectItem
-          index={index}
-          item={item}
-          handleItemChange={handleItemChange}
-        />
-        <button
-          type="button"
-          className="trash-button icon-button"
-          onClick={() => removeItem(index)}
-        >
-          <i className="material-icons">&#xE872;</i>
-        </button>
-      </div>
-    ))
-  );
+  const itemComponents = resourceCollection.map((item, index) => (
+    <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
+      <ResourceObjectItem
+        index={index}
+        item={item}
+        handleItemChange={handleItemChange}
+      />
+      <button
+        type="button"
+        className="trash-button icon-button"
+        onClick={() => removeItem(index)}
+      >
+        <i className="material-icons">&#xE872;</i>
+      </button>
+    </div>
+  ));
 
   return (
     <>
       <label htmlFor="edit-item">{label}</label>
       <div className="edit--section--list--item--sublist">
-        {createItemComponents(resourceCollection)}
+        {itemComponents}
       </div>
       <button type="button" className="edit--section--list--item--button solid-brand" onClick={addItem}>
         {buttonText}
