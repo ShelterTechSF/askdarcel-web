@@ -100,19 +100,17 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     steps: ['housingStatus', 'subcategoriesRadio', 'results'],
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
-  // Todo: Once we have actual categories, update ID and relevant data. These below categories
-  // are for development and testing purposes
   {
     algoliaCategoryName: 'Ucsf-mental-health',
-    id: '1000010',
+    id: '2000001',
     name: 'Mental health resources',
-    slug: 'mental-health-resources',
+    slug: 'ucsf-mental-health-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
     algoliaCategoryName: 'Ucsf-shelter',
-    id: '1000010',
+    id: '2000002',
     name: 'Shelter resources',
     slug: 'ucsf-shelter-resources',
     steps: ['subcategories', 'results'],
@@ -120,9 +118,9 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   },
   {
     algoliaCategoryName: 'Ucsf-substance-use',
-    id: '1000010',
+    id: '2000003',
     name: 'Substance use resources',
-    slug: 'substance-use-resources',
+    slug: 'ucsf-substance-use-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },

@@ -84,15 +84,18 @@ const Page = () => {
   const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedSubcategories>({});
   interface LocationState {
     selectedResourceSlug: string;
+    selectedEligibilityNames: string[];
   }
 
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const selectedResourceSlug = state && state.selectedResourceSlug;
+  const selectedEligibilities = state && state.selectedEligibilityNames;
 
   const goToResourceResults = (slug: string) => {
     const searchState = {
       refinementList: {
+        eligibilities: selectedEligibilities,
         categories: subcategories
           .filter(c => selectedSubcategories[c.id])
           .map(c => c.name),
@@ -100,20 +103,20 @@ const Page = () => {
     };
 
     const categoriesRefinements = searchState.refinementList.categories.join('; ') || 'NONE';
+    const eligibilitiesRefinements = searchState.refinementList.eligibilities.join('; ') || 'NONE';
     const search = qs.stringify(searchState, { encodeValuesOnly: true });
 
-    // Todo add eligibilities refinements to tracking
     ReactGA.event({
       category: 'UCSF Resource Inquiry',
       action: 'Refined UCSF Resource Inquiry',
-      label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements}`,
+      label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
     });
 
     history.push(`/${slug}/results?search=${search}`);
   };
 
   const backToEligibilityPage = (slug: string) => {
-    history.push('/client-identity', { selectedResourceSlug: slug });
+    history.push('/client-identity', { selectedResourceSlug: slug, selectedEligibilityNames: [] });
   };
 
   if (!selectedResourceSlug) {
