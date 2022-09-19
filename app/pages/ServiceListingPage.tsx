@@ -82,7 +82,7 @@ export const ServiceListingPage = () => {
             <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
 
             <ServiceListingSection title="About This Service" data-cy="service-about-section">
-              <ReactMarkdown className="rendered-markdown" source={service.long_description} />
+              <ReactMarkdown className="rendered-markdown" source={service.long_description} linkTarget="_blank" />
               <ServiceAttribution
                 attribution={resource.source_attribution}
                 status={resource.status}

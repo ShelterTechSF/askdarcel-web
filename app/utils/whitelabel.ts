@@ -25,6 +25,9 @@ interface WhiteLabelSite {
   logoLinkDestination: string;
   navLogoStyle: string;
   showBanner: boolean;
+  showClinicianAction: boolean;
+  showHandoutsIcon: boolean;
+  showHeaderQrCode: boolean;
   showMobileNav: boolean;
   showSearch: boolean;
   siteNavStyle: string;
@@ -66,6 +69,9 @@ const SFFamilies: WhiteLabelSite = {
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
+  showClinicianAction: false,
+  showHandoutsIcon: false,
+  showHeaderQrCode: false,
   showMobileNav: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
@@ -87,6 +93,9 @@ const SFServiceGuide: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
+  showClinicianAction: false,
+  showHandoutsIcon: false,
+  showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
@@ -108,6 +117,9 @@ const LinkSF: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
+  showClinicianAction: false,
+  showHandoutsIcon: false,
+  showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
@@ -129,6 +141,9 @@ const defaultWhiteLabel: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: true,
+  showClinicianAction: false,
+  showHandoutsIcon: false,
+  showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
@@ -150,6 +165,9 @@ const Ucsf: WhiteLabelSite = {
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
   showBanner: false,
+  showClinicianAction: true,
+  showHandoutsIcon: true,
+  showHeaderQrCode: true,
   showMobileNav: true,
   showSearch: true,
   siteNavStyle: styles.siteNav,
