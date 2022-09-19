@@ -100,7 +100,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const clinicianActionsLink = (
     <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleClinicianActionsModal}>
       <img src={icon('clinician-action')} alt="clinician action" className={styles.sideLinkIcon} />
-      <div className={styles.sideLinkText}>Clinician Action</div>
+      <div className={styles.sideLinkText}>Clinician action</div>
     </div>
   );
 

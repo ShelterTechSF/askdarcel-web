@@ -41,10 +41,7 @@
   }
 }
 
-.closeBtn {
-  width: 128px;
-  height: 53px;
-  border-radius: 3px;
-  font-size: 16px;
-  justify-self: right;
+.buttonBar {
+  display: flex;
+  justify-content: end;
 }

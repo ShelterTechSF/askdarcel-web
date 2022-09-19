@@ -1,7 +1,6 @@
 @import '~styles/utils/_helpers.scss';
 
 .clinicianActions {
-  position: relative;
   width: 850px;
 }
 
@@ -40,11 +39,4 @@
 .buttonBar {
   display: flex;
   justify-content: end;
-}
-
-.closeBtn {
-  width: 128px;
-  height: 53px;
-  border-radius: 3px;
-  font-size: 16px;
 }

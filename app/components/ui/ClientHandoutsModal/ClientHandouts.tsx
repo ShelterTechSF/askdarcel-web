@@ -36,14 +36,14 @@ export const ClientHandouts = ({
             </span>
           </a>
         ))}
-
-        <Button
-          onClick={closeModal}
-          addClass={styles.closeBtn}
-          tabIndex={0}
-        >
-          Close
-        </Button>
+        <div className={styles.buttonBar}>
+          <Button
+            onClick={closeModal}
+            tabIndex={0}
+          >
+            Close
+          </Button>
+        </div>
       </div>
     </Modal>
   );
