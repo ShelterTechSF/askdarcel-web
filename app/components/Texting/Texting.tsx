@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import { icon } from 'assets';
 import styles from './Texting.module.scss';
@@ -9,20 +8,37 @@ import { Loader } from '../ui';
 import { SentView } from './components/SentView';
 import { ErrorView } from './components/ErrorView';
 
+/** A view of a Service from within the Texting component.
+ *
+ * TODO: Replace this with an app-wide Service type.
+ */
+export interface TextingService {
+  serviceName: string;
+  serviceId: number;
+}
+
+/** Payload for the create Texting API endpoint. */
+export interface APITexting {
+  recipient_name: string;
+  phone_number: string;
+  service_id: number;
+}
+
 // Text resource informations to the user phone
 
-export const Texting = ({ closeModal, service, isShowing }) => {
+export const Texting = ({ closeModal, service, isShowing }:
+  { closeModal: () => void; service: TextingService; isShowing: boolean }) => {
   const [view, setView] = useState('');
 
   // Send data to backend
-  const sendData = data => dataService.post('/api/textings', { data }).then(response => {
+  const sendData = (data: APITexting) => dataService.post('/api/textings', { data }).then(response => {
     if (response.ok) {
       setView('sentView');
     }
   })
     .catch(() => setView('errorView'));
 
-  const handleSubmit = data => {
+  const handleSubmit = (data: APITexting) => {
     setView('loader');
     sendData(data);
   };
@@ -56,7 +72,7 @@ export const Texting = ({ closeModal, service, isShowing }) => {
       isOpen={isShowing}
       onRequestClose={closeModal}
       ariaHideApp={false}
-      parentSelector={() => document.querySelector('#root')}
+      parentSelector={() => document.querySelector('#root')!}
     >
       <button
         className={styles.closeButton}
@@ -68,13 +84,4 @@ export const Texting = ({ closeModal, service, isShowing }) => {
       { activeView }
     </ReactModal>
   );
-};
-
-Texting.propTypes = {
-  service: PropTypes.shape({
-    serviceName: PropTypes.string.isRequired,
-    serviceId: PropTypes.number.isRequired,
-  }).isRequired,
-  closeModal: PropTypes.func.isRequired,
-  isShowing: PropTypes.bool.isRequired,
 };
