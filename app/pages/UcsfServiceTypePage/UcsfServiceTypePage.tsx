@@ -22,16 +22,18 @@ interface SelectedSubcategories {
   [key: number]: boolean;
 }
 
+const seeAllPseudoId = -1;
+
 const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcategories }: {
   subcategories: SubcategoryRefinement[];
   selectedSubcategories: SelectedSubcategories;
   setSelectedSubcategories: (categories: SelectedSubcategories) => void;
 }) => {
   const handleSubcategoryClick = (targetSubcategoryId: number) => {
-    const seeAllIsTarget = targetSubcategoryId === -1;
+    const seeAllIsTarget = targetSubcategoryId === seeAllPseudoId;
     const targetValue = !selectedSubcategories[targetSubcategoryId];
     if (seeAllIsTarget) {
-      // Check or uncheck all boxes in accordance with "See all" checked value
+      // Check or uncheck all boxes in accordance with "See All" checked value
       massUpdateSelectedSubcategories(targetValue);
     } else {
       const updatedSubcategories = {
@@ -39,9 +41,9 @@ const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcate
         [targetSubcategoryId]: targetValue,
       };
 
-      // If target checked value is false, uncheck "See all" box as well
+      // If target checked value is false, uncheck "See All" box as well
       if (!targetValue) {
-        updatedSubcategories[-1] = false;
+        updatedSubcategories[seeAllPseudoId] = false;
       }
 
       setSelectedSubcategories(updatedSubcategories);
@@ -96,9 +98,13 @@ const Page = () => {
     const searchState = {
       refinementList: {
         eligibilities: selectedEligibilities,
-        categories: subcategories
-          .filter(c => selectedSubcategories[c.id])
-          .map(c => c.name),
+        categories: subcategories.reduce<string[]>((result, c) => {
+          const isNotSeeAll = c.id !== seeAllPseudoId;
+          if (isNotSeeAll && selectedSubcategories[c.id]) {
+            return [...result, c.name];
+          }
+          return result;
+        }, []),
       },
     };
 
@@ -112,7 +118,7 @@ const Page = () => {
       label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
     });
 
-    history.push(`/${slug}/results?search=${search}`);
+    history.push(`/${slug}/results?${search}`);
   };
 
   const backToEligibilityPage = (slug: string) => {
@@ -128,9 +134,9 @@ const Page = () => {
     constants[selectedResourceSlug].id,
   ) || [];
 
-  // Add generic "See all" element to subcategory array if it is not there yet
-  if (subcategories.length > 0 && subcategories[0].id !== -1) {
-    subcategories.unshift({ id: -1, name: 'See all' });
+  // Add generic "See All" element to subcategory array if it is not there yet
+  if (subcategories.length > 0 && subcategories[0].id !== seeAllPseudoId) {
+    subcategories.unshift({ id: seeAllPseudoId, name: 'See All' });
   }
 
   return (

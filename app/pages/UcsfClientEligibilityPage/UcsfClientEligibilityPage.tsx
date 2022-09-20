@@ -10,7 +10,6 @@ import {
   eligibilityMap,
   Eligibility,
   EligibilityGroup,
-  seeAllPseudoId,
 } from './ucsfEligibilitiesMap';
 import styles from './UcsfClientEligibilityPage.module.scss';
 
@@ -38,12 +37,12 @@ const ClientEligibilities = ({
     eligibility: Eligibility,
     eligibilities: Eligibility[],
   ) => {
-    const seeAllEligibility = eligibilities.find(e => e.id === seeAllPseudoId);
+    const seeAllEligibility = eligibilities.find(e => e.isSeeAll);
     const eligibilityCheckedId = eligibility.checkedId;
     const seeAllIsTarget = eligibility === seeAllEligibility;
     const targetValue = !selectedEligibilities[eligibilityCheckedId];
     if (seeAllIsTarget) {
-      // Check or uncheck all boxes in accordance with "See all" checked value
+      // Check or uncheck all boxes in accordance with "See All" checked value
       massToggleGroupEligibilities(eligibilities, targetValue);
     } else {
       const updatedEligibilities = {
@@ -51,9 +50,9 @@ const ClientEligibilities = ({
         [eligibilityCheckedId]: targetValue,
       };
 
-      // If target checked value is false, uncheck "See all" box as well
+      // If target checked value is false, uncheck "See All" box as well
       if (!targetValue) {
-        // Added "!" because every Eligibility array will have a See all element
+        // Added "!" because every Eligibility array will have a See All element
         updatedEligibilities[seeAllEligibility!.checkedId] = false;
       }
 
@@ -134,8 +133,7 @@ const Page = () => {
       result,
       eligibility,
     ) => {
-      const isSeeAll = eligibility.id === seeAllPseudoId;
-      if (selectedEligibilities[eligibility.checkedId] && !isSeeAll) {
+      if (selectedEligibilities[eligibility.checkedId] && !eligibility.isSeeAll) {
         return [...result, eligibility.name];
       }
       return result;

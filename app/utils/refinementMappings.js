@@ -3,7 +3,7 @@ export const eligibilitiesMapping = {
   Families: ['Families', 'Families with Babies'],
   Homeless: ['Homeless'],
   Immigrants: ['Immigrants', 'Undocumented'],
-  LGBTQ: ['LGBTQ', 'Transgender'],
+  'LGBTQ+': ['LGBTQ+', 'LGBTQ', 'Transgender', 'Transgender and Gender Non-Conforming'], // Todo: remove "LGBTQ" once LGBTQ eligibility has been switched to LGBTQ+ in DB across all environments
   'Mental Health/Substance Use': ['Mental Illness', 'Substance Dependency'],
   'Re-Entry': ['Re-Entry', 'In Jail'],
   'Seniors (55+ years old)': ['Seniors (55+ years old)'],
