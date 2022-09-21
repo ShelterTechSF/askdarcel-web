@@ -30,19 +30,19 @@ const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcate
   setSelectedSubcategories: (categories: SelectedSubcategories) => void;
 }) => {
   const handleSubcategoryClick = (targetSubcategoryId: number) => {
-    const seeAllIsTarget = targetSubcategoryId === seeAllPseudoId;
-    const targetValue = !selectedSubcategories[targetSubcategoryId];
-    if (seeAllIsTarget) {
+    const seeAllIsTargetElement = targetSubcategoryId === seeAllPseudoId;
+    const newValue = !selectedSubcategories[targetSubcategoryId];
+    if (seeAllIsTargetElement) {
       // Check or uncheck all boxes in accordance with "See All" checked value
-      massUpdateSelectedSubcategories(targetValue);
+      massUpdateSelectedSubcategories(newValue);
     } else {
       const updatedSubcategories = {
         ...selectedSubcategories,
-        [targetSubcategoryId]: targetValue,
+        [targetSubcategoryId]: newValue,
       };
 
-      // If target checked value is false, uncheck "See All" box as well
-      if (!targetValue) {
+      // If new checked value is false, uncheck "See All" box as well
+      if (!newValue) {
         updatedSubcategories[seeAllPseudoId] = false;
       }
 
@@ -50,10 +50,10 @@ const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcate
     }
   };
 
-  const massUpdateSelectedSubcategories = (targetValue: boolean) => {
+  const massUpdateSelectedSubcategories = (newValue: boolean) => {
     const massUpdatedSubcategories: SelectedSubcategories = {};
     subcategories.forEach(category => {
-      massUpdatedSubcategories[category.id] = targetValue;
+      massUpdatedSubcategories[category.id] = newValue;
     });
 
     setSelectedSubcategories(massUpdatedSubcategories);
@@ -98,13 +98,13 @@ const Page = () => {
     const searchState = {
       refinementList: {
         eligibilities: selectedEligibilities,
-        categories: subcategories.reduce<string[]>((result, c) => {
+        categories: subcategories.flatMap(c => {
           const isSeeAllItem = c.id === seeAllPseudoId;
           if (!isSeeAllItem && selectedSubcategories[c.id]) {
-            return [...result, c.name];
+            return c.name;
           }
-          return result;
-        }, []),
+          return [];
+        }),
       },
     };
 

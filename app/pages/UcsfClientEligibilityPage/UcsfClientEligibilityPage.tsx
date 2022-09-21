@@ -38,22 +38,20 @@ const ClientEligibilities = ({
     eligibilities: Eligibility[],
   ) => {
     const seeAllEligibilityItem = eligibilities.find(e => e.isSeeAll);
-    const eligibilityCheckedId = eligibility.checkedId;
-    const targetValue = !selectedEligibilities[eligibilityCheckedId];
+    const newValue = !selectedEligibilities[eligibility.checkedId];
 
     if (eligibility.isSeeAll) {
       // Check or uncheck all boxes in accordance with "See All" checked value
-      massToggleGroupEligibilities(eligibilities, targetValue);
+      massToggleGroupEligibilities(eligibilities, newValue);
     } else {
       const updatedEligibilities = {
         ...selectedEligibilities,
-        [eligibilityCheckedId]: targetValue,
+        [eligibility.checkedId]: newValue,
       };
 
-      // If target checked value is false, uncheck "See All" box as well
-      if (!targetValue) {
-        // N.B. Use of "!" assumes that every Eligibility array will have a "See All" element
-        updatedEligibilities[seeAllEligibilityItem!.checkedId] = false;
+      // If new checked value is false, uncheck "See All" box as well
+      if (!newValue && seeAllEligibilityItem) {
+        updatedEligibilities[seeAllEligibilityItem.checkedId] = false;
       }
 
       setSelectedEligibilities(updatedEligibilities);
@@ -95,7 +93,7 @@ const ClientEligibilities = ({
                     )}
                     name={eligibilityGroup.label}
                     id={`${eligibilityGroup.label}-${eligibility.name}`}
-                    checked={selectedEligibilities[eligibility.checkedId] || false}
+                    checked={selectedEligibilities[eligibility.checkedId] ?? false}
                   />
                   <label className={styles.eligibilityLabel} htmlFor={`${eligibilityGroup.label}-${eligibility.name}`}>
                     {eligibility.name}
@@ -124,20 +122,14 @@ const Page = () => {
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
 
   const goToServiceTypePage = (slug: string) => {
-    const flattenedEligibilityGroups = resourceEligibilityGroups.reduce<Eligibility[]>(
-      (previousValue, currentValue) => previousValue.concat(currentValue.eligibilities),
-      [],
-    );
-
-    const selectedEligibilityNames = flattenedEligibilityGroups.reduce<string[]>((
-      result,
-      eligibility,
-    ) => {
+    const flatEligibilities = resourceEligibilityGroups.flatMap(group => (group.eligibilities));
+    const selectedEligibilityNames = flatEligibilities.flatMap(eligibility => {
       if (selectedEligibilities[eligibility.checkedId] && !eligibility.isSeeAll) {
-        return [...result, eligibility.name];
+        return eligibility.name;
       }
-      return result;
-    }, []);
+
+      return [];
+    });
 
     history.push('/service-type', { selectedResourceSlug: slug, selectedEligibilityNames });
   };
