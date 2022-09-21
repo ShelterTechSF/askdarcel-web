@@ -18,30 +18,30 @@ interface SelectedEligibilities {
 }
 
 const ClientEligibilities = ({
-  resourceEligibilities, selectedEligibilities, setSelectedEligibilities, resourceSlug,
+  resourceEligibilityGroups, selectedEligibilities, setSelectedEligibilities, resourceSlug,
 }: {
-  resourceEligibilities: EligibilityGroup[];
+  resourceEligibilityGroups: EligibilityGroup[];
   selectedEligibilities: SelectedEligibilities;
   setSelectedEligibilities: (categories: SelectedEligibilities) => void;
   resourceSlug: string;
 }) => {
   useEffect(() => {
-    setEligibilityGroupList(resourceEligibilities);
+    setEligibilityGroupList(resourceEligibilityGroups);
   }, [resourceSlug]);
 
   const [eligibilityGroupList, setEligibilityGroupList] = useState<EligibilityGroup[]>(
-    resourceEligibilities,
+    resourceEligibilityGroups,
   );
 
   const handleEligibilityClick = (
     eligibility: Eligibility,
     eligibilities: Eligibility[],
   ) => {
-    const seeAllEligibility = eligibilities.find(e => e.isSeeAll);
+    const seeAllEligibilityItem = eligibilities.find(e => e.isSeeAll);
     const eligibilityCheckedId = eligibility.checkedId;
-    const seeAllIsTarget = eligibility === seeAllEligibility;
     const targetValue = !selectedEligibilities[eligibilityCheckedId];
-    if (seeAllIsTarget) {
+
+    if (eligibility.isSeeAll) {
       // Check or uncheck all boxes in accordance with "See All" checked value
       massToggleGroupEligibilities(eligibilities, targetValue);
     } else {
@@ -52,8 +52,8 @@ const ClientEligibilities = ({
 
       // If target checked value is false, uncheck "See All" box as well
       if (!targetValue) {
-        // Added "!" because every Eligibility array will have a See All element
-        updatedEligibilities[seeAllEligibility!.checkedId] = false;
+        // N.B. Use of "!" assumes that every Eligibility array will have a "See All" element
+        updatedEligibilities[seeAllEligibilityItem!.checkedId] = false;
       }
 
       setSelectedEligibilities(updatedEligibilities);
@@ -121,15 +121,15 @@ const Page = () => {
   const history = useHistory<LocationState>();
   const { state } = history.location;
   const selectedResourceSlug = state && state.selectedResourceSlug;
-  const resourceEligibilities = eligibilityMap[selectedResourceSlug];
+  const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
 
   const goToServiceTypePage = (slug: string) => {
-    const flattenedEligibilities = resourceEligibilities.reduce<Eligibility[]>(
+    const flattenedEligibilityGroups = resourceEligibilityGroups.reduce<Eligibility[]>(
       (previousValue, currentValue) => previousValue.concat(currentValue.eligibilities),
       [],
     );
 
-    const selectedEligibilityNames = flattenedEligibilities.reduce<string[]>((
+    const selectedEligibilityNames = flattenedEligibilityGroups.reduce<string[]>((
       result,
       eligibility,
     ) => {
@@ -159,7 +159,7 @@ const Page = () => {
       />
       <div className={styles.eligibilitiesContainer}>
         <ClientEligibilities
-          resourceEligibilities={resourceEligibilities}
+          resourceEligibilityGroups={resourceEligibilityGroups}
           selectedEligibilities={selectedEligibilities}
           setSelectedEligibilities={setSelectedEligibilities}
           resourceSlug={selectedResourceSlug}

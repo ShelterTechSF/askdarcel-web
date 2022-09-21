@@ -1,8 +1,10 @@
-// This provides a map of the UCSF relevant eligibilities in our database.
-// When the eligibilities are selected, we include their IDs in Algolia queries
+// This provides a map of the designed UCSF eligibility structure. Until the API
+// has devised a system for creating a parent/child eligibility data structure,
+// we will store UCSF eligibilities as constants on the frontend
 
-// The checkedId property is used to determine an eligibility's checked status on
-// the UcsfClientEligilityPage.
+// The checkedId property is used as the key to an eligibility's checked value on
+// the UcsfClientEligilityPage UI. When a given eligibility is checked, it is is
+// included in the Algolia query on the /results page.
 export interface Eligibility {
   isSeeAll: boolean;
   checkedId: string;

@@ -93,7 +93,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   {
-    algoliaCategoryName: 'Covid-longterm-housing',
+    algoliaCategoryName: 'Covid-longtermhousing',
     id: '1000011',
     name: 'Long-term Housing',
     slug: 'longterm-housing-resources',
@@ -101,7 +101,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   {
-    algoliaCategoryName: 'Ucsf-mental-health',
+    algoliaCategoryName: 'Ucsf-mentalhealth',
     id: '2000001',
     name: 'Mental health resources',
     slug: 'ucsf-mental-health-resources',
@@ -117,7 +117,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: 'Ucsf-substance-use',
+    algoliaCategoryName: 'Ucsf-substanceuse',
     id: '2000003',
     name: 'Substance use resources',
     slug: 'ucsf-substance-use-resources',

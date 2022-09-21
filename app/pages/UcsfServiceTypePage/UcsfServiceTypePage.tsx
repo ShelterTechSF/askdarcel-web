@@ -99,8 +99,8 @@ const Page = () => {
       refinementList: {
         eligibilities: selectedEligibilities,
         categories: subcategories.reduce<string[]>((result, c) => {
-          const isNotSeeAll = c.id !== seeAllPseudoId;
-          if (isNotSeeAll && selectedSubcategories[c.id]) {
+          const isSeeAllItem = c.id === seeAllPseudoId;
+          if (!isSeeAllItem && selectedSubcategories[c.id]) {
             return [...result, c.name];
           }
           return result;
