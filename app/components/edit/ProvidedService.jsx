@@ -277,8 +277,8 @@ const ProvidedService = ({
           <FormTextArea
             label="Clinician Actions (Include any COVID Actions)"
             placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral"
-            value={service.instructions || ''}
-            setValue={value => handleChange('instructions', value)}
+            value={(service.instructions[0] && service.instructions[0].instruction) || ''}
+            setValue={value => handleChange('instructions', [{ instruction: value }])}
           />
         </li>
 
