@@ -42,15 +42,15 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
         type="string"
         className="input"
         placeholder="Handout Language"
-        data-field="language"
-        defaultValue={item.language}
+        data-field="description"
+        defaultValue={item.description}
         onChange={handleFieldChange}
       />
       <input
         type="string"
         className="input"
-        placeholder="Handout Link"
-        data-field="link"
+        placeholder="Handout URL"
+        data-field="url"
         defaultValue={item.url}
         onChange={handleFieldChange}
       />
