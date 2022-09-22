@@ -6,18 +6,6 @@ import { Button } from 'components/ui/inline/Button/Button';
 
 import styles from './ClinicianActions.module.scss';
 
-const ActionList = ({
-  header, actions,
-}: {
-  header?: string;
-  actions: string;
-}) => (
-  <div className={styles.actionListContainer}>
-    <p className={styles.actionType}>{header}</p>
-    <ReactMarkdown className="rendered-markdown" source={actions} />
-  </div>
-);
-
 export const ClinicianActions = ({
   isOpen, setIsOpen, actions,
 }: {
@@ -37,7 +25,7 @@ export const ClinicianActions = ({
     >
       <div className={styles.modalContent}>
         <h2 className={styles.title}>Actions</h2>
-        <div className={styles.actionListContainer}>
+        <div className={styles.actionContainer}>
           <ReactMarkdown className="rendered-markdown" source={actions} />
         </div>
         <div className={styles.buttonBar}>

@@ -107,7 +107,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const handoutsLink = (
     <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleHandoutModal}>
       <img src={icon('print-blue')} alt="printout icon" className={styles.sideLinkIcon} />
-      <div className={styles.sideLinkText}>Client handouts</div>
+      <div className={styles.sideLinkText}>Print</div>
     </div>
   );
 
@@ -158,12 +158,12 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       <ClinicianActions
         isOpen={clinicianActionsIsOpen}
         setIsOpen={toggleClinicianActionsModal}
-        actions={(hit.instructions && hit.instructions[0]) || []}
+        actions={(hit.instructions && hit.instructions[0]) ?? []}
       />
       <ClientHandouts
         isOpen={handoutModalIsOpen}
         setIsOpen={toggleHandoutModal}
-        handoutCollection={hit.documents || []}
+        handoutCollection={hit.documents ?? []}
       />
       <div className={styles.searchText}>
         <div className={styles.title}>
