@@ -100,7 +100,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const clinicianActionsLink = (
     <div className={styles.sideLink} role="button" tabIndex={0} onClick={toggleClinicianActionsModal}>
       <img src={icon('clinician-action')} alt="clinician action" className={styles.sideLinkIcon} />
-      <div className={styles.sideLinkText}>Clinician action</div>
+      <div className={styles.sideLinkText}>Clinician actions</div>
     </div>
   );
 
@@ -152,26 +152,18 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     entryId = serviceId;
   }
 
-  // Todo: mock data until API returns handouts on the service model
-  const handoutCollection = [
-    { id: '1', description: 'English', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
-    { id: '2', description: 'Cantonese', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
-    { id: '3', description: 'Mandarin', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
-    { id: '4', description: 'Filipino', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
-    { id: '5', description: 'Spanish', link: 'https://ucsf.app.box.com/s/233qfwg6eilw1i1tipo9ts2jnh3mqz00' },
-  ];
-
   return (
     <div className={styles.searchResult}>
       <Texting closeModal={toggleTextingModal} service={service} isShowing={textingIsOpen} />
       <ClinicianActions
         isOpen={clinicianActionsIsOpen}
         setIsOpen={toggleClinicianActionsModal}
+        actions={(hit.instructions && hit.instructions[0]) || []}
       />
       <ClientHandouts
         isOpen={handoutModalIsOpen}
         setIsOpen={toggleHandoutModal}
-        handoutCollection={handoutCollection}
+        handoutCollection={hit.documents || []}
       />
       <div className={styles.searchText}>
         <div className={styles.title}>
