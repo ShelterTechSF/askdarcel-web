@@ -34,7 +34,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
             <tr>
               <th>Website</th>
               <td>
-                <a href={website}>{website}</a>
+                <a target="_blank" rel="noopener noreferrer" href={website}>{website}</a>
               </td>
             </tr>
           ) : null}

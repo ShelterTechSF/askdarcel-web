@@ -1,4 +1,4 @@
-export type Step = 'eligibilities' | 'subcategories' | 'results';
+export type Step = 'housingStatus' | 'subcategoriesRadio' | 'eligibilities' | 'subcategories' | 'results';
 
 export interface ServiceCategory {
   algoliaCategoryName: string;
@@ -90,6 +90,14 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: 'Shelter resources',
     slug: 'shelter-resources',
     steps: ['subcategories', 'results'],
+    subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
+  },
+  {
+    algoliaCategoryName: 'Covid-longterm-housing',
+    id: '1000011',
+    name: 'Long-term Housing',
+    slug: 'longterm-housing-resources',
+    steps: ['housingStatus', 'subcategoriesRadio', 'results'],
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   // Todo: Once we have actual categories, update ID and relevant data. These below categories
