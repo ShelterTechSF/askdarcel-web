@@ -4,10 +4,11 @@ export {
   User,
 };
 
-export * from './SearchHits';
+export * from './BreakingNewsItem';
 export * from './ChangeRequest';
 export * from './Meta';
 export * from './Organization';
-export * from './Schedule';
 export * from './RecurringSchedule';
+export * from './Schedule';
+export * from './SearchHits';
 export * from './Service';

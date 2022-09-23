@@ -40,6 +40,7 @@ import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/Ucs
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
 import { UcsfServiceTypePage } from './pages/UcsfServiceTypePage/UcsfServiceTypePage';
 import OrganizationEditPage from './pages/OrganizationEditPage';
+import EditBreakingNewsPage from './pages/EditBreakingNewsPage';
 import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
 import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
 
@@ -136,6 +137,7 @@ export const App = () => {
               <Route exact path="/terms-of-service" component={TermsOfServicePage} />
               <Route exact path="/:categorySlug/form" component={ServiceDiscoveryForm} />
               <Route exact path="/:categorySlug/results" component={ServiceDiscoveryResults} />
+              <Route exact path="/edit-breaking-news" component={EditBreakingNewsPage} />
 
               {/* UCSF white label paths */}
               <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
