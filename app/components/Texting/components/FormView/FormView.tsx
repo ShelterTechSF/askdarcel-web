@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Heading from './Heading';
 import Privacy from './Privacy';
 import Buttons from './Buttons';
 import styles from './Form.module.scss';
+import type { APITexting, TextingService } from '../../Texting';
 
 const initialState = {
   recipientName: '',
   phoneNumber: '',
   agreed: false,
-};
+} as const;
 
-export const FormView = ({ service, handleSubmit, closeModal }) => {
+export const FormView = ({ service, handleSubmit, closeModal }:
+  { service: TextingService;
+    handleSubmit: (data: APITexting) => void;
+    closeModal: () => void; }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
   const { serviceName, serviceId } = service;
-  const onChange = evt => {
+  const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const {
       type,
       name,
@@ -26,7 +29,7 @@ export const FormView = ({ service, handleSubmit, closeModal }) => {
     setState(prevState => ({ ...prevState, [name]: newValue }));
   };
 
-  const onSubmit = event => {
+  const onSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     const data = {
       recipient_name: recipientName,
@@ -78,13 +81,4 @@ export const FormView = ({ service, handleSubmit, closeModal }) => {
       <Privacy />
     </div>
   );
-};
-
-FormView.propTypes = {
-  service: PropTypes.shape({
-    serviceName: PropTypes.string.isRequired,
-    serviceId: PropTypes.number.isRequired,
-  }).isRequired,
-  closeModal: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
 };
