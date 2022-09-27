@@ -176,7 +176,6 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
-        { whiteLabel.showHandoutsIcon && handoutsLink }
         {
           phoneNumber
           && (
@@ -198,6 +197,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         }
         { texting }
         { whiteLabel.showClinicianAction && clinicianActionsLink }
+        { whiteLabel.showHandoutsIcon && handoutsLink }
       </div>
     </div>
   );
