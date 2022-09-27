@@ -1,89 +1,76 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import qs from 'qs';
+import ReactGA from 'react-ga';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
 import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
 
-import { serviceTypeData } from './ucsfServiceTypes';
+import { constants } from './constants';
 import styles from './UcsfServiceTypePage.module.scss';
 
-const ServiceTypes = ({ rawServiceData, resourceSlug }: {
-  rawServiceData: any;
-  resourceSlug: string;
+import { useSubcategoriesForCategory } from '../../hooks/APIHooks';
+
+interface SubcategoryRefinement {
+  name: string;
+  id: number;
+}
+
+interface SelectedSubcategories {
+  [key: number]: boolean;
+}
+
+const seeAllPseudoId = -1;
+
+const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcategories }: {
+  subcategories: SubcategoryRefinement[];
+  selectedSubcategories: SelectedSubcategories;
+  setSelectedSubcategories: (categories: SelectedSubcategories) => void;
 }) => {
-  interface serviceTypeItem {
-    checked: boolean;
-    name: string;
-  }
-
-  const resourceServiceList = rawServiceData[resourceSlug];
-  const [serviceTypeList, setServiceTypeList] = useState(resourceServiceList.types);
-
-  // Todo: This setServiceType and toggleChecked logic could change pretty drastically
-  // once the API returns service type data. The shape of that data is still under discussion
-  // between product and dev
-  const setServiceTypes = (index: number, updatedServiceType: serviceTypeItem) => {
-    let updatedList;
-    if (updatedServiceType.name === 'See all') {
-      updatedList = serviceTypeList.map((item: serviceTypeItem) => (
-        {
-          ...item,
-          checked: updatedServiceType.checked,
-        }
-      ));
-      updatedList = massToggleServiceList(serviceTypeList as [], updatedServiceType.checked);
+  const handleSubcategoryClick = (targetSubcategoryId: number) => {
+    const seeAllIsTargetElement = targetSubcategoryId === seeAllPseudoId;
+    const newValue = !selectedSubcategories[targetSubcategoryId];
+    if (seeAllIsTargetElement) {
+      // Check or uncheck all boxes in accordance with "See All" checked value
+      massUpdateSelectedSubcategories(newValue);
     } else {
-      const seeAllServiceItem = serviceTypeList[0];
-      if (!updatedServiceType.checked) {
-        seeAllServiceItem.checked = false;
+      const updatedSubcategories = {
+        ...selectedSubcategories,
+        [targetSubcategoryId]: newValue,
+      };
+
+      // If new checked value is false, uncheck "See All" box as well
+      if (!newValue) {
+        updatedSubcategories[seeAllPseudoId] = false;
       }
 
-      updatedList = [
-        seeAllServiceItem,
-        ...serviceTypeList.slice(1, index),
-        updatedServiceType,
-        ...serviceTypeList.slice(index + 1),
-      ];
+      setSelectedSubcategories(updatedSubcategories);
     }
-
-    setServiceTypeList(updatedList);
   };
 
-  const toggleChecked = (targetItem: serviceTypeItem) => {
-    const targetToggleState = !targetItem.checked;
+  const massUpdateSelectedSubcategories = (newValue: boolean) => {
+    const massUpdatedSubcategories: SelectedSubcategories = {};
+    subcategories.forEach(category => {
+      massUpdatedSubcategories[category.id] = newValue;
+    });
 
-    return {
-      ...targetItem,
-      checked: targetToggleState,
-    };
+    setSelectedSubcategories(massUpdatedSubcategories);
   };
-
-  // Toggles all eligibilities in accordance with the toggleState argument
-  const massToggleServiceList = (
-    list: serviceTypeItem[],
-    toggleState: boolean,
-  ) => (
-    list.map((item: serviceTypeItem) => ({
-      ...item,
-      checked: toggleState,
-    }))
-  );
 
   return (
     <div className={styles.serviceTypeBox}>
       <div className={styles.serviceTypeBox_title}>Service Type</div>
 
       <ul className={styles.serviceTypeList}>
-        {/* Todo: This list rendering logic will be refactored when the API is setup */}
-        {serviceTypeList.map((item: serviceTypeItem, index: number) => (
+        {subcategories.map(item => (
           <li key={item.name} className={styles.serviceTypeGroup}>
             <Checkbox
-              onChange={() => setServiceTypes(index, toggleChecked(item))}
+              onChange={() => handleSubcategoryClick(item.id)}
               name="serviceTypes"
               id={item.name}
-              checked={item.checked}
+              checked={selectedSubcategories[item.id] || false}
             />
             <label className={styles.serviceTypeLabel} htmlFor={item.name}>
               {item.name}
@@ -96,25 +83,60 @@ const ServiceTypes = ({ rawServiceData, resourceSlug }: {
 };
 
 const Page = () => {
-  const history = useHistory();
-  interface locationState {
+  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedSubcategories>({});
+  interface LocationState {
     selectedResourceSlug: string;
+    selectedEligibilityNames: string[];
   }
 
-  const state = history.location.state as locationState;
+  const history = useHistory<LocationState>();
+  const { state } = history.location;
   const selectedResourceSlug = state && state.selectedResourceSlug;
+  const selectedEligibilities = state && state.selectedEligibilityNames;
+
   const goToResourceResults = (slug: string) => {
-    history.push(`/${slug}/results`);
+    const searchState = {
+      refinementList: {
+        eligibilities: selectedEligibilities,
+        categories: subcategories.flatMap(c => {
+          const isSeeAllItem = c.id === seeAllPseudoId;
+          if (!isSeeAllItem && selectedSubcategories[c.id]) {
+            return c.name;
+          }
+          return [];
+        }),
+      },
+    };
+
+    const categoriesRefinements = searchState.refinementList.categories.join('; ') || 'NONE';
+    const eligibilitiesRefinements = searchState.refinementList.eligibilities.join('; ') || 'NONE';
+    const search = qs.stringify(searchState, { encodeValuesOnly: true });
+
+    ReactGA.event({
+      category: 'UCSF Resource Inquiry',
+      action: 'Refined UCSF Resource Inquiry',
+      label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
+    });
+
+    history.push(`/${slug}/results?${search}`);
   };
 
   const backToEligibilityPage = (slug: string) => {
-    history.push('/client-identity', { selectedResourceSlug: slug });
+    history.push('/client-identity', { selectedResourceSlug: slug, selectedEligibilityNames: [] });
   };
 
   if (!selectedResourceSlug) {
-    // User has navigated to page directly without selecting a resource
     history.push('/');
     return null;
+  }
+
+  const subcategories: SubcategoryRefinement[] = useSubcategoriesForCategory(
+    constants[selectedResourceSlug].id,
+  ) || [];
+
+  // Add generic "See All" element to subcategory array if it is not there yet
+  if (subcategories.length > 0 && subcategories[0].id !== seeAllPseudoId) {
+    subcategories.unshift({ id: seeAllPseudoId, name: 'See All' });
   }
 
   return (
@@ -125,8 +147,9 @@ const Page = () => {
       />
       <div className={styles.serviceTypeContainer}>
         <ServiceTypes
-          rawServiceData={serviceTypeData}
-          resourceSlug={state.selectedResourceSlug}
+          subcategories={subcategories}
+          selectedSubcategories={selectedSubcategories}
+          setSelectedSubcategories={setSelectedSubcategories}
         />
         <div className={styles.serviceTypeBtns}>
           <Button
@@ -151,30 +174,3 @@ export const UcsfServiceTypePage = () => (
     <Page />
   </Layout>
 );
-
-/**
- * Todo: The below is a general sketch of how we will fetch eligibility data using the category
- * IDs of the selected UCSF resources. Before we can do this, UCSF resources in our DB will need
- * to have associated eligibilities and category IDs
-
-  interface resourceListItem {
-    id: string;
-    name: string;
-    icon: string;
-    checked: boolean;
-  }
-
-  // const location = useLocation();
-  interface stateType {
-    selectedResources: resourceListItem[];
-  }
-
-  const { state } = useLocation<stateType>();
-  const selectedResources = state.selectedResources;
-  const resourceEligibilities: object[] = [];
-
-  selectedResources.forEach((resource) => {
-    const eligibilities = useEligibilitiesForCategory(resource.id) || [];
-    resourceEligibilities.push(...eligibilities);
-  });
-*/
