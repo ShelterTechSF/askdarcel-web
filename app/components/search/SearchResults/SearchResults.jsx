@@ -158,7 +158,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       <ClinicianActions
         isOpen={clinicianActionsIsOpen}
         setIsOpen={toggleClinicianActionsModal}
-        actions={(hit.instructions && hit.instructions[0]) ?? []}
+        actions={(hit?.instructions?.[0]) ?? ''}
       />
       <ClientHandouts
         isOpen={handoutModalIsOpen}
@@ -196,8 +196,8 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           )
         }
         { texting }
-        { whiteLabel.showClinicianAction && clinicianActionsLink }
-        { whiteLabel.showHandoutsIcon && handoutsLink }
+        { (whiteLabel.showClinicianAction && !!hit.documents?.length) && clinicianActionsLink }
+        { (whiteLabel.showHandoutsIcon && !!hit.instructions?.length) && handoutsLink }
       </div>
     </div>
   );
