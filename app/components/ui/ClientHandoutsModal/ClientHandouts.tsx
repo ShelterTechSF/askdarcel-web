@@ -25,9 +25,9 @@ export const ClientHandouts = ({
       closeModal={closeModal}
     >
       <div className={styles.modalContent}>
-        <h2 className={styles.title}>Print Handout</h2>
+        <h2 className={styles.title}>Print</h2>
         {handoutCollection.map(handout => (
-          <a href={handout.link} target="_blank" rel="noreferrer" className={styles.handoutLink} key={handout.id}>
+          <a href={handout.url} target="_blank" rel="noreferrer" className={styles.handoutLink} key={handout.id}>
             <img src={icon('pdf-red')} alt="PDF icon" className={styles.sideLinkIcon} />
             <span>
               {handout.description}
