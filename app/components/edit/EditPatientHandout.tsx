@@ -49,7 +49,7 @@ const EditPatientHandout = ({ index, item, handleItemChange }: {
       <input
         type="string"
         className="input"
-        placeholder="Handout URL"
+        placeholder="http://"
         data-field="url"
         defaultValue={item.url}
         onChange={handleFieldChange}

@@ -283,16 +283,16 @@ const ProvidedService = ({
             label="Patient Handouts"
             buttonText="Add Handout"
             blankTemplateObj={{}}
-            propertyKeyName="patientHandouts"
+            propertyKeyName="documents"
           />
         </li>
 
         <li className="edit--section--list--item">
           <FormTextArea
             label="Clinician Actions (Include any COVID Actions)"
-            placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral"
-            value={service?.instructions?.[0]?.instruction ?? ''}
-            setValue={value => handleChange('instructions', [{ instruction: value }])}
+            placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral (markdown is supported)"
+            value={service.instructions?.[0]?.instruction ?? ''}
+            setValue={value => handleChange('instructions', [{ id: service.instructions?.[0]?.id ?? -2, service_id: service.id, instruction: value }])}
           />
         </li>
 

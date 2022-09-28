@@ -199,6 +199,23 @@ function postNotes(notesObj, promises, uriObj) {
   }
 }
 
+function postInstructions(instructions, promises) {
+  if (instructions?.length > 0) {
+    // Todo: The API is returning instructions as an array of objects whereas we really
+    // only need one instructions object. When the API returns the instructions as an
+    // object rather than an array, we can remove this loop.
+    instructions.forEach(currentInstruction => {
+      if (currentInstruction.id < 0) {
+        const uri = '/api/instructions';
+        promises.push(dataService.post(uri, { instruction: currentInstruction }));
+      } else {
+        const uri = `/api/instructions/${currentInstruction.id}`;
+        promises.push(dataService.put(uri, { instruction: currentInstruction }));
+      }
+    });
+  }
+}
+
 /** Return an array of Promises performing the correct update operation.
  *
  * Note that this will return a promise that resolves to null for addresses that
@@ -614,6 +631,8 @@ class OrganizationEditPage extends React.Component {
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
+        postInstructions(currentService.instructions, promises, { path: 'services', id: key });
+        delete currentService.instructions;
         delete currentService.shouldInheritScheduleFromParent;
         const { addressHandles } = currentService;
         delete currentService.addressHandles;
@@ -962,6 +981,7 @@ class OrganizationEditPage extends React.Component {
         message: 'Successfully saved your changes.',
       });
     }).catch(err => {
+      this.setState({ submitting: false });
       console.log(err); // eslint-disable-line no-console
       showPopUpMessage({
         type: 'error',
