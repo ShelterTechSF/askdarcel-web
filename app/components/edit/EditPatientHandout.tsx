@@ -2,8 +2,8 @@ import React from 'react';
 
 interface PatientHandout {
   id: string;
-  language: string;
-  link: string;
+  description: string;
+  url: string;
   [key: string]: string;
 }
 

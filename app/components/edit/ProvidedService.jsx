@@ -282,7 +282,7 @@ const ProvidedService = ({
             ResourceObjectItem={EditPatientHandout}
             label="Patient Handouts"
             buttonText="Add Handout"
-            blankTemplateObj={{}}
+            blankTemplateObj={{ service_id: service.id }}
             propertyKeyName="documents"
           />
         </li>

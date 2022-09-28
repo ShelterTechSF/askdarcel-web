@@ -16,8 +16,10 @@ interface ComponentProps {
 }
 
 interface ResourceItem {
-  keyId?: number;
+  service_id: number;
   id?: string | number;
+  keyId?: number;
+  isRemoved?: boolean;
 }
 
 export const EditServiceChildCollection = <T extends ResourceItem> ({
@@ -62,31 +64,48 @@ export const EditServiceChildCollection = <T extends ResourceItem> ({
   };
 
   const removeItem = (index: number) => {
-    const newCollection = [
-      ...resourceCollection.slice(0, index),
-      ...resourceCollection.slice(index + 1),
-    ];
+    let newCollection;
+    const deletedItem = resourceCollection[index];
+    if (deletedItem.id) {
+      deletedItem.isRemoved = true;
+      newCollection = [
+        ...resourceCollection.slice(0, index),
+        deletedItem,
+        ...resourceCollection.slice(index + 1),
+      ];
+    } else {
+      newCollection = [
+        ...resourceCollection.slice(0, index),
+        ...resourceCollection.slice(index + 1),
+      ];
+    }
 
     setResourceCollection(newCollection);
     handleCollectionChange(propertyKeyName, newCollection);
   };
 
-  const itemComponents = resourceCollection.map((item, index) => (
-    <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
-      <ResourceObjectItem
-        index={index}
-        item={item}
-        handleItemChange={handleItemChange}
-      />
-      <button
-        type="button"
-        className="trash-button icon-button"
-        onClick={() => removeItem(index)}
-      >
-        <i className="material-icons">&#xE872;</i>
-      </button>
-    </div>
-  ));
+  const itemComponents = resourceCollection.flatMap((item, index) => {
+    if (item.isRemoved) {
+      return null;
+    }
+
+    return (
+      <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
+        <ResourceObjectItem
+          index={index}
+          item={item}
+          handleItemChange={handleItemChange}
+        />
+        <button
+          type="button"
+          className="trash-button icon-button"
+          onClick={() => removeItem(index)}
+        >
+          <i className="material-icons">&#xE872;</i>
+        </button>
+      </div>
+    );
+  });
 
   return (
     <>
