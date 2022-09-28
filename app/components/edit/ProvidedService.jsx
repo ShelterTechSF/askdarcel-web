@@ -279,10 +279,10 @@ const ProvidedService = ({
           <EditServiceChildCollection
             initialCollectionData={service.documents}
             handleCollectionChange={handleChange}
-            ResourceObjectItem={EditPatientHandout}
+            CollectionItemComponent={EditPatientHandout}
             label="Patient Handouts"
             buttonText="Add Handout"
-            blankTemplateObj={{ service_id: service.id }}
+            blankItemTemplate={{ service_id: service.id }}
             propertyKeyName="documents"
           />
         </li>
@@ -366,6 +366,7 @@ ProvidedService.propTypes = {
     categories: PropTypes.array,
     notes: PropTypes.array,
     schedule: PropTypes.object,
+    documents: PropTypes.array,
     eligibilities: PropTypes.array,
     email: PropTypes.string,
     instructions: PropTypes.array,

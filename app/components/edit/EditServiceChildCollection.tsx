@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 
 /**
  * Renders a child property collection of a Service as a list of individual components,
- * called ResourceObjectItem. Enables the user to add, modify, and delete members of
+ * called CollectionItemComponent. Enables the user to add, modify, and delete members of
  * the collection and save to the DB.
  *
  * In the future, this component could possibly be abstracted to replace the
@@ -15,83 +15,83 @@ interface ComponentProps {
   handleItemChange: any;
 }
 
-interface ResourceItem {
+interface CollectionItem {
   service_id: number;
   id?: string | number;
   keyId?: number;
   isRemoved?: boolean;
 }
 
-export const EditServiceChildCollection = <T extends ResourceItem> ({
+export const EditServiceChildCollection = <T extends CollectionItem> ({
   initialCollectionData,
   handleCollectionChange,
-  ResourceObjectItem,
+  CollectionItemComponent,
   label,
-  blankTemplateObj,
+  blankItemTemplate,
   buttonText,
   propertyKeyName,
 }: {
   initialCollectionData: any[];
   handleCollectionChange: (field: string, value: T[]) => void;
-  ResourceObjectItem: FC<ComponentProps>;
+  CollectionItemComponent: FC<ComponentProps>;
   label: string;
-  blankTemplateObj: T;
+  blankItemTemplate: T;
   buttonText: string;
   propertyKeyName: string;
 }) => {
-  const [resourceCollection, setResourceCollection] = useState<T[]>(
+  const [itemCollection, setItemCollection] = useState<T[]>(
     initialCollectionData || [],
   );
 
   const addItem = () => {
     const newItem = {
-      ...blankTemplateObj,
+      ...blankItemTemplate,
       keyId: Math.random(),
     };
 
-    setResourceCollection([...resourceCollection, newItem]);
+    setItemCollection([...itemCollection, newItem]);
   };
 
   const handleItemChange = (index: number, item: any) => {
     const newCollection: T[] = [
-      ...resourceCollection.slice(0, index),
+      ...itemCollection.slice(0, index),
       item,
-      ...resourceCollection.slice(index + 1),
+      ...itemCollection.slice(index + 1),
     ];
 
-    setResourceCollection(newCollection);
+    setItemCollection(newCollection);
     handleCollectionChange(propertyKeyName, newCollection);
   };
 
   const removeItem = (index: number) => {
     let newCollection;
-    const deletedItem = resourceCollection[index];
+    const deletedItem = itemCollection[index];
     if (deletedItem.id) {
       deletedItem.isRemoved = true;
       newCollection = [
-        ...resourceCollection.slice(0, index),
+        ...itemCollection.slice(0, index),
         deletedItem,
-        ...resourceCollection.slice(index + 1),
+        ...itemCollection.slice(index + 1),
       ];
     } else {
       newCollection = [
-        ...resourceCollection.slice(0, index),
-        ...resourceCollection.slice(index + 1),
+        ...itemCollection.slice(0, index),
+        ...itemCollection.slice(index + 1),
       ];
     }
 
-    setResourceCollection(newCollection);
+    setItemCollection(newCollection);
     handleCollectionChange(propertyKeyName, newCollection);
   };
 
-  const itemComponents = resourceCollection.flatMap((item, index) => {
+  const itemComponents = itemCollection.flatMap((item, index) => {
     if (item.isRemoved) {
       return null;
     }
 
     return (
       <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
-        <ResourceObjectItem
+        <CollectionItemComponent
           index={index}
           item={item}
           handleItemChange={handleItemChange}
