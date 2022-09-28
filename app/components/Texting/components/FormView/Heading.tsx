@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styles from './Form.module.scss';
 
-const Heading = ({ serviceName }) => (
+const Heading = ({ serviceName }: { serviceName: string }) => (
   <div>
     <h1 className={styles.title}>
       {`Text me information for ${serviceName}`}
@@ -12,9 +11,5 @@ const Heading = ({ serviceName }) => (
     </h3>
   </div>
 );
-
-Heading.propTypes = {
-  serviceName: PropTypes.string.isRequired,
-};
 
 export default Heading;

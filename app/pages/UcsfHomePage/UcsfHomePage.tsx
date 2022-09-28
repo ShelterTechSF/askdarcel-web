@@ -80,18 +80,15 @@ const ResourceListComponent = ({ resourceList, setSelectedResource, setDisableNe
 };
 
 const Page = () => {
-  // Todo: the UCSF Categories/Resources are not set up yet. For now, we're defaulting
-  // the below resources to Covid-* category resource IDs for development purposes only
-  // (using: 1000010: shelter, 1000001: food, 1000002: hygiene)
   const ucsfResources = [
     {
-      id: '1000010', name: 'Shelter', icon: 'bed', checked: false, slug: 'shelter-resources',
+      id: '2000001', name: 'Mental Health', icon: 'smiley-face', checked: false, slug: 'ucsf-mental-health-resources',
     },
     {
-      id: '1000001', name: 'Substance Use', icon: 'hospital', checked: false, slug: 'substance-use-resources',
+      id: '2000002', name: 'Shelter', icon: 'bed', checked: false, slug: 'ucsf-shelter-resources',
     },
     {
-      id: '1000002', name: 'Mental Health', icon: 'smiley-face', checked: false, slug: 'mental-health-resources',
+      id: '2000003', name: 'Substance Use', icon: 'hospital', checked: false, slug: 'ucsf-substance-use-resources',
     },
   ];
 

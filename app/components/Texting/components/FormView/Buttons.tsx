@@ -1,9 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './Form.module.scss';
 
-const Buttons = ({ closeModal, onSubmit, disabled }) => (
+const Buttons = (
+  { closeModal, onSubmit, disabled }:
+  {
+    onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    closeModal: () => void;
+    disabled: boolean;
+  },
+) => (
   <div className={styles.buttons}>
     <button
       type="button"
@@ -22,11 +28,5 @@ const Buttons = ({ closeModal, onSubmit, disabled }) => (
     </button>
   </div>
 );
-
-Buttons.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
-};
 
 export default Buttons;
