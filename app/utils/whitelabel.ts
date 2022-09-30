@@ -51,27 +51,43 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
 
 const configKey = determineWhiteLabelSite();
 
+const whiteLabelDefaults = {
+  homePageComponent: 'HomePage',
+  intercom: false,
+  logoLinkDestination: '/',
+  navLogoStyle: styles.siteNav,
+  showBanner: true,
+  showClinicianAction: false,
+  showHandoutsIcon: false,
+  showHeaderQrCode: false,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.siteNav,
+  userWay: false,
+} as const;
+
+const appImageDefaults = {
+  background: BackgroundImage,
+  algolia: SearchByAlgoliaImage,
+  mohcdSeal: SFSeal,
+} as const;
+
 /*
   Specify what is viewed in each white label.
   A '/' (which is a forward-slash) as a value for logoLinkDestination
   denotes that the link is internal to the application.
 */
+
 const SFFamilies: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: SFFamiliesLogo,
     logoSmall: SFFamiliesLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
-  intercom: false,
+  ...whiteLabelDefaults,
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
   showMobileNav: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
@@ -82,98 +98,53 @@ const SFFamilies: WhiteLabelSite = {
 
 const SFServiceGuide: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: SFServiceLogo,
     logoSmall: SFServiceLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
+  ...whiteLabelDefaults,
   intercom: true,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
-  showBanner: true,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
   siteUrl: 'https://sfserviceguide.org',
   title: 'SF Service Guide',
-  userWay: false,
 } as const;
 
 const LinkSF: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: LinkSFLogo,
     logoSmall: LinkSFLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
-  intercom: false,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
-  showBanner: true,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
+  ...whiteLabelDefaults,
   siteUrl: 'https://linksf.sfserviceguide.org',
   title: 'Link SF',
-  userWay: false,
 } as const;
 
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: SFServiceLogo,
     logoSmall: SFServiceLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
+  ...whiteLabelDefaults,
   intercom: true,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
-  showBanner: true,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
   siteUrl: 'https://askdarcel.org',
   title: 'AskDarcel',
-  userWay: false,
 } as const;
 
 const Ucsf: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: UcsfServiceLogo,
     logoSmall: UcsfServiceLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
+  ...whiteLabelDefaults,
   homePageComponent: 'UcsfHomePage',
-  intercom: false,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
   showBanner: false,
   showClinicianAction: true,
   showHandoutsIcon: true,
   showHeaderQrCode: true,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
   siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
   title: 'UCSF Outpatient Services',
-  userWay: false,
 } as const;
 
 /*

@@ -47,7 +47,7 @@ export const MapOfLocations = ({ locationRenderer, locations }: {
                             {i + 1}
                             .
                           </td>
-                          <td><strong>{loc.address.address_1}</strong></td>
+                          <td><strong translate="no">{loc.address.address_1}</strong></td>
                           <td className="iconcell">
                             <div className="selector">
                               <i className="material-icons">keyboard_arrow_down</i>

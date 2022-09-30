@@ -138,6 +138,9 @@
 .sideLinks {
   flex-shrink: 0;
   width: auto;
+  @media screen and (min-width: $min-tablet-p) {
+    max-width: 325px;
+  }
   margin-left: 25px;
   font-weight: bold;
   font-size: 18px;
