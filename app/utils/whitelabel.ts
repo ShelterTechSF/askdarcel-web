@@ -20,6 +20,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
+  enableTranslation: boolean;
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
@@ -52,6 +53,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
 const configKey = determineWhiteLabelSite();
 
 const whiteLabelDefaults = {
+  enableTranslation: true,
   homePageComponent: 'HomePage',
   intercom: false,
   logoLinkDestination: '/',
@@ -85,6 +87,7 @@ const SFFamilies: WhiteLabelSite = {
     logoSmall: SFFamiliesLogo,
   },
   ...whiteLabelDefaults,
+  enableTranslation: false,
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
@@ -138,6 +141,7 @@ const Ucsf: WhiteLabelSite = {
     logoSmall: UcsfServiceLogo,
   },
   ...whiteLabelDefaults,
+  enableTranslation: false,
   homePageComponent: 'UcsfHomePage',
   showBanner: false,
   showClinicianAction: true,
