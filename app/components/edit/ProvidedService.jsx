@@ -5,6 +5,8 @@ import EditSchedule from './EditSchedule';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import FormTextArea from './FormTextArea';
 import { AddressListItem } from './EditAddress';
+import EditPatientHandout from './EditPatientHandout';
+import { EditServiceChildCollection } from './EditServiceChildCollection';
 
 import s from './ProvidedService.module.scss';
 
@@ -274,11 +276,23 @@ const ProvidedService = ({
         ))}
 
         <li className="edit--section--list--item">
+          <EditServiceChildCollection
+            initialCollectionData={service.documents}
+            handleCollectionChange={handleChange}
+            CollectionItemComponent={EditPatientHandout}
+            label="Patient Handouts"
+            buttonText="Add Handout"
+            blankItemTemplate={{ service_id: service.id }}
+            propertyKeyName="documents"
+          />
+        </li>
+
+        <li className="edit--section--list--item">
           <FormTextArea
             label="Clinician Actions (Include any COVID Actions)"
-            placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral"
-            value={service?.instructions?.[0]?.instruction ?? ''}
-            setValue={value => handleChange('instructions', [{ instruction: value }])}
+            placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral (markdown is supported)"
+            value={service.instructions?.[0]?.instruction ?? ''}
+            setValue={value => handleChange('instructions', [{ id: service.instructions?.[0]?.id ?? -2, service_id: service.id, instruction: value }])}
           />
         </li>
 
@@ -352,6 +366,7 @@ ProvidedService.propTypes = {
     categories: PropTypes.array,
     notes: PropTypes.array,
     schedule: PropTypes.object,
+    documents: PropTypes.array,
     eligibilities: PropTypes.array,
     email: PropTypes.string,
     instructions: PropTypes.array,
