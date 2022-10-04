@@ -51,24 +51,23 @@
 }
 
 .searchResult {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
-  padding-top: 21px;
-  padding-bottom: 24px;
-  padding-left: 24px;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 25px;
+  justify-items: end;
+  padding: 21px 0 24px 24px;
   border-left: 1px solid $color-grey3;
   border-bottom: 1px solid $color-grey3;
 
   @media screen and (max-width: $break-desktop) {
-    flex-direction: column;
+    gap: 32px;
+    grid-template-columns: none;
+    justify-items: start;
   }
 
   @media screen and (max-width: $break-tablet-l) {
     padding-left: 30px;
   }
-
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
@@ -84,15 +83,6 @@
     border-bottom: 1px solid $color-grey3;
     padding: 24px 0;
   }
-
-  // Todo: Look into replacing this with :last-child
-  // &_addressLast {
-  //   padding-top: 24px;
-  // }
-}
-
-.searchText {
-  flex-grow: 2;
 }
 
 .title {
@@ -115,7 +105,7 @@
 
 .description {
   font-size: 18px;
-  margin: 32px 0;
+  padding-top: 32px;
   a {
     word-break: break-word;
   }
@@ -136,26 +126,11 @@
 }
 
 .sideLinks {
-  flex-shrink: 0;
-  width: auto;
-  @media screen and (min-width: $min-tablet-p) {
-    max-width: 325px;
-  }
-  margin-left: 25px;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
 
-  @media screen and (max-width: $break-desktop) {
-    flex-direction: column;
-    margin-left: 0;
-    margin-right: 0;
-    width: inherit;
-  }
-
   @media screen and (max-width: 600px) {
-    padding-top: 16px;
-    margin-top: 0;
     font-size: 16px;
   }
 }
@@ -172,7 +147,7 @@
 }
 
 .sideLinkText {
-  padding: 0 8px;
+  padding-left: 8px;
   overflow: auto;
 }
 
