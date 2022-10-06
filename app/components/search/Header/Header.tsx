@@ -7,7 +7,7 @@ import { QrCodeModal } from 'components/ui/QrCodeModal/QrCodeModal';
 
 import styles from './Header.module.scss';
 
-const { showHeaderQrCode } = whiteLabel;
+const { showHeaderQrCode, showPrintResultsBtn } = whiteLabel;
 
 export const Header = ({
   resultsTitle,
@@ -25,12 +25,22 @@ export const Header = ({
       <h1 className={styles.title}>{resultsTitle}</h1>
       <Button
         onClick={() => { setQrCodeModalOpen(true); }}
-        addClass={`${styles.qrCodeBtn} ${showHeaderQrCode ? styles.showQrCode : ''}`}
+        addClass={`${styles.qrCodeBtn} ${showHeaderQrCode ? styles.showBtn : ''}`}
         styleType="transparent"
       >
         <>
-          <img src={assetIcon('qr-code')} alt="QR Code" className={styles.qrCodeIcon} />
-          <span className={styles.qrCodeBtnText}>Resource List QR Code</span>
+          <img src={assetIcon('qr-code')} alt="QR code icon" />
+          <span className={styles.btnText}>Resource List QR Code</span>
+        </>
+      </Button>
+      <Button
+        onClick={() => { window.print(); }}
+        addClass={`${styles.printAllBtn} ${showPrintResultsBtn ? styles.showBtn : ''}`}
+        styleType="transparent"
+      >
+        <>
+          <img src={assetIcon('print-blue')} alt="Printer icon" />
+          <span className={styles.btnText}>Print all results</span>
         </>
       </Button>
       <QrCodeModal

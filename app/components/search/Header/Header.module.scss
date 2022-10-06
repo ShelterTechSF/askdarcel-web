@@ -25,10 +25,11 @@
   }
 }
 
+.printAllBtn,
 .qrCodeBtn {
   display: none;
 
-  &.showQrCode {
+  &.showBtn {
     display: block;
 
     @media screen and (max-width: $break-tablet-s) {
@@ -37,7 +38,7 @@
   }
 }
 
-.qrCodeBtnText {
+.btnText {
   font-weight: 600;
   font-size: 16px;
   margin-left: 10px;

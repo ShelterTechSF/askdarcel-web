@@ -157,3 +157,60 @@
     display: block;
   }
 }
+
+@media print {
+  // This below styles are for printing out the results on our service/search results page.
+
+  // This sets visibility hidden on all elements except for the searchResultsContainer
+  // and its children to avoid printing irrelevant sections of the page.
+  // This follows the example of SO this answer https://stackoverflow.com/a/2618980
+  body {
+    visibility: hidden;
+  }
+
+  .searchResultsContainer {
+    visibility: visible;
+  }
+
+  .searchResultsContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 50px auto;
+    width: 700px;
+    display: block;
+  }
+
+  .searchResult {
+    display: block;
+    padding: 20px 0;
+    border-left: 0;
+  }
+
+  .sideLink {
+    display: none;
+    &.showInPrintView {
+      display: block;
+      padding-top: 20px;
+    }
+  }
+
+  :global(.results-map) {
+    display: none;
+  }
+
+  a, button, input, textarea {
+    // In the Firefox print view, input and anchor elements are not hidden due to the transition
+    // delay on changing the visibility value.
+    transition: none !important;
+  }
+
+  a[href]::after {
+    // Our _reset.scss file displays the whole href of a link in the ::after selector.
+    // This is confusing for our service and resource links which are just routes
+    // to other parts of our site or phone numbers. Thus, overriding that here.
+    content: "" !important;
+  }
+}
