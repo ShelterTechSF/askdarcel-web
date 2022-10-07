@@ -39,7 +39,7 @@ const EditSidebar = ({
       type="button"
       className={`${styles.actionButton} ${styles.deactivate}`}
       key="deactive"
-      disabled={submitting}
+      disabled={submitting || resource.status === 'inactive'}
       onClick={() => handleDeactivation('resource', resource.id)}
     >
       Deactivate

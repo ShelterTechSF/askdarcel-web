@@ -35,6 +35,7 @@ export interface Service {
   resource: Organization;
   schedule: Schedule;
   source_attribution: string;
+  status: string;
   updated_at: string;
   url: string | null;
   verified_at: any;

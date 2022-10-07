@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
   ActionBarMobile,
@@ -41,6 +41,9 @@ export const OrganizationListingPage = () => {
   }, [id]);
 
   if (!org) { return <Loader />; }
+  if (org.status === 'inactive') {
+    return <Redirect to="/" />;
+  }
 
   const orgLocations = getOrganizationLocations(org);
   const allActions = getOrganizationActions(org);

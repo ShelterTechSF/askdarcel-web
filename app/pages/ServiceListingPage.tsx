@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import {
   ActionBarMobile,
   ActionSidebar,
@@ -42,6 +42,9 @@ export const ServiceListingPage = () => {
   }, [id]);
 
   if (!service) { return <Loader />; }
+  if (service.status === 'inactive') {
+    return <Redirect to="/" />;
+  }
 
   const { resource, recurringSchedule } = service;
   const locations = getServiceLocations(service, resource, recurringSchedule);
