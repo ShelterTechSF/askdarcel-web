@@ -1,16 +1,16 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import * as typeformEmbed from '@typeform/embed';
+import { createPopup } from '@typeform/embed';
+import '@typeform/embed/build/css/popup.css';
 import { icon as assetIcon } from 'assets';
 
 import styles from './ResourceCard.module.scss';
 
 const openTypeform = (link: string): void => {
-  const typeformReference = typeformEmbed.makePopup(
+  const typeformReference = createPopup(
     link,
     {
-      mode: 'popup',
-      hideFooters: true,
+      hideFooter: true,
     },
   );
   typeformReference.open();
