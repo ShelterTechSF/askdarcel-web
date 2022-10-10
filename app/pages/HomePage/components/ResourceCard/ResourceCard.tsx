@@ -5,7 +5,7 @@ import { icon as assetIcon } from 'assets';
 
 import styles from './ResourceCard.module.scss';
 
-const openTypeform = (event, link) => {
+const openTypeform = (link: string): void => {
   const typeformReference = typeformEmbed.makePopup(
     link,
     {
@@ -16,7 +16,15 @@ const openTypeform = (event, link) => {
   typeformReference.open();
 };
 
-const ResourceCard = ({ resource }) => {
+export interface Resource {
+  link?: string;
+  name?: string;
+  icon?: string;
+  categorySlug?: string;
+  isTypeform?: boolean;
+}
+
+const ResourceCard = ({ resource }: { resource: Resource }) => {
   const {
     link = '', name = '', icon = '', categorySlug, isTypeform = false,
   } = resource;
@@ -28,7 +36,7 @@ const ResourceCard = ({ resource }) => {
   if (isTypeform) {
     anchorTagProps = {
       role: 'button',
-      onClick: e => { openTypeform(e, link); },
+      onClick: () => { openTypeform(link); },
     };
   } else if (categorySlug) {
     anchorTagProps = {
