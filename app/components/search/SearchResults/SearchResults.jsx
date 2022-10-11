@@ -167,12 +167,12 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       />
       <div className={styles.searchText}>
         <div className={styles.title}>
-          <Link to={{ pathname: `/${basePath}/${entryId}` }}>{`${index + 1}. ${hit.name}`}</Link>
+          <Link to={{ pathname: `/${basePath}/${entryId}` }} translate="no">{`${index + 1}. ${hit.name}`}</Link>
         </div>
         <div className={styles.serviceOf}>
-          <Link to={`/organizations/${resourceId}`}>{hit.service_of}</Link>
+          <Link to={`/organizations/${resourceId}`} translate="no">{hit.service_of}</Link>
         </div>
-        <div className={styles.address}>{renderAddressMetadata(hit)}</div>
+        <div className={styles.address} translate="no">{renderAddressMetadata(hit)}</div>
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>

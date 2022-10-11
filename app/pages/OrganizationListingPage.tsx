@@ -72,7 +72,7 @@ export const OrganizationListingPage = () => {
           <div className="org--main--left">
             <header className="org--main--header">
               <div className="org--main--header--title-container">
-                <h1 data-cy="org-page-title" className="org--main--header--title">{org.name}</h1>
+                <h1 data-cy="org-page-title" className="org--main--header--title" translate="no">{org.name}</h1>
                 <MOHCDBadge resource={org} />
               </div>
               <div className="org--main--header--hours">

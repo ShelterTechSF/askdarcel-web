@@ -17,7 +17,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
         <p>updated {service.updated_at}</p>
       </div> */}
       <h2 className="service--header">
-        <a href={`/services/${service.id}`}>
+        <a href={`/services/${service.id}`} translate="no">
           {service.name}
         </a>
       </h2>
