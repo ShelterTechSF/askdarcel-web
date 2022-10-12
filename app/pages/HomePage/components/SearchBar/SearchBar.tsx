@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './SearchBar.module.scss';
 
 export const SearchBar = ({
-  onChange, onSubmit, placeholder, value,
+  onChange, onSubmit = () => {}, placeholder, value,
+}: {
+  onChange: (newValue: string) => void;
+  onSubmit?: () => void;
+  placeholder?: string;
+  value: string;
 }) => (
   <form
     className={styles.form}
@@ -27,15 +31,3 @@ export const SearchBar = ({
     </div>
   </form>
 );
-
-SearchBar.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func,
-  placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-};
-
-SearchBar.defaultProps = {
-  onSubmit: () => {},
-  placeholder: undefined,
-};
