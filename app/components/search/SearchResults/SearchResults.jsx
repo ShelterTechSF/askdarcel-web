@@ -189,8 +189,8 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           )
         }
         { texting }
-        { (whiteLabel.showClinicianAction && !!hit.documents?.length) && clinicianActionsLink }
-        { (whiteLabel.showHandoutsIcon && !!hit.instructions?.length) && handoutsLink }
+        { (whiteLabel.showClinicianAction && !!hit.instructions?.length) && clinicianActionsLink }
+        { (whiteLabel.showHandoutsIcon && !!hit.documents?.length) && handoutsLink }
       </div>
     </div>
   );
