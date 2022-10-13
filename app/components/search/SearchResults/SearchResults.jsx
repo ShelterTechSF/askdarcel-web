@@ -40,7 +40,12 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
     if (centerCoords) {
       googleMapObject.setCenter(centerCoords);
     }
-  }, [centerCoords]);
+    document.body.classList.add('searchResultsPage');
+    return () => {
+      document.body.classList.remove('searchResultsPage');
+    };
+  }, []);
+
   return (
     <div className={styles.searchResultsAndMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
