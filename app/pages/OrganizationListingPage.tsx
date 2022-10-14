@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import qs from 'qs';
 import {
   ActionBarMobile,
   ActionSidebar,
@@ -33,6 +34,9 @@ export const OrganizationListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [org, setOrg] = useState<Organization|null>(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const { search } = useLocation();
+  const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
+  const { visitDeactivated } = searchState;
 
   useEffect(() => {
     fetchOrganization(id)
@@ -41,7 +45,7 @@ export const OrganizationListingPage = () => {
   }, [id]);
 
   if (!org) { return <Loader />; }
-  if (org.status === 'inactive') {
+  if (org.status === 'inactive' && !visitDeactivated) {
     return <Redirect to="/" />;
   }
 

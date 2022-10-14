@@ -10,7 +10,7 @@ const Translate = () => {
           <script type="text/javascript">
             {`
               function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es,tl,zh-TW'}, 'google_translate_element');
+                new google.translate.TranslateElement({includedLanguages: 'en,es,tl,zh-TW'}, 'google_translate_element');
               }
             `}
           </script>

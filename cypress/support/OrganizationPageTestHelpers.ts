@@ -7,5 +7,5 @@ export class OrganizationPageTestHelpers {
   ORG_SERVICES_LIST_ITEM = '[data-cy="service-list-item"]'
   NOTES_SECTION = '[data-cy="notes-section"]'
 
-  url = (orgId: number) => `/organizations/${orgId}`
+  url = (orgId: number) => `/organizations/${orgId}?visitDeactivated=true`
 }

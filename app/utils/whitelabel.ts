@@ -30,6 +30,7 @@ interface WhiteLabelSite {
   showHandoutsIcon: boolean;
   showHeaderQrCode: boolean;
   showMobileNav: boolean;
+  showPrintResultsBtn: boolean;
   showSearch: boolean;
   siteNavStyle: string;
   siteUrl: string;
@@ -58,6 +59,7 @@ const whiteLabelDefaults = {
   intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
+  showPrintResultsBtn: true,
   showBanner: true,
   showClinicianAction: false,
   showHandoutsIcon: false,
@@ -92,6 +94,7 @@ const SFFamilies: WhiteLabelSite = {
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
   showMobileNav: false,
+  showPrintResultsBtn: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: 'https://sffamilies.sfserviceguide.org/',
@@ -147,6 +150,7 @@ const Ucsf: WhiteLabelSite = {
   showClinicianAction: true,
   showHandoutsIcon: true,
   showHeaderQrCode: true,
+  showPrintResultsBtn: false,
   siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
   title: 'UCSF Outpatient Services',
 } as const;

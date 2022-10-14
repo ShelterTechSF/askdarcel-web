@@ -40,20 +40,18 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
     if (centerCoords) {
       googleMapObject.setCenter(centerCoords);
     }
-  }, [centerCoords]);
+    document.body.classList.add('searchResultsPage');
+    return () => {
+      document.body.classList.remove('searchResultsPage');
+    };
+  }, []);
+
   return (
     <div className={styles.searchResultsAndMapContainer}>
       <div className={`${styles.searchResultsContainer} ${expandList ? styles.expandList : ''}`}>
         <div className={`${styles.noResultsMessage} ${(hits && hits.length) ? styles.hidden : ''}`}>
           No results found in your area. Try a different location, category, or search term.
         </div>
-
-        {/* <div className={styles.searchResultsTopShadow}></div> */}
-        {/*
-        // todo: to be included as part of next stage of multiple location work
-        <button className={styles.expandListSlider} onClick={() => setExpandList(!expandList)}>
-          SLIDER HERE
-        </button> */}
         { hits.map((hit, index) => (
           <SearchResult
             hit={hit}
@@ -179,7 +177,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         {
           phoneNumber
           && (
-            <div className={styles.sideLink}>
+            <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
               <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
               <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
             </div>
