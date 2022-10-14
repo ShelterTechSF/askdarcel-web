@@ -11,7 +11,7 @@ export class ServicePageTestHelpers {
   BUTTON_PRINT = '.action-sidebar--print'
   BUTTON_DIRECTIONS = '.action-sidebar--directions'
 
-  url = (serviceId: number) => `/services/${serviceId}`
+  url = (serviceId: number) => `/services/${serviceId}?visitDeactivated=true`
 
   scheduleDayChangeRequestBody = (
     schedule_id: number,

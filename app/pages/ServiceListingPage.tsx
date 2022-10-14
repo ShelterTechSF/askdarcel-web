@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Helmet } from 'react-helmet-async';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, useLocation } from 'react-router-dom';
+import qs from 'qs';
 import {
   ActionBarMobile,
   ActionSidebar,
@@ -34,6 +35,9 @@ export const ServiceListingPage = () => {
   const [service, setService] = useState<Service | null>(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const details = useMemo(() => (service ? generateServiceDetails(service) : []), [service]);
+  const { search } = useLocation();
+  const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
+  const { visitDeactivated } = searchState;
 
   useEffect(() => {
     fetchService(id)
@@ -42,7 +46,7 @@ export const ServiceListingPage = () => {
   }, [id]);
 
   if (!service) { return <Loader />; }
-  if (service.status === 'inactive') {
+  if (service.status === 'inactive' && !visitDeactivated) {
     return <Redirect to="/" />;
   }
 
