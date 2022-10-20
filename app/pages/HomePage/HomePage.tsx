@@ -23,35 +23,6 @@ const covidResources = [
   { name: 'Resources for Domestic Violence Survivors', icon: 'warning', categorySlug: 'domestic-violence-resources' },
 ];
 
-const generalResources = [{
-  name: 'Family Homelessness',
-  icon: 'family',
-  link: 'https://sheltertech.typeform.com/to/GFEzl2',
-  isTypeform: true,
-}, {
-  name: 'Youth Homelessness',
-  icon: 'care',
-  link: 'https://sheltertech.typeform.com/to/mXv584',
-  isTypeform: true,
-}, {
-  name: 'Adult Homelessness',
-  icon: 'shelter',
-  link: 'https://sheltertech.typeform.com/to/KXi3Pp',
-  isTypeform: true,
-},
-{
-  name: 'Eviction Prevention',
-  icon: 'eviction-prevention',
-  link: 'https://sheltertech.typeform.com/to/UpboWbGi',
-  isTypeform: true,
-},
-{
-  name: 'Affordable Housing',
-  icon: 'housing',
-  link: 'https://sheltertech.typeform.com/to/X16WX6wE',
-  isTypeform: true,
-}];
-
 export const HomePage = () => {
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState('');
@@ -74,12 +45,6 @@ export const HomePage = () => {
         title="Find essential services in San Francisco"
       >
         <ResourceList resources={covidResources} />
-      </HomePageSection>
-      <HomePageSection
-        title="Get step-by-step help"
-        description="Get guided help with many of the most common issues people are facing in San Francisco."
-      >
-        <ResourceList resources={generalResources} />
       </HomePageSection>
       <HomePageSection
         title="Browse Directory"

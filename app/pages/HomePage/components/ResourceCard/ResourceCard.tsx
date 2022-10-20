@@ -1,44 +1,26 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { createPopup } from '@typeform/embed';
-import '@typeform/embed/build/css/popup.css';
 import { icon as assetIcon } from 'assets';
 
 import styles from './ResourceCard.module.scss';
-
-const openTypeform = (link: string): void => {
-  const typeformReference = createPopup(
-    link,
-    {
-      hideFooter: true,
-    },
-  );
-  typeformReference.open();
-};
 
 export interface Resource {
   link?: string;
   name?: string;
   icon?: string;
   categorySlug?: string;
-  isTypeform?: boolean;
 }
 
 const ResourceCard = ({ resource }: { resource: Resource }) => {
   const {
-    link = '', name = '', icon = '', categorySlug, isTypeform = false,
+    link = '', name = '', icon = '', categorySlug,
   } = resource;
 
   const history = useHistory();
 
   let anchorTagProps;
 
-  if (isTypeform) {
-    anchorTagProps = {
-      role: 'button',
-      onClick: () => { openTypeform(link); },
-    };
-  } else if (categorySlug) {
+  if (categorySlug) {
     anchorTagProps = {
       role: 'button',
       onClick: () => history.push(`/${categorySlug}/form`),
