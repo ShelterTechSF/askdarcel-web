@@ -87,6 +87,10 @@ describe('Organization Page', () => {
       // the alias to #wait method below to delay test execution until the request has returned
       cy.intercept('GET', `/api/resources/${orgId}`).as('getResourceData');
       cy.request<{ services: Service[] }>('POST', `/api/resources/${orgId}/services`, { services: newServices }).its('status').should('eq', 201);
+      // In Cypress' headless environment, Google Translate is intermittently throwing an uncaught
+      // exception in this block and causing the tests to fail. The below disables Cypress' uncaught
+      // exception event to avoid this problem. See: https://github.com/cypress-io/cypress/issues/2554
+      cy.on('uncaught:exception', () => false);
       cy.reload(true)
         .wait('@getResourceData').its('response.statusCode').should('eq', 200)
         .get(page.ORG_SERVICES_SECTION).should('contain.text', 'Services')
