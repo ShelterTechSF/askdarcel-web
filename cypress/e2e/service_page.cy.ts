@@ -38,6 +38,10 @@ describe('Service Page', () => {
   });
 
   it('should render the locations and hours section, then add and remove a schedule_day', () => {
+    // In Cypress' headless environment, Google Translate is intermittently throwing an uncaught
+    // exception in this block and causing the tests to fail. The below disables Cypress' uncaught
+    // exception event to avoid this problem. See: https://github.com/cypress-io/cypress/issues/2554
+    cy.on('uncaught:exception', () => false);
     // Check the hours section renders, and that a newly added schedule shows up
     cy.visit(page.url(serviceId));
       // Intercept client's AJAX request to services endpoint and alias as "getServiceData". Pass
