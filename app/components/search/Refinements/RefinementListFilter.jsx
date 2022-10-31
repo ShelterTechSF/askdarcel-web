@@ -12,8 +12,7 @@ const RefinementListFilter = ({ items, refine }) => (
           className={styles.refinementInput}
           type="checkbox"
           checked={item.isRefined}
-          onChange={e => {
-            e.preventDefault();
+          onChange={() => {
             refine(item.value);
           }}
         />
