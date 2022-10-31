@@ -1,3 +1,8 @@
+export interface TagType {
+  tag: string;
+  selected: boolean;
+}
+
 export const TAG_LIST = [
   {
     tag: 'Contact Information',
@@ -23,7 +28,8 @@ export const TAG_LIST = [
     tag: 'Other',
     selected: false,
   },
-].map(tag => Object.freeze(tag));
+] as const;
 
-export const UPVOTE = 'upvote';
-export const DOWNVOTE = 'downvote';
+export type VoteType = 'upvote' | 'downvote' | 'neither';
+export type StepState = 'start' | 'tags' | 'review';
+export type SubmittedState = 'submitting' | 'submitted' | null;

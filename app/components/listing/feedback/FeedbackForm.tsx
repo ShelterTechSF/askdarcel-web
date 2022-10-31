@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { cloneDeep } from 'lodash';
 import { icon } from 'assets';
-import { TAG_LIST, DOWNVOTE } from './constants';
+import { TAG_LIST } from './constants';
+import type {
+  StepState, SubmittedState, TagType, VoteType,
+} from './constants';
+import { Organization, Service } from '../../../models';
 import { addFeedback } from '../../../utils/DataService';
 import {
   VoteButtons,
@@ -12,13 +16,17 @@ import {
 } from './FeedbackSteps';
 import styles from './FeedbackForm.module.scss';
 
-export const FeedbackForm = ({ service, resource, closeModal }) => {
-  const [vote, setVote] = useState('neither');
-  const [tagOptions, setTags] = useState(TAG_LIST);
+export const FeedbackForm = ({ service, resource, closeModal }: {
+  service?: Service;
+  resource: Organization;
+  closeModal: () => void;
+}) => {
+  const [vote, setVote] = useState<VoteType>('neither');
+  const [tagOptions, setTags] = useState<readonly TagType[]>(TAG_LIST);
   const [review, setReview] = useState('');
-  const [step, setStep] = useState('start');
-  const [isSubmitted, setIsSubmitted] = useState(null);
-  const handleVoteChange = voteType => {
+  const [step, setStep] = useState<StepState>('start');
+  const [isSubmitted, setIsSubmitted] = useState<SubmittedState>(null);
+  const handleVoteChange = (voteType: VoteType) => {
     setStep('start');
     setVote(voteType);
   };
@@ -28,23 +36,23 @@ export const FeedbackForm = ({ service, resource, closeModal }) => {
    *
    * @param {int} pos - position of tag in array of tagOptions.
   */
-  const toggleSelectedTag = pos => {
+  const toggleSelectedTag = (pos: number) => {
     const updatedTags = cloneDeep(tagOptions);
     updatedTags[pos].selected = !updatedTags[pos].selected;
     setTags(updatedTags);
   };
 
-  const handleReviewChange = e => {
+  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setReview(e.target.value);
   };
 
   const handleNextStep = () => (
-    (vote === DOWNVOTE && step === 'start') ? setStep('tags') : setStep('review')
+    (vote === 'downvote' && step === 'start') ? setStep('tags') : setStep('review')
   );
 
   const handlePrevStep = () => (
-    (vote === DOWNVOTE && step === 'review') ? setStep('tags') : setStep('start')
+    (vote === 'downvote' && step === 'review') ? setStep('tags') : setStep('start')
   );
 
   const handleSubmit = () => {
@@ -72,10 +80,11 @@ export const FeedbackForm = ({ service, resource, closeModal }) => {
 
   const isReviewRequired = (
     tagOptions.some(({ tag, selected }) => tag === 'Other' && selected)
-    && vote === DOWNVOTE
+    && vote === 'downvote'
   );
 
   const STEPS = {
+    start: null,
     tags: (
       <FeedbackTags tagOptions={tagOptions} onSelectTag={toggleSelectedTag} />
     ),
@@ -93,7 +102,7 @@ export const FeedbackForm = ({ service, resource, closeModal }) => {
       <div
         className={styles.closeModal}
         role="button"
-        tabIndex="0"
+        tabIndex={0}
         onClick={closeModal}
       >
         <img src={icon('close')} alt="close" />
