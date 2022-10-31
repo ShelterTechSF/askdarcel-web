@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { eligibilitiesMapping, categoriesMapping } from 'utils/refinementMappings';
 import ClearAllFilters from 'components/search/Refinements/ClearAllFilters';
 import OpenNowFilter from 'components/search/Refinements/OpenNowFilter';
 import RefinementListFilter from 'components/search/Refinements/RefinementListFilter';
 import FacetRefinementList from 'components/search/Refinements/FacetRefinementList';
+import { eligibilityMap as ucsfEligibilityMap } from 'pages/UcsfClientEligibilityPage/ucsfEligibilitiesMap';
 
 import filtersIcon from 'assets/img/filters-icon.png';
 import styles from './Sidebar.module.scss';
 
 const Sidebar = ({
   setSearchRadius, searchRadius, isSearchResultsPage,
-  eligibilities = [], subcategories = [], subcategoryNames = [],
+  eligibilities = [], categorySlug = '', subcategories = [], subcategoryNames = [],
 }: {
   setSearchRadius: (radius: any) => void;
   searchRadius: string;
   isSearchResultsPage: boolean;
   eligibilities?: object[];
+  categorySlug?: string;
   subcategories?: object[];
   subcategoryNames?: string[];
 }) => {
@@ -28,6 +30,17 @@ const Sidebar = ({
     setSearchRadius(evt.target.value);
   };
 
+  const eligibilityNames = useMemo(() => {
+    // This var holds a set of eligibility names pertaining to a given whitelabeled category. This
+    // set can be used to filter the collection of eligibilities returned by Algolia in cases where
+    // we only want to display a specific list of eligibilities for said whitelabeled category.
+
+    // Currently, this is only set up to work with UCSF, but can be expanded upon in the future.
+    const resourceEligibilityGroups = ucsfEligibilityMap?.[categorySlug] ?? [];
+    const flatEligibilities = resourceEligibilityGroups.flatMap(group => (group.eligibilities));
+    return flatEligibilities.map(eligibility => eligibility.name);
+  }, []);
+
   // Currently, the Search Results Page uses generic categories/eligibilities while the
   // Service Results Page uses COVID-specific categories. This logic determines which
   // of these to use as based on the isSearchResultsPage value
@@ -35,9 +48,24 @@ const Sidebar = ({
     categoryRefinementJsx = <FacetRefinementList attribute="categories" limit={100} mapping={categoriesMapping} />;
     eligibilityRefinementJsx = <FacetRefinementList attribute="eligibilities" limit={100} mapping={eligibilitiesMapping} />;
   } else {
+    const transformEligibilities = (items: any) => {
+      let itemsList = items;
+      if (eligibilityNames.length > 0) {
+        itemsList = items.filter(({ label }: { label: string }) => (
+          eligibilityNames.includes(label)));
+      }
+
+      return itemsList.sort(orderByLabel);
+    };
+
     // Service Results Page
     if (eligibilities.length) {
-      eligibilityRefinementJsx = <RefinementListFilter attribute="eligibilities" transformItems={items => items.sort(orderByLabel)} />;
+      eligibilityRefinementJsx = (
+        <RefinementListFilter
+          attribute="eligibilities"
+          transformItems={transformEligibilities}
+        />
+      );
     }
     if (subcategories.length) {
       categoryRefinementJsx = (

@@ -140,7 +140,6 @@ export const App = () => {
               {/* UCSF white label paths */}
               <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
               <Route exact path="/service-type" component={UcsfServiceTypePage} />
-              <Route exact path="/suggested-resources" component={ServiceDiscoveryResults} />
 
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />
