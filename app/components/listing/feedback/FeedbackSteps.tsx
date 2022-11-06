@@ -1,28 +1,33 @@
 import React from 'react';
 
 import { icon } from 'assets';
-import { UPVOTE, DOWNVOTE } from './constants';
+import type {
+  SubmittedState, StepState, TagType, VoteType,
+} from './constants';
 import styles from './FeedbackSteps.module.scss';
 
-export const VoteButtons = ({ vote, onVoteChange }) => (
+export const VoteButtons = ({ vote, onVoteChange }: {
+  vote: VoteType;
+  onVoteChange: (v: VoteType) => void;
+}) => (
   <>
     <div className={`${styles.stepsPrompt} ${styles.votePrompt}`}>
       How was your experience on this site?
     </div>
     <div className={styles.voteIcons}>
-      <div onClick={() => onVoteChange(UPVOTE)} role="button" tabIndex="-1">
+      <div onClick={() => onVoteChange('upvote')} role="button" tabIndex={-1}>
         <img
-          src={icon(`upvote${vote === UPVOTE ? '-active' : ''}`)}
+          src={icon(`upvote${vote === 'upvote' ? '-active' : ''}`)}
           alt="upvote"
         />
       </div>
       <div
-        onClick={() => onVoteChange(DOWNVOTE)}
+        onClick={() => onVoteChange('downvote')}
         role="button"
-        tabIndex="-2"
+        tabIndex={-2}
       >
         <img
-          src={icon(`downvote${vote === DOWNVOTE ? '-active' : ''}`)}
+          src={icon(`downvote${vote === 'downvote' ? '-active' : ''}`)}
           alt="downvote"
         />
       </div>
@@ -30,7 +35,10 @@ export const VoteButtons = ({ vote, onVoteChange }) => (
   </>
 );
 
-export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
+export const FeedbackTags = ({ tagOptions, onSelectTag }: {
+  tagOptions: readonly TagType[];
+  onSelectTag: (i: number) => void;
+}) => (
   <div className={styles.feedbackTags}>
     <div className={styles.stepsPrompt}>What can be improved?</div>
     <div className={styles.feedbackTagsContainer}>
@@ -40,7 +48,7 @@ export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
           <div
             key={tag}
             role="button"
-            tabIndex="0"
+            tabIndex={0}
             className={`${styles.feedbackTag} ${selectedStyle}`}
             onClick={() => onSelectTag(pos)}
           >
@@ -52,14 +60,17 @@ export const FeedbackTags = ({ tagOptions, onSelectTag }) => (
   </div>
 );
 
-export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
+export const Review = ({ reviewValue, onReviewChange, isReviewRequired }: {
+  reviewValue: string;
+  onReviewChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  isReviewRequired: boolean;
+}) => (
   <div className={styles.feedbackReview}>
     <div className={styles.stepsPrompt}>
       Please provide your feedback below:
     </div>
     <textarea
       className={styles.feedbackTextarea}
-      type="text"
       placeholder={`Type your feedback here ${
         !isReviewRequired ? '(optional)' : ''
       }`}
@@ -69,7 +80,7 @@ export const Review = ({ reviewValue, onReviewChange, isReviewRequired }) => (
   </div>
 );
 
-export const SubmitMessage = ({ closeModal }) => (
+export const SubmitMessage = ({ closeModal }: {closeModal: () => void}) => (
   <>
     <div className={styles.feedbackSubmitHeader}>
       Thank you for your feedback!
@@ -91,6 +102,14 @@ export const NavigationButtons = ({
   onSubmit,
   isReviewRequired,
   isSubmitted,
+}: {
+  step: StepState;
+  vote: VoteType;
+  onPrevStep: () => void;
+  onNextStep: () => void;
+  onSubmit: () => void;
+  isReviewRequired: boolean;
+  isSubmitted: SubmittedState;
 }) => (
   <div className={styles.navButtonsContainer}>
     {step !== 'start' && (
