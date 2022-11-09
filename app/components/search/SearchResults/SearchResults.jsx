@@ -142,6 +142,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
+  const showDischargeSidelinks = whiteLabel.showClinicianAction && whiteLabel.showHandoutsIcon;
   // Href structure varies depending on whether the hit is a resource or location
   let basePath = 'organizations';
   let entryId = resourceId;
@@ -174,11 +175,11 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
-        <div>
+        <div className={showDischargeSidelinks ? '' : styles.hideDischargeSidelinks}>
           { (whiteLabel.showClinicianAction && !!hit.instructions?.length) && clinicianActionsLink }
           { (whiteLabel.showHandoutsIcon && !!hit.documents?.length) && handoutsLink }
         </div>
-        <div className={`${whiteLabel.showClinicianAction ? styles.deemphasizedSideLinks : ''}`}>
+        <div className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ''}>
           {
             phoneNumber
             && (

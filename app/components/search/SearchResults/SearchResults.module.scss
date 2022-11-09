@@ -142,8 +142,12 @@
   cursor: pointer;
 }
 
-.deemphasizedSideLinks {
+.deemphasizeSideLinks {
   font-weight: 400;
+}
+
+.hideDischargeSidelinks {
+  display: none;
 }
 
 .sideLinkIcon {
