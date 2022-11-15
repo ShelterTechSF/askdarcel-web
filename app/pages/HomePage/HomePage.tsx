@@ -21,6 +21,7 @@ const covidResources = [
   { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' },
   { name: 'LGBTQ+ Resources', icon: 'community', categorySlug: 'lgbtq-resources' },
   { name: 'Resources for Domestic Violence Survivors', icon: 'warning', categorySlug: 'domestic-violence-resources' },
+  { name: 'Substance Use Resources', icon: 'hospital', categorySlug: 'substance-use-resources' },
 ];
 
 export const HomePage = () => {
