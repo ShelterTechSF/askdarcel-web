@@ -15,7 +15,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Covid-food',
     id: '1000001',
-    name: 'Food resources',
+    name: 'Food Resources',
     slug: 'food-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
@@ -23,7 +23,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Covid-hygiene',
     id: '1000002',
-    name: 'Hygiene resources',
+    name: 'Hygiene Resources',
     slug: 'hygiene-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
@@ -55,7 +55,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Covid-finance',
     id: '1000003',
-    name: 'Financial',
+    name: 'Financial Resources',
     slug: 'financial-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
@@ -87,7 +87,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Covid-shelter',
     id: '1000010',
-    name: 'Shelter resources',
+    name: 'Shelter Resources',
     slug: 'shelter-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
@@ -101,9 +101,17 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   {
+    algoliaCategoryName: 'Covid-substanceuse',
+    id: '1000012',
+    name: 'Substance Use Resources',
+    slug: 'substance-use-resources',
+    steps: ['subcategories', 'results'],
+    subcategorySubheading: defaultSubheading,
+  },
+  {
     algoliaCategoryName: 'Ucsf-mentalhealth',
     id: '2000001',
-    name: 'Mental health resources',
+    name: 'Mental Health Resources',
     slug: 'ucsf-mental-health-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
@@ -111,7 +119,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Ucsf-shelter',
     id: '2000002',
-    name: 'Shelter resources',
+    name: 'Shelter Resources',
     slug: 'ucsf-shelter-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
@@ -119,7 +127,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
     algoliaCategoryName: 'Ucsf-substanceuse',
     id: '2000003',
-    name: 'Substance use resources',
+    name: 'Substance Use Resources',
     slug: 'ucsf-substance-use-resources',
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
