@@ -22,7 +22,7 @@ interface UcsfEligibilityMap {
 }
 
 /* eslint-disable object-curly-newline */
-export const eligibilityMap: UcsfEligibilityMap = {
+export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
   'ucsf-mental-health-resources': [
     {
       label: 'Age and Dependents',

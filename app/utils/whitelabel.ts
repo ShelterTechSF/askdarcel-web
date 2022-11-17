@@ -89,7 +89,7 @@ const SFFamilies: WhiteLabelSite = {
     logoSmall: SFFamiliesLogo,
   },
   ...whiteLabelDefaults,
-  enableTranslation: false,
+  enableTranslation: true,
   logoLinkDestination: 'https://www.sffamilies.org/',
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
