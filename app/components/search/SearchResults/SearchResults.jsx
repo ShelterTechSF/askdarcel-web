@@ -176,8 +176,8 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       </div>
       <div className={styles.sideLinks}>
         <div className={showDischargeSidelinks ? '' : styles.hideDischargeSidelinks}>
-          { (whiteLabel.showClinicianAction && !!hit.instructions?.length) && clinicianActionsLink }
-          { (whiteLabel.showHandoutsIcon && !!hit.documents?.length) && handoutsLink }
+          { (!!hit.instructions?.length) && clinicianActionsLink }
+          { (!!hit.documents?.length) && handoutsLink }
         </div>
         <div className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ''}>
           {
