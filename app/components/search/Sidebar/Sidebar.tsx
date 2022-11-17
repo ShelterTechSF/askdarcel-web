@@ -35,8 +35,14 @@ const Sidebar = ({
     // set can be used to filter the collection of eligibilities returned by Algolia in cases where
     // we only want to display a specific list of eligibilities for said whitelabeled category.
 
-    // Currently, this is only set up to work with UCSF, but can be expanded upon in the future.
-    const resourceEligibilityGroups = ucsfEligibilityMap?.[categorySlug] ?? [];
+    // This only accepts UCSF specific slugs because UCSF is currently the only whitelabel that
+    // has a defined and limited set of eligibility filters. In the future, we can create a
+    // universal map of slugs to eligibility sets across all whitelabels.
+    const resourceEligibilityGroups = ucsfEligibilityMap[categorySlug];
+    if (!resourceEligibilityGroups) {
+      return [];
+    }
+
     const flatEligibilities = resourceEligibilityGroups.flatMap(group => (group.eligibilities));
     return flatEligibilities.map(eligibility => eligibility.name);
   }, []);
@@ -48,10 +54,10 @@ const Sidebar = ({
     categoryRefinementJsx = <FacetRefinementList attribute="categories" limit={100} mapping={categoriesMapping} />;
     eligibilityRefinementJsx = <FacetRefinementList attribute="eligibilities" limit={100} mapping={eligibilitiesMapping} />;
   } else {
-    const transformEligibilities = (items: any) => {
+    const transformEligibilities = (items: { label: string }[]) => {
       let itemsList = items;
       if (eligibilityNames.length > 0) {
-        itemsList = items.filter(({ label }: { label: string }) => (
+        itemsList = items.filter(({ label }) => (
           eligibilityNames.includes(label)));
       }
 
@@ -71,8 +77,8 @@ const Sidebar = ({
       categoryRefinementJsx = (
         <RefinementListFilter
           attribute="categories"
-          transformItems={(items: any) => items
-            .filter(({ label }: { label: string }) => subcategoryNames.includes(label))
+          transformItems={(items: { label: string }[]) => items
+            .filter(({ label }) => subcategoryNames.includes(label))
             .sort(orderByLabel)}
         />
       );
