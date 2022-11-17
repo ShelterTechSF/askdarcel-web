@@ -142,6 +142,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const url = hit.url || hit.website;
   const serviceId = hit.service_id;
   const resourceId = hit.resource_id;
+  const showDischargeSidelinks = whiteLabel.showClinicianAction && whiteLabel.showHandoutsIcon;
   // Href structure varies depending on whether the hit is a resource or location
   let basePath = 'organizations';
   let entryId = resourceId;
@@ -174,28 +175,32 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         <ReactMarkdown className={`rendered-markdown ${styles.description}`} source={hit.long_description} linkTarget="_blank" />
       </div>
       <div className={styles.sideLinks}>
-        {
-          phoneNumber
-          && (
-            <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
-              <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
-              <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
-            </div>
-          )
-        }
-        <div />
-        {
-          url
-          && (
-            <div className={styles.sideLink}>
-              <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
-              <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Go to website</a>
-            </div>
-          )
-        }
-        { texting }
-        { (whiteLabel.showClinicianAction && !!hit.instructions?.length) && clinicianActionsLink }
-        { (whiteLabel.showHandoutsIcon && !!hit.documents?.length) && handoutsLink }
+        <div className={showDischargeSidelinks ? '' : styles.hideDischargeSidelinks}>
+          { (!!hit.instructions?.length) && clinicianActionsLink }
+          { (!!hit.documents?.length) && handoutsLink }
+        </div>
+        <div className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ''}>
+          {
+            phoneNumber
+            && (
+              <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
+                <img src={icon('phone-blue')} alt="phone" className={styles.sideLinkIcon} />
+                <a href={`tel:${phoneNumber}`} className={styles.sideLinkText}>{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
+              </div>
+            )
+          }
+          <div />
+          {
+            url
+            && (
+              <div className={styles.sideLink}>
+                <img src={icon('popout-blue')} alt="website" className={styles.sideLinkIcon} />
+                <a target="_blank" rel="noopener noreferrer" href={url} className={styles.sideLinkText}>Go to website</a>
+              </div>
+            )
+          }
+          { texting }
+        </div>
       </div>
     </div>
   );
