@@ -37,41 +37,25 @@ const ClientEligibilities = ({
     eligibility: Eligibility,
     eligibilities: Eligibility[],
   ) => {
-    const seeAllEligibilityItem = eligibilities.find(e => e.isSeeAll);
+    const seeAllEligibilityItem = eligibilities.find(e => e.isSeeAll)!;
     const newValue = !selectedEligibilities[eligibility.checkedId];
+    const updatedEligibilities = { ...selectedEligibilities, [eligibility.checkedId]: newValue };
 
-    if (eligibility.isSeeAll) {
-      // Check or uncheck all boxes in accordance with "See All" checked value
-      massToggleGroupEligibilities(eligibilities, newValue);
-    } else {
-      const updatedEligibilities = {
-        ...selectedEligibilities,
-        [eligibility.checkedId]: newValue,
-      };
-
-      // If new checked value is false, uncheck "See All" box as well
-      if (!newValue && seeAllEligibilityItem) {
+    if (newValue) {
+      if (eligibility.isSeeAll) {
+        // If "See All" is target refinement, deselect all other eligibilities. This is done because
+        // showing all services requires that we do not include any refinements in our query
+        eligibilities.forEach(el => {
+          updatedEligibilities[el.checkedId] = false;
+        });
+      } else {
+        // If new refinement will be checked, uncheck "See All" box since now the query will include
+        // refinements
         updatedEligibilities[seeAllEligibilityItem.checkedId] = false;
       }
-
-      setSelectedEligibilities(updatedEligibilities);
     }
-  };
 
-  // Toggles all eligibilities in accordance with the toggleState argument
-  const massToggleGroupEligibilities = (
-    eligibilities: Eligibility[],
-    toggleState: boolean,
-  ) => {
-    const updatedEligibilities = {
-      ...selectedEligibilities,
-    };
-
-    eligibilities.forEach(eligibility => {
-      updatedEligibilities[eligibility.checkedId] = toggleState;
-    });
-
-    setSelectedEligibilities(updatedEligibilities);
+    setSelectedEligibilities({ ...updatedEligibilities, [eligibility.checkedId]: newValue });
   };
 
   return (
