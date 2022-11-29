@@ -32,31 +32,23 @@ const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcate
   const handleSubcategoryClick = (targetSubcategoryId: number) => {
     const seeAllIsTargetElement = targetSubcategoryId === seeAllPseudoId;
     const newValue = !selectedSubcategories[targetSubcategoryId];
-    if (seeAllIsTargetElement) {
-      // Check or uncheck all boxes in accordance with "See All" checked value
-      massUpdateSelectedSubcategories(newValue);
-    } else {
-      const updatedSubcategories = {
-        ...selectedSubcategories,
-        [targetSubcategoryId]: newValue,
-      };
+    const updatedSubcategories = { ...selectedSubcategories };
 
-      // If new checked value is false, uncheck "See All" box as well
-      if (!newValue) {
+    if (newValue) {
+      if (seeAllIsTargetElement) {
+        // If "See All" is target refinement, deselect all other subcategories. This is done because
+        // showing all services requires that we do not include any refinements in our query
+        subcategories.forEach(category => {
+          updatedSubcategories[category.id] = false;
+        });
+      } else {
+        // If new refinement will be checked, uncheck "See All" box since now the query will include
+        // refinements
         updatedSubcategories[seeAllPseudoId] = false;
       }
-
-      setSelectedSubcategories(updatedSubcategories);
     }
-  };
 
-  const massUpdateSelectedSubcategories = (newValue: boolean) => {
-    const massUpdatedSubcategories: SelectedSubcategories = {};
-    subcategories.forEach(category => {
-      massUpdatedSubcategories[category.id] = newValue;
-    });
-
-    setSelectedSubcategories(massUpdatedSubcategories);
+    setSelectedSubcategories({ ...updatedSubcategories, [targetSubcategoryId]: newValue });
   };
 
   return (
