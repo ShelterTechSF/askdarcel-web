@@ -109,4 +109,14 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
       ],
     },
   ],
+
+  'ucsf-food-insecurity-resources': [
+    {
+      label: 'Age and Dependents',
+      eligibilities: [
+        { isSeeAll: true, checkedId: '31', name: 'See All', checked: false },
+        { isSeeAll: false, checkedId: '32', name: 'I am a Senior', checked: false },
+      ],
+    },
+  ],
 };
