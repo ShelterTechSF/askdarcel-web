@@ -12,7 +12,9 @@ import { simpleScheduleLookup, createScheduleFromShorthand } from '../../../page
 // Savings.
 
 describe('<RelativeOpeningTimes />', () => {
-  const getNamedSchedule = name => createScheduleFromShorthand([simpleScheduleLookup[name]])[0];
+  const getNamedSchedule = (name: keyof typeof simpleScheduleLookup) => (
+    createScheduleFromShorthand([simpleScheduleLookup[name]])[0]
+  );
 
   it('should display "open 24/7" for a schedule with every day open', () => {
     const recurringSchedule = getNamedSchedule('twenty_four_seven');

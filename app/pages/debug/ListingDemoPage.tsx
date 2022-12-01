@@ -8,6 +8,10 @@ import {
 } from '../../models';
 import './ListingDemoPage.scss';
 
+type Interval = readonly [number, number];
+type DaySchedule = null | Interval | readonly Interval[];
+type WeekSchedule = readonly DaySchedule[];
+
 // Is sorted so that the first day is today
 /* eslint-disable max-len */
 export const simpleScheduleLookup = {
@@ -24,29 +28,41 @@ export const simpleScheduleLookup = {
   random7: [[1000, 2300], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], null],
   random8: [[[2330, 1200], [1800, 2000], [2200, 2359]], null, [0, 2359], [0, 2359], [0, 2359], [0, 2359], [900, 2200]],
   closes_tomorrow: [[1800, 900], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [0, 2359], [[0, 900], [1100, 1800], [1900, 2300]]],
-};
+} as const;
 /* eslint-enable max-len */
 
 const simpleSchedules = Object.values(simpleScheduleLookup);
 
-export const createScheduleFromShorthand = shedule_shorthand => {
+/** Return true if x is an Interval[]; false if it is only an Interval.
+ *
+ * This is a user-defined type guard, since TypeScript is unable to infer the
+ * correct type normally.
+ *
+ * For more information on user-defined type guards, see:
+ * https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
+ */
+function isIntervalArray(x: Interval | readonly Interval[]): x is readonly Interval[] {
+  return Array.isArray(x[0]);
+}
+
+export const createScheduleFromShorthand = (shedule_shorthand: WeekSchedule[]) => {
   const today = new Date().getDay();
   const schedules = shedule_shorthand.map(shorthandSchedule => {
     const intervals = shorthandSchedule.flatMap((day, i) => {
       if (day === null) { return []; }
 
-      const instancesOfToday = Array.isArray(day[0]) ? day : [day];
+      const instancesOfToday = isIntervalArray(day) ? day : [day];
       // Shift days such that 0 maps to the current day.
       const adjustedDay = (i + today) % 7;
       return instancesOfToday.map(([opensAt, closesAt]) => {
         const {
           hour: opensAtHour,
           minute: opensAtMinute,
-        } = parseConcatenatedIntegerTime(opensAt);
+        } = parseConcatenatedIntegerTime(opensAt)!;
         const {
           hour: closesAtHour,
           minute: closesAtMinute,
-        } = parseConcatenatedIntegerTime(closesAt);
+        } = parseConcatenatedIntegerTime(closesAt)!;
         const adjustedClosesAtDay = closesAt < opensAt ? (adjustedDay + 1) % 7 : adjustedDay;
         return new RecurringInterval({
           opensAt: new RecurringTime({
@@ -76,7 +92,7 @@ export class ListingDebugPage extends React.Component {
         <h1>RelativeOpeningTime</h1>
         { recurringSchedules.map(recurringSchedule => (
           <p>
-            <RelativeOpeningTime key={recurringSchedule} recurringSchedule={recurringSchedule} />
+            <RelativeOpeningTime recurringSchedule={recurringSchedule} />
             {/* <pre>{ JSON.stringify(recurringSchedule, null, 2) }</pre> */}
           </p>
         )) }
