@@ -7,15 +7,17 @@ export const Banner = () => (
     <div className={styles.bannerContent}>
       <img src={icon('alert')} alt="attention" className={styles.alertIcon} />
       <div>
-        <strong className={styles.title}>MONKEYPOX VACCINE INFO: </strong>
-        Find out where to get a vaccine and if you&apos;re eligible.
-        {' '}
-        <span className={styles.linkInfo}>
-          Find a
+        <strong className={styles.title}>SHELTER ACCESS DURING RAINY AND COLD WEATHER:</strong>
+        <p>
+          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://hsh.sfgov.org/services">Get information</a>
           {' '}
-          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://sf.gov/information/monkeypox-vaccine">site near you</a>
-          .
-        </span>
+          on expanded shelter access during cold and wet weather in San Francisco.
+        </p>
+        <p>
+          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://hsh.sfgov.org/services/how-to-get-services/accessing-temporary-shelter">General information</a>
+          {' '}
+          on finding temporary shelter.
+        </p>
       </div>
     </div>
   </div>
