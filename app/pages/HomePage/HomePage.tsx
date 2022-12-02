@@ -18,10 +18,10 @@ const covidResources = [
   { name: 'Rental Assistance and Eviction Prevention', icon: 'housing-1', categorySlug: 'rental-assistance-resources' },
   { name: 'Financial Assistance', icon: 'wallet', categorySlug: 'financial-resources' },
   { name: 'Jobs', icon: 'employment', categorySlug: 'job-assistance-resources' },
-  { name: 'Internet', icon: 'wifi', categorySlug: 'internet-access-resources' },
+  { name: 'Internet, Devices & Technology Training', icon: 'devices', categorySlug: 'internet-access-resources' },
   { name: 'LGBTQ+ Resources', icon: 'community', categorySlug: 'lgbtq-resources' },
   { name: 'Resources for Domestic Violence Survivors', icon: 'warning', categorySlug: 'domestic-violence-resources' },
-  { name: 'Substance Use Resources', icon: 'hospital', categorySlug: 'substance-use-resources' },
+  { name: 'Substance Use Resources', icon: 'health-safety', categorySlug: 'substance-use-resources' },
 ];
 
 export const HomePage = () => {
