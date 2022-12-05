@@ -99,7 +99,7 @@ module.exports = {
     },
     // Mocha Tests
     {
-      files: ['**/*.spec.js*', 'testing/mocha.js'],
+      files: ['**/*.spec.[jt]s*', 'testing/mocha.js'],
       env: { mocha: true },
       rules: {
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
@@ -107,6 +107,7 @@ module.exports = {
         'import/no-unused-modules': 'off',
         // Chai assertions may appear like unused expressions
         'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
       },
     },
     // TestCafe
