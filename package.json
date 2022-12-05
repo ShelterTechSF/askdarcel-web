@@ -23,6 +23,7 @@
     "qs": "^6.5.1",
     "react": "^16.8.6",
     "react-burger-menu": "^2.6.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^16.8.6",
     "react-ga": "^2.4.1",
     "react-helmet-async": "^1.0.4",

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { CookiesProvider } from 'react-cookie';
 import * as Sentry from '@sentry/browser';
 
 import config from './config';
@@ -27,7 +28,9 @@ ReactDOM.render(
   (
     <BrowserRouter>
       <HelmetProvider>
-        <App />
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
       </HelmetProvider>
     </BrowserRouter>
   ), rootElement,
