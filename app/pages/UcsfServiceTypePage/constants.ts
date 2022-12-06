@@ -22,6 +22,10 @@ const constants: UcsfServiceTypeDictionary = {
   'ucsf-food-insecurity-resources': {
     id: '2000004',
   },
+
+  'ucsf-immigration-resources': {
+    id: '2000005',
+  },
 };
 
 export { constants };

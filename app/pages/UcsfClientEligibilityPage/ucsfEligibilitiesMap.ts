@@ -9,6 +9,7 @@ export interface Eligibility {
   isSeeAll: boolean;
   checkedId: string;
   name: string;
+  alias?: string;
   checked: boolean;
 }
 
@@ -114,8 +115,28 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: 'Age and Dependents',
       eligibilities: [
-        { isSeeAll: true, checkedId: '31', name: 'See All', checked: false },
-        { isSeeAll: false, checkedId: '32', name: 'I am a Senior', checked: false },
+        { isSeeAll: true, checkedId: '33', name: 'See All', checked: false },
+        { isSeeAll: false, checkedId: '34', name: 'I am a Senior', checked: false },
+      ],
+    },
+  ],
+
+  'ucsf-immigration-resources': [
+    {
+      label: 'Other identities/categories',
+      eligibilities: [
+        { isSeeAll: true, checkedId: '35', name: 'See All', checked: false },
+        { isSeeAll: false, checkedId: '36', name: 'API (Asian/Pacific Islander)', alias: 'Asian and Pacific Islander', checked: false },
+        { isSeeAll: false, checkedId: '37', name: 'HIV/AIDS', checked: false },
+        { isSeeAll: false, checkedId: '38', name: 'Latinx', alias: 'Latinx/Hispanic', checked: false },
+        { isSeeAll: false, checkedId: '39', name: 'Middle Eastern and North African', checked: false },
+        { isSeeAll: false, checkedId: '40', name: 'Youth (below 21 years old)', checked: false },
+        { isSeeAll: false, checkedId: '41', name: 'African/Black', checked: false },
+        { isSeeAll: false, checkedId: '42', name: 'Gender-Based Violence', checked: false },
+        { isSeeAll: false, checkedId: '43', name: 'Jewish', checked: false },
+        { isSeeAll: false, checkedId: '44', name: 'LGBTQ+', checked: false },
+        { isSeeAll: false, checkedId: '45', name: 'Women', checked: false },
+        { isSeeAll: false, checkedId: '46', name: 'Anyone in Need', checked: false },
       ],
     },
   ],

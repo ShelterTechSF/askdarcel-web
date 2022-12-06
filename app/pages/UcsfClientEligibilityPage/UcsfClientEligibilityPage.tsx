@@ -80,7 +80,7 @@ const ClientEligibilities = ({
                     checked={selectedEligibilities[eligibility.checkedId] ?? false}
                   />
                   <label className={styles.eligibilityLabel} htmlFor={`${eligibilityGroup.label}-${eligibility.name}`}>
-                    {eligibility.name}
+                    {eligibility.alias ?? eligibility.name}
                   </label>
                 </li>
               ))}
