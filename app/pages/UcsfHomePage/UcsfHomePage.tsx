@@ -90,6 +90,12 @@ const Page = () => {
     {
       id: '2000003', name: 'Substance Use', icon: 'hospital', checked: false, slug: 'ucsf-substance-use-resources',
     },
+    {
+      id: '2000004', name: 'Food Insecurity', icon: 'food', checked: false, slug: 'ucsf-food-insecurity-resources',
+    },
+    {
+      id: '2000005', name: 'Immigration', icon: 'globe', checked: false, slug: 'ucsf-immigration-resources',
+    },
   ];
 
   // todo: setResourceList will be used when we allow multiple selected resources

@@ -127,7 +127,7 @@ const Page = () => {
   ) || [];
 
   // Add generic "See All" element to subcategory array if it is not there yet
-  if (subcategories.length > 0 && subcategories[0].id !== seeAllPseudoId) {
+  if (!subcategories[0] || subcategories[0].id !== seeAllPseudoId) {
     subcategories.unshift({ id: seeAllPseudoId, name: 'See All' });
   }
 

@@ -132,4 +132,20 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
+  {
+    algoliaCategoryName: 'Ucsf-foodinsecurity',
+    id: '2000004',
+    name: 'Food Insecurity Resources',
+    slug: 'ucsf-food-insecurity-resources',
+    steps: ['subcategories', 'results'],
+    subcategorySubheading: defaultSubheading,
+  },
+  {
+    algoliaCategoryName: 'Ucsf-immmigration',
+    id: '2000005',
+    name: 'Immigration Resources',
+    slug: 'ucsf-immigration-resources',
+    steps: ['subcategories', 'results'],
+    subcategorySubheading: defaultSubheading,
+  },
 ];

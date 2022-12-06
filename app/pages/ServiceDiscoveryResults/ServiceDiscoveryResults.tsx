@@ -82,6 +82,7 @@ export const ServiceDiscoveryResults = ({
         eligibilities={eligibilities}
         subcategories={subcategories}
         categoryName={category.name}
+        categorySlug={categorySlug}
         algoliaCategoryName={parentCategory.name}
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
@@ -99,12 +100,13 @@ export const ServiceDiscoveryResults = ({
 
 /** Stateless inner component that just handles presentation. */
 const InnerServiceDiscoveryResults = ({
-  eligibilities, subcategories, categoryName, algoliaCategoryName, searchState,
+  eligibilities, subcategories, categoryName, categorySlug, algoliaCategoryName, searchState,
   onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
 }: {
   eligibilities: object[];
   subcategories: ServiceCategory[];
   categoryName: string;
+  categorySlug: string;
   algoliaCategoryName: string;
   searchState: SearchState;
   onSearchStateChange: (nextSearchState: SearchState) => void;
@@ -138,6 +140,7 @@ const InnerServiceDiscoveryResults = ({
             searchRadius={searchRadius}
             isSearchResultsPage={false}
             eligibilities={eligibilities}
+            categorySlug={categorySlug}
             subcategories={subcategories}
             subcategoryNames={subcategoryNames}
           />
