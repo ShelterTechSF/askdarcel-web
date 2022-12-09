@@ -25,6 +25,7 @@ interface WhiteLabelSite {
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
+  refinementListLimit: number;
   showBanner: boolean;
   showClinicianAction: boolean;
   showHandoutsIcon: boolean;
@@ -59,6 +60,7 @@ const whiteLabelDefaults = {
   intercom: false,
   logoLinkDestination: '/',
   navLogoStyle: styles.siteNav,
+  refinementListLimit: 10,
   showPrintResultsBtn: true,
   showBanner: true,
   showClinicianAction: false,
@@ -146,6 +148,7 @@ const Ucsf: WhiteLabelSite = {
   ...whiteLabelDefaults,
   enableTranslation: false,
   homePageComponent: 'UcsfHomePage',
+  refinementListLimit: 15,
   showBanner: false,
   showClinicianAction: true,
   showHandoutsIcon: true,
