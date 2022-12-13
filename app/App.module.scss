@@ -1,0 +1,7 @@
+.outerContainer {
+  /* Creates a stacking context such that everything inside of the
+   * .outerContainer is either above or below anything outside of the
+   * .outerContainer. One example of something outside of the .outerContainer is
+   * modals. */
+  z-index: 0;
+}

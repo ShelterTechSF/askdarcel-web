@@ -43,6 +43,8 @@ import OrganizationEditPage from './pages/OrganizationEditPage';
 import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
 import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
 
+import styles from './App.module.scss';
+
 const {
   homePageComponent,
   intercom,
@@ -84,7 +86,7 @@ export const App = () => {
   }, []);
 
   return (
-    <div id={outerContainerId}>
+    <div id={outerContainerId} className={styles.outerContainer}>
       { /* eslint-disable-next-line react/jsx-no-constructed-context-values */ }
       <AppContext.Provider value={{ userLocation }}>
         <Helmet>

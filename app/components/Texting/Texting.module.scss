@@ -6,6 +6,7 @@
   width: 100%;
   top: 70px;
   background: rgba(0, 0, 0, 0.2);
+  overflow: auto; /* Needed to allow the modal to scroll, rather than the page. */
   @media screen and (max-width: 900px ){
     top: 50px;
   }
