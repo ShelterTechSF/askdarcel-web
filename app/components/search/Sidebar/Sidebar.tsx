@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 
+import { whiteLabel } from 'utils';
 import { eligibilitiesMapping, categoriesMapping } from 'utils/refinementMappings';
 import ClearAllFilters from 'components/search/Refinements/ClearAllFilters';
 import OpenNowFilter from 'components/search/Refinements/OpenNowFilter';
@@ -69,6 +70,7 @@ const Sidebar = ({
       eligibilityRefinementJsx = (
         <RefinementListFilter
           attribute="eligibilities"
+          limit={whiteLabel.refinementListLimit}
           transformItems={transformEligibilities}
         />
       );
@@ -77,6 +79,7 @@ const Sidebar = ({
       categoryRefinementJsx = (
         <RefinementListFilter
           attribute="categories"
+          limit={whiteLabel.refinementListLimit}
           transformItems={(items: { label: string }[]) => items
             .filter(({ label }) => subcategoryNames.includes(label))
             .sort(orderByLabel)}
