@@ -2,7 +2,7 @@ import BackgroundImage from '../assets/img/bg.png';
 import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
 import SFFamiliesLogo from '../assets/img/sf-families.svg';
 import SFServiceLogo from '../assets/img/sf-service.svg';
-import UcsfServiceLogo from '../assets/img/ucsf-logo.svg';
+import UcsfServiceLogo from '../assets/img/ic-dcnav.png';
 import SFSeal from '../assets/img/sf-seal.png';
 import LinkSFLogo from '../assets/img/link-sf.png';
 import config from '../config';
@@ -146,12 +146,13 @@ const Ucsf: WhiteLabelSite = {
   ...whiteLabelDefaults,
   enableTranslation: false,
   homePageComponent: 'UcsfHomePage',
+  navLogoStyle: styles.navLogoUcsf,
   showBanner: false,
   showClinicianAction: true,
   showHandoutsIcon: true,
   showHeaderQrCode: true,
   showPrintResultsBtn: false,
-  siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
+  siteUrl: 'https://dcnav.sfserviceguide.org',
   title: 'UCSF Outpatient Services',
 } as const;
 

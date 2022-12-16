@@ -106,11 +106,11 @@ const Page = () => {
   const [disableNextButton, setDisableNextButton] = useState(true);
   const history = useHistory();
 
-  const goToEligibilitiesStep = () => {
+  const goToNextStep = () => {
     // const selectedResources = resourceList.filter(resource => resource.checked);
     if (selectedResource) {
       const selectedResourceSlug = selectedResource.slug;
-      history.push('/client-identity', { selectedResourceSlug });
+      history.push('/find-services', { selectedResourceSlug });
     }
   };
 
@@ -130,7 +130,7 @@ const Page = () => {
       />
       <div className={styles.buttonContainer}>
         <Button
-          onClick={goToEligibilitiesStep}
+          onClick={goToNextStep}
           disabled={disableNextButton}
         >
           Next

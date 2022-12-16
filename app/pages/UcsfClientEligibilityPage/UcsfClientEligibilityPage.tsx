@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
-import { Button } from 'components/ui/inline/Button/Button';
-import { Section } from 'components/ucsf/Section/Section';
-import { Layout } from 'components/ucsf/Layout/Layout';
 
 import {
-  eligibilityMap,
   Eligibility,
   EligibilityGroup,
 } from './ucsfEligibilitiesMap';
@@ -17,7 +12,7 @@ interface SelectedEligibilities {
   [key: string]: boolean;
 }
 
-const ClientEligibilities = ({
+export const ClientEligibilities = ({
   resourceEligibilityGroups, selectedEligibilities, setSelectedEligibilities, resourceSlug,
 }: {
   resourceEligibilityGroups: EligibilityGroup[];
@@ -91,74 +86,3 @@ const ClientEligibilities = ({
     </div>
   );
 };
-
-const Page = () => {
-  const [selectedEligibilities, setSelectedEligibilities] = useState<SelectedEligibilities>({});
-
-  interface LocationState {
-    selectedResourceSlug: string;
-    selectedEligibilityNames: string[];
-  }
-
-  const history = useHistory<LocationState>();
-  const { state } = history.location;
-  const selectedResourceSlug = state && state.selectedResourceSlug;
-  const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
-
-  const goToServiceTypePage = (slug: string) => {
-    const flatEligibilities = resourceEligibilityGroups.flatMap(group => (group.eligibilities));
-    const selectedEligibilityNames = flatEligibilities.flatMap(eligibility => {
-      if (selectedEligibilities[eligibility.checkedId] && !eligibility.isSeeAll) {
-        return eligibility.name;
-      }
-
-      return [];
-    });
-
-    history.push('/service-type', { selectedResourceSlug: slug, selectedEligibilityNames });
-  };
-
-  const backToResourceSelection = () => {
-    history.push('/');
-  };
-
-  if (!selectedResourceSlug) {
-    history.push('/');
-    return null;
-  }
-
-  return (
-    <div className={styles.eligibilityPage}>
-      <Section
-        addClass={styles.subtitleMargin}
-        subtitle="Step 2: Can you tell us more about your client and their needs?"
-      />
-      <div className={styles.eligibilitiesContainer}>
-        <ClientEligibilities
-          resourceEligibilityGroups={resourceEligibilityGroups}
-          selectedEligibilities={selectedEligibilities}
-          setSelectedEligibilities={setSelectedEligibilities}
-          resourceSlug={selectedResourceSlug}
-        />
-        <div className={styles.eligibilitiesBtns}>
-          <Button
-            onClick={backToResourceSelection}
-          >
-            Back
-          </Button>
-          <Button
-            onClick={() => { goToServiceTypePage(selectedResourceSlug); }}
-          >
-            Next: Service Capacity
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const UcsfClientEligibilityPage = () => (
-  <Layout>
-    <Page />
-  </Layout>
-);
