@@ -47,6 +47,8 @@ describe('Service Page', () => {
       // Intercept client's AJAX request to services endpoint and alias as "getServiceData". Pass
       // the alias to #wait method below to delay test execution until the request has returned
       cy.intercept('GET', `/api/services/${serviceId}`, req => {
+        // Deleting "if-none-match" headers forces the intercept to make a fresh request rather than
+        // potentially resolving a cached object
         delete req.headers['if-none-match'];
       }).as('getServiceData');
 
