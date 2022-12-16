@@ -6,13 +6,14 @@ import {
   Eligibility,
   EligibilityGroup,
 } from './ucsfEligibilitiesMap';
-import styles from './UcsfClientEligibilityPage.module.scss';
+
+import styles from './EligibilityRefinements.module.scss';
 
 interface SelectedEligibilities {
   [key: string]: boolean;
 }
 
-export const ClientEligibilities = ({
+export const EligibilityRefinements = ({
   resourceEligibilityGroups, selectedEligibilities, setSelectedEligibilities, resourceSlug,
 }: {
   resourceEligibilityGroups: EligibilityGroup[];

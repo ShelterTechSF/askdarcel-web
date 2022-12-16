@@ -6,13 +6,13 @@ import ReactGA from 'react-ga';
 import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
+import { SubcategoryRefinements } from 'components/ucsf/SubcategoryRefinements/SubcategoryRefinements';
+import { EligibilityRefinements } from 'components/ucsf/EligibilityRefinements/EligibilityRefinements';
+import { eligibilityMap } from 'components/ucsf/EligibilityRefinements/ucsfEligibilitiesMap';
 
 import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
-import { ClientEligibilities } from '../UcsfClientEligibilityPage/UcsfClientEligibilityPage';
-import { ServiceTypes } from '../UcsfServiceTypePage/UcsfServiceTypePage';
 import { useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
-import { eligibilityMap } from '../UcsfClientEligibilityPage/ucsfEligibilitiesMap';
 
 import styles from './UcsfDiscoveryForm.module.scss';
 
@@ -133,7 +133,7 @@ const Page = () => {
       />
       <div className={styles.eligibilitiesContainer}>
         {stepName === 'eligibilities' ? (
-          <ClientEligibilities
+          <EligibilityRefinements
             resourceEligibilityGroups={resourceEligibilityGroups}
             selectedEligibilities={selectedEligibilities}
             setSelectedEligibilities={setSelectedEligibilities}
@@ -141,7 +141,7 @@ const Page = () => {
           />
         )
           : (
-            <ServiceTypes
+            <SubcategoryRefinements
               subcategories={subcategories}
               selectedSubcategories={selectedSubcategories}
               setSelectedSubcategories={setSelectedSubcategories}

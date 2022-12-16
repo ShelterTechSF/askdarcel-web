@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
 
-import styles from './UcsfServiceTypePage.module.scss';
+import styles from './SubcategoryRefinements.module.scss';
 
 interface SubcategoryRefinement {
   name: string;
@@ -15,7 +15,10 @@ interface SelectedSubcategories {
 
 const seeAllPseudoId = -1;
 
-export const ServiceTypes = ({ subcategories, selectedSubcategories, setSelectedSubcategories }: {
+export const SubcategoryRefinements = ({
+  subcategories, selectedSubcategories,
+  setSelectedSubcategories,
+}: {
   subcategories: SubcategoryRefinement[];
   selectedSubcategories: SelectedSubcategories;
   setSelectedSubcategories: (categories: SelectedSubcategories) => void;
