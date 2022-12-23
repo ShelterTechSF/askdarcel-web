@@ -7,7 +7,7 @@ import {
   EligibilityGroup,
 } from './ucsfEligibilitiesMap';
 
-import styles from './EligibilityRefinements.module.scss';
+import styles from './Refinements.module.scss';
 
 interface SelectedEligibilities {
   [key: string]: boolean;
@@ -55,17 +55,17 @@ export const EligibilityRefinements = ({
   };
 
   return (
-    <div className={styles.eligibilitiesBox}>
-      <div className={styles.eligibilitiesBox_title}>Client Identity</div>
-      <ol className={styles.eligibilitiesLabels}>
+    <div className={styles.refinementsBox}>
+      <div className={styles.refinementsBox_title}>Client Identity</div>
+      <ol className={styles.refinementsLabels}>
         {eligibilityGroupList.map(eligibilityGroup => (
           <li key={eligibilityGroup.label} className={styles.listContainer}>
-            <span className={styles.eligibilityGroupLabel}>
+            <span className={styles.refinementsGroupLabel}>
               {eligibilityGroup.label}
             </span>
-            <ul className={styles.eligibilitiesList}>
+            <ul className={styles.refinementsList}>
               {eligibilityGroup.eligibilities.map(eligibility => (
-                <li key={`${eligibilityGroup.label}-${eligibility.name}`} className={styles.eligibilityGroup}>
+                <li key={`${eligibilityGroup.label}-${eligibility.name}`}>
                   <Checkbox
                     onChange={() => handleEligibilityClick(
                       eligibility,
@@ -75,7 +75,7 @@ export const EligibilityRefinements = ({
                     id={`${eligibilityGroup.label}-${eligibility.name}`}
                     checked={selectedEligibilities[eligibility.checkedId] ?? false}
                   />
-                  <label className={styles.eligibilityLabel} htmlFor={`${eligibilityGroup.label}-${eligibility.name}`}>
+                  <label className={styles.refinementsLabel} htmlFor={`${eligibilityGroup.label}-${eligibility.name}`}>
                     {eligibility.alias ?? eligibility.name}
                   </label>
                 </li>

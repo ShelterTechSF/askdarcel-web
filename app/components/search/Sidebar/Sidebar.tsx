@@ -6,7 +6,7 @@ import ClearAllFilters from 'components/search/Refinements/ClearAllFilters';
 import OpenNowFilter from 'components/search/Refinements/OpenNowFilter';
 import RefinementListFilter from 'components/search/Refinements/RefinementListFilter';
 import FacetRefinementList from 'components/search/Refinements/FacetRefinementList';
-import { eligibilityMap as ucsfEligibilityMap } from 'pages/UcsfClientEligibilityPage/ucsfEligibilitiesMap';
+import { eligibilityMap as ucsfEligibilityMap } from 'components/ucsf/RefinementLists/ucsfEligibilitiesMap';
 
 import filtersIcon from 'assets/img/filters-icon.png';
 import styles from './Sidebar.module.scss';

@@ -1,14 +1,6 @@
 @import '~styles/utils/_helpers.scss';
 
-.serviceTypePage {
-  grid-column: 2 / span 10;
-
-  @media screen and (max-width: $break-tablet-s) {
-    grid-column: 1 / span 12;
-  }
-}
-
-.serviceTypeBox {
+.refinementsBox {
   display: flex;
   margin: 16px 0;
   padding: 32px;
@@ -32,22 +24,22 @@
   }
 }
 
-.serviceTypeList {
-  display: grid;
-  gap: 8px;
-}
-
-.serviceTypeLabels {
+.refinementsLabels {
   display: grid;
   gap: 45px;
   list-style: decimal inside;
 }
 
-.serviceTypeGroupLabel {
+.refinementsList {
+  display: grid;
+  gap: 8px;
+}
+
+.refinementsGroupLabel {
   display: list-item;
 }
 
-.serviceTypeLabel {
+.refinementsLabel {
   cursor: pointer;
   padding-left: 8px;
 }
@@ -60,21 +52,4 @@
   @media screen and (max-width: $break-tablet-p) {
     grid-template-columns: none;
   }
-}
-
-.serviceTypeBtns {
-  text-align: right;
-  margin-bottom: 20px;
-
-  @media screen and (max-width: $break-tablet-p) {
-    margin-bottom: 100px;
-  }
-
-  @media screen and (max-width: $break-tablet-s) {
-    text-align: center;
-  }
-}
-
-.goToResultsBtn {
-  margin-left: 8px;
 }

@@ -6,9 +6,9 @@ import ReactGA from 'react-ga';
 import { Button } from 'components/ui/inline/Button/Button';
 import { Section } from 'components/ucsf/Section/Section';
 import { Layout } from 'components/ucsf/Layout/Layout';
-import { SubcategoryRefinements } from 'components/ucsf/SubcategoryRefinements/SubcategoryRefinements';
-import { EligibilityRefinements } from 'components/ucsf/EligibilityRefinements/EligibilityRefinements';
-import { eligibilityMap } from 'components/ucsf/EligibilityRefinements/ucsfEligibilitiesMap';
+import { SubcategoryRefinements } from 'components/ucsf/RefinementLists/SubcategoryRefinements';
+import { EligibilityRefinements } from 'components/ucsf/RefinementLists/EligibilityRefinements';
+import { eligibilityMap } from 'components/ucsf/RefinementLists/ucsfEligibilitiesMap';
 
 import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import { useSubcategoriesForCategory } from '../../hooks/APIHooks';
@@ -126,7 +126,7 @@ const Page = () => {
   }
 
   return (
-    <div className={styles.eligibilityPage}>
+    <div className={styles.discoveryFormPage}>
       <Section
         addClass={styles.subtitleMargin}
         subtitle={stepSubtitle}
@@ -148,7 +148,7 @@ const Page = () => {
             />
           )}
 
-        <div className={styles.eligibilitiesBtns}>
+        <div className={styles.navigationButtons}>
           <Button
             onClick={backToResourceSelection}
           >

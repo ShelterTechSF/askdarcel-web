@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
 
-import styles from './SubcategoryRefinements.module.scss';
+import styles from './Refinements.module.scss';
 
 interface SubcategoryRefinement {
   name: string;
@@ -51,19 +51,19 @@ export const SubcategoryRefinements = ({
   };
 
   return (
-    <div className={styles.serviceTypeBox}>
-      <div className={styles.serviceTypeBox_title}>Service Type</div>
+    <div className={styles.refinementsBox}>
+      <div className={styles.refinementsBox_title}>Service Type</div>
 
-      <ul className={styles.serviceTypeList}>
+      <ul className={styles.refinementsList}>
         {subcategories.map(item => (
-          <li key={item.name} className={styles.serviceTypeGroup}>
+          <li key={item.name}>
             <Checkbox
               onChange={() => handleSubcategoryClick(item.id)}
               name="serviceTypes"
               id={item.name}
               checked={selectedSubcategories[item.id] || false}
             />
-            <label className={styles.serviceTypeLabel} htmlFor={item.name}>
+            <label className={styles.refinementsLabel} htmlFor={item.name}>
               {item.name}
             </label>
           </li>
