@@ -17,7 +17,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: '1000001',
     name: 'Food Resources',
     slug: 'food-resources',
-    steps: ['eligibilities', 'subcategories', 'results'],
+    steps: ['subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
