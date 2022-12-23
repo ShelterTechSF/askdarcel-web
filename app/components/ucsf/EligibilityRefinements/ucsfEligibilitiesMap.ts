@@ -22,6 +22,13 @@ interface UcsfEligibilityMap {
   [key: string]: EligibilityGroup[];
 }
 
+// N.B.: Until we have found a way to make use of Algolia's "Show More" refinements button,
+// none of the below resource groups should have a _total_ eligibility amount that exceeds the
+// refinementListLimit value defined in the UCSF whitelabel config in whitelabel.ts.
+// E.g., The ucsf-mental-health-resources should not have more than a sum total of X eligibilities
+// among all of its eligibility groups. This excludes any "See All" eligibilities, which we do not
+// display in the sidebar.
+
 /* eslint-disable object-curly-newline */
 export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
   'ucsf-mental-health-resources': [

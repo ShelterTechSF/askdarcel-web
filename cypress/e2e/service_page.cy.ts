@@ -46,7 +46,11 @@ describe('Service Page', () => {
     cy.visit(page.url(serviceId));
       // Intercept client's AJAX request to services endpoint and alias as "getServiceData". Pass
       // the alias to #wait method below to delay test execution until the request has returned
-      cy.intercept('GET', `/api/services/${serviceId}`).as('getServiceData');
+      cy.intercept('GET', `/api/services/${serviceId}`, req => {
+        // Deleting "if-none-match" headers forces the intercept to make a fresh request rather than
+        // potentially resolving a cached object
+        delete req.headers['if-none-match'];
+      }).as('getServiceData');
 
       cy.request(`/api/services/${serviceId}`).should((res: Cypress.Response<{ service: Service }>) => {
         expect(res.status).to.eq(200);
