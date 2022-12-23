@@ -13,7 +13,6 @@ import { eligibilityMap } from 'components/ucsf/RefinementLists/ucsfEligibilitie
 import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
 import { useSubcategoriesForCategory } from '../../hooks/APIHooks';
 
-
 import styles from './UcsfDiscoveryForm.module.scss';
 
 interface SubcategoryRefinement {
@@ -114,7 +113,7 @@ const Page = () => {
   if (stepName === 'eligibilities') {
     stepSubtitle += 'Can you tell us more about your client and their needs?';
   } else {
-    stepSubtitle += 'Can you tell us more about the services that your client is looking for?'
+    stepSubtitle += 'Can you tell us more about the services that your client is looking for?';
   }
 
   const nextStepName = steps[currentStep + 1];
