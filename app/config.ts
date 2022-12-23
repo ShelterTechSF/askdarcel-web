@@ -3,6 +3,7 @@ declare global {
 }
 
 interface Config {
+  GOOGLE_ANALYTICS_ID: string;
   LINKSF_DOMAIN: string;
   MOHCD_DOMAIN: string;
   MOHCD_SUBDOMAIN: string;
