@@ -52,7 +52,7 @@ describe('Service Page', () => {
         delete req.headers['if-none-match'];
       }).as('getServiceData');
 
-      cy.request(`/api/services/${serviceId}`).should((res: Cypress.Response<{ service: Service }>) => {
+      cy.request(`/api/services/${serviceId}`).then((res: Cypress.Response<{ service: Service }>) => {
         expect(res.status).to.eq(200);
         const { service } = res.body;
 
@@ -75,7 +75,7 @@ describe('Service Page', () => {
             .should('contain.text', '8:00 AM - 10:00 AM');
       });
 
-      cy.request<{ service: Service }>(`/api/services/${serviceId}`).should(res => {
+      cy.request<{ service: Service }>(`/api/services/${serviceId}`).then(res => {
         expect(res.status).to.eq(200);
         const { service } = res.body;
 

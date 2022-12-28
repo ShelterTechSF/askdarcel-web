@@ -17,11 +17,11 @@ describe('Organization Page', () => {
   };
 
   it('should correctly set info with a change request', () => {
-    cy.request('POST', `/api/resources/${orgId}/change_requests`, { change_request }).should(r => {
+    cy.request('POST', `/api/resources/${orgId}/change_requests`, { change_request }).then(r => {
       expect(r.status).to.eq(201);
     });
 
-    cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).should(res => {
+    cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).then(res => {
       expect(res.status).to.eq(200);
       expect(res.body.resource).to.include.all.keys('id', 'name', 'email', 'notes');
 
@@ -45,7 +45,7 @@ describe('Organization Page', () => {
   });
 
   it('should render services section with multiple services', () => {
-    cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).should(res => {
+    cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).then(res => {
       expect(res.status).to.eq(200);
       expect(res.body.resource).to.include.all.keys('id', 'name', 'email', 'services');
 

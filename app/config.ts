@@ -2,7 +2,17 @@ declare global {
   const CONFIG: any;
 }
 
-const config = {
+interface Config {
+  GOOGLE_ANALYTICS_ID: string;
+  LINKSF_DOMAIN: string;
+  MOHCD_DOMAIN: string;
+  MOHCD_SUBDOMAIN: string;
+  SFFAMILIES_DOMAIN: string;
+  UCSF_DOMAIN: string;
+  [key: string]: any;
+}
+
+const config: Config = {
   ALGOLIA_APPLICATION_ID: CONFIG.ALGOLIA_APPLICATION_ID,
   ALGOLIA_INDEX_PREFIX: CONFIG.ALGOLIA_INDEX_PREFIX,
   ALGOLIA_READ_ONLY_API_KEY: CONFIG.ALGOLIA_READ_ONLY_API_KEY,

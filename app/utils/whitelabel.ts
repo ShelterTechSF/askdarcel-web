@@ -43,7 +43,7 @@ interface WhiteLabelSite {
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
   const domain = window.location.host;
   const subdomain = domain.split('.')[0];
-  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: any) => (
+  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) => (
     subdomain === whiteLabelSubdomain || subdomain === `${whiteLabelSubdomain}-staging`
   );
 
