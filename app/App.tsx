@@ -36,9 +36,8 @@ import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
-import { UcsfClientEligibilityPage } from './pages/UcsfClientEligibilityPage/UcsfClientEligibilityPage';
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
-import { UcsfServiceTypePage } from './pages/UcsfServiceTypePage/UcsfServiceTypePage';
+import { UcsfDiscoveryForm } from './pages/UcsfDiscoveryForm/UcsfDiscoveryForm';
 import OrganizationEditPage from './pages/OrganizationEditPage';
 import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
 import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
@@ -140,8 +139,7 @@ export const App = () => {
               <Route exact path="/:categorySlug/results" component={ServiceDiscoveryResults} />
 
               {/* UCSF white label paths */}
-              <Route exact path="/client-identity" component={UcsfClientEligibilityPage} />
-              <Route exact path="/service-type" component={UcsfServiceTypePage} />
+              <Route exact path="/find-services" component={UcsfDiscoveryForm} />
 
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />

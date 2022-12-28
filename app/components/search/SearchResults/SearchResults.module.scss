@@ -54,7 +54,7 @@
   display: grid;
   grid-template-columns: 7fr 3fr;
   gap: 25px;
-  justify-items: end;
+  justify-items: stretch;
   padding: 21px 0 24px 24px;
   border-left: 1px solid $color-grey3;
   border-bottom: 1px solid $color-grey3;

@@ -1,14 +1,6 @@
 @import '~styles/utils/_helpers.scss';
 
-.eligibilityPage {
-  grid-column: 2 / span 10;
-
-  @media screen and (max-width: $break-tablet-s) {
-    grid-column: 1 / span 12;
-  }
-}
-
-.eligibilitiesBox {
+.refinementsBox {
   display: flex;
   margin: 16px 0;
   padding: 32px;
@@ -32,22 +24,22 @@
   }
 }
 
-.eligibilitiesList {
-  display: grid;
-  gap: 8px;
-}
-
-.eligibilitiesLabels {
+.refinementsLabels {
   display: grid;
   gap: 45px;
   list-style: decimal inside;
 }
 
-.eligibilityGroupLabel {
+.refinementsList {
+  display: grid;
+  gap: 8px;
+}
+
+.refinementsGroupLabel {
   display: list-item;
 }
 
-.eligibilityLabel {
+.refinementsLabel {
   cursor: pointer;
   padding-left: 8px;
 }
@@ -59,15 +51,5 @@
 
   @media screen and (max-width: $break-tablet-p) {
     grid-template-columns: none;
-  }
-}
-
-.eligibilitiesBtns {
-  display: flex;
-  justify-content: right;
-  column-gap: 8px;
-
-  @media screen and (max-width: $break-tablet-s) {
-    justify-content: center;
   }
 }

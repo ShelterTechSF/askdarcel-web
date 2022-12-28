@@ -113,7 +113,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: '2000001',
     name: 'Mental Health Resources',
     slug: 'ucsf-mental-health-resources',
-    steps: ['subcategories', 'results'],
+    steps: ['eligibilities', 'subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -121,7 +121,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: '2000002',
     name: 'Shelter Resources',
     slug: 'ucsf-shelter-resources',
-    steps: ['subcategories', 'results'],
+    steps: ['eligibilities', 'subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -129,7 +129,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: '2000003',
     name: 'Substance Use Resources',
     slug: 'ucsf-substance-use-resources',
-    steps: ['subcategories', 'results'],
+    steps: ['eligibilities', 'subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -137,7 +137,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: '2000004',
     name: 'Food Insecurity Resources',
     slug: 'ucsf-food-insecurity-resources',
-    steps: ['subcategories', 'results'],
+    steps: ['eligibilities', 'subcategories', 'results'],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -145,7 +145,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: '2000005',
     name: 'Immigration Resources',
     slug: 'ucsf-immigration-resources',
-    steps: ['subcategories', 'results'],
+    steps: ['eligibilities', 'results'],
     subcategorySubheading: defaultSubheading,
   },
 ];

@@ -1,0 +1,19 @@
+@import '~styles/utils/_helpers.scss';
+
+.discoveryFormPage {
+  grid-column: 2 / span 10;
+
+  @media screen and (max-width: $break-tablet-s) {
+    grid-column: 1 / span 12;
+  }
+}
+
+.navigationButtons {
+  display: flex;
+  justify-content: right;
+  column-gap: 8px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    justify-content: center;
+  }
+}
