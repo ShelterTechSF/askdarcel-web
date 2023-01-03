@@ -68,8 +68,8 @@ export const FeedbackForm = ({ service, resource, closeModal }: {
     };
 
     const [source, sourceId] = !service
-      ? ['resources', resource.id]
-      : ['services', service.id];
+      ? ['resources', resource.id] as const
+      : ['services', service.id] as const;
 
     addFeedback(source, sourceId, feedback)
       .then(() => {
