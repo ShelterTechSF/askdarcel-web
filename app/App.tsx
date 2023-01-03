@@ -82,7 +82,7 @@ export const App = () => {
       ReactGA.set({ page });
       ReactGA.pageview(page);
     });
-  }, []);
+  }, [history]);
 
   return (
     <div id={outerContainerId} className={styles.outerContainer}>

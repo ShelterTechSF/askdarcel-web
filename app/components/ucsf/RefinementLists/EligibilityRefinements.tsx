@@ -21,6 +21,7 @@ export const EligibilityRefinements = ({
   setSelectedEligibilities: (categories: SelectedEligibilities) => void;
   resourceSlug: string;
 }) => {
+  // Why is eligibilityGroupList a state variable and not just a prop?
   useEffect(() => {
     setEligibilityGroupList(resourceEligibilityGroups);
   }, [resourceSlug]);

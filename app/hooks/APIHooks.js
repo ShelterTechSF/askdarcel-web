@@ -14,9 +14,11 @@ export const useEligibilitiesForCategory = categoryID => {
   const [eligibilities, setEligibilities] = useState(null);
 
   useEffect(() => {
-    dataService.get(`/api/eligibilities?category_id=${categoryID}`).then(response => {
-      setEligibilities(response.eligibilities);
-    });
+    if (categoryID !== null) {
+      dataService.get(`/api/eligibilities?category_id=${categoryID}`).then(response => {
+        setEligibilities(response.eligibilities);
+      });
+    }
   }, [categoryID]);
 
   return eligibilities;
@@ -30,9 +32,11 @@ export const useSubcategoriesForCategory = categoryID => {
   const [subcategories, setSubcategories] = useState(null);
 
   useEffect(() => {
-    dataService.get(`/api/categories/subcategories?id=${categoryID}`).then(response => {
-      setSubcategories(response.categories);
-    });
+    if (categoryID !== null) {
+      dataService.get(`/api/categories/subcategories?id=${categoryID}`).then(response => {
+        setSubcategories(response.categories);
+      });
+    }
   }, [categoryID]);
 
   return subcategories;
