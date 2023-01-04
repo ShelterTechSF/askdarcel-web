@@ -138,7 +138,6 @@ const Page = () => {
             resourceEligibilityGroups={resourceEligibilityGroups}
             selectedEligibilities={selectedEligibilities}
             setSelectedEligibilities={setSelectedEligibilities}
-            resourceSlug={selectedResourceSlug}
           />
         )
           : (
