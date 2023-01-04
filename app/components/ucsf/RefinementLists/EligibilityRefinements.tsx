@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
 
@@ -14,21 +14,12 @@ interface SelectedEligibilities {
 }
 
 export const EligibilityRefinements = ({
-  resourceEligibilityGroups, selectedEligibilities, setSelectedEligibilities, resourceSlug,
+  resourceEligibilityGroups, selectedEligibilities, setSelectedEligibilities,
 }: {
   resourceEligibilityGroups: EligibilityGroup[];
   selectedEligibilities: SelectedEligibilities;
   setSelectedEligibilities: (categories: SelectedEligibilities) => void;
-  resourceSlug: string;
 }) => {
-  useEffect(() => {
-    setEligibilityGroupList(resourceEligibilityGroups);
-  }, [resourceSlug]);
-
-  const [eligibilityGroupList, setEligibilityGroupList] = useState<EligibilityGroup[]>(
-    resourceEligibilityGroups,
-  );
-
   const handleEligibilityClick = (
     eligibility: Eligibility,
     eligibilities: Eligibility[],
@@ -58,7 +49,7 @@ export const EligibilityRefinements = ({
     <div className={styles.refinementsBox}>
       <div className={styles.refinementsBox_title}>Client Identity</div>
       <ol className={styles.refinementsLabels}>
-        {eligibilityGroupList.map(eligibilityGroup => (
+        {resourceEligibilityGroups.map(eligibilityGroup => (
           <li key={eligibilityGroup.label} className={styles.listContainer}>
             <span className={styles.refinementsGroupLabel}>
               {eligibilityGroup.label}

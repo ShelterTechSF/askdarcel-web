@@ -4,6 +4,7 @@ module.exports = {
   extends: [
     'airbnb',
     'plugin:testcafe/recommended',
+    'plugin:react-hooks/recommended',
   ],
   plugins: [
     'react',
@@ -38,6 +39,7 @@ module.exports = {
     'jsx-a11y/label-has-for': ['off'], // This is deprecated in favor of jsx-a11y/label-has-associated-control
     'no-console': 'warn',
     'no-underscore-dangle': 'off',
+    'react-hooks/exhaustive-deps': 'error', // Default is 'warn'; we upgrade to 'error' because otherwise warnings are just noise
     'react/forbid-prop-types': 'off',
     'react/prefer-stateless-function': 'off',
     'react/prop-types': 'off',

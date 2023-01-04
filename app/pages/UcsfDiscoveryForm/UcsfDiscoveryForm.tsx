@@ -44,18 +44,20 @@ const Page = () => {
   const selectedResourceSlug = state && state.selectedResourceSlug;
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
   const category = CATEGORIES.find(c => c.slug === selectedResourceSlug);
+
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const subcategories: SubcategoryRefinement[] = useSubcategoriesForCategory(
+    category?.id ?? null,
+  ) || [];
+
   if (!category) {
     history.push('/');
     return null;
   }
 
-  const [currentStep, setCurrentStep] = useState(0);
   const { steps } = category;
   const stepName = steps[currentStep];
-
-  const subcategories: SubcategoryRefinement[] = useSubcategoriesForCategory(
-    category.id,
-  ) || [];
 
   const goToNextStep = (slug: string) => {
     // Take the user to the results page or the subsequent refinement step, depending
@@ -136,7 +138,6 @@ const Page = () => {
             resourceEligibilityGroups={resourceEligibilityGroups}
             selectedEligibilities={selectedEligibilities}
             setSelectedEligibilities={setSelectedEligibilities}
-            resourceSlug={selectedResourceSlug}
           />
         )
           : (

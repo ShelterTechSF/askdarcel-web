@@ -31,10 +31,8 @@ const transformHits = hits => hits.map(hit => {
 // Todo: setExpandList will be used as part of next stage of multiple location work
 // eslint-disable-next-line no-unused-vars
 const SearchResults = ({ searchResults, expandList, setExpandList }) => {
-  if (!searchResults) return null;
   const [centerCoords, setCenterCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState(null);
-  const hits = transformHits(searchResults.hits);
 
   useEffect(() => {
     if (centerCoords) {
@@ -44,7 +42,11 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
     return () => {
       document.body.classList.remove('searchResultsPage');
     };
-  }, []);
+  }, [googleMapObject, centerCoords]);
+
+  if (!searchResults) return null;
+
+  const hits = transformHits(searchResults.hits);
 
   return (
     <div className={styles.searchResultsAndMapContainer}>

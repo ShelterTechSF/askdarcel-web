@@ -62,12 +62,12 @@ export const RelativeOpeningTime = ({ recurringSchedule, currentDate = moment() 
   recurringSchedule: RecurringSchedule;
   currentDate?: Moment;
 }) => {
-  const [steps, setSteps] = useState(0);
+  const [, setSteps] = useState(0);
   const { text, classes } = getRelativeOpeningTime(recurringSchedule, currentDate);
 
   useEffect(() => {
     // Just to force re-render this component every minute
-    const tick = setInterval(() => setSteps(steps + 1));
+    const tick = setInterval(() => setSteps(s => s + 1));
     return () => clearInterval(tick);
   }, []);
 

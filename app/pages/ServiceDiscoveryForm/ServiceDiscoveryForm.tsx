@@ -30,15 +30,11 @@ export const ServiceDiscoveryForm = () => {
   const match = useRouteMatch();
   const { categorySlug } = match.params as MatchParams;
   const category = CATEGORIES.find(c => c.slug === categorySlug);
-  if (!category) {
-    // Category does not exist; user may have entered the category in the URL bar
-    return <Redirect push to={{ pathname: '/' }} />;
-  }
 
   // The activeCategoryId is updated if the user proceeds to a further step that has child
   // subcategories to be displayed. When it is set, the target subcategory refinements are
   // fetched and rendered in place of the previous refinements
-  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(category.id);
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(category?.id ?? null);
 
   // The selectedSubcategory represents the single subcategory selected by the user in
   // the RadioFormStep component
@@ -48,6 +44,11 @@ export const ServiceDiscoveryForm = () => {
   || [];
   const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(activeCategoryId)
   || [];
+
+  if (!category) {
+    // Category does not exist; user may have entered the category in the URL bar
+    return <Redirect push to={{ pathname: '/' }} />;
+  }
 
   return (
     <InnerServiceDiscoveryForm

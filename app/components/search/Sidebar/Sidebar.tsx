@@ -46,7 +46,7 @@ const Sidebar = ({
 
     const flatEligibilities = resourceEligibilityGroups.flatMap(group => (group.eligibilities));
     return flatEligibilities.map(eligibility => eligibility.name);
-  }, []);
+  }, [categorySlug]);
 
   // Currently, the Search Results Page uses generic categories/eligibilities while the
   // Service Results Page uses COVID-specific categories. This logic determines which
