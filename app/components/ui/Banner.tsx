@@ -9,12 +9,12 @@ export const Banner = () => (
       <div>
         <strong className={styles.title}>SHELTER ACCESS DURING RAINY AND COLD WEATHER:</strong>
         <p>
-          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://hsh.sfgov.org/services">Get information</a>
+          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://hsh.sfgov.org/services/how-to-get-services/accessing-temporary-shelter">Get information</a>
           {' '}
           on expanded shelter access during cold and wet weather in San Francisco.
         </p>
         <p>
-          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://hsh.sfgov.org/services/how-to-get-services/accessing-temporary-shelter">General information</a>
+          <a className={styles.bannerLink} target="_blank" rel="noreferrer" href="https://hsh.sfgov.org/services">General information</a>
           {' '}
           on finding temporary shelter.
         </p>
