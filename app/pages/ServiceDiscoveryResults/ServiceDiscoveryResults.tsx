@@ -12,6 +12,7 @@ import { Loader } from 'components/ui';
 import SearchResults from 'components/search/SearchResults/SearchResults';
 import Sidebar from 'components/search/Sidebar/Sidebar';
 import { Header } from 'components/search/Header/Header';
+import { Category } from 'models/Meta';
 
 import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 import config from '../../config';
@@ -104,7 +105,7 @@ const InnerServiceDiscoveryResults = ({
   onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
 }: {
   eligibilities: object[];
-  subcategories: ServiceCategory[];
+  subcategories: Category[];
   categoryName: string;
   categorySlug: string;
   algoliaCategoryName: string;
