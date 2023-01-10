@@ -161,7 +161,7 @@ const Ucsf: WhiteLabelSite = {
   showHeaderQrCode: true,
   showPrintResultsBtn: false,
   siteUrl: 'https://dcnav.sfserviceguide.org',
-  title: 'UCSF Outpatient Services',
+  title: 'Discharge Navigator',
 } as const;
 
 /*
