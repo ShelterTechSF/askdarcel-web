@@ -1,6 +1,8 @@
-import * as _ from 'lodash/fp/object';
+import * as _ from 'lodash';
 
-function setAuthHeaders(resp) {
+import type { VoteType } from '../components/listing/feedback/constants';
+
+function setAuthHeaders(resp: Response): void {
   const { headers } = resp;
   if (headers.get('access-token') && headers.get('client')) {
     // console.log('we would set new auth headers except for an API bug giving us invalid tokens',
@@ -16,7 +18,7 @@ function setAuthHeaders(resp) {
   }
 }
 
-export function post(url, body, headers) {
+export function post(url: RequestInfo | URL, body: any, headers?: HeadersInit): Promise<Response> {
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ export function post(url, body, headers) {
   });
 }
 
-export function get(url, headers) {
+export function get(url: RequestInfo | URL, headers?: HeadersInit): Promise<any> {
   let queryHeaders = {
     'Content-Type': 'application/json',
   };
@@ -55,7 +57,7 @@ export function get(url, headers) {
   });
 }
 
-export function put(url, body, headers) {
+export function put(url: RequestInfo | URL, body: any, headers: HeadersInit): Promise<Response> {
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -75,7 +77,7 @@ export function put(url, body, headers) {
   });
 }
 
-export function APIDelete(url, headers) {
+export function APIDelete(url: RequestInfo | URL, headers: HeadersInit): Promise<void> {
   let queryHeaders = {
     'Content-Type': 'application/json',
   };
@@ -92,8 +94,14 @@ export function APIDelete(url, headers) {
   });
 }
 
-export const addFeedback = (source, sourceId, body) => (
+interface FeedbackBody {
+  rating: VoteType;
+  tags: string[];
+  review: string;
+}
+
+export const addFeedback = (source: 'resources' | 'services', sourceId: number, body: FeedbackBody): Promise<Response> => (
   post(`/api/${source}/${sourceId}/feedbacks`, body).then(res => res.json())
 );
 
-export const getResourceCount = () => get('/api/resources/count');
+export const getResourceCount = (): Promise<number> => get('/api/resources/count');
