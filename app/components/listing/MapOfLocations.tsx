@@ -16,6 +16,8 @@ export const MapOfLocations = ({ locationRenderer, locations }: {
     return <Loader />;
   }
   const { lat, lng } = userLocation;
+  // const latitude = locations?.[0]?.address?.latitude;
+  // const longitude = locations?.[0]?.address?.longitude;
 
   return (
     <div>
