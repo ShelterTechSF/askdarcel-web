@@ -7,4 +7,4 @@ import config from '../config';
   script.type = 'text/javascript';
   script.src = `https://maps.googleapis.com/maps/api/js?v=3&key=${config.GOOGLE_API_KEY}`;
   document.body.appendChild(script);
-}());
+})();

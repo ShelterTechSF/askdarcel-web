@@ -24,8 +24,12 @@ export const Header = ({
     <div className={styles.header}>
       <h1 className={styles.title}>{resultsTitle}</h1>
       <Button
-        onClick={() => { setQrCodeModalOpen(true); }}
-        addClass={`${styles.qrCodeBtn} ${showHeaderQrCode ? styles.showBtn : ''}`}
+        onClick={() => {
+          setQrCodeModalOpen(true);
+        }}
+        addClass={`${styles.qrCodeBtn} ${
+          showHeaderQrCode ? styles.showBtn : ''
+        }`}
         styleType="transparent"
       >
         <>
@@ -34,8 +38,12 @@ export const Header = ({
         </>
       </Button>
       <Button
-        onClick={() => { window.print(); }}
-        addClass={`${styles.printAllBtn} ${showPrintResultsBtn ? styles.showBtn : ''}`}
+        onClick={() => {
+          window.print();
+        }}
+        addClass={`${styles.printAllBtn} ${
+          showPrintResultsBtn ? styles.showBtn : ''
+        }`}
         styleType="transparent"
       >
         <>
@@ -43,16 +51,29 @@ export const Header = ({
           <span className={styles.btnText}>Print all results</span>
         </>
       </Button>
-      <QrCodeModal
-        isOpen={qrCodeModalOpen}
-        setIsOpen={setQrCodeModalOpen}
-      />
+      <QrCodeModal isOpen={qrCodeModalOpen} setIsOpen={setQrCodeModalOpen} />
       <div className={styles.mapListToggleContainer}>
-        <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(true)}>
-          <span className={`${styles.listIcon} ${expandList ? styles.activeView : ''}`} />
+        <button
+          type="button"
+          className={styles.mapListToggleBtn}
+          onClick={() => setExpandList(true)}
+        >
+          <span
+            className={`${styles.listIcon} ${
+              expandList ? styles.activeView : ''
+            }`}
+          />
         </button>
-        <button type="button" className={styles.mapListToggleBtn} onClick={() => setExpandList(false)}>
-          <span className={`${styles.mapIcon} ${!expandList ? styles.activeView : ''}`} />
+        <button
+          type="button"
+          className={styles.mapListToggleBtn}
+          onClick={() => setExpandList(false)}
+        >
+          <span
+            className={`${styles.mapIcon} ${
+              !expandList ? styles.activeView : ''
+            }`}
+          />
         </button>
       </div>
     </div>

@@ -26,17 +26,27 @@ export interface APITexting {
 
 // Text resource informations to the user phone
 
-export const Texting = ({ closeModal, service, isShowing }:
-  { closeModal: () => void; service: TextingService; isShowing: boolean }) => {
+export const Texting = ({
+  closeModal,
+  service,
+  isShowing,
+}: {
+  closeModal: () => void;
+  service: TextingService;
+  isShowing: boolean;
+}) => {
   const [view, setView] = useState('');
 
   // Send data to backend
-  const sendData = (data: APITexting) => dataService.post('/api/textings', { data }).then(response => {
-    if (response.ok) {
-      setView('sentView');
-    }
-  })
-    .catch(() => setView('errorView'));
+  const sendData = (data: APITexting) =>
+    dataService
+      .post('/api/textings', { data })
+      .then((response) => {
+        if (response.ok) {
+          setView('sentView');
+        }
+      })
+      .catch(() => setView('errorView'));
 
   const handleSubmit = (data: APITexting) => {
     setView('loader');
@@ -74,14 +84,10 @@ export const Texting = ({ closeModal, service, isShowing }:
       ariaHideApp={false}
       parentSelector={() => document.querySelector('#root')!}
     >
-      <button
-        className={styles.closeButton}
-        onClick={closeModal}
-        type="button"
-      >
+      <button className={styles.closeButton} onClick={closeModal} type="button">
         <img src={icon('close')} alt="Close" />
       </button>
-      { activeView }
+      {activeView}
     </ReactModal>
   );
 };

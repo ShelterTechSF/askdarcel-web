@@ -1,6 +1,6 @@
-exec: [ "nginx", "-g", "daemon off;" ]
-data_sources: [ file, environment ]
-template_sources: [ file ]
+exec: ['nginx', '-g', 'daemon off;']
+data_sources: [file, environment]
+template_sources: [file]
 
 environments:
   production:

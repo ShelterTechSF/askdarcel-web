@@ -21,7 +21,7 @@ import s from './ProvidedService.module.scss';
  * required for the UI because the blank time needs to appear under a day of
  * week before an open and close time is set.
  */
-const buildScheduleDays = schedule => {
+const buildScheduleDays = (schedule) => {
   const scheduleId = schedule ? schedule.id : null;
   const currSchedule = {};
   let finalSchedule = {};
@@ -47,7 +47,7 @@ const buildScheduleDays = schedule => {
   };
 
   if (schedule) {
-    schedule.schedule_days.forEach(day => {
+    schedule.schedule_days.forEach((day) => {
       const currDay = day.day;
       if (!is24Hours[currDay]) {
         // Check to see if any of the hour pairs for the day
@@ -57,7 +57,9 @@ const buildScheduleDays = schedule => {
           is24Hours[currDay] = true;
           // Since this record already exists in our DB, we only need the id
           // scheduleID is needed when creating no data
-          currSchedule[currDay] = [{ opens_at: 0, closes_at: 2359, id: day.id }];
+          currSchedule[currDay] = [
+            { opens_at: 0, closes_at: 2359, id: day.id },
+          ];
         } else {
           Object.assign(day, { openChanged: false, closeChanged: false });
           if (currSchedule[currDay]) {
@@ -74,16 +76,14 @@ const buildScheduleDays = schedule => {
 };
 export { buildScheduleDays };
 
-const InputField = ({
-  type, label, placeholder, value, setValue,
-}) => (
+const InputField = ({ type, label, placeholder, value, setValue }) => (
   <>
     <label htmlFor="input">{label}</label>
     <input
       type={type}
       placeholder={placeholder}
       value={value || ''}
-      onChange={evt => setValue(evt.target.value)}
+      onChange={(evt) => setValue(evt.target.value)}
     />
   </>
 );
@@ -102,26 +102,25 @@ InputField.defaultProps = {
 };
 
 const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
-  const selectableOptions = resourceAddresses
-    .flatMap((address, handle) => {
-      // Don't include addresses that have already been added to the service
-      if (service.addressHandles.includes(handle)) {
-        return [];
-      }
-      // Don't show addresses that have been marked for removal
-      if (resourceAddresses[handle].isRemoved) {
-        return [];
-      }
-      // HACK: Filter out any addresses that were just created on the Edit page
-      // but have not been saved to the DB yet, since they do not have IDs and the
-      // current create address API does not return the ID of the address, which
-      // prevents other logic on the Edit page from functioning correctly.
-      if (!('id' in resourceAddresses[handle])) {
-        return [];
-      }
-      return [{ value: handle, label: address.name || address.address_1 }];
-    });
-  const handleSelectChange = e => {
+  const selectableOptions = resourceAddresses.flatMap((address, handle) => {
+    // Don't include addresses that have already been added to the service
+    if (service.addressHandles.includes(handle)) {
+      return [];
+    }
+    // Don't show addresses that have been marked for removal
+    if (resourceAddresses[handle].isRemoved) {
+      return [];
+    }
+    // HACK: Filter out any addresses that were just created on the Edit page
+    // but have not been saved to the DB yet, since they do not have IDs and the
+    // current create address API does not return the ID of the address, which
+    // prevents other logic on the Edit page from functioning correctly.
+    if (!('id' in resourceAddresses[handle])) {
+      return [];
+    }
+    return [{ value: handle, label: address.name || address.address_1 }];
+  });
+  const handleSelectChange = (e) => {
     const selectedValue = parseInt(e.target.value, 10);
     handleChange('addressHandles', [...service.addressHandles, selectedValue]);
   };
@@ -129,10 +128,17 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
     <li className="edit--section--list--item">
       <label>
         Location
-        <select className={s.addressSelect} value="" onChange={handleSelectChange}>
+        <select
+          className={s.addressSelect}
+          value=""
+          onChange={handleSelectChange}
+        >
           <option value="">Add location from organization</option>
           {selectableOptions.map(({ value, label }) => (
-            <option key={value} value={value}>{label}</option>))}
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
         </select>
       </label>
       <div className={s.addressList}>
@@ -143,7 +149,12 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
               key={handle}
               displayIndex={displayIndexMinusOne + 1}
               address={address}
-              onRemove={() => handleChange('addressHandles', service.addressHandles.filter(a => a !== handle))}
+              onRemove={() =>
+                handleChange(
+                  'addressHandles',
+                  service.addressHandles.filter((a) => a !== handle)
+                )
+              }
             />
           );
         })}
@@ -155,7 +166,8 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
 const TEXT_AREAS = [
   {
     label: 'Service Description',
-    placeholder: "Describe what you'll receive from this service in a few sentences.",
+    placeholder:
+      "Describe what you'll receive from this service in a few sentences.",
     field: 'long_description',
   },
   {
@@ -178,33 +190,35 @@ const TEXT_AREAS = [
 ];
 
 const ProvidedService = ({
-  editServiceById, handleDeactivation, index, service, resourceAddresses,
+  editServiceById,
+  handleDeactivation,
+  index,
+  service,
+  resourceAddresses,
 }) => {
   const handleChange = (field, value) => {
     const { id } = service;
     editServiceById(id, { id, [field]: value });
   };
 
-  const setShouldInheritScheduleFromParent = shouldInherit => {
+  const setShouldInheritScheduleFromParent = (shouldInherit) => {
     const { scheduleObj: scheduleDaysByDay } = service;
 
     let tempScheduleDays = {};
 
     if (shouldInherit) {
       tempScheduleDays = Object.entries(scheduleDaysByDay).reduce(
-        (acc, [day, scheduleDays]) => (
-          {
-            ...acc,
-            [day]: scheduleDays.map(scheduleDay => ({
-              ...scheduleDay,
-              opens_at: null,
-              closes_at: null,
-              openChanged: true,
-              closeChanged: true,
-            })),
-          }
-        ),
-        {},
+        (acc, [day, scheduleDays]) => ({
+          ...acc,
+          [day]: scheduleDays.map((scheduleDay) => ({
+            ...scheduleDay,
+            opens_at: null,
+            closes_at: null,
+            openChanged: true,
+            closeChanged: true,
+          })),
+        }),
+        {}
       );
     } else {
       tempScheduleDays = buildScheduleDays(service.schedule);
@@ -216,9 +230,7 @@ const ProvidedService = ({
   return (
     <li id={`${service.id}`} className="edit--service edit--section">
       <header className="edit--section--header">
-        <h4>
-          {`Service ${index + 1}: ${service.name || 'New Service'}`}
-        </h4>
+        <h4>{`Service ${index + 1}: ${service.name || 'New Service'}`}</h4>
         <button
           className="remove-item"
           type="button"
@@ -235,7 +247,7 @@ const ProvidedService = ({
             label="Name of the Service"
             placeholder="What is this service called?"
             value={service.name}
-            setValue={value => handleChange('name', value)}
+            setValue={(value) => handleChange('name', value)}
           />
         </li>
 
@@ -244,7 +256,7 @@ const ProvidedService = ({
             label="Nickname"
             placeholder="What it's known as in the community"
             value={service.alternate_name}
-            setValue={value => handleChange('alternate_name', value)}
+            setValue={(value) => handleChange('alternate_name', value)}
           />
         </li>
 
@@ -260,17 +272,17 @@ const ProvidedService = ({
             label="Service E-Mail"
             placeholder="Email address for this service"
             value={service.email}
-            setValue={value => handleChange('email', value)}
+            setValue={(value) => handleChange('email', value)}
           />
         </li>
 
-        {TEXT_AREAS.map(textArea => (
+        {TEXT_AREAS.map((textArea) => (
           <li className="edit--section--list--item" key={textArea.field}>
             <FormTextArea
               label={textArea.label}
               placeholder={textArea.placeholder}
               value={service[textArea.field] || ''}
-              setValue={value => handleChange(textArea.field, value)}
+              setValue={(value) => handleChange(textArea.field, value)}
             />
           </li>
         ))}
@@ -292,14 +304,22 @@ const ProvidedService = ({
             label="Clinician Actions (Include any COVID Actions)"
             placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral (markdown is supported)"
             value={service.instructions?.[0]?.instruction ?? ''}
-            setValue={value => handleChange('instructions', [{ id: service.instructions?.[0]?.id ?? -2, service_id: service.id, instruction: value }])}
+            setValue={(value) =>
+              handleChange('instructions', [
+                {
+                  id: service.instructions?.[0]?.id ?? -2,
+                  service_id: service.id,
+                  instruction: value,
+                },
+              ])
+            }
           />
         </li>
 
         <li className="edit--section--list--item">
           <MultiSelectDropdown
             selectedItems={service.eligibilities}
-            handleSelectChange={value => handleChange('eligibilities', value)}
+            handleSelectChange={(value) => handleChange('eligibilities', value)}
             label="Eligibility"
             optionsRoute="eligibilities"
           />
@@ -310,7 +330,7 @@ const ProvidedService = ({
             label="Cost"
             placeholder="How much does this service cost?"
             value={service.fee}
-            setValue={value => handleChange('fee', value)}
+            setValue={(value) => handleChange('fee', value)}
           />
         </li>
 
@@ -319,7 +339,7 @@ const ProvidedService = ({
             label="Wait Time"
             placeholder="Is there a waiting list or wait time?"
             value={service.wait_time}
-            setValue={value => handleChange('wait_time', value)}
+            setValue={(value) => handleChange('wait_time', value)}
           />
         </li>
 
@@ -328,7 +348,7 @@ const ProvidedService = ({
             label="Service&#39;s Website"
             placeholder="http://"
             value={service.url}
-            setValue={value => handleChange('url', value)}
+            setValue={(value) => handleChange('url', value)}
           />
         </li>
 
@@ -338,18 +358,18 @@ const ProvidedService = ({
           setShouldInheritFromParent={setShouldInheritScheduleFromParent}
           scheduleId={service.schedule.id}
           scheduleDaysByDay={service.scheduleObj}
-          handleScheduleChange={value => handleChange('scheduleObj', value)}
+          handleScheduleChange={(value) => handleChange('scheduleObj', value)}
         />
 
         <EditNotes
           notes={service.notes}
-          handleNotesChange={value => handleChange('notesObj', value)}
+          handleNotesChange={(value) => handleChange('notesObj', value)}
         />
 
         <li className="edit--section--list--item">
           <MultiSelectDropdown
             selectedItems={service.categories}
-            handleSelectChange={value => handleChange('categories', value)}
+            handleSelectChange={(value) => handleChange('categories', value)}
             label="Categories"
             optionsRoute="categories"
           />

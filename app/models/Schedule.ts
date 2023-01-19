@@ -21,7 +21,8 @@ export interface ScheduleDay {
   closes_at: number | null;
 }
 
-export interface ScheduleParams extends Omit<Partial<Schedule>, 'schedule_days'> {
+export interface ScheduleParams
+  extends Omit<Partial<Schedule>, 'schedule_days'> {
   schedule_days: Partial<ScheduleDay>[];
 }
 
@@ -45,7 +46,10 @@ export const parseConcatenatedIntegerTime = (integerTime: any) => {
     // hours digits from the minutes digits.
     const timeString: string = integerTime.toString();
     const hourString: string = timeString.substring(0, timeString.length - 2);
-    const minuteString: string = timeString.substring(timeString.length - 2, timeString.length);
+    const minuteString: string = timeString.substring(
+      timeString.length - 2,
+      timeString.length
+    );
     const hour: number = hourString.length ? parseInt(hourString, 10) : 0;
     const minute: number = parseInt(minuteString, 10);
     return { hour, minute };
@@ -60,22 +64,26 @@ const parseAPIScheduleDay = (apiScheduleDay: ScheduleDay) => {
   const opensAtTime = parseConcatenatedIntegerTime(apiScheduleDay.opens_at);
   const closesAtTime = parseConcatenatedIntegerTime(apiScheduleDay.closes_at);
   if (opensAtTime === null || closesAtTime === null) {
-    Sentry.captureMessage(`ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`);
+    Sentry.captureMessage(
+      `ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`
+    );
     return null;
   }
 
-  const opensAtMinutes = opensAtTime.hour * MINUTES_IN_HOUR + opensAtTime.minute;
-  const closesAtMinutes = closesAtTime.hour * MINUTES_IN_HOUR + closesAtTime.minute;
+  const opensAtMinutes =
+    opensAtTime.hour * MINUTES_IN_HOUR + opensAtTime.minute;
+  const closesAtMinutes =
+    closesAtTime.hour * MINUTES_IN_HOUR + closesAtTime.minute;
   const opensAt = new RecurringTime({
     day: DAY_TO_INT[apiScheduleDay.day],
     hour: opensAtTime.hour,
     minute: opensAtTime.minute,
   });
   const closesAt = new RecurringTime({
-    day: (
-      DAY_TO_INT[apiScheduleDay.day]
-        + (closesAtMinutes < opensAtMinutes ? 1 : 0)
-    ) % DAYS_IN_WEEK,
+    day:
+      (DAY_TO_INT[apiScheduleDay.day] +
+        (closesAtMinutes < opensAtMinutes ? 1 : 0)) %
+      DAYS_IN_WEEK,
     hour: closesAtTime.hour,
     minute: closesAtTime.minute,
   });
@@ -83,19 +91,24 @@ const parseAPIScheduleDay = (apiScheduleDay: ScheduleDay) => {
 };
 
 const parseValidAPIScheduleDays = (
-  apiScheduleDays: ScheduleDay[],
-): RecurringInterval[] => apiScheduleDays.reduce((acc: RecurringInterval[], apiScheduleDay) => {
-  const interval = parseAPIScheduleDay(apiScheduleDay);
-  if (interval) { acc.push(interval); }
-  return acc;
-}, []);
+  apiScheduleDays: ScheduleDay[]
+): RecurringInterval[] =>
+  apiScheduleDays.reduce((acc: RecurringInterval[], apiScheduleDay) => {
+    const interval = parseAPIScheduleDay(apiScheduleDay);
+    if (interval) {
+      acc.push(interval);
+    }
+    return acc;
+  }, []);
 
 /** Transform API Schedule into a RecurringSchedule. */
-export const parseAPISchedule = (apiSchedule: Schedule) => new RecurringSchedule({
-  intervals: parseValidAPIScheduleDays(apiSchedule.schedule_days),
-  hoursKnown: apiSchedule.hours_known,
-});
+export const parseAPISchedule = (apiSchedule: Schedule) =>
+  new RecurringSchedule({
+    intervals: parseValidAPIScheduleDays(apiSchedule.schedule_days),
+    hoursKnown: apiSchedule.hours_known,
+  });
 
-export const parseAlgoliaSchedule = (algoliaSchedule: ScheduleDay[]) => new RecurringSchedule({
-  intervals: parseValidAPIScheduleDays(algoliaSchedule),
-});
+export const parseAlgoliaSchedule = (algoliaSchedule: ScheduleDay[]) =>
+  new RecurringSchedule({
+    intervals: parseValidAPIScheduleDays(algoliaSchedule),
+  });

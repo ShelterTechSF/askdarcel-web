@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "app",
-    "lib": [
-      "dom",
-      "es2015"
-    ],
+    "lib": ["dom", "es2015"],
     "target": "es2015",
     "allowJs": true, // Allow a mix of JS and TS until we fully migrate to TS.
     "jsx": "react",

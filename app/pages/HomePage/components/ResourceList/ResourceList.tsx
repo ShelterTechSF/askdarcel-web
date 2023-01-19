@@ -6,7 +6,9 @@ import styles from './ResourceList.module.scss';
 
 const ResourceList = ({ resources }: { resources: Resource[] }) => (
   <ul className={styles.list}>
-    {resources.map(resource => <ResourceCard key={resource.name} resource={resource} />)}
+    {resources.map((resource) => (
+      <ResourceCard key={resource.name} resource={resource} />
+    ))}
   </ul>
 );
 

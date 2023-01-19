@@ -1,4 +1,9 @@
-export type Step = 'housingStatus' | 'subcategoriesRadio' | 'eligibilities' | 'subcategories' | 'results';
+export type Step =
+  | 'housingStatus'
+  | 'subcategoriesRadio'
+  | 'eligibilities'
+  | 'subcategories'
+  | 'results';
 
 export interface ServiceCategory {
   algoliaCategoryName: string;
@@ -9,7 +14,8 @@ export interface ServiceCategory {
   subcategorySubheading: string;
 }
 
-const defaultSubheading = 'What are you currently looking for? Select all that apply.';
+const defaultSubheading =
+  'What are you currently looking for? Select all that apply.';
 
 export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
@@ -90,7 +96,8 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: 'Shelter Resources',
     slug: 'shelter-resources',
     steps: ['subcategories', 'results'],
-    subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
+    subcategorySubheading:
+      'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   {
     algoliaCategoryName: 'Covid-longtermhousing',
@@ -98,7 +105,8 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: 'Long-term Housing',
     slug: 'longterm-housing-resources',
     steps: ['housingStatus', 'subcategoriesRadio', 'results'],
-    subcategorySubheading: 'If you need shelter, then tell us more about who you are. Select one answer.',
+    subcategorySubheading:
+      'If you need shelter, then tell us more about who you are. Select one answer.',
   },
   {
     algoliaCategoryName: 'Covid-substanceuse',

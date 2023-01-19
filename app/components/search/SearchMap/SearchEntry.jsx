@@ -5,7 +5,9 @@ import whiteLabel from 'utils/whitelabel';
 import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
 import './SearchEntry.scss';
 
-const { appImages: { mohcdSeal } } = whiteLabel;
+const {
+  appImages: { mohcdSeal },
+} = whiteLabel;
 
 export default class SearchEntry extends Component {
   renderAddressMetadata() {
@@ -44,28 +46,32 @@ export default class SearchEntry extends Component {
             <div className="entry-header">
               <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
               {hit.is_mohcd_funded && (
-              <div className="mohcd-funded">
-                <img src={mohcdSeal} alt="MOHCD seal" />
-                <p>Funded by MOHCD</p>
-              </div>
+                <div className="mohcd-funded">
+                  <img src={mohcdSeal} alt="MOHCD seal" />
+                  <p>Funded by MOHCD</p>
+                </div>
               )}
             </div>
             {type === 'service' && (
-            <p className="entry-meta">
-              <Link to={`/organizations/${hit.resource_id}`}>{hit.service_of}</Link>
-            </p>
+              <p className="entry-meta">
+                <Link to={`/organizations/${hit.resource_id}`}>
+                  {hit.service_of}
+                </Link>
+              </p>
             )}
             <p className="entry-meta">
               {this.renderAddressMetadata()}
-              {recurringSchedule
-                  && (
-                    <span className="entry-schedule">
-                      <RelativeOpeningTime recurringSchedule={recurringSchedule} />
-                    </span>
-                  )}
+              {recurringSchedule && (
+                <span className="entry-schedule">
+                  <RelativeOpeningTime recurringSchedule={recurringSchedule} />
+                </span>
+              )}
             </p>
             <div className="entry-body">
-              <ReactMarkdown className="rendered-markdown search-entry-body" source={description} />
+              <ReactMarkdown
+                className="rendered-markdown search-entry-body"
+                source={description}
+              />
             </div>
           </div>
           <ul className="action-buttons">
@@ -82,7 +88,6 @@ export default class SearchEntry extends Component {
               </li>
             )}
           </ul>
-
         </li>
       </Link>
     );

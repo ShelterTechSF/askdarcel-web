@@ -1,17 +1,17 @@
 @import 'app/styles/utils/_colors.scss';
 
 .list {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 16px;
-    row-gap: 16px;
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 16px;
+  row-gap: 16px;
 
-    @media screen and (max-width: 920px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-  
-    @media screen and (max-width: 600px) {
-        grid-template-columns: 1fr;
-    }
+  @media screen and (max-width: 920px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }

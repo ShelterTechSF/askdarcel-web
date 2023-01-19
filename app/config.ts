@@ -16,7 +16,11 @@ const config: Config = {
   ALGOLIA_APPLICATION_ID: CONFIG.ALGOLIA_APPLICATION_ID,
   ALGOLIA_INDEX_PREFIX: CONFIG.ALGOLIA_INDEX_PREFIX,
   ALGOLIA_READ_ONLY_API_KEY: CONFIG.ALGOLIA_READ_ONLY_API_KEY,
-  GOOGLE_ANALYTICS_ID: (process.env.NODE_ENV === 'production' || window.location.host === 'www.askdarcel.org') ? 'UA-116318550-1' : 'UA-116318550-2', // TODO This should probably be in whitelabel
+  GOOGLE_ANALYTICS_ID:
+    process.env.NODE_ENV === 'production' ||
+    window.location.host === 'www.askdarcel.org'
+      ? 'UA-116318550-1'
+      : 'UA-116318550-2', // TODO This should probably be in whitelabel
   GOOGLE_API_KEY: CONFIG.GOOGLE_API_KEY,
   INTERCOM_APP_ID: 'w50oz3tb',
   LINKSF_DOMAIN: CONFIG.LINKSF_DOMAIN,

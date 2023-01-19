@@ -8,7 +8,10 @@ const ClearAllFilter = ({ items, refine, setSearchRadius }) => (
     role="button"
     tabIndex="0"
     className={styles.clearAll}
-    onClick={() => { refine(items); setSearchRadius('all'); }}
+    onClick={() => {
+      refine(items);
+      setSearchRadius('all');
+    }}
     disabled={!items.length}
   >
     Clear all

@@ -7,14 +7,16 @@ interface PatientHandout {
   [key: string]: string;
 }
 
-const EditPatientHandout = ({ index, item, handleItemChange }: {
+const EditPatientHandout = ({
+  index,
+  item,
+  handleItemChange,
+}: {
   index: number;
   item: PatientHandout;
   handleItemChange: (handoutIndex: number, handout: PatientHandout) => void;
 }) => {
-  const handleFieldChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const { field } = e.target.dataset;
     if (field) {

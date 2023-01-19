@@ -11,22 +11,22 @@ const initialState = {
   agreed: false,
 } as const;
 
-export const FormView = ({ service, handleSubmit, closeModal }:
-  { service: TextingService;
-    handleSubmit: (data: APITexting) => void;
-    closeModal: () => void; }) => {
+export const FormView = ({
+  service,
+  handleSubmit,
+  closeModal,
+}: {
+  service: TextingService;
+  handleSubmit: (data: APITexting) => void;
+  closeModal: () => void;
+}) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
   const { serviceName, serviceId } = service;
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      type,
-      name,
-      value,
-      checked,
-    } = evt.target;
+    const { type, name, value, checked } = evt.target;
     const newValue = type === 'checkbox' ? checked : value;
-    setState(prevState => ({ ...prevState, [name]: newValue }));
+    setState((prevState) => ({ ...prevState, [name]: newValue }));
   };
 
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

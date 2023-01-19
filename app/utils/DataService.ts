@@ -18,7 +18,11 @@ function setAuthHeaders(resp: Response): void {
   }
 }
 
-export function post(url: RequestInfo | URL, body: any, headers?: HeadersInit): Promise<Response> {
+export function post(
+  url: RequestInfo | URL,
+  body: any,
+  headers?: HeadersInit
+): Promise<Response> {
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -31,14 +35,19 @@ export function post(url: RequestInfo | URL, body: any, headers?: HeadersInit): 
     mode: 'cors',
     headers: queryHeaders,
     body: JSON.stringify(body),
-  }).then(resp => {
-    if (!resp.ok) { throw resp; }
+  }).then((resp) => {
+    if (!resp.ok) {
+      throw resp;
+    }
     setAuthHeaders(resp);
     return resp;
   });
 }
 
-export function get(url: RequestInfo | URL, headers?: HeadersInit): Promise<any> {
+export function get(
+  url: RequestInfo | URL,
+  headers?: HeadersInit
+): Promise<any> {
   let queryHeaders = {
     'Content-Type': 'application/json',
   };
@@ -50,14 +59,20 @@ export function get(url: RequestInfo | URL, headers?: HeadersInit): Promise<any>
     mode: 'cors',
     headers: queryHeaders,
     credentials: 'include',
-  }).then(resp => {
-    if (!resp.ok) { throw resp; }
+  }).then((resp) => {
+    if (!resp.ok) {
+      throw resp;
+    }
     setAuthHeaders(resp);
     return resp.json();
   });
 }
 
-export function put(url: RequestInfo | URL, body: any, headers: HeadersInit): Promise<Response> {
+export function put(
+  url: RequestInfo | URL,
+  body: any,
+  headers: HeadersInit
+): Promise<Response> {
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -70,14 +85,19 @@ export function put(url: RequestInfo | URL, body: any, headers: HeadersInit): Pr
     mode: 'cors',
     headers: queryHeaders,
     body: JSON.stringify(body),
-  }).then(resp => {
-    if (!resp.ok) { throw resp; }
+  }).then((resp) => {
+    if (!resp.ok) {
+      throw resp;
+    }
     setAuthHeaders(resp);
     return resp;
   });
 }
 
-export function APIDelete(url: RequestInfo | URL, headers: HeadersInit): Promise<void> {
+export function APIDelete(
+  url: RequestInfo | URL,
+  headers: HeadersInit
+): Promise<void> {
   let queryHeaders = {
     'Content-Type': 'application/json',
   };
@@ -88,8 +108,10 @@ export function APIDelete(url: RequestInfo | URL, headers: HeadersInit): Promise
     method: 'DELETE',
     mode: 'cors',
     headers: queryHeaders,
-  }).then(resp => {
-    if (!resp.ok) { throw resp; }
+  }).then((resp) => {
+    if (!resp.ok) {
+      throw resp;
+    }
     setAuthHeaders(resp);
   });
 }
@@ -100,8 +122,12 @@ interface FeedbackBody {
   review: string;
 }
 
-export const addFeedback = (source: 'resources' | 'services', sourceId: number, body: FeedbackBody): Promise<Response> => (
-  post(`/api/${source}/${sourceId}/feedbacks`, body).then(res => res.json())
-);
+export const addFeedback = (
+  source: 'resources' | 'services',
+  sourceId: number,
+  body: FeedbackBody
+): Promise<Response> =>
+  post(`/api/${source}/${sourceId}/feedbacks`, body).then((res) => res.json());
 
-export const getResourceCount = (): Promise<number> => get('/api/resources/count');
+export const getResourceCount = (): Promise<number> =>
+  get('/api/resources/count');

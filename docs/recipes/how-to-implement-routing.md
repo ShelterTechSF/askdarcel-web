@@ -1,14 +1,14 @@
 ## How to Implement Routing and Navigation [![img](https://img.shields.io/badge/discussion-join-green.svg?style=flat-square)](https://github.com/kriasoft/react-starter-kit/issues/116)
 
- * [Step 1: Basic Routing](#step-1-basic-routing)
- * [Step 2: Asynchronous Routes](#step-2-asynchronous-routes)
- * [Step 3: Parameterized Routes](#step-3-parameterized-routes)
- * Step 4: Handling Redirects
- * Step 5: Setting Page Title and Meta Tags
- * Step 6: Code Splitting
- * Step 7: Nested Routes
- * Step 8: Integration with Flux
- * Step 9: Server-side Rendering
+- [Step 1: Basic Routing](#step-1-basic-routing)
+- [Step 2: Asynchronous Routes](#step-2-asynchronous-routes)
+- [Step 3: Parameterized Routes](#step-3-parameterized-routes)
+- Step 4: Handling Redirects
+- Step 5: Setting Page Title and Meta Tags
+- Step 6: Code Splitting
+- Step 7: Nested Routes
+- Step 8: Integration with Flux
+- Step 9: Server-side Rendering
 
 ### Step 1: Basic Routing
 
@@ -25,8 +25,16 @@ import NotFoundPage from './components/NotFoundPage';
 import ErrorPage from './components/ErrorPage';
 
 const routes = {
-  '/':      <Layout><HomePage /></Layout>,
-  '/about': <Layout><AboutPage /></Layout>
+  '/': (
+    <Layout>
+      <HomePage />
+    </Layout>
+  ),
+  '/about': (
+    <Layout>
+      <AboutPage />
+    </Layout>
+  ),
 };
 
 const container = document.getElementById('app');
@@ -60,15 +68,27 @@ import ErrorPage from './components/ErrorPage';
 
 const routes = {
   '/': async () => {
-    const response = await fetch('/graphql?query={content(path:"/"){title,html}}');
+    const response = await fetch(
+      '/graphql?query={content(path:"/"){title,html}}'
+    );
     const data = await response.json();
-    return <Layout><HomePage {...data} /></Layout>
+    return (
+      <Layout>
+        <HomePage {...data} />
+      </Layout>
+    );
   },
   '/about': async () => {
-    const response = await fetch('/graphql?query={content(path:"/about"){title,html}}');
+    const response = await fetch(
+      '/graphql?query={content(path:"/about"){title,html}}'
+    );
     const data = await response.json();
-    return <Layout><AboutPage {...data} /></Layout>;
-  }
+    return (
+      <Layout>
+        <AboutPage {...data} />
+      </Layout>
+    );
+  },
 };
 
 const container = document.getElementById('app');

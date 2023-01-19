@@ -1,16 +1,16 @@
-version: "3.5"
+version: '3.5'
 services:
   db:
     image: postgres:9.5
     networks: [askdarcel]
-    ports: ["5432:5432"]
+    ports: ['5432:5432']
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   api:
     image: sheltertechsf/askdarcel-api:latest
     networks: [askdarcel]
-    ports: ["3000:3000"]
+    ports: ['3000:3000']
     depends_on: [db]
     command: bash -c 'bundle install --with=development && bundle exec rake db:setup db:populate && bundle exec rails server --binding=0.0.0.0 -p 3000'
     environment:

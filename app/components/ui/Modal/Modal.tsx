@@ -7,10 +7,13 @@ import styles from './Modal.module.scss';
 /**
  * This modal component is used on the service/search results page. It provides
  * shared layout and shared styling.
-*/
+ */
 
 export const Modal = ({
-  isOpen, closeModal, children, addModalClass,
+  isOpen,
+  closeModal,
+  children,
+  addModalClass,
 }: {
   isOpen: boolean;
   closeModal: () => void;

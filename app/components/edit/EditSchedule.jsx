@@ -11,7 +11,7 @@ class EditSchedule extends Component {
       ...scheduleDaysByDay,
       [day]: scheduleDays,
     });
-  }
+  };
 
   render() {
     // This component is shared between organizations and services. Organizations
@@ -28,38 +28,37 @@ class EditSchedule extends Component {
     return (
       <li key="hours" className="edit--section--list--item hours">
         <span className="label">Hours</span>
-        { canInheritFromParent
-          && (
-            <div className="inherit-schedule">
-              <label htmlFor="inherit" className="inline-checkbox">
-                <input
-                  id="inherit"
-                  className="input-checkbox"
-                  type="checkbox"
-                  checked={shouldInheritFromParent}
-                  onChange={() => setShouldInheritFromParent(!shouldInheritFromParent)}
-                />
-                Inherit schedule from parent organization
-              </label>
-            </div>
-          )}
+        {canInheritFromParent && (
+          <div className="inherit-schedule">
+            <label htmlFor="inherit" className="inline-checkbox">
+              <input
+                id="inherit"
+                className="input-checkbox"
+                type="checkbox"
+                checked={shouldInheritFromParent}
+                onChange={() =>
+                  setShouldInheritFromParent(!shouldInheritFromParent)
+                }
+              />
+              Inherit schedule from parent organization
+            </label>
+          </div>
+        )}
         {!shouldInheritFromParent && (
           <div>
             <span className="label open-24-label">24 hrs?</span>
             <ul className="edit-hours-list">
-              {
-                Object.entries(scheduleDaysByDay).map(([day, scheduleDays]) => (
-                  <EditScheduleDay
-                    key={day}
-                    day={day}
-                    scheduleId={scheduleId}
-                    scheduleDays={scheduleDays}
-                    setScheduleDays={
-                      newScheduleDays => this.setScheduleDaysForDay(day, newScheduleDays)
-                    }
-                  />
-                ))
-              }
+              {Object.entries(scheduleDaysByDay).map(([day, scheduleDays]) => (
+                <EditScheduleDay
+                  key={day}
+                  day={day}
+                  scheduleId={scheduleId}
+                  scheduleDays={scheduleDays}
+                  setScheduleDays={(newScheduleDays) =>
+                    this.setScheduleDaysForDay(day, newScheduleDays)
+                  }
+                />
+              ))}
             </ul>
           </div>
         )}

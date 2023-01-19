@@ -14,7 +14,9 @@ function timeToDate(hours: string) {
   const date = new Date();
   const hoursString = hours.toString();
   date.setHours(Number(hoursString.substring(0, hoursString.length - 2)));
-  date.setMinutes(Number(hoursString.substring(hoursString.length - 2, hoursString.length)));
+  date.setMinutes(
+    Number(hoursString.substring(hoursString.length - 2, hoursString.length))
+  );
   date.setSeconds(0);
   return date;
 }
@@ -37,9 +39,9 @@ export function timeToTimeInputValue(hours: string) {
     return '';
   }
   const hour = date.getHours();
-  const strHour = (hour < 10) ? `0${hour.toString()}` : hour.toString();
+  const strHour = hour < 10 ? `0${hour.toString()}` : hour.toString();
   const minute = date.getMinutes();
-  const strMinute = (minute < 10) ? `0${minute.toString()}` : minute.toString();
+  const strMinute = minute < 10 ? `0${minute.toString()}` : minute.toString();
   return `${strHour}:${strMinute}`;
 }
 
@@ -54,7 +56,10 @@ export function getCurrentDayTime() {
   const diffMinutes = mmt.diff(mmtMidnight, 'minutes');
   // Round down to the closest 30 min block of time
   const timeRoundedDown = Math.floor(diffMinutes / 30) * 30;
-  const finalTime = mmt.startOf('day').add(timeRoundedDown, 'minutes').format('HH:mm');
+  const finalTime = mmt
+    .startOf('day')
+    .add(timeRoundedDown, 'minutes')
+    .format('HH:mm');
 
   let dayText = '';
 

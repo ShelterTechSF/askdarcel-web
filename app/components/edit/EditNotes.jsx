@@ -7,11 +7,13 @@ class EditNotes extends Component {
 
     this.state = {
       notes: {},
-      existingNotes: props.notes ? props.notes.map(note => {
-        const newNote = note;
-        newNote.key = note.id;
-        return newNote;
-      }) : [],
+      existingNotes: props.notes
+        ? props.notes.map((note) => {
+            const newNote = note;
+            newNote.key = note.id;
+            return newNote;
+          })
+        : [],
       uuid: -1,
     };
 
@@ -25,11 +27,14 @@ class EditNotes extends Component {
     const { notes } = this.state;
     const { handleNotesChange } = this.props;
     notes[key] = note;
-    this.setState({
-      notes,
-    }, () => {
-      handleNotesChange(this.state);
-    });
+    this.setState(
+      {
+        notes,
+      },
+      () => {
+        handleNotesChange(this.state);
+      }
+    );
   }
 
   addNote() {
@@ -55,12 +60,15 @@ class EditNotes extends Component {
       notes[key] = { isRemoved: true };
     }
 
-    this.setState({
-      notes,
-      existingNotes,
-    }, () => {
-      handleNotesChange(this.state);
-    });
+    this.setState(
+      {
+        notes,
+        existingNotes,
+      },
+      () => {
+        handleNotesChange(this.state);
+      }
+    );
   }
 
   renderNotes() {
@@ -79,12 +87,15 @@ class EditNotes extends Component {
   render() {
     return (
       <li className="edit--section--list--item edit--notes">
-        <label htmlFor="add-note">
-          Notes
-        </label>
+        <label htmlFor="add-note">Notes</label>
         <p>
-          <a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Markdown</a>
-          {' '}
+          <a
+            href="https://github.github.com/gfm/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Markdown
+          </a>{' '}
           is also supported for notes.
         </p>
         <ul className="edit--section--list--item--sublist">
@@ -95,9 +106,7 @@ class EditNotes extends Component {
           className="edit--section--list--item--button"
           onClick={this.addNote}
         >
-          <i className="material-icons">add_box</i>
-          {' '}
-          Add Note
+          <i className="material-icons">add_box</i> Add Note
         </button>
       </li>
     );

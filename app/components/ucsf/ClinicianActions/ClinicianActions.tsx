@@ -7,7 +7,9 @@ import { Button } from 'components/ui/inline/Button/Button';
 import styles from './ClinicianActions.module.scss';
 
 export const ClinicianActions = ({
-  isOpen, setIsOpen, actions,
+  isOpen,
+  setIsOpen,
+  actions,
 }: {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;

@@ -18,13 +18,15 @@
     font-size: 18px;
   }
 
-  :global(.ais-Pagination-item--nextPage), :global(.ais-Pagination-item--previousPage) {
-    border: 1px solid rgba(0,0,0,0.2);
+  :global(.ais-Pagination-item--nextPage),
+  :global(.ais-Pagination-item--previousPage) {
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     padding: 13px 8px;
     margin: 0 3px;
     font-size: 0.87rem;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       border: 1px solid #276ce5;
     }
   }

@@ -17,7 +17,8 @@ export const ResourceGuidesData: ResourceGuideModel[] = [
   id: (last(path.split('/')) || '').replace('.pdf', ''),
 }));
 
-export const ResourceGuidesLookup: { [id: string]: ResourceGuideModel } = ResourceGuidesData.reduce(
-  (lookup, data) => ({ ...lookup, [data.id]: data }),
-  {},
-);
+export const ResourceGuidesLookup: { [id: string]: ResourceGuideModel } =
+  ResourceGuidesData.reduce(
+    (lookup, data) => ({ ...lookup, [data.id]: data }),
+    {}
+  );

@@ -1,13 +1,7 @@
 import { get } from '../utils/DataService';
 import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
 import { Schedule, parseAPISchedule } from './Schedule';
-import {
-  Address,
-  Category,
-  LocationDetails,
-  Note,
-  PhoneNumber,
-} from './Meta';
+import { Address, Category, LocationDetails, Note, PhoneNumber } from './Meta';
 import { RecurringSchedule } from './RecurringSchedule';
 
 // An Organization used to be called a 'Resource', and represents
@@ -37,7 +31,8 @@ export interface Organization {
   website: string | null;
 }
 
-export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'> {
+export interface OrganizationParams
+  extends Omit<Partial<Organization>, 'notes'> {
   notes?: Partial<Note>[];
 }
 
@@ -54,26 +49,30 @@ export interface OrganizationAction {
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const fetchOrganization = (id: string): Promise<Organization> => get(`/api/resources/${id}`)
-  .then(({ resource }: { resource: Organization }) => {
-    const recurringSchedule = parseAPISchedule(resource.schedule);
-    return {
-      ...resource,
-      recurringSchedule,
-      services: resource.services.map(service => ({
-        ...service,
-        recurringSchedule: shouldServiceInheritScheduleFromOrg(service)
-          ? parseAPISchedule(service.schedule)
-          : recurringSchedule,
-      })),
-    };
-  });
+export const fetchOrganization = (id: string): Promise<Organization> =>
+  get(`/api/resources/${id}`).then(
+    ({ resource }: { resource: Organization }) => {
+      const recurringSchedule = parseAPISchedule(resource.schedule);
+      return {
+        ...resource,
+        recurringSchedule,
+        services: resource.services.map((service) => ({
+          ...service,
+          recurringSchedule: shouldServiceInheritScheduleFromOrg(service)
+            ? parseAPISchedule(service.schedule)
+            : recurringSchedule,
+        })),
+      };
+    }
+  );
 
-export const getOrganizationLocations = (org: Organization): LocationDetails[] => {
+export const getOrganizationLocations = (
+  org: Organization
+): LocationDetails[] => {
   const { addresses } = org;
   if (!addresses || !addresses.length) return [];
 
-  return addresses.map(address => ({
+  return addresses.map((address) => ({
     id: address.id,
     address,
     name: org.name,
@@ -81,7 +80,9 @@ export const getOrganizationLocations = (org: Organization): LocationDetails[] =
   }));
 };
 
-export const getOrganizationActions = (org: Organization): OrganizationAction[] => {
+export const getOrganizationActions = (
+  org: Organization
+): OrganizationAction[] => {
   const phoneNumber = org?.phones?.[0]?.number;
   const latitude = org?.addresses?.[0]?.latitude;
   const longitude = org?.addresses?.[0]?.longitude;

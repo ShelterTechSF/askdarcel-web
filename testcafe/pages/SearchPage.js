@@ -7,7 +7,8 @@ export default class SearchPage {
 
     this.firstOrganization = baseSelector.find('.resource-entry');
     this.firstOrganizationName = this.firstOrganization.find('.entry-headline');
-    this.firstOrganizationDesc = this.firstOrganization.find('.search-entry-body');
+    this.firstOrganizationDesc =
+      this.firstOrganization.find('.search-entry-body');
 
     this.firstService = baseSelector.find('.service-entry');
     this.firstServiceName = this.firstService.find('.entry-headline');

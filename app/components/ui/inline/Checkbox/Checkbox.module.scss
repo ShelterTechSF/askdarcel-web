@@ -11,15 +11,16 @@
   margin: 0;
   place-content: center;
   vertical-align: middle;
-  border: 2.5px solid #9E9E9E;
+  border: 2.5px solid #9e9e9e;
   border-radius: 3px;
   background-color: #fff;
   box-shadow: none;
   transition: none;
   cursor: pointer;
 
-  &::after, &::before {
-    content: "";
+  &::after,
+  &::before {
+    content: '';
     transform: scale(0);
   }
 
@@ -51,7 +52,9 @@
     }
   }
 
-  &:active, &:hover, &:focus {
+  &:active,
+  &:hover,
+  &:focus {
     box-shadow: initial;
   }
 }

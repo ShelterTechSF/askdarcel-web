@@ -12,7 +12,10 @@ class EditNote extends Component {
 
   handleFieldChange(e) {
     const { note } = this.state;
-    const { handleChange, note: { key } } = this.props;
+    const {
+      handleChange,
+      note: { key },
+    } = this.props;
     note.note = e.target.value;
     this.setState({ note });
 
@@ -46,9 +49,7 @@ class EditNote extends Component {
         </li>
       );
     }
-    return (
-      note
-    );
+    return note;
   }
 }
 

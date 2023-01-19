@@ -9,7 +9,12 @@ import config from '../config';
 import styles from '../components/ui/Navigation.module.scss';
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
+type WhiteLabelSiteKey =
+  | 'defaultWhiteLabel'
+  | 'SFServiceGuide'
+  | 'SFFamilies'
+  | 'LinkSF'
+  | 'Ucsf';
 type homepageComponentEnums = 'HomePage' | 'UcsfHomePage';
 
 interface WhiteLabelSite {
@@ -43,14 +48,18 @@ interface WhiteLabelSite {
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
   const domain = window.location.host;
   const subdomain = domain.split('.')[0];
-  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) => (
-    subdomain === whiteLabelSubdomain || subdomain === `${whiteLabelSubdomain}-staging`
-  );
+  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) =>
+    subdomain === whiteLabelSubdomain ||
+    subdomain === `${whiteLabelSubdomain}-staging`;
 
   if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return 'SFFamilies';
   if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return 'LinkSF';
   if (checkWhiteLabelSubdomain(config.UCSF_DOMAIN)) return 'Ucsf';
-  if (subdomain === String(config.MOHCD_DOMAIN) || domain === `staging.${String(config.MOHCD_DOMAIN)}.org`) return 'SFServiceGuide';
+  if (
+    subdomain === String(config.MOHCD_DOMAIN) ||
+    domain === `staging.${String(config.MOHCD_DOMAIN)}.org`
+  )
+    return 'SFServiceGuide';
   // N.B. The qaone environment can be used to test various whitelabels as needed
   if (subdomain === 'qaone') return 'Ucsf';
 

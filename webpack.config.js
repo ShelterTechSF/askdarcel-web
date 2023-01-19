@@ -24,7 +24,9 @@ const environmentConfig = [
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
-  if (process.env[key] !== undefined) { acc[key] = process.env[key]; }
+  if (process.env[key] !== undefined) {
+    acc[key] = process.env[key];
+  }
   return acc;
 }, userConfig);
 
@@ -62,7 +64,8 @@ module.exports = {
         'og:title': 'SF Service Guide | San Francisco',
         'twitter:card': 'summary_large_image',
         'twitter:site': '@sheltertechorg',
-        'og:description': 'Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.',
+        'og:description':
+          'Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.',
         'og:type': 'website',
         // Note: The image is specified in the HTML itself because it needs to
         // reference an image file.
@@ -78,9 +81,7 @@ module.exports = {
     }),
     new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin({
-      patterns: [
-        { from: 'public', to: path.resolve(__dirname, 'public') },
-      ],
+      patterns: [{ from: 'public', to: path.resolve(__dirname, 'public') }],
     }),
     new NodePolyfillPlugin(),
   ],
@@ -147,9 +148,7 @@ module.exports = {
         generator: {
           filename: '[name][ext]',
         },
-        include: [
-          path.resolve(__dirname, 'app/assets'),
-        ],
+        include: [path.resolve(__dirname, 'app/assets')],
       },
     ],
   },

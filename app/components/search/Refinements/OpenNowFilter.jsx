@@ -34,7 +34,15 @@ const OpenNowFilter = ({ currentRefinement, refine }) => {
   return (
     <label key="openNow" className={styles.checkBox}>
       Open Now
-      <input type="checkbox" name="openNow" id="openNow" className={styles.refinementInput} value={isActive} checked={isActive} onChange={toggleRefinement} />
+      <input
+        type="checkbox"
+        name="openNow"
+        id="openNow"
+        className={styles.refinementInput}
+        value={isActive}
+        checked={isActive}
+        onChange={toggleRefinement}
+      />
     </label>
   );
 };

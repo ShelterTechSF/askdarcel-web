@@ -4,10 +4,9 @@ import Texting from './pages/Texting';
 const searchResultsPage = new SearchResultsPage();
 const texting = new Texting();
 
-fixture`Texting info`
-  .page(SearchResultsPage.url());
+fixture`Texting info`.page(SearchResultsPage.url());
 
-test('Text info, Basic', async t => {
+test('Text info, Basic', async (t) => {
   const data = {
     recipientName: 'test name',
     phoneNumber: '4154353493',
@@ -18,7 +17,9 @@ test('Text info, Basic', async t => {
   // check submit button is disabled
   await t.expect(texting.submitButton.hasAttribute('disabled')).ok();
 
-  await t.typeText(texting.recipientName, data.recipientName, { replace: true });
+  await t.typeText(texting.recipientName, data.recipientName, {
+    replace: true,
+  });
   await t.typeText(texting.phoneNumber, data.phoneNumber, { replace: true });
   await t.click(texting.agree);
 

@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { cloneDeep } from 'lodash';
 import { icon } from 'assets';
 import { TAG_LIST } from './constants';
-import type {
-  StepState, SubmittedState, TagType, VoteType,
-} from './constants';
+import type { StepState, SubmittedState, TagType, VoteType } from './constants';
 import { Organization, Service } from '../../../models';
 import { addFeedback } from '../../../utils/DataService';
 import {
@@ -16,7 +14,11 @@ import {
 } from './FeedbackSteps';
 import styles from './FeedbackForm.module.scss';
 
-export const FeedbackForm = ({ service, resource, closeModal }: {
+export const FeedbackForm = ({
+  service,
+  resource,
+  closeModal,
+}: {
   service?: Service;
   resource: Organization;
   closeModal: () => void;
@@ -35,7 +37,7 @@ export const FeedbackForm = ({ service, resource, closeModal }: {
    * Toggle selected tags state with given position
    *
    * @param {int} pos - position of tag in array of tagOptions.
-  */
+   */
   const toggleSelectedTag = (pos: number) => {
     const updatedTags = cloneDeep(tagOptions);
     updatedTags[pos].selected = !updatedTags[pos].selected;
@@ -47,13 +49,15 @@ export const FeedbackForm = ({ service, resource, closeModal }: {
     setReview(e.target.value);
   };
 
-  const handleNextStep = () => (
-    (vote === 'downvote' && step === 'start') ? setStep('tags') : setStep('review')
-  );
+  const handleNextStep = () =>
+    vote === 'downvote' && step === 'start'
+      ? setStep('tags')
+      : setStep('review');
 
-  const handlePrevStep = () => (
-    (vote === 'downvote' && step === 'review') ? setStep('tags') : setStep('start')
-  );
+  const handlePrevStep = () =>
+    vote === 'downvote' && step === 'review'
+      ? setStep('tags')
+      : setStep('start');
 
   const handleSubmit = () => {
     setIsSubmitted('submitting');
@@ -68,20 +72,19 @@ export const FeedbackForm = ({ service, resource, closeModal }: {
     };
 
     const [source, sourceId] = !service
-      ? ['resources', resource.id] as const
-      : ['services', service.id] as const;
+      ? (['resources', resource.id] as const)
+      : (['services', service.id] as const);
 
     addFeedback(source, sourceId, feedback)
       .then(() => {
         setIsSubmitted('submitted');
       })
-      .catch(err => console.log(err)); // eslint-disable-line no-console
+      .catch((err) => console.log(err)); // eslint-disable-line no-console
   };
 
-  const isReviewRequired = (
-    tagOptions.some(({ tag, selected }) => tag === 'Other' && selected)
-    && vote === 'downvote'
-  );
+  const isReviewRequired =
+    tagOptions.some(({ tag, selected }) => tag === 'Other' && selected) &&
+    vote === 'downvote';
 
   const STEPS = {
     start: null,

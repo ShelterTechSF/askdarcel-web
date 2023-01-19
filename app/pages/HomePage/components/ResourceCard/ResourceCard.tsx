@@ -12,9 +12,7 @@ export interface Resource {
 }
 
 const ResourceCard = ({ resource }: { resource: Resource }) => {
-  const {
-    link = '', name = '', icon = '', categorySlug,
-  } = resource;
+  const { link = '', name = '', icon = '', categorySlug } = resource;
 
   const history = useHistory();
 
@@ -33,10 +31,7 @@ const ResourceCard = ({ resource }: { resource: Resource }) => {
   }
 
   return (
-    <a
-      className={styles.card}
-      {...anchorTagProps}
-    >
+    <a className={styles.card} {...anchorTagProps}>
       <img src={assetIcon(icon)} alt={name} className={styles.icon} />
       <span className={styles.name}>{name}</span>
     </a>

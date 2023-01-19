@@ -1,4 +1,4 @@
-@import "~styles/utils/_helpers.scss";
+@import '~styles/utils/_helpers.scss';
 
 .header {
   display: flex;
@@ -51,7 +51,9 @@
   margin: 0;
   width: auto;
   height: auto;
-  &:focus, &:active, &:hover {
+  &:focus,
+  &:active,
+  &:hover {
     box-shadow: none;
   }
   // End Button default overrrides
@@ -76,7 +78,6 @@
 .mapIcon {
   background-image: url(assets/img/ic-map.svg);
 }
-
 
 .mapListToggleContainer {
   @media screen and (min-width: $min-tablet-p) {

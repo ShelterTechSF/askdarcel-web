@@ -7,8 +7,8 @@ export const ServiceCard = ({ service }: { service: Service }) => {
   return (
     <Link to={{ pathname: `/services/${id}` }} className="card">
       <header className="content">
-        <h3>{ name }</h3>
-        <p>{ long_description }</p>
+        <h3>{name}</h3>
+        <p>{long_description}</p>
       </header>
     </Link>
   );

@@ -24,13 +24,12 @@ export const SfServiceGuideJsx = () => (
           SF Service Guide
         </h1>
         <p>
-          The SF Service Guide is an online directory of human services
-          in San Francisco. Our goal is to help anyone with access to a
-          smartphone, tablet, or computer find the services they need.
-          The guide&apos;s focus is on homelessness and housing services,
-          but also covers a variety of other services, from education and
-          legal aid to senior services and re-entry programs.
-          {' '}
+          The SF Service Guide is an online directory of human services in San
+          Francisco. Our goal is to help anyone with access to a smartphone,
+          tablet, or computer find the services they need. The guide&apos;s
+          focus is on homelessness and housing services, but also covers a
+          variety of other services, from education and legal aid to senior
+          services and re-entry programs.{' '}
         </p>
       </header>
       <section className={styles.aboutSection}>
@@ -44,10 +43,9 @@ export const SfServiceGuideJsx = () => (
             <img src={STLogo} alt="ShelterTech" />
           </a>
           <p>
-            The SF Service Guide is developed and maintained by
-            ShelterTech, a volunteer-only 501c(3) non-profit that builds
-            tech products for homeless and at risk communities.
-            {' '}
+            The SF Service Guide is developed and maintained by ShelterTech, a
+            volunteer-only 501c(3) non-profit that builds tech products for
+            homeless and at risk communities.{' '}
             <a href="http://sheltertech.org" rel="noopener">
               Learn more here.
             </a>
@@ -87,34 +85,22 @@ export const SfServiceGuideJsx = () => (
         <h3>Strategic partners:</h3>
         <ul className={styles.partnersList}>
           <li>
-            <a
-              href="https://larkinstreetyouth.org/"
-              rel="noopener"
-            >
+            <a href="https://larkinstreetyouth.org/" rel="noopener">
               <img src={LarkinLogo} alt="Larkin Street Youth Services" />
             </a>
           </li>
           <li>
-            <a
-              href="http://evictiondefense.org/"
-              rel="noopener"
-            >
+            <a href="http://evictiondefense.org/" rel="noopener">
               <img src={EDCLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a
-              href="https://homeownershipsf.org/"
-              rel="noopener"
-            >
+            <a href="https://homeownershipsf.org/" rel="noopener">
               <img src={HomeownershipSFLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a
-              href="https://www.compass-sf.org/"
-              rel="noopener"
-            >
+            <a href="https://www.compass-sf.org/" rel="noopener">
               <img src={CompassLogo} alt="WeWork" />
             </a>
           </li>
@@ -124,10 +110,7 @@ export const SfServiceGuideJsx = () => (
             </a>
           </li>
           <li>
-            <a
-              href="https://www.sffamilies.org/"
-              rel="noopener"
-            >
+            <a href="https://www.sffamilies.org/" rel="noopener">
               <img src={SFFamiliesLogo} alt="SF Families" />
             </a>
           </li>

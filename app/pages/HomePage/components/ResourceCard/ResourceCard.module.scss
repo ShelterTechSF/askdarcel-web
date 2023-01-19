@@ -1,46 +1,45 @@
 @import '../../../../styles/utils/_helpers.scss';
 
 .card {
-    padding: 20px;
-    border-radius: 3px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
 
-    @media screen and (max-width: 920px) {
-        padding: 12px;
+  @media screen and (max-width: 920px) {
+    padding: 12px;
+  }
 
+  &:hover {
+    background-color: $color-brand;
+    color: white;
+
+    .icon {
+      // make the icon white on hover
+      filter: brightness(0) invert(1);
     }
-
-    &:hover {
-        background-color: $color-brand;
-        color: white;
-
-        .icon {
-            // make the icon white on hover
-            filter: brightness(0) invert(1);
-        }
-    }
+  }
 }
 
 .icon {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
 
-    @media screen and (max-width: 920px) {
-        width: 44px;
-        height: 44px;
-        margin-right: 12px;
-    }
+  @media screen and (max-width: 920px) {
+    width: 44px;
+    height: 44px;
+    margin-right: 12px;
+  }
 }
 
 .name {
-    font-weight: bold;
-    font-size: 24px;
+  font-weight: bold;
+  font-size: 24px;
 
-    @media screen and (max-width: 920px) {
-        font-weight: normal;
-        font-size: 16px;
-    }
+  @media screen and (max-width: 920px) {
+    font-weight: normal;
+    font-size: 16px;
+  }
 }

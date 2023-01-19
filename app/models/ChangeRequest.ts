@@ -8,7 +8,7 @@ export interface ChangeRequest {
   type: string;
 }
 
-export type ChangeRequestParams = ScheduleDayChangeRequestParams
+export type ChangeRequestParams = ScheduleDayChangeRequestParams;
 
 interface ScheduleDayChangeRequestParams {
   schedule_id: number;

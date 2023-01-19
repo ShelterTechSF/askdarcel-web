@@ -13,27 +13,32 @@ export interface OrganizationHit extends Omit<Organization, 'schedule'> {
   schedule: ScheduleDay[];
 }
 
-export type SearchHit = ServiceHit | OrganizationHit
+export type SearchHit = ServiceHit | OrganizationHit;
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
  * uses the time helper classes.
  */
-export const transformHits = (hits: SearchHit[]) => hits.map(hit => {
-  switch (hit.type) {
-    case 'resource':
-      return {
-        ...hit,
-        recurringSchedule: hit.schedule?.length ? parseAlgoliaSchedule(hit.schedule) : null,
-      };
-    case 'service': {
-      const schedule = hit.schedule || hit.resource_schedule;
-      return {
-        ...hit,
-        recurringSchedule: schedule?.length ? parseAlgoliaSchedule(schedule) : null,
-      };
+export const transformHits = (hits: SearchHit[]) =>
+  hits.map((hit) => {
+    switch (hit.type) {
+      case 'resource':
+        return {
+          ...hit,
+          recurringSchedule: hit.schedule?.length
+            ? parseAlgoliaSchedule(hit.schedule)
+            : null,
+        };
+      case 'service': {
+        const schedule = hit.schedule || hit.resource_schedule;
+        return {
+          ...hit,
+          recurringSchedule: schedule?.length
+            ? parseAlgoliaSchedule(schedule)
+            : null,
+        };
+      }
+      default:
+        return null;
     }
-    default:
-      return null;
-  }
-});
+  });

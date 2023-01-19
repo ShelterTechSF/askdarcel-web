@@ -14,13 +14,14 @@ table {
   tr {
     transition: all 0.2s ease-in-out;
 
-    th, td {
+    th,
+    td {
       padding: 10px;
       text-align: left;
 
       &.iconcell {
         max-width: $padding-xxlarge;
-        $padding: 10px $padding-default
+        $padding: 10px $padding-default;
       }
     }
 
@@ -38,20 +39,19 @@ table {
     width: auto;
 
     tr {
-      td, th {
+      td,
+      th {
         padding: $padding-default $padding-large;
       }
     }
   }
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 // TYPEFACES
 
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap');
-
 
 $font-family-base: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
 
@@ -92,7 +92,8 @@ $font-family-base: 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
 ////////////////////////////////////////////////////////////////////////////////////////
 // FONT STYLES
 
-html, body {
+html,
+body {
   font-size: $font-size;
   line-height: 1.25;
   font-family: $font-family-base;
@@ -139,7 +140,7 @@ a {
     color: $color-brand-dark;
     text-decoration: underline;
   }
-  @include transition(all .2s);
+  @include transition(all 0.2s);
 }
 
 em {
@@ -148,11 +149,12 @@ em {
 strong {
   font-weight: 700;
 }
-button{
+button {
   font-family: $font-family-base;
   cursor: pointer;
 }
-textarea, input{
+textarea,
+input {
   font-family: $font-family-base;
 }
 %hide-text {

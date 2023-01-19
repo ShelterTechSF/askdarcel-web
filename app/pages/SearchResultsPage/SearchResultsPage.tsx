@@ -1,9 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import algoliasearch from 'algoliasearch/lite';
-import {
-  InstantSearch, Configure, SearchBox,
-} from 'react-instantsearch/dom';
+import { InstantSearch, Configure, SearchBox } from 'react-instantsearch/dom';
 import qs, { ParsedQs } from 'qs';
 
 import { GeoCoordinates, useAppContext } from 'utils';
@@ -18,7 +16,7 @@ import styles from './SearchResultsPage.module.scss';
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
-  config.ALGOLIA_READ_ONLY_API_KEY,
+  config.ALGOLIA_READ_ONLY_API_KEY
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
@@ -40,8 +38,13 @@ export const SearchResultsPage = () => {
   const { search } = useLocation();
   const [expandList, setExpandList] = useState(false);
 
-  const searchState: SearchState = useMemo(() => qs.parse(search.slice(1)), [search]);
-  const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius ?? 'all');
+  const searchState: SearchState = useMemo(
+    () => qs.parse(search.slice(1)),
+    [search]
+  );
+  const [searchRadius, setSearchRadius] = useState(
+    searchState?.configure?.aroundRadius ?? 'all'
+  );
 
   return (
     <InnerSearchResults
@@ -60,8 +63,15 @@ export const SearchResultsPage = () => {
 
 /** Stateless inner component that just handles presentation. */
 const InnerSearchResults = ({
-  history, userLocation, lastPush, setLastPush, expandList, setExpandList, searchState,
-  searchRadius, setSearchRadius,
+  history,
+  userLocation,
+  lastPush,
+  setLastPush,
+  expandList,
+  setExpandList,
+  searchState,
+  searchRadius,
+  setSearchRadius,
 }: {
   history: any;
   userLocation: GeoCoordinates | null;
@@ -93,7 +103,9 @@ const InnerSearchResults = ({
           const THRESHOLD = 700;
           const newPush = Date.now();
           setLastPush(newPush);
-          const newUrl = nextSearchState ? `search?${qs.stringify(nextSearchState)}` : '';
+          const newUrl = nextSearchState
+            ? `search?${qs.stringify(nextSearchState)}`
+            : '';
           if (lastPush && newPush - lastPush <= THRESHOLD) {
             history.replace(newUrl);
           } else {
@@ -102,8 +114,11 @@ const InnerSearchResults = ({
         }}
         createURL={(state: any) => `search?${qs.stringify(state)}`}
       >
-
-        <Configure aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`} aroundRadius={searchRadius} aroundPrecision={1600} />
+        <Configure
+          aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`}
+          aroundRadius={searchRadius}
+          aroundPrecision={1600}
+        />
         {/* <div className={styles.searchBox}>
           todo: part of the next stage of multiple location development
           <SearchBox />

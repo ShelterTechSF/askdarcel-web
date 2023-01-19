@@ -11,7 +11,11 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
   const toggleInfoHidden = () => setInfoHidden(!infoHidden);
 
   return (
-    <li className="service" id={`service-${service.id}`} data-cy="service-list-item">
+    <li
+      className="service"
+      id={`service-${service.id}`}
+      data-cy="service-list-item"
+    >
       {/* <div className="service--meta disabled-feature">
         <p><ServiceCategory category={service.category} /></p>
         <p>updated {service.updated_at}</p>
@@ -21,32 +25,44 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
           {service.name}
         </a>
       </h2>
-      <ReactMarkdown className="rendered-markdown service--description" source={service.long_description} />
+      <ReactMarkdown
+        className="rendered-markdown service--description"
+        source={service.long_description}
+      />
       <div
         className="service--details-toggle"
         onClick={toggleInfoHidden}
         role="button"
         tabIndex={0}
       >
-        { infoHidden
-          && (
-            <span>
-              More Info
-              <i className="material-icons">keyboard_arrow_down</i>
-            </span>
-          )}
+        {infoHidden && (
+          <span>
+            More Info
+            <i className="material-icons">keyboard_arrow_down</i>
+          </span>
+        )}
       </div>
 
-      { !infoHidden && (
+      {!infoHidden && (
         <div className="service-application-process-container">
           <ul className="service--details">
-            <ServiceContactDetails email={service.email} website={service.url} />
-            <ServiceEligibility subject="How to apply" result={service.application_process} />
-            <ServiceEligibility subject="Required documents" result={service.required_documents} />
+            <ServiceContactDetails
+              email={service.email}
+              website={service.url}
+            />
+            <ServiceEligibility
+              subject="How to apply"
+              result={service.application_process}
+            />
+            <ServiceEligibility
+              subject="Required documents"
+              result={service.required_documents}
+            />
             <ServiceEligibility subject="Fees" result={service.fee} />
-            {service.notes.length ? <Notes notes={service.notes} /> : null }
-            {service.recurringSchedule.intervals.length > 0
-              && <WeeklyHours recurringSchedule={service.recurringSchedule} />}
+            {service.notes.length ? <Notes notes={service.notes} /> : null}
+            {service.recurringSchedule.intervals.length > 0 && (
+              <WeeklyHours recurringSchedule={service.recurringSchedule} />
+            )}
           </ul>
           <div
             role="button"
@@ -65,7 +81,11 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
   );
 };
 
-const WeeklyHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) => (
+const WeeklyHours = ({
+  recurringSchedule,
+}: {
+  recurringSchedule: RecurringSchedule;
+}) => (
   <li className="service--details--item">
     <header>Hours</header>
     <div className="service--details--item--info">
@@ -74,9 +94,12 @@ const WeeklyHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedu
   </li>
 );
 
-const ServiceContactDetails = ({ email, website }: {
-  email?: string|null;
-  website?: string|null;
+const ServiceContactDetails = ({
+  email,
+  website,
+}: {
+  email?: string | null;
+  website?: string | null;
 }) => {
   if (!(email || website)) {
     return null;
@@ -102,44 +125,59 @@ const ServiceContactDetails = ({ email, website }: {
   );
 };
 
-const ServiceEligibility = ({ result, subject }: {
-  result: string|null;
+const ServiceEligibility = ({
+  result,
+  subject,
+}: {
+  result: string | null;
   subject: string;
-}) => (result ? (
-  <li className="service--details--item">
-    <header>{subject}</header>
-    <ReactMarkdown className="rendered-markdown service--details--item--info">{result}</ReactMarkdown>
-  </li>
-) : null);
+}) =>
+  result ? (
+    <li className="service--details--item">
+      <header>{subject}</header>
+      <ReactMarkdown className="rendered-markdown service--details--item--info">
+        {result}
+      </ReactMarkdown>
+    </li>
+  ) : null;
 
-const DetailedHours = ({ recurringSchedule }: { recurringSchedule: RecurringSchedule }) => (
+const DetailedHours = ({
+  recurringSchedule,
+}: {
+  recurringSchedule: RecurringSchedule;
+}) => (
   <span className="weekly-hours-list">
-    {
-      (
-        recurringSchedule.hoursKnown
-          ? (recurringSchedule.intervals.map(interval => (
-            <div key={interval.key()} className="weekly-hours-list--item">
-              <span className="weekly-hours-list--item--day">{interval.opensAt.dayString()}</span>
-              <span className="weekly-hours-list--item--hours">
-                { interval.is24Hours()
-                  ? '24 Hours'
-                  : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`}
-              </span>
-            </div>
-          )))
-          : (<div className="weekly-hours-list--item">Call for Hours</div>)
-      )
-    }
+    {recurringSchedule.hoursKnown ? (
+      recurringSchedule.intervals.map((interval) => (
+        <div key={interval.key()} className="weekly-hours-list--item">
+          <span className="weekly-hours-list--item--day">
+            {interval.opensAt.dayString()}
+          </span>
+          <span className="weekly-hours-list--item--hours">
+            {interval.is24Hours()
+              ? '24 Hours'
+              : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`}
+          </span>
+        </div>
+      ))
+    ) : (
+      <div className="weekly-hours-list--item">Call for Hours</div>
+    )}
   </span>
 );
 
-export const ServiceAttribution = ({ attribution, status }: {
+export const ServiceAttribution = ({
+  attribution,
+  status,
+}: {
   attribution: string;
   status: string;
 }) => {
-  const benetechLink = 'https://medium.com/@Shelter_Tech/sheltertech-is-participating-'
-  + 'in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6';
-  const isServiceNetAttribution = attribution === 'service_net' && status === 'approved';
+  const benetechLink =
+    'https://medium.com/@Shelter_Tech/sheltertech-is-participating-' +
+    'in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6';
+  const isServiceNetAttribution =
+    attribution === 'service_net' && status === 'approved';
 
   return isServiceNetAttribution ? (
     <div className="attributed-service">
@@ -151,8 +189,15 @@ export const ServiceAttribution = ({ attribution, status }: {
             className="listing-menu--button-icon"
           />
         </span>
-        <span className="attributed-service-text">We&apos;ve updated this record thanks to a </span>
-        <a className="attributed-service-link" href={benetechLink} target="_blank" rel="noopener noreferrer">
+        <span className="attributed-service-text">
+          We&apos;ve updated this record thanks to a{' '}
+        </span>
+        <a
+          className="attributed-service-link"
+          href={benetechLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Service Net Partner
         </a>
       </p>

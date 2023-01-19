@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { icon } from 'assets';
-import type {
-  SubmittedState, StepState, TagType, VoteType,
-} from './constants';
+import type { SubmittedState, StepState, TagType, VoteType } from './constants';
 import styles from './FeedbackSteps.module.scss';
 
-export const VoteButtons = ({ vote, onVoteChange }: {
+export const VoteButtons = ({
+  vote,
+  onVoteChange,
+}: {
   vote: VoteType;
   onVoteChange: (v: VoteType) => void;
 }) => (
@@ -21,11 +22,7 @@ export const VoteButtons = ({ vote, onVoteChange }: {
           alt="upvote"
         />
       </div>
-      <div
-        onClick={() => onVoteChange('downvote')}
-        role="button"
-        tabIndex={-2}
-      >
+      <div onClick={() => onVoteChange('downvote')} role="button" tabIndex={-2}>
         <img
           src={icon(`downvote${vote === 'downvote' ? '-active' : ''}`)}
           alt="downvote"
@@ -35,7 +32,10 @@ export const VoteButtons = ({ vote, onVoteChange }: {
   </>
 );
 
-export const FeedbackTags = ({ tagOptions, onSelectTag }: {
+export const FeedbackTags = ({
+  tagOptions,
+  onSelectTag,
+}: {
   tagOptions: readonly TagType[];
   onSelectTag: (i: number) => void;
 }) => (
@@ -60,7 +60,11 @@ export const FeedbackTags = ({ tagOptions, onSelectTag }: {
   </div>
 );
 
-export const Review = ({ reviewValue, onReviewChange, isReviewRequired }: {
+export const Review = ({
+  reviewValue,
+  onReviewChange,
+  isReviewRequired,
+}: {
   reviewValue: string;
   onReviewChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   isReviewRequired: boolean;
@@ -80,7 +84,7 @@ export const Review = ({ reviewValue, onReviewChange, isReviewRequired }: {
   </div>
 );
 
-export const SubmitMessage = ({ closeModal }: {closeModal: () => void}) => (
+export const SubmitMessage = ({ closeModal }: { closeModal: () => void }) => (
   <>
     <div className={styles.feedbackSubmitHeader}>
       Thank you for your feedback!

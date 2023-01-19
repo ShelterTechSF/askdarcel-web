@@ -16,7 +16,8 @@ interface SelectedSubcategories {
 const seeAllPseudoId = -1;
 
 export const SubcategoryRefinements = ({
-  subcategories, selectedSubcategories,
+  subcategories,
+  selectedSubcategories,
   setSelectedSubcategories,
 }: {
   subcategories: SubcategoryRefinement[];
@@ -37,7 +38,7 @@ export const SubcategoryRefinements = ({
       if (seeAllIsTargetElement) {
         // If "See All" is target refinement, deselect all other subcategories. This is done because
         // showing all services requires that we do not include any refinements in our query
-        subcategories.forEach(category => {
+        subcategories.forEach((category) => {
           updatedSubcategories[category.id] = false;
         });
       } else {
@@ -47,7 +48,10 @@ export const SubcategoryRefinements = ({
       }
     }
 
-    setSelectedSubcategories({ ...updatedSubcategories, [targetSubcategoryId]: newValue });
+    setSelectedSubcategories({
+      ...updatedSubcategories,
+      [targetSubcategoryId]: newValue,
+    });
   };
 
   return (
@@ -55,7 +59,7 @@ export const SubcategoryRefinements = ({
       <div className={styles.refinementsBox_title}>Service Type</div>
 
       <ul className={styles.refinementsList}>
-        {subcategories.map(item => (
+        {subcategories.map((item) => (
           <li key={item.name}>
             <Checkbox
               onChange={() => handleSubcategoryClick(item.id)}

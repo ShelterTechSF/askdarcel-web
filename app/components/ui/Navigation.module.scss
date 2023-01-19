@@ -106,7 +106,7 @@
   display: flex;
 
   @include r_min($break-tablet-s) {
-    display: none !important;  // !important is needed to override .form-row
+    display: none !important; // !important is needed to override .form-row
   }
 }
 
@@ -159,8 +159,8 @@
   $font-size: 18px;
 
   border: 3px transparent;
-  background:
-    url(../../assets/img/ic-search.png) 15px center/18px 18px no-repeat,
+  background: url(../../assets/img/ic-search.png) 15px center/18px 18px
+      no-repeat,
     #f9f9f9;
   color: #888888;
   font-size: $font-size;

@@ -2,13 +2,21 @@ import React, { Fragment } from 'react';
 import _ from 'lodash';
 import { Address, Category, PhoneNumber } from '../../models';
 
-const CategoryRenderer = ({ category }: { category: string }) => <p>{category}</p>;
+const CategoryRenderer = ({ category }: { category: string }) => (
+  <p>{category}</p>
+);
 
-export const ResourceCategories = ({ categories }: { categories: Category[] }) => {
+export const ResourceCategories = ({
+  categories,
+}: {
+  categories: Category[];
+}) => {
   const uniqueCategories = _.uniqBy(categories, 'id');
   return categories?.length ? (
     <span className="categories">
-      {uniqueCategories.map(cat => <CategoryRenderer key={cat.id} category={cat.name} />)}
+      {uniqueCategories.map((cat) => (
+        <CategoryRenderer key={cat.id} category={cat.name} />
+      ))}
     </span>
   ) : null;
 };
@@ -38,8 +46,9 @@ const buildLocation = (address: Address) => {
     ['city', 'state_province', 'postal_code'],
   ];
 
-  return fieldsOnEachLine.map(fields => {
-    const line = fields.map(field => address[field])
+  return fieldsOnEachLine.map((fields) => {
+    const line = fields
+      .map((field) => address[field])
       .filter(Boolean)
       .join(', ');
     if (line.length > 0) {
@@ -64,16 +73,20 @@ export const AddressInfoRenderer = ({ address }: { address: Address }) => (
 
 export const PhoneNumberRenderer = ({ phones }: { phones: PhoneNumber[] }) => (
   <span className="phone">
-    { phones.map(phone => (
+    {phones.map((phone) => (
       <p key={phone.id}>
         <a href={`tel:${phone.number}`}>{phone.number}</a>
         {` ${phone.service_type}`}
       </p>
-    )) }
+    ))}
   </span>
 );
 
-const ExternalLink = ({ children, to }: { children: any; to: string }) => <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>;
+const ExternalLink = ({ children, to }: { children: any; to: string }) => (
+  <a href={to} target="_blank" rel="noopener noreferrer">
+    {children}
+  </a>
+);
 
 export const WebsiteRenderer = ({ website }: { website: string }) => (
   <span className="website">

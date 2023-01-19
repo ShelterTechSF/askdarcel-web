@@ -5,22 +5,33 @@ import 'react-tippy/dist/tippy.css';
 import SearchEntry from 'components/search/SearchMap/SearchEntry';
 import { useAppContext } from 'utils';
 import { Loader } from 'components/ui';
-import { createMapOptions, UserLocationMarker, CustomMarker } from 'components/ui/MapElements';
+import {
+  createMapOptions,
+  UserLocationMarker,
+  CustomMarker,
+} from 'components/ui/MapElements';
 import './SearchMap.scss';
 import { SearchHit } from '../../../models';
 import config from '../../../config';
 
 export const SearchMap = ({
-  hits, hitsPerPage, page, setMapObject,
+  hits,
+  hitsPerPage,
+  page,
+  setMapObject,
 }: {
-    hits: SearchHit[];
-    hitsPerPage: number;
-    page: number;
-    setMapObject: (map: any) => void;
+  hits: SearchHit[];
+  hitsPerPage: number;
+  page: number;
+  setMapObject: (map: any) => void;
 }) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
-    return <div className="mapLoaderContainer"><Loader /></div>;
+    return (
+      <div className="mapLoaderContainer">
+        <Loader />
+      </div>
+    );
   }
   const { lat, lng } = userLocation;
 
@@ -41,7 +52,7 @@ export const SearchMap = ({
           options={createMapOptions}
         >
           <UserLocationMarker lat={lat} lng={lng} key={1} />
-          { hits.reduce((markers, hit, index) => {
+          {hits.reduce((markers, hit, index) => {
             // Add a marker for each address of each hit
             hit.addresses?.forEach((addr: any, i: number) => {
               // Append letter to index number if there are multiple addresses per service
@@ -51,16 +62,20 @@ export const SearchMap = ({
                 tag += alphabeticalIndex;
               }
 
-              markers.push(<SearchHitMarker
-                key={`${hit.id}.${addr.latitude}.${addr.longitude}.${addr.address_1}.${addr.address_2 || ''}`}
-                lat={addr.latitude}
-                lng={addr.longitude}
-                tag={tag}
-                hit={hit}
-              />);
+              markers.push(
+                <SearchHitMarker
+                  key={`${hit.id}.${addr.latitude}.${addr.longitude}.${
+                    addr.address_1
+                  }.${addr.address_2 || ''}`}
+                  lat={addr.latitude}
+                  lng={addr.longitude}
+                  tag={tag}
+                  hit={hit}
+                />
+              );
             });
             return markers;
-          }, [] as ReactElement[]) }
+          }, [] as ReactElement[])}
         </GoogleMap>
       </div>
     </div>
@@ -69,11 +84,19 @@ export const SearchMap = ({
 
 // The GoogleMap component expects children to be passed lat/long,
 // even though we don't use them here.
-// eslint-disable-next-line react/no-unused-prop-types
-const SearchHitMarker = ({ hit, tag }: { lat: any; lng: any; hit: SearchHit; tag: string }) => (
+/* eslint-disable react/no-unused-prop-types */
+const SearchHitMarker = ({
+  hit,
+  tag,
+}: {
+  lat: any;
+  lng: any;
+  hit: SearchHit;
+  tag: string;
+}) => (
   <Tooltip
     arrow
-    html={(<SearchEntry hitNumber={tag} hit={hit} />)}
+    html={<SearchEntry hitNumber={tag} hit={hit} />}
     interactive
     position="bottom"
     theme="light"
@@ -83,3 +106,4 @@ const SearchHitMarker = ({ hit, tag }: { lat: any; lng: any; hit: SearchHit; tag
     <CustomMarker text={tag} />
   </Tooltip>
 );
+/* eslint-enable react/no-unused-prop-types */

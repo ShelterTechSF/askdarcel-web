@@ -10,13 +10,12 @@ export const ResourceGuides = () => (
       <h1>Resource Guides</h1>
 
       <ul>
-        { ResourceGuidesData.map(guide => (
+        {ResourceGuidesData.map((guide) => (
           <li>
             <Link to={`/resource-guides/${guide.id}`}>{guide.name}</Link>
           </li>
-        )) }
+        ))}
       </ul>
-
     </div>
     <Footer />
   </>

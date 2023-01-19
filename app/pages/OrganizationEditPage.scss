@@ -5,7 +5,7 @@
 .edit {
   display: flex;
   overflow: visible;
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     flex-direction: column;
   }
 }
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   padding: 0 calc-em(60px);
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     width: 100%;
     padding: 0 20px;
     overflow: hidden;
@@ -60,7 +60,7 @@
   border-radius: 8px;
   padding: calc-em(40px);
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     padding: 20px;
     width: 95%;
   }
@@ -86,7 +86,7 @@
 
   &--item {
     margin: 0 calc-em(20px) calc-em(40px);
-    @media screen and (max-width: 900px ) {
+    @media screen and (max-width: 900px) {
       margin: 0 0 20px;
     }
 
@@ -94,7 +94,7 @@
       margin-bottom: 0;
     }
 
-    &--collection-container{
+    &--collection-container {
       display: flex;
     }
 
@@ -102,7 +102,8 @@
     // that used the <label> tag but that were not valid label elements, so we
     // had to change the tag type but added the .label class to preserve the
     // styling.
-    label, .label {
+    label,
+    .label {
       color: #888888;
       font-size: calc-em(16px);
       margin-bottom: calc-em(15px);
@@ -128,7 +129,7 @@
     .input {
       padding: calc-em(15px) calc-em(20px);
       width: 100%;
-      border: 1px solid #DDDDDD;
+      border: 1px solid #dddddd;
       border-radius: 3px;
       background-color: $color-white;
       font-size: calc-em(17px);
@@ -156,7 +157,6 @@
         cursor: not-allowed;
       }
     }
-
 
     &--sublist .edit--section--list--item {
       margin-right: 0;
@@ -235,7 +235,7 @@
 .edit--section--list--item button.remove-item {
   color: $color-red;
   border: 1px solid $color-red;
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     font-size: 12px;
   }
   &:hover {

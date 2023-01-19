@@ -7,7 +7,10 @@ describe('User Model', () => {
     expect(state.location.lat).to.exist;
     expect(state.location.lng).to.exist;
 
-    const newState = User.REDUCER(state, User.setUserLocation({ lat: 15, lng: 20 }));
+    const newState = User.REDUCER(
+      state,
+      User.setUserLocation({ lat: 15, lng: 20 })
+    );
     expect(newState.location.lat).to.equal(15);
     expect(newState.location.lng).to.equal(20);
   });

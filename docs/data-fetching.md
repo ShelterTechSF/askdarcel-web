@@ -10,7 +10,11 @@ export const path = '/products';
 export const action = async () => {
   const response = await fetch('/graphql?query={products{id,name}}');
   const data = await response.json();
-  return <Layout><Products {...data} /></Layout>;
+  return (
+    <Layout>
+      <Products {...data} />
+    </Layout>
+  );
 };
 ```
 
@@ -28,5 +32,3 @@ Both `whatwg-fetch` and `node-fetch` modules have almost identical API. If
 you're new to this API, the following article may give you a good introduction:
 
 https://jakearchibald.com/2015/thats-so-fetch/
-
-

@@ -31,8 +31,10 @@ const Page = () => {
     [key: string]: boolean;
   }
 
-  const [selectedEligibilities, setSelectedEligibilities] = useState<SelectedEligibilities>({});
-  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedSubcategories>({});
+  const [selectedEligibilities, setSelectedEligibilities] =
+    useState<SelectedEligibilities>({});
+  const [selectedSubcategories, setSelectedSubcategories] =
+    useState<SelectedSubcategories>({});
 
   interface LocationState {
     selectedResourceSlug: string;
@@ -43,13 +45,12 @@ const Page = () => {
   const { state } = history.location;
   const selectedResourceSlug = state && state.selectedResourceSlug;
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
-  const category = CATEGORIES.find(c => c.slug === selectedResourceSlug);
+  const category = CATEGORIES.find((c) => c.slug === selectedResourceSlug);
 
   const [currentStep, setCurrentStep] = useState(0);
 
-  const subcategories: SubcategoryRefinement[] = useSubcategoriesForCategory(
-    category?.id ?? null,
-  ) || [];
+  const subcategories: SubcategoryRefinement[] =
+    useSubcategoriesForCategory(category?.id ?? null) || [];
 
   if (!category) {
     history.push('/');
@@ -64,19 +65,26 @@ const Page = () => {
     // on where the user is in the pathway
     const nextStepIsResults = steps[currentStep + 1] === 'results';
     if (nextStepIsResults) {
-      const flatEligibilities = resourceEligibilityGroups.flatMap(group => (group.eligibilities));
-      const selectedEligibilityNames = flatEligibilities.flatMap(eligibility => {
-        if (selectedEligibilities[eligibility.checkedId] && !eligibility.isSeeAll) {
-          return eligibility.name;
-        }
+      const flatEligibilities = resourceEligibilityGroups.flatMap(
+        (group) => group.eligibilities
+      );
+      const selectedEligibilityNames = flatEligibilities.flatMap(
+        (eligibility) => {
+          if (
+            selectedEligibilities[eligibility.checkedId] &&
+            !eligibility.isSeeAll
+          ) {
+            return eligibility.name;
+          }
 
-        return [];
-      });
+          return [];
+        }
+      );
 
       const searchState = {
         refinementList: {
           eligibilities: selectedEligibilityNames,
-          categories: subcategories.flatMap(c => {
+          categories: subcategories.flatMap((c) => {
             const isSeeAllItem = c.id === seeAllPseudoId;
             if (!isSeeAllItem && selectedSubcategories[c.id]) {
               return c.name;
@@ -86,8 +94,10 @@ const Page = () => {
         },
       };
 
-      const categoriesRefinements = searchState.refinementList.categories.join('; ') || 'NONE';
-      const eligibilitiesRefinements = searchState.refinementList.eligibilities.join('; ') || 'NONE';
+      const categoriesRefinements =
+        searchState.refinementList.categories.join('; ') || 'NONE';
+      const eligibilitiesRefinements =
+        searchState.refinementList.eligibilities.join('; ') || 'NONE';
       const search = qs.stringify(searchState, { encodeValuesOnly: true });
 
       ReactGA.event({
@@ -115,7 +125,8 @@ const Page = () => {
   if (stepName === 'eligibilities') {
     stepSubtitle += 'Can you tell us more about your client and their needs?';
   } else {
-    stepSubtitle += 'Can you tell us more about the services that your client is looking for?';
+    stepSubtitle +=
+      'Can you tell us more about the services that your client is looking for?';
   }
 
   const nextStepName = steps[currentStep + 1];
@@ -128,10 +139,7 @@ const Page = () => {
 
   return (
     <div className={styles.discoveryFormPage}>
-      <Section
-        addClass={styles.subtitleMargin}
-        subtitle={stepSubtitle}
-      />
+      <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
       <div className={styles.eligibilitiesContainer}>
         {stepName === 'eligibilities' ? (
           <EligibilityRefinements
@@ -139,23 +147,20 @@ const Page = () => {
             selectedEligibilities={selectedEligibilities}
             setSelectedEligibilities={setSelectedEligibilities}
           />
-        )
-          : (
-            <SubcategoryRefinements
-              subcategories={subcategories}
-              selectedSubcategories={selectedSubcategories}
-              setSelectedSubcategories={setSelectedSubcategories}
-            />
-          )}
+        ) : (
+          <SubcategoryRefinements
+            subcategories={subcategories}
+            selectedSubcategories={selectedSubcategories}
+            setSelectedSubcategories={setSelectedSubcategories}
+          />
+        )}
 
         <div className={styles.navigationButtons}>
+          <Button onClick={backToResourceSelection}>Back</Button>
           <Button
-            onClick={backToResourceSelection}
-          >
-            Back
-          </Button>
-          <Button
-            onClick={() => { goToNextStep(selectedResourceSlug); }}
+            onClick={() => {
+              goToNextStep(selectedResourceSlug);
+            }}
           >
             {nextButtonText}
           </Button>

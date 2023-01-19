@@ -6,10 +6,14 @@ const resourcePage = new ResourcePage();
 const editResourcePage = new EditResourcePage();
 const servicePage = new ServicePage();
 
-fixture`Edit Resource`
-  .page(ResourcePage.url(1));
+fixture`Edit Resource`.page(ResourcePage.url(1));
 
-async function testEditTextProperty(t, showPageSelector, editPageSelector, newValue) {
+async function testEditTextProperty(
+  t,
+  showPageSelector,
+  editPageSelector,
+  newValue
+) {
   await t
     .navigateTo(editResourcePage.url(1))
     .typeText(editPageSelector, newValue, { replace: true })
@@ -18,11 +22,16 @@ async function testEditTextProperty(t, showPageSelector, editPageSelector, newVa
     .contains(newValue);
 }
 
-test('Edit resource name', async t => {
-  await testEditTextProperty(t, resourcePage.resourceName, editResourcePage.name, 'New Resource Name');
+test('Edit resource name', async (t) => {
+  await testEditTextProperty(
+    t,
+    resourcePage.resourceName,
+    editResourcePage.name,
+    'New Resource Name'
+  );
 });
 
-test('Edit resource address', async t => {
+test('Edit resource address', async (t) => {
   await t.navigateTo(editResourcePage.url(1));
 
   const newProps = {
@@ -37,34 +46,34 @@ test('Edit resource address', async t => {
   // Make edits
   await t.click(EditResourcePage.getAddressEditButton(0));
   await Object.keys(newProps).reduce(
-    (_t, prop) => _t.typeText(
-      editResourcePage.addressModal[prop],
-      newProps[prop],
-      { replace: true },
-    ),
-    t,
+    (_t, prop) =>
+      _t.typeText(editResourcePage.addressModal[prop], newProps[prop], {
+        replace: true,
+      }),
+    t
   );
   await t.click(editResourcePage.addressModal.saveButton);
   await t.click(editResourcePage.saveButton);
 
   // Check visibility of edits on show page
-  await Object.keys(newProps)
-    .reduce(
-      (_t, prop) => _t.expect(resourcePage.address.textContent).contains(newProps[prop]),
-      t,
-    );
+  await Object.keys(newProps).reduce(
+    (_t, prop) =>
+      _t.expect(resourcePage.address.textContent).contains(newProps[prop]),
+    t
+  );
 
   await t.navigateTo(editResourcePage.url(1));
 
   // Check visibility of edits on edit page
   await t.click(EditResourcePage.getAddressEditButton(0));
   await Object.keys(newProps).reduce(
-    (_t, prop) => _t.expect(editResourcePage.addressModal[prop].value).eql(newProps[prop]),
-    t,
+    (_t, prop) =>
+      _t.expect(editResourcePage.addressModal[prop].value).eql(newProps[prop]),
+    t
   );
 });
 
-test('Edit resource phone number', async t => {
+test('Edit resource phone number', async (t) => {
   const newNumber = '415-555-5555';
   const newFormattedNumber = '(415) 555-5555';
   const newServiceType = 'Main number';
@@ -79,18 +88,21 @@ test('Edit resource phone number', async t => {
 
   // Check visibility of edits on show page
   await t
-    .expect(resourcePage.phones.parent().textContent).contains(newFormattedNumber)
-    .expect(resourcePage.phones.parent().textContent).contains(newServiceType);
+    .expect(resourcePage.phones.parent().textContent)
+    .contains(newFormattedNumber)
+    .expect(resourcePage.phones.parent().textContent)
+    .contains(newServiceType);
 });
 
-test('Add resource phone number', async t => {
+test('Add resource phone number', async (t) => {
   const newNumber = '415-555-5556';
   const newFormattedNumber = '(415) 555-5556';
   const newServiceType = 'Added number';
 
   // Wait for page to load before counting phone numbers by using hover action.
   await t.hover(resourcePage.phones);
-  const originalCount = await resourcePage.phones.with({ boundTestRun: t }).count;
+  const originalCount = await resourcePage.phones.with({ boundTestRun: t })
+    .count;
 
   // Make edits
   await t
@@ -104,59 +116,61 @@ test('Add resource phone number', async t => {
 
   // Check visibility of edits on show page
   await t
-    .expect(resourcePage.phones.parent().textContent).contains(newFormattedNumber)
-    .expect(resourcePage.phones.parent().textContent).contains(newServiceType)
+    .expect(resourcePage.phones.parent().textContent)
+    .contains(newFormattedNumber)
+    .expect(resourcePage.phones.parent().textContent)
+    .contains(newServiceType)
     .expect(resourcePage.phones.count)
     .eql(originalCount + 1);
 });
 
-test('Delete resource phone number', async t => {
+test('Delete resource phone number', async (t) => {
   await t.hover(resourcePage.phones);
-  const originalCount = await resourcePage.phones.with({ boundTestRun: t }).count;
+  const originalCount = await resourcePage.phones.with({ boundTestRun: t })
+    .count;
 
   await t
     .navigateTo(editResourcePage.url(1))
     .click(editResourcePage.deletePhoneButton)
     .click(editResourcePage.saveButton);
-  await t
-    .expect(resourcePage.phones.count)
-    .eql(originalCount - 1);
+  await t.expect(resourcePage.phones.count).eql(originalCount - 1);
 });
 
-test('Edit resource website', async t => {
+test('Edit resource website', async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.website,
     editResourcePage.website,
-    'http://www.example.com/',
+    'http://www.example.com/'
   );
 });
 
-test('Edit resource email', async t => {
+test('Edit resource email', async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.email,
     editResourcePage.email,
-    'example@example.com',
+    'example@example.com'
   );
 });
 
-test('Edit resource description', async t => {
+test('Edit resource description', async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.description,
     editResourcePage.description,
-    'This is my new description',
+    'This is my new description'
   );
 });
 
-test('Add Resource Note', async t => {
+test('Add Resource Note', async (t) => {
   const newNote = 'A new note has been added';
 
   // Wait for page to load before counting phone Notes by using hover action.
   await t.hover(resourcePage.noteContainer);
 
-  const originalCount = await resourcePage.notes.with({ boundTestRun: t }).count;
+  const originalCount = await resourcePage.notes.with({ boundTestRun: t })
+    .count;
 
   // Make edits
   await t
@@ -170,7 +184,8 @@ test('Add Resource Note', async t => {
 
   // Check visibility of edits on show page
   await t
-    .expect(resourcePage.notes.parent().textContent).contains(newNote)
+    .expect(resourcePage.notes.parent().textContent)
+    .contains(newNote)
     .expect(resourcePage.notes.count)
     .eql(originalCount + 1);
 });
@@ -179,7 +194,7 @@ test('Add Resource Note', async t => {
 // because it depends on the above test to create a note
 // TODO: Update seeded data to include a note initially to decouple
 // tests
-test('Edit Resource Note', async t => {
+test('Edit Resource Note', async (t) => {
   const newNote = 'Modified Note Text';
 
   // Wait for page to load before counting phone Notes by using hover action.
@@ -192,29 +207,27 @@ test('Edit Resource Note', async t => {
     .click(editResourcePage.saveButton);
 
   // Check visibility of edits on show page
-  await t
-    .expect(resourcePage.notes.parent().textContent).contains(newNote);
+  await t.expect(resourcePage.notes.parent().textContent).contains(newNote);
 });
 
 // NOTE: If the `Add Resource Note` test fails, this test will fail
 // because it depends on the above test to create a note
 // TODO: Update seeded data to include a note initially to decouple
 // tests
-test('Delete Resource Note', async t => {
+test('Delete Resource Note', async (t) => {
   // Wait for page to load before counting phone Notes by using hover action.
   await t.hover(resourcePage.notes);
-  const originalCount = await resourcePage.notes.with({ boundTestRun: t }).count;
+  const originalCount = await resourcePage.notes.with({ boundTestRun: t })
+    .count;
 
   await t
     .navigateTo(editResourcePage.url(1))
     .click(editResourcePage.deleteNoteButton)
     .click(editResourcePage.saveButton);
-  await t
-    .expect(resourcePage.notes.count)
-    .eql(originalCount - 1);
+  await t.expect(resourcePage.notes.count).eql(originalCount - 1);
 });
 
-test('Add new service', async t => {
+test('Add new service', async (t) => {
   const SERVICE_DATA = {
     NAME: 'Test Service',
     NICKNAME: 'Best Service',
@@ -236,16 +249,15 @@ test('Add new service', async t => {
   // Wait for page to load before counting services by using hover action.
   await t.hover(editResourcePage.addServiceButton);
   // Count the number of services
-  const originalServiceCount = await editResourcePage.services.with({ boundTestRun: t }).count;
+  const originalServiceCount = await editResourcePage.services.with({
+    boundTestRun: t,
+  }).count;
 
   // Add a service
-  await t
-    .click(editResourcePage.addServiceButton);
+  await t.click(editResourcePage.addServiceButton);
 
   // Check edit resource page
-  await t
-    .expect(editResourcePage.services.count)
-    .eql(originalServiceCount + 1);
+  await t.expect(editResourcePage.services.count).eql(originalServiceCount + 1);
 
   // Save and check resource page
   // Normally TestCafe will automatically scroll to an element that it needs to
@@ -283,13 +295,10 @@ test('Add new service', async t => {
     .click(editResourcePage.saveButton);
 
   // New service should exist in services list
-  await t
-    .expect(resourcePage.services.count)
-    .eql(originalServiceCount + 1);
+  await t.expect(resourcePage.services.count).eql(originalServiceCount + 1);
 
   // Click on new service to navigate to service page
-  await t
-    .click(resourcePage.servicesHeader);
+  await t.click(resourcePage.servicesHeader);
 
   // Test services page
   // Name should be displayed
@@ -297,21 +306,29 @@ test('Add new service', async t => {
   // Email should be displayed
   await t.expect(servicePage.email.textContent).eql(SERVICE_DATA.EMAIL);
   // Description should be displayed
-  await t.expect(servicePage.description.textContent).eql(SERVICE_DATA.DESCRIPTION);
+  await t
+    .expect(servicePage.description.textContent)
+    .eql(SERVICE_DATA.DESCRIPTION);
   // Application process should be displayed
-  await t.expect(servicePage.appProcess.textContent).eql(SERVICE_DATA.APP_PROCESS);
+  await t
+    .expect(servicePage.appProcess.textContent)
+    .eql(SERVICE_DATA.APP_PROCESS);
   // Required Documents should be displayed
-  await t.expect(servicePage.requiredDocs.textContent).eql(SERVICE_DATA.REQ_DOCS);
+  await t
+    .expect(servicePage.requiredDocs.textContent)
+    .eql(SERVICE_DATA.REQ_DOCS);
   // Cost should be displayed
   await t.expect(servicePage.cost.textContent).eql(SERVICE_DATA.COST);
 });
 
-test('Delete a service', async t => {
+test('Delete a service', async (t) => {
   // Wait for page to load before counting services by using hover action.
   await t.hover(resourcePage.services);
 
   // Count the number of services
-  const originalServiceCount = await resourcePage.services.with({ boundTestRun: t }).count;
+  const originalServiceCount = await resourcePage.services.with({
+    boundTestRun: t,
+  }).count;
 
   // Navigate to edit page and delete the last service
   await t
@@ -325,7 +342,5 @@ test('Delete a service', async t => {
     .click(editResourcePage.saveButton);
 
   // Test
-  await t
-    .expect(resourcePage.services.count)
-    .eql(originalServiceCount - 1);
+  await t.expect(resourcePage.services.count).eql(originalServiceCount - 1);
 });

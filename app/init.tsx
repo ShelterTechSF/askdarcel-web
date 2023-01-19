@@ -13,7 +13,9 @@ require('instantsearch.css/themes/reset.css');
 require('./styles/main.scss');
 
 if (process.env.NODE_ENV === 'production') {
-  Sentry.init({ dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}` });
+  Sentry.init({
+    dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}`,
+  });
 } else {
   /* eslint-disable no-console */
   (Sentry as any).captureException = (e: any) => console.error(e);
@@ -25,13 +27,12 @@ const rootElement = document.getElementById('root')!;
 ReactModal.setAppElement(rootElement);
 
 ReactDOM.render(
-  (
-    <BrowserRouter>
-      <HelmetProvider>
-        <CookiesProvider>
-          <App />
-        </CookiesProvider>
-      </HelmetProvider>
-    </BrowserRouter>
-  ), rootElement,
+  <BrowserRouter>
+    <HelmetProvider>
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
+    </HelmetProvider>
+  </BrowserRouter>,
+  rootElement
 );

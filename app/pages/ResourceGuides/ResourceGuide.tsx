@@ -12,22 +12,35 @@ export const ResourceGuide = () => {
   return (
     <>
       <div className={styles.resourceWrapper}>
-        { !guide && (
-        <p>
-          Cannot find a guide named
-          {id}
-        </p>
-        ) }
-        { guide && (
-        <div className={styles.resourceFrameWrapper}>
-          <h1>{ guide.name }</h1>
-          <ResourceGuideIFrame title={guide.name} path={guide.path} />
-        </div>
-        ) }
+        {!guide && (
+          <p>
+            Cannot find a guide named
+            {id}
+          </p>
+        )}
+        {guide && (
+          <div className={styles.resourceFrameWrapper}>
+            <h1>{guide.name}</h1>
+            <ResourceGuideIFrame title={guide.name} path={guide.path} />
+          </div>
+        )}
       </div>
       <Footer />
     </>
   );
 };
 
-export const ResourceGuideIFrame = ({ path, title }: { path: string; title: string }) => <iframe className={styles.resourceFrame} title={title} src={path} height="100%" />;
+export const ResourceGuideIFrame = ({
+  path,
+  title,
+}: {
+  path: string;
+  title: string;
+}) => (
+  <iframe
+    className={styles.resourceFrame}
+    title={title}
+    src={path}
+    height="100%"
+  />
+);

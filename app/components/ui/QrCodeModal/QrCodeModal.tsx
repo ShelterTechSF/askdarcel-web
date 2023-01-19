@@ -7,7 +7,8 @@ import { Button } from 'components/ui/inline/Button/Button';
 import styles from './QrCodeModal.module.scss';
 
 export const QrCodeModal = ({
-  isOpen, setIsOpen,
+  isOpen,
+  setIsOpen,
 }: {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
@@ -26,16 +27,11 @@ export const QrCodeModal = ({
         <div className={styles.description}>
           <h2 className={styles.title}>Resource Code</h2>
           <p className={styles.body}>
-            Scan this QR code with a mobile phone
-            to open this&nbsp;page.
+            Scan this QR code with a mobile phone to open this&nbsp;page.
           </p>
         </div>
         <QRCodeSVG value={window.location.href} size={235} />
-        <Button
-          onClick={closeModal}
-          addClass={styles.closeBtn}
-          tabIndex={0}
-        >
+        <Button onClick={closeModal} addClass={styles.closeBtn} tabIndex={0}>
           Close
         </Button>
       </div>

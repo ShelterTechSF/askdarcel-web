@@ -12,13 +12,13 @@
   top: 5rem;
   height: 94vh;
 
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     width: 100%;
     height: 80px;
     z-index: 1;
   }
 
-  @media screen and (max-width: 767px ) {
+  @media screen and (max-width: 767px) {
     top: 50px;
   }
 }
@@ -36,7 +36,7 @@
     border-bottom: 0;
   }
 
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     display: none;
   }
 }
@@ -107,7 +107,7 @@
   width: 250px;
   background: $color-grey1;
 
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -116,7 +116,7 @@
 }
 
 .actionButton {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: calc-em(16px);
   padding: calc-em(7px) calc-em(15px);
   border: 1px solid $color-brand;
@@ -127,7 +127,7 @@
   flex: 0 0 auto;
   margin: 5px 0;
 
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     width: 30%;
     font-size: 14px;
     padding: 5px 10px;

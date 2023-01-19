@@ -2,14 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './Form.module.scss';
 
-const Buttons = (
-  { closeModal, onSubmit, disabled }:
-  {
-    onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    closeModal: () => void;
-    disabled: boolean;
-  },
-) => (
+const Buttons = ({
+  closeModal,
+  onSubmit,
+  disabled,
+}: {
+  onSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  closeModal: () => void;
+  disabled: boolean;
+}) => (
   <div className={styles.buttons}>
     <button
       type="button"

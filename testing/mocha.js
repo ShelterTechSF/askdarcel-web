@@ -22,7 +22,7 @@ global.window = jsdom.window;
 global.document = jsdom.window.document;
 global.navigator = { userAgent: 'node.js' };
 
-Object.keys(document.defaultView).forEach(property => {
+Object.keys(document.defaultView).forEach((property) => {
   if (typeof global[property] === 'undefined') {
     exposedProperties.push(property);
     global[property] = document.defaultView[property];
