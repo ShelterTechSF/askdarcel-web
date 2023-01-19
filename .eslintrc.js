@@ -5,14 +5,9 @@ module.exports = {
     'airbnb',
     'plugin:testcafe/recommended',
     'plugin:react-hooks/recommended',
+    'prettier',
   ],
-  plugins: [
-    'react',
-    'jsx-a11y',
-    'import',
-    'testcafe',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', 'jsx-a11y', 'import', 'testcafe', '@typescript-eslint'],
   env: {
     browser: true,
   },
@@ -25,11 +20,16 @@ module.exports = {
     },
   },
   rules: {
-    'arrow-parens': ['warn', 'as-needed'],
     'camelcase': 'off',
-    'import/extensions': ['error', {
-      js: 'never', jsx: 'never', ts: 'never', tsx: 'never',
-    }],
+    'import/extensions': [
+      'error',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     'import/no-extraneous-dependencies': 'error',
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
@@ -44,7 +44,10 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
     'react/prop-types': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
-    'react/function-component-definition': ['error', { namedComponents: 'arrow-function' }],
+    'react/function-component-definition': [
+      'error',
+      { namedComponents: 'arrow-function' },
+    ],
   },
   overrides: [
     {
@@ -57,7 +60,10 @@ module.exports = {
         project: './tsconfig.json',
       },
       rules: {
-        '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'semi', requireLast: true } }],
+        '@typescript-eslint/member-delimiter-style': [
+          'error',
+          { multiline: { delimiter: 'semi', requireLast: true } },
+        ],
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-call': 'off',
@@ -104,7 +110,10 @@ module.exports = {
       files: ['**/*.spec.[jt]s*', 'testing/mocha.js'],
       env: { mocha: true },
       rules: {
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
         // This file is an entrypoints, so it does not require exports.
         'import/no-unused-modules': 'off',
         // Chai assertions may appear like unused expressions
@@ -116,7 +125,10 @@ module.exports = {
     {
       files: ['testcafe/**'],
       rules: {
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
         // TestCafe uses tagged template literals for DSL reasons, so they are
         // expressions that actually have a stateful effect. This is
         // specifically used in the `fixture` syntax.
@@ -137,12 +149,12 @@ module.exports = {
     },
     // Node.js scripts
     {
-      files: [
-        'tools/**',
-        'webpack.config.js',
-      ],
+      files: ['tools/**', 'webpack.config.js'],
       rules: {
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
         // The tools and webpack.config.js are entrypoints and don't require
         // exports.
         'import/no-unused-modules': 'off',
@@ -154,9 +166,7 @@ module.exports = {
     },
     // .eslintrc.js
     {
-      files: [
-        '.eslintrc.js',
-      ],
+      files: ['.eslintrc.js'],
       rules: {
         // import/no-unused-modules only detects ES6 exports, so ignore
         // CJS-style imports.
