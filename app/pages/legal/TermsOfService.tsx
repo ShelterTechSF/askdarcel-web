@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Footer } from '../../components/ui';
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { Footer } from "../../components/ui";
 
 const termsOfServiceContent = `
 # SF Service Guide Terms of Service
@@ -78,7 +78,10 @@ export const TermsOfServicePage = () => (
   <div className="listing-container">
     <article className="text-page listing" id="privacyPolict">
       <div className="listing--main">
-        <ReactMarkdown className="rendered-markdown" source={termsOfServiceContent} />
+        <ReactMarkdown
+          className="rendered-markdown"
+          source={termsOfServiceContent}
+        />
       </div>
     </article>
     <Footer />

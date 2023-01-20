@@ -1,6 +1,6 @@
 // Actions
 export const ACTIONS = {
-  SET_USER_LOCATION: 'SET_USER_LOCATION',
+  SET_USER_LOCATION: "SET_USER_LOCATION",
 };
 
 const initialState = {

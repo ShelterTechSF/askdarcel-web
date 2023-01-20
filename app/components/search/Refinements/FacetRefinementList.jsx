@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connectRefinementList } from 'react-instantsearch/connectors';
-import styles from './RefinementFilters.module.scss';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connectRefinementList } from "react-instantsearch/connectors";
+import styles from "./RefinementFilters.module.scss";
 
 // Todo: This component could potentially be consolidated with the the Refinement List Filter
 // component when categories/eligibilities are standardized across the homepage Service
@@ -19,7 +19,10 @@ class FacetRefinementList extends Component {
 
   componentDidUpdate(prevProps) {
     const { currentRefinement } = this.props;
-    if (currentRefinement.sort().join(',') !== prevProps.currentRefinement.sort().join(',')) {
+    if (
+      currentRefinement.sort().join(",") !==
+      prevProps.currentRefinement.sort().join(",")
+    ) {
       const checks = this.setChecks();
       // setState is done in a condition so it won't create loop
       this.setState({ isChecked: checks }); // eslint-disable-line react/no-did-update-set-state
@@ -30,13 +33,14 @@ class FacetRefinementList extends Component {
     const { mapping } = this.props;
     const mapKeys = Object.keys(mapping);
     const checks = {};
-    mapKeys.forEach(key => {
+    mapKeys.forEach((key) => {
       checks[key] = this.keyHasAtLeastOneRefined(key);
     });
     return checks;
   }
 
-  changeRefinement(key, event) { // eslint-disable-line no-unused-vars
+  changeRefinement(key) {
+    // eslint-disable-line no-unused-vars
     const { refine } = this.props;
     const { currentRefinement } = this.props;
     const { mapping } = this.props;
@@ -44,7 +48,9 @@ class FacetRefinementList extends Component {
     let newRefinement;
     if (isChecked[key]) {
       // If key currently checked, unrefine every sub-element (filter through current refinement)
-      newRefinement = currentRefinement.filter(value => !mapping[key].includes(value));
+      newRefinement = currentRefinement.filter(
+        (value) => !mapping[key].includes(value)
+      );
     } else {
       // If key currently unchecked, refine all sub-elements
       newRefinement = currentRefinement.concat(mapping[key]);
@@ -55,7 +61,7 @@ class FacetRefinementList extends Component {
   keyHasAtLeastOneRefined(key) {
     const { currentRefinement } = this.props;
     const { mapping } = this.props;
-    return mapping[key].some(value => currentRefinement.includes(value));
+    return mapping[key].some((value) => currentRefinement.includes(value));
   }
 
   refinementHasResults(key) {
@@ -64,7 +70,7 @@ class FacetRefinementList extends Component {
     // Disability is still enabled as a checkbox
     const { items } = this.props;
     const { mapping } = this.props;
-    return items.some(item => mapping[key].includes(item.label));
+    return items.some((item) => mapping[key].includes(item.label));
   }
 
   render() {
@@ -74,14 +80,18 @@ class FacetRefinementList extends Component {
 
     return (
       <ul>
-        {mapKeys.map(key => {
+        {mapKeys.map((key) => {
           const refinementHasResults = this.refinementHasResults(key);
           // for each map key, display it as a filtering option
           // for onClick of each option, call refine on the values of the key
           // eslint-disable-next-line prefer-template
           return (
             <li key={key}>
-              <label className={`${styles.checkBox} ${!refinementHasResults ? styles.disabled : ''}`}>
+              <label
+                className={`${styles.checkBox} ${
+                  !refinementHasResults ? styles.disabled : ""
+                }`}
+              >
                 {key}
                 <input
                   type="checkbox"

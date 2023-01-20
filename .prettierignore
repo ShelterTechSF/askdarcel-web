@@ -1,0 +1,5 @@
+build
+# Unignore any .js that start with a dot so that we prettify config files themselves
+!.*.js
+cypress.config.ts
+node_modules

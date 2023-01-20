@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connectRefinementList } from 'react-instantsearch/connectors';
-import { getCurrentDayTime } from 'utils/index';
+import React from "react";
+import PropTypes from "prop-types";
+import { connectRefinementList } from "react-instantsearch/connectors";
+import { getCurrentDayTime } from "utils/index";
 
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
@@ -31,7 +31,7 @@ const OpenNowRefinementList = ({ currentRefinement, refine }) => {
   };
   return (
     <button
-      className={`filter-chip ${isActive ? 'active' : ''}`}
+      className={`filter-chip ${isActive ? "active" : ""}`}
       onClick={toggleRefinement}
       type="button"
     >

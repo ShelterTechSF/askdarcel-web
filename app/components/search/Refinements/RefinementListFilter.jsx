@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connectRefinementList } from 'react-instantsearch/connectors';
-import styles from './RefinementFilters.module.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { connectRefinementList } from "react-instantsearch/connectors";
+import styles from "./RefinementFilters.module.scss";
 
 const RefinementListFilter = ({ items, refine }) => (
   <ul>
-    {items.map(item => (
+    {items.map((item) => (
       <label key={item.label} className={styles.checkBox}>
         {item.label}
         <input
@@ -22,12 +22,14 @@ const RefinementListFilter = ({ items, refine }) => (
 );
 
 RefinementListFilter.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.arrayOf(PropTypes.string).isRequired,
-    count: PropTypes.number.isRequired,
-    isRefined: PropTypes.bool.isRequired,
-  })).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.arrayOf(PropTypes.string).isRequired,
+      count: PropTypes.number.isRequired,
+      isRefined: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
   refine: PropTypes.func.isRequired,
 };
 

@@ -4,13 +4,17 @@ There is isomorphic `core/fetch` module that can be used the same way in both
 client-side and server-side code as follows:
 
 ```jsx
-import fetch from '../core/fetch';
+import fetch from "../core/fetch";
 
-export const path = '/products';
+export const path = "/products";
 export const action = async () => {
-  const response = await fetch('/graphql?query={products{id,name}}');
+  const response = await fetch("/graphql?query={products{id,name}}");
   const data = await response.json();
-  return <Layout><Products {...data} /></Layout>;
+  return (
+    <Layout>
+      <Products {...data} />
+    </Layout>
+  );
 };
 ```
 
@@ -28,5 +32,3 @@ Both `whatwg-fetch` and `node-fetch` modules have almost identical API. If
 you're new to this API, the following article may give you a good introduction:
 
 https://jakearchibald.com/2015/thats-so-fetch/
-
-

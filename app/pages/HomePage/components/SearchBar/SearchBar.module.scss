@@ -1,4 +1,4 @@
-@import 'app/styles/utils/_colors.scss';
+@import "app/styles/utils/_colors.scss";
 
 $row-height: 60px;
 
@@ -11,14 +11,14 @@ $row-height: 60px;
 .textInputWrapper {
   flex: 1 1 0;
   margin-right: 20px;
-  @media screen and ( max-width: 600px ) {
+  @media screen and (max-width: 600px) {
     margin-right: 0;
   }
 }
 
 .textInput {
-  background:
-    url("../../../../assets/img/ic-search-blue.svg") center left 15px no-repeat;
+  background: url("../../../../assets/img/ic-search-blue.svg") center left 15px
+    no-repeat;
   border-radius: 3px;
   border: 1px solid #e0e0e0;
   height: $row-height;
@@ -27,7 +27,8 @@ $row-height: 60px;
   &::placeholder {
     font-style: normal;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     border: 1px solid $color-brand;
   }
 }
@@ -42,13 +43,14 @@ $row-height: 60px;
   font-size: 16px;
   height: $row-height;
   width: 180px;
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   &:active {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
   }
-  @media screen and ( max-width: 600px ) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 }

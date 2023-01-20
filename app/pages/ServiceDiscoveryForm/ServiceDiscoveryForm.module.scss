@@ -1,173 +1,172 @@
-@import '../../styles/utils/_helpers.scss';
+@import "../../styles/utils/_helpers.scss";
 
 .header {
-    height: 55px;
-    line-height: 55px;
-    font-size: 18px;
-    color: $color-grey6;
-    border-bottom: 1px solid $color-grey3;
-    padding-left: 35px;
-    .backButton {
-        cursor: pointer;
-    }
-    i {
-        padding-right: 12px;
-    }
+  height: 55px;
+  line-height: 55px;
+  font-size: 18px;
+  color: $color-grey6;
+  border-bottom: 1px solid $color-grey3;
+  padding-left: 35px;
+  .backButton {
+    cursor: pointer;
+  }
+  i {
+    padding-right: 12px;
+  }
 }
 
 .body {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding-bottom: 80px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 80px;
 }
 
 .contentContainer {
-    padding: 48px;
-    width: 700px;
-    text-align: left;
-    h1 {
-        font-size: 26px;
-        color: $color-grey9;
-    }
-    h2 {
-        font-size: 20px;
-        font-weight: bold;
-        color: $color-grey9;
-        margin: 20px 0;
-    }
+  padding: 48px;
+  width: 700px;
+  text-align: left;
+  h1 {
+    font-size: 26px;
+    color: $color-grey9;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: $color-grey9;
+    margin: 20px 0;
+  }
 
-    @media screen and (max-width: $break-tablet-s) {
-        padding: 48px 20px 60px;
-    }
+  @media screen and (max-width: $break-tablet-s) {
+    padding: 48px 20px 60px;
+  }
 }
 
 .contentText {
-    hyphens: none;
+  hyphens: none;
 }
 
 .refinementList {
-    display: grid;
-    grid-auto-rows: 1fr;
-    gap: 12px;
-    margin-bottom: 12px;
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .listOption {
-    min-height: 75px;
-    background-color: $color-grey1;
+  min-height: 75px;
+  background-color: $color-grey1;
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  label {
     display: flex;
-    align-items: center;
-    padding: 15px 10px;
-    label {
-        display: flex;
-        cursor: pointer;
-        input {
-            margin: auto 12px;
-            width: auto;
-        }
+    cursor: pointer;
+    input {
+      margin: auto 12px;
+      width: auto;
     }
-    span {
-        color: $color-brand;
-        font-weight: 600;
-    }
+  }
+  span {
+    color: $color-brand;
+    font-weight: 600;
+  }
 
-    @media screen and (max-width: $break-tablet-s) {
-        min-height: 90px;
-    }
+  @media screen and (max-width: $break-tablet-s) {
+    min-height: 90px;
+  }
 }
 
-
 .footer {
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-top: 1px solid $color-grey3;
-    background-color: $color-white;
-    padding: 18px 35px;
-    @media screen and (max-width: $break-tablet-s) {
-        justify-content: center;
-    }
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid $color-grey3;
+  background-color: $color-white;
+  padding: 18px 35px;
+  @media screen and (max-width: $break-tablet-s) {
+    justify-content: center;
+  }
 }
 
 .progressBar {
-    @media screen and (max-width: $break-tablet-l) {
-        display: none;
-    }
+  @media screen and (max-width: $break-tablet-l) {
+    display: none;
+  }
 }
 
 .progressBarMeter {
-    width: 666px;
-    height: 11px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    // overflow: hidden must be set to force both the progress bar and progress
-    // value to get clipped to have rounded corders.
-    border-radius: 100px;
-    overflow: hidden;
+  width: 666px;
+  height: 11px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  // overflow: hidden must be set to force both the progress bar and progress
+  // value to get clipped to have rounded corders.
+  border-radius: 100px;
+  overflow: hidden;
 
-    &::-webkit-progress-bar {
-        background-color: #e0e0e0;
-    }
+  &::-webkit-progress-bar {
+    background-color: #e0e0e0;
+  }
 
-    &::-webkit-progress-value {
-        background-color: #0025e4;
-    }
+  &::-webkit-progress-value {
+    background-color: #0025e4;
+  }
 
-    // This is actually the progress bar value, not the whole bar, in Firefox
-    &::-moz-progress-bar {
-        background-color: #0025e4;
-    }
+  // This is actually the progress bar value, not the whole bar, in Firefox
+  &::-moz-progress-bar {
+    background-color: #0025e4;
+  }
 }
 
 .progressBarText {
-    color: #202020;
-    font-size: 18px;
+  color: #202020;
+  font-size: 18px;
 }
 
 .actionGroup {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 5px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
 
-    .button {
-        width: 188px;
-        border: 1px solid $color-brand;
-        border-radius: 3px;
-        &:disabled {
-            background: $color-brand-light;
-            cursor: not-allowed;
-            border: none;
-        }
-
-        &:not(:last-child) {
-            margin-right: 30px;
-            @media screen and (max-width: $break-tablet-s) {
-                margin-right: 0;
-            }
-        }
-
-        @media screen and (max-width: $break-tablet-s) {
-            width: 250px;
-        }
+  .button {
+    width: 188px;
+    border: 1px solid $color-brand;
+    border-radius: 3px;
+    &:disabled {
+      background: $color-brand-light;
+      cursor: not-allowed;
+      border: none;
     }
 
-    .actionBack {
-        background-color: transparent;
-        color: $color-brand;
-    }
-
-    .actionSubmit {
-        background-color: $color-brand;
+    &:not(:last-child) {
+      margin-right: 30px;
+      @media screen and (max-width: $break-tablet-s) {
+        margin-right: 0;
+      }
     }
 
     @media screen and (max-width: $break-tablet-s) {
-        justify-content: center;
-        flex-direction: column-reverse;
-        gap: 16px;
+      width: 250px;
     }
+  }
+
+  .actionBack {
+    background-color: transparent;
+    color: $color-brand;
+  }
+
+  .actionSubmit {
+    background-color: $color-brand;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    justify-content: center;
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
 }

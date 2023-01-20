@@ -1,24 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ProvidedService from './ProvidedService';
+import React from "react";
+import PropTypes from "prop-types";
+import ProvidedService from "./ProvidedService";
 
 const EditServices = ({
-  addService, editServiceById, handleDeactivation, services, resourceAddresses,
+  addService,
+  editServiceById,
+  handleDeactivation,
+  services,
+  resourceAddresses,
 }) => (
   <li className="edit--section--list--item">
     <ul className="edit--section--list--item--sublist edit--service--list">
-      {
-        services.map((service, index) => (
-          <ProvidedService
-            key={`${service.id}`}
-            index={index}
-            service={service}
-            editServiceById={editServiceById}
-            handleDeactivation={handleDeactivation}
-            resourceAddresses={resourceAddresses}
-          />
-        ))
-      }
+      {services.map((service, index) => (
+        <ProvidedService
+          key={`${service.id}`}
+          index={index}
+          service={service}
+          editServiceById={editServiceById}
+          handleDeactivation={handleDeactivation}
+          resourceAddresses={resourceAddresses}
+        />
+      ))}
     </ul>
     <button
       type="button"

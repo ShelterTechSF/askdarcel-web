@@ -26,7 +26,7 @@ services:
   frontend:
     image: nginx:stable
     networks: [askdarcel]
-    ports: ['8080:8080']
+    ports: ["8080:8080"]
     depends_on: [api]
     environment:
       NGINX_API_URL: http://api:3000
