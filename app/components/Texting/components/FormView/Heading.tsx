@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './Form.module.scss';
+import React from "react";
+import styles from "./Form.module.scss";
 
 const Heading = ({ serviceName }: { serviceName: string }) => (
   <div>

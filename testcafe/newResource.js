@@ -1,29 +1,29 @@
-import NewResourcePage from './pages/NewResourcePage';
-import ResourcePage from './pages/ResourcePage';
+import NewResourcePage from "./pages/NewResourcePage";
+import ResourcePage from "./pages/ResourcePage";
 
 const newResourcePage = new NewResourcePage();
 
 fixture`Add New Resource`.page(NewResourcePage.url());
 
-test('Add new resource, basic', async (t) => {
+test("Add new resource, basic", async (t) => {
   // TODO: Currently, all that is required is a name and an address
   // what should the minimum data be for a new resource?
   const data = {
-    name: 'New Resource Name',
+    name: "New Resource Name",
     address: {
-      address1: '123 Fake St.',
-      city: 'San Francisco',
-      stateOrProvince: 'CA',
-      postalCode: '94110',
+      address1: "123 Fake St.",
+      city: "San Francisco",
+      stateOrProvince: "CA",
+      postalCode: "94110",
     },
     phone: {
-      number: '1234567890',
-      type: 'LandLine',
+      number: "1234567890",
+      type: "LandLine",
     },
-    website: 'https://theBestResource.best',
-    email: 'theBestResource1337@aol.com',
-    description: 'A description of this resource',
-    note: 'A new note about this resource',
+    website: "https://theBestResource.best",
+    email: "theBestResource1337@aol.com",
+    description: "A description of this resource",
+    note: "A new note about this resource",
   };
 
   // Add name
@@ -65,7 +65,7 @@ test('Add new resource, basic', async (t) => {
 
   // Save data
   function dialogHandler(type, text) {
-    if (!text.includes('Resource successfuly created')) {
+    if (!text.includes("Resource successfuly created")) {
       throw new Error(`Got unexpected dialog: ${text}`);
     }
   }

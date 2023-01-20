@@ -1,15 +1,15 @@
-import React, { ReactElement } from 'react';
-import GoogleMap from 'google-map-react';
-import config from '../../config';
-import { LocationDetails } from '../../models';
-import { Loader } from '../ui';
-import { Accordion, AccordionItem } from '../ui/Accordion';
+import React, { ReactElement } from "react";
+import GoogleMap from "google-map-react";
+import config from "../../config";
+import { LocationDetails } from "../../models";
+import { Loader } from "../ui";
+import { Accordion, AccordionItem } from "../ui/Accordion";
 import {
   createMapOptions,
   CustomMarker,
   UserLocationMarker,
-} from '../ui/MapElements';
-import { useAppContext } from '../../utils';
+} from "../ui/MapElements";
+import { useAppContext } from "../../utils";
 
 export const MapOfLocations = ({
   locationRenderer,

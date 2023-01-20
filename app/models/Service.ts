@@ -1,7 +1,7 @@
-import { get } from '../utils/DataService';
-import type { Organization } from './Organization';
-import { Schedule, ScheduleParams, parseAPISchedule } from './Schedule';
-import { RecurringSchedule } from './RecurringSchedule';
+import { get } from "../utils/DataService";
+import type { Organization } from "./Organization";
+import { Schedule, ScheduleParams, parseAPISchedule } from "./Schedule";
+import { RecurringSchedule } from "./RecurringSchedule";
 import {
   Address,
   Category,
@@ -9,7 +9,7 @@ import {
   LocationDetails,
   Note,
   Program,
-} from './Meta';
+} from "./Meta";
 
 // A Service is provided by an Organization
 export interface Service {
@@ -35,7 +35,7 @@ export interface Service {
   resource: Organization;
   schedule: Schedule;
   source_attribution: string;
-  status: 'pending' | 'approved' | 'rejected' | 'inactive';
+  status: "pending" | "approved" | "rejected" | "inactive";
   updated_at: string;
   url: string | null;
   verified_at: any;
@@ -43,7 +43,7 @@ export interface Service {
 }
 
 export interface ServiceParams
-  extends Omit<Partial<Service>, 'notes' | 'schedule'> {
+  extends Omit<Partial<Service>, "notes" | "schedule"> {
   shouldInheritScheduleFromParent: boolean;
   notes?: Partial<Note>[];
   schedule?: ScheduleParams;
@@ -76,10 +76,10 @@ export const generateServiceDetails = (
   service: Service
 ): { title: string; value: any }[] =>
   [
-    ['How to Apply', service.application_process],
-    ['Required Documents', service.required_documents],
-    ['Fees', service.fee],
-    ['Notes', service.notes.map((d) => d.note).join('\n')],
+    ["How to Apply", service.application_process],
+    ["Required Documents", service.required_documents],
+    ["Fees", service.fee],
+    ["Notes", service.notes.map((d) => d.note).join("\n")],
   ]
     .filter((row) => row[1])
     .map((row) => ({ title: row[0], value: row[1] }));

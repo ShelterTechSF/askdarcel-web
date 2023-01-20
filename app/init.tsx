@@ -1,18 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactModal from 'react-modal';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { CookiesProvider } from 'react-cookie';
-import * as Sentry from '@sentry/browser';
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactModal from "react-modal";
+import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { CookiesProvider } from "react-cookie";
+import * as Sentry from "@sentry/browser";
 
-import config from './config';
-import { App } from './App';
+import config from "./config";
+import { App } from "./App";
 
-require('instantsearch.css/themes/reset.css');
-require('./styles/main.scss');
+require("instantsearch.css/themes/reset.css");
+require("./styles/main.scss");
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   Sentry.init({
     dsn: `https://${config.SENTRY_PUBLIC_KEY}@sentry.io/${config.SENTRY_PROJECT_ID}`,
   });
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
   /* eslint-enable no-console */
 }
 
-const rootElement = document.getElementById('root')!;
+const rootElement = document.getElementById("root")!;
 ReactModal.setAppElement(rootElement);
 
 ReactDOM.render(

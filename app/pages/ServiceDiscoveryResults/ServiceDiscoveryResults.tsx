@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, Configure } from 'react-instantsearch/dom';
-import qs from 'qs';
+import React, { useState, useEffect } from "react";
+import algoliasearch from "algoliasearch/lite";
+import { InstantSearch, Configure } from "react-instantsearch/dom";
+import qs from "qs";
 
-import { match as Match, RouteComponentProps } from 'react-router-dom';
+import { match as Match, RouteComponentProps } from "react-router-dom";
 
-import * as dataService from 'utils/DataService';
-import { useAppContext } from 'utils';
+import * as dataService from "utils/DataService";
+import { useAppContext } from "utils";
 
-import { Loader } from 'components/ui';
-import SearchResults from 'components/search/SearchResults/SearchResults';
-import Sidebar from 'components/search/Sidebar/Sidebar';
-import { Header } from 'components/search/Header/Header';
-import { Category } from 'models/Meta';
+import { Loader } from "components/ui";
+import SearchResults from "components/search/SearchResults/SearchResults";
+import Sidebar from "components/search/Sidebar/Sidebar";
+import { Header } from "components/search/Header/Header";
+import { Category } from "models/Meta";
 
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
-} from '../../hooks/APIHooks';
-import config from '../../config';
-import { CATEGORIES, ServiceCategory } from '../ServiceDiscoveryForm/constants';
-import styles from './ServiceDiscoveryResults.module.scss';
+} from "../../hooks/APIHooks";
+import config from "../../config";
+import { CATEGORIES, ServiceCategory } from "../ServiceDiscoveryForm/constants";
+import styles from "./ServiceDiscoveryResults.module.scss";
 
 type MatchParams = { categorySlug: string };
-type RouterLocation = RouteComponentProps['location'];
+type RouterLocation = RouteComponentProps["location"];
 type SearchState = {
   configure?: {
     aroundRadius?: string;
@@ -40,7 +40,7 @@ const searchClient = algoliasearch(
 const createURL = (state: SearchState) =>
   `?${qs.stringify(state, { encodeValuesOnly: true })}`;
 const searchStateToURL = (location: RouterLocation, searchState: SearchState) =>
-  searchState ? `${location.pathname}${createURL(searchState)}` : '';
+  searchState ? `${location.pathname}${createURL(searchState)}` : "";
 const urlToSearchState = (location: RouterLocation): SearchState =>
   qs.parse(location.search.slice(1));
 
@@ -50,8 +50,8 @@ export const ServiceDiscoveryResults = ({
   location,
   match,
 }: {
-  history: RouteComponentProps['history'];
-  location: RouteComponentProps['location'];
+  history: RouteComponentProps["history"];
+  location: RouteComponentProps["location"];
   match: Match<MatchParams>;
 }) => {
   const { categorySlug } = match.params;
@@ -67,7 +67,7 @@ export const ServiceDiscoveryResults = ({
   const [searchState, setSearchState] = useState(urlToSearchState(location));
   const [expandList, setExpandList] = useState(false);
   const [searchRadius, setSearchRadius] = useState(
-    searchState?.configure?.aroundRadius || 'all'
+    searchState?.configure?.aroundRadius || "all"
   );
   const { userLocation } = useAppContext();
 

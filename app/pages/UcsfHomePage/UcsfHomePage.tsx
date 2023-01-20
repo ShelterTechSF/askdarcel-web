@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { icon as assetIcon } from 'assets';
-import { Radio } from 'components/ui/inline/Radio/Radio';
-import { Button } from 'components/ui/inline/Button/Button';
-import { Section } from 'components/ucsf/Section/Section';
-import { Layout } from 'components/ucsf/Layout/Layout';
+import { icon as assetIcon } from "assets";
+import { Radio } from "components/ui/inline/Radio/Radio";
+import { Button } from "components/ui/inline/Button/Button";
+import { Section } from "components/ucsf/Section/Section";
+import { Layout } from "components/ucsf/Layout/Layout";
 
-import styles from './UcsfHomePage.module.scss';
+import styles from "./UcsfHomePage.module.scss";
 
 interface resourceListItem {
   id: string;
@@ -64,7 +64,7 @@ const ResourceListComponent = ({
         <li
           key={resource.id}
           className={`${styles.resourceItem}
-          ${resource.checked ? styles.isChecked : ''}`}
+          ${resource.checked ? styles.isChecked : ""}`}
         >
           <label
             className={styles.resourceLabel}
@@ -93,39 +93,39 @@ const ResourceListComponent = ({
 const Page = () => {
   const ucsfResources = [
     {
-      id: '2000001',
-      name: 'Mental Health',
-      icon: 'smiley-face',
+      id: "2000001",
+      name: "Mental Health",
+      icon: "smiley-face",
       checked: false,
-      slug: 'ucsf-mental-health-resources',
+      slug: "ucsf-mental-health-resources",
     },
     {
-      id: '2000002',
-      name: 'Shelter',
-      icon: 'bed',
+      id: "2000002",
+      name: "Shelter",
+      icon: "bed",
       checked: false,
-      slug: 'ucsf-shelter-resources',
+      slug: "ucsf-shelter-resources",
     },
     {
-      id: '2000003',
-      name: 'Substance Use',
-      icon: 'hospital',
+      id: "2000003",
+      name: "Substance Use",
+      icon: "hospital",
       checked: false,
-      slug: 'ucsf-substance-use-resources',
+      slug: "ucsf-substance-use-resources",
     },
     {
-      id: '2000004',
-      name: 'Food Insecurity',
-      icon: 'food',
+      id: "2000004",
+      name: "Food Insecurity",
+      icon: "food",
       checked: false,
-      slug: 'ucsf-food-insecurity-resources',
+      slug: "ucsf-food-insecurity-resources",
     },
     {
-      id: '2000005',
-      name: 'Immigration',
-      icon: 'globe',
+      id: "2000005",
+      name: "Immigration",
+      icon: "globe",
       checked: false,
-      slug: 'ucsf-immigration-resources',
+      slug: "ucsf-immigration-resources",
     },
   ];
 
@@ -141,7 +141,7 @@ const Page = () => {
     // const selectedResources = resourceList.filter(resource => resource.checked);
     if (selectedResource) {
       const selectedResourceSlug = selectedResource.slug;
-      history.push('/find-services', { selectedResourceSlug });
+      history.push("/find-services", { selectedResourceSlug });
     }
   };
 

@@ -1,4 +1,4 @@
-@import '../../styles/utils/_helpers.scss';
+@import "../../styles/utils/_helpers.scss";
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDIT HOURS
@@ -79,7 +79,7 @@
       &:first-of-type {
         margin-right: calc-em(10px);
       }
-      &[type='checkbox'] {
+      &[type="checkbox"] {
         width: 35px;
         margin-left: 30px;
         float: right;

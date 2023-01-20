@@ -1,5 +1,5 @@
-@import '../utils/_colors.scss';
-@import '../utils/_layoututils.scss';
+@import "../utils/_colors.scss";
+@import "../utils/_layoututils.scss";
 
 .ReactModal__Body--open {
   position: fixed;
@@ -51,13 +51,13 @@ pre {
         display: inline-block;
 
         &::after {
-          content: ' • ';
+          content: " • ";
           padding: $padding-default;
         }
 
         &:last-of-type {
           &::after {
-            content: '';
+            content: "";
           }
         }
       }

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Redirect, useHistory, useRouteMatch } from 'react-router-dom';
-import qs from 'qs';
-import ReactGA from 'react-ga';
+import React, { useState } from "react";
+import { Redirect, useHistory, useRouteMatch } from "react-router-dom";
+import qs from "qs";
+import ReactGA from "react-ga";
 
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
-} from '../../hooks/APIHooks';
-import { CATEGORIES, Step, ServiceCategory } from './constants';
+} from "../../hooks/APIHooks";
+import { CATEGORIES, Step, ServiceCategory } from "./constants";
 
-import styles from './ServiceDiscoveryForm.module.scss';
+import styles from "./ServiceDiscoveryForm.module.scss";
 
 interface CategoryRefinement {
   name: string;
@@ -50,7 +50,7 @@ export const ServiceDiscoveryForm = () => {
 
   if (!category) {
     // Category does not exist; user may have entered the category in the URL bar
-    return <Redirect push to={{ pathname: '/' }} />;
+    return <Redirect push to={{ pathname: "/" }} />;
   }
 
   return (
@@ -91,9 +91,9 @@ const InnerServiceDiscoveryForm = ({
   const stepName = steps[currentStep];
   const disableNextBtn =
     selectedSubcategory === null &&
-    ['housingStatus', 'subcategoriesRadio'].includes(stepName);
+    ["housingStatus", "subcategoriesRadio"].includes(stepName);
   const goToNextStep = () => {
-    if (stepName === 'housingStatus') {
+    if (stepName === "housingStatus") {
       if (!selectedSubcategory) {
         return;
       }
@@ -101,8 +101,8 @@ const InnerServiceDiscoveryForm = ({
       if (selectedSubcategory === 1100045) {
         // User has selected first option in Long Term Housing step 1. Set category ID to Shelter
         // ID and redirect user to the Shelter resources form.
-        setActiveCategoryId('1000010');
-        history.replace('/shelter-resources/form');
+        setActiveCategoryId("1000010");
+        history.replace("/shelter-resources/form");
       } else {
         const targetCategoryId = selectedSubcategory;
         // Set active category to be the subcategory that the user has selected
@@ -118,7 +118,7 @@ const InnerServiceDiscoveryForm = ({
 
   // TODO: Should goBack go back to the previous step?
   const goBack = () => {
-    history.push('/');
+    history.push("/");
   };
 
   return (
@@ -186,7 +186,7 @@ const Content = ({
   };
 
   switch (steps[currentStep]) {
-    case 'housingStatus':
+    case "housingStatus":
       return (
         <RadioFormStep
           heading="Which of the following best describes your current housing situation?"
@@ -195,7 +195,7 @@ const Content = ({
           refinements={subcategories}
         />
       );
-    case 'eligibilities':
+    case "eligibilities":
       return (
         <FormStep
           heading="Tell us more about you"
@@ -205,7 +205,7 @@ const Content = ({
           toggleRefinement={handleEligibilityClick}
         />
       );
-    case 'subcategories':
+    case "subcategories":
       return (
         <FormStep
           heading="Tell us more about you"
@@ -215,7 +215,7 @@ const Content = ({
           toggleRefinement={handleSubcategoryClick}
         />
       );
-    case 'subcategoriesRadio':
+    case "subcategoriesRadio":
       return (
         <RadioFormStep
           heading="Tell us more about your needs"
@@ -224,7 +224,7 @@ const Content = ({
           refinements={subcategories}
         />
       );
-    case 'results':
+    case "results":
     default: {
       const searchState = {
         refinementList: {
@@ -238,12 +238,12 @@ const Content = ({
       };
 
       const categoriesRefinements =
-        searchState.refinementList.categories.join('; ') || 'NONE';
+        searchState.refinementList.categories.join("; ") || "NONE";
       const eligibilitiesRefinements =
-        searchState.refinementList.eligibilities.join('; ') || 'NONE';
+        searchState.refinementList.eligibilities.join("; ") || "NONE";
       ReactGA.event({
-        category: 'Resource Inquiry',
-        action: 'Refined Resource Inquiry',
+        category: "Resource Inquiry",
+        action: "Refined Resource Inquiry",
         label: `${categorySlug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
       });
 

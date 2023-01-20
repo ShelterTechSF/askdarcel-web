@@ -1,4 +1,4 @@
-const icons = require.context('../assets/img', true, /ic-.*\.(png|svg)$/i);
+const icons = require.context("../assets/img", true, /ic-.*\.(png|svg)$/i);
 const iconPathMap = {};
 
 icons.keys().forEach((key) => {
@@ -6,6 +6,6 @@ icons.keys().forEach((key) => {
 });
 
 const icon = (name) =>
-  iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, '-')];
+  iconPathMap[name.toLowerCase().replace(/(\s+|\/)/g, "-")];
 
 export { icon };

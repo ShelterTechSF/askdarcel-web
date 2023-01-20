@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import { connectStateResults } from 'react-instantsearch/connectors';
-import { whiteLabel } from 'utils';
-import { SearchMap } from 'components/search/SearchMap/SearchMap';
-import ResultsPagination from 'components/search/Pagination/ResultsPagination';
-import { Texting } from 'components/Texting';
-import { ClinicianActions } from 'components/ucsf/ClinicianActions/ClinicianActions';
-import { ClientHandouts } from 'components/ui/ClientHandoutsModal/ClientHandouts';
-import { icon } from '../../../assets';
-import { parseAlgoliaSchedule } from '../../../models';
-import styles from './SearchResults.module.scss';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import { connectStateResults } from "react-instantsearch/connectors";
+import { whiteLabel } from "utils";
+import { SearchMap } from "components/search/SearchMap/SearchMap";
+import ResultsPagination from "components/search/Pagination/ResultsPagination";
+import { Texting } from "components/Texting";
+import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
+import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
+import { icon } from "../../../assets";
+import { parseAlgoliaSchedule } from "../../../models";
+import styles from "./SearchResults.module.scss";
 
 /**
  * Transform Algolia search hits such that each hit has a recurringSchedule that
@@ -39,9 +39,9 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
     if (centerCoords) {
       googleMapObject.setCenter(centerCoords);
     }
-    document.body.classList.add('searchResultsPage');
+    document.body.classList.add("searchResultsPage");
     return () => {
-      document.body.classList.remove('searchResultsPage');
+      document.body.classList.remove("searchResultsPage");
     };
   }, [googleMapObject, centerCoords]);
 
@@ -53,12 +53,12 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
     <div className={styles.searchResultsAndMapContainer}>
       <div
         className={`${styles.searchResultsContainer} ${
-          expandList ? styles.expandList : ''
+          expandList ? styles.expandList : ""
         }`}
       >
         <div
           className={`${styles.noResultsMessage} ${
-            hits && hits.length ? styles.hidden : ''
+            hits && hits.length ? styles.hidden : ""
           }`}
         >
           No results found in your area. Try a different location, category, or
@@ -106,7 +106,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       onClick={toggleTextingModal}
     >
       <img
-        src={icon('text-message')}
+        src={icon("text-message")}
         alt="chat-bubble"
         className={styles.sideLinkIcon}
       />
@@ -129,7 +129,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       onClick={toggleClinicianActionsModal}
     >
       <img
-        src={icon('clinician-action')}
+        src={icon("clinician-action")}
         alt="clinician action"
         className={styles.sideLinkIcon}
       />
@@ -145,7 +145,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       onClick={toggleHandoutModal}
     >
       <img
-        src={icon('print-blue')}
+        src={icon("print-blue")}
         alt="printout icon"
         className={styles.sideLinkIcon}
       />
@@ -171,13 +171,13 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
     // If the input doesn't match regex, function returns number's original value
     if (!number) {
-      return '';
+      return "";
     }
 
-    const cleaned = number.toString().replace(/\D/g, '');
+    const cleaned = number.toString().replace(/\D/g, "");
     const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
     if (match) {
-      return [match[2], '-', match[3], '-', match[4]].join('');
+      return [match[2], "-", match[3], "-", match[4]].join("");
     }
 
     return number;
@@ -189,10 +189,10 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
   const showDischargeSidelinks =
     whiteLabel.showClinicianAction && whiteLabel.showHandoutsIcon;
   // Href structure varies depending on whether the hit is a resource or location
-  let basePath = 'organizations';
+  let basePath = "organizations";
   let entryId = resourceId;
-  if (hit.type === 'service') {
-    basePath = 'services';
+  if (hit.type === "service") {
+    basePath = "services";
     entryId = serviceId;
   }
 
@@ -206,7 +206,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       <ClinicianActions
         isOpen={clinicianActionsIsOpen}
         setIsOpen={toggleClinicianActionsModal}
-        actions={hit?.instructions?.[0] ?? ''}
+        actions={hit?.instructions?.[0] ?? ""}
       />
       <ClientHandouts
         isOpen={handoutModalIsOpen}
@@ -236,19 +236,19 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       <div className={styles.sideLinks}>
         <div
           className={
-            showDischargeSidelinks ? '' : styles.hideDischargeSidelinks
+            showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
           }
         >
           {!!hit.instructions?.length && clinicianActionsLink}
           {!!hit.documents?.length && handoutsLink}
         </div>
         <div
-          className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ''}
+          className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ""}
         >
           {phoneNumber && (
             <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
               <img
-                src={icon('phone-blue')}
+                src={icon("phone-blue")}
                 alt="phone"
                 className={styles.sideLinkIcon}
               />
@@ -262,7 +262,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           {url && (
             <div className={styles.sideLink}>
               <img
-                src={icon('popout-blue')}
+                src={icon("popout-blue")}
                 alt="website"
                 className={styles.sideLinkIcon}
               />

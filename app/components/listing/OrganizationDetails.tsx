@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import _ from 'lodash';
-import { Address, Category, PhoneNumber } from '../../models';
+import React, { Fragment } from "react";
+import _ from "lodash";
+import { Address, Category, PhoneNumber } from "../../models";
 
 const CategoryRenderer = ({ category }: { category: string }) => (
   <p>{category}</p>
@@ -11,7 +11,7 @@ export const ResourceCategories = ({
 }: {
   categories: Category[];
 }) => {
-  const uniqueCategories = _.uniqBy(categories, 'id');
+  const uniqueCategories = _.uniqBy(categories, "id");
   return categories?.length ? (
     <span className="categories">
       {uniqueCategories.map((cat) => (
@@ -41,18 +41,18 @@ export const ResourceCategories = ({
 //
 const buildLocation = (address: Address) => {
   const fieldsOnEachLine: (keyof Address)[][] = [
-    ['name'],
-    ['address_1', 'address_2'],
-    ['city', 'state_province', 'postal_code'],
+    ["name"],
+    ["address_1", "address_2"],
+    ["city", "state_province", "postal_code"],
   ];
 
   return fieldsOnEachLine.map((fields) => {
     const line = fields
       .map((field) => address[field])
       .filter(Boolean)
-      .join(', ');
+      .join(", ");
     if (line.length > 0) {
-      const key = fields.join('-');
+      const key = fields.join("-");
 
       return (
         <Fragment key={key}>

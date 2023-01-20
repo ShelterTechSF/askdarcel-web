@@ -1,25 +1,25 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 
-import { whiteLabel } from 'utils';
+import { whiteLabel } from "utils";
 import {
   eligibilitiesMapping,
   categoriesMapping,
-} from 'utils/refinementMappings';
-import ClearAllFilters from 'components/search/Refinements/ClearAllFilters';
-import OpenNowFilter from 'components/search/Refinements/OpenNowFilter';
-import RefinementListFilter from 'components/search/Refinements/RefinementListFilter';
-import FacetRefinementList from 'components/search/Refinements/FacetRefinementList';
-import { eligibilityMap as ucsfEligibilityMap } from 'components/ucsf/RefinementLists/ucsfEligibilitiesMap';
+} from "utils/refinementMappings";
+import ClearAllFilters from "components/search/Refinements/ClearAllFilters";
+import OpenNowFilter from "components/search/Refinements/OpenNowFilter";
+import RefinementListFilter from "components/search/Refinements/RefinementListFilter";
+import FacetRefinementList from "components/search/Refinements/FacetRefinementList";
+import { eligibilityMap as ucsfEligibilityMap } from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
 
-import filtersIcon from 'assets/img/filters-icon.png';
-import styles from './Sidebar.module.scss';
+import filtersIcon from "assets/img/filters-icon.png";
+import styles from "./Sidebar.module.scss";
 
 const Sidebar = ({
   setSearchRadius,
   searchRadius,
   isSearchResultsPage,
   eligibilities = [],
-  categorySlug = '',
+  categorySlug = "",
   subcategories = [],
   subcategoryNames = [],
 }: {
@@ -132,7 +132,7 @@ const Sidebar = ({
       </div>
       <div
         className={`${styles.filtersContainer} ${
-          filterMenuVisible ? styles.showFilters : ''
+          filterMenuVisible ? styles.showFilters : ""
         }`}
       >
         <div className={styles.filterResourcesHeaderMobile}>
@@ -156,7 +156,7 @@ const Sidebar = ({
 
         <div
           className={`${styles.filterGroup} ${
-            eligibilityRefinementJsx ? '' : styles.hideFilterGroup
+            eligibilityRefinementJsx ? "" : styles.hideFilterGroup
           } `}
         >
           <div className={styles.filterTitle}>Eligibilities</div>
@@ -165,7 +165,7 @@ const Sidebar = ({
 
         <div
           className={`${styles.filterGroup} ${
-            categoryRefinementJsx ? '' : styles.hideFilterGroup
+            categoryRefinementJsx ? "" : styles.hideFilterGroup
           }`}
         >
           <div className={styles.filterTitle}>Categories</div>
@@ -181,7 +181,7 @@ const Sidebar = ({
               name="searchRadius"
               onChange={onChangeValue}
               value="400"
-              checked={searchRadius === '400'}
+              checked={searchRadius === "400"}
               className={styles.refinementInput}
             />
           </label>
@@ -192,7 +192,7 @@ const Sidebar = ({
               name="searchRadius"
               onChange={onChangeValue}
               value="1600"
-              checked={searchRadius === '1600'}
+              checked={searchRadius === "1600"}
               className={styles.refinementInput}
             />
           </label>
@@ -203,7 +203,7 @@ const Sidebar = ({
               name="searchRadius"
               onChange={onChangeValue}
               value="4828"
-              checked={searchRadius === '4828'}
+              checked={searchRadius === "4828"}
               className={styles.refinementInput}
             />
           </label>

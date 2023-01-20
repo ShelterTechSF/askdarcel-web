@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import whiteLabel from 'utils/whitelabel';
-import { RelativeOpeningTime } from 'components/listing/RelativeOpeningTime';
-import './SearchEntry.scss';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import whiteLabel from "utils/whitelabel";
+import { RelativeOpeningTime } from "components/listing/RelativeOpeningTime";
+import "./SearchEntry.scss";
 
 const {
   appImages: { mohcdSeal },
@@ -29,14 +29,14 @@ export default class SearchEntry extends Component {
 
   render() {
     const { hit, hitNumber } = this.props;
-    const description = hit.long_description || 'No description, yet...';
+    const description = hit.long_description || "No description, yet...";
     const { recurringSchedule, type } = hit;
 
     // handle resources and services slightly differently.
-    let basePath = 'organizations';
+    let basePath = "organizations";
     let entryId = hit.resource_id;
-    if (type === 'service') {
-      basePath = 'services';
+    if (type === "service") {
+      basePath = "services";
       entryId = hit.service_id;
     }
     return (
@@ -52,7 +52,7 @@ export default class SearchEntry extends Component {
                 </div>
               )}
             </div>
-            {type === 'service' && (
+            {type === "service" && (
               <p className="entry-meta">
                 <Link to={`/organizations/${hit.resource_id}`}>
                   {hit.service_of}

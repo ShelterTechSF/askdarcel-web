@@ -17,31 +17,31 @@ is mapped to a React component:
 
 ```js
 // client.js
-import React from 'react';
-import Layout from './components/Layout';
-import HomePage from './components/HomePage';
-import AboutPage from './components/AboutPage';
-import NotFoundPage from './components/NotFoundPage';
-import ErrorPage from './components/ErrorPage';
+import React from "react";
+import Layout from "./components/Layout";
+import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
+import NotFoundPage from "./components/NotFoundPage";
+import ErrorPage from "./components/ErrorPage";
 
 const routes = {
-  '/': (
+  "/": (
     <Layout>
       <HomePage />
     </Layout>
   ),
-  '/about': (
+  "/about": (
     <Layout>
       <AboutPage />
     </Layout>
   ),
 };
 
-const container = document.getElementById('app');
+const container = document.getElementById("app");
 
 function render() {
   try {
-    const path = window.location.hash.substr(1) || '/';
+    const path = window.location.hash.substr(1) || "/";
     const component = routes[path] || <NotFoundPage />;
     React.render(component, container);
   } catch (err) {
@@ -49,7 +49,7 @@ function render() {
   }
 }
 
-window.addEventListener('hashchange', () => render());
+window.addEventListener("hashchange", () => render());
 render();
 ```
 
@@ -58,16 +58,16 @@ render();
 Just wrap React components inside your routes into asynchronous functions:
 
 ```js
-import React from 'react';
-import fetch from './core/fetch';
-import Layout from './components/Layout';
-import HomePage from './components/HomePage';
-import AboutPage from './components/AboutPage';
-import NotFoundPage from './components/NotFoundPage';
-import ErrorPage from './components/ErrorPage';
+import React from "react";
+import fetch from "./core/fetch";
+import Layout from "./components/Layout";
+import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
+import NotFoundPage from "./components/NotFoundPage";
+import ErrorPage from "./components/ErrorPage";
 
 const routes = {
-  '/': async () => {
+  "/": async () => {
     const response = await fetch(
       '/graphql?query={content(path:"/"){title,html}}'
     );
@@ -78,7 +78,7 @@ const routes = {
       </Layout>
     );
   },
-  '/about': async () => {
+  "/about": async () => {
     const response = await fetch(
       '/graphql?query={content(path:"/about"){title,html}}'
     );
@@ -91,11 +91,11 @@ const routes = {
   },
 };
 
-const container = document.getElementById('app');
+const container = document.getElementById("app");
 
 async function render() {
   try {
-    const path = window.location.hash.substr(1) || '/';
+    const path = window.location.hash.substr(1) || "/";
     const route = routes[path];
     const component = route ? await route() : <NotFoundPage />;
     React.render(component, container);
@@ -104,7 +104,7 @@ async function render() {
   }
 }
 
-window.addEventListener('hashchange', () => render());
+window.addEventListener("hashchange", () => render());
 render();
 ```
 

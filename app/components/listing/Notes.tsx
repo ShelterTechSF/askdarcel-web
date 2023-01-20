@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Note } from '../../models';
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { Note } from "../../models";
 
 const NotesList = ({ notes }: { notes: Note[] }) => (
   <ul className="service--section--list">

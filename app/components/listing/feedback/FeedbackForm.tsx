@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { cloneDeep } from 'lodash';
-import { icon } from 'assets';
-import { TAG_LIST } from './constants';
-import type { StepState, SubmittedState, TagType, VoteType } from './constants';
-import { Organization, Service } from '../../../models';
-import { addFeedback } from '../../../utils/DataService';
+import React, { useState } from "react";
+import { cloneDeep } from "lodash";
+import { icon } from "assets";
+import { TAG_LIST } from "./constants";
+import type { StepState, SubmittedState, TagType, VoteType } from "./constants";
+import { Organization, Service } from "../../../models";
+import { addFeedback } from "../../../utils/DataService";
 import {
   VoteButtons,
   FeedbackTags,
   Review,
   SubmitMessage,
   NavigationButtons,
-} from './FeedbackSteps';
-import styles from './FeedbackForm.module.scss';
+} from "./FeedbackSteps";
+import styles from "./FeedbackForm.module.scss";
 
 export const FeedbackForm = ({
   service,
@@ -23,13 +23,13 @@ export const FeedbackForm = ({
   resource: Organization;
   closeModal: () => void;
 }) => {
-  const [vote, setVote] = useState<VoteType>('neither');
+  const [vote, setVote] = useState<VoteType>("neither");
   const [tagOptions, setTags] = useState<readonly TagType[]>(TAG_LIST);
-  const [review, setReview] = useState('');
-  const [step, setStep] = useState<StepState>('start');
+  const [review, setReview] = useState("");
+  const [step, setStep] = useState<StepState>("start");
   const [isSubmitted, setIsSubmitted] = useState<SubmittedState>(null);
   const handleVoteChange = (voteType: VoteType) => {
-    setStep('start');
+    setStep("start");
     setVote(voteType);
   };
 
@@ -50,17 +50,17 @@ export const FeedbackForm = ({
   };
 
   const handleNextStep = () =>
-    vote === 'downvote' && step === 'start'
-      ? setStep('tags')
-      : setStep('review');
+    vote === "downvote" && step === "start"
+      ? setStep("tags")
+      : setStep("review");
 
   const handlePrevStep = () =>
-    vote === 'downvote' && step === 'review'
-      ? setStep('tags')
-      : setStep('start');
+    vote === "downvote" && step === "review"
+      ? setStep("tags")
+      : setStep("start");
 
   const handleSubmit = () => {
-    setIsSubmitted('submitting');
+    setIsSubmitted("submitting");
     const tags = tagOptions
       .filter(({ selected }) => selected)
       .map(({ tag }) => tag);
@@ -72,19 +72,19 @@ export const FeedbackForm = ({
     };
 
     const [source, sourceId] = !service
-      ? (['resources', resource.id] as const)
-      : (['services', service.id] as const);
+      ? (["resources", resource.id] as const)
+      : (["services", service.id] as const);
 
     addFeedback(source, sourceId, feedback)
       .then(() => {
-        setIsSubmitted('submitted');
+        setIsSubmitted("submitted");
       })
       .catch((err) => console.log(err)); // eslint-disable-line no-console
   };
 
   const isReviewRequired =
-    tagOptions.some(({ tag, selected }) => tag === 'Other' && selected) &&
-    vote === 'downvote';
+    tagOptions.some(({ tag, selected }) => tag === "Other" && selected) &&
+    vote === "downvote";
 
   const STEPS = {
     start: null,
@@ -108,16 +108,16 @@ export const FeedbackForm = ({
         tabIndex={0}
         onClick={closeModal}
       >
-        <img src={icon('close')} alt="close" />
+        <img src={icon("close")} alt="close" />
       </div>
       <div className={styles.feedbackHeader}>
-        <img src={icon('feedback-blue-header')} alt="feedback" />
+        <img src={icon("feedback-blue-header")} alt="feedback" />
         <span>Share your Feedback</span>
       </div>
       <div className={styles.feedbackSubheader}>
         The team usually replies within a day.
       </div>
-      {isSubmitted === 'submitted' ? (
+      {isSubmitted === "submitted" ? (
         <SubmitMessage closeModal={closeModal} />
       ) : (
         <div className={styles.stepsContainer}>

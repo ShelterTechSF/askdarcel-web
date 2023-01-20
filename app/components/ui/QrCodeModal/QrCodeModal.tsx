@@ -1,10 +1,10 @@
-import React from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+import React from "react";
+import { QRCodeSVG } from "qrcode.react";
 
-import { Modal } from 'components/ui/Modal/Modal';
-import { Button } from 'components/ui/inline/Button/Button';
+import { Modal } from "components/ui/Modal/Modal";
+import { Button } from "components/ui/inline/Button/Button";
 
-import styles from './QrCodeModal.module.scss';
+import styles from "./QrCodeModal.module.scss";
 
 export const QrCodeModal = ({
   isOpen,

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './Section.module.scss';
+import styles from "./Section.module.scss";
 
 export const Section = ({
   title,
@@ -13,7 +13,7 @@ export const Section = ({
   body?: string;
   addClass?: string;
 }) => (
-  <section className={`${addClass || ''}`}>
+  <section className={`${addClass || ""}`}>
     {title && <h1 className={styles.title}>{title}</h1>}
     {subtitle && <h2 className={styles.subtitle}>{subtitle}</h2>}
     {body && <p className={styles.body}>{body}</p>}

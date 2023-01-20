@@ -1,8 +1,8 @@
-import React from 'react';
-import { Pagination } from 'react-instantsearch/dom';
-import whiteLabel from 'utils/whitelabel';
+import React from "react";
+import { Pagination } from "react-instantsearch/dom";
+import whiteLabel from "utils/whitelabel";
 
-import styles from './ResultsPagination.module.scss';
+import styles from "./ResultsPagination.module.scss";
 
 const {
   appImages: { algolia },
@@ -12,7 +12,7 @@ const ResultsPagination = ({ noResults }: { noResults: boolean }) => (
   <div>
     <div
       className={`${styles.paginationContainer} ${
-        noResults ? styles.hidePagination : ''
+        noResults ? styles.hidePagination : ""
       }`}
     >
       <div className={styles.resultsPagination}>
@@ -21,8 +21,8 @@ const ResultsPagination = ({ noResults }: { noResults: boolean }) => (
           showLast={false}
           showFirst={false}
           translations={{
-            previous: 'Prev',
-            next: 'Next',
+            previous: "Prev",
+            next: "Next",
           }}
         />
       </div>

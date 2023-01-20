@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './Partners.scss';
-import STLogo from './assets/STLogo.png';
-import MOHCDLogo from './assets/MOHCDLogo.png';
-import JDCLogo from './assets/JDCLogo.png';
-import BenetechLogo from './assets/BenetechLogo.png';
-import SFFamiliesLogo from './assets/SFFamiliesLogo.png';
-import BridgeLogo from './assets/BridgeLogo.png';
+import "./Partners.scss";
+import STLogo from "./assets/STLogo.png";
+import MOHCDLogo from "./assets/MOHCDLogo.png";
+import JDCLogo from "./assets/JDCLogo.png";
+import BenetechLogo from "./assets/BenetechLogo.png";
+import SFFamiliesLogo from "./assets/SFFamiliesLogo.png";
+import BridgeLogo from "./assets/BridgeLogo.png";
 
 export const Partners = () => (
   <div className="partners">

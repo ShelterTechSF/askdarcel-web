@@ -1,8 +1,8 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import styles from './ResourceGuides.module.scss';
-import { Footer } from '../../components/ui';
-import { ResourceGuidesLookup } from './data';
+import React from "react";
+import { useParams } from "react-router-dom";
+import styles from "./ResourceGuides.module.scss";
+import { Footer } from "../../components/ui";
+import { ResourceGuidesLookup } from "./data";
 
 export const ResourceGuide = () => {
   const { id } = useParams<{ id: string }>();

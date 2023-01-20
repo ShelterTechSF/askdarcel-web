@@ -5,17 +5,17 @@ https://disqus.com/admin/create/
 #### `DisqusThread.js`
 
 ```js
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from "react";
 
-const SHORTNAME = 'example';
-const WEBSITE_URL = 'http://www.example.com';
+const SHORTNAME = "example";
+const WEBSITE_URL = "http://www.example.com";
 
 function renderDisqus() {
   if (window.DISQUS === undefined) {
-    var script = document.createElement('script');
+    var script = document.createElement("script");
     script.async = true;
-    script.src = 'https://' + SHORTNAME + '.disqus.com/embed.js';
-    document.getElementsByTagName('head')[0].appendChild(script);
+    script.src = "https://" + SHORTNAME + ".disqus.com/embed.js";
+    document.getElementsByTagName("head")[0].appendChild(script);
   } else {
     window.DISQUS.reset({ reload: true });
   }
@@ -66,8 +66,8 @@ export default DisqusThread;
 #### `MyComponent.js`
 
 ```js
-import React from 'react';
-import DisqusThread from './DisqusThread.js';
+import React from "react";
+import DisqusThread from "./DisqusThread.js";
 
 class MyComponent {
   render() {

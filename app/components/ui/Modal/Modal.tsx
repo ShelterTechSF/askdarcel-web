@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
-import ReactModal from 'react-modal';
+import React, { ReactNode } from "react";
+import ReactModal from "react-modal";
 
-import { icon } from 'assets';
+import { icon } from "assets";
 
-import styles from './Modal.module.scss';
+import styles from "./Modal.module.scss";
 /**
  * This modal component is used on the service/search results page. It provides
  * shared layout and shared styling.
@@ -27,7 +27,7 @@ export const Modal = ({
     onRequestClose={closeModal}
   >
     <div role="button" tabIndex={0} onClick={closeModal}>
-      <img src={icon('close')} alt="close" className={styles.closeModalIcon} />
+      <img src={icon("close")} alt="close" className={styles.closeModalIcon} />
     </div>
     {children}
   </ReactModal>

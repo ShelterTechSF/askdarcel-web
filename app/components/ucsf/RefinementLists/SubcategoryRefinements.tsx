@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
+import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
-import styles from './Refinements.module.scss';
+import styles from "./Refinements.module.scss";
 
 interface SubcategoryRefinement {
   name: string;
@@ -26,7 +26,7 @@ export const SubcategoryRefinements = ({
 }) => {
   // Add generic "See All" element to subcategory array if it is not there yet
   if (!subcategories[0] || subcategories[0].id !== seeAllPseudoId) {
-    subcategories.unshift({ id: seeAllPseudoId, name: 'See All' });
+    subcategories.unshift({ id: seeAllPseudoId, name: "See All" });
   }
 
   const handleSubcategoryClick = (targetSubcategoryId: number) => {

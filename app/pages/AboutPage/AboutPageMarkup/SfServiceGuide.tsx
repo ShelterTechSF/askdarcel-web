@@ -1,18 +1,18 @@
-import React from 'react';
-import { Footer } from '../../../components/ui';
+import React from "react";
+import { Footer } from "../../../components/ui";
 
-import styles from '../AboutPage.module.scss';
-import STLogo from '../assets/STLogo.png';
-import MOHCDLogo from '../assets/MOHCDLogo.png';
-import JDCLogo from '../assets/JDCLogo.png';
-import BenetechLogo from '../assets/BenetechLogo.png';
-import SFFamiliesLogo from '../assets/SFFamiliesLogo.png';
-import BridgeLogo from '../assets/BridgeLogo.png';
-import LarkinLogo from '../assets/LarkinLogo.png';
-import WeworkLogo from '../assets/WeworkLogo.png';
-import CompassLogo from '../assets/Compass.png';
-import EDCLogo from '../assets/EDC.png';
-import HomeownershipSFLogo from '../assets/HomeownershipSF.png';
+import styles from "../AboutPage.module.scss";
+import STLogo from "../assets/STLogo.png";
+import MOHCDLogo from "../assets/MOHCDLogo.png";
+import JDCLogo from "../assets/JDCLogo.png";
+import BenetechLogo from "../assets/BenetechLogo.png";
+import SFFamiliesLogo from "../assets/SFFamiliesLogo.png";
+import BridgeLogo from "../assets/BridgeLogo.png";
+import LarkinLogo from "../assets/LarkinLogo.png";
+import WeworkLogo from "../assets/WeworkLogo.png";
+import CompassLogo from "../assets/Compass.png";
+import EDCLogo from "../assets/EDC.png";
+import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
 
 export const SfServiceGuideJsx = () => (
   <div className={styles.about}>
@@ -29,7 +29,7 @@ export const SfServiceGuideJsx = () => (
           tablet, or computer find the services they need. The guide&apos;s
           focus is on homelessness and housing services, but also covers a
           variety of other services, from education and legal aid to senior
-          services and re-entry programs.{' '}
+          services and re-entry programs.{" "}
         </p>
       </header>
       <section className={styles.aboutSection}>
@@ -45,7 +45,7 @@ export const SfServiceGuideJsx = () => (
           <p>
             The SF Service Guide is developed and maintained by ShelterTech, a
             volunteer-only 501c(3) non-profit that builds tech products for
-            homeless and at risk communities.{' '}
+            homeless and at risk communities.{" "}
             <a href="http://sheltertech.org" rel="noopener">
               Learn more here.
             </a>

@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
+import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
-import { Eligibility, EligibilityGroup } from './ucsfEligibilitiesMap';
+import { Eligibility, EligibilityGroup } from "./ucsfEligibilitiesMap";
 
-import styles from './Refinements.module.scss';
+import styles from "./Refinements.module.scss";
 
 interface SelectedEligibilities {
   [key: string]: boolean;

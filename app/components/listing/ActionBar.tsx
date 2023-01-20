@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { icon as iconPath } from '../../assets';
-import { OrganizationAction } from '../../models';
-import './ActionBar.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import { icon as iconPath } from "../../assets";
+import { OrganizationAction } from "../../models";
+import "./ActionBar.scss";
 
 const ActionButton = ({
   action,

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connectCurrentRefinements } from 'react-instantsearch/connectors';
-import styles from './RefinementFilters.module.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { connectCurrentRefinements } from "react-instantsearch/connectors";
+import styles from "./RefinementFilters.module.scss";
 
 const ClearAllFilter = ({ items, refine, setSearchRadius }) => (
   <div
@@ -10,7 +10,7 @@ const ClearAllFilter = ({ items, refine, setSearchRadius }) => (
     className={styles.clearAll}
     onClick={() => {
       refine(items);
-      setSearchRadius('all');
+      setSearchRadius("all");
     }}
     disabled={!items.length}
   >

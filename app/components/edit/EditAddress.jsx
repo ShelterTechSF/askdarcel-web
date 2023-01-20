@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import ReactModal from 'react-modal';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import ReactModal from "react-modal";
+import PropTypes from "prop-types";
 import {
   RiDeleteBin5Line,
   RiEditBoxLine,
   RiArrowLeftLine,
-} from 'react-icons/ri';
+} from "react-icons/ri";
 
-import s from './EditAddress.module.scss';
+import s from "./EditAddress.module.scss";
 
 // Subcomponents
 
@@ -20,8 +20,8 @@ import s from './EditAddress.module.scss';
  */
 const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
   const isEdit = !!defaultData.id;
-  const title = isEdit ? 'Edit Address' : 'Add New Address';
-  const submitButtonText = isEdit ? 'Save Address' : 'Add New Address';
+  const title = isEdit ? "Edit Address" : "Add New Address";
+  const submitButtonText = isEdit ? "Save Address" : "Add New Address";
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -147,7 +147,7 @@ const compactAddressDisplay = ({
     city,
     state_postal,
   ];
-  return lines.filter((x) => x).join(', ');
+  return lines.filter((x) => x).join(", ");
 };
 
 export const AddressListItem = ({
@@ -183,24 +183,24 @@ export const AddressListItem = ({
 // type ModalState = { type: "closed" } | { type: "add" } | { type: "edit"; editingIndex: number };
 
 const EditAddresses = ({ addresses, setAddresses }) => {
-  const [modalState, setModalState] = useState({ type: 'closed' });
+  const [modalState, setModalState] = useState({ type: "closed" });
 
-  const closeModal = () => setModalState({ type: 'closed' });
+  const closeModal = () => setModalState({ type: "closed" });
 
-  const modalIsOpen = modalState.type !== 'closed';
+  const modalIsOpen = modalState.type !== "closed";
   let modalDefaultData;
   let modalOnSave;
   switch (modalState.type) {
-    case 'closed':
+    case "closed":
       modalDefaultData = {};
       modalOnSave = () => {};
       break;
-    case 'add': {
+    case "add": {
       modalDefaultData = {};
       modalOnSave = (newData) => setAddresses([...addresses, newData]);
       break;
     }
-    case 'edit': {
+    case "edit": {
       modalDefaultData = addresses[modalState.editingIndex];
       modalOnSave = (newData) => {
         const addressesCopy = addresses.slice();
@@ -247,7 +247,7 @@ const EditAddresses = ({ addresses, setAddresses }) => {
               displayIndex={displayIndexMinusOne + 1}
               address={address}
               onEdit={() =>
-                setModalState({ type: 'edit', editingIndex: arrayIndex })
+                setModalState({ type: "edit", editingIndex: arrayIndex })
               }
               onRemove={() => removeAddress(arrayIndex)}
             />
@@ -257,7 +257,7 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       <button
         className={s.newAddressButton}
         type="button"
-        onClick={() => setModalState({ type: 'add' })}
+        onClick={() => setModalState({ type: "add" })}
       >
         Add Location
       </button>

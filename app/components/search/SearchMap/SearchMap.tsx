@@ -1,18 +1,18 @@
-import React, { ReactElement } from 'react';
-import GoogleMap from 'google-map-react';
-import { Tooltip } from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
-import SearchEntry from 'components/search/SearchMap/SearchEntry';
-import { useAppContext } from 'utils';
-import { Loader } from 'components/ui';
+import React, { ReactElement } from "react";
+import GoogleMap from "google-map-react";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+import SearchEntry from "components/search/SearchMap/SearchEntry";
+import { useAppContext } from "utils";
+import { Loader } from "components/ui";
 import {
   createMapOptions,
   UserLocationMarker,
   CustomMarker,
-} from 'components/ui/MapElements';
-import './SearchMap.scss';
-import { SearchHit } from '../../../models';
-import config from '../../../config';
+} from "components/ui/MapElements";
+import "./SearchMap.scss";
+import { SearchHit } from "../../../models";
+import config from "../../../config";
 
 export const SearchMap = ({
   hits,
@@ -66,7 +66,7 @@ export const SearchMap = ({
                 <SearchHitMarker
                   key={`${hit.id}.${addr.latitude}.${addr.longitude}.${
                     addr.address_1
-                  }.${addr.address_2 || ''}`}
+                  }.${addr.address_2 || ""}`}
                   lat={addr.latitude}
                   lng={addr.longitude}
                   tag={tag}

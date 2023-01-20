@@ -1,6 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
-import styles from './Form.module.scss';
+import React from "react";
+import classNames from "classnames";
+import styles from "./Form.module.scss";
 
 const Buttons = ({
   closeModal,

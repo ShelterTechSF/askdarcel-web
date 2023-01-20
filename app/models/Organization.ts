@@ -1,8 +1,8 @@
-import { get } from '../utils/DataService';
-import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
-import { Schedule, parseAPISchedule } from './Schedule';
-import { Address, Category, LocationDetails, Note, PhoneNumber } from './Meta';
-import { RecurringSchedule } from './RecurringSchedule';
+import { get } from "../utils/DataService";
+import { Service, shouldServiceInheritScheduleFromOrg } from "./Service";
+import { Schedule, parseAPISchedule } from "./Schedule";
+import { Address, Category, LocationDetails, Note, PhoneNumber } from "./Meta";
+import { RecurringSchedule } from "./RecurringSchedule";
 
 // An Organization used to be called a 'Resource', and represents
 // an institution that provides services to those experiencing homelessness
@@ -25,14 +25,14 @@ export interface Organization {
   services: Service[];
   short_description: string | null;
   source_attribution: string;
-  status: 'pending' | 'approved' | 'rejected' | 'inactive';
+  status: "pending" | "approved" | "rejected" | "inactive";
   updated_at: string;
   verified_at: string | null;
   website: string | null;
 }
 
 export interface OrganizationParams
-  extends Omit<Partial<Organization>, 'notes'> {
+  extends Omit<Partial<Organization>, "notes"> {
   notes?: Partial<Note>[];
 }
 
@@ -94,27 +94,27 @@ export const getOrganizationActions = (
     //   to: `/organizations/${resource.id}/edit`,
     // },
     {
-      name: 'Print',
-      icon: 'print',
+      name: "Print",
+      icon: "print",
     },
     {
-      name: 'Share Feedback',
-      icon: 'feedback',
+      name: "Share Feedback",
+      icon: "feedback",
     },
   ];
 
   if (phoneNumber) {
     actions.push({
-      name: 'Call',
-      icon: 'phone',
+      name: "Call",
+      icon: "phone",
       link: `tel:${phoneNumber}`,
     });
   }
 
   if (latitude && longitude) {
     actions.push({
-      name: 'Directions',
-      icon: 'directions',
+      name: "Directions",
+      icon: "directions",
       link: `http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
     });
   }

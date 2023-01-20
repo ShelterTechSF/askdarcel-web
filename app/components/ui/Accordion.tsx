@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './Accordion.scss';
+import React, { useState } from "react";
+import "./Accordion.scss";
 
 export const Accordion = ({ children }: { children: JSX.Element[] }) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -8,7 +8,7 @@ export const Accordion = ({ children }: { children: JSX.Element[] }) => {
     <ul className="accordion">
       {children.map((ch, i) => (
         <li // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
-          className={activeTab === i ? 'open' : 'closed'}
+          className={activeTab === i ? "open" : "closed"}
           onClick={() => setActiveTab(i)}
           key={ch.key}
         >

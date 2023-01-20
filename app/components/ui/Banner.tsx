@@ -1,11 +1,11 @@
-import React from 'react';
-import { icon } from 'assets';
-import styles from './Banner.module.scss';
+import React from "react";
+import { icon } from "assets";
+import styles from "./Banner.module.scss";
 
 export const Banner = () => (
   <div className={styles.bannerContainer}>
     <div className={styles.bannerContent}>
-      <img src={icon('alert')} alt="attention" className={styles.alertIcon} />
+      <img src={icon("alert")} alt="attention" className={styles.alertIcon} />
       <div>
         <strong className={styles.title}>
           SHELTER ACCESS DURING RAINY AND COLD WEATHER:
@@ -18,7 +18,7 @@ export const Banner = () => (
             href="https://hsh.sfgov.org/services/how-to-get-services/accessing-temporary-shelter"
           >
             Get information
-          </a>{' '}
+          </a>{" "}
           on expanded shelter access during cold and wet weather in San
           Francisco.
         </p>
@@ -30,7 +30,7 @@ export const Banner = () => (
             href="https://hsh.sfgov.org/services"
           >
             General information
-          </a>{' '}
+          </a>{" "}
           on finding temporary shelter.
         </p>
       </div>

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import whiteLabel from '../../utils/whitelabel';
-import './Footer.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import whiteLabel from "../../utils/whitelabel";
+import "./Footer.scss";
 
 export const Footer = () => {
   const { title } = whiteLabel;

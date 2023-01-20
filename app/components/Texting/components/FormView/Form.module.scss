@@ -1,4 +1,4 @@
-@import '../../../../styles/utils/_helpers.scss';
+@import "../../../../styles/utils/_helpers.scss";
 
 .title {
   margin-top: 50px;
@@ -65,7 +65,7 @@
   }
 }
 
-.checkBox input[type='checkbox'] {
+.checkBox input[type="checkbox"] {
   margin-right: 10px;
   width: auto;
   cursor: pointer;

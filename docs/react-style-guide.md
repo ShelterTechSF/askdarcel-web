@@ -77,7 +77,7 @@ Navigation.propTypes = { items: PropTypes.array.isRequired };
 
 ```scss
 // Navigation.scss
-@import '../variables.scss';
+@import "../variables.scss";
 
 .root {
   width: 300px;
@@ -119,9 +119,9 @@ Navigation.propTypes = { items: PropTypes.array.isRequired };
 
 ```jsx
 // Navigation.js
-import React, { PropTypes } from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Navigation.scss';
+import React, { PropTypes } from "react";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
+import s from "./Navigation.scss";
 
 function Navigation() {
   return (
@@ -154,8 +154,8 @@ export default withStyles(Navigation, s);
 
 ```js
 // withViewport.js
-import React, { Component } from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import React, { Component } from "react";
+import { canUseDOM } from "fbjs/lib/ExecutionEnvironment";
 
 function withViewport(ComposedComponent) {
   return class WithViewport extends Component {
@@ -166,13 +166,13 @@ function withViewport(ComposedComponent) {
     };
 
     componentDidMount() {
-      window.addEventListener('resize', this.handleResize);
-      window.addEventListener('orientationchange', this.handleResize);
+      window.addEventListener("resize", this.handleResize);
+      window.addEventListener("orientationchange", this.handleResize);
     }
 
     componentWillUnmount() {
-      window.removeEventListener('resize', this.handleResize);
-      window.removeEventListener('orientationchange', this.handleResize);
+      window.removeEventListener("resize", this.handleResize);
+      window.removeEventListener("orientationchange", this.handleResize);
     }
 
     handleResize = () => {
@@ -198,8 +198,8 @@ export default withViewport;
 
 ```js
 // MyComponent.js
-import React from 'react';
-import withViewport from './withViewport';
+import React from "react";
+import withViewport from "./withViewport";
 
 class MyComponent {
   render() {

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Service } from '../../models';
-import { ServiceDetails } from './ServiceDetails';
+import React from "react";
+import { Service } from "../../models";
+import { ServiceDetails } from "./ServiceDetails";
 
 export const ServiceList = ({ services }: { services: Service[] }) =>
   services?.length > 0 ? (

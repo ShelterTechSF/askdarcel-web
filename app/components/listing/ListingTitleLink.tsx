@@ -1,23 +1,23 @@
-import React from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
-import { Tooltip } from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
-import { OrganizationCard } from './OrganizationCard';
-import { ServiceCard } from './ServiceCard';
-import { Service, Organization } from '../../models';
+import React from "react";
+import { BrowserRouter, Link } from "react-router-dom";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+import { OrganizationCard } from "./OrganizationCard";
+import { ServiceCard } from "./ServiceCard";
+import { Service, Organization } from "../../models";
 
 export const ListingTitleLink = ({
   listing,
   type,
 }:
-  | { listing: Service; type: 'service' }
-  | { listing: Organization; type: 'org' }) => {
-  const isService = type === 'service';
+  | { listing: Service; type: "service" }
+  | { listing: Organization; type: "org" }) => {
+  const isService = type === "service";
   const to = isService
     ? `/services/${listing.id}`
     : `/organizations/${listing.id}`;
   const summaryCard =
-    type === 'service' ? (
+    type === "service" ? (
       <ServiceCard service={listing} />
     ) : (
       <OrganizationCard org={listing} />

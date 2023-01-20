@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState } from "react";
 
 /**
  * Renders a child property collection of a Service as a list of individual components,

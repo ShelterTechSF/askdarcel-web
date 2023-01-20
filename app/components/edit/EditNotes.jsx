@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import EditNote from './EditNote';
+import React, { Component } from "react";
+import EditNote from "./EditNote";
 
 class EditNotes extends Component {
   constructor(props) {
@@ -95,7 +95,7 @@ class EditNotes extends Component {
             rel="noopener noreferrer"
           >
             Markdown
-          </a>{' '}
+          </a>{" "}
           is also supported for notes.
         </p>
         <ul className="edit--section--list--item--sublist">

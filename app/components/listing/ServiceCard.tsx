@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Service } from '../../models';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Service } from "../../models";
 
 export const ServiceCard = ({ service }: { service: Service }) => {
   const { id, name, long_description } = service;

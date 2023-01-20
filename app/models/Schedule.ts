@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 import {
   DAY_TO_INT,
   DAYS_IN_WEEK,
@@ -6,7 +6,7 @@ import {
   RecurringTime,
   RecurringSchedule,
   RecurringInterval,
-} from './RecurringSchedule';
+} from "./RecurringSchedule";
 
 export interface Schedule {
   id: number;
@@ -22,7 +22,7 @@ export interface ScheduleDay {
 }
 
 export interface ScheduleParams
-  extends Omit<Partial<Schedule>, 'schedule_days'> {
+  extends Omit<Partial<Schedule>, "schedule_days"> {
   schedule_days: Partial<ScheduleDay>[];
 }
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { useParams, Redirect, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import qs from 'qs';
+import React, { useState, useEffect, useMemo } from "react";
+import ReactMarkdown from "react-markdown";
+import { useParams, Redirect, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import qs from "qs";
 import {
   ActionBarMobile,
   ActionSidebar,
@@ -18,16 +18,16 @@ import {
   ServiceList,
   TableOfOpeningTimes,
   WebsiteRenderer,
-} from '../components/listing';
-import { Loader } from '../components/ui';
-import whitelabel from '../utils/whitelabel';
+} from "../components/listing";
+import { Loader } from "../components/ui";
+import whitelabel from "../utils/whitelabel";
 import {
   fetchOrganization,
   getOrganizationActions,
   getOrganizationLocations,
   Organization,
   OrganizationAction,
-} from '../models';
+} from "../models";
 
 // Page at /organization/123
 export const OrganizationListingPage = () => {
@@ -46,24 +46,24 @@ export const OrganizationListingPage = () => {
   if (!org) {
     return <Loader />;
   }
-  if (org.status === 'inactive' && !visitDeactivated) {
+  if (org.status === "inactive" && !visitDeactivated) {
     return <Redirect to="/" />;
   }
 
   const orgLocations = getOrganizationLocations(org);
   const allActions = getOrganizationActions(org);
   const sidebarActions = allActions.filter((a) =>
-    ['print', 'directions', 'feedback'].includes(a.icon)
+    ["print", "directions", "feedback"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
-    ['phone', 'directions', 'feedback'].includes(a.icon)
+    ["phone", "directions", "feedback"].includes(a.icon)
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
-      case 'feedback':
+      case "feedback":
         setFeedbackModalOpen(true);
         break;
-      case 'print':
+      case "print":
         window.print();
         break;
       default:
@@ -75,7 +75,7 @@ export const OrganizationListingPage = () => {
     <div className="org-container">
       <Helmet>
         <title>{`${org.name} | ${whitelabel.title}`}</title>
-        <meta name="description" content={org.long_description || ''} />
+        <meta name="description" content={org.long_description || ""} />
       </Helmet>
       <article className="org" id="resource">
         <div className="org--main">
@@ -118,7 +118,7 @@ export const OrganizationListingPage = () => {
                 source={
                   org.long_description ||
                   org.short_description ||
-                  'No Description available'
+                  "No Description available"
                 }
               />
             </OrganizationListingSection>

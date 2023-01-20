@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react';
-import { GeoCoordinates } from './location';
+import { createContext, useContext } from "react";
+import { GeoCoordinates } from "./location";
 
 export const AppContext = createContext({
   userLocation: <GeoCoordinates | null>null,

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { icon } from 'assets';
+import { icon } from "assets";
 
-import { Modal } from 'components/ui/Modal/Modal';
-import { Button } from 'components/ui/inline/Button/Button';
+import { Modal } from "components/ui/Modal/Modal";
+import { Button } from "components/ui/inline/Button/Button";
 
-import styles from './ClientHandouts.module.scss';
+import styles from "./ClientHandouts.module.scss";
 
 export const ClientHandouts = ({
   isOpen,
@@ -37,7 +37,7 @@ export const ClientHandouts = ({
             key={handout.id}
           >
             <img
-              src={icon('pdf-red')}
+              src={icon("pdf-red")}
               alt="PDF icon"
               className={styles.sideLinkIcon}
             />

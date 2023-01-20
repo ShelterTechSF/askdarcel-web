@@ -1,5 +1,5 @@
-import { round } from './numbers';
-import config from '../config';
+import { round } from "./numbers";
+import config from "../config";
 
 export type GeoCoordinates = { lat: number; lng: number };
 
@@ -50,7 +50,7 @@ export const getLocationBrowser = () =>
         }
       );
     } else {
-      const msg = 'Geolocation is not supported by this browser.';
+      const msg = "Geolocation is not supported by this browser.";
       console.log(msg); // eslint-disable-line no-console
       reject(msg);
     }
@@ -62,17 +62,17 @@ export const getLocationBrowser = () =>
 export const getLocationGoogle = () =>
   new Promise<GeoCoordinates>((resolve, reject) => {
     // Results are not very accurate
-    let url = 'https://www.googleapis.com/geolocation/v1/geolocate';
+    let url = "https://www.googleapis.com/geolocation/v1/geolocate";
     if (config.GOOGLE_API_KEY) {
       url += `?key=${config.GOOGLE_API_KEY}`;
     }
-    fetch(url, { method: 'post' })
+    fetch(url, { method: "post" })
       .then((r) => r.json())
       .then(({ location }: { location: GeoCoordinates }) => {
         if (areCoordsInSanFrancisco(location)) {
           resolve(location);
         } else {
-          const msg = 'User location out of bounds';
+          const msg = "User location out of bounds";
           console.log(msg); // eslint-disable-line no-console
           reject(msg);
         }

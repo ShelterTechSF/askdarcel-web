@@ -1,6 +1,6 @@
-import ResourcePage from './pages/ResourcePage';
-import EditResourcePage from './pages/EditResourcePage';
-import ServicePage from './pages/ServicePage';
+import ResourcePage from "./pages/ResourcePage";
+import EditResourcePage from "./pages/EditResourcePage";
+import ServicePage from "./pages/ServicePage";
 
 const resourcePage = new ResourcePage();
 const editResourcePage = new EditResourcePage();
@@ -22,25 +22,25 @@ async function testEditTextProperty(
     .contains(newValue);
 }
 
-test('Edit resource name', async (t) => {
+test("Edit resource name", async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.resourceName,
     editResourcePage.name,
-    'New Resource Name'
+    "New Resource Name"
   );
 });
 
-test('Edit resource address', async (t) => {
+test("Edit resource address", async (t) => {
   await t.navigateTo(editResourcePage.url(1));
 
   const newProps = {
-    name: 'Main HQ',
-    address1: '123 Fake St.',
-    address2: 'Suite 456',
-    city: 'Springfield',
-    stateOrProvince: 'Illinois',
-    postalCode: '62701',
+    name: "Main HQ",
+    address1: "123 Fake St.",
+    address2: "Suite 456",
+    city: "Springfield",
+    stateOrProvince: "Illinois",
+    postalCode: "62701",
   };
 
   // Make edits
@@ -73,10 +73,10 @@ test('Edit resource address', async (t) => {
   );
 });
 
-test('Edit resource phone number', async (t) => {
-  const newNumber = '415-555-5555';
-  const newFormattedNumber = '(415) 555-5555';
-  const newServiceType = 'Main number';
+test("Edit resource phone number", async (t) => {
+  const newNumber = "415-555-5555";
+  const newFormattedNumber = "(415) 555-5555";
+  const newServiceType = "Main number";
 
   // Make edits
   const phone = EditResourcePage.getPhone(0);
@@ -94,10 +94,10 @@ test('Edit resource phone number', async (t) => {
     .contains(newServiceType);
 });
 
-test('Add resource phone number', async (t) => {
-  const newNumber = '415-555-5556';
-  const newFormattedNumber = '(415) 555-5556';
-  const newServiceType = 'Added number';
+test("Add resource phone number", async (t) => {
+  const newNumber = "415-555-5556";
+  const newFormattedNumber = "(415) 555-5556";
+  const newServiceType = "Added number";
 
   // Wait for page to load before counting phone numbers by using hover action.
   await t.hover(resourcePage.phones);
@@ -124,7 +124,7 @@ test('Add resource phone number', async (t) => {
     .eql(originalCount + 1);
 });
 
-test('Delete resource phone number', async (t) => {
+test("Delete resource phone number", async (t) => {
   await t.hover(resourcePage.phones);
   const originalCount = await resourcePage.phones.with({ boundTestRun: t })
     .count;
@@ -136,35 +136,35 @@ test('Delete resource phone number', async (t) => {
   await t.expect(resourcePage.phones.count).eql(originalCount - 1);
 });
 
-test('Edit resource website', async (t) => {
+test("Edit resource website", async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.website,
     editResourcePage.website,
-    'http://www.example.com/'
+    "http://www.example.com/"
   );
 });
 
-test('Edit resource email', async (t) => {
+test("Edit resource email", async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.email,
     editResourcePage.email,
-    'example@example.com'
+    "example@example.com"
   );
 });
 
-test('Edit resource description', async (t) => {
+test("Edit resource description", async (t) => {
   await testEditTextProperty(
     t,
     resourcePage.description,
     editResourcePage.description,
-    'This is my new description'
+    "This is my new description"
   );
 });
 
-test('Add Resource Note', async (t) => {
-  const newNote = 'A new note has been added';
+test("Add Resource Note", async (t) => {
+  const newNote = "A new note has been added";
 
   // Wait for page to load before counting phone Notes by using hover action.
   await t.hover(resourcePage.noteContainer);
@@ -194,8 +194,8 @@ test('Add Resource Note', async (t) => {
 // because it depends on the above test to create a note
 // TODO: Update seeded data to include a note initially to decouple
 // tests
-test('Edit Resource Note', async (t) => {
-  const newNote = 'Modified Note Text';
+test("Edit Resource Note", async (t) => {
+  const newNote = "Modified Note Text";
 
   // Wait for page to load before counting phone Notes by using hover action.
   await t.navigateTo(editResourcePage.url(1));
@@ -214,7 +214,7 @@ test('Edit Resource Note', async (t) => {
 // because it depends on the above test to create a note
 // TODO: Update seeded data to include a note initially to decouple
 // tests
-test('Delete Resource Note', async (t) => {
+test("Delete Resource Note", async (t) => {
   // Wait for page to load before counting phone Notes by using hover action.
   await t.hover(resourcePage.notes);
   const originalCount = await resourcePage.notes.with({ boundTestRun: t })
@@ -227,18 +227,18 @@ test('Delete Resource Note', async (t) => {
   await t.expect(resourcePage.notes.count).eql(originalCount - 1);
 });
 
-test('Add new service', async (t) => {
+test("Add new service", async (t) => {
   const SERVICE_DATA = {
-    NAME: 'Test Service',
-    NICKNAME: 'Best Service',
-    EMAIL: '1800bestservice@best.com',
-    DESCRIPTION: 'I go here when I want the best best service.',
-    APP_PROCESS: 'Walk in and ask for assistance',
-    REQ_DOCS: 'No ID required',
-    INTERP_SERVICES: 'ASL provided',
-    COST: 'Free',
-    WAIT_TIME: 'N/A',
-    WEBSITE: 'https://bestservice.com',
+    NAME: "Test Service",
+    NICKNAME: "Best Service",
+    EMAIL: "1800bestservice@best.com",
+    DESCRIPTION: "I go here when I want the best best service.",
+    APP_PROCESS: "Walk in and ask for assistance",
+    REQ_DOCS: "No ID required",
+    INTERP_SERVICES: "ASL provided",
+    COST: "Free",
+    WAIT_TIME: "N/A",
+    WEBSITE: "https://bestservice.com",
   };
 
   // Wait for page to load by using hover action.
@@ -321,7 +321,7 @@ test('Add new service', async (t) => {
   await t.expect(servicePage.cost.textContent).eql(SERVICE_DATA.COST);
 });
 
-test('Delete a service', async (t) => {
+test("Delete a service", async (t) => {
   // Wait for page to load before counting services by using hover action.
   await t.hover(resourcePage.services);
 

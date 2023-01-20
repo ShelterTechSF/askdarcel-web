@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './Form.module.scss';
+import React from "react";
+import styles from "./Form.module.scss";
 
 const Privacy = () => (
   <div className={styles.privacy}>
@@ -10,8 +10,8 @@ const Privacy = () => (
       rel="noopener noreferrer"
       href="https://sfserviceguide.org/"
     >
-      {' '}
-      here{' '}
+      {" "}
+      here{" "}
     </a>
     to view.
   </div>

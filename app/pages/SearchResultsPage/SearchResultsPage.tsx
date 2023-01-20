@@ -1,17 +1,17 @@
-import React, { useMemo, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, Configure, SearchBox } from 'react-instantsearch/dom';
-import qs, { ParsedQs } from 'qs';
+import React, { useMemo, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import algoliasearch from "algoliasearch/lite";
+import { InstantSearch, Configure, SearchBox } from "react-instantsearch/dom";
+import qs, { ParsedQs } from "qs";
 
-import { GeoCoordinates, useAppContext } from 'utils';
+import { GeoCoordinates, useAppContext } from "utils";
 
-import { Loader } from 'components/ui';
-import SearchResults from 'components/search/SearchResults/SearchResults';
-import Sidebar from 'components/search/Sidebar/Sidebar';
-import { Header } from 'components/search/Header/Header';
-import config from '../../config';
-import styles from './SearchResultsPage.module.scss';
+import { Loader } from "components/ui";
+import SearchResults from "components/search/SearchResults/SearchResults";
+import Sidebar from "components/search/Sidebar/Sidebar";
+import { Header } from "components/search/Header/Header";
+import config from "../../config";
+import styles from "./SearchResultsPage.module.scss";
 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
@@ -43,7 +43,7 @@ export const SearchResultsPage = () => {
     [search]
   );
   const [searchRadius, setSearchRadius] = useState(
-    searchState?.configure?.aroundRadius ?? 'all'
+    searchState?.configure?.aroundRadius ?? "all"
   );
 
   return (
@@ -90,7 +90,7 @@ const InnerSearchResults = ({
   return (
     <div className={styles.container}>
       <Header
-        resultsTitle={searchState.query || ''}
+        resultsTitle={searchState.query || ""}
         expandList={expandList}
         setExpandList={setExpandList}
       />
@@ -105,7 +105,7 @@ const InnerSearchResults = ({
           setLastPush(newPush);
           const newUrl = nextSearchState
             ? `search?${qs.stringify(nextSearchState)}`
-            : '';
+            : "";
           if (lastPush && newPush - lastPush <= THRESHOLD) {
             history.replace(newUrl);
           } else {

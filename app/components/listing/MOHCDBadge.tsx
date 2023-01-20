@@ -1,12 +1,12 @@
-import React from 'react';
-import { Organization } from '../../models';
-import MOHCDFunded from '../../assets/img/ic-mohcd-funded-services.svg';
+import React from "react";
+import { Organization } from "../../models";
+import MOHCDFunded from "../../assets/img/ic-mohcd-funded-services.svg";
 
-import styles from './MOHCDBadge.module.scss';
+import styles from "./MOHCDBadge.module.scss";
 
 export const MOHCDBadge = ({ resource }: { resource: Organization }) => {
   const isMOHCDFunded: boolean = resource?.categories.some(
-    (category) => category.name === 'MOHCD Funded'
+    (category) => category.name === "MOHCD Funded"
   );
 
   return isMOHCDFunded ? (

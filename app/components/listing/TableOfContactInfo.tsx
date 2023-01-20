@@ -1,5 +1,5 @@
-import React from 'react';
-import { Service } from '../../models';
+import React from "react";
+import { Service } from "../../models";
 
 export const TableOfContactInfo = ({ service }: { service: Service }) => {
   // TODO May break for non services, need a better check for inheritance
@@ -56,7 +56,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
               <ul>
                 {phones.map((phone) => (
                   <li key={phone.number}>
-                    <a href={`tel:${phone.number}`}>{phone.number}</a>{' '}
+                    <a href={`tel:${phone.number}`}>{phone.number}</a>{" "}
                     {phone.service_type && `(${phone.service_type})`}
                   </li>
                 ))}

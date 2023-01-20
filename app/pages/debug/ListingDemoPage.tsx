@@ -1,12 +1,12 @@
-import React from 'react';
-import { RelativeOpeningTime } from '../../components/listing/RelativeOpeningTime';
+import React from "react";
+import { RelativeOpeningTime } from "../../components/listing/RelativeOpeningTime";
 import {
   RecurringInterval,
   RecurringSchedule,
   RecurringTime,
   parseConcatenatedIntegerTime,
-} from '../../models';
-import './ListingDemoPage.scss';
+} from "../../models";
+import "./ListingDemoPage.scss";
 
 type Interval = readonly [number, number];
 type DaySchedule = null | Interval | readonly Interval[];

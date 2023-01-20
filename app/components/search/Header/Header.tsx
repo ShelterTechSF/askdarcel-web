@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import whiteLabel from 'utils/whitelabel';
-import { Button } from 'components/ui/inline/Button/Button';
-import { icon as assetIcon } from 'assets';
-import { QrCodeModal } from 'components/ui/QrCodeModal/QrCodeModal';
+import whiteLabel from "utils/whitelabel";
+import { Button } from "components/ui/inline/Button/Button";
+import { icon as assetIcon } from "assets";
+import { QrCodeModal } from "components/ui/QrCodeModal/QrCodeModal";
 
-import styles from './Header.module.scss';
+import styles from "./Header.module.scss";
 
 const { showHeaderQrCode, showPrintResultsBtn } = whiteLabel;
 
@@ -28,12 +28,12 @@ export const Header = ({
           setQrCodeModalOpen(true);
         }}
         addClass={`${styles.qrCodeBtn} ${
-          showHeaderQrCode ? styles.showBtn : ''
+          showHeaderQrCode ? styles.showBtn : ""
         }`}
         styleType="transparent"
       >
         <>
-          <img src={assetIcon('qr-code')} alt="QR code icon" />
+          <img src={assetIcon("qr-code")} alt="QR code icon" />
           <span className={styles.btnText}>Resource List QR Code</span>
         </>
       </Button>
@@ -42,12 +42,12 @@ export const Header = ({
           window.print();
         }}
         addClass={`${styles.printAllBtn} ${
-          showPrintResultsBtn ? styles.showBtn : ''
+          showPrintResultsBtn ? styles.showBtn : ""
         }`}
         styleType="transparent"
       >
         <>
-          <img src={assetIcon('print-blue')} alt="Printer icon" />
+          <img src={assetIcon("print-blue")} alt="Printer icon" />
           <span className={styles.btnText}>Print all results</span>
         </>
       </Button>
@@ -60,7 +60,7 @@ export const Header = ({
         >
           <span
             className={`${styles.listIcon} ${
-              expandList ? styles.activeView : ''
+              expandList ? styles.activeView : ""
             }`}
           />
         </button>
@@ -71,7 +71,7 @@ export const Header = ({
         >
           <span
             className={`${styles.mapIcon} ${
-              !expandList ? styles.activeView : ''
+              !expandList ? styles.activeView : ""
             }`}
           />
         </button>

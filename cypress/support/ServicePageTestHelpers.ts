@@ -1,4 +1,4 @@
-import { ChangeRequestParams, ScheduleDay } from '../../app/models';
+import { ChangeRequestParams, ScheduleDay } from "../../app/models";
 
 export class ServicePageTestHelpers {
   SERVICE_TITLE = '[data-cy="service-page-title"]';
@@ -8,8 +8,8 @@ export class ServicePageTestHelpers {
   SECTION_HOURS = '[data-cy="service-loc-hours-section"]';
   SECTION_HOURS_ROWS = '[data-cy="opening-times-row"]';
 
-  BUTTON_PRINT = '.action-sidebar--print';
-  BUTTON_DIRECTIONS = '.action-sidebar--directions';
+  BUTTON_PRINT = ".action-sidebar--print";
+  BUTTON_DIRECTIONS = ".action-sidebar--directions";
 
   url = (serviceId: number) => `/services/${serviceId}?visitDeactivated=true`;
 
@@ -17,7 +17,7 @@ export class ServicePageTestHelpers {
     schedule_id: number,
     schedule_day: Partial<ScheduleDay>
   ): ChangeRequestParams => ({
-    type: 'schedule_days',
+    type: "schedule_days",
     schedule_id,
     change_request: schedule_day,
   });

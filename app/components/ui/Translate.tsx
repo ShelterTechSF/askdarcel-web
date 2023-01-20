@@ -1,14 +1,14 @@
-import React from 'react';
-import { useCookies } from 'react-cookie';
-import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
-import { whiteLabel } from '../../utils';
+import React from "react";
+import { useCookies } from "react-cookie";
+import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
+import { whiteLabel } from "../../utils";
 
-const INCLUDED_LANGUAGES = ['en', 'es', 'tl', 'zh-TW'];
-const INCLUDED_LANGUAGES_STR = INCLUDED_LANGUAGES.join(',');
+const INCLUDED_LANGUAGES = ["en", "es", "tl", "zh-TW"];
+const INCLUDED_LANGUAGES_STR = INCLUDED_LANGUAGES.join(",");
 
 const Translate = () => {
-  const [, setCookie] = useCookies(['googtrans']);
+  const [, setCookie] = useCookies(["googtrans"]);
   const { search } = useLocation();
 
   if (whiteLabel.enableTranslation) {
@@ -18,9 +18,9 @@ const Translate = () => {
     // interpret that as an explicit ask to translate the site
     // into that target language.
     const params = new URLSearchParams(search);
-    const targetLangCode = params.get('lang');
+    const targetLangCode = params.get("lang");
     if (targetLangCode && INCLUDED_LANGUAGES.includes(targetLangCode)) {
-      setCookie('googtrans', `/en/${targetLangCode}`, { path: '/' });
+      setCookie("googtrans", `/en/${targetLangCode}`, { path: "/" });
     }
 
     return (

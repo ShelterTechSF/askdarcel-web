@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 /* eslint-disable react/no-multi-comp */
 class EditNote extends Component {

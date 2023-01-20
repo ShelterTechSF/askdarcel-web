@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from "moment";
 
 /**
  * Convert time from concatenated hours-minutes format to a Date object.
@@ -36,7 +36,7 @@ function timeToDate(hours: string) {
 export function timeToTimeInputValue(hours: string) {
   const date = timeToDate(hours);
   if (date === null) {
-    return '';
+    return "";
   }
   const hour = date.getHours();
   const strHour = hour < 10 ? `0${hour.toString()}` : hour.toString();
@@ -46,47 +46,47 @@ export function timeToTimeInputValue(hours: string) {
 }
 
 export function stringToTime(timeString: string) {
-  return parseInt(timeString.replace(':', ''), 10);
+  return parseInt(timeString.replace(":", ""), 10);
 }
 
 export function getCurrentDayTime() {
   const mmt = moment();
   const day = mmt.day();
-  const mmtMidnight = mmt.clone().startOf('day');
-  const diffMinutes = mmt.diff(mmtMidnight, 'minutes');
+  const mmtMidnight = mmt.clone().startOf("day");
+  const diffMinutes = mmt.diff(mmtMidnight, "minutes");
   // Round down to the closest 30 min block of time
   const timeRoundedDown = Math.floor(diffMinutes / 30) * 30;
   const finalTime = mmt
-    .startOf('day')
-    .add(timeRoundedDown, 'minutes')
-    .format('HH:mm');
+    .startOf("day")
+    .add(timeRoundedDown, "minutes")
+    .format("HH:mm");
 
-  let dayText = '';
+  let dayText = "";
 
   switch (day) {
     case 0:
-      dayText = 'Su';
+      dayText = "Su";
       break;
     case 1:
-      dayText = 'M';
+      dayText = "M";
       break;
     case 2:
-      dayText = 'Tu';
+      dayText = "Tu";
       break;
     case 3:
-      dayText = 'W';
+      dayText = "W";
       break;
     case 4:
-      dayText = 'Th';
+      dayText = "Th";
       break;
     case 5:
-      dayText = 'F';
+      dayText = "F";
       break;
     case 6:
-      dayText = 'Sa';
+      dayText = "Sa";
       break;
     default:
-      dayText = 'Su';
+      dayText = "Su";
   }
 
   const dayTime = `${dayText}-${finalTime}`;

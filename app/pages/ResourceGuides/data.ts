@@ -1,6 +1,6 @@
-import { last } from 'lodash';
-import EvictionGuideSpanish from '../../assets/guides/edc-guide-spanish.pdf';
-import EvictionGuideEnglish from '../../assets/guides/edc-guide.pdf';
+import { last } from "lodash";
+import EvictionGuideSpanish from "../../assets/guides/edc-guide-spanish.pdf";
+import EvictionGuideEnglish from "../../assets/guides/edc-guide.pdf";
 
 export interface ResourceGuideModel {
   name: string;
@@ -9,12 +9,12 @@ export interface ResourceGuideModel {
 }
 
 export const ResourceGuidesData: ResourceGuideModel[] = [
-  { name: 'Eviction Prevention Guide (Espanol)', path: EvictionGuideSpanish },
-  { name: 'Eviction Prevention Guide (English)', path: EvictionGuideEnglish },
+  { name: "Eviction Prevention Guide (Espanol)", path: EvictionGuideSpanish },
+  { name: "Eviction Prevention Guide (English)", path: EvictionGuideEnglish },
 ].map(({ name, path }: { name: string; path: string }) => ({
   name,
   path,
-  id: (last(path.split('/')) || '').replace('.pdf', ''),
+  id: (last(path.split("/")) || "").replace(".pdf", ""),
 }));
 
 export const ResourceGuidesLookup: { [id: string]: ResourceGuideModel } =

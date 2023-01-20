@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connectRefinementList } from 'react-instantsearch/connectors';
-import styles from './RefinementFilters.module.scss';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connectRefinementList } from "react-instantsearch/connectors";
+import styles from "./RefinementFilters.module.scss";
 
 // Todo: This component could potentially be consolidated with the the Refinement List Filter
 // component when categories/eligibilities are standardized across the homepage Service
@@ -20,8 +20,8 @@ class FacetRefinementList extends Component {
   componentDidUpdate(prevProps) {
     const { currentRefinement } = this.props;
     if (
-      currentRefinement.sort().join(',') !==
-      prevProps.currentRefinement.sort().join(',')
+      currentRefinement.sort().join(",") !==
+      prevProps.currentRefinement.sort().join(",")
     ) {
       const checks = this.setChecks();
       // setState is done in a condition so it won't create loop
@@ -89,7 +89,7 @@ class FacetRefinementList extends Component {
             <li key={key}>
               <label
                 className={`${styles.checkBox} ${
-                  !refinementHasResults ? styles.disabled : ''
+                  !refinementHasResults ? styles.disabled : ""
                 }`}
               >
                 {key}

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './Checkbox.module.scss';
+import styles from "./Checkbox.module.scss";
 
 type CheckboxProps = {
   name?: string;
@@ -24,7 +24,7 @@ export const Checkbox = ({
     onChange={onChange}
     value={value}
     checked={checked}
-    className={`${styles.inputDefaults} ${addClass || ''}`}
+    className={`${styles.inputDefaults} ${addClass || ""}`}
     id={id}
     type="checkbox"
   />

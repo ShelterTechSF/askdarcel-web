@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import * as User from '../User';
+import { expect } from "chai";
+import * as User from "../User";
 
-describe('User Model', () => {
-  it('should set the current user location', () => {
+describe("User Model", () => {
+  it("should set the current user location", () => {
     const state = User.REDUCER(undefined, {});
     expect(state.location.lat).to.exist;
     expect(state.location.lng).to.exist;

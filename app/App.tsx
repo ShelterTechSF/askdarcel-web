@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import ReactGA from 'react-ga';
-import Intercom from 'react-intercom';
-import { Helmet } from 'react-helmet-async';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import ReactGA from "react-ga";
+import Intercom from "react-intercom";
+import { Helmet } from "react-helmet-async";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 
-import { AppContext, GeoCoordinates, getLocation, whiteLabel } from './utils';
+import { AppContext, GeoCoordinates, getLocation, whiteLabel } from "./utils";
 import {
   Banner,
   HamburgerMenu,
@@ -12,30 +12,30 @@ import {
   PopUpMessage,
   PopupMessageProp,
   UserWay,
-} from './components/ui';
-import config from './config';
-import MetaImage from './assets/img/sfsg-preview.png';
+} from "./components/ui";
+import config from "./config";
+import MetaImage from "./assets/img/sfsg-preview.png";
 
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ListingDebugPage } from './pages/debug/ListingDemoPage';
-import { OrganizationListingPage } from './pages/OrganizationListingPage';
-import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
+import { HomePage } from "./pages/HomePage";
+import { AboutPage } from "./pages/AboutPage";
+import { ListingDebugPage } from "./pages/debug/ListingDemoPage";
+import { OrganizationListingPage } from "./pages/OrganizationListingPage";
+import { PrivacyPolicyPage } from "./pages/legal/PrivacyPolicy";
 import {
   RedirectToOrganizations,
   RedirectToOrganizationsEdit,
-} from './pages/LegacyRedirects';
-import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
-import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
-import { ServiceListingPage } from './pages/ServiceListingPage';
-import { TermsOfServicePage } from './pages/legal/TermsOfService';
-import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
-import { UcsfDiscoveryForm } from './pages/UcsfDiscoveryForm/UcsfDiscoveryForm';
-import OrganizationEditPage from './pages/OrganizationEditPage';
-import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
-import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
+} from "./pages/LegacyRedirects";
+import { ResourceGuides, ResourceGuide } from "./pages/ResourceGuides";
+import { SearchResultsPage } from "./pages/SearchResultsPage/SearchResultsPage";
+import { ServiceListingPage } from "./pages/ServiceListingPage";
+import { TermsOfServicePage } from "./pages/legal/TermsOfService";
+import { UcsfHomePage } from "./pages/UcsfHomePage/UcsfHomePage";
+import { UcsfDiscoveryForm } from "./pages/UcsfDiscoveryForm/UcsfDiscoveryForm";
+import OrganizationEditPage from "./pages/OrganizationEditPage";
+import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
+import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
 
-import styles from './App.module.scss';
+import styles from "./App.module.scss";
 
 const {
   homePageComponent,
@@ -46,8 +46,8 @@ const {
   title,
   userWay,
 } = whiteLabel;
-const outerContainerId = 'outer-container';
-const pageWrapId = 'page-wrap';
+const outerContainerId = "outer-container";
+const pageWrapId = "page-wrap";
 
 export const App = () => {
   const homePageDictionary = {
@@ -58,9 +58,9 @@ export const App = () => {
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({
-    message: '',
+    message: "",
     visible: false,
-    type: 'success',
+    type: "success",
   });
   const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
 
@@ -71,7 +71,7 @@ export const App = () => {
       })
       .catch((err) => {
         console.log(
-          'Could not obtain location, defaulting to San Francisco.',
+          "Could not obtain location, defaulting to San Francisco.",
           err
         ); // eslint-disable-line no-console
       });

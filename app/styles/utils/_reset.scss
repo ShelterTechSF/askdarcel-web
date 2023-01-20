@@ -97,7 +97,7 @@ video {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-size-adjust: 0.5;
-  font-family: 'Open Sans', 'San Francisco', 'Roboto', 'Arial', sans-serif;
+  font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-backface-visibility: hidden;
@@ -146,7 +146,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -190,7 +190,7 @@ a:active {
   zoom: 1;
   &:before,
   &:after {
-    content: '\0020';
+    content: "\0020";
     display: block;
     height: 0;
     overflow: hidden;
@@ -295,11 +295,11 @@ button {
   }
 
   a[href]::after {
-    content: ' (' attr(href) ')';
+    content: " (" attr(href) ")";
   }
 
   abbr[title]::after {
-    content: ' (' attr(title) ')';
+    content: " (" attr(title) ")";
   }
 
   /*
@@ -307,9 +307,9 @@ button {
     * or use the `javascript:` pseudo protocol
     */
 
-  a[href^='#']::after,
-  a[href^='javascript:']::after {
-    content: '';
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
   }
 
   pre,

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Notes } from './Notes';
-import { Service, RecurringSchedule } from '../../models';
+import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { Notes } from "./Notes";
+import { Service, RecurringSchedule } from "../../models";
 
-import ServiceVerified from '../../assets/img/ic-attributed-record.svg';
-import './ServiceDetails.scss';
+import ServiceVerified from "../../assets/img/ic-attributed-record.svg";
+import "./ServiceDetails.scss";
 
 export const ServiceDetails = ({ service }: { service: Service }) => {
   const [infoHidden, setInfoHidden] = useState(true);
@@ -110,13 +110,13 @@ const ServiceContactDetails = ({
       <div className="service--details--item--info">
         {email && (
           <p>
-            {'Email: '}
+            {"Email: "}
             <a href={`mailto:${email}`}>{email}</a>
           </p>
         )}
         {website && (
           <p>
-            {'Website: '}
+            {"Website: "}
             <a href={website}>{website}</a>
           </p>
         )}
@@ -155,7 +155,7 @@ const DetailedHours = ({
           </span>
           <span className="weekly-hours-list--item--hours">
             {interval.is24Hours()
-              ? '24 Hours'
+              ? "24 Hours"
               : `${interval.opensAt.timeString()} - ${interval.closesAt.timeString()}`}
           </span>
         </div>
@@ -174,10 +174,10 @@ export const ServiceAttribution = ({
   status: string;
 }) => {
   const benetechLink =
-    'https://medium.com/@Shelter_Tech/sheltertech-is-participating-' +
-    'in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6';
+    "https://medium.com/@Shelter_Tech/sheltertech-is-participating-" +
+    "in-the-benetech-service-net-pilot-in-the-san-francisco-bay-area-b28645d3dee6";
   const isServiceNetAttribution =
-    attribution === 'service_net' && status === 'approved';
+    attribution === "service_net" && status === "approved";
 
   return isServiceNetAttribution ? (
     <div className="attributed-service">
@@ -190,7 +190,7 @@ export const ServiceAttribution = ({
           />
         </span>
         <span className="attributed-service-text">
-          We&apos;ve updated this record thanks to a{' '}
+          We&apos;ve updated this record thanks to a{" "}
         </span>
         <a
           className="attributed-service-link"

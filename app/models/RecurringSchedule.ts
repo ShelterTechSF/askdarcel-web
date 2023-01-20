@@ -2,7 +2,7 @@
  * Data structures used for consistently representing time throughout the app.
  */
 
-import { invert, minBy, sortBy } from 'lodash';
+import { invert, minBy, sortBy } from "lodash";
 
 // WARNING: This must match Moment.js's day of week to integer mapping.
 export const DAY_TO_INT = Object.freeze({
@@ -134,14 +134,14 @@ export class RecurringTime {
    * Format the time as hh:mm AM/PM.
    */
   timeString(): string {
-    const ampm = this.hour > 11 ? 'PM' : 'AM';
+    const ampm = this.hour > 11 ? "PM" : "AM";
     let normalizedHour = this.hour;
     if (normalizedHour === 0) {
       normalizedHour = 12;
     } else if (normalizedHour > 12) {
       normalizedHour -= 12;
     }
-    const formattedMinute = this.minute.toString().padStart(2, '0');
+    const formattedMinute = this.minute.toString().padStart(2, "0");
     return `${normalizedHour}:${formattedMinute} ${ampm}`;
   }
 

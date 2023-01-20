@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import EditNotes from './EditNotes';
-import EditSchedule from './EditSchedule';
-import MultiSelectDropdown from './MultiSelectDropdown';
-import FormTextArea from './FormTextArea';
-import { AddressListItem } from './EditAddress';
-import EditPatientHandout from './EditPatientHandout';
-import { EditServiceChildCollection } from './EditServiceChildCollection';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import EditNotes from "./EditNotes";
+import EditSchedule from "./EditSchedule";
+import MultiSelectDropdown from "./MultiSelectDropdown";
+import FormTextArea from "./FormTextArea";
+import { AddressListItem } from "./EditAddress";
+import EditPatientHandout from "./EditPatientHandout";
+import { EditServiceChildCollection } from "./EditServiceChildCollection";
 
-import s from './ProvidedService.module.scss';
+import s from "./ProvidedService.module.scss";
 
 /** Build UI state schedule from API schedule.
  *
@@ -82,7 +82,7 @@ const InputField = ({ type, label, placeholder, value, setValue }) => (
     <input
       type={type}
       placeholder={placeholder}
-      value={value || ''}
+      value={value || ""}
       onChange={(evt) => setValue(evt.target.value)}
     />
   </>
@@ -97,8 +97,8 @@ InputField.propTypes = {
 };
 
 InputField.defaultProps = {
-  type: 'text',
-  value: '',
+  type: "text",
+  value: "",
 };
 
 const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
@@ -115,14 +115,14 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
     // but have not been saved to the DB yet, since they do not have IDs and the
     // current create address API does not return the ID of the address, which
     // prevents other logic on the Edit page from functioning correctly.
-    if (!('id' in resourceAddresses[handle])) {
+    if (!("id" in resourceAddresses[handle])) {
       return [];
     }
     return [{ value: handle, label: address.name || address.address_1 }];
   });
   const handleSelectChange = (e) => {
     const selectedValue = parseInt(e.target.value, 10);
-    handleChange('addressHandles', [...service.addressHandles, selectedValue]);
+    handleChange("addressHandles", [...service.addressHandles, selectedValue]);
   };
   return (
     <li className="edit--section--list--item">
@@ -151,7 +151,7 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
               address={address}
               onRemove={() =>
                 handleChange(
-                  'addressHandles',
+                  "addressHandles",
                   service.addressHandles.filter((a) => a !== handle)
                 )
               }
@@ -165,27 +165,27 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
 
 const TEXT_AREAS = [
   {
-    label: 'Service Description',
+    label: "Service Description",
     placeholder:
       "Describe what you'll receive from this service in a few sentences.",
-    field: 'long_description',
+    field: "long_description",
   },
   {
-    label: 'Application Process',
-    placeholder: 'How do you apply for this service?',
-    field: 'application_process',
+    label: "Application Process",
+    placeholder: "How do you apply for this service?",
+    field: "application_process",
   },
   {
-    label: 'Required Documents',
-    placeholder: 'What documents do you need to bring to apply?',
-    field: 'required_documents',
+    label: "Required Documents",
+    placeholder: "What documents do you need to bring to apply?",
+    field: "required_documents",
   },
   {
     // TODO: Make this a multiselectdropdown, create a new table in the DB for languages,
     //       and seed it with languages
-    label: 'Interpretation Services',
-    placeholder: 'What interpretation services do they offer?',
-    field: 'interpretation_services',
+    label: "Interpretation Services",
+    placeholder: "What interpretation services do they offer?",
+    field: "interpretation_services",
   },
 ];
 
@@ -223,19 +223,19 @@ const ProvidedService = ({
     } else {
       tempScheduleDays = buildScheduleDays(service.schedule);
     }
-    handleChange('shouldInheritScheduleFromParent', shouldInherit);
-    handleChange('scheduleObj', tempScheduleDays);
+    handleChange("shouldInheritScheduleFromParent", shouldInherit);
+    handleChange("scheduleObj", tempScheduleDays);
   };
 
   return (
     <li id={`${service.id}`} className="edit--service edit--section">
       <header className="edit--section--header">
-        <h4>{`Service ${index + 1}: ${service.name || 'New Service'}`}</h4>
+        <h4>{`Service ${index + 1}: ${service.name || "New Service"}`}</h4>
         <button
           className="remove-item"
           type="button"
           id="service--deactivation"
-          onClick={() => handleDeactivation('service', service.id)}
+          onClick={() => handleDeactivation("service", service.id)}
         >
           Remove Service
         </button>
@@ -247,7 +247,7 @@ const ProvidedService = ({
             label="Name of the Service"
             placeholder="What is this service called?"
             value={service.name}
-            setValue={(value) => handleChange('name', value)}
+            setValue={(value) => handleChange("name", value)}
           />
         </li>
 
@@ -256,7 +256,7 @@ const ProvidedService = ({
             label="Nickname"
             placeholder="What it's known as in the community"
             value={service.alternate_name}
-            setValue={(value) => handleChange('alternate_name', value)}
+            setValue={(value) => handleChange("alternate_name", value)}
           />
         </li>
 
@@ -272,7 +272,7 @@ const ProvidedService = ({
             label="Service E-Mail"
             placeholder="Email address for this service"
             value={service.email}
-            setValue={(value) => handleChange('email', value)}
+            setValue={(value) => handleChange("email", value)}
           />
         </li>
 
@@ -281,7 +281,7 @@ const ProvidedService = ({
             <FormTextArea
               label={textArea.label}
               placeholder={textArea.placeholder}
-              value={service[textArea.field] || ''}
+              value={service[textArea.field] || ""}
               setValue={(value) => handleChange(textArea.field, value)}
             />
           </li>
@@ -303,9 +303,9 @@ const ProvidedService = ({
           <FormTextArea
             label="Clinician Actions (Include any COVID Actions)"
             placeholder="Add a list of actions to be taken by clinician and/or client prior to providing service referral (markdown is supported)"
-            value={service.instructions?.[0]?.instruction ?? ''}
+            value={service.instructions?.[0]?.instruction ?? ""}
             setValue={(value) =>
-              handleChange('instructions', [
+              handleChange("instructions", [
                 {
                   id: service.instructions?.[0]?.id ?? -2,
                   service_id: service.id,
@@ -319,7 +319,7 @@ const ProvidedService = ({
         <li className="edit--section--list--item">
           <MultiSelectDropdown
             selectedItems={service.eligibilities}
-            handleSelectChange={(value) => handleChange('eligibilities', value)}
+            handleSelectChange={(value) => handleChange("eligibilities", value)}
             label="Eligibility"
             optionsRoute="eligibilities"
           />
@@ -330,7 +330,7 @@ const ProvidedService = ({
             label="Cost"
             placeholder="How much does this service cost?"
             value={service.fee}
-            setValue={(value) => handleChange('fee', value)}
+            setValue={(value) => handleChange("fee", value)}
           />
         </li>
 
@@ -339,7 +339,7 @@ const ProvidedService = ({
             label="Wait Time"
             placeholder="Is there a waiting list or wait time?"
             value={service.wait_time}
-            setValue={(value) => handleChange('wait_time', value)}
+            setValue={(value) => handleChange("wait_time", value)}
           />
         </li>
 
@@ -348,7 +348,7 @@ const ProvidedService = ({
             label="Service&#39;s Website"
             placeholder="http://"
             value={service.url}
-            setValue={(value) => handleChange('url', value)}
+            setValue={(value) => handleChange("url", value)}
           />
         </li>
 
@@ -358,18 +358,18 @@ const ProvidedService = ({
           setShouldInheritFromParent={setShouldInheritScheduleFromParent}
           scheduleId={service.schedule.id}
           scheduleDaysByDay={service.scheduleObj}
-          handleScheduleChange={(value) => handleChange('scheduleObj', value)}
+          handleScheduleChange={(value) => handleChange("scheduleObj", value)}
         />
 
         <EditNotes
           notes={service.notes}
-          handleNotesChange={(value) => handleChange('notesObj', value)}
+          handleNotesChange={(value) => handleChange("notesObj", value)}
         />
 
         <li className="edit--section--list--item">
           <MultiSelectDropdown
             selectedItems={service.categories}
-            handleSelectChange={(value) => handleChange('categories', value)}
+            handleSelectChange={(value) => handleChange("categories", value)}
             label="Categories"
             optionsRoute="categories"
           />

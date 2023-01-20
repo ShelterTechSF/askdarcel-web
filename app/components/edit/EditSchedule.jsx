@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import EditScheduleDay from './EditScheduleDay';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import EditScheduleDay from "./EditScheduleDay";
 
-import './EditSchedule.scss';
+import "./EditSchedule.scss";
 
 class EditSchedule extends Component {
   setScheduleDaysForDay = (day, scheduleDays) => {

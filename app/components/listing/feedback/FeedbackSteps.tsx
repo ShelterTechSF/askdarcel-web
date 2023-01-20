@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { icon } from 'assets';
-import type { SubmittedState, StepState, TagType, VoteType } from './constants';
-import styles from './FeedbackSteps.module.scss';
+import { icon } from "assets";
+import type { SubmittedState, StepState, TagType, VoteType } from "./constants";
+import styles from "./FeedbackSteps.module.scss";
 
 export const VoteButtons = ({
   vote,
@@ -16,15 +16,15 @@ export const VoteButtons = ({
       How was your experience on this site?
     </div>
     <div className={styles.voteIcons}>
-      <div onClick={() => onVoteChange('upvote')} role="button" tabIndex={-1}>
+      <div onClick={() => onVoteChange("upvote")} role="button" tabIndex={-1}>
         <img
-          src={icon(`upvote${vote === 'upvote' ? '-active' : ''}`)}
+          src={icon(`upvote${vote === "upvote" ? "-active" : ""}`)}
           alt="upvote"
         />
       </div>
-      <div onClick={() => onVoteChange('downvote')} role="button" tabIndex={-2}>
+      <div onClick={() => onVoteChange("downvote")} role="button" tabIndex={-2}>
         <img
-          src={icon(`downvote${vote === 'downvote' ? '-active' : ''}`)}
+          src={icon(`downvote${vote === "downvote" ? "-active" : ""}`)}
           alt="downvote"
         />
       </div>
@@ -43,7 +43,7 @@ export const FeedbackTags = ({
     <div className={styles.stepsPrompt}>What can be improved?</div>
     <div className={styles.feedbackTagsContainer}>
       {tagOptions.map(({ tag, selected }, pos) => {
-        const selectedStyle = selected ? styles.selectedTag : '';
+        const selectedStyle = selected ? styles.selectedTag : "";
         return (
           <div
             key={tag}
@@ -76,7 +76,7 @@ export const Review = ({
     <textarea
       className={styles.feedbackTextarea}
       placeholder={`Type your feedback here ${
-        !isReviewRequired ? '(optional)' : ''
+        !isReviewRequired ? "(optional)" : ""
       }`}
       value={reviewValue}
       onChange={onReviewChange}
@@ -116,26 +116,26 @@ export const NavigationButtons = ({
   isSubmitted: SubmittedState;
 }) => (
   <div className={styles.navButtonsContainer}>
-    {step !== 'start' && (
+    {step !== "start" && (
       <button type="button" className={styles.backButton} onClick={onPrevStep}>
         Back
       </button>
     )}
-    {step === 'review' ? (
+    {step === "review" ? (
       <button
         type="button"
         className={styles.navButtons}
-        disabled={isReviewRequired || isSubmitted === 'submitting'}
+        disabled={isReviewRequired || isSubmitted === "submitting"}
         onClick={onSubmit}
       >
-        {isSubmitted === 'submitting' ? 'Submitting...' : 'Submit'}
+        {isSubmitted === "submitting" ? "Submitting..." : "Submit"}
       </button>
     ) : (
       <button
         type="button"
         className={styles.navButtons}
         onClick={onNextStep}
-        disabled={vote === 'neither'}
+        disabled={vote === "neither"}
       >
         Next
       </button>

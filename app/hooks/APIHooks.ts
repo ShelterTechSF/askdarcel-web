@@ -1,9 +1,9 @@
 // React Hooks for interacting with the AskDarcel API service.
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import * as dataService from '../utils/DataService';
-import type { Category, Eligibility } from '../models/Meta';
+import * as dataService from "../utils/DataService";
+import type { Category, Eligibility } from "../models/Meta";
 
 // TODO: Handle failure?
 

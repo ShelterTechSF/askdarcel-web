@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { stringToTime, timeToTimeInputValue } from '../../utils/time';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { stringToTime, timeToTimeInputValue } from "../../utils/time";
 
 const TimeInputRow = ({
   dayOfWeekAbbrev,
@@ -26,7 +26,7 @@ const TimeInputRow = ({
 
   const changeOpenOrCloseTime = (field, value) => {
     const parsedTime = stringToTime(value);
-    const changedField = field === 'opens_at' ? 'openChanged' : 'closeChanged';
+    const changedField = field === "opens_at" ? "openChanged" : "closeChanged";
     const newScheduleDay = {
       ...scheduleDay,
       [field]: parsedTime,
@@ -60,12 +60,12 @@ const TimeInputRow = ({
           <input
             type="time"
             value={timeToTimeInputValue(scheduleDay.opens_at)}
-            onChange={(e) => changeOpenOrCloseTime('opens_at', e.target.value)}
+            onChange={(e) => changeOpenOrCloseTime("opens_at", e.target.value)}
           />
           <input
             type="time"
             value={timeToTimeInputValue(scheduleDay.closes_at)}
-            onChange={(e) => changeOpenOrCloseTime('closes_at', e.target.value)}
+            onChange={(e) => changeOpenOrCloseTime("closes_at", e.target.value)}
           />
           {index > 0 && (
             <button
@@ -83,13 +83,13 @@ const TimeInputRow = ({
 };
 
 const DAYS_OF_WEEK = Object.freeze({
-  Monday: 'M',
-  Tuesday: 'T',
-  Wednesday: 'W',
-  Thursday: 'Th',
-  Friday: 'F',
-  Saturday: 'S',
-  Sunday: 'Su',
+  Monday: "M",
+  Tuesday: "T",
+  Wednesday: "W",
+  Thursday: "Th",
+  Friday: "F",
+  Saturday: "S",
+  Sunday: "Su",
 });
 
 class EditScheduleDay extends Component {

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import ResourceCard from '../ResourceCard/ResourceCard';
-import type { Resource } from '../ResourceCard/ResourceCard';
-import styles from './ResourceList.module.scss';
+import ResourceCard from "../ResourceCard/ResourceCard";
+import type { Resource } from "../ResourceCard/ResourceCard";
+import styles from "./ResourceList.module.scss";
 
 const ResourceList = ({ resources }: { resources: Resource[] }) => (
   <ul className={styles.list}>

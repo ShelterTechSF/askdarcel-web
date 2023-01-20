@@ -1,4 +1,4 @@
-@import 'app/styles/utils/_colors.scss';
+@import "app/styles/utils/_colors.scss";
 
 $row-height: 60px;
 
@@ -17,7 +17,7 @@ $row-height: 60px;
 }
 
 .textInput {
-  background: url('../../../../assets/img/ic-search-blue.svg') center left 15px
+  background: url("../../../../assets/img/ic-search-blue.svg") center left 15px
     no-repeat;
   border-radius: 3px;
   border: 1px solid #e0e0e0;

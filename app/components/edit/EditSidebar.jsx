@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
-import styles from './EditSidebar.module.scss';
+import styles from "./EditSidebar.module.scss";
 
 const SaveButton = ({ children, disabled, onClick }) => (
   <button
@@ -35,8 +35,8 @@ const EditSidebar = ({
       type="button"
       className={`${styles.actionButton} ${styles.deactivate}`}
       key="deactive"
-      disabled={submitting || resource.status === 'inactive'}
-      onClick={() => handleDeactivation('resource', resource.id)}
+      disabled={submitting || resource.status === "inactive"}
+      onClick={() => handleDeactivation("resource", resource.id)}
     >
       Deactivate
     </button>,
@@ -105,11 +105,11 @@ const EditSidebar = ({
             <li key={key} className={styles.listItem}>
               <a
                 href={`#${key}`}
-                style={{ display: 'block' }}
+                style={{ display: "block" }}
                 onClick={(e) => {
                   e.preventDefault();
                   const topOfElement = document.getElementById(key).offsetTop;
-                  window.scroll({ top: topOfElement, behavior: 'smooth' });
+                  window.scroll({ top: topOfElement, behavior: "smooth" });
                 }}
               >
                 {service.name}

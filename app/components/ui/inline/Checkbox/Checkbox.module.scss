@@ -1,4 +1,4 @@
-@import 'app/styles/utils/_helpers.scss';
+@import "app/styles/utils/_helpers.scss";
 
 // The styles below were largely borrowed from https://moderncss.dev/pure-css-custom-checkbox-style
 
@@ -20,7 +20,7 @@
 
   &::after,
   &::before {
-    content: '';
+    content: "";
     transform: scale(0);
   }
 

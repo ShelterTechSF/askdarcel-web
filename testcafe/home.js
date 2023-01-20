@@ -1,6 +1,6 @@
-import config from './config';
-import FindPage from './pages/FindPage';
-import SearchPage from './pages/SearchPage';
+import config from "./config";
+import FindPage from "./pages/FindPage";
+import SearchPage from "./pages/SearchPage";
 // import ResourcePage from './pages/ResourcePage';
 
 const findPage = new FindPage();
@@ -20,10 +20,10 @@ fixture`Home Page`.page`${config.baseUrl}`;
 //     ;
 // });
 
-test('Basic search test', async (t) => {
+test("Basic search test", async (t) => {
   await t
-    .typeText(findPage.searchBox, 'Food')
-    .pressKey('enter')
+    .typeText(findPage.searchBox, "Food")
+    .pressKey("enter")
     .expect(searchPage.pagination.exists)
     .ok();
 });

@@ -1,17 +1,17 @@
-@import '~styles/utils/_helpers.scss';
+@import "~styles/utils/_helpers.scss";
 
 .searchResultsAndMapContainer {
   display: grid;
   grid-template-columns: 6fr 4fr;
-  grid-template-areas: 'results map';
+  grid-template-areas: "results map";
   grid-column-gap: 15px;
 
   @media screen and (max-width: $break-tablet-s) {
     grid-template-columns: auto;
     grid-template-rows: auto auto;
     grid-template-areas:
-      'map'
-      'results';
+      "map"
+      "results";
   }
 }
 
@@ -192,7 +192,7 @@
       // Our _reset.scss file displays the whole href of a link in the ::after selector.
       // This is confusing for our service and resource links which are just routes
       // to other parts of our site, etc. Thus, overriding that here.
-      content: '' !important;
+      content: "" !important;
     }
   }
 

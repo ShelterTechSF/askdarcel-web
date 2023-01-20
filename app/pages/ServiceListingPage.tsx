@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Helmet } from 'react-helmet-async';
-import { useParams, Redirect, useLocation } from 'react-router-dom';
-import qs from 'qs';
+import React, { useState, useEffect, useMemo } from "react";
+import ReactMarkdown from "react-markdown";
+import { Helmet } from "react-helmet-async";
+import { useParams, Redirect, useLocation } from "react-router-dom";
+import qs from "qs";
 import {
   ActionBarMobile,
   ActionSidebar,
@@ -14,9 +14,9 @@ import {
   ServiceCard,
   TableOfContactInfo,
   TableOfOpeningTimes,
-} from 'components/listing';
-import { Datatable, Loader } from 'components/ui';
-import whiteLabel from '../utils/whitelabel';
+} from "components/listing";
+import { Datatable, Loader } from "components/ui";
+import whiteLabel from "../utils/whitelabel";
 import {
   fetchService,
   generateServiceDetails,
@@ -25,7 +25,7 @@ import {
   Organization,
   OrganizationAction,
   Service,
-} from '../models';
+} from "../models";
 
 const { title: whiteLabelTitle } = whiteLabel;
 
@@ -50,7 +50,7 @@ export const ServiceListingPage = () => {
   if (!service) {
     return <Loader />;
   }
-  if (service.status === 'inactive' && !visitDeactivated) {
+  if (service.status === "inactive" && !visitDeactivated) {
     return <Redirect to="/" />;
   }
 
@@ -58,17 +58,17 @@ export const ServiceListingPage = () => {
   const locations = getServiceLocations(service, resource, recurringSchedule);
   const allActions = getOrganizationActions(resource);
   const sidebarActions = allActions.filter((a) =>
-    ['print', 'directions', 'feedback'].includes(a.icon)
+    ["print", "directions", "feedback"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
-    ['phone', 'directions', 'feedback'].includes(a.icon)
+    ["phone", "directions", "feedback"].includes(a.icon)
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
-      case 'feedback':
+      case "feedback":
         setFeedbackModalOpen(true);
         break;
-      case 'print':
+      case "print":
         window.print();
         break;
       default:
@@ -230,7 +230,7 @@ export const ServiceProgramDetails = ({
   <span>
     A service
     {service.program ? ` in the ${service.program.name} program` : null}
-    {' offered by '}
+    {" offered by "}
     <ListingTitleLink type="org" listing={organization} />
   </span>
 );

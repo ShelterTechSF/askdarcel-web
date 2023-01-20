@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import qs from 'qs';
-import ReactGA from 'react-ga';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import qs from "qs";
+import ReactGA from "react-ga";
 
-import { Button } from 'components/ui/inline/Button/Button';
-import { Section } from 'components/ucsf/Section/Section';
-import { Layout } from 'components/ucsf/Layout/Layout';
-import { SubcategoryRefinements } from 'components/ucsf/RefinementLists/SubcategoryRefinements';
-import { EligibilityRefinements } from 'components/ucsf/RefinementLists/EligibilityRefinements';
-import { eligibilityMap } from 'components/ucsf/RefinementLists/ucsfEligibilitiesMap';
+import { Button } from "components/ui/inline/Button/Button";
+import { Section } from "components/ucsf/Section/Section";
+import { Layout } from "components/ucsf/Layout/Layout";
+import { SubcategoryRefinements } from "components/ucsf/RefinementLists/SubcategoryRefinements";
+import { EligibilityRefinements } from "components/ucsf/RefinementLists/EligibilityRefinements";
+import { eligibilityMap } from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
 
-import { CATEGORIES } from '../ServiceDiscoveryForm/constants';
-import { useSubcategoriesForCategory } from '../../hooks/APIHooks';
+import { CATEGORIES } from "../ServiceDiscoveryForm/constants";
+import { useSubcategoriesForCategory } from "../../hooks/APIHooks";
 
-import styles from './UcsfDiscoveryForm.module.scss';
+import styles from "./UcsfDiscoveryForm.module.scss";
 
 interface SubcategoryRefinement {
   name: string;
@@ -53,7 +53,7 @@ const Page = () => {
     useSubcategoriesForCategory(category?.id ?? null) || [];
 
   if (!category) {
-    history.push('/');
+    history.push("/");
     return null;
   }
 
@@ -63,7 +63,7 @@ const Page = () => {
   const goToNextStep = (slug: string) => {
     // Take the user to the results page or the subsequent refinement step, depending
     // on where the user is in the pathway
-    const nextStepIsResults = steps[currentStep + 1] === 'results';
+    const nextStepIsResults = steps[currentStep + 1] === "results";
     if (nextStepIsResults) {
       const flatEligibilities = resourceEligibilityGroups.flatMap(
         (group) => group.eligibilities
@@ -95,14 +95,14 @@ const Page = () => {
       };
 
       const categoriesRefinements =
-        searchState.refinementList.categories.join('; ') || 'NONE';
+        searchState.refinementList.categories.join("; ") || "NONE";
       const eligibilitiesRefinements =
-        searchState.refinementList.eligibilities.join('; ') || 'NONE';
+        searchState.refinementList.eligibilities.join("; ") || "NONE";
       const search = qs.stringify(searchState, { encodeValuesOnly: true });
 
       ReactGA.event({
-        category: 'UCSF Resource Inquiry',
-        action: 'Refined UCSF Resource Inquiry',
+        category: "UCSF Resource Inquiry",
+        action: "Refined UCSF Resource Inquiry",
         label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
       });
 
@@ -115,33 +115,33 @@ const Page = () => {
 
   const backToResourceSelection = () => {
     if (currentStep === 0) {
-      history.push('/');
+      history.push("/");
     } else {
       setCurrentStep(currentStep - 1);
     }
   };
 
   let stepSubtitle = `Step ${currentStep + 2}: `;
-  if (stepName === 'eligibilities') {
-    stepSubtitle += 'Can you tell us more about your client and their needs?';
+  if (stepName === "eligibilities") {
+    stepSubtitle += "Can you tell us more about your client and their needs?";
   } else {
     stepSubtitle +=
-      'Can you tell us more about the services that your client is looking for?';
+      "Can you tell us more about the services that your client is looking for?";
   }
 
   const nextStepName = steps[currentStep + 1];
-  let nextButtonText = 'Next: ';
-  if (nextStepName === 'subcategories') {
-    nextButtonText += 'Service Type';
-  } else if (nextStepName === 'results') {
-    nextButtonText += 'Service List';
+  let nextButtonText = "Next: ";
+  if (nextStepName === "subcategories") {
+    nextButtonText += "Service Type";
+  } else if (nextStepName === "results") {
+    nextButtonText += "Service List";
   }
 
   return (
     <div className={styles.discoveryFormPage}>
       <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
       <div className={styles.eligibilitiesContainer}>
-        {stepName === 'eligibilities' ? (
+        {stepName === "eligibilities" ? (
           <EligibilityRefinements
             resourceEligibilityGroups={resourceEligibilityGroups}
             selectedEligibilities={selectedEligibilities}

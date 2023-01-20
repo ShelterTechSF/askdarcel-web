@@ -1,5 +1,5 @@
-import React from 'react';
-import { RecurringSchedule } from '../../models/RecurringSchedule';
+import React from "react";
+import { RecurringSchedule } from "../../models/RecurringSchedule";
 
 // TODO order with current day first
 // TODO Show relativeOpeningTime for current day

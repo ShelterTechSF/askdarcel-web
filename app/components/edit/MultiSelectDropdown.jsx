@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Select from 'react-select';
-import * as dataService from '../../utils/DataService';
-import 'react-select/dist/react-select.css';
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import Select from "react-select";
+import * as dataService from "../../utils/DataService";
+import "react-select/dist/react-select.css";
 
 function dataToSelectValue(data) {
   return {

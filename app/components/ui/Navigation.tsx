@@ -1,10 +1,10 @@
-import React, { FormEvent, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import cn from 'classnames';
-import qs from 'qs';
-import Translate from './Translate';
-import whiteLabel from '../../utils/whitelabel';
-import styles from './Navigation.module.scss';
+import React, { FormEvent, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import cn from "classnames";
+import qs from "qs";
+import Translate from "./Translate";
+import whiteLabel from "../../utils/whitelabel";
+import styles from "./Navigation.module.scss";
 
 const {
   appImages: { logoSmall },
@@ -23,7 +23,7 @@ export const Navigation = ({
   showSearch: boolean;
   toggleHamburgerMenu: () => void;
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [showSecondarySearch, setShowSecondarySearch] = useState(false);
   const searchProps = { query, setQuery };
 
@@ -139,8 +139,8 @@ const SiteSearch = ({
       className={cn([
         styles.navSearch,
         extraClasses,
-        'search-container',
-        'form-row',
+        "search-container",
+        "form-row",
       ])}
       role="search"
     >

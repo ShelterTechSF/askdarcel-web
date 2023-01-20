@@ -1,10 +1,10 @@
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
-import type { VoteType } from '../components/listing/feedback/constants';
+import type { VoteType } from "../components/listing/feedback/constants";
 
 function setAuthHeaders(resp: Response): void {
   const { headers } = resp;
-  if (headers.get('access-token') && headers.get('client')) {
+  if (headers.get("access-token") && headers.get("client")) {
     // console.log('we would set new auth headers except for an API bug giving us invalid tokens',
     //   headers.get('access-token'), headers.get('client')
     // )
@@ -24,15 +24,15 @@ export function post(
   headers?: HeadersInit
 ): Promise<Response> {
   let queryHeaders = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    Accept: "application/json",
+    "Content-Type": "application/json",
   };
   if (headers) {
     queryHeaders = _.assignIn(queryHeaders, headers);
   }
   return fetch(url, {
-    method: 'POST',
-    mode: 'cors',
+    method: "POST",
+    mode: "cors",
     headers: queryHeaders,
     body: JSON.stringify(body),
   }).then((resp) => {
@@ -49,16 +49,16 @@ export function get(
   headers?: HeadersInit
 ): Promise<any> {
   let queryHeaders = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
   if (headers) {
     queryHeaders = _.assignIn(queryHeaders, headers);
   }
   return fetch(url, {
-    method: 'GET',
-    mode: 'cors',
+    method: "GET",
+    mode: "cors",
     headers: queryHeaders,
-    credentials: 'include',
+    credentials: "include",
   }).then((resp) => {
     if (!resp.ok) {
       throw resp;
@@ -74,15 +74,15 @@ export function put(
   headers: HeadersInit
 ): Promise<Response> {
   let queryHeaders = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    Accept: "application/json",
+    "Content-Type": "application/json",
   };
   if (headers) {
     queryHeaders = _.assignIn(queryHeaders, headers);
   }
   return fetch(url, {
-    method: 'PUT',
-    mode: 'cors',
+    method: "PUT",
+    mode: "cors",
     headers: queryHeaders,
     body: JSON.stringify(body),
   }).then((resp) => {
@@ -99,14 +99,14 @@ export function APIDelete(
   headers: HeadersInit
 ): Promise<void> {
   let queryHeaders = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
   if (headers) {
     queryHeaders = _.assignIn(queryHeaders, headers);
   }
   return fetch(url, {
-    method: 'DELETE',
-    mode: 'cors',
+    method: "DELETE",
+    mode: "cors",
     headers: queryHeaders,
   }).then((resp) => {
     if (!resp.ok) {
@@ -123,11 +123,11 @@ interface FeedbackBody {
 }
 
 export const addFeedback = (
-  source: 'resources' | 'services',
+  source: "resources" | "services",
   sourceId: number,
   body: FeedbackBody
 ): Promise<Response> =>
   post(`/api/${source}/${sourceId}/feedbacks`, body).then((res) => res.json());
 
 export const getResourceCount = (): Promise<number> =>
-  get('/api/resources/count');
+  get("/api/resources/count");
