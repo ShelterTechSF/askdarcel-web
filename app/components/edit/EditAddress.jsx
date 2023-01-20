@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import ReactModal from 'react-modal';
-import PropTypes from 'prop-types';
-import { RiDeleteBin5Line, RiEditBoxLine, RiArrowLeftLine } from 'react-icons/ri';
+import React, { useState } from "react";
+import ReactModal from "react-modal";
+import PropTypes from "prop-types";
+import {
+  RiDeleteBin5Line,
+  RiEditBoxLine,
+  RiArrowLeftLine,
+} from "react-icons/ri";
 
-import s from './EditAddress.module.scss';
+import s from "./EditAddress.module.scss";
 
 // Subcomponents
 
@@ -14,13 +18,11 @@ import s from './EditAddress.module.scss';
  * "Cancel" button. Therefore, we have chosen to implement the form inputs as
  * uncontrolled components.
  */
-const EditAddressModal = ({
-  isOpen, onRequestClose, defaultData, onSave,
-}) => {
+const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
   const isEdit = !!defaultData.id;
-  const title = isEdit ? 'Edit Address' : 'Add New Address';
-  const submitButtonText = isEdit ? 'Save Address' : 'Add New Address';
-  const handleSubmit = e => {
+  const title = isEdit ? "Edit Address" : "Add New Address";
+  const submitButtonText = isEdit ? "Save Address" : "Add New Address";
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newData = Object.fromEntries(formData.entries());
@@ -108,9 +110,7 @@ const EditAddressModal = ({
             type="button"
             onClick={onRequestClose}
           >
-            <RiArrowLeftLine />
-            {' '}
-            Cancel
+            <RiArrowLeftLine /> Cancel
           </button>
           <input
             className={s.addButton}
@@ -129,21 +129,35 @@ EditAddressModal.propTypes = {
 
 /** Format address as a single line. */
 const compactAddressDisplay = ({
-  address_1, address_2, address_3, address_4, city, state_province, postal_code,
+  address_1,
+  address_2,
+  address_3,
+  address_4,
+  city,
+  state_province,
+  postal_code,
 }) => {
   // No comma between state and postal code
   const state_postal = `${state_province} ${postal_code}`;
-  const lines = [address_1, address_2, address_3, address_4, city, state_postal];
-  return lines.filter(x => x).join(', ');
+  const lines = [
+    address_1,
+    address_2,
+    address_3,
+    address_4,
+    city,
+    state_postal,
+  ];
+  return lines.filter((x) => x).join(", ");
 };
 
 export const AddressListItem = ({
-  displayIndex, address, onEdit, onRemove,
+  displayIndex,
+  address,
+  onEdit,
+  onRemove,
 }) => (
   <div className={s.listItemContainer}>
-    <div className={s.listItemIndex}>
-      {`${displayIndex}.`}
-    </div>
+    <div className={s.listItemIndex}>{`${displayIndex}.`}</div>
     <div className={s.listItemName}>{address.name}</div>
     <div className={s.listItemAddress}>{compactAddressDisplay(address)}</div>
     <div className={s.listItemEdit}>
@@ -169,26 +183,26 @@ export const AddressListItem = ({
 // type ModalState = { type: "closed" } | { type: "add" } | { type: "edit"; editingIndex: number };
 
 const EditAddresses = ({ addresses, setAddresses }) => {
-  const [modalState, setModalState] = useState({ type: 'closed' });
+  const [modalState, setModalState] = useState({ type: "closed" });
 
-  const closeModal = () => setModalState({ type: 'closed' });
+  const closeModal = () => setModalState({ type: "closed" });
 
-  const modalIsOpen = modalState.type !== 'closed';
+  const modalIsOpen = modalState.type !== "closed";
   let modalDefaultData;
   let modalOnSave;
   switch (modalState.type) {
-    case 'closed':
+    case "closed":
       modalDefaultData = {};
       modalOnSave = () => {};
       break;
-    case 'add': {
+    case "add": {
       modalDefaultData = {};
-      modalOnSave = newData => setAddresses([...addresses, newData]);
+      modalOnSave = (newData) => setAddresses([...addresses, newData]);
       break;
     }
-    case 'edit': {
+    case "edit": {
       modalDefaultData = addresses[modalState.editingIndex];
-      modalOnSave = newData => {
+      modalOnSave = (newData) => {
         const addressesCopy = addresses.slice();
         addressesCopy[modalState.editingIndex] = { ...newData, dirty: true };
         setAddresses(addressesCopy);
@@ -199,7 +213,7 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       throw new Error(`Unexpected modal state: ${modalState}`);
   }
 
-  const removeAddress = index => {
+  const removeAddress = (index) => {
     const address = addresses[index];
     const newAddresses = addresses.slice();
     if (address.id) {
@@ -232,7 +246,9 @@ const EditAddresses = ({ addresses, setAddresses }) => {
               key={address.id || JSON.stringify(address)}
               displayIndex={displayIndexMinusOne + 1}
               address={address}
-              onEdit={() => setModalState({ type: 'edit', editingIndex: arrayIndex })}
+              onEdit={() =>
+                setModalState({ type: "edit", editingIndex: arrayIndex })
+              }
               onRemove={() => removeAddress(arrayIndex)}
             />
           ))}
@@ -241,7 +257,7 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       <button
         className={s.newAddressButton}
         type="button"
-        onClick={() => setModalState({ type: 'add' })}
+        onClick={() => setModalState({ type: "add" })}
       >
         Add Location
       </button>

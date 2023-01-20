@@ -1,4 +1,4 @@
-@import '../../styles/utils/_helpers.scss';
+@import "../../styles/utils/_helpers.scss";
 
 .overlay {
   position: fixed;
@@ -7,7 +7,7 @@
   top: 70px;
   background: rgba(0, 0, 0, 0.2);
   overflow: auto; /* Needed to allow the modal to scroll, rather than the page. */
-  @media screen and (max-width: 900px ){
+  @media screen and (max-width: 900px) {
     top: 50px;
   }
 }
@@ -16,14 +16,14 @@
   position: relative;
   width: 500px;
   height: 660px;
-  background: #FFFFFF;
+  background: #ffffff;
   margin: 35px auto;
   padding: 24px 40px;
   box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   box-sizing: border-box;
   border-radius: 8px;
 
-  @media screen and (max-width: 900px ) {
+  @media screen and (max-width: 900px) {
     width: 95%;
     height: 95%;
     font-size: 14px;

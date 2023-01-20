@@ -1,44 +1,51 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // CALCULATE EMS
 
-@function calc-em($target-px, $context:$font-size) {
-    // Todo: All instances of this function should eventually be removed as it is misleading.
-    // It returns a rem value rather than an em value. Thus the $context value is spurious --
-    // the outputted value is relative to the HTML's (Root Element) font-size rather than $context
-    @return calc(($target-px / $context) * 1rem);
+@function calc-em($target-px, $context: $font-size) {
+  // Todo: All instances of this function should eventually be removed as it is misleading.
+  // It returns a rem value rather than an em value. Thus the $context value is spurious --
+  // the outputted value is relative to the HTML's (Root Element) font-size rather than $context
+  @return calc(($target-px / $context) * 1rem);
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // MEDIA QUERIES
 
 @mixin r_max($width) {
-    @media screen and (max-width:calc-em($width,16px)) { @content; }
+  @media screen and (max-width: calc-em($width,16px)) {
+    @content;
+  }
 }
 @mixin r_min($width) {
-    @media screen and (min-width:calc-em($width,16px)) { @content; }
+  @media screen and (min-width: calc-em($width,16px)) {
+    @content;
+  }
 }
 
 @mixin r_h_max($height) {
-    @media screen and (max-height:calc-em($height,16px)) { @content; }
+  @media screen and (max-height: calc-em($height,16px)) {
+    @content;
+  }
 }
 @mixin r_h_min($height) {
-    @media screen and (min-height:calc-em($height,16px)) { @content; }
+  @media screen and (min-height: calc-em($height,16px)) {
+    @content;
+  }
 }
 
 @mixin r_min_max($min-width, $max-width) {
-    @media screen and (min-width:calc-em($min-width,16px)) and (max-width:calc-em($max-width,16px)) { @content; }
+  @media screen and (min-width: calc-em($min-width,16px)) and (max-width: calc-em($max-width,16px)) {
+    @content;
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // BOURBON MIXINS
 
-@mixin transition ($properties...) {
+@mixin transition($properties...) {
   @if length($properties) >= 1 {
     @include prefixer(transition, $properties, webkit moz spec);
-  }
-
-  @else {
+  } @else {
     $properties: all 0.15s ease-out 0s;
     @include prefixer(transition, $properties, webkit moz spec);
   }
@@ -49,40 +56,35 @@
 //************************************************************************//
 
 // Variable settings for /addons/prefixer.scss
-$prefix-for-webkit:    true !default;
-$prefix-for-mozilla:   true !default;
+$prefix-for-webkit: true !default;
+$prefix-for-mozilla: true !default;
 $prefix-for-microsoft: true !default;
-$prefix-for-opera:     true !default;
-$prefix-for-spec:      true !default; // required for keyframe mixin
+$prefix-for-opera: true !default;
+$prefix-for-spec: true !default; // required for keyframe mixin
 
-@mixin prefixer ($property, $value, $prefixes) {
+@mixin prefixer($property, $value, $prefixes) {
   @each $prefix in $prefixes {
     @if $prefix == webkit {
       @if $prefix-for-webkit {
         -webkit-#{$property}: $value;
       }
-    }
-    @else if $prefix == moz {
+    } @else if $prefix == moz {
       @if $prefix-for-mozilla {
         -moz-#{$property}: $value;
       }
-    }
-    @else if $prefix == ms {
+    } @else if $prefix == ms {
       @if $prefix-for-microsoft {
         -ms-#{$property}: $value;
       }
-    }
-    @else if $prefix == o {
+    } @else if $prefix == o {
       @if $prefix-for-opera {
         -o-#{$property}: $value;
       }
-    }
-    @else if $prefix == spec {
+    } @else if $prefix == spec {
       @if $prefix-for-spec {
         #{$property}: $value;
       }
-    }
-    @else  {
+    } @else {
       @warn "Unrecognized prefix: #{$prefix}";
     }
   }
@@ -125,7 +127,6 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 // 2011 - flex (decimal | width decimal)
 // 2012 - flex (integer integer width)
 @mixin flex($value) {
-
   // Grab flex-grow for older browsers.
   $flex-grow: nth($value, 1);
 
@@ -141,7 +142,6 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 // 2011 - flex-direction (row | row-reverse | column | column-reverse)
 // 2012 - flex-direction (row | row-reverse | column | column-reverse)
 @mixin flex-direction($value: row) {
-
   // Alt values.
   $value-2009: $value;
   $value-2011: $value;
@@ -198,7 +198,6 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 // 2011 - flex-pack (start | end | center | justify)
 // 2012 - justify-content (flex-start | flex-end | center | space-between | space-around)
 @mixin justify-content($value: flex-start) {
-
   // Alt values.
   $alt-value: $value;
   @if $value == "flex-start" {
@@ -225,7 +224,6 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 // 2011 - flex-align (start | end | center | baseline | stretch)
 // 2012 - align-items (flex-start | flex-end | center | baseline | stretch)
 @mixin align-items($value: stretch) {
-
   $alt-value: $value;
 
   @if $value == "flex-start" {
@@ -247,7 +245,6 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 // 2011 - flex-item-align (auto | start | end | center | baseline | stretch)
 // 2012 - align-self (auto | flex-start | flex-end | center | baseline | stretch)
 @mixin align-self($value: auto) {
-
   $value-2011: $value;
   @if $value == "flex-start" {
     $value-2011: start;
@@ -265,7 +262,6 @@ $prefix-for-spec:      true !default; // required for keyframe mixin
 // 2011 - flex-line-pack (start | end | center | justify | distribute | stretch)
 // 2012 - align-content (flex-start | flex-end | center | space-between | space-around | stretch)
 @mixin align-content($value: stretch) {
-
   $value-2011: $value;
   @if $value == "flex-start" {
     $value-2011: start;

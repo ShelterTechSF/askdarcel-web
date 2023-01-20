@@ -1,16 +1,21 @@
-import BackgroundImage from '../assets/img/bg.png';
-import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
-import SFFamiliesLogo from '../assets/img/sf-families.svg';
-import SFServiceLogo from '../assets/img/sf-service.svg';
-import UcsfServiceLogo from '../assets/img/ic-dcnav.png';
-import SFSeal from '../assets/img/sf-seal.png';
-import LinkSFLogo from '../assets/img/link-sf.png';
-import config from '../config';
-import styles from '../components/ui/Navigation.module.scss';
+import BackgroundImage from "../assets/img/bg.png";
+import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
+import SFFamiliesLogo from "../assets/img/sf-families.svg";
+import SFServiceLogo from "../assets/img/sf-service.svg";
+import UcsfServiceLogo from "../assets/img/ic-dcnav.png";
+import SFSeal from "../assets/img/sf-seal.png";
+import LinkSFLogo from "../assets/img/link-sf.png";
+import config from "../config";
+import styles from "../components/ui/Navigation.module.scss";
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
-type homepageComponentEnums = 'HomePage' | 'UcsfHomePage';
+type WhiteLabelSiteKey =
+  | "defaultWhiteLabel"
+  | "SFServiceGuide"
+  | "SFFamilies"
+  | "LinkSF"
+  | "Ucsf";
+type homepageComponentEnums = "HomePage" | "UcsfHomePage";
 
 interface WhiteLabelSite {
   appImages: {
@@ -42,28 +47,32 @@ interface WhiteLabelSite {
 // Include a domain in config.js
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
   const domain = window.location.host;
-  const subdomain = domain.split('.')[0];
-  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) => (
-    subdomain === whiteLabelSubdomain || subdomain === `${whiteLabelSubdomain}-staging`
-  );
+  const subdomain = domain.split(".")[0];
+  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) =>
+    subdomain === whiteLabelSubdomain ||
+    subdomain === `${whiteLabelSubdomain}-staging`;
 
-  if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return 'SFFamilies';
-  if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return 'LinkSF';
-  if (checkWhiteLabelSubdomain(config.UCSF_DOMAIN)) return 'Ucsf';
-  if (subdomain === String(config.MOHCD_DOMAIN) || domain === `staging.${String(config.MOHCD_DOMAIN)}.org`) return 'SFServiceGuide';
+  if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return "SFFamilies";
+  if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return "LinkSF";
+  if (checkWhiteLabelSubdomain(config.UCSF_DOMAIN)) return "Ucsf";
+  if (
+    subdomain === String(config.MOHCD_DOMAIN) ||
+    domain === `staging.${String(config.MOHCD_DOMAIN)}.org`
+  )
+    return "SFServiceGuide";
   // N.B. The qaone environment can be used to test various whitelabels as needed
-  if (subdomain === 'qaone') return 'Ucsf';
+  if (subdomain === "qaone") return "Ucsf";
 
-  return 'defaultWhiteLabel';
+  return "defaultWhiteLabel";
 }
 
 const configKey = determineWhiteLabelSite();
 
 const whiteLabelDefaults = {
   enableTranslation: true,
-  homePageComponent: 'HomePage',
+  homePageComponent: "HomePage",
   intercom: false,
-  logoLinkDestination: '/',
+  logoLinkDestination: "/",
   navLogoStyle: styles.siteNav,
   refinementListLimit: 10,
   showPrintResultsBtn: true,
@@ -97,15 +106,15 @@ const SFFamilies: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   enableTranslation: true,
-  logoLinkDestination: 'https://www.sffamilies.org/',
+  logoLinkDestination: "https://www.sffamilies.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
   showMobileNav: false,
   showPrintResultsBtn: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
-  siteUrl: 'https://sffamilies.sfserviceguide.org/',
-  title: 'SF Families',
+  siteUrl: "https://sffamilies.sfserviceguide.org/",
+  title: "SF Families",
   userWay: true,
 } as const;
 
@@ -117,8 +126,8 @@ const SFServiceGuide: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   intercom: true,
-  siteUrl: 'https://sfserviceguide.org',
-  title: 'SF Service Guide',
+  siteUrl: "https://sfserviceguide.org",
+  title: "SF Service Guide",
 } as const;
 
 const LinkSF: WhiteLabelSite = {
@@ -128,8 +137,8 @@ const LinkSF: WhiteLabelSite = {
     logoSmall: LinkSFLogo,
   },
   ...whiteLabelDefaults,
-  siteUrl: 'https://linksf.sfserviceguide.org',
-  title: 'Link SF',
+  siteUrl: "https://linksf.sfserviceguide.org",
+  title: "Link SF",
 } as const;
 
 const defaultWhiteLabel: WhiteLabelSite = {
@@ -140,8 +149,8 @@ const defaultWhiteLabel: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   intercom: true,
-  siteUrl: 'https://askdarcel.org',
-  title: 'AskDarcel',
+  siteUrl: "https://askdarcel.org",
+  title: "AskDarcel",
 } as const;
 
 const Ucsf: WhiteLabelSite = {
@@ -152,7 +161,7 @@ const Ucsf: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   enableTranslation: false,
-  homePageComponent: 'UcsfHomePage',
+  homePageComponent: "UcsfHomePage",
   navLogoStyle: styles.navLogoUcsf,
   refinementListLimit: 15,
   showBanner: false,
@@ -160,8 +169,8 @@ const Ucsf: WhiteLabelSite = {
   showHandoutsIcon: true,
   showHeaderQrCode: true,
   showPrintResultsBtn: false,
-  siteUrl: 'https://dcnav.sfserviceguide.org',
-  title: 'Discharge Navigator',
+  siteUrl: "https://dcnav.sfserviceguide.org",
+  title: "Discharge Navigator",
 } as const;
 
 /*

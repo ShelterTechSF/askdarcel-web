@@ -1,4 +1,4 @@
-@import '~styles/utils/_helpers.scss';
+@import "~styles/utils/_helpers.scss";
 
 .modalOverlay {
   position: fixed;
@@ -23,7 +23,7 @@
   background-color: #fff;
   box-shadow: 0px 12px 32px rgba(0, 0, 0, 0.2);
   border-radius: 16px;
-  @media screen and (max-width: $break-tablet-s ) {
+  @media screen and (max-width: $break-tablet-s) {
     padding: 30px;
     // Prevent ugly/confusing rounding of corners when
     // modal takes up entirety of mobile screen

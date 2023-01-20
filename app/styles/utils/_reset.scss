@@ -5,7 +5,87 @@
 // BASIC RESET - A simplified hybrid of Eric Meyer's defaults and Normalize.css
 // ==================================================================================================
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -17,176 +97,254 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-size-adjust: 0.5;
-  font-family: 'Open Sans', 'San Francisco', 'Roboto', 'Arial', sans-serif;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-backface-visibility: hidden;
 }
 
 // Zero out font sizes. Most browser defaults ~16px */
-html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; overflow-y:auto; min-height: 100vh;-webkit-font-smoothing: antialiased;}
-body {min-height: 100vh;}
-
-// Set display rules for non-HTML5 browsers */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-
-// Get Rid of any "graphics" ordered or unordered lists try to add */
-ol, ul { list-style: none; }
-
-// Remove default quotes from blockquote and q */
-blockquote, q { quotes: none; }
-blockquote:before, blockquote:after,
-q:before, q:after { content: ''; content: none; }
-
-// Helpful when working with tables */
-table { border-collapse: collapse;  border-spacing: 0; }
-
-// Image borders are ugly and IE sucks */
-img { border: 0; -ms-interpolation-mode: bicubic; }
-
-// Handle sub and superscript with sophistication */
-sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
-
-// Remove underlines from links */
-a, a:hover, a:focus, a:active{ text-decoration:none;}
-
-// Extend Clearfix
-.cf { zoom:1;
-  &:before, &:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-  &:after { clear: both; }
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  overflow-y: auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  min-height: 100vh;
 }
 
-*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+// Set display rules for non-HTML5 browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
 
- button { -webkit-appearance: none; -moz-appearance: none; border: none; }
+// Get Rid of any "graphics" ordered or unordered lists try to add */
+ol,
+ul {
+  list-style: none;
+}
 
- *:focus { outline: 0; }
+// Remove default quotes from blockquote and q */
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
 
- ::selection { background: rgb(216, 202, 248); /* WebKit/Blink Browsers */ }
- ::-moz-selection { background: rgb(216, 202, 248); /* Gecko Browsers */ }
+// Helpful when working with tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 
- //////////////////////////////////////////////////////////////////////////////////////////
- // CUSTOM RESETS
+// Image borders are ugly and IE sucks */
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
 
- /* A better looking default horizontal rule */
+// Handle sub and superscript with sophistication */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
 
- hr {
-   display: block;
-   height: 1px;
-   border: 0;
-   border-top: 1px solid #ccc;
-   margin: 1em 0;
-   padding: 0;
- }
+// Remove underlines from links */
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
 
- /*
+// Extend Clearfix
+.cf {
+  zoom: 1;
+  &:before,
+  &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+}
+
+*:focus {
+  outline: 0;
+}
+
+::selection {
+  background: rgb(216, 202, 248); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: rgb(216, 202, 248); /* Gecko Browsers */
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// CUSTOM RESETS
+
+/* A better looking default horizontal rule */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
   * Remove the gap between audio, canvas, iframes,
   * images, videos and the bottom of their containers:
   * https://github.com/h5bp/html5-boilerplate/issues/440
   */
 
- audio,
- canvas,
- iframe,
- img,
- svg,
- video {
-   vertical-align: middle;
- }
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
 
- /* Remove default fieldset styles. */
+/* Remove default fieldset styles. */
 
- fieldset {
-   border: 0;
-   margin: 0;
-   padding: 0;
- }
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
 
- /* Allow only vertical resizing of textareas. */
+/* Allow only vertical resizing of textareas. */
 
- textarea {
-   resize: vertical;
- }
+textarea {
+  resize: vertical;
+}
 
- button {
+button {
   background: 0;
   outline: 0;
- }
+}
 
- /*
+/*
   * Print styles
   * Inlined to avoid the additional HTTP request:
   * http://www.phpied.com/delay-loading-your-print-css/
   * ========================================================================== */
 
- @media print {
-   *,
-   *::before,
-   *::after {
-     background: transparent !important;
-     color: #000 !important; /* Black prints faster: http://www.sanbeiji.com/archives/953 */
-     box-shadow: none !important;
-     text-shadow: none !important;
-   }
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster: http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
 
-   a,
-   a:visited {
-     text-decoration: underline;
-   }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
 
-   a[href]::after {
-     content: ' (' attr(href) ')';
-   }
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
 
-   abbr[title]::after {
-     content: ' (' attr(title) ')';
-   }
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
 
-   /*
+  /*
     * Don't show links that are fragment identifiers,
     * or use the `javascript:` pseudo protocol
     */
 
-   a[href^='#']::after,
-   a[href^='javascript:']::after {
-     content: '';
-   }
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
 
-   pre,
-   blockquote {
-     border: 1px solid #999;
-     page-break-inside: avoid;
-   }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
 
-   /*
+  /*
     * Printing Tables:
     * http://css-discuss.incutio.com/wiki/Printing_Tables
     */
 
-   thead {
-     display: table-header-group;
-   }
+  thead {
+    display: table-header-group;
+  }
 
-   tr,
-   img {
-     page-break-inside: avoid;
-   }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
 
-   img {
-     max-width: 100% !important;
-   }
+  img {
+    max-width: 100% !important;
+  }
 
-   p,
-   h2,
-   h3 {
-     orphans: 3;
-     widows: 3;
-   }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
 
-   h2,
-   h3 {
-     page-break-after: avoid;
-   }
- }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}

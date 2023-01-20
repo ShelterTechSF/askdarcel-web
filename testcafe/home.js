@@ -1,14 +1,13 @@
-import config from './config';
-import FindPage from './pages/FindPage';
-import SearchPage from './pages/SearchPage';
+import config from "./config";
+import FindPage from "./pages/FindPage";
+import SearchPage from "./pages/SearchPage";
 // import ResourcePage from './pages/ResourcePage';
 
 const findPage = new FindPage();
 const searchPage = new SearchPage();
 // const resourcePage = new ResourcePage();
 
-fixture`Home Page`
-  .page`${config.baseUrl}`;
+fixture`Home Page`.page`${config.baseUrl}`;
 
 // TODO: Investigate why this is failing
 // test('Basic navigation test', async (t) => {
@@ -21,10 +20,10 @@ fixture`Home Page`
 //     ;
 // });
 
-test('Basic search test', async t => {
+test("Basic search test", async (t) => {
   await t
-    .typeText(findPage.searchBox, 'Food')
-    .pressKey('enter')
+    .typeText(findPage.searchBox, "Food")
+    .pressKey("enter")
     .expect(searchPage.pagination.exists)
     .ok();
 });

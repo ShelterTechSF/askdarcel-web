@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Footer } from '../../components/ui';
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { Footer } from "../../components/ui";
 
 const privacyPolicyContent = `
 # Privacy Policy
@@ -68,7 +68,10 @@ export const PrivacyPolicyPage = () => (
   <div className="listing-container">
     <article className="text-page listing" id="privacyPolict">
       <div className="listing--main">
-        <ReactMarkdown className="rendered-markdown" source={privacyPolicyContent} />
+        <ReactMarkdown
+          className="rendered-markdown"
+          source={privacyPolicyContent}
+        />
       </div>
     </article>
     <Footer />

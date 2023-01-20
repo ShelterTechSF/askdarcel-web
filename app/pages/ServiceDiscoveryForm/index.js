@@ -1,1 +1,1 @@
-export { ServiceDiscoveryForm } from './ServiceDiscoveryForm';
+export { ServiceDiscoveryForm } from "./ServiceDiscoveryForm";

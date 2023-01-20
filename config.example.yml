@@ -7,16 +7,15 @@
 # - Street View API
 # Note that the settings for this key are in Google Cloud Platform under the
 # AskDarcel project
-GOOGLE_API_KEY: 'AIzaSyAz2oiKYp048xbbjXH54PrNDdQO38I6-pc'
+GOOGLE_API_KEY: "AIzaSyAz2oiKYp048xbbjXH54PrNDdQO38I6-pc"
 
 # Please replace the entire value of the ALGOLIA_INDEX_PREFIX setting with your
 # GitHub username, including the < and > symbols.
-ALGOLIA_INDEX_PREFIX: '<ENTER_YOUR_GITHUB_USERNAME_HERE>'
-ALGOLIA_APPLICATION_ID: 'J8TVT53HPZ'
-ALGOLIA_READ_ONLY_API_KEY: 'fdf77b152ff7ce0ea4e4221ff3d17d85'
+ALGOLIA_INDEX_PREFIX: "<ENTER_YOUR_GITHUB_USERNAME_HERE>"
+ALGOLIA_APPLICATION_ID: "J8TVT53HPZ"
+ALGOLIA_READ_ONLY_API_KEY: "fdf77b152ff7ce0ea4e4221ff3d17d85"
 
-MOHCD_SUBDOMAIN: 'testing'
-
+MOHCD_SUBDOMAIN: "testing"
 # uncomment this to simulate sfserviceguide whitelabel UI locally, assuming that
 # you're pointing to localhost:8080
 # MOHCD_DOMAIN: 'localhost:8080'

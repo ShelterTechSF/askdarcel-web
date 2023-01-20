@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState } from "react";
 
 /**
  * Renders a child property collection of a Service as a list of individual components,
@@ -22,7 +22,7 @@ interface CollectionItem {
   isRemoved?: boolean;
 }
 
-export const EditServiceChildCollection = <T extends CollectionItem> ({
+export const EditServiceChildCollection = <T extends CollectionItem>({
   initialCollectionData,
   handleCollectionChange,
   CollectionItemComponent,
@@ -40,7 +40,7 @@ export const EditServiceChildCollection = <T extends CollectionItem> ({
   propertyKeyName: string;
 }) => {
   const [itemCollection, setItemCollection] = useState<T[]>(
-    initialCollectionData || [],
+    initialCollectionData || []
   );
 
   const addItem = () => {
@@ -90,7 +90,10 @@ export const EditServiceChildCollection = <T extends CollectionItem> ({
     }
 
     return (
-      <div key={item.id || item.keyId} className="edit--section--list--item--collection-container">
+      <div
+        key={item.id || item.keyId}
+        className="edit--section--list--item--collection-container"
+      >
         <CollectionItemComponent
           index={index}
           item={item}
@@ -110,10 +113,12 @@ export const EditServiceChildCollection = <T extends CollectionItem> ({
   return (
     <>
       <label htmlFor="edit-item">{label}</label>
-      <div className="edit--section--list--item--sublist">
-        {itemComponents}
-      </div>
-      <button type="button" className="edit--section--list--item--button solid-brand" onClick={addItem}>
+      <div className="edit--section--list--item--sublist">{itemComponents}</div>
+      <button
+        type="button"
+        className="edit--section--list--item--button solid-brand"
+        onClick={addItem}
+      >
         {buttonText}
       </button>
     </>

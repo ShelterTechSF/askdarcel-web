@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, Configure } from 'react-instantsearch/dom';
-import qs from 'qs';
+import React, { useState, useEffect } from "react";
+import algoliasearch from "algoliasearch/lite";
+import { InstantSearch, Configure } from "react-instantsearch/dom";
+import qs from "qs";
 
-import { match as Match, RouteComponentProps } from 'react-router-dom';
+import { match as Match, RouteComponentProps } from "react-router-dom";
 
-import * as dataService from 'utils/DataService';
-import { useAppContext } from 'utils';
+import * as dataService from "utils/DataService";
+import { useAppContext } from "utils";
 
-import { Loader } from 'components/ui';
-import SearchResults from 'components/search/SearchResults/SearchResults';
-import Sidebar from 'components/search/Sidebar/Sidebar';
-import { Header } from 'components/search/Header/Header';
+import { Loader } from "components/ui";
+import SearchResults from "components/search/SearchResults/SearchResults";
+import Sidebar from "components/search/Sidebar/Sidebar";
+import { Header } from "components/search/Header/Header";
+import { Category } from "models/Meta";
 
-import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
-import config from '../../config';
-import { CATEGORIES, ServiceCategory } from '../ServiceDiscoveryForm/constants';
-import styles from './ServiceDiscoveryResults.module.scss';
+import {
+  useEligibilitiesForCategory,
+  useSubcategoriesForCategory,
+} from "../../hooks/APIHooks";
+import config from "../../config";
+import { CATEGORIES, ServiceCategory } from "../ServiceDiscoveryForm/constants";
+import styles from "./ServiceDiscoveryResults.module.scss";
 
 type MatchParams = { categorySlug: string };
-type RouterLocation = RouteComponentProps['location'];
+type RouterLocation = RouteComponentProps["location"];
 type SearchState = {
   configure?: {
     aroundRadius?: string;
@@ -29,35 +33,42 @@ type SearchState = {
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = algoliasearch(
   config.ALGOLIA_APPLICATION_ID,
-  config.ALGOLIA_READ_ONLY_API_KEY,
+  config.ALGOLIA_READ_ONLY_API_KEY
 );
 /* eslint-enable @typescript-eslint/no-unsafe-argument */
 
-const createURL = (state: SearchState) => `?${qs.stringify(state, { encodeValuesOnly: true })}`;
-const searchStateToURL = (location: RouterLocation, searchState: SearchState) => (searchState
-  ? `${location.pathname}${createURL(searchState)}` : ''
-);
-const urlToSearchState = (location: RouterLocation): SearchState => qs.parse(
-  location.search.slice(1),
-);
+const createURL = (state: SearchState) =>
+  `?${qs.stringify(state, { encodeValuesOnly: true })}`;
+const searchStateToURL = (location: RouterLocation, searchState: SearchState) =>
+  searchState ? `${location.pathname}${createURL(searchState)}` : "";
+const urlToSearchState = (location: RouterLocation): SearchState =>
+  qs.parse(location.search.slice(1));
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const ServiceDiscoveryResults = ({
-  history, location, match,
+  history,
+  location,
+  match,
 }: {
-  history: RouteComponentProps['history'];
-  location: RouteComponentProps['location'];
+  history: RouteComponentProps["history"];
+  location: RouteComponentProps["location"];
   match: Match<MatchParams>;
 }) => {
   const { categorySlug } = match.params;
-  const category = CATEGORIES.find(c => c.slug === categorySlug);
-  if (category === undefined) { throw new Error(`Unknown category slug ${categorySlug}`); }
-  const [parentCategory, setParentCategory] = useState<ServiceCategory | null>(null);
+  const category = CATEGORIES.find((c) => c.slug === categorySlug);
+  if (category === undefined) {
+    throw new Error(`Unknown category slug ${categorySlug}`);
+  }
+  const [parentCategory, setParentCategory] = useState<ServiceCategory | null>(
+    null
+  );
   const eligibilities = useEligibilitiesForCategory(category.id);
   const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
   const [expandList, setExpandList] = useState(false);
-  const [searchRadius, setSearchRadius] = useState(searchState?.configure?.aroundRadius || 'all');
+  const [searchRadius, setSearchRadius] = useState(
+    searchState?.configure?.aroundRadius || "all"
+  );
   const { userLocation } = useAppContext();
 
   const onSearchStateChange = (nextSearchState: SearchState) => {
@@ -67,16 +78,20 @@ export const ServiceDiscoveryResults = ({
 
   // TODO: Handle failure?
   useEffect(() => {
-    dataService.get(`/api/categories/${category.id}`).then(({ category: serviceCategory }: { category: ServiceCategory }) => {
-      setParentCategory(serviceCategory);
-    });
+    dataService
+      .get(`/api/categories/${category.id}`)
+      .then(({ category: serviceCategory }: { category: ServiceCategory }) => {
+        setParentCategory(serviceCategory);
+      });
   }, [category.id]);
 
   // TS compiler requires explict null type checks
-  if (parentCategory !== null
-      && eligibilities !== null
-      && subcategories !== null
-      && userLocation !== null) {
+  if (
+    parentCategory !== null &&
+    eligibilities !== null &&
+    subcategories !== null &&
+    userLocation !== null
+  ) {
     return (
       <InnerServiceDiscoveryResults
         eligibilities={eligibilities}
@@ -100,11 +115,21 @@ export const ServiceDiscoveryResults = ({
 
 /** Stateless inner component that just handles presentation. */
 const InnerServiceDiscoveryResults = ({
-  eligibilities, subcategories, categoryName, categorySlug, algoliaCategoryName, searchState,
-  onSearchStateChange, searchRadius, setSearchRadius, expandList, setExpandList, userLatLng,
+  eligibilities,
+  subcategories,
+  categoryName,
+  categorySlug,
+  algoliaCategoryName,
+  searchState,
+  onSearchStateChange,
+  searchRadius,
+  setSearchRadius,
+  expandList,
+  setExpandList,
+  userLatLng,
 }: {
   eligibilities: object[];
-  subcategories: ServiceCategory[];
+  subcategories: Category[];
   categoryName: string;
   categorySlug: string;
   algoliaCategoryName: string;
@@ -116,7 +141,7 @@ const InnerServiceDiscoveryResults = ({
   setExpandList: (_expandList: boolean) => void;
   userLatLng: string;
 }) => {
-  const subcategoryNames = subcategories.map(c => c.name);
+  const subcategoryNames = subcategories.map((c) => c.name);
 
   return (
     <div className={styles.container}>
@@ -132,8 +157,12 @@ const InnerServiceDiscoveryResults = ({
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
-
-        <Configure filters={`categories:'${algoliaCategoryName}'`} aroundLatLng={userLatLng} aroundRadius={searchRadius} aroundPrecision={1600} />
+        <Configure
+          filters={`categories:'${algoliaCategoryName}'`}
+          aroundLatLng={userLatLng}
+          aroundRadius={searchRadius}
+          aroundPrecision={1600}
+        />
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}
@@ -152,7 +181,6 @@ const InnerServiceDiscoveryResults = ({
             />
           </div>
         </div>
-
       </InstantSearch>
     </div>
   );

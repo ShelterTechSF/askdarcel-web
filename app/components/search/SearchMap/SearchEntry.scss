@@ -5,8 +5,10 @@
   list-style-type: none;
   transition: all 200ms ease;
   background: #fff;
-  &:active, &:hover, &:focus {
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
+  &:active,
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
   }
   @media screen and (max-width: 767px) {
     margin-bottom: 0;
@@ -21,7 +23,7 @@
   padding: 25px 30px 30px;
   width: 100%;
   flex: 1 1 80%;
-  @media screen and (max-width: 600px ) {
+  @media screen and (max-width: 600px) {
     padding: 25px 30px 30px 20px;
   }
 }
@@ -33,12 +35,12 @@
 }
 
 .entry-headline {
-  color: rgba(0,0,0,0.87);
+  color: rgba(0, 0, 0, 0.87);
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 5px;
   display: block;
-  letter-spacing: -.25px;
+  letter-spacing: -0.25px;
   &:hover {
     color: #276ce5;
   }
@@ -49,15 +51,15 @@
   color: #666;
   font-size: 0.87rem;
   margin-bottom: 2px;
-  @media screen and (max-width:767px) {
-  flex-direction: column;
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
   }
 }
 
 .entry-schedule {
   @media screen and (min-width: 767px) {
     &:before {
-      content: ' • ';
+      content: " • ";
       margin-left: 4px;
     }
   }
@@ -69,7 +71,7 @@
   padding-bottom: 6px;
   text-overflow: ellipsis;
   overflow: hidden;
-  @media screen and (max-width:767px) {
+  @media screen and (max-width: 767px) {
     display: none;
   }
   p {
@@ -137,14 +139,14 @@
 
 .relative-opening-time {
   &.status-red {
-    color: #E34646;
+    color: #e34646;
   }
 
   &.status-green {
-    color: #01C270;
+    color: #01c270;
   }
 
   &.status-amber {
-    color: #F3AE00;
+    color: #f3ae00;
   }
 }

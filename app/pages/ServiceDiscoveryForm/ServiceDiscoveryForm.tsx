@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { Redirect, useHistory, useRouteMatch } from 'react-router-dom';
-import qs from 'qs';
-import ReactGA from 'react-ga';
+import React, { useState } from "react";
+import { Redirect, useHistory, useRouteMatch } from "react-router-dom";
+import qs from "qs";
+import ReactGA from "react-ga";
 
-import { useEligibilitiesForCategory, useSubcategoriesForCategory } from '../../hooks/APIHooks';
 import {
-  CATEGORIES,
-  Step,
-  ServiceCategory,
-} from './constants';
+  useEligibilitiesForCategory,
+  useSubcategoriesForCategory,
+} from "../../hooks/APIHooks";
+import { CATEGORIES, Step, ServiceCategory } from "./constants";
 
-import styles from './ServiceDiscoveryForm.module.scss';
+import styles from "./ServiceDiscoveryForm.module.scss";
 
 interface CategoryRefinement {
   name: string;
@@ -29,25 +28,29 @@ export const ServiceDiscoveryForm = () => {
 
   const match = useRouteMatch();
   const { categorySlug } = match.params as MatchParams;
-  const category = CATEGORIES.find(c => c.slug === categorySlug);
+  const category = CATEGORIES.find((c) => c.slug === categorySlug);
 
   // The activeCategoryId is updated if the user proceeds to a further step that has child
   // subcategories to be displayed. When it is set, the target subcategory refinements are
   // fetched and rendered in place of the previous refinements
-  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(category?.id ?? null);
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(
+    category?.id ?? null
+  );
 
   // The selectedSubcategory represents the single subcategory selected by the user in
   // the RadioFormStep component
-  const [selectedSubcategory, setSelectedSubcategory] = useState<number | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<number | null>(
+    null
+  );
 
-  const eligibilities: CategoryRefinement[] = useEligibilitiesForCategory(activeCategoryId)
-  || [];
-  const subcategories: CategoryRefinement[] = useSubcategoriesForCategory(activeCategoryId)
-  || [];
+  const eligibilities: CategoryRefinement[] =
+    useEligibilitiesForCategory(activeCategoryId) || [];
+  const subcategories: CategoryRefinement[] =
+    useSubcategoriesForCategory(activeCategoryId) || [];
 
   if (!category) {
     // Category does not exist; user may have entered the category in the URL bar
-    return <Redirect push to={{ pathname: '/' }} />;
+    return <Redirect push to={{ pathname: "/" }} />;
   }
 
   return (
@@ -65,8 +68,13 @@ export const ServiceDiscoveryForm = () => {
 
 /** Main component that handles form data and advancing steps. */
 const InnerServiceDiscoveryForm = ({
-  category, subcategorySubheading, eligibilities, subcategories,
-  setActiveCategoryId, selectedSubcategory, setSelectedSubcategory,
+  category,
+  subcategorySubheading,
+  eligibilities,
+  subcategories,
+  setActiveCategoryId,
+  selectedSubcategory,
+  setSelectedSubcategory,
 }: {
   category: ServiceCategory;
   subcategorySubheading: string;
@@ -76,17 +84,16 @@ const InnerServiceDiscoveryForm = ({
   selectedSubcategory: number | null;
   setSelectedSubcategory: (item: number | null) => void;
 }) => {
-  const {
-    steps,
-    slug: categorySlug,
-  } = category;
+  const { steps, slug: categorySlug } = category;
 
   const [currentStep, setCurrentStep] = useState(0);
   const history = useHistory();
   const stepName = steps[currentStep];
-  const disableNextBtn = selectedSubcategory === null && ['housingStatus', 'subcategoriesRadio'].includes(stepName);
+  const disableNextBtn =
+    selectedSubcategory === null &&
+    ["housingStatus", "subcategoriesRadio"].includes(stepName);
   const goToNextStep = () => {
-    if (stepName === 'housingStatus') {
+    if (stepName === "housingStatus") {
       if (!selectedSubcategory) {
         return;
       }
@@ -94,8 +101,8 @@ const InnerServiceDiscoveryForm = ({
       if (selectedSubcategory === 1100045) {
         // User has selected first option in Long Term Housing step 1. Set category ID to Shelter
         // ID and redirect user to the Shelter resources form.
-        setActiveCategoryId('1000010');
-        history.replace('/shelter-resources/form');
+        setActiveCategoryId("1000010");
+        history.replace("/shelter-resources/form");
       } else {
         const targetCategoryId = selectedSubcategory;
         // Set active category to be the subcategory that the user has selected
@@ -111,7 +118,7 @@ const InnerServiceDiscoveryForm = ({
 
   // TODO: Should goBack go back to the previous step?
   const goBack = () => {
-    history.push('/');
+    history.push("/");
   };
 
   return (
@@ -138,8 +145,13 @@ const InnerServiceDiscoveryForm = ({
 };
 
 const Content = ({
-  steps, currentStep, eligibilities, subcategories, categorySlug,
-  subcategorySubheading, setSelectedSubcategory,
+  steps,
+  currentStep,
+  eligibilities,
+  subcategories,
+  categorySlug,
+  subcategorySubheading,
+  setSelectedSubcategory,
 }: {
   steps: Step[];
   currentStep: number;
@@ -149,25 +161,23 @@ const Content = ({
   subcategorySubheading: string;
   setSelectedSubcategory: (targetItemId: number) => void;
 }) => {
-  const [selectedEligibilities, setSelectedEligibilities] = useState<SelectedRefinements>({});
-  const [selectedSubcategories, setSelectedSubcategories] = useState<SelectedRefinements>({});
+  const [selectedEligibilities, setSelectedEligibilities] =
+    useState<SelectedRefinements>({});
+  const [selectedSubcategories, setSelectedSubcategories] =
+    useState<SelectedRefinements>({});
 
   const handleEligibilityClick = (targetEligibilityId: number) => {
-    setSelectedEligibilities(
-      {
-        ...selectedEligibilities,
-        [targetEligibilityId]: !selectedEligibilities[targetEligibilityId],
-      },
-    );
+    setSelectedEligibilities({
+      ...selectedEligibilities,
+      [targetEligibilityId]: !selectedEligibilities[targetEligibilityId],
+    });
   };
 
   const handleSubcategoryClick = (targetCategoryId: number) => {
-    setSelectedSubcategories(
-      {
-        ...selectedSubcategories,
-        [targetCategoryId]: !selectedSubcategories[targetCategoryId],
-      },
-    );
+    setSelectedSubcategories({
+      ...selectedSubcategories,
+      [targetCategoryId]: !selectedSubcategories[targetCategoryId],
+    });
   };
 
   const handleRadioSelect = (targetCategoryId: number) => {
@@ -176,7 +186,7 @@ const Content = ({
   };
 
   switch (steps[currentStep]) {
-    case 'housingStatus':
+    case "housingStatus":
       return (
         <RadioFormStep
           heading="Which of the following best describes your current housing situation?"
@@ -185,7 +195,7 @@ const Content = ({
           refinements={subcategories}
         />
       );
-    case 'eligibilities':
+    case "eligibilities":
       return (
         <FormStep
           heading="Tell us more about you"
@@ -195,7 +205,7 @@ const Content = ({
           toggleRefinement={handleEligibilityClick}
         />
       );
-    case 'subcategories':
+    case "subcategories":
       return (
         <FormStep
           heading="Tell us more about you"
@@ -205,7 +215,7 @@ const Content = ({
           toggleRefinement={handleSubcategoryClick}
         />
       );
-    case 'subcategoriesRadio':
+    case "subcategoriesRadio":
       return (
         <RadioFormStep
           heading="Tell us more about your needs"
@@ -214,25 +224,26 @@ const Content = ({
           refinements={subcategories}
         />
       );
-    case 'results':
-    default:
-    {
+    case "results":
+    default: {
       const searchState = {
         refinementList: {
           eligibilities: eligibilities
-            .filter(elg => selectedEligibilities[elg.id])
-            .map(el => el.name),
+            .filter((elg) => selectedEligibilities[elg.id])
+            .map((el) => el.name),
           categories: subcategories
-            .filter(c => selectedSubcategories[c.id])
-            .map(c => c.name),
+            .filter((c) => selectedSubcategories[c.id])
+            .map((c) => c.name),
         },
       };
 
-      const categoriesRefinements = searchState.refinementList.categories.join('; ') || 'NONE';
-      const eligibilitiesRefinements = searchState.refinementList.eligibilities.join('; ') || 'NONE';
+      const categoriesRefinements =
+        searchState.refinementList.categories.join("; ") || "NONE";
+      const eligibilitiesRefinements =
+        searchState.refinementList.eligibilities.join("; ") || "NONE";
       ReactGA.event({
-        category: 'Resource Inquiry',
-        action: 'Refined Resource Inquiry',
+        category: "Resource Inquiry",
+        action: "Refined Resource Inquiry",
         label: `${categorySlug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
       });
 
@@ -252,11 +263,14 @@ const Content = ({
 
 // Stateless components that only handle presentation.
 
-const Header = ({ onGoBack }: {
-  onGoBack: () => void;
-}) => (
+const Header = ({ onGoBack }: { onGoBack: () => void }) => (
   <div className={styles.header}>
-    <div className={styles.backButton} role="button" onClick={onGoBack} tabIndex={0}>
+    <div
+      className={styles.backButton}
+      role="button"
+      onClick={onGoBack}
+      tabIndex={0}
+    >
       <i className="material-icons">keyboard_arrow_left</i>
       All resource guides
     </div>
@@ -264,7 +278,11 @@ const Header = ({ onGoBack }: {
 );
 
 const Footer = ({
-  onGoBack, onNextStep, currentStep, numSteps, disableNextBtn,
+  onGoBack,
+  onNextStep,
+  currentStep,
+  numSteps,
+  disableNextBtn,
 }: {
   onGoBack: () => void;
   onNextStep: () => void;
@@ -274,16 +292,18 @@ const Footer = ({
 }) => (
   <div className={styles.footer}>
     <div className={styles.progressBarContainer}>
-      {
-      /*
-      * Add 1 to current step because it is 0-indexed.
-      * Subtract 1 from numSteps because we shouldn't include the RESULT step.
-      */
-      }
+      {/*
+       * Add 1 to current step because it is 0-indexed.
+       * Subtract 1 from numSteps because we shouldn't include the RESULT step.
+       */}
       <ProgressBar currentNumber={currentStep + 1} totalNumber={numSteps - 1} />
     </div>
     <div className={styles.actionGroup}>
-      <button type="button" className={`${styles.button} ${styles.actionBack}`} onClick={onGoBack}>
+      <button
+        type="button"
+        className={`${styles.button} ${styles.actionBack}`}
+        onClick={onGoBack}
+      >
         Back
       </button>
       <button
@@ -298,7 +318,10 @@ const Footer = ({
   </div>
 );
 
-const ProgressBar = ({ currentNumber, totalNumber }: {
+const ProgressBar = ({
+  currentNumber,
+  totalNumber,
+}: {
   currentNumber: number;
   totalNumber: number;
 }) => (
@@ -308,14 +331,22 @@ const ProgressBar = ({ currentNumber, totalNumber }: {
         <div className={styles.progressBarText}>
           {`Question ${currentNumber} / ${totalNumber}`}
         </div>
-        <progress className={styles.progressBarMeter} value={currentNumber} max={totalNumber} />
+        <progress
+          className={styles.progressBarMeter}
+          value={currentNumber}
+          max={totalNumber}
+        />
       </>
     )}
   </div>
 );
 
 const FormStep = ({
-  heading, subheading, refinements, selectedRefinements, toggleRefinement,
+  heading,
+  subheading,
+  refinements,
+  selectedRefinements,
+  toggleRefinement,
 }: {
   heading: string;
   subheading: string;
@@ -328,7 +359,7 @@ const FormStep = ({
       <h1 className={styles.contentText}>{heading}</h1>
       <h2 className={styles.contentText}>{subheading}</h2>
       <ul className={styles.refinementList}>
-        {refinements.map(refinement => (
+        {refinements.map((refinement) => (
           <li className={styles.listOption} key={refinement.id}>
             <label>
               <input
@@ -351,7 +382,10 @@ interface RadioRefinementType {
 }
 
 const RadioFormStep = ({
-  heading, subheading, refinements, handleRadioSelect,
+  heading,
+  subheading,
+  refinements,
+  handleRadioSelect,
 }: {
   heading: string;
   subheading: string;
@@ -363,11 +397,11 @@ const RadioFormStep = ({
       <h1 className={styles.contentText}>{heading}</h1>
       <h2 className={styles.contentText}>{subheading}</h2>
       <ul className={styles.refinementList}>
-        {refinements.map(refinement => (
+        {refinements.map((refinement) => (
           <li className={styles.listOption} key={refinement.id}>
             <label>
               <input
-                onChange={() => (handleRadioSelect(refinement.id))}
+                onChange={() => handleRadioSelect(refinement.id)}
                 name="refinement"
                 type="radio"
                 value={refinement.id}

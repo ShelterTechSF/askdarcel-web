@@ -1,15 +1,13 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 
-const FormTextArea = ({
-  label, placeholder, value, setValue,
-}) => (
+const FormTextArea = ({ label, placeholder, value, setValue }) => (
   <>
     <label htmlFor="textarea">{label}</label>
     <textarea
       placeholder={placeholder}
       value={value}
-      onChange={evt => setValue(evt.target.value)}
+      onChange={(evt) => setValue(evt.target.value)}
     />
   </>
 );

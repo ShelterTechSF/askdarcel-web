@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { icon as iconPath } from '../../assets';
-import { OrganizationAction } from '../../models';
-import './ActionBar.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import { icon as iconPath } from "../../assets";
+import { OrganizationAction } from "../../models";
+import "./ActionBar.scss";
 
 const ActionButton = ({
   action,
@@ -15,9 +15,7 @@ const ActionButton = ({
   listItemClass?: string;
   onClickAction: (a: OrganizationAction) => void;
 }) => {
-  const {
-    icon, link, name, to,
-  } = action;
+  const { icon, link, name, to } = action;
   const linkClass = `action-sidebar--${name.toLowerCase()}`;
   const content = (
     <>
@@ -33,12 +31,16 @@ const ActionButton = ({
   return (
     <li className={listItemClass}>
       {to ? (
-        <Link to={to} className={linkClass}>{content}</Link>
+        <Link to={to} className={linkClass}>
+          {content}
+        </Link>
       ) : (
         <a
           className={linkClass}
           href={link}
-          onClick={() => { onClickAction(action); }}
+          onClick={() => {
+            onClickAction(action);
+          }}
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -51,7 +53,7 @@ const ActionButton = ({
 
 export const ActionSidebar = ({ actions, onClickAction }: ActionBarProps) => (
   <ul className="action-sidebar">
-    {actions.map(action => (
+    {actions.map((action) => (
       <ActionButton
         action={action}
         iconColor="gray"
@@ -64,7 +66,7 @@ export const ActionSidebar = ({ actions, onClickAction }: ActionBarProps) => (
 
 export const ActionBarMobile = ({ actions, onClickAction }: ActionBarProps) => (
   <ul className="mobile-action-bar">
-    {actions.map(action => (
+    {actions.map((action) => (
       <ActionButton
         action={action}
         iconColor="blue"
