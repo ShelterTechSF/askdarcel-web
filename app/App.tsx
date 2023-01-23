@@ -25,6 +25,7 @@ import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/Le
 import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
 import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
 import { ServiceListingPage } from './pages/ServiceListingPage';
+import { ServicePdfPage } from './pages/PDF/ServicePdfPage';
 import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
 import { UcsfDiscoveryForm } from './pages/UcsfDiscoveryForm/UcsfDiscoveryForm';
@@ -157,7 +158,6 @@ export const App = () => {
                   />
                 )}
               />
-
               <Route
                 exact
                 path="/privacy-policy"
@@ -174,6 +174,16 @@ export const App = () => {
                 exact
                 path="/services/:id"
                 component={ServiceListingPage}
+              />
+              <Route
+                exact
+                path="/service-handout/:id"
+                component={ServicePdfPage}
+              />
+              <Route
+                exact
+                path="/pdf/:id"
+                component={PDF}
               />
               <Route
                 exact
@@ -202,7 +212,6 @@ export const App = () => {
               <Redirect path="/resource/new" to="/organizations/new" />
               <Route exact path="/resource/edit" component={RedirectToOrganizationsEdit} />
               <Route exact path="/resource" component={RedirectToOrganizations} />
-              <Route exact path="/service-handout/:id" component={PDF} />
 
               <Redirect to="/" />
             </Switch>

@@ -19,7 +19,7 @@ import {
   Address,
 } from "../../models/Meta";
 
-import styles from "./styles.module.scss";
+// import styles from "."module"scss";
 
 export const ServicePdfPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,18 +34,21 @@ export const ServicePdfPage = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+
     fetchService(id).then((s) => setService(s));
-    // window.addEventListener('load', handleLoad);
     if (loaded) {
-      fetch(`/api/services/convert_to_pdf?url=http://dcnav.sfserviceguide.org/services/${id}`, {
-        body: JSON.stringify({html: ref.current?.outerHTML}),
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' }
-      }).then(resp => resp.blob()).then(blob => {
-        // setPdfSource(window.URL.createObjectURL(blob));
-      });
-      console.log(ref.current?.outerHTML);
+      setTimeout(() => {
+        fetch(`/api/services/html_to_pdf`, {
+          body: JSON.stringify({html: ref.current?.outerHTML}),
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'application/json' }
+        }).then(resp => resp.blob()).then(blob => {
+          setPdfSource(window.URL.createObjectURL(blob));
+        });
+      }, 3000);
+
+
     }
   }, [id, loaded]);
 
@@ -64,44 +67,68 @@ export const ServicePdfPage = () => {
 
   return (
     <div>
-    {/* <embed
+    <embed
       src={pdfSource}
       type="application/pdf"
       height="100%"
       width="100%"
-      style={{ height: '95vh' }}
-    /> */}
-      <div ref={ref} className={`${styles.serviceHandout} serviceHandoutPdf`}>
+      style={{ height: '97vh', display: pdfSource ? 'block' : 'none', }}
+    />
+      <div ref={ref} className="serviceHandout serviceHandoutPdf">
         <style>{`
-          .serviceHandoutPdf {
-            background: blue;
+
+          * {
+            margin: 0;
+            font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
+          }
+          .serviceHandoutPdf table.compact tr th,
+          .serviceHandoutPdf table.compact tr td {
+            padding-left: 0;
           }
 
-          :global {
-            .serviceHandoutPdf table.compact tr th,
-            .serviceHandoutPdf table.compact tr td {
-              padding-left: 0;
-            }
+          .serviceHandoutPdf table tr th {
+            font-weight: bold;
+            color: #666;
+          }
 
-            .serviceHandoutPdf .map {
-              height: 300px;
-            }
+          .serviceHandoutPdf table tr th, table tr td {
+            padding: 10px;
+            text-align: left;
+          }
+
+          .serviceHandoutPdf table tr td ul {
+            list-style: none;
+          }
+
+          .serviceHandoutPdf table tr td li {
+            padding: 0;
+          }
+
+          .serviceHandoutPdf .map {
+            height: 300px;
           }
 
           .serviceHandout {
-            padding: 44px 32px;
-            // visibility: hidden;
+            padding: 30px;
+            // position: absolute;
+            // top: 0;
+            // bottom: 0;
+            // right: 0;
+            // left: 0;
+            // z-index: 9999999;
+            // overflow: scroll;
+            background-color: #fff;
           }
 
           .titleSection {
             display: grid;
             gap: 8px;
-            border-bottom: solid 3px $handoutTeal;
+            border-bottom: solid 3px #31adb5;
             padding-bottom: 10px;
           }
 
           .serviceTitle {
-            color: $handoutTeal;
+            color: #31adb5;
             font-weight: 800;
             font-size: 24px;
           }
@@ -112,66 +139,71 @@ export const ServicePdfPage = () => {
 
           .aboutSection {
             padding: 18px 0;
-            h2 {
-              text-transform: uppercase;
-              font-size: 18px;
-              font-weight: 800;
-              color: $color-grey7;
-              padding-bottom: 10px;
-            }
           }
 
-          .contactInfo {
-            h2 {
-              text-transform: uppercase;
-              font-size: 18px;
-              font-weight: 800;
-              color: #ff6821;
-            }
+          .aboutSection h2 {
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: 800;
+            color: #484848;
+            padding-bottom: 10px;
           }
 
-          .renderedMarkdown {
-            strong {
-              font-weight: 600;
-              color: $color-grey6;
-            }
+          .contactInfo h2 {
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: 800;
+            color: #ff6821;
+          }
 
-            em {
-              font-style: italic;
-            }
+          .renderedMarkdown strong {
+            font-weight: 600;
+            color: #666;
+          }
 
-            ul {
-              padding: 12px 26px;
-              li {
-                list-style-type: disc;
-              }
-            }
+          .renderedMarkdown em {
+            font-style: italic;
+          }
 
-            li ul {
-              padding: 0px 26px;
-            }
+          .renderedMarkdown ul {
+            padding: 12px 26px;
+          }
 
-            ol {
-              padding: 12px 26px;
-              li {
-                list-style-type: decimal;
-              }
-            }
+          .renderedMarkdown ul li {
+            list-style-type: disc;
+          }
 
-            p strong {
-              color: $color-grey9;
-            }
+          .renderedMarkdown li ul {
+            padding: 0px 26px;
+          }
+
+          .renderedMarkdown ol li {
+            list-style-type: decimal;
+          }
+
+          .renderedMarkdown h1 {
+            font-size: 16px;
+            font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
+          }
+
+          .renderedMarkdown ol {
+            padding: 12px 26px;
+          }
+
+          p strong {
+            color: #242c2e;
           }
 
           .locationSection {
             padding-top: 18px;
-            h2 {
-              text-transform: uppercase;
-              font-size: 18px;
-              font-weight: 800;
-              color: $color-grey7;
-              padding-bottom: 10px;
-            }
+          }
+
+          .locationSection h2 {
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: 800;
+            color: #484848;
+            padding-bottom: 10px;
           }
 
           .locationContainer {
@@ -186,11 +218,10 @@ export const ServicePdfPage = () => {
 
           .serviceHours {
             padding-top: 10px;
-            :global {
-              table tr th {
-                font-weight: 600;
-              }
-            }
+          }
+
+          .serviceHours table tr th {
+            font-weight: 600;
           }
 
           .hoursTitle {
@@ -200,14 +231,14 @@ export const ServicePdfPage = () => {
 
         `}
         </style>
-        <header className={styles.titleSection}>
-          <h1 className={styles.serviceTitle}>{service.name}</h1>
+        <header className="titleSection">
+          <h1 className="serviceTitle">{service.name}</h1>
           <ServiceProgramDetails service={service} organization={resource} />
         </header>
 
-        <ServiceListingSection title="About" className={styles.aboutSection}>
+        <ServiceListingSection title="About" className="aboutSection">
           <ReactMarkdown
-            className={styles.renderedMarkdown}
+            className="renderedMarkdown"
             source={service.long_description}
             linkTarget="_blank"
           />
@@ -227,7 +258,7 @@ export const ServicePdfPage = () => {
                   </tr>
                   <tr>
                     <td>
-                      <ReactMarkdown className={styles.renderedMarkdown}>
+                      <ReactMarkdown className="renderedMarkdown">
                         {d.value}
                       </ReactMarkdown>
                     </td>
@@ -240,7 +271,7 @@ export const ServicePdfPage = () => {
         )}
 
         <ServiceListingSection
-          className={styles.contactInfo}
+          className="contactInfo"
           title="Contact Info"
         >
           <TableOfContactInfo service={service} />
@@ -248,15 +279,15 @@ export const ServicePdfPage = () => {
 
         {locations.length > 0 && (
           <ServiceListingSection
-            className={styles.locationSection}
+            className="locationSection"
             title="Location and Hours"
           >
-            <div className={styles.locationContainer}>
-              <div className={styles.addressInfo}>
+            <div className="locationContainer">
+              <div className="addressInfo">
                 <ServiceAddress address={locations[0].address} resourceName={service.resource.name} />
 
-                <div className={styles.serviceHours}>
-                  <p className={styles.hoursTitle}>Hours</p>
+                <div className="serviceHours">
+                  <p className="hoursTitle">Hours</p>
                   <TableOfOpeningTimes
                     recurringSchedule={locations[0].recurringSchedule}
                   />
@@ -303,11 +334,11 @@ export const ServiceProgramDetails = ({
   service,
   organization,
 }: ServiceProgramDetailsProps) => (
-  <p className={styles.subtitle}>
+  <p className="subtitle">
     A service
     {service.program ? ` in the ${service.program.name} program` : null}
     {" offered by "}
-    <span className={styles.subtitle_orgName}>{organization.name}</span>
+    <span className="subtitle_orgName">{organization.name}</span>
   </p>
 );
 
@@ -322,7 +353,7 @@ const ServiceAddress = (
   const { address_1, address_2, city, state_province, postal_code } = address;
   return (
     <div>
-      <p className={styles.resourceName}>{resourceName}</p>
+      <p className="resourceName">{resourceName}</p>
       <p>
         <span>{address_1}</span>
         {address_2

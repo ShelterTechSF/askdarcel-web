@@ -7,9 +7,11 @@ export const PDF = () => {
   const [pdfSource, setPdfSource] = useState('');
 
   useEffect(() => {
-    fetch(`/api/services/convert_to_pdf?url=http://dcnav.sfserviceguide.org/services/${id}`, {
+    fetch(`/api/services/url_to_pdf`, {
       method: 'POST',
       mode: 'cors',
+      body: JSON.stringify({url: `http://dcnav.sfserviceguide.org/services/${id}`}),
+      headers: { 'Content-Type': 'application/json' }
     }).then(resp => resp.blob()).then(blob => {
       setPdfSource(window.URL.createObjectURL(blob));
     });
