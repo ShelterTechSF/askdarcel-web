@@ -1,5 +1,9 @@
-// Set any styles here that we do not want to pass to the HTML to PDF conversion API
+// Set any styles here that we do not want to pass to the HTML -> PDF conversion API
 // E.g. showing/hiding loaders, etc.
+
+.pdfEmbed {
+  height: 98vh;
+}
 
 .handoutInvisible {
   visibility: hidden;

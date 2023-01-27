@@ -69,7 +69,7 @@ export const ServicePdfPage = () => {
       locations[0].address;
 
     // Use address rather than Lat/Lng as center. In some cases, a location may not have
-    // lat/lng or it may not be updated with address change. Address seems to
+    // lat/lng or it may not be updated after address changes. Address seems to
     // be a safer value to access.
     const center = `${address_1}, ${city}, ${state_province}, ${postal_code}`;
     const baseMapUrl = "https://maps.googleapis.com/maps/api/staticmap";
@@ -86,6 +86,9 @@ export const ServicePdfPage = () => {
       `${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`
     ).then((mapResp) => {
       setMapImgSrc(mapResp.url);
+    }).catch(() => {
+      // If there is an error, set the mapImgSrc to non-null so that the HTML to PDF API request will still be made
+      setMapImgSrc('');
     });
   }
 
@@ -97,7 +100,7 @@ export const ServicePdfPage = () => {
           type="application/pdf"
           height="100%"
           width="100%"
-          style={{ height: "98vh" }}
+          className={styles.pdfEmbed}
         />
       )}
       {!pdfSource && (
