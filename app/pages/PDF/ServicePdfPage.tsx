@@ -17,16 +17,14 @@ import {
   Organization,
   Service,
 } from "../../models";
-import {
-  Address,
-} from "../../models/Meta";
+import { Address } from "../../models/Meta";
 
 import styles from "./styles.module.scss";
 
 export const ServicePdfPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
-  const [pdfSource, setPdfSource] = useState('');
+  const [pdfSource, setPdfSource] = useState("");
   const [mapImgSrc, setMapImgSrc] = useState<string | null>(null);
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
@@ -47,20 +45,20 @@ export const ServicePdfPage = () => {
     if (mapImgSrc !== null && !pdfSource) {
       // Map image has been fetched. We're now ready to make our request to the PDF conversion endpoint
       fetch(`/api/services/html_to_pdf`, {
-        body: JSON.stringify({html: ref.current?.outerHTML}),
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' }
-      }).then(resp => resp.blob()).then(blob => {
-        setPdfSource(window.URL.createObjectURL(blob));
-      });
+        body: JSON.stringify({ html: ref.current?.outerHTML }),
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((resp) => resp.blob())
+        .then((blob) => {
+          setPdfSource(window.URL.createObjectURL(blob));
+        });
     }
   }, [mapImgSrc, pdfSource]);
 
-  if (!service) {
-    return (
-      <Loader />
-    );
+  if (!service || !pdfSource) {
+    return <Loader />;
   }
 
   const { resource, recurringSchedule } = service;
@@ -71,39 +69,47 @@ export const ServicePdfPage = () => {
     const lng = locations[0].address.longitude;
 
     if (!lat || !lng) {
-      setMapImgSrc('');
+      setMapImgSrc("");
     } else {
       const center = `${lat}, ${lng}`;
-      const baseMapUrl = 'https://maps.googleapis.com/maps/api/staticmap';
+      const baseMapUrl = "https://maps.googleapis.com/maps/api/staticmap";
       const params = {
         center,
-        zoom: '14',
-        size: '375x225',
+        zoom: "14",
+        size: "375x225",
         markers: `color:0xff6821|${center}`,
-        maptype: 'roadmap',
+        maptype: "roadmap",
         key: config.GOOGLE_API_KEY,
       };
 
-      fetch(`${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`)
-        .then((mapResp) => {
-          setMapImgSrc(mapResp.url);
-        });
+      fetch(
+        `${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`
+      ).then((mapResp) => {
+        setMapImgSrc(mapResp.url);
+      });
     }
   }
 
   return (
     <div>
-      { pdfSource && <embed
-        src={pdfSource}
-        type="application/pdf"
-        height="100%"
-        width="100%"
-        style={{ height: '98vh' }}
-      />}
+      {pdfSource && (
+        <embed
+          src={pdfSource}
+          type="application/pdf"
+          height="100%"
+          width="100%"
+          style={{ height: "98vh" }}
+        />
+      )}
 
-      { !pdfSource && <div ref={ref} className={`serviceHandoutPdf ${styles.handoutInvisible}`}>
-        {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles */}
-        <style>{`
+      {!pdfSource && (
+        <div
+          ref={ref}
+          className={`serviceHandoutPdf ${styles.handoutInvisible}`}
+        >
+          {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles */}
+          <style>
+            {`
           .serviceHandoutPdf * {
             margin: 0;
             font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
@@ -270,78 +276,77 @@ export const ServicePdfPage = () => {
           }
 
         `}
-        </style>
-        <header className="titleSection">
-          <h1 className="serviceTitle">{service.name}</h1>
-          <ServiceProgramDetails service={service} organization={resource} />
-        </header>
+          </style>
+          <header className="titleSection">
+            <h1 className="serviceTitle">{service.name}</h1>
+            <ServiceProgramDetails service={service} organization={resource} />
+          </header>
 
-        <ServiceListingSection title="About" className="aboutSection">
-          <ReactMarkdown
-            className="renderedMarkdown"
-            source={service.long_description}
-            linkTarget="_blank"
-          />
-          <ServiceAttribution
-            attribution={resource.source_attribution}
-            status={resource.status}
-          />
-        </ServiceListingSection>
-
-        {details.length > 0 && (
-          <ServiceListingSection className="detailsSection">
-            <Datatable
-              rowRenderer={(d) => (
-                <>
-                  <tr key={d.title}>
-                    <th>{d.title}</th>
-                  </tr>
-                  <tr>
-                    <td>
-                      <ReactMarkdown className="renderedMarkdown">
-                        {d.value}
-                      </ReactMarkdown>
-                    </td>
-                  </tr>
-                </>
-              )}
-              rows={details}
+          <ServiceListingSection title="About" className="aboutSection">
+            <ReactMarkdown
+              className="renderedMarkdown"
+              source={service.long_description}
+              linkTarget="_blank"
+            />
+            <ServiceAttribution
+              attribution={resource.source_attribution}
+              status={resource.status}
             />
           </ServiceListingSection>
-        )}
 
-        <ServiceListingSection
-          className="contactInfo"
-          title="Contact Info"
-        >
-          <TableOfContactInfo service={service} />
-        </ServiceListingSection>
+          {details.length > 0 && (
+            <ServiceListingSection className="detailsSection">
+              <Datatable
+                rowRenderer={(d) => (
+                  <>
+                    <tr key={d.title}>
+                      <th>{d.title}</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <ReactMarkdown className="renderedMarkdown">
+                          {d.value}
+                        </ReactMarkdown>
+                      </td>
+                    </tr>
+                  </>
+                )}
+                rows={details}
+              />
+            </ServiceListingSection>
+          )}
 
-        {locations.length > 0 && (
-          <ServiceListingSection
-            className="locationSection"
-            title="Location and Hours"
-          >
-            <div className="locationContainer">
-              <div className="addressInfo">
-                <ServiceAddress address={locations[0].address} resourceName={service.resource.name} />
-
-                <div className="serviceHours">
-                  <p className="hoursTitle">Hours</p>
-                  <TableOfOpeningTimes
-                    recurringSchedule={locations[0].recurringSchedule}
-                  />
-                </div>
-
-              </div>
-              <div>
-                <img src={mapImgSrc ?? ''} alt="Map" />
-              </div>
-            </div>
-
+          <ServiceListingSection className="contactInfo" title="Contact Info">
+            <TableOfContactInfo service={service} />
           </ServiceListingSection>
-        )}
-      </div>}
+
+          {locations.length > 0 && (
+            <ServiceListingSection
+              className="locationSection"
+              title="Location and Hours"
+            >
+              <div className="locationContainer">
+                <div className="addressInfo">
+                  <ServiceAddress
+                    address={locations[0].address}
+                    resourceName={service.resource.name}
+                  />
+
+                  <div className="serviceHours">
+                    <p className="hoursTitle">Hours</p>
+                    <TableOfOpeningTimes
+                      recurringSchedule={locations[0].recurringSchedule}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <img src={mapImgSrc ?? ""} alt="Map" />
+                </div>
+              </div>
+            </ServiceListingSection>
+          )}
+        </div>
+      )}
     </div>
   );
 };
@@ -358,7 +363,7 @@ export const ServiceListingSection = ({
   ...props
 }: ServiceListingSectionProps) => (
   <section {...props}>
-    {{title} && <h2>{title}</h2>}
+    {{ title } && <h2>{title}</h2>}
     {children}
   </section>
 );
@@ -385,29 +390,22 @@ type ServiceAddressProps = {
   address: Address;
 };
 
-const ServiceAddress = (
-  {resourceName, address}: ServiceAddressProps
-) => {
+const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
   const { address_1, address_2, city, state_province, postal_code } = address;
   return (
     <div>
       <p className="resourceName">{resourceName}</p>
       <p>
         <span>{address_1}</span>
-        {address_2
-          && (
+        {address_2 && (
           <span>
             <span> </span>
             <span>{address_2}</span>
           </span>
-          )}
+        )}
       </p>
       <p>
-        <span>{city}</span>
-        ,
-        {' '}
-        <span>{state_province}</span>
-        {' '}
+        <span>{city}</span>, <span>{state_province}</span>{" "}
         <span>{postal_code}</span>
       </p>
     </div>

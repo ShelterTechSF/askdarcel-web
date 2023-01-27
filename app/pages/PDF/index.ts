@@ -1,1 +1,1 @@
-export * from './ServicePdfPage';
+export * from "./ServicePdfPage";

@@ -16,22 +16,25 @@ import {
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
 
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ListingDebugPage } from './pages/debug/ListingDemoPage';
-import { OrganizationListingPage } from './pages/OrganizationListingPage';
-import { PrivacyPolicyPage } from './pages/legal/PrivacyPolicy';
-import { RedirectToOrganizations, RedirectToOrganizationsEdit } from './pages/LegacyRedirects';
-import { ResourceGuides, ResourceGuide } from './pages/ResourceGuides';
-import { SearchResultsPage } from './pages/SearchResultsPage/SearchResultsPage';
-import { ServiceListingPage } from './pages/ServiceListingPage';
-import { ServicePdfPage } from './pages/PDF/ServicePdfPage';
-import { TermsOfServicePage } from './pages/legal/TermsOfService';
-import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
-import { UcsfDiscoveryForm } from './pages/UcsfDiscoveryForm/UcsfDiscoveryForm';
-import OrganizationEditPage from './pages/OrganizationEditPage';
-import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
-import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
+import { HomePage } from "./pages/HomePage";
+import { AboutPage } from "./pages/AboutPage";
+import { ListingDebugPage } from "./pages/debug/ListingDemoPage";
+import { OrganizationListingPage } from "./pages/OrganizationListingPage";
+import { PrivacyPolicyPage } from "./pages/legal/PrivacyPolicy";
+import {
+  RedirectToOrganizations,
+  RedirectToOrganizationsEdit,
+} from "./pages/LegacyRedirects";
+import { ResourceGuides, ResourceGuide } from "./pages/ResourceGuides";
+import { SearchResultsPage } from "./pages/SearchResultsPage/SearchResultsPage";
+import { ServiceListingPage } from "./pages/ServiceListingPage";
+import { ServicePdfPage } from "./pages/Pdf/ServicePdfPage";
+import { TermsOfServicePage } from "./pages/legal/TermsOfService";
+import { UcsfHomePage } from "./pages/UcsfHomePage/UcsfHomePage";
+import { UcsfDiscoveryForm } from "./pages/UcsfDiscoveryForm/UcsfDiscoveryForm";
+import OrganizationEditPage from "./pages/OrganizationEditPage";
+import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
+import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
 
 import styles from "./App.module.scss";
 
@@ -204,8 +207,16 @@ export const App = () => {
 
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />
-              <Route exact path="/resource/edit" component={RedirectToOrganizationsEdit} />
-              <Route exact path="/resource" component={RedirectToOrganizations} />
+              <Route
+                exact
+                path="/resource/edit"
+                component={RedirectToOrganizationsEdit}
+              />
+              <Route
+                exact
+                path="/resource"
+                component={RedirectToOrganizations}
+              />
 
               <Redirect to="/" />
             </Switch>
