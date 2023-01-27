@@ -1,5 +1,14 @@
-// Set handout HTML to hidden here so that the user does not see the flash of HTML before
-// the PDF is rendered and so that actual HTML sent to the PDF API is not set to hidden.
+// Set any styles here that we do not want to pass to the HTML to PDF conversion API
+// E.g. showing/hiding loaders, etc.
+
 .handoutInvisible {
   visibility: hidden;
+}
+
+.loaderText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -55px;
+  width: 110px;
 }

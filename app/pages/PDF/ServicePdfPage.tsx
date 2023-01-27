@@ -57,7 +57,7 @@ export const ServicePdfPage = () => {
     }
   }, [mapImgSrc, pdfSource]);
 
-  if (!service || !pdfSource) {
+  if (!service) {
     return <Loader />;
   }
 
@@ -65,29 +65,28 @@ export const ServicePdfPage = () => {
   const locations = getServiceLocations(service, resource, recurringSchedule);
 
   if (locations.length > 0 && mapImgSrc === null) {
-    const lat = locations[0].address.latitude;
-    const lng = locations[0].address.longitude;
+    const { address_1, city, state_province, postal_code } =
+      locations[0].address;
 
-    if (!lat || !lng) {
-      setMapImgSrc("");
-    } else {
-      const center = `${lat}, ${lng}`;
-      const baseMapUrl = "https://maps.googleapis.com/maps/api/staticmap";
-      const params = {
-        center,
-        zoom: "14",
-        size: "375x225",
-        markers: `color:0xff6821|${center}`,
-        maptype: "roadmap",
-        key: config.GOOGLE_API_KEY,
-      };
+    // Use address rather than Lat/Lng as center. In some cases, a location may not have
+    // lat/lng or it may not be updated with address change. Address seems to
+    // be a safer value to access.
+    const center = `${address_1}, ${city}, ${state_province}, ${postal_code}`;
+    const baseMapUrl = "https://maps.googleapis.com/maps/api/staticmap";
+    const params = {
+      center,
+      zoom: "14",
+      size: "375x225",
+      markers: `color:0xff6821|${center}`,
+      maptype: "roadmap",
+      key: config.GOOGLE_API_KEY,
+    };
 
-      fetch(
-        `${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`
-      ).then((mapResp) => {
-        setMapImgSrc(mapResp.url);
-      });
-    }
+    fetch(
+      `${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`
+    ).then((mapResp) => {
+      setMapImgSrc(mapResp.url);
+    });
   }
 
   return (
@@ -101,7 +100,13 @@ export const ServicePdfPage = () => {
           style={{ height: "98vh" }}
         />
       )}
-
+      {!pdfSource && (
+        <>
+          <p className={styles.loaderText}>Fetching PDF...</p>
+          <Loader />
+        </>
+      )}
+      ;
       {!pdfSource && (
         <div
           ref={ref}
