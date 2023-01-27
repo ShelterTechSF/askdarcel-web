@@ -30,7 +30,6 @@ import { TermsOfServicePage } from './pages/legal/TermsOfService';
 import { UcsfHomePage } from './pages/UcsfHomePage/UcsfHomePage';
 import { UcsfDiscoveryForm } from './pages/UcsfDiscoveryForm/UcsfDiscoveryForm';
 import OrganizationEditPage from './pages/OrganizationEditPage';
-import { PDF } from './pages/PDF';
 import { ServiceDiscoveryForm } from './pages/ServiceDiscoveryForm';
 import { ServiceDiscoveryResults } from './pages/ServiceDiscoveryResults';
 
@@ -179,11 +178,6 @@ export const App = () => {
                 exact
                 path="/service-handout/:id"
                 component={ServicePdfPage}
-              />
-              <Route
-                exact
-                path="/pdf/:id"
-                component={PDF}
               />
               <Route
                 exact
