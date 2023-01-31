@@ -2,19 +2,14 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import qs from "qs";
-import {
-  ServiceAttribution,
-  TableOfContactInfo,
-  TableOfOpeningTimes,
-} from "components/listing";
 
-import { Datatable, Loader } from "components/ui";
 import config from "../../config";
 import {
   fetchService,
   generateServiceDetails,
   getServiceLocations,
   Organization,
+  RecurringSchedule,
   Service,
 } from "../../models";
 import { Address } from "../../models/Meta";
@@ -296,10 +291,6 @@ export const ServicePdfPage = () => {
               source={service.long_description}
               linkTarget="_blank"
             />
-            <ServiceAttribution
-              attribution={resource.source_attribution}
-              status={resource.status}
-            />
           </ServiceListingSection>
 
           {details.length > 0 && (
@@ -359,7 +350,6 @@ export const ServicePdfPage = () => {
   );
 };
 
-// These components have been (mostly) repurposed from the Service Listing Page
 type ServiceListingSectionProps = {
   title?: string;
 } & React.HTMLProps<HTMLDivElement>;
@@ -419,3 +409,136 @@ const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
     </div>
   );
 };
+
+export const TableOfContactInfo = ({ service }: { service: Service }) => {
+  // NB This component was copied from our compoonents directory to be used
+  // in this file so that future developers would not need to worry about this file
+  // when updating our code
+  const website = service.url || service.resource?.website;
+  const email = service.email || service.resource?.email;
+  const phones = service.resource?.phones;
+
+  if (!website && !phones && !email) {
+    return (
+      <span>
+        <table>
+          <tbody>
+            <tr>
+              <td>We don&apos;t have any contact info for this service.</td>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+    );
+  }
+
+  return (
+    <table>
+      <tbody>
+        {website ? (
+          <tr>
+            <th>Website</th>
+            <td>
+              <a target="_blank" rel="noopener noreferrer" href={website}>
+                {website}
+              </a>
+            </td>
+          </tr>
+        ) : null}
+
+        {email ? (
+          <tr>
+            <th>Email</th>
+            <td>
+              <a href={`mailto:${email}`}>{email}</a>
+            </td>
+          </tr>
+        ) : null}
+
+        {phones.length ? (
+          <tr>
+            <th>Phone</th>
+            <td>
+              <ul>
+                {phones.map((phone) => (
+                  <li key={phone.number}>
+                    <a href={`tel:${phone.number}`}>{phone.number}</a>{" "}
+                    {phone.service_type && `(${phone.service_type})`}
+                  </li>
+                ))}
+              </ul>
+            </td>
+          </tr>
+        ) : null}
+      </tbody>
+    </table>
+  );
+};
+
+export const TableOfOpeningTimes = ({
+  recurringSchedule,
+}: {
+  recurringSchedule: RecurringSchedule;
+}) => (
+  // NB This component was copied from our compoonents directory to be used
+  // in this file so that future developers would not need to worry about this file
+  // when updating our code
+  <table className="compact">
+    <tbody>
+      {(recurringSchedule.hoursKnown &&
+        recurringSchedule.intervals.map((interval) => {
+          const opensAt = interval.opensAt.timeString();
+          const closesAt = interval.closesAt.timeString();
+          return (
+            <tr key={interval.key()} data-cy="opening-times-row">
+              <th>{interval.opensAt.dayString()}</th>
+              <td>{`${opensAt} - ${closesAt}`}</td>
+            </tr>
+          );
+        })) || (
+        <tr>
+          <th>Call for Hours</th>
+        </tr>
+      )}
+    </tbody>
+  </table>
+);
+
+interface DatatableProps<T = any> {
+  rows: T[];
+  rowRenderer: (row: T) => JSX.Element;
+}
+
+export const Datatable = <T extends unknown>({
+  rows,
+  rowRenderer,
+}: DatatableProps<T>) => (
+  // NB This component was copied from our compoonents directory to be used
+  // in this file so that future developers would not need to worry about this file
+  // when updating our code
+  <table>
+    <tbody>{rows.map((row) => rowRenderer(row))}</tbody>
+  </table>
+);
+
+export const Loader = () => (
+  // NB This component was copied from our compoonents directory to be used
+  // in this file so that future developers would not need to worry about this file
+  // when updating our code
+  <div className="loader">
+    <div className="sk-fading-circle">
+      <div className="sk-circle1 sk-circle" />
+      <div className="sk-circle2 sk-circle" />
+      <div className="sk-circle3 sk-circle" />
+      <div className="sk-circle4 sk-circle" />
+      <div className="sk-circle5 sk-circle" />
+      <div className="sk-circle6 sk-circle" />
+      <div className="sk-circle7 sk-circle" />
+      <div className="sk-circle8 sk-circle" />
+      <div className="sk-circle9 sk-circle" />
+      <div className="sk-circle10 sk-circle" />
+      <div className="sk-circle11 sk-circle" />
+      <div className="sk-circle12 sk-circle" />
+    </div>
+  </div>
+);

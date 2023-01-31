@@ -34,7 +34,7 @@ export const ClientHandouts = ({
             target="_blank"
             rel="noreferrer"
             className={styles.handoutLink}
-            key={handout.id}
+            key={handout.id ?? handout.key}
           >
             <img
               src={icon("pdf-red")}

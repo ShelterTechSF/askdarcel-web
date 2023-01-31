@@ -216,7 +216,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
             ? hit.documents
             : [
                 {
-                  id: -1,
+                  key: -1,
                   description: "English",
                   url: `/service-handout/${entryId}`,
                 },
