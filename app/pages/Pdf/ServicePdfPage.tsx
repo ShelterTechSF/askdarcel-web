@@ -123,8 +123,8 @@ export const ServicePdfPage = () => {
             background-color: #fff;
           }
 
-          .serviceHandoutPdf table.compact tr th,
-          .serviceHandoutPdf table.compact tr td {
+          .compactHeader,
+          .compactData {
             padding-left: 0;
           }
 
@@ -433,7 +433,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
   }
 
   return (
-    <table>
+    <table className="contactInfoTable">
       <tbody>
         {website ? (
           <tr>
@@ -490,9 +490,13 @@ export const TableOfOpeningTimes = ({
           const opensAt = interval.opensAt.timeString();
           const closesAt = interval.closesAt.timeString();
           return (
-            <tr key={interval.key()} data-cy="opening-times-row">
-              <th>{interval.opensAt.dayString()}</th>
-              <td>{`${opensAt} - ${closesAt}`}</td>
+            <tr
+              key={interval.key()}
+              data-cy="opening-times-row"
+              className="compactRow"
+            >
+              <th className="compactHeader">{interval.opensAt.dayString()}</th>
+              <td className="compactData">{`${opensAt} - ${closesAt}`}</td>
             </tr>
           );
         })) || (
