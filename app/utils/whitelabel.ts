@@ -18,6 +18,8 @@ type WhiteLabelSiteKey =
 type homepageComponentEnums = "HomePage" | "UcsfHomePage";
 
 interface WhiteLabelSite {
+  aboutPageText: string;
+  aboutPageTitle: string;
   appImages: {
     background: string;
     logoLarge: string;
@@ -69,6 +71,13 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
 const configKey = determineWhiteLabelSite();
 
 const whiteLabelDefaults = {
+  aboutPageText: `The SF Service Guide is an online directory of human services in San
+Francisco. Our goal is to help anyone with access to a smartphone,
+tablet, or computer find the services they need. The guide's
+focus is on homelessness and housing services, but also covers a
+variety of other services, from education and legal aid to senior
+services and re-entry programs.`,
+  aboutPageTitle: "SF Service Guide",
   enableTranslation: true,
   homePageComponent: "HomePage",
   intercom: false,
@@ -160,6 +169,13 @@ const Ucsf: WhiteLabelSite = {
     logoSmall: UcsfServiceLogo,
   },
   ...whiteLabelDefaults,
+  aboutPageText: `The Discharge Navigator is a clinician-focused tool designed to empower medical providers
+with real-time access to information about social resources around San Francisco. Clinicians
+can utilize this database to identify and share targeted resources for patients based on social
+needs, language requirements, and demographics. This project is the result of collaboration
+among experts across the SF Department of Public Health, Zuckerberg SF General Emergency
+Department, and UCSF School of Medicine in partnership with SF Service Guide.`,
+  aboutPageTitle: "Discharge Navigator",
   enableTranslation: false,
   homePageComponent: "UcsfHomePage",
   navLogoStyle: styles.navLogoUcsf,
