@@ -16,7 +16,7 @@ import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
 import ZenDeskLogo from "../assets/ZenDeskLogo.jpg";
 import TLTechLabLogo from "../assets/TLTechLabLogo.png";
 
-export const LinkSfJsx = () => (
+export const LinkSf = () => (
   <div className={styles.about}>
     <article className={styles.textPage} id="about">
       <header className={styles.aboutHeader}>

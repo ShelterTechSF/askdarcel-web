@@ -1,4 +1,6 @@
 import React from "react";
+import { whiteLabel } from "../../../utils";
+
 import { Footer } from "../../../components/ui";
 
 import styles from "../AboutPage.module.scss";
@@ -14,23 +16,18 @@ import CompassLogo from "../assets/Compass.png";
 import EDCLogo from "../assets/EDC.png";
 import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
 
-export const SfServiceGuideJsx = () => (
+const { aboutPageText, aboutPageTitle } = whiteLabel;
+
+export const SfServiceGuide = () => (
   <div className={styles.about}>
     <article className={styles.textPage} id="about">
       <header className={styles.aboutHeader}>
         <h1>
           About the
           <br />
-          SF Service Guide
+          {aboutPageTitle}
         </h1>
-        <p>
-          The SF Service Guide is an online directory of human services in San
-          Francisco. Our goal is to help anyone with access to a smartphone,
-          tablet, or computer find the services they need. The guide&apos;s
-          focus is on homelessness and housing services, but also covers a
-          variety of other services, from education and legal aid to senior
-          services and re-entry programs.{" "}
-        </p>
+        <p>{aboutPageText} </p>
       </header>
       <section className={styles.aboutSection}>
         <h3>Powered by:</h3>
@@ -43,7 +40,7 @@ export const SfServiceGuideJsx = () => (
             <img src={STLogo} alt="ShelterTech" />
           </a>
           <p>
-            The SF Service Guide is developed and maintained by ShelterTech, a
+            The {aboutPageTitle} is developed and maintained by ShelterTech, a
             volunteer-only 501c(3) non-profit that builds tech products for
             homeless and at risk communities.{" "}
             <a href="http://sheltertech.org" rel="noopener">
@@ -63,7 +60,7 @@ export const SfServiceGuideJsx = () => (
             <img src={MOHCDLogo} alt="MOHCD" />
           </a>
           <p>
-            The SF Service Guide is supported by a grant from the SF
+            The {aboutPageTitle} is supported by a grant from the SF
             Mayor&apos;s Office of Housing and Community Development.
           </p>
         </div>
