@@ -1,7 +1,5 @@
 import * as _ from 'lodash/fp/object';
 
-import { getBreakingNewsItems } from '../models';
-
 function setAuthHeaders(resp) {
   const { headers } = resp;
   if (headers.get('access-token') && headers.get('client')) {
@@ -19,13 +17,6 @@ function setAuthHeaders(resp) {
 }
 
 export function post(url, body, headers) {
-  // mock
-  if (url === '/api/breaking_news_items') {
-    return Promise.resolve({
-      id: '~enc~3',
-    });
-  }
-  // mock
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -46,12 +37,6 @@ export function post(url, body, headers) {
 }
 
 export function get(url, headers) {
-  // mock
-  if (url === '/api/breaking_news_items') {
-    return getBreakingNewsItems();
-    // mock
-  }
-
   let queryHeaders = {
     'Content-Type': 'application/json',
   };
@@ -71,9 +56,6 @@ export function get(url, headers) {
 }
 
 export function put(url, body, headers) {
-  if (url.slice(0, 24) === '/api/breaking_news_items') {
-    return Promise.resolve(true);
-  }
   let queryHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -94,11 +76,6 @@ export function put(url, body, headers) {
 }
 
 export function APIDelete(url, headers) {
-  // mock
-  if (url.slice(0, 24) === '/api/breaking_news_items') {
-    return Promise.resolve(true);
-  }
-  // mock
   let queryHeaders = {
     'Content-Type': 'application/json',
   };

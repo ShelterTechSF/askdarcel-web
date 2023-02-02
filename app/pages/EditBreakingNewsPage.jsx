@@ -7,10 +7,6 @@ import { withRouter } from 'react-router-dom';
 import * as dataService from '../utils/DataService';
 import './EditBreakingNewsPage.scss';
 
-const onSave = item => {
-  dataService.put(`/api/breaking_news_items/${item.id}`);
-};
-
 class EditBreakingNewsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +18,18 @@ class EditBreakingNewsPage extends React.Component {
   }
 
   async componentDidMount() {
-    this.setState({ breakingNewsItems: await dataService.get('/api/breaking_news_items') });
+    const { news_articles } = await dataService.get('/api/news_articles');
+    const breakingNewsItems = news_articles.map(article => ({
+      ...article,
+      effective_date: this.formatDate(article.effective_date),
+      expiration_date: this.formatDate(article.expiration_date)
+    }));
+
+    this.setState({ breakingNewsItems });
+  }
+
+  formatDate(date) {
+    return date ? new Date(date) : null;
   }
 
   onFieldChange(item, { target }) {
@@ -38,14 +45,20 @@ class EditBreakingNewsPage extends React.Component {
 
   onDatePickerChange(item, value, field) {
     const newItem = { ...item, [field]: value };
+
     this.setState(prevState => ({
       breakingNewsItems: prevState.breakingNewsItems
         .map(oldItem => (oldItem.id === newItem.id ? newItem : oldItem)),
     }));
   }
 
+  onSave(item) {
+    dataService.put(`/api/news_articles/${item.id}`, item);
+  }
+
   async onDelete(item) {
-    await dataService.APIDelete(`/api/breaking_news_items/${item.id}`);
+    await dataService.APIDelete(`/api/news_articles/${item.id}`);
+
     this.setState(prevState => ({
       breakingNewsItems: prevState.breakingNewsItems
         .filter(oldItem => oldItem.id !== item.id),
@@ -53,19 +66,20 @@ class EditBreakingNewsPage extends React.Component {
   }
 
   async onAddNew() {
-    const newItem = await dataService.post('/api/breaking_news_items');
+    const response = await dataService.post('/api/news_articles', {});
+    const { news_article } = await response.json();
 
-    this.setState(prevState => ({ breakingNewsItems: [...prevState.breakingNewsItems, newItem] }));
+    this.setState(prevState => ({
+      breakingNewsItems: [...prevState.breakingNewsItems, news_article]
+    }));
   }
 
   renderForm(item, index) {
-    const { breakingNewsItems } = this.state;
-
     return (
       <form className="news-item-form" key={item.id}>
         <div className="form-header">
           <h2>{`Breaking News Item #${index + 1}`}</h2>
-          <button type="button" onClick={() => onSave(item)}>
+          <button type="button" onClick={() => this.onSave(item)}>
             <RiSave3Line />
             Save
           </button>
@@ -103,7 +117,7 @@ class EditBreakingNewsPage extends React.Component {
               <label htmlFor="effective-date">Effective Date</label>
               <DatePicker
                 id="effective-date"
-                selected={breakingNewsItems[index].effective_date}
+                selected={item.effective_date}
                 onChange={e => this.onDatePickerChange(item, e, 'effective_date')}
                 placeholderText="Effective Date"
               />
@@ -112,7 +126,7 @@ class EditBreakingNewsPage extends React.Component {
               <label htmlFor="expiration-date">Expiration Date</label>
               <DatePicker
                 id="expiration-date"
-                selected={breakingNewsItems[index].expiration_date}
+                selected={item.expiration_date}
                 onChange={e => this.onDatePickerChange(item, e, 'expiration_date')}
                 placeholderText="Expiration Date"
               />
@@ -126,7 +140,7 @@ class EditBreakingNewsPage extends React.Component {
             placeholder="Body"
             data-field="body"
             defaultValue={item.body}
-            onChange={e => this.onFieldChange(index, e)}
+            onChange={e => this.onFieldChange(item, e)}
           />
         </div>
       </form>
