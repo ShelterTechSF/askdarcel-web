@@ -12,7 +12,6 @@ const {
   navLogoStyle,
   showMobileNav,
   siteNavStyle,
-  siteUrl,
   title,
 } = whiteLabel;
 
@@ -77,7 +76,7 @@ export const Navigation = ({
 
 const SiteLogo = () =>
   /^https?:\/\//.test(logoLinkDestination) ? (
-    <a className={`${navLogoStyle} ${styles.navLogo}`} href={siteUrl}>
+    <a className={`${navLogoStyle} ${styles.navLogo}`} href={logoLinkDestination}>
       <img src={logoSmall} alt={title} />
     </a>
   ) : (
