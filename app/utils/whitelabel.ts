@@ -1,6 +1,6 @@
 import BackgroundImage from "../assets/img/bg.png";
 import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
-import SFFamiliesLogo from "../assets/img/sf-families.svg";
+import Our415Logo from "../assets/img/Our415_logo-hori.svg";
 import SFServiceLogo from "../assets/img/sf-service.svg";
 import UcsfServiceLogo from "../assets/img/ic-dcnav.png";
 import SFSeal from "../assets/img/sf-seal.png";
@@ -110,12 +110,12 @@ const appImageDefaults = {
 const SFFamilies: WhiteLabelSite = {
   appImages: {
     ...appImageDefaults,
-    logoLarge: SFFamiliesLogo,
-    logoSmall: SFFamiliesLogo,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
   enableTranslation: true,
-  logoLinkDestination: "https://www.sffamilies.org/",
+  logoLinkDestination: "https://www.our415.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
   showMobileNav: false,
@@ -123,7 +123,7 @@ const SFFamilies: WhiteLabelSite = {
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: "https://sffamilies.sfserviceguide.org/",
-  title: "SF Families",
+  title: "Our 415",
   userWay: true,
 } as const;
 
