@@ -16,6 +16,13 @@ import { Address } from "../../models/Meta";
 
 import styles from "./styles.module.scss";
 
+// Note: Much of the code/styling/components in this file were copied over from the Service
+// Listing Page. This file is a standalone file that exists to render PDFs of service data.
+// It should not be referenced elsewhere.
+// Once this component has rendered, an effect hook is run that gets the HTML of this component
+// and passes it to our Rails API which then relays the HTML to an HTML to PDF conversion 3rd party
+// API. The PDF is passed back to the client and is then displayed
+
 export const ServicePdfPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
@@ -355,7 +362,7 @@ type ServiceListingSectionProps = {
 } & React.HTMLProps<HTMLDivElement>;
 
 // A title with the content of a section
-export const ServiceListingSection = ({
+const ServiceListingSection = ({
   children,
   title,
   ...props
@@ -371,7 +378,7 @@ type ServiceProgramDetailsProps = {
   organization: Organization;
 };
 
-export const ServiceProgramDetails = ({
+const ServiceProgramDetails = ({
   service,
   organization,
 }: ServiceProgramDetailsProps) => (
@@ -410,7 +417,7 @@ const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
   );
 };
 
-export const TableOfContactInfo = ({ service }: { service: Service }) => {
+const TableOfContactInfo = ({ service }: { service: Service }) => {
   // NB This component was copied from our compoonents directory to be used
   // in this file so that future developers would not need to worry about this file
   // when updating our code
@@ -475,7 +482,7 @@ export const TableOfContactInfo = ({ service }: { service: Service }) => {
   );
 };
 
-export const TableOfOpeningTimes = ({
+const TableOfOpeningTimes = ({
   recurringSchedule,
 }: {
   recurringSchedule: RecurringSchedule;
@@ -513,7 +520,7 @@ interface DatatableProps<T = any> {
   rowRenderer: (row: T) => JSX.Element;
 }
 
-export const Datatable = <T extends unknown>({
+const Datatable = <T extends unknown>({
   rows,
   rowRenderer,
 }: DatatableProps<T>) => (
@@ -525,7 +532,7 @@ export const Datatable = <T extends unknown>({
   </table>
 );
 
-export const Loader = () => (
+const Loader = () => (
   // NB This component was copied from our compoonents directory to be used
   // in this file so that future developers would not need to worry about this file
   // when updating our code
