@@ -211,7 +211,17 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       <ClientHandouts
         isOpen={handoutModalIsOpen}
         setIsOpen={toggleHandoutModal}
-        handoutCollection={hit.documents ?? []}
+        handoutCollection={
+          hit.documents.length > 0
+            ? hit.documents
+            : [
+                {
+                  key: -1,
+                  description: "English",
+                  url: `/service-handout/${entryId}`,
+                },
+              ]
+        }
       />
       <div className={styles.searchText}>
         <div className={styles.title}>
@@ -240,7 +250,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           }
         >
           {!!hit.instructions?.length && clinicianActionsLink}
-          {!!hit.documents?.length && handoutsLink}
+          {handoutsLink}
         </div>
         <div
           className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ""}

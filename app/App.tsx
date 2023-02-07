@@ -28,6 +28,7 @@ import {
 import { ResourceGuides, ResourceGuide } from "./pages/ResourceGuides";
 import { SearchResultsPage } from "./pages/SearchResultsPage/SearchResultsPage";
 import { ServiceListingPage } from "./pages/ServiceListingPage";
+import { ServicePdfPage } from "./pages/Pdf/ServicePdfPage";
 import { TermsOfServicePage } from "./pages/legal/TermsOfService";
 import { UcsfHomePage } from "./pages/UcsfHomePage/UcsfHomePage";
 import { UcsfDiscoveryForm } from "./pages/UcsfDiscoveryForm/UcsfDiscoveryForm";
@@ -159,7 +160,6 @@ export const App = () => {
                   />
                 )}
               />
-
               <Route
                 exact
                 path="/privacy-policy"
@@ -176,6 +176,11 @@ export const App = () => {
                 exact
                 path="/services/:id"
                 component={ServiceListingPage}
+              />
+              <Route
+                exact
+                path="/service-handout/:id"
+                component={ServicePdfPage}
               />
               <Route
                 exact
