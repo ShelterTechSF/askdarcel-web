@@ -212,7 +212,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
         isOpen={handoutModalIsOpen}
         setIsOpen={toggleHandoutModal}
         handoutCollection={
-          hit.documents.length > 0
+          hit?.documents?.length > 0
             ? hit.documents
             : [
                 {
