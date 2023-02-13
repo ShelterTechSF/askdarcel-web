@@ -27,7 +27,7 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  enableTranslation: boolean;
+  enabledTranslations: ReadonlyArray<string>; // empty to disable translation
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
@@ -78,7 +78,7 @@ focus is on homelessness and housing services, but also covers a
 variety of other services, from education and legal aid to senior
 services and re-entry programs.`,
   aboutPageTitle: "SF Service Guide",
-  enableTranslation: true,
+  enabledTranslations: ["en", "es", "tl", "zh-TW"],
   homePageComponent: "HomePage",
   intercom: false,
   logoLinkDestination: "/",
@@ -114,7 +114,7 @@ const SFFamilies: WhiteLabelSite = {
     logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
-  enableTranslation: true,
+  enabledTranslations: ["en", "es", "tl", "zh-TW", "vi", "ar", "ru"],
   logoLinkDestination: "https://www.our415.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
@@ -122,7 +122,7 @@ const SFFamilies: WhiteLabelSite = {
   showPrintResultsBtn: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
-  siteUrl: "https://sffamilies.sfserviceguide.org/",
+  siteUrl: "https://our415.sfserviceguide.org/",
   title: "Our 415",
   userWay: true,
 } as const;
@@ -176,7 +176,7 @@ needs, language requirements, and demographics. This project is the result of co
 among experts across the SF Department of Public Health, Zuckerberg SF General Emergency
 Department, and UCSF School of Medicine in partnership with SF Service Guide.`,
   aboutPageTitle: "Discharge Navigator",
-  enableTranslation: false,
+  enabledTranslations: [],
   homePageComponent: "UcsfHomePage",
   navLogoStyle: styles.navLogoUcsf,
   refinementListLimit: 15,

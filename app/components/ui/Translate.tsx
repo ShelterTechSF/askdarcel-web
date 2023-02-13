@@ -4,14 +4,12 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { whiteLabel } from "../../utils";
 
-const INCLUDED_LANGUAGES = ["en", "es", "tl", "zh-TW"];
-const INCLUDED_LANGUAGES_STR = INCLUDED_LANGUAGES.join(",");
-
 const Translate = () => {
   const [, setCookie] = useCookies(["googtrans"]);
   const { search } = useLocation();
 
-  if (whiteLabel.enableTranslation) {
+  const languages = whiteLabel.enabledTranslations;
+  if (languages && languages.length > 0) {
     // Google Translate determines translation source and target
     // with a "googtrans" cookie.
     // When the user navigates with a `lang` query param,
@@ -19,7 +17,7 @@ const Translate = () => {
     // into that target language.
     const params = new URLSearchParams(search);
     const targetLangCode = params.get("lang");
-    if (targetLangCode && INCLUDED_LANGUAGES.includes(targetLangCode)) {
+    if (targetLangCode && languages.includes(targetLangCode)) {
       setCookie("googtrans", `/en/${targetLangCode}`, { path: "/" });
     }
 
@@ -30,7 +28,7 @@ const Translate = () => {
             {`
               function googleTranslateElementInit() {
                 new google.translate.TranslateElement({
-                  includedLanguages: '${INCLUDED_LANGUAGES_STR}',
+                  includedLanguages: '${languages.join(",")}',
                   pageLanguage: 'en',
                 }, 'google_translate_element');
               }
