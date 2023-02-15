@@ -84,14 +84,14 @@ export const ServicePdfPage = () => {
       key: config.GOOGLE_API_KEY,
     };
 
-    fetch(
-      `${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`
-    ).then((mapResp) => {
-      setMapImgSrc(mapResp.url);
-    }).catch(() => {
-      // If there is an error, set the mapImgSrc to non-null so that the HTML to PDF API request will still be made
-      setMapImgSrc('');
-    });
+    fetch(`${baseMapUrl}?${qs.stringify(params, { encodeValuesOnly: true })}`)
+      .then((mapResp) => {
+        setMapImgSrc(mapResp.url);
+      })
+      .catch(() => {
+        // If there is an error, set the mapImgSrc to non-null so that the HTML to PDF API request will still be made
+        setMapImgSrc("");
+      });
   }
 
   return (

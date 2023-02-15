@@ -201,7 +201,7 @@ export const App = () => {
               {/* UCSF white label paths */}
               <Route
                 exact
-                path="/find-services"
+                path="/find-services/:selectedResourceSlug"
                 component={UcsfDiscoveryForm}
               />
 

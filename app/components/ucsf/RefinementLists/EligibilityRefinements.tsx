@@ -51,7 +51,7 @@ export const EligibilityRefinements = ({
   };
 
   return (
-    <div className={styles.refinementsBox}>
+    <>
       <div className={styles.refinementsBox_title}>Client Identity</div>
       <ol className={styles.refinementsLabels}>
         {resourceEligibilityGroups.map((eligibilityGroup) => (
@@ -87,6 +87,6 @@ export const EligibilityRefinements = ({
           </li>
         ))}
       </ol>
-    </div>
+    </>
   );
 };
