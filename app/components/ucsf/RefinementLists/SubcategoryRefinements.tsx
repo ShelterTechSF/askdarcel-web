@@ -55,7 +55,7 @@ export const SubcategoryRefinements = ({
   };
 
   return (
-    <div className={styles.refinementsBox}>
+    <>
       <div className={styles.refinementsBox_title}>Service Type</div>
 
       <ul className={styles.refinementsList}>
@@ -73,6 +73,6 @@ export const SubcategoryRefinements = ({
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };

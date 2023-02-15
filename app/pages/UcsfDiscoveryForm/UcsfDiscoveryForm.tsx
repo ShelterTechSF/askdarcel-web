@@ -119,12 +119,11 @@ const Page = () => {
     }
   };
 
-  let stepSubtitle = `${servicesName}: `;
+  let stepSubtitle =
+    "Can you tell us more about the services that your patient is looking for?";
   if (stepName === "eligibilities") {
-    stepSubtitle += "Can you tell us more about your patient and their needs?";
-  } else {
-    stepSubtitle +=
-      "Can you tell us more about the services that your patient is looking for?";
+    stepSubtitle =
+      "Can you tell us more about your patient and their specific needs?";
   }
 
   const nextStepName = steps[currentStep + 1];
@@ -135,27 +134,33 @@ const Page = () => {
     nextButtonText += "Show Results";
   }
 
+  const refinementsComponent =
+    stepName === "eligibilities" ? (
+      <EligibilityRefinements
+        resourceEligibilityGroups={resourceEligibilityGroups}
+        selectedEligibilities={selectedEligibilities}
+        setSelectedEligibilities={setSelectedEligibilities}
+      />
+    ) : (
+      <SubcategoryRefinements
+        subcategories={subcategories}
+        selectedSubcategories={selectedSubcategories}
+        setSelectedSubcategories={setSelectedSubcategories}
+      />
+    );
+
   return (
     <div className={styles.discoveryFormPage}>
+      <Section title={servicesName} />
       <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
       <div className={styles.eligibilitiesContainer}>
-        {stepName === "eligibilities" ? (
-          <EligibilityRefinements
-            resourceEligibilityGroups={resourceEligibilityGroups}
-            selectedEligibilities={selectedEligibilities}
-            setSelectedEligibilities={setSelectedEligibilities}
-          />
-        ) : (
-          <SubcategoryRefinements
-            subcategories={subcategories}
-            selectedSubcategories={selectedSubcategories}
-            setSelectedSubcategories={setSelectedSubcategories}
-          />
-        )}
-
+        <div className={styles.refinementsBox}>{refinementsComponent}</div>
         <div className={styles.navigationButtons}>
-          <Button onClick={backToResourceSelection}>Back</Button>
+          <Button addClass={styles.goBackBtn} onClick={backToResourceSelection}>
+            Back
+          </Button>
           <Button
+            addClass={styles.nextBtn}
             onClick={() => {
               goToNextStep(selectedResourceSlug);
             }}

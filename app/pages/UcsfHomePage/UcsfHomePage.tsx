@@ -55,7 +55,7 @@ const Page = () => (
     <Section title="For Clinicians" />
     <Section
       addClass={styles.subtitleMargin}
-      subtitle="Step 1: What kind of assistance does your client need?"
+      subtitle="What kind of assistance does your patient need?"
     />
     <ResourceListComponent resourceList={UCSF_RESOURCES} />
   </div>
