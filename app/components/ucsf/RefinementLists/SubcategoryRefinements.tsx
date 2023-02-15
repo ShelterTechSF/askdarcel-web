@@ -65,7 +65,7 @@ export const SubcategoryRefinements = ({
               onChange={() => handleSubcategoryClick(item.id)}
               name="serviceTypes"
               id={item.name}
-              checked={selectedSubcategories[item.id] || false}
+              checked={selectedSubcategories[item.id] ?? false}
             />
             <label className={styles.refinementsLabel} htmlFor={item.name}>
               {item.name}

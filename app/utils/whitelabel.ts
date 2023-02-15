@@ -65,7 +65,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
   // N.B. The qaone environment can be used to test various whitelabels as needed
   if (subdomain === "qaone") return "Ucsf";
 
-  return "Ucsf";
+  return "defaultWhiteLabel";
 }
 
 const configKey = determineWhiteLabelSite();
