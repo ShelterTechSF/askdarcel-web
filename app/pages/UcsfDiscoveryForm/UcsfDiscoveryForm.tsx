@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import qs from "qs";
 import ReactGA from "react-ga";
 
@@ -36,17 +36,14 @@ const Page = () => {
   const [selectedSubcategories, setSelectedSubcategories] =
     useState<SelectedSubcategories>({});
 
-  interface LocationState {
+  const history = useHistory();
+  const match = useRouteMatch();
+  interface MatchParams {
     selectedResourceSlug: string;
-    selectedEligibilityNames: string[];
   }
-
-  const history = useHistory<LocationState>();
-  const { state } = history.location;
-  const selectedResourceSlug = state && state.selectedResourceSlug;
+  const { selectedResourceSlug } = match.params as MatchParams;
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
   const category = CATEGORIES.find((c) => c.slug === selectedResourceSlug);
-
   const [currentStep, setCurrentStep] = useState(0);
 
   const subcategories: SubcategoryRefinement[] =
@@ -57,6 +54,7 @@ const Page = () => {
     return null;
   }
 
+  const servicesName = category.abbreviatedName;
   const { steps } = category;
   const stepName = steps[currentStep];
 
@@ -121,12 +119,12 @@ const Page = () => {
     }
   };
 
-  let stepSubtitle = `Step ${currentStep + 2}: `;
+  let stepSubtitle = `${servicesName}: `;
   if (stepName === "eligibilities") {
-    stepSubtitle += "Can you tell us more about your client and their needs?";
+    stepSubtitle += "Can you tell us more about your patient and their needs?";
   } else {
     stepSubtitle +=
-      "Can you tell us more about the services that your client is looking for?";
+      "Can you tell us more about the services that your patient is looking for?";
   }
 
   const nextStepName = steps[currentStep + 1];
@@ -134,7 +132,7 @@ const Page = () => {
   if (nextStepName === "subcategories") {
     nextButtonText += "Service Type";
   } else if (nextStepName === "results") {
-    nextButtonText += "Service List";
+    nextButtonText += "Show Results";
   }
 
   return (

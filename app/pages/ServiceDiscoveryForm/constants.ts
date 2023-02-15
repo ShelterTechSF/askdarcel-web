@@ -9,6 +9,7 @@ export interface ServiceCategory {
   algoliaCategoryName: string;
   id: string;
   name: string;
+  abbreviatedName?: string;
   slug: string;
   steps: Step[];
   subcategorySubheading: string;
@@ -120,6 +121,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     algoliaCategoryName: "Ucsf-mentalhealth",
     id: "2000001",
     name: "Mental Health Resources",
+    abbreviatedName: "Mental Health",
     slug: "ucsf-mental-health-resources",
     steps: ["eligibilities", "subcategories", "results"],
     subcategorySubheading: defaultSubheading,
@@ -128,6 +130,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     algoliaCategoryName: "Ucsf-shelter",
     id: "2000002",
     name: "Shelter Resources",
+    abbreviatedName: "Shelter",
     slug: "ucsf-shelter-resources",
     steps: ["eligibilities", "subcategories", "results"],
     subcategorySubheading: defaultSubheading,
@@ -136,6 +139,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     algoliaCategoryName: "Ucsf-substanceuse",
     id: "2000003",
     name: "Substance Use Resources",
+    abbreviatedName: "Substance Use",
     slug: "ucsf-substance-use-resources",
     steps: ["eligibilities", "subcategories", "results"],
     subcategorySubheading: defaultSubheading,
@@ -144,6 +148,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     algoliaCategoryName: "Ucsf-foodinsecurity",
     id: "2000004",
     name: "Food Insecurity Resources",
+    abbreviatedName: "Food Insecurity",
     slug: "ucsf-food-insecurity-resources",
     steps: ["eligibilities", "subcategories", "results"],
     subcategorySubheading: defaultSubheading,
@@ -152,6 +157,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     algoliaCategoryName: "Ucsf-immmigration",
     id: "2000005",
     name: "Immigration Resources",
+    abbreviatedName: "Immigration",
     slug: "ucsf-immigration-resources",
     steps: ["eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
