@@ -21,9 +21,7 @@ const ResourceListComponent = ({
   </ul>
 );
 
-const ResourceCard = ({resource}: {
-  resource: ResourceItem;
-}) => {
+const ResourceCard = ({ resource }: { resource: ResourceItem }) => {
   const history = useHistory();
   const goToNextStep = (selectedResourceSlug: string) => {
     history.push(`/find-services/${selectedResourceSlug}`);

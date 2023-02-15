@@ -54,7 +54,7 @@ const Page = () => {
     return null;
   }
 
-  const servicesName = category.abbreviatedName;
+  const servicesName = category.abbreviatedName ?? "";
   const { steps } = category;
   const stepName = steps[currentStep];
 
