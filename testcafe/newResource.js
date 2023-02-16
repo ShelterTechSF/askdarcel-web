@@ -1,30 +1,29 @@
-import NewResourcePage from './pages/NewResourcePage';
-import ResourcePage from './pages/ResourcePage';
+import NewResourcePage from "./pages/NewResourcePage";
+import ResourcePage from "./pages/ResourcePage";
 
 const newResourcePage = new NewResourcePage();
 
-fixture`Add New Resource`
-  .page(NewResourcePage.url());
+fixture`Add New Resource`.page(NewResourcePage.url());
 
-test('Add new resource, basic', async t => {
+test("Add new resource, basic", async (t) => {
   // TODO: Currently, all that is required is a name and an address
   // what should the minimum data be for a new resource?
   const data = {
-    name: 'New Resource Name',
+    name: "New Resource Name",
     address: {
-      address1: '123 Fake St.',
-      city: 'San Francisco',
-      stateOrProvince: 'CA',
-      postalCode: '94110',
+      address1: "123 Fake St.",
+      city: "San Francisco",
+      stateOrProvince: "CA",
+      postalCode: "94110",
     },
     phone: {
-      number: '1234567890',
-      type: 'LandLine',
+      number: "1234567890",
+      type: "LandLine",
     },
-    website: 'https://theBestResource.best',
-    email: 'theBestResource1337@aol.com',
-    description: 'A description of this resource',
-    note: 'A new note about this resource',
+    website: "https://theBestResource.best",
+    email: "theBestResource1337@aol.com",
+    description: "A description of this resource",
+    note: "A new note about this resource",
   };
 
   // Add name
@@ -33,12 +32,11 @@ test('Add new resource, basic', async t => {
   // Add address
   await t.click(newResourcePage.addAddressButton);
   await Object.keys(data.address).reduce(
-    (_t, prop) => _t.typeText(
-      newResourcePage.addressModal[prop],
-      data.address[prop],
-      { replace: true },
-    ),
-    t,
+    (_t, prop) =>
+      _t.typeText(newResourcePage.addressModal[prop], data.address[prop], {
+        replace: true,
+      }),
+    t
   );
   await t.click(newResourcePage.addressModal.saveButton);
 
@@ -56,7 +54,9 @@ test('Add new resource, basic', async t => {
   await t.typeText(newResourcePage.email, data.email, { replace: true });
 
   // Add description
-  await t.typeText(newResourcePage.description, data.description, { replace: true });
+  await t.typeText(newResourcePage.description, data.description, {
+    replace: true,
+  });
 
   // Add note
   await t.click(newResourcePage.addNoteButton);
@@ -65,11 +65,12 @@ test('Add new resource, basic', async t => {
 
   // Save data
   function dialogHandler(type, text) {
-    if (!text.includes('Resource successfuly created')) {
+    if (!text.includes("Resource successfuly created")) {
       throw new Error(`Got unexpected dialog: ${text}`);
     }
   }
-  await t.setNativeDialogHandler(dialogHandler)
+  await t
+    .setNativeDialogHandler(dialogHandler)
     .click(newResourcePage.saveButton)
     .setNativeDialogHandler(null);
   const dialogHistory = await t.getNativeDialogHistory();
@@ -84,15 +85,23 @@ test('Add new resource, basic', async t => {
   await t.expect(resourcePage.resourceName.textContent).eql(data.name);
 
   // Ensure resource address is correct
-  await t.expect(resourcePage.address.textContent).contains(data.address.address1);
+  await t
+    .expect(resourcePage.address.textContent)
+    .contains(data.address.address1);
   await t.expect(resourcePage.address.textContent).contains(data.address.city);
-  await t.expect(resourcePage.address.textContent).contains(data.address.stateOrProvince);
-  await t.expect(resourcePage.address.textContent).contains(data.address.postalCode);
+  await t
+    .expect(resourcePage.address.textContent)
+    .contains(data.address.stateOrProvince);
+  await t
+    .expect(resourcePage.address.textContent)
+    .contains(data.address.postalCode);
 
   // Ensure resource phone is correct
   await t
-    .expect(resourcePage.phones.parent().textContent).contains(data.phone.number)
-    .expect(resourcePage.phones.parent().textContent).contains(data.phone.type);
+    .expect(resourcePage.phones.parent().textContent)
+    .contains(data.phone.number)
+    .expect(resourcePage.phones.parent().textContent)
+    .contains(data.phone.type);
 
   // Ensure resource website is correct
   await t.expect(resourcePage.website.textContent).eql(data.website);

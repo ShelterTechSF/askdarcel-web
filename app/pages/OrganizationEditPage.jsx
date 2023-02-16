@@ -1,23 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import { Prompt, withRouter } from 'react-router-dom';
-import _ from 'lodash';
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import { Prompt, withRouter } from "react-router-dom";
+import _ from "lodash";
 
-import { Loader } from 'components/ui';
-import EditAddresses from '../components/edit/EditAddress';
-import EditServices from '../components/edit/EditServices';
-import EditNotes from '../components/edit/EditNotes';
-import EditSchedule from '../components/edit/EditSchedule';
-import EditPhones from '../components/edit/EditPhones';
-import EditSidebar from '../components/edit/EditSidebar';
-import { buildScheduleDays } from '../components/edit/ProvidedService';
-import * as dataService from '../utils/DataService';
-import './OrganizationEditPage.scss';
+import { Loader } from "components/ui";
+import EditAddresses from "../components/edit/EditAddress";
+import EditServices from "../components/edit/EditServices";
+import EditNotes from "../components/edit/EditNotes";
+import EditSchedule from "../components/edit/EditSchedule";
+import EditPhones from "../components/edit/EditPhones";
+import EditSidebar from "../components/edit/EditSidebar";
+import { buildScheduleDays } from "../components/edit/ProvidedService";
+import * as dataService from "../utils/DataService";
+import "./OrganizationEditPage.scss";
 
-const ACTION_INSERT = 'insert';
-const ACTION_EDIT = 'edit';
-const ACTION_REMOVE = 'remove';
+const ACTION_INSERT = "insert";
+const ACTION_EDIT = "edit";
+const ACTION_REMOVE = "remove";
 
 /**
  * Apply a set of changes to a base array of items.
@@ -35,27 +35,29 @@ const ACTION_REMOVE = 'remove';
  * @return {object[]} An array of items with the changes applied
  */
 const applyChanges = (baseItems, changesById, deletedIds = undefined) => {
-  const baseItemIds = new Set(baseItems.map(i => i.id));
+  const baseItemIds = new Set(baseItems.map((i) => i.id));
   // Order the new IDs in decreasing order, since that's the order they should
   // appear on the page.
   // We use lodash's sortBy because JavaScript's sort does a lexicographic sort,
   // even on numbers.
   const newIds = _.sortBy(
     Object.keys(changesById)
-      .map(idStr => parseInt(idStr, 10))
-      .filter(id => !baseItemIds.has(id)),
+      .map((idStr) => parseInt(idStr, 10))
+      .filter((id) => !baseItemIds.has(id))
   ).reverse();
   // Prepopulate an array with all the items, including the new ones in the
   // right position.
-  const prechangedItems = [...baseItems, ...newIds.map(id => ({ id }))];
-  let transformedItems = prechangedItems.map(item => {
+  const prechangedItems = [...baseItems, ...newIds.map((id) => ({ id }))];
+  let transformedItems = prechangedItems.map((item) => {
     if (item.id in changesById) {
       return { ...item, ...changesById[item.id] };
     }
     return item;
   });
   if (deletedIds) {
-    transformedItems = transformedItems.filter(item => !deletedIds.has(item.id));
+    transformedItems = transformedItems.filter(
+      (item) => !deletedIds.has(item.id)
+    );
   }
   return transformedItems;
 };
@@ -71,10 +73,9 @@ function getDiffObject(curr, orig) {
 
 function updateCollectionObject(object, id, path, promises) {
   promises.push(
-    dataService.post(
-      `/api/${path}/${id}/change_requests`,
-      { change_request: { action: ACTION_EDIT, field_changes: object } },
-    ),
+    dataService.post(`/api/${path}/${id}/change_requests`, {
+      change_request: { action: ACTION_EDIT, field_changes: object },
+    })
   );
 }
 
@@ -83,38 +84,40 @@ function updateCollectionObject(object, id, path, promises) {
  */
 function createCollectionObject(object, path, promises, resourceID) {
   promises.push(
-    dataService.post(
-      '/api/change_requests',
-      { change_request: object, type: path, parent_resource_id: resourceID },
-    ),
+    dataService.post("/api/change_requests", {
+      change_request: object,
+      type: path,
+      parent_resource_id: resourceID,
+    })
   );
 }
 
 function createNewPhoneNumber(item, resourceID, promises) {
   promises.push(
-    dataService.post(
-      '/api/change_requests',
-      {
-        change_request: {
-          action: ACTION_INSERT,
-          field_changes: item,
-        },
-        parent_resource_id: resourceID,
-        type: 'phones',
+    dataService.post("/api/change_requests", {
+      change_request: {
+        action: ACTION_INSERT,
+        field_changes: item,
       },
-    ),
+      parent_resource_id: resourceID,
+      type: "phones",
+    })
   );
 }
 
 function deletCollectionObject(item, path, promises) {
-  if (path === 'phones') {
-    promises.push(
-      dataService.APIDelete(`/api/phones/${item.id}`),
-    );
+  if (path === "phones") {
+    promises.push(dataService.APIDelete(`/api/phones/${item.id}`));
   }
 }
 
-function postCollection(collection, originalCollection, path, promises, resourceID) {
+function postCollection(
+  collection,
+  originalCollection,
+  path,
+  promises,
+  resourceID
+) {
   for (let i = 0; i < collection.length; i += 1) {
     const item = collection[i];
     if (item.isRemoved) {
@@ -127,7 +130,7 @@ function postCollection(collection, originalCollection, path, promises, resource
       }
     } else if (item.dirty) {
       delete item.dirty;
-      if (path === 'phones') {
+      if (path === "phones") {
         createNewPhoneNumber(item, resourceID, promises);
       } else {
         createCollectionObject(item, path, promises, resourceID);
@@ -142,9 +145,9 @@ function postSchedule(scheduleObj, promises) {
   }
   let currDay = [];
   let value = {};
-  Object.keys(scheduleObj).forEach(day => {
+  Object.keys(scheduleObj).forEach((day) => {
     currDay = scheduleObj[day];
-    currDay.forEach(curr => {
+    currDay.forEach((curr) => {
       value = {};
       if (curr.id) {
         if (!curr.openChanged && !curr.closeChanged) {
@@ -157,13 +160,17 @@ function postSchedule(scheduleObj, promises) {
           value.closes_at = curr.closes_at;
         }
 
-        promises.push(dataService.post(`/api/schedule_days/${curr.id}/change_requests`, { change_request: value }));
+        promises.push(
+          dataService.post(`/api/schedule_days/${curr.id}/change_requests`, {
+            change_request: value,
+          })
+        );
       } else {
         value = {
           change_request: {
             day,
           },
-          type: 'schedule_days',
+          type: "schedule_days",
           schedule_id: curr.scheduleId,
         };
         if (curr.openChanged) {
@@ -175,7 +182,7 @@ function postSchedule(scheduleObj, promises) {
         if (!curr.openChanged && !curr.closeChanged) {
           return;
         }
-        promises.push(dataService.post('/api/change_requests', { ...value }));
+        promises.push(dataService.post("/api/change_requests", { ...value }));
       }
     });
   });
@@ -194,6 +201,44 @@ function postNotes(notesObj, promises, uriObj) {
       } else {
         const uri = `/api/notes/${key}/change_requests`;
         promises.push(dataService.post(uri, { change_request: currentNote }));
+      }
+    });
+  }
+}
+
+function postInstructions(instructions, promises) {
+  if (instructions?.length > 0) {
+    // Todo: The API is returning instructions as an array of objects whereas we really
+    // only need one instructions object. When the API returns the instructions as an
+    // object rather than an array, we can remove this loop.
+    instructions.forEach((currentInstruction) => {
+      if (currentInstruction.id < 0) {
+        const uri = "/api/instructions";
+        promises.push(
+          dataService.post(uri, { instruction: currentInstruction })
+        );
+      } else {
+        const uri = `/api/instructions/${currentInstruction.id}`;
+        promises.push(
+          dataService.put(uri, { instruction: currentInstruction })
+        );
+      }
+    });
+  }
+}
+
+function postDocuments(documents, promises) {
+  if (documents?.length > 0) {
+    documents.forEach((currentDocument) => {
+      if (currentDocument.isRemoved) {
+        const uri = `/api/documents/${currentDocument.id}`;
+        promises.push(dataService.APIDelete(uri));
+      } else if (currentDocument.id) {
+        const uri = `/api/documents/${currentDocument.id}`;
+        promises.push(dataService.put(uri, { document: currentDocument }));
+      } else {
+        const uri = "/api/documents";
+        promises.push(dataService.post(uri, { document: currentDocument }));
       }
     });
   }
@@ -218,43 +263,45 @@ function postNotes(notesObj, promises, uriObj) {
  *
  * Otherwise, assume that the address is unmodified and don't do anything.
  */
-const postAddresses = (addresses, uriObj) => addresses.map(address => {
-  const { id, isRemoved, dirty } = address;
-  const { id: parent_resource_id } = uriObj;
-  const postableAddress = { ..._.omit(address, ['dirty', 'isRemoved']) };
+const postAddresses = (addresses, uriObj) =>
+  addresses.map((address) => {
+    const { id, isRemoved, dirty } = address;
+    const { id: parent_resource_id } = uriObj;
+    const postableAddress = { ..._.omit(address, ["dirty", "isRemoved"]) };
 
-  if (!id) {
-    // Create new address
+    if (!id) {
+      // Create new address
 
-    // Skip any addresses that only have blank fields
-    if (_.every(Object.values(postableAddress), _.isEmpty)) {
-      return Promise.resolve(null);
+      // Skip any addresses that only have blank fields
+      if (_.every(Object.values(postableAddress), _.isEmpty)) {
+        return Promise.resolve(null);
+      }
+
+      return dataService.post("/api/change_requests", {
+        change_request: {
+          action: ACTION_INSERT,
+          field_changes: postableAddress,
+        },
+        parent_resource_id,
+        type: "addresses",
+      });
+    }
+    if (isRemoved) {
+      // Delete existing address
+      return dataService.post(`/api/addresses/${id}/change_requests`, {
+        change_request: { action: ACTION_REMOVE },
+      });
+    }
+    if (dirty) {
+      // Update existing address
+      return dataService.post(`/api/addresses/${id}/change_requests`, {
+        change_request: postableAddress,
+      });
     }
 
-    return dataService.post('/api/change_requests', {
-      change_request: {
-        action: ACTION_INSERT,
-        field_changes: postableAddress,
-      },
-      parent_resource_id,
-      type: 'addresses',
-    });
-  } if (isRemoved) {
-    // Delete existing address
-    return dataService.post(`/api/addresses/${id}/change_requests`, {
-      change_request: { action: ACTION_REMOVE },
-    });
-  } if (dirty) {
-    // Update existing address
-    return dataService.post(
-      `/api/addresses/${id}/change_requests`,
-      { change_request: postableAddress },
-    );
-  }
-
-  // Skip any unmodified addresses.
-  return Promise.resolve(null);
-});
+    // Skip any unmodified addresses.
+    return Promise.resolve(null);
+  });
 
 // THis is only called for schedules for new services, not for resources nor for
 // existing services.
@@ -262,8 +309,8 @@ function createFullSchedule(scheduleObj) {
   if (scheduleObj) {
     const newSchedule = [];
     let tempDay = {};
-    Object.keys(scheduleObj).forEach(day => {
-      scheduleObj[day].forEach(curr => {
+    Object.keys(scheduleObj).forEach((day) => {
+      scheduleObj[day].forEach((curr) => {
         if (curr.opens_at === null || curr.closes_at === null) {
           return;
         }
@@ -280,13 +327,13 @@ function createFullSchedule(scheduleObj) {
   return { schedule_days: [] };
 }
 
-const prepNotesData = notes => Object.values(notes).map(note => ({ note }));
+const prepNotesData = (notes) => Object.values(notes).map((note) => ({ note }));
 
-const prepSchedule = scheduleObj => {
+const prepSchedule = (scheduleObj) => {
   const newSchedule = [];
   let tempDay = {};
-  Object.keys(scheduleObj).forEach(day => {
-    scheduleObj[day].forEach(curr => {
+  Object.keys(scheduleObj).forEach((day) => {
+    scheduleObj[day].forEach((curr) => {
       if (curr.opens_at === null || curr.closes_at === null) {
         return;
       }
@@ -300,7 +347,7 @@ const prepSchedule = scheduleObj => {
   return newSchedule;
 };
 
-const deepClone = obj => JSON.parse(JSON.stringify(obj));
+const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
 
 /** Determine the type of change between oldAddresses and newAddresses.
  *
@@ -331,29 +378,31 @@ const computeTypeOfChangeToAddresses = (oldAddresses, newAddresses) => {
     // identify which index was removed so that we can adjust the address
     // handles on the services to reflect the new indexes.
     if (oldAddresses.length !== newAddresses.length + 1) {
-      throw new Error('Cannot handle case where multiple updates are processed at the same time');
+      throw new Error(
+        "Cannot handle case where multiple updates are processed at the same time"
+      );
     }
     for (let i = 0; i < oldAddresses.length; i += 1) {
       if (!_.isEqual(oldAddresses[i], newAddresses[i])) {
-        return { type: 'removed', handle: i };
+        return { type: "removed", handle: i };
       }
     }
-    throw new Error('Error detecting index of removed address');
+    throw new Error("Error detecting index of removed address");
   } else if (oldAddresses.length === newAddresses.length) {
     for (let i = 0; i < oldAddresses.length; i += 1) {
       if (!oldAddresses[i].isRemoved && newAddresses[i].isRemoved) {
-        return { type: 'markedForRemoval', handle: i };
+        return { type: "markedForRemoval", handle: i };
       }
     }
     for (let i = 0; i < oldAddresses.length; i += 1) {
       if (!_.isEqual(oldAddresses[i], newAddresses[i])) {
-        return { type: 'modified', handle: i };
+        return { type: "modified", handle: i };
       }
     }
-    throw new Error('Error detecting index of edited or removed address');
+    throw new Error("Error detecting index of edited or removed address");
   } else {
     // oldAddresses.length < newAddresses.length
-    return { type: 'added' };
+    return { type: "added" };
   }
 };
 
@@ -362,7 +411,8 @@ const computeTypeOfChangeToAddresses = (oldAddresses, newAddresses) => {
  * This recipe was copied from
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
  */
-const setDifference = (set1, set2) => new Set([...set1].filter(x => !set2.has(x)));
+const setDifference = (set1, set2) =>
+  new Set([...set1].filter((x) => !set2.has(x)));
 
 // Helper functions for computing views on state.
 //
@@ -372,7 +422,7 @@ const setDifference = (set1, set2) => new Set([...set1].filter(x => !set2.has(x)
 // locations in order to build the complete picture.
 
 /** Get latest list of addresses. */
-const getAddresses = state => {
+const getAddresses = (state) => {
   const { addresses } = state;
   // addresses could be empty if we haven't added, removed, or modified an
   // address. In this case, we want to use the addresses on
@@ -418,10 +468,13 @@ class OrganizationEditPage extends React.Component {
   }
 
   componentDidMount() {
-    const { location: { pathname }, match: { params } } = this.props;
-    const splitPath = pathname.split('/');
-    window.addEventListener('beforeunload', this.keepOnPage);
-    if (splitPath[splitPath.length - 1] === 'new') {
+    const {
+      location: { pathname },
+      match: { params },
+    } = this.props;
+    const splitPath = pathname.split("/");
+    window.addEventListener("beforeunload", this.keepOnPage);
+    if (splitPath[splitPath.length - 1] === "new") {
       this.setState({
         newResource: true,
         resource: { schedule: {} },
@@ -431,16 +484,17 @@ class OrganizationEditPage extends React.Component {
     const resourceID = params.id;
     if (resourceID) {
       const url = `/api/resources/${resourceID}`;
-      fetch(url).then(r => r.json())
-        .then(data => this.handleAPIGetResource(data.resource));
+      fetch(url)
+        .then((r) => r.json())
+        .then((data) => this.handleAPIGetResource(data.resource));
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.keepOnPage);
+    window.removeEventListener("beforeunload", this.keepOnPage);
   }
 
-  handleAPIGetResource = resource => {
+  handleAPIGetResource = (resource) => {
     // Transform the original API response such that all addresses on services
     // are replaced with handles to the corresponding address on the resource.
     // This ensures that there is only one canonical copy of an address, which
@@ -464,14 +518,16 @@ class OrganizationEditPage extends React.Component {
     // Transformed version of services where the `addresses` property has been
     // replaced with an `addressHandles` property, which only contains the index
     // of an address within the resourceAddresses array.
-    const transformedServices = rawServices.map(service => {
+    const transformedServices = rawServices.map((service) => {
       const { addresses = [], ...serviceWithoutAddresses } = service;
       // It is safe to compare addresses using the  `id` here because at this
       // point, all addresses came from the API response and therefore have
       // database primary key IDs assigned. Addresses that are added in the Edit
       // page are not assigned IDs until after saving the page, so this
       // assumption is not safe to make after this point in time.
-      const addressHandles = addresses.map(a => resourceAddresses.findIndex(ra => ra.id === a.id));
+      const addressHandles = addresses.map((a) =>
+        resourceAddresses.findIndex((ra) => ra.id === a.id)
+      );
       return { ...serviceWithoutAddresses, addressHandles };
     });
     // Build new version of the resource that has the services replaced with the
@@ -488,10 +544,14 @@ class OrganizationEditPage extends React.Component {
           // If the service doesn't have a schedule associated with it, and can
           // inherit its schedule from its parent, inherit the parent resource's
           // schedule.
-          shouldInheritScheduleFromParent: !(_.get(service.schedule, 'schedule_days.length', false)),
+          shouldInheritScheduleFromParent: !_.get(
+            service.schedule,
+            "schedule_days.length",
+            false
+          ),
         },
       }),
-      {},
+      {}
     );
 
     this.setState({
@@ -499,7 +559,7 @@ class OrganizationEditPage extends React.Component {
       services,
       scheduleObj: buildScheduleDays(resource.schedule),
     });
-  }
+  };
 
   /** Post new and modified services to API.
    *
@@ -568,23 +628,27 @@ class OrganizationEditPage extends React.Component {
     const { resource, addresses } = this.state;
     const newServices = [];
     const newServicesAddressHandles = [];
-    const unsavedAddresses = addresses.length > 0 ? addresses : resource.addresses;
+    const unsavedAddresses =
+      addresses.length > 0 ? addresses : resource.addresses;
 
-    const getAddressIDFromHandle = handle => {
+    const getAddressIDFromHandle = (handle) => {
       if (unsavedAddresses[handle] && unsavedAddresses[handle].id) {
         // Associating with an address that already existed, which means
         // we can simply grab its ID.
         return Promise.resolve(unsavedAddresses[handle].id);
-      } if (postAddressPromises[handle]) {
+      }
+      if (postAddressPromises[handle]) {
         // Associating with an address that was just created, which means
         // we have to index into postAddressPromises in order to obtain
         // its ID from the API response.
         return postAddressPromises[handle].then(() => {
           // FIXEME: The API does not respond with the address's ID
-          throw new Error('NOT IMPLEMENTED');
+          throw new Error("NOT IMPLEMENTED");
         });
       }
-      return Promise.reject(new Error("Received a handle to an address that doesn't exist."));
+      return Promise.reject(
+        new Error("Received a handle to an address that doesn't exist.")
+      );
     };
 
     Object.entries(servicesObj).forEach(([key, value]) => {
@@ -597,7 +661,9 @@ class OrganizationEditPage extends React.Component {
           currentService.notes = notes;
         }
 
-        currentService.schedule = createFullSchedule(currentService.scheduleObj);
+        currentService.schedule = createFullSchedule(
+          currentService.scheduleObj
+        );
         delete currentService.scheduleObj;
 
         const { addressHandles } = currentService;
@@ -610,15 +676,30 @@ class OrganizationEditPage extends React.Component {
       } else {
         // Edit an existing service
         const uri = `/api/services/${key}/change_requests`;
-        postNotes(currentService.notesObj, promises, { path: 'services', id: key });
+        postNotes(currentService.notesObj, promises, {
+          path: "services",
+          id: key,
+        });
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
+        postInstructions(currentService.instructions, promises, {
+          path: "services",
+          id: key,
+        });
+        delete currentService.instructions;
+        postDocuments(currentService.documents, promises, {
+          path: "services",
+          id: key,
+        });
+        delete currentService.documents;
         delete currentService.shouldInheritScheduleFromParent;
         const { addressHandles } = currentService;
         delete currentService.addressHandles;
         if (!_.isEmpty(currentService)) {
-          promises.push(dataService.post(uri, { change_request: currentService }));
+          promises.push(
+            dataService.post(uri, { change_request: currentService })
+          );
 
           // Compute the added and removed addresses by comparing the original
           // address handles to the new address handles, and submit API requests
@@ -631,19 +712,37 @@ class OrganizationEditPage extends React.Component {
           // addresses from the service.
           if (addressHandles === undefined) return;
 
-          const originalService = resource.services.find(s => s.id === currentService.id);
+          const originalService = resource.services.find(
+            (s) => s.id === currentService.id
+          );
           const oldAddressHandleSet = new Set(originalService.addressHandles);
           const newAddressHandleSet = new Set(addressHandles);
           const removedAddressHandles = [
-            ...setDifference(oldAddressHandleSet, newAddressHandleSet)];
-          const addedAddressHandles = [...setDifference(newAddressHandleSet, oldAddressHandleSet)];
+            ...setDifference(oldAddressHandleSet, newAddressHandleSet),
+          ];
+          const addedAddressHandles = [
+            ...setDifference(newAddressHandleSet, oldAddressHandleSet),
+          ];
 
-          promises.push(...removedAddressHandles.map(handle => (
-            getAddressIDFromHandle(handle).then(addressID => dataService.APIDelete(`/api/services/${key}/addresses/${addressID}`))
-          )));
-          promises.push(...addedAddressHandles.map(handle => (
-            getAddressIDFromHandle(handle).then(addressID => dataService.put(`/api/services/${key}/addresses/${addressID}`, ''))
-          )));
+          promises.push(
+            ...removedAddressHandles.map((handle) =>
+              getAddressIDFromHandle(handle).then((addressID) =>
+                dataService.APIDelete(
+                  `/api/services/${key}/addresses/${addressID}`
+                )
+              )
+            )
+          );
+          promises.push(
+            ...addedAddressHandles.map((handle) =>
+              getAddressIDFromHandle(handle).then((addressID) =>
+                dataService.put(
+                  `/api/services/${key}/addresses/${addressID}`,
+                  ""
+                )
+              )
+            )
+          );
         }
       }
     });
@@ -652,18 +751,28 @@ class OrganizationEditPage extends React.Component {
       const uri = `/api/resources/${resource.id}/services`;
       const newServicePromises = dataService
         .post(uri, { services: newServices })
-        .then(resp => resp.json())
+        .then((resp) => resp.json())
         // After new services are created, grab their IDs and associate them
         // with addresses.
-        .then(resp => Promise.all(resp.services.map(({ service }, i) => {
-          const serviceAddressPromises = newServicesAddressHandles[i].map(handle => (
-            getAddressIDFromHandle(handle).then(addressID => dataService.put(`/api/services/${service.id}/addresses/${addressID}`, ''))
-          ));
-          return Promise.all(serviceAddressPromises);
-        })));
+        .then((resp) =>
+          Promise.all(
+            resp.services.map(({ service }, i) => {
+              const serviceAddressPromises = newServicesAddressHandles[i].map(
+                (handle) =>
+                  getAddressIDFromHandle(handle).then((addressID) =>
+                    dataService.put(
+                      `/api/services/${service.id}/addresses/${addressID}`,
+                      ""
+                    )
+                  )
+              );
+              return Promise.all(serviceAddressPromises);
+            })
+          )
+        );
       promises.push(newServicePromises);
     }
-  }
+  };
 
   /** @method editServiceById
    * @description Updates the service with any changes made
@@ -680,7 +789,7 @@ class OrganizationEditPage extends React.Component {
         inputsDirty: true,
       };
     });
-  }
+  };
 
   /** @method addService
    * @description Creates a brand new service
@@ -703,7 +812,7 @@ class OrganizationEditPage extends React.Component {
       services: { ...services, [nextServiceId]: newService },
       latestServiceId: nextServiceId,
     });
-  }
+  };
 
   // Combine several sources of data to provide a view of an address appropriate
   // both for the UI and for sending API requests.
@@ -719,14 +828,15 @@ class OrganizationEditPage extends React.Component {
     const { addresses: resourceAddresses = [] } = resource;
     if (!_.isEmpty(addresses)) {
       return addresses;
-    } if (!_.isEmpty(resourceAddresses)) {
+    }
+    if (!_.isEmpty(resourceAddresses)) {
       return resourceAddresses;
     }
     return [];
-  }
+  };
 
-  setAddresses = addresses => {
-    this.setState(state => {
+  setAddresses = (addresses) => {
+    this.setState((state) => {
       // Update addresses, and possibly update services as well due to addresses
       // being removed.
       //
@@ -745,60 +855,73 @@ class OrganizationEditPage extends React.Component {
       // This page _really_ needs to be completely rewritten.
       const { resource, services: oldServices } = state;
       const oldAddresses = getAddresses(state);
-      const changeType = computeTypeOfChangeToAddresses(oldAddresses, addresses);
+      const changeType = computeTypeOfChangeToAddresses(
+        oldAddresses,
+        addresses
+      );
 
       let newServices = null;
-      if (changeType.type === 'removed') {
+      if (changeType.type === "removed") {
         const removedAddressHandle = changeType.handle;
         // Adjust the address handles on the services to reflect the new
         // indexes.
-        newServices = Object.fromEntries(Object.entries(oldServices).map(([key, service]) => {
-          let oldServiceAddressHandles = null;
-          if (service.addressHandles) {
-            // If we had previously made a change to the service's addresses,
-            // then they should be on this.state.services[x].addressHandles, and
-            // we should use that list.
-            oldServiceAddressHandles = service.addressHandles;
-          } else {
-            const serviceOnResource = resource.services.find(s => s.id === service.id);
-            if (serviceOnResource && serviceOnResource.addressHandles) {
-              // If we hadn't modified the service yet, but the service existed
-              // on this.resource.services and had addressHandles, then use that
-              // list.
-              oldServiceAddressHandles = serviceOnResource.addressHandles;
+        newServices = Object.fromEntries(
+          Object.entries(oldServices).map(([key, service]) => {
+            let oldServiceAddressHandles = null;
+            if (service.addressHandles) {
+              // If we had previously made a change to the service's addresses,
+              // then they should be on this.state.services[x].addressHandles, and
+              // we should use that list.
+              oldServiceAddressHandles = service.addressHandles;
             } else {
-              // If neither of the above two cases apply, then return from the
-              // .map() early by returning the original key-value pair
-              // unmodified.
-              return [key, service];
+              const serviceOnResource = resource.services.find(
+                (s) => s.id === service.id
+              );
+              if (serviceOnResource && serviceOnResource.addressHandles) {
+                // If we hadn't modified the service yet, but the service existed
+                // on this.resource.services and had addressHandles, then use that
+                // list.
+                oldServiceAddressHandles = serviceOnResource.addressHandles;
+              } else {
+                // If neither of the above two cases apply, then return from the
+                // .map() early by returning the original key-value pair
+                // unmodified.
+                return [key, service];
+              }
             }
-          }
-          const newAddressHandles = oldServiceAddressHandles.reduce((handles, handle) => {
-            if (handle < removedAddressHandle) {
-              // Address unchanged
-              return [...handles, handle];
-            } if (handle === removedAddressHandle) {
-              // Removed address; skip pushing this handle.
-              return handles;
-            }
-            // Handle is outdated; subtract 1 from the handle to get the new
-            // index.
-            return [...handles, handle - 1];
-          }, []);
-          return [key, { ...service, addressHandles: newAddressHandles }];
-        }));
-      } else if (changeType.type === 'markedForRemoval') {
+            const newAddressHandles = oldServiceAddressHandles.reduce(
+              (handles, handle) => {
+                if (handle < removedAddressHandle) {
+                  // Address unchanged
+                  return [...handles, handle];
+                }
+                if (handle === removedAddressHandle) {
+                  // Removed address; skip pushing this handle.
+                  return handles;
+                }
+                // Handle is outdated; subtract 1 from the handle to get the new
+                // index.
+                return [...handles, handle - 1];
+              },
+              []
+            );
+            return [key, { ...service, addressHandles: newAddressHandles }];
+          })
+        );
+      } else if (changeType.type === "markedForRemoval") {
         // No addresses were added or removed, but we still need to check to see
         // if any addresses had `isRemoved` set to true. If so, if any service
         // has a handle to that address, remove it from the service.
         const removedAddressHandle = changeType.handle;
         const someServiceHasStaleHandle = Object.values(oldServices).some(
-          service => {
+          (service) => {
             let addressHandles;
             if (service.addressHandles) {
               ({ addressHandles } = service);
             } else {
-              const serviceOnResource = resource.services.find(s => s.id === service.id);
+              const serviceOnResource = resource.services.find(
+                (s) => s.id === service.id
+              );
               if (serviceOnResource && serviceOnResource.addressHandles) {
                 ({ addressHandles } = serviceOnResource);
               } else {
@@ -806,15 +929,20 @@ class OrganizationEditPage extends React.Component {
                 return false;
               }
             }
-            return addressHandles.some(handle => handle === removedAddressHandle);
-          },
+            return addressHandles.some(
+              (handle) => handle === removedAddressHandle
+            );
+          }
         );
         if (someServiceHasStaleHandle) {
-          newServices = Object.fromEntries(Object.entries(oldServices).map(([key, service]) => {
-            const filteredHandles = service.addressHandles
-              .filter(handle => handle !== removedAddressHandle);
-            return [key, { ...service, addressHandles: filteredHandles }];
-          }));
+          newServices = Object.fromEntries(
+            Object.entries(oldServices).map(([key, service]) => {
+              const filteredHandles = service.addressHandles.filter(
+                (handle) => handle !== removedAddressHandle
+              );
+              return [key, { ...service, addressHandles: filteredHandles }];
+            })
+          );
         }
       }
 
@@ -824,12 +952,13 @@ class OrganizationEditPage extends React.Component {
       }
       return updates;
     });
-  }
+  };
 
   keepOnPage(e) {
     const { inputsDirty } = this.state;
     if (inputsDirty) {
-      const message = 'Are you sure you want to leave? Any changes you have made will be lost.';
+      const message =
+        "Are you sure you want to leave? Any changes you have made will be lost.";
       e.returnValue = message;
     }
   }
@@ -849,7 +978,7 @@ class OrganizationEditPage extends React.Component {
     const schedule = prepSchedule(scheduleObj);
     // TODO: Stop sending the country field after it is no longer required on the
     // API side.
-    const modifiedAddresses = addresses.map(a => ({ country: 'USA', ...a }));
+    const modifiedAddresses = addresses.map((a) => ({ country: "USA", ...a }));
     const newResource = {
       name,
       addresses: modifiedAddresses,
@@ -860,23 +989,28 @@ class OrganizationEditPage extends React.Component {
       schedule: { schedule_days: schedule },
       phones,
     };
-    const requestString = '/api/resources';
+    const requestString = "/api/resources";
 
     this.setState({ submitting: true });
     const setNotSubmitting = () => {
       this.setState({ submitting: false });
     };
-    dataService.post(requestString, { resources: [newResource] })
-      .then(response => {
+    dataService
+      .post(requestString, { resources: [newResource] })
+      .then((response) => {
         if (response.ok) {
-          alert('Resource successfuly created. Thanks!'); // eslint-disable-line no-alert
-          response.json().then(res => history.push(`/organizations/${res.resources[0].resource.id}`));
+          alert("Resource successfuly created. Thanks!"); // eslint-disable-line no-alert
+          response
+            .json()
+            .then((res) =>
+              history.push(`/organizations/${res.resources[0].resource.id}`)
+            );
         } else {
           Promise.reject(response);
         }
       })
-      .catch(error => {
-        alert('Issue creating resource, please try again.'); // eslint-disable-line no-alert
+      .catch((error) => {
+        alert("Issue creating resource, please try again."); // eslint-disable-line no-alert
         console.log(error); // eslint-disable-line no-console
         setNotSubmitting();
       });
@@ -935,50 +1069,60 @@ class OrganizationEditPage extends React.Component {
     }
     // fire off resource request
     if (resourceModified) {
-      promises.push(dataService.post(`/api/resources/${resource.id}/change_requests`, { change_request: resourceChangeRequest }));
+      promises.push(
+        dataService.post(`/api/resources/${resource.id}/change_requests`, {
+          change_request: resourceChangeRequest,
+        })
+      );
     }
 
     // Fire off phone requests
-    postCollection(phones, resource.phones, 'phones', promises, resource.id);
+    postCollection(phones, resource.phones, "phones", promises, resource.id);
 
     // schedule
     postSchedule(scheduleObj, promises);
 
     // Addresses
-    const postAddressPromises = postAddresses(addresses, { path: 'resources', id: resource.id });
+    const postAddressPromises = postAddresses(addresses, {
+      path: "resources",
+      id: resource.id,
+    });
     promises.push(...postAddressPromises);
 
     // Services
     this.postServices(services, promises, postAddressPromises);
 
     // Notes
-    postNotes(notes, promises, { path: 'resources', id: resource.id });
+    postNotes(notes, promises, { path: "resources", id: resource.id });
 
     const that = this;
-    Promise.all(promises).then(() => {
-      history.push(`/organizations/${that.state.resource.id}`);
-      showPopUpMessage({
-        type: 'success',
-        message: 'Successfully saved your changes.',
+    Promise.all(promises)
+      .then(() => {
+        history.push(`/organizations/${that.state.resource.id}`);
+        showPopUpMessage({
+          type: "success",
+          message: "Successfully saved your changes.",
+        });
+      })
+      .catch((err) => {
+        this.setState({ submitting: false });
+        console.log(err); // eslint-disable-line no-console
+        showPopUpMessage({
+          type: "error",
+          message: "Sorry! An error occurred.",
+        });
       });
-    }).catch(err => {
-      console.log(err); // eslint-disable-line no-console
-      showPopUpMessage({
-        type: 'error',
-        message: 'Sorry! An error occurred.',
-      });
-    });
   }
 
   handleDeactivation(type, id) {
     const { history } = this.props;
     let confirmMessage = null;
     let path = null;
-    if (type === 'resource') {
-      confirmMessage = 'Are you sure you want to deactive this resource?';
+    if (type === "resource") {
+      confirmMessage = "Are you sure you want to deactive this resource?";
       path = `/api/resources/${id}`;
-    } else if (type === 'service') {
-      confirmMessage = 'Are you sure you want to remove this service?';
+    } else if (type === "service") {
+      confirmMessage = "Are you sure you want to remove this service?";
       path = `/api/services/${id}`;
     }
     // eslint-disable-next-line no-alert
@@ -990,15 +1134,18 @@ class OrganizationEditPage extends React.Component {
           return { deactivatedServiceIds: newDeactivatedServiceIds };
         });
       } else {
-        dataService.APIDelete(path, { change_request: { status: '2' } })
+        dataService
+          .APIDelete(path, { change_request: { status: "2" } })
           .then(() => {
-            alert('Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know.'); // eslint-disable-line no-alert
-            if (type === 'resource') {
+            alert(
+              "Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know."
+            ); // eslint-disable-line no-alert
+            if (type === "resource") {
               // Resource successfully deactivated. Redirect to home.
-              history.push({ pathname: '/' });
+              history.push({ pathname: "/" });
             } else {
               // Service successfully deactivated. Mark deactivated in local state.
-              this.setState(state => {
+              this.setState((state) => {
                 state.deactivatedServiceIds.add(id);
                 return state;
               });
@@ -1030,27 +1177,30 @@ class OrganizationEditPage extends React.Component {
   }
 
   certifyHAP() {
-    const { resource: { id: resourceId } } = this.state;
-    dataService.post(`/api/resources/${resourceId}/certify`)
-      .then(response => {
+    const {
+      resource: { id: resourceId },
+    } = this.state;
+    dataService
+      .post(`/api/resources/${resourceId}/certify`)
+      .then((response) => {
         // TODO: Do not use alert() for user notifications.
         if (response.ok) {
-          alert('HAP Certified. Thanks!'); // eslint-disable-line no-alert
+          alert("HAP Certified. Thanks!"); // eslint-disable-line no-alert
           const { resource } = this.state;
           resource.certified = response.ok;
           this.setState({ resource });
         } else {
-          alert('Issue verifying resource. Please try again.'); // eslint-disable-line no-alert
+          alert("Issue verifying resource. Please try again."); // eslint-disable-line no-alert
         }
       });
   }
 
   sidebarAddService() {
     this.addService();
-    const newService = document.getElementById('new-service-button');
+    const newService = document.getElementById("new-service-button");
     // eslint-disable-next-line react/no-find-dom-node
     const domNode = ReactDOM.findDOMNode(newService);
-    domNode.scrollIntoView({ behavior: 'smooth' });
+    domNode.scrollIntoView({ behavior: "smooth" });
   }
 
   renderSectionFields() {
@@ -1058,7 +1208,6 @@ class OrganizationEditPage extends React.Component {
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
-
           <li key="name" className="edit--section--list--item">
             <label htmlFor="edit-name-input">Name of the Organization</label>
             <input
@@ -1131,8 +1280,15 @@ class OrganizationEditPage extends React.Component {
               onChange={this.handleResourceFieldChange}
             />
             <p>
-              If you&#39;d like to add formatting to descriptions, we support&nbsp;
-              <a href="https://github.github.com/gfm/" target="_blank" rel="noopener noreferrer">Github Flavored Markdown</a>
+              If you&#39;d like to add formatting to descriptions, we
+              support&nbsp;
+              <a
+                href="https://github.github.com/gfm/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github Flavored Markdown
+              </a>
               .
             </p>
           </li>
@@ -1162,7 +1318,6 @@ class OrganizationEditPage extends React.Component {
             notes={resource.notes}
             handleNotesChange={this.handleNotesChange}
           />
-
         </ul>
       </section>
     );
@@ -1174,7 +1329,11 @@ class OrganizationEditPage extends React.Component {
       services: serviceChanges,
       deactivatedServiceIds: serviceDeletions,
     } = this.state;
-    const flattenedServices = applyChanges(services, serviceChanges, serviceDeletions);
+    const flattenedServices = applyChanges(
+      services,
+      serviceChanges,
+      serviceDeletions
+    );
     return (
       <ul className="edit--section--list">
         <EditServices
@@ -1189,56 +1348,49 @@ class OrganizationEditPage extends React.Component {
   }
 
   render() {
-    const {
-      inputsDirty,
-      newResource,
-      resource,
-      services,
-      submitting,
-    } = this.state;
+    const { inputsDirty, newResource, resource, services, submitting } =
+      this.state;
     const { history } = this.props;
 
     const showPrompt = inputsDirty && !submitting;
 
-    return (!resource && !newResource ? <Loader />
-      : (
-        <div className="edit">
-          <EditSidebar
-            createResource={this.createResource}
-            handleSubmit={this.handleSubmit}
-            handleCancel={() => history.goBack()}
-            handleDeactivation={this.handleDeactivation}
-            resource={resource}
-            submitting={submitting}
-            certifyHAP={this.certifyHAP}
-            newServices={services}
-            newResource={newResource}
-            addService={this.sidebarAddService}
-          />
-          <div className="edit--main">
-            <header className="edit--main--header">
-              <h1 className="edit--main--header--title">Let&apos;s start with the basics</h1>
-            </header>
-            <div className="edit--sections">
-              {this.renderSectionFields()}
+    return !resource && !newResource ? (
+      <Loader />
+    ) : (
+      <div className="edit">
+        <EditSidebar
+          createResource={this.createResource}
+          handleSubmit={this.handleSubmit}
+          handleCancel={() => history.goBack()}
+          handleDeactivation={this.handleDeactivation}
+          resource={resource}
+          submitting={submitting}
+          certifyHAP={this.certifyHAP}
+          newServices={services}
+          newResource={newResource}
+          addService={this.sidebarAddService}
+        />
+        <div className="edit--main">
+          <header className="edit--main--header">
+            <h1 className="edit--main--header--title">
+              Let&apos;s start with the basics
+            </h1>
+          </header>
+          <div className="edit--sections">{this.renderSectionFields()}</div>
+          {!newResource && (
+            <div className="edit--services">
+              <header className="edit--main--header">
+                <h1 className="edit--main--header--title">Services</h1>
+              </header>
+              <div className="edit--sections">{this.renderServices()}</div>
             </div>
-            {!newResource && (
-              <div className="edit--services">
-                <header className="edit--main--header">
-                  <h1 className="edit--main--header--title">Services</h1>
-                </header>
-                <div className="edit--sections">
-                  {this.renderServices()}
-                </div>
-              </div>
-            )}
-          </div>
-          <Prompt
-            message="Are you sure you want to leave? Any changes you have made will be lost."
-            when={showPrompt}
-          />
+          )}
         </div>
-      )
+        <Prompt
+          message="Are you sure you want to leave? Any changes you have made will be lost."
+          when={showPrompt}
+        />
+      </div>
     );
   }
 }

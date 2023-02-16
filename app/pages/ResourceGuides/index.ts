@@ -1,2 +1,2 @@
-export * from './ResourceGuides';
-export * from './ResourceGuide';
+export * from "./ResourceGuides";
+export * from "./ResourceGuide";

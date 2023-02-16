@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './Radio.module.scss';
+import styles from "./Radio.module.scss";
 
 type RadioProps = {
   name: string;
@@ -24,7 +24,7 @@ export const Radio = ({
     onChange={onChange}
     value={value}
     defaultChecked={defaultChecked}
-    className={`${styles.radioDefaults} ${addClass || ''}`}
+    className={`${styles.radioDefaults} ${addClass || ""}`}
     id={id}
     type="radio"
   />

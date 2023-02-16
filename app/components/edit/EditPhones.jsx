@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import editCollectionHOC from './EditCollection';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import _ from "lodash";
+import editCollectionHOC from "./EditCollection";
 
 class EditPhone extends Component {
   constructor(props) {
@@ -69,6 +69,6 @@ EditPhone.propTypes = {
   }).isRequired,
 };
 
-const EditPhones = editCollectionHOC(EditPhone, 'Phones', {}, 'Add Phone');
-EditPhones.displayName = 'EditPhones';
+const EditPhones = editCollectionHOC(EditPhone, "Phones", {}, "Add Phone");
+EditPhones.displayName = "EditPhones";
 export default EditPhones;

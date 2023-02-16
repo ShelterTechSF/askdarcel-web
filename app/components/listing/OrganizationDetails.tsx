@@ -1,14 +1,22 @@
-import React, { Fragment } from 'react';
-import _ from 'lodash';
-import { Address, Category, PhoneNumber } from '../../models';
+import React, { Fragment } from "react";
+import _ from "lodash";
+import { Address, Category, PhoneNumber } from "../../models";
 
-const CategoryRenderer = ({ category }: { category: string }) => <p>{category}</p>;
+const CategoryRenderer = ({ category }: { category: string }) => (
+  <p>{category}</p>
+);
 
-export const ResourceCategories = ({ categories }: { categories: Category[] }) => {
-  const uniqueCategories = _.uniqBy(categories, 'id');
+export const ResourceCategories = ({
+  categories,
+}: {
+  categories: Category[];
+}) => {
+  const uniqueCategories = _.uniqBy(categories, "id");
   return categories?.length ? (
     <span className="categories">
-      {uniqueCategories.map(cat => <CategoryRenderer key={cat.id} category={cat.name} />)}
+      {uniqueCategories.map((cat) => (
+        <CategoryRenderer key={cat.id} category={cat.name} />
+      ))}
     </span>
   ) : null;
 };
@@ -33,17 +41,18 @@ export const ResourceCategories = ({ categories }: { categories: Category[] }) =
 //
 const buildLocation = (address: Address) => {
   const fieldsOnEachLine: (keyof Address)[][] = [
-    ['name'],
-    ['address_1', 'address_2'],
-    ['city', 'state_province', 'postal_code'],
+    ["name"],
+    ["address_1", "address_2"],
+    ["city", "state_province", "postal_code"],
   ];
 
-  return fieldsOnEachLine.map(fields => {
-    const line = fields.map(field => address[field])
+  return fieldsOnEachLine.map((fields) => {
+    const line = fields
+      .map((field) => address[field])
       .filter(Boolean)
-      .join(', ');
+      .join(", ");
     if (line.length > 0) {
-      const key = fields.join('-');
+      const key = fields.join("-");
 
       return (
         <Fragment key={key}>
@@ -57,23 +66,27 @@ const buildLocation = (address: Address) => {
 };
 
 export const AddressInfoRenderer = ({ address }: { address: Address }) => (
-  <span className="address">
+  <span className="address" translate="no">
     {buildLocation(address)}
   </span>
 );
 
 export const PhoneNumberRenderer = ({ phones }: { phones: PhoneNumber[] }) => (
   <span className="phone">
-    { phones.map(phone => (
+    {phones.map((phone) => (
       <p key={phone.id}>
         <a href={`tel:${phone.number}`}>{phone.number}</a>
         {` ${phone.service_type}`}
       </p>
-    )) }
+    ))}
   </span>
 );
 
-const ExternalLink = ({ children, to }: { children: any; to: string }) => <a href={to} target="_blank" rel="noopener noreferrer">{children}</a>;
+const ExternalLink = ({ children, to }: { children: any; to: string }) => (
+  <a href={to} target="_blank" rel="noopener noreferrer">
+    {children}
+  </a>
+);
 
 export const WebsiteRenderer = ({ website }: { website: string }) => (
   <span className="website">

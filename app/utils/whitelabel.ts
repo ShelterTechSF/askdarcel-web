@@ -1,18 +1,25 @@
-import BackgroundImage from '../assets/img/bg.png';
-import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
-import SFFamiliesLogo from '../assets/img/sf-families.svg';
-import SFServiceLogo from '../assets/img/sf-service.svg';
-import UcsfServiceLogo from '../assets/img/ucsf-logo.svg';
-import SFSeal from '../assets/img/sf-seal.png';
-import LinkSFLogo from '../assets/img/link-sf.png';
-import config from '../config';
-import styles from '../components/ui/Navigation.module.scss';
+import BackgroundImage from "../assets/img/bg.png";
+import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
+import Our415Logo from "../assets/img/Our415_logo-hori.svg";
+import SFServiceLogo from "../assets/img/sf-service.svg";
+import UcsfServiceLogo from "../assets/img/ic-dcnav.png";
+import SFSeal from "../assets/img/sf-seal.png";
+import LinkSFLogo from "../assets/img/link-sf.png";
+import config from "../config";
+import styles from "../components/ui/Navigation.module.scss";
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
-type homepageComponentEnums = 'HomePage' | 'UcsfHomePage';
+type WhiteLabelSiteKey =
+  | "defaultWhiteLabel"
+  | "SFServiceGuide"
+  | "SFFamilies"
+  | "LinkSF"
+  | "Ucsf";
+type homepageComponentEnums = "HomePage" | "UcsfHomePage";
 
 interface WhiteLabelSite {
+  aboutPageText: string;
+  aboutPageTitle: string;
   appImages: {
     background: string;
     logoLarge: string;
@@ -20,15 +27,18 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
+  enabledTranslations: ReadonlyArray<string>; // empty to disable translation
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
+  refinementListLimit: number;
   showBanner: boolean;
   showClinicianAction: boolean;
   showHandoutsIcon: boolean;
   showHeaderQrCode: boolean;
   showMobileNav: boolean;
+  showPrintResultsBtn: boolean;
   showSearch: boolean;
   siteNavStyle: string;
   siteUrl: string;
@@ -39,141 +49,144 @@ interface WhiteLabelSite {
 // Include a domain in config.js
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
   const domain = window.location.host;
-  const subdomain = domain.split('.')[0];
-  if (subdomain === String(config.SFFAMILIES_DOMAIN) || subdomain === `${String(config.SFFAMILIES_DOMAIN)}-staging`) return 'SFFamilies';
-  if (subdomain === String(config.MOHCD_DOMAIN) || domain === `staging.${String(config.MOHCD_DOMAIN)}.org`) return 'SFServiceGuide';
-  if (subdomain === String(config.LINKSF_DOMAIN) || subdomain === `${String(config.LINKSF_DOMAIN)}-staging`) return 'LinkSF';
-  // QA One domain
-  if (subdomain === 'qaone') return 'Ucsf';
+  const subdomain = domain.split(".")[0];
+  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) =>
+    subdomain === whiteLabelSubdomain ||
+    subdomain === `${whiteLabelSubdomain}-staging`;
 
-  return 'defaultWhiteLabel';
+  if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return "SFFamilies";
+  if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return "LinkSF";
+  if (checkWhiteLabelSubdomain(config.UCSF_DOMAIN)) return "Ucsf";
+  if (
+    subdomain === String(config.MOHCD_DOMAIN) ||
+    domain === `staging.${String(config.MOHCD_DOMAIN)}.org`
+  )
+    return "SFServiceGuide";
+  // N.B. The qaone environment can be used to test various whitelabels as needed
+  if (subdomain === "qaone") return "Ucsf";
+
+  return "defaultWhiteLabel";
 }
 
 const configKey = determineWhiteLabelSite();
+
+const whiteLabelDefaults = {
+  aboutPageText: `The SF Service Guide is an online directory of human services in San
+Francisco. Our goal is to help anyone with access to a smartphone,
+tablet, or computer find the services they need. The guide's
+focus is on homelessness and housing services, but also covers a
+variety of other services, from education and legal aid to senior
+services and re-entry programs.`,
+  aboutPageTitle: "SF Service Guide",
+  enabledTranslations: ["en", "es", "tl", "zh-TW"],
+  homePageComponent: "HomePage",
+  intercom: false,
+  logoLinkDestination: "/",
+  navLogoStyle: styles.siteNav,
+  refinementListLimit: 10,
+  showPrintResultsBtn: true,
+  showBanner: true,
+  showClinicianAction: false,
+  showHandoutsIcon: false,
+  showHeaderQrCode: false,
+  showMobileNav: true,
+  showSearch: true,
+  siteNavStyle: styles.siteNav,
+  userWay: false,
+} as const;
+
+const appImageDefaults = {
+  background: BackgroundImage,
+  algolia: SearchByAlgoliaImage,
+  mohcdSeal: SFSeal,
+} as const;
 
 /*
   Specify what is viewed in each white label.
   A '/' (which is a forward-slash) as a value for logoLinkDestination
   denotes that the link is internal to the application.
 */
+
 const SFFamilies: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
-    logoLarge: SFFamiliesLogo,
-    logoSmall: SFFamiliesLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
+    ...appImageDefaults,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
-  homePageComponent: 'HomePage',
-  intercom: false,
-  logoLinkDestination: 'https://www.sffamilies.org/',
+  ...whiteLabelDefaults,
+  enabledTranslations: ["en", "es", "tl", "zh-TW", "vi", "ar", "ru"],
+  logoLinkDestination: "https://www.our415.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
   showMobileNav: false,
+  showPrintResultsBtn: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
-  siteUrl: 'https://sffamilies.sfserviceguide.org/',
-  title: 'SF Families',
+  siteUrl: "https://our415.sfserviceguide.org/",
+  title: "Our 415",
   userWay: true,
 } as const;
 
 const SFServiceGuide: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: SFServiceLogo,
     logoSmall: SFServiceLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
+  ...whiteLabelDefaults,
   intercom: true,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
-  showBanner: true,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
-  siteUrl: 'https://sfserviceguide.org',
-  title: 'SF Service Guide',
-  userWay: false,
+  siteUrl: "https://sfserviceguide.org",
+  title: "SF Service Guide",
 } as const;
 
 const LinkSF: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: LinkSFLogo,
     logoSmall: LinkSFLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
-  intercom: false,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
-  showBanner: true,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
-  siteUrl: 'https://linksf.sfserviceguide.org',
-  title: 'Link SF',
-  userWay: false,
+  ...whiteLabelDefaults,
+  siteUrl: "https://linksf.sfserviceguide.org",
+  title: "Link SF",
 } as const;
 
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: SFServiceLogo,
     logoSmall: SFServiceLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'HomePage',
+  ...whiteLabelDefaults,
   intercom: true,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
-  showBanner: true,
-  showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
-  siteUrl: 'https://askdarcel.org',
-  title: 'AskDarcel',
-  userWay: false,
+  siteUrl: "https://askdarcel.org",
+  title: "AskDarcel",
 } as const;
 
 const Ucsf: WhiteLabelSite = {
   appImages: {
-    background: BackgroundImage,
+    ...appImageDefaults,
     logoLarge: UcsfServiceLogo,
     logoSmall: UcsfServiceLogo,
-    algolia: SearchByAlgoliaImage,
-    mohcdSeal: SFSeal,
   },
-  homePageComponent: 'UcsfHomePage',
-  intercom: false,
-  logoLinkDestination: '/',
-  navLogoStyle: styles.siteNav,
+  ...whiteLabelDefaults,
+  aboutPageText: `The Discharge Navigator is a clinician-focused tool designed to empower medical providers
+with real-time access to information about social resources around San Francisco. Clinicians
+can utilize this database to identify and share targeted resources for patients based on social
+needs, language requirements, and demographics. This project is the result of collaboration
+among experts across the SF Department of Public Health, Zuckerberg SF General Emergency
+Department, and UCSF School of Medicine in partnership with SF Service Guide.`,
+  aboutPageTitle: "Discharge Navigator",
+  enabledTranslations: [],
+  homePageComponent: "UcsfHomePage",
+  navLogoStyle: styles.navLogoUcsf,
+  refinementListLimit: 15,
   showBanner: false,
   showClinicianAction: true,
   showHandoutsIcon: true,
   showHeaderQrCode: true,
-  showMobileNav: true,
-  showSearch: true,
-  siteNavStyle: styles.siteNav,
-  siteUrl: 'https://ucsf.sfserviceguide.org', // todo: get the desired siteUrl from UCSF
-  title: 'UCSF Outpatient Services',
-  userWay: false,
+  showPrintResultsBtn: false,
+  siteUrl: "https://dcnav.sfserviceguide.org",
+  title: "Discharge Navigator",
 } as const;
 
 /*

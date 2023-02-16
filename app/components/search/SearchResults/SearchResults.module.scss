@@ -1,4 +1,4 @@
-@import '~styles/utils/_helpers.scss';
+@import "~styles/utils/_helpers.scss";
 
 .searchResultsAndMapContainer {
   display: grid;
@@ -51,24 +51,23 @@
 }
 
 .searchResult {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
-  padding-top: 21px;
-  padding-bottom: 24px;
-  padding-left: 24px;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 25px;
+  justify-items: stretch;
+  padding: 21px 0 24px 24px;
   border-left: 1px solid $color-grey3;
   border-bottom: 1px solid $color-grey3;
 
   @media screen and (max-width: $break-desktop) {
-    flex-direction: column;
+    gap: 32px;
+    grid-template-columns: none;
+    justify-items: start;
   }
 
   @media screen and (max-width: $break-tablet-l) {
     padding-left: 30px;
   }
-
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
@@ -84,15 +83,6 @@
     border-bottom: 1px solid $color-grey3;
     padding: 24px 0;
   }
-
-  // Todo: Look into replacing this with :last-child
-  // &_addressLast {
-  //   padding-top: 24px;
-  // }
-}
-
-.searchText {
-  flex-grow: 2;
 }
 
 .title {
@@ -115,7 +105,7 @@
 
 .description {
   font-size: 18px;
-  margin: 32px 0;
+  padding-top: 32px;
   a {
     word-break: break-word;
   }
@@ -136,23 +126,11 @@
 }
 
 .sideLinks {
-  flex-shrink: 0;
-  width: auto;
-  margin-left: 25px;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
 
-  @media screen and (max-width: $break-desktop) {
-    flex-direction: column;
-    margin-left: 0;
-    margin-right: 0;
-    width: inherit;
-  }
-
   @media screen and (max-width: 600px) {
-    padding-top: 16px;
-    margin-top: 0;
     font-size: 16px;
   }
 }
@@ -164,18 +142,83 @@
   cursor: pointer;
 }
 
+.deemphasizeSideLinks {
+  font-weight: 400;
+}
+
+.hideDischargeSidelinks {
+  display: none;
+}
+
 .sideLinkIcon {
   width: 24px;
 }
 
 .sideLinkText {
-  padding: 0 8px;
+  padding-left: 8px;
   overflow: auto;
 }
 
 .expandListSlider {
   display: none;
-  @media screen and ( max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-s) {
     display: block;
+  }
+}
+
+@media print {
+  // This below styles are for printing out the results on our service/search results page.
+
+  // This sets visibility hidden on all elements except for the searchResultsContainer
+  // and its children to avoid printing irrelevant sections of the page.
+  // This follows the example of this answer https://stackoverflow.com/a/2618980
+  :global(.searchResultsPage) {
+    visibility: hidden;
+
+    :global(.results-map) {
+      display: none;
+    }
+
+    a,
+    button,
+    input,
+    textarea {
+      // In the Firefox print view, input and anchor elements are not hidden due to the transition
+      // delay on changing the visibility value.
+      transition: none !important;
+    }
+
+    a[href]::after {
+      // Our _reset.scss file displays the whole href of a link in the ::after selector.
+      // This is confusing for our service and resource links which are just routes
+      // to other parts of our site, etc. Thus, overriding that here.
+      content: "" !important;
+    }
+  }
+
+  .searchResultsContainer {
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 50px auto;
+    width: 6.5in;
+    display: block;
+  }
+
+  .searchResult {
+    display: block;
+    padding: 20px 0;
+    border-left: 0;
+  }
+
+  .sideLink {
+    display: none;
+    &.showInPrintView {
+      display: block;
+      padding-top: 20px;
+    }
   }
 }

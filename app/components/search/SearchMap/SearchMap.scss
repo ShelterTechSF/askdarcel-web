@@ -1,4 +1,4 @@
-@import '~styles/utils/_helpers.scss';
+@import "~styles/utils/_helpers.scss";
 
 .mapLoaderContainer .loader .sk-fading-circle {
   margin: 200px auto;
@@ -23,7 +23,7 @@
 }
 
 .marker {
-  transform:translateY(-50%);
+  transform: translateY(-50%);
   position: absolute;
   height: 55px;
   width: 30px;

@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import { icon } from 'assets';
+import { icon } from "assets";
 
-import { Modal } from 'components/ui/Modal/Modal';
-import { Button } from 'components/ui/inline/Button/Button';
+import { Modal } from "components/ui/Modal/Modal";
+import { Button } from "components/ui/inline/Button/Button";
 
-import styles from './ClientHandouts.module.scss';
+import styles from "./ClientHandouts.module.scss";
 
 export const ClientHandouts = ({
-  isOpen, setIsOpen, handoutCollection,
+  isOpen,
+  setIsOpen,
+  handoutCollection,
 }: {
   isOpen: boolean;
   setIsOpen: (val: boolean) => void;
@@ -25,22 +27,25 @@ export const ClientHandouts = ({
       closeModal={closeModal}
     >
       <div className={styles.modalContent}>
-        <h2 className={styles.title}>Print Handout</h2>
-        {handoutCollection.map(handout => (
-          <a href={handout.link} target="_blank" rel="noreferrer" className={styles.handoutLink} key={handout.id}>
-            <img src={icon('pdf-red')} alt="PDF icon" className={styles.sideLinkIcon} />
-            <span>
-              {handout.description}
-              {' '}
-              - PDF
-            </span>
+        <h2 className={styles.title}>Print</h2>
+        {handoutCollection.map((handout) => (
+          <a
+            href={handout.url}
+            target="_blank"
+            rel="noreferrer"
+            className={styles.handoutLink}
+            key={handout.id ?? handout.key}
+          >
+            <img
+              src={icon("pdf-red")}
+              alt="PDF icon"
+              className={styles.sideLinkIcon}
+            />
+            <span>{handout.description} - PDF</span>
           </a>
         ))}
         <div className={styles.buttonBar}>
-          <Button
-            onClick={closeModal}
-            tabIndex={0}
-          >
+          <Button onClick={closeModal} tabIndex={0}>
             Close
           </Button>
         </div>

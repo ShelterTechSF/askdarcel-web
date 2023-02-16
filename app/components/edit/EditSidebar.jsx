@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
-import styles from './EditSidebar.module.scss';
+import styles from "./EditSidebar.module.scss";
 
 const SaveButton = ({ children, disabled, onClick }) => (
   <button
@@ -28,30 +28,22 @@ const EditSidebar = ({
   submitting,
 }) => {
   let actionButtons = [
-    <SaveButton
-      key="submit"
-      disabled={submitting}
-      onClick={handleSubmit}
-    >
+    <SaveButton key="submit" disabled={submitting} onClick={handleSubmit}>
       Save Changes
     </SaveButton>,
     <button
       type="button"
       className={`${styles.actionButton} ${styles.deactivate}`}
       key="deactive"
-      disabled={submitting}
-      onClick={() => handleDeactivation('resource', resource.id)}
+      disabled={submitting || resource.status === "inactive"}
+      onClick={() => handleDeactivation("resource", resource.id)}
     >
       Deactivate
     </button>,
   ];
   if (newResource) {
     actionButtons = [
-      <SaveButton
-        key="submit"
-        disabled={submitting}
-        onClick={createResource}
-      >
+      <SaveButton key="submit" disabled={submitting} onClick={createResource}>
         Submit
       </SaveButton>,
       <button
@@ -73,17 +65,17 @@ const EditSidebar = ({
         onClick={certifyHAP}
       >
         HAP Approve
-      </button>,
+      </button>
     );
   }
   // Populate existing services so they show up on the sidebar
   // Do a 2-level-deep clone of the newServices object
   const allServices = Object.entries(newServices).reduce(
     (acc, [id, service]) => ({ ...acc, [id]: { ...service } }),
-    {},
+    {}
   );
   if (resource.services) {
-    resource.services.forEach(service => {
+    resource.services.forEach((service) => {
       allServices[service.id].name = service.name;
     });
   }
@@ -100,7 +92,11 @@ const EditSidebar = ({
 
         <h3 className={styles.listHeading}>
           <a href="#services">Services</a>
-          <button type="button" className={styles.serviceActionButton} onClick={addService}>
+          <button
+            type="button"
+            className={styles.serviceActionButton}
+            onClick={addService}
+          >
             <i className="material-icons">add_circle_outline</i>
           </button>
         </h3>
@@ -109,11 +105,11 @@ const EditSidebar = ({
             <li key={key} className={styles.listItem}>
               <a
                 href={`#${key}`}
-                style={{ display: 'block' }}
-                onClick={e => {
+                style={{ display: "block" }}
+                onClick={(e) => {
                   e.preventDefault();
                   const topOfElement = document.getElementById(key).offsetTop;
-                  window.scroll({ top: topOfElement, behavior: 'smooth' });
+                  window.scroll({ top: topOfElement, behavior: "smooth" });
                 }}
               >
                 {service.name}
@@ -123,9 +119,7 @@ const EditSidebar = ({
         </ul>
       </div>
 
-      <div className={styles.actions}>
-        {actionButtons}
-      </div>
+      <div className={styles.actions}>{actionButtons}</div>
     </nav>
   );
 };

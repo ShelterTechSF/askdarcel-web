@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import styles from './Button.module.scss';
+import styles from "./Button.module.scss";
 
-type ButtonType = 'button' | 'submit' | 'reset';
-type StyleType = 'transparent';
+type ButtonType = "button" | "submit" | "reset";
+type StyleType = "transparent";
 
 export const Button = ({
   children,
   onClick,
-  buttonType = 'button',
+  buttonType = "button",
   addClass,
   styleType,
   tabIndex,
@@ -23,7 +23,7 @@ export const Button = ({
   disabled?: boolean;
 }) => {
   let buttonClass;
-  if (styleType === 'transparent') {
+  if (styleType === "transparent") {
     buttonClass = styles.buttonTransparent;
   } else {
     buttonClass = styles.button;
@@ -37,7 +37,7 @@ export const Button = ({
       /* eslint-disable-next-line react/button-has-type */
       type={buttonType}
       tabIndex={tabIndex}
-      className={`${buttonClass} ${addClass || ''}`}
+      className={`${buttonClass} ${addClass || ""}`}
       disabled={disabled}
     >
       {children}

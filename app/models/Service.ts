@@ -1,7 +1,7 @@
-import { get } from '../utils/DataService';
-import type { Organization } from './Organization';
-import { Schedule, ScheduleParams, parseAPISchedule } from './Schedule';
-import { RecurringSchedule } from './RecurringSchedule';
+import { get } from "../utils/DataService";
+import type { Organization } from "./Organization";
+import { Schedule, ScheduleParams, parseAPISchedule } from "./Schedule";
+import { RecurringSchedule } from "./RecurringSchedule";
 import {
   Address,
   Category,
@@ -9,7 +9,7 @@ import {
   LocationDetails,
   Note,
   Program,
-} from './Meta';
+} from "./Meta";
 
 // A Service is provided by an Organization
 export interface Service {
@@ -35,13 +35,15 @@ export interface Service {
   resource: Organization;
   schedule: Schedule;
   source_attribution: string;
+  status: "pending" | "approved" | "rejected" | "inactive";
   updated_at: string;
   url: string | null;
   verified_at: any;
   wait_time: any;
 }
 
-export interface ServiceParams extends Omit<Partial<Service>, 'notes'|'schedule'> {
+export interface ServiceParams
+  extends Omit<Partial<Service>, "notes" | "schedule"> {
   shouldInheritScheduleFromParent: boolean;
   notes?: Partial<Note>[];
   schedule?: ScheduleParams;
@@ -51,7 +53,7 @@ export interface ServiceParams extends Omit<Partial<Service>, 'notes'|'schedule'
 export const getServiceLocations = (
   service: Service,
   resource: Organization,
-  recurringSchedule: any,
+  recurringSchedule: any
 ): LocationDetails[] => {
   let addresses: Address[];
   if (service.addresses && service.addresses.length > 0) {
@@ -61,7 +63,7 @@ export const getServiceLocations = (
   } else {
     addresses = [];
   }
-  return addresses.map(address => ({
+  return addresses.map((address) => ({
     id: address.id,
     address,
     name: service.name,
@@ -70,18 +72,21 @@ export const getServiceLocations = (
 };
 
 // Get all the fields from a service we should render
-export const generateServiceDetails = (service: Service): ({ title: string; value: any }[]) => [
-  ['How to Apply', service.application_process],
-  ['Required Documents', service.required_documents],
-  ['Fees', service.fee],
-  ['Notes', service.notes.map(d => d.note).join('\n')],
-].filter(row => row[1])
-  .map(row => ({ title: row[0], value: row[1] }));
+export const generateServiceDetails = (
+  service: Service
+): { title: string; value: any }[] =>
+  [
+    ["How to Apply", service.application_process],
+    ["Required Documents", service.required_documents],
+    ["Fees", service.fee],
+    ["Notes", service.notes.map((d) => d.note).join("\n")],
+  ]
+    .filter((row) => row[1])
+    .map((row) => ({ title: row[0], value: row[1] }));
 
 // Determine if a service has its own schedule, or should inherit
-export const shouldServiceInheritScheduleFromOrg = (service: Service) => (
-  service.schedule && service.schedule.schedule_days.length > 0
-);
+export const shouldServiceInheritScheduleFromOrg = (service: Service) =>
+  service.schedule && service.schedule.schedule_days.length > 0;
 
 /**
  * Return a Promise with the fetched Service.
@@ -89,8 +94,8 @@ export const shouldServiceInheritScheduleFromOrg = (service: Service) => (
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const fetchService = (id: string): Promise<Service> => get(`/api/services/${id}`)
-  .then(({ service }: { service: Service }) => {
+export const fetchService = (id: string): Promise<Service> =>
+  get(`/api/services/${id}`).then(({ service }: { service: Service }) => {
     const recurringSchedule = shouldServiceInheritScheduleFromOrg(service)
       ? parseAPISchedule(service.schedule)
       : parseAPISchedule(service.resource.schedule);

@@ -25,10 +25,11 @@
   }
 }
 
+.printAllBtn,
 .qrCodeBtn {
   display: none;
 
-  &.showQrCode {
+  &.showBtn {
     display: block;
 
     @media screen and (max-width: $break-tablet-s) {
@@ -37,7 +38,7 @@
   }
 }
 
-.qrCodeBtnText {
+.btnText {
   font-weight: 600;
   font-size: 16px;
   margin-left: 10px;
@@ -50,7 +51,9 @@
   margin: 0;
   width: auto;
   height: auto;
-  &:focus, &:active, &:hover {
+  &:focus,
+  &:active,
+  &:hover {
     box-shadow: none;
   }
   // End Button default overrrides
@@ -75,7 +78,6 @@
 .mapIcon {
   background-image: url(assets/img/ic-map.svg);
 }
-
 
 .mapListToggleContainer {
   @media screen and (min-width: $min-tablet-p) {

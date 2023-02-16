@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connectRefinementList } from 'react-instantsearch/connectors';
-import { getCurrentDayTime } from 'utils/index';
-import styles from './RefinementFilters.module.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { connectRefinementList } from "react-instantsearch/connectors";
+import { getCurrentDayTime } from "utils/index";
+import styles from "./RefinementFilters.module.scss";
 
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
@@ -34,7 +34,15 @@ const OpenNowFilter = ({ currentRefinement, refine }) => {
   return (
     <label key="openNow" className={styles.checkBox}>
       Open Now
-      <input type="checkbox" name="openNow" id="openNow" className={styles.refinementInput} value={isActive} checked={isActive} onChange={toggleRefinement} />
+      <input
+        type="checkbox"
+        name="openNow"
+        id="openNow"
+        className={styles.refinementInput}
+        value={isActive}
+        checked={isActive}
+        onChange={toggleRefinement}
+      />
     </label>
   );
 };

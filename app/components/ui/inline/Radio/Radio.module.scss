@@ -1,4 +1,4 @@
-@import 'app/styles/utils/_helpers.scss';
+@import "app/styles/utils/_helpers.scss";
 
 // Todo: Look into standardizing radio button styles across browsers
 .radioDefaults {
@@ -8,9 +8,9 @@
   box-shadow: none;
   cursor: pointer;
 
-  &:active, &:hover, &:focus {
+  &:active,
+  &:hover,
+  &:focus {
     box-shadow: initial;
   }
 }
-
-

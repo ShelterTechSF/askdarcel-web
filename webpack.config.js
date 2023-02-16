@@ -1,75 +1,79 @@
-const { readFileSync } = require('fs');
-const yaml = require('js-yaml');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const { readFileSync } = require("fs");
+const yaml = require("js-yaml");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtendedDefinePlugin = require("extended-define-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
-const CONFIG_YAML = process.env.CONFIG_YAML || 'config.yml';
+const CONFIG_YAML = process.env.CONFIG_YAML || "config.yml";
 
 // Take the user config from the file, and override keys with environment variables if they exist
-const userConfig = yaml.safeLoad(readFileSync(CONFIG_YAML, 'utf8'));
+const userConfig = yaml.safeLoad(readFileSync(CONFIG_YAML, "utf8"));
 const environmentConfig = [
-  'GOOGLE_API_KEY',
-  'ALGOLIA_INDEX_PREFIX',
-  'ALGOLIA_APPLICATION_ID',
-  'ALGOLIA_READ_ONLY_API_KEY',
-  'MOHCD_SUBDOMAIN',
-  'MOHCD_DOMAIN',
-  'SFFAMILIES_DOMAIN',
-  'TESTCAFE_RUNNING',
-  'LINKSF_DOMAIN',
+  "GOOGLE_API_KEY",
+  "ALGOLIA_INDEX_PREFIX",
+  "ALGOLIA_APPLICATION_ID",
+  "ALGOLIA_READ_ONLY_API_KEY",
+  "MOHCD_SUBDOMAIN",
+  "MOHCD_DOMAIN",
+  "SFFAMILIES_DOMAIN",
+  "TESTCAFE_RUNNING",
+  "LINKSF_DOMAIN",
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
-  if (process.env[key] !== undefined) { acc[key] = process.env[key]; }
+  if (process.env[key] !== undefined) {
+    acc[key] = process.env[key];
+  }
   return acc;
 }, userConfig);
 
-const appRoot = path.resolve(__dirname, 'app/');
-const buildDir = path.resolve(__dirname, 'build');
+const appRoot = path.resolve(__dirname, "app/");
+const buildDir = path.resolve(__dirname, "build");
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'production',
+  mode: process.env.NODE_ENV || "production",
   context: __dirname,
-  entry: ['whatwg-fetch', '@babel/polyfill', path.resolve(appRoot, 'init.tsx')],
+  entry: ["whatwg-fetch", "@babel/polyfill", path.resolve(appRoot, "init.tsx")],
   output: {
     path: buildDir,
-    publicPath: '/dist/',
-    filename: 'bundle.js',
+    publicPath: "/dist/",
+    filename: "bundle.js",
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+    extensions: [".tsx", ".ts", ".jsx", ".js"],
     alias: {
-      app: path.resolve(appRoot, ''),
-      assets: path.resolve(appRoot, 'assets'),
-      actions: path.resolve(appRoot, 'actions'),
-      components: path.resolve(appRoot, 'components'),
-      reducers: path.resolve(appRoot, 'reducers'),
-      styles: path.resolve(appRoot, 'styles'),
-      utils: path.resolve(appRoot, 'utils'),
+      app: path.resolve(appRoot, ""),
+      assets: path.resolve(appRoot, "assets"),
+      actions: path.resolve(appRoot, "actions"),
+      components: path.resolve(appRoot, "components"),
+      pages: path.resolve(appRoot, "pages"),
+      reducers: path.resolve(appRoot, "reducers"),
+      styles: path.resolve(appRoot, "styles"),
+      utils: path.resolve(appRoot, "utils"),
     },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'SF Service Guide',
-      template: 'app/index.html',
+      title: "SF Service Guide",
+      template: "app/index.html",
       meta: {
-        'og:url': 'https://sfserviceguide.org',
-        'og:title': 'SF Service Guide | San Francisco',
-        'twitter:card': 'summary_large_image',
-        'twitter:site': '@sheltertechorg',
-        'og:description': 'Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.',
-        'og:type': 'website',
+        "og:url": "https://sfserviceguide.org",
+        "og:title": "SF Service Guide | San Francisco",
+        "twitter:card": "summary_large_image",
+        "twitter:site": "@sheltertechorg",
+        "og:description":
+          "Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.",
+        "og:type": "website",
         // Note: The image is specified in the HTML itself because it needs to
         // reference an image file.
-        'og:image:type': 'image/png',
-        'og:image:width': '1200',
-        'og:image:height': '630',
+        "og:image:type": "image/png",
+        "og:image:width": "1200",
+        "og:image:height": "630",
       },
-      favicon: 'app/favicon.ico',
+      favicon: "app/favicon.ico",
     }),
     new ExtendedDefinePlugin({
       CONFIG: config,
@@ -77,20 +81,18 @@ module.exports = {
     }),
     new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin({
-      patterns: [
-        { from: 'public', to: path.resolve(__dirname, 'public') },
-      ],
+      patterns: [{ from: "public", to: path.resolve(__dirname, "public") }],
     }),
     new NodePolyfillPlugin(),
   ],
-  devtool: 'source-map',
+  devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.(j|t)sx?$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
           },
         ],
         exclude: [/node_modules/],
@@ -98,36 +100,36 @@ module.exports = {
       {
         test: /\.s?css$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               importLoaders: 1,
               modules: {
                 auto: true,
-                localIdentName: '[path][name]__[local]--[contenthash:base64:5]',
+                localIdentName: "[path][name]__[local]--[contenthash:base64:5]",
               },
             },
           },
-          'sass-loader',
+          "sass-loader",
         ],
       },
       {
         test: /\.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: 'fonts/[name][ext]',
+          filename: "fonts/[name][ext]",
         },
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: '[name]-[contenthash][ext]',
+          filename: "[name]-[contenthash][ext]",
         },
         use: [
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
               gifsicle: {
                 interlaced: false,
@@ -142,13 +144,11 @@ module.exports = {
       },
       {
         test: /\.pdf$/,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: '[name][ext]',
+          filename: "[name][ext]",
         },
-        include: [
-          path.resolve(__dirname, 'app/assets'),
-        ],
+        include: [path.resolve(__dirname, "app/assets")],
       },
     ],
   },
@@ -156,12 +156,12 @@ module.exports = {
     contentBase: buildDir,
     historyApiFallback: true,
     proxy: {
-      '/api-docs': {
-        target: process.env.API_URL || 'http://localhost:3000',
+      "/api-docs": {
+        target: process.env.API_URL || "http://localhost:3000",
       },
-      '/api/': {
-        target: process.env.API_URL || 'http://localhost:3000',
-        pathRewrite: { '^/api/': '' },
+      "/api/": {
+        target: process.env.API_URL || "http://localhost:3000",
+        pathRewrite: { "^/api/": "" },
       },
     },
   },

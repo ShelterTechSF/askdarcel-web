@@ -7,32 +7,34 @@
 }
 
 .listing {
-	background: $color-white;
+  background: $color-white;
 
-	h1, h2, h3 {
-		font-weight: bold;
-		padding: $padding-default;
-	}
+  h1,
+  h2,
+  h3 {
+    font-weight: bold;
+    padding: $padding-default;
+  }
 
   h1 {
     font-size: 26px;
-		text-transform: capitalize;
-		margin-bottom: $padding-default;
+    text-transform: capitalize;
+    margin-bottom: $padding-default;
   }
 
   h2 {
-		color: $color-textfade;
-		font-size: 22px; // TODO Centralize these sizes across all pages
-		padding-bottom: $padding-xlarge;
+    color: $color-textfade;
+    font-size: 22px; // TODO Centralize these sizes across all pages
+    padding-bottom: $padding-xlarge;
   }
 
   p {
-		color: $color-textfade;
-		padding: $padding-default;
+    color: $color-textfade;
+    padding: $padding-default;
   }
 
   header {
-		padding: $padding-xlarge 0;
+    padding: $padding-xlarge 0;
 
     p {
       font-size: 13px;
@@ -40,7 +42,7 @@
   }
 
   section {
-    border-bottom: 1px solid #EEE;
+    border-bottom: 1px solid #eee;
     padding: $padding-xlarge 0;
 
     p {
@@ -51,7 +53,7 @@
   @include r_max($break-tablet-s) {
     h2 {
       padding-bottom: $padding-default;
-      font-size: calc-em(16px)
+      font-size: calc-em(16px);
     }
     header {
       padding: 0 0 calc-em(20px) 0;
@@ -75,27 +77,27 @@
 // ORG MAIN INFO
 
 .listing--main {
-	width:100%;
+  width: 100%;
   max-width: calc-em(1000px);
   padding: calc-em(20px);
   margin: calc-em(34px) auto 0;
   display: flex;
-	&--left {
-		width: calc-em(660px);
+  &--left {
+    width: calc-em(660px);
     border-right: 1px solid #ddd;
     padding-right: $padding-large;
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		align-content: stretch;
-	}
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+  }
   @include r_max($break-tablet-s) {
     margin-top: 0;
-    	&--left {
-        border-right: none;
-        padding-right: 0;
-      }
+    &--left {
+      border-right: none;
+      padding-right: 0;
+    }
   }
 }
 
@@ -103,47 +105,47 @@
 // ORG HEADER
 
 .certified {
-	float: right;
-	height: 36px;
-	margin-right: $padding-default;
+  float: right;
+  height: 36px;
+  margin-right: $padding-default;
 
-	&:after {
-		clear: both;
-	}
+  &:after {
+    clear: both;
+  }
 }
 
 .listing--main--header {
-	&--title {
-		@extend %font-size-x-large;
-		color: #333333;
-		font-weight: 600;
-	}
-	&--rating {
-		margin-top: calc-em(10px);
-	}
-	&--hours {
-		margin-top: calc-em(10px);
-		color: #888888;
-	}
-	&--phone {
-		margin-top: calc-em(5px);
-		color: #888888;
-	}
-	&--description {
-		margin-top: calc-em(20px);
-		border-top: 1px solid #dddddd;
-		padding-top: calc-em(20px);
-		header {
-			@extend %font-size-large;
-			font-weight: 600;
-			color: #888888;
-		}
-		p {
-			white-space: pre-line;
-			padding-right: 6px;
-			margin-top: calc-em(10px);
-		}
-	}
+  &--title {
+    @extend %font-size-x-large;
+    color: #333333;
+    font-weight: 600;
+  }
+  &--rating {
+    margin-top: calc-em(10px);
+  }
+  &--hours {
+    margin-top: calc-em(10px);
+    color: #888888;
+  }
+  &--phone {
+    margin-top: calc-em(5px);
+    color: #888888;
+  }
+  &--description {
+    margin-top: calc-em(20px);
+    border-top: 1px solid #dddddd;
+    padding-top: calc-em(20px);
+    header {
+      @extend %font-size-large;
+      font-weight: 600;
+      color: #888888;
+    }
+    p {
+      white-space: pre-line;
+      padding-right: 6px;
+      margin-top: calc-em(10px);
+    }
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -152,117 +154,117 @@
 .service--section {
   margin-top: calc-em(20px);
   &--header {
-  	border-bottom: 1px solid #DDDDDD;
-  	h4 {
-  		@extend %font-size-medium;
-  		display: inline-block;
-			color: #1C72E6;
-			font-weight: bold;
-			padding-bottom: calc-em(10px);
-			border-bottom: 3px solid #1C72E6;
-		}
+    border-bottom: 1px solid #dddddd;
+    h4 {
+      @extend %font-size-medium;
+      display: inline-block;
+      color: #1c72e6;
+      font-weight: bold;
+      padding-bottom: calc-em(10px);
+      border-bottom: 3px solid #1c72e6;
+    }
   }
 
   .service {
-	margin-top: calc-em(30px);
-	padding-top: calc-em(30px);
-	border-top: 1px solid #DDDDDD;
-	&:first-of-type {
-		border-top: 0;
-		margin-top: 0;
-	}
-	&--meta {
-		display: flex;
-		justify-content: space-between;
-		margin-right: calc-em(60px);
-		p {
-			@extend %font-size-small;
-			color: #888888;
-		}
-	}
-	&--header {
-		@extend %font-size-large;
-		font-weight: 600;
-		color: #333333;
-	}
-	&--description {
-		margin-top: calc-em(15px);
-	}
-	&--details-toggle {
-		margin-top: calc-em(20px);
-		color: #1C72E6;
-		cursor: pointer;
-		i {
-			transform: translateY(2px);
-		}
-	}
-	&--details {
-		margin-top: calc-em(40px);
-		&--item {
-			display: flex;
-			margin-top: calc-em(20px);
-			&:last-of-type {
-				.service--details--item--info {
-					border-bottom: 0;
-				}
-			}
-			header {
-				width: calc-em(130px);
-				margin-right: calc-em(20px);
-				color: #333333;
-				font-weight: 600;
-				flex-grow: 0;
-				flex-shrink: 0;
-			}
-			&--info {
-				flex-grow: 1;
-				border-bottom: 1px solid #DDDDDD;
-				padding: 0 calc-em(60px) calc-em(20px) 0;
-			}
-		}
-	}
-}
+    margin-top: calc-em(30px);
+    padding-top: calc-em(30px);
+    border-top: 1px solid #dddddd;
+    &:first-of-type {
+      border-top: 0;
+      margin-top: 0;
+    }
+    &--meta {
+      display: flex;
+      justify-content: space-between;
+      margin-right: calc-em(60px);
+      p {
+        @extend %font-size-small;
+        color: #888888;
+      }
+    }
+    &--header {
+      @extend %font-size-large;
+      font-weight: 600;
+      color: #333333;
+    }
+    &--description {
+      margin-top: calc-em(15px);
+    }
+    &--details-toggle {
+      margin-top: calc-em(20px);
+      color: #1c72e6;
+      cursor: pointer;
+      i {
+        transform: translateY(2px);
+      }
+    }
+    &--details {
+      margin-top: calc-em(40px);
+      &--item {
+        display: flex;
+        margin-top: calc-em(20px);
+        &:last-of-type {
+          .service--details--item--info {
+            border-bottom: 0;
+          }
+        }
+        header {
+          width: calc-em(130px);
+          margin-right: calc-em(20px);
+          color: #333333;
+          font-weight: 600;
+          flex-grow: 0;
+          flex-shrink: 0;
+        }
+        &--info {
+          flex-grow: 1;
+          border-bottom: 1px solid #dddddd;
+          padding: 0 calc-em(60px) calc-em(20px) 0;
+        }
+      }
+    }
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG INFO
 
 .info--section {
-	margin-top: calc-em(50px);
-	.info {
-		margin-top: calc-em(30px);
-		display: flex;
-		width: calc-em(600px);
-		flew-wrap: wrap;
-		&--column {
-			width: 50%;
-			@include r_max($break-tablet-s) {
-	      width: 100%;
-	    }
-	    > span {
-	    	display: block;
-	    	margin-top: calc-em(10px);
-	    	&:first-of-type {
-	    		margin-top: 0;
-	    	}
-	    }
-		}
-	}
+  margin-top: calc-em(50px);
+  .info {
+    margin-top: calc-em(30px);
+    display: flex;
+    width: calc-em(600px);
+    flew-wrap: wrap;
+    &--column {
+      width: 50%;
+      @include r_max($break-tablet-s) {
+        width: 100%;
+      }
+      > span {
+        display: block;
+        margin-top: calc-em(10px);
+        &:first-of-type {
+          margin-top: 0;
+        }
+      }
+    }
+  }
 }
 
 .weekly-hours-list {
-	&--item {
-		display: flex;
-		line-height: 1.5;
-		&--day {
-			width: calc-em(130px);
-		}
-	}
+  &--item {
+    display: flex;
+    line-height: 1.5;
+    &--day {
+      width: calc-em(130px);
+    }
+  }
 }
 
 .relativeTime {
-	padding: $padding-default;
-	font-weight: bold;
+  padding: $padding-default;
+  font-weight: bold;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -279,27 +281,27 @@
 }
 
 .rendered-markdown {
-	strong {
-		font-weight: bold;
-	}
+  strong {
+    font-weight: bold;
+  }
 
-	em {
-		font-style: italic;
-	}
+  em {
+    font-style: italic;
+  }
 
-	ul {
-		padding: 16px 26px;
+  ul {
+    padding: 16px 26px;
 
-		li {
-			list-style-type: disc;
-		}
-	}
+    li {
+      list-style-type: disc;
+    }
+  }
 
-	ol {
-		padding: 16px 26px;
+  ol {
+    padding: 16px 26px;
 
-		li {
-			list-style-type: decimal;
-		}
-	}
+    li {
+      list-style-type: decimal;
+    }
+  }
 }

@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import Select from 'react-select';
-import * as dataService from '../../utils/DataService';
-import 'react-select/dist/react-select.css';
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import Select from "react-select";
+import * as dataService from "../../utils/DataService";
+import "react-select/dist/react-select.css";
 
 function dataToSelectValue(data) {
   return {
@@ -25,7 +25,7 @@ class MultiSelectDropdown extends Component {
 
   componentDidMount() {
     const { optionsRoute } = this.props;
-    dataService.get(`/api/${optionsRoute}`).then(json => {
+    dataService.get(`/api/${optionsRoute}`).then((json) => {
       this.setState({
         options: json[optionsRoute].map(dataToSelectValue),
       });
@@ -35,7 +35,7 @@ class MultiSelectDropdown extends Component {
   handleChange(newValues) {
     const { handleSelectChange } = this.props;
     this.setState({ selectedValues: newValues }, () => {
-      handleSelectChange(newValues.map(val => val.value));
+      handleSelectChange(newValues.map((val) => val.value));
     });
   }
 
@@ -62,7 +62,7 @@ MultiSelectDropdown.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired
   ),
   handleSelectChange: PropTypes.func.isRequired,
   optionsRoute: PropTypes.string.isRequired,

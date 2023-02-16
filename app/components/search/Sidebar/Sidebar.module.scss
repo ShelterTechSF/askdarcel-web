@@ -152,7 +152,9 @@
   font-weight: 400;
   font-size: 15px;
 
-  &:active, &:focus, &:hover {
+  &:active,
+  &:focus,
+  &:hover {
     box-shadow: none;
   }
 

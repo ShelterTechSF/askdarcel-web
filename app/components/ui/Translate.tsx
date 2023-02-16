@@ -1,29 +1,43 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-
-// This is a prototype component for testing out the Google Translate widget. The logic below
-// dictates that this component only be displayed on staging; i.e. the widget will be displayed IF
-// location.hostname === 'staging.sfserviceguide.org'.
-//
-// Note: At least while testing, this is a <li> element as it goes within the
-// nav <ul> site links element.
+import React from "react";
+import { useCookies } from "react-cookie";
+import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
+import { whiteLabel } from "../../utils";
 
 const Translate = () => {
-  const isStaging = window.location.hostname === 'staging.sfserviceguide.org';
-  if (isStaging) {
+  const [, setCookie] = useCookies(["googtrans"]);
+  const { search } = useLocation();
+
+  const languages = whiteLabel.enabledTranslations;
+  if (languages && languages.length > 0) {
+    // Google Translate determines translation source and target
+    // with a "googtrans" cookie.
+    // When the user navigates with a `lang` query param,
+    // interpret that as an explicit ask to translate the site
+    // into that target language.
+    const params = new URLSearchParams(search);
+    const targetLangCode = params.get("lang");
+    if (targetLangCode && languages.includes(targetLangCode)) {
+      setCookie("googtrans", `/en/${targetLangCode}`, { path: "/" });
+    }
+
     return (
-      <li className="googleTranslateContainer">
-        {/* todo: When we go live with Google Translate the scripts within this Helmet snippet
-         /* maybe should be moved to index.html, depending on specific whitelabel needs too  */}
+      <li>
         <Helmet>
           <script type="text/javascript">
             {`
               function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es,tl,zh-TW'}, 'google_translate_element');
+                new google.translate.TranslateElement({
+                  includedLanguages: '${languages.join(",")}',
+                  pageLanguage: 'en',
+                }, 'google_translate_element');
               }
             `}
           </script>
-          <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+          <script
+            type="text/javascript"
+            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          />
         </Helmet>
         <div id="google_translate_element" />
       </li>
