@@ -230,3 +230,22 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     },
   ],
 };
+
+export interface SelectedEligibilities {
+  [key: string]: boolean;
+}
+
+export const defaultSelectedEligibilities = (
+  eligibilityGroup: EligibilityGroup[]
+): SelectedEligibilities => {
+  const selectedEligibilities: SelectedEligibilities = {};
+  const mergedEligibilities = eligibilityGroup.flatMap(
+    (group) => group.eligibilities
+  );
+
+  mergedEligibilities.forEach((eligibility: Eligibility) => {
+    selectedEligibilities[eligibility.checkedId] = eligibility.isSeeAll
+  })
+
+  return selectedEligibilities;
+};

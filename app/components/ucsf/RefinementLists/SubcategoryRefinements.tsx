@@ -9,9 +9,13 @@ interface SubcategoryRefinement {
   id: number;
 }
 
-interface SelectedSubcategories {
+export interface SelectedSubcategories {
   [key: number]: boolean;
 }
+
+export const defaultSelectedSubcategories: Readonly<SelectedSubcategories> = {
+  "-1": true,
+};
 
 const seeAllPseudoId = -1;
 
