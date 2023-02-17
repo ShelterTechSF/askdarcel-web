@@ -6,10 +6,12 @@ import ReactGA from "react-ga";
 import { Button } from "components/ui/inline/Button/Button";
 import { Section } from "components/ucsf/Section/Section";
 import { Layout } from "components/ucsf/Layout/Layout";
-import { SubcategoryRefinements, SelectedSubcategories, defaultSelectedSubcategories } from "components/ucsf/RefinementLists/SubcategoryRefinements";
 import {
-  EligibilityRefinements,
-} from "components/ucsf/RefinementLists/EligibilityRefinements";
+  SubcategoryRefinements,
+  SelectedSubcategories,
+  defaultSelectedSubcategories,
+} from "components/ucsf/RefinementLists/SubcategoryRefinements";
+import { EligibilityRefinements } from "components/ucsf/RefinementLists/EligibilityRefinements";
 import {
   eligibilityMap,
   defaultSelectedEligibilities,
@@ -158,7 +160,10 @@ const Page = () => {
         <div className={styles.refinementsBox}>{refinementsComponent}</div>
         <div className={styles.buttonBarBorder}>
           <div className={styles.navigationButtons}>
-            <Button addClass={styles.goBackBtn} onClick={backToResourceSelection}>
+            <Button
+              addClass={styles.goBackBtn}
+              onClick={backToResourceSelection}
+            >
               Back
             </Button>
             <Button

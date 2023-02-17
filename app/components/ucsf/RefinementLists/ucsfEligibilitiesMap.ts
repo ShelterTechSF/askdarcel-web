@@ -244,8 +244,8 @@ export const defaultSelectedEligibilities = (
   );
 
   mergedEligibilities.forEach((eligibility: Eligibility) => {
-    selectedEligibilities[eligibility.checkedId] = eligibility.isSeeAll
-  })
+    selectedEligibilities[eligibility.checkedId] = eligibility.isSeeAll;
+  });
 
   return selectedEligibilities;
 };
