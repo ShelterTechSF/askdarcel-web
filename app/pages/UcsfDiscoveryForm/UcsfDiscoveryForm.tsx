@@ -156,18 +156,20 @@ const Page = () => {
       <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
       <div className={styles.eligibilitiesContainer}>
         <div className={styles.refinementsBox}>{refinementsComponent}</div>
-        <div className={styles.navigationButtons}>
-          <Button addClass={styles.goBackBtn} onClick={backToResourceSelection}>
-            Back
-          </Button>
-          <Button
-            addClass={styles.nextBtn}
-            onClick={() => {
-              goToNextStep(selectedResourceSlug);
-            }}
-          >
-            {nextButtonText}
-          </Button>
+        <div className={styles.buttonBarBorder}>
+          <div className={styles.navigationButtons}>
+            <Button addClass={styles.goBackBtn} onClick={backToResourceSelection}>
+              Back
+            </Button>
+            <Button
+              addClass={styles.nextBtn}
+              onClick={() => {
+                goToNextStep(selectedResourceSlug);
+              }}
+            >
+              {nextButtonText}
+            </Button>
+          </div>
         </div>
       </div>
     </div>
