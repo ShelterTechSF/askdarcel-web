@@ -27,7 +27,14 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  enabledTranslations: ReadonlyArray<string>; // empty to disable translation
+  /** A list of languages to enable automatic translations for.
+   *
+   * The language codes must match the Google Translate API [1].
+   * Set to the empty array to disable automatic translation.
+   *
+   * [1]: https://cloud.google.com/translate/docs/languages
+   */
+  enabledTranslations: readonly string[];
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
