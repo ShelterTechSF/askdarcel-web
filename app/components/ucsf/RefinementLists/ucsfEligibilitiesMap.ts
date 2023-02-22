@@ -243,7 +243,7 @@ export const defaultSelectedEligibilities = (
     (group) => group.eligibilities
   );
 
-  mergedEligibilities.forEach((eligibility: Eligibility) => {
+  mergedEligibilities.forEach((eligibility) => {
     selectedEligibilities[eligibility.checkedId] = eligibility.isSeeAll;
   });
 

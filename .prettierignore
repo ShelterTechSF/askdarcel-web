@@ -3,4 +3,3 @@ build
 !.*.js
 cypress.config.ts
 node_modules
-.eslintrc.js

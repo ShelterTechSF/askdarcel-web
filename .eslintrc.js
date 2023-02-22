@@ -1,3 +1,5 @@
+// Disabling eslint quote props because prettier clashes with eslint here
+/* eslint-disable quote-props */
 const path = require("path");
 
 module.exports = {
@@ -20,7 +22,7 @@ module.exports = {
     },
   },
   rules: {
-    "camelcase": "off",
+    camelcase: "off",
     "import/extensions": [
       "error",
       {
@@ -144,7 +146,7 @@ module.exports = {
       rules: {
         "newline-per-chained-call": "off",
         "lines-between-class-members": "off",
-        "indent": "off",
+        indent: "off",
       },
     },
     // Node.js scripts
