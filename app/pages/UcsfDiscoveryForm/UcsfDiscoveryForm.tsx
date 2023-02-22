@@ -177,7 +177,7 @@ const Page = () => {
 };
 
 export const UcsfDiscoveryForm = () => (
-  <Layout>
+  <Layout customClass={styles.discoveryLayout}>
     <Page />
   </Layout>
 );
