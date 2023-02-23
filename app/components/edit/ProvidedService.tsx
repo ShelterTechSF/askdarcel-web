@@ -208,7 +208,7 @@ const ProvidedService = ({
 
     if (shouldInherit) {
       tempScheduleDays = Object.entries(scheduleDaysByDay).reduce(
-        (acc, [day, scheduleDays]) => ({
+        (acc, [day, scheduleDays]: any) => ({
           ...acc,
           [day]: scheduleDays.map((scheduleDay) => ({
             ...scheduleDay,

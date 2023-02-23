@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import { Prompt, withRouter } from "react-router-dom";
 import _ from "lodash";
 
@@ -34,7 +33,7 @@ const ACTION_REMOVE = "remove";
  *
  * @return {object[]} An array of items with the changes applied
  */
-const applyChanges = (baseItems, changesById, deletedIds = undefined) => {
+const applyChanges = (baseItems, changesById, deletedIds: any = undefined) => {
   const baseItemIds = new Set(baseItems.map((i) => i.id));
   // Order the new IDs in decreasing order, since that's the order they should
   // appear on the page.
@@ -123,7 +122,7 @@ function postCollection(
     if (item.isRemoved) {
       deletCollectionObject(item, path, promises);
     } else if (i < originalCollection.length && item.dirty) {
-      const diffObj = getDiffObject(item, originalCollection[i]);
+      const diffObj: any = getDiffObject(item, originalCollection[i]);
       if (!_.isEmpty(diffObj)) {
         delete diffObj.dirty;
         updateCollectionObject(diffObj, item.id, path, promises);
@@ -143,8 +142,8 @@ function postSchedule(scheduleObj, promises) {
   if (!scheduleObj) {
     return;
   }
-  let currDay = [];
-  let value = {};
+  let currDay: any[] = [];
+  let value: any = {};
   Object.keys(scheduleObj).forEach((day) => {
     currDay = scheduleObj[day];
     currDay.forEach((curr) => {
@@ -191,7 +190,7 @@ function postSchedule(scheduleObj, promises) {
 function postNotes(notesObj, promises, uriObj) {
   if (notesObj && notesObj.notes) {
     const { notes } = notesObj;
-    Object.entries(notes).forEach(([key, currentNote]) => {
+    Object.entries(notes).forEach(([key, currentNote]: any) => {
       if (key < 0) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
         promises.push(dataService.post(uri, { note: currentNote }));
@@ -307,17 +306,18 @@ const postAddresses = (addresses, uriObj) =>
 // existing services.
 function createFullSchedule(scheduleObj) {
   if (scheduleObj) {
-    const newSchedule = [];
+    const newSchedule: any[] = [];
     let tempDay = {};
     Object.keys(scheduleObj).forEach((day) => {
       scheduleObj[day].forEach((curr) => {
         if (curr.opens_at === null || curr.closes_at === null) {
           return;
         }
-        tempDay = {};
-        tempDay.day = day;
-        tempDay.opens_at = curr.opens_at;
-        tempDay.closes_at = curr.closes_at;
+        tempDay = {
+          day,
+          opens_at: curr.opens_at,
+          closes_at: curr.closes_at,
+        };
         newSchedule.push(tempDay);
       });
     });
@@ -330,17 +330,18 @@ function createFullSchedule(scheduleObj) {
 const prepNotesData = (notes) => Object.values(notes).map((note) => ({ note }));
 
 const prepSchedule = (scheduleObj) => {
-  const newSchedule = [];
+  const newSchedule: any[] = [];
   let tempDay = {};
   Object.keys(scheduleObj).forEach((day) => {
     scheduleObj[day].forEach((curr) => {
       if (curr.opens_at === null || curr.closes_at === null) {
         return;
       }
-      tempDay = {};
-      tempDay.day = day;
-      tempDay.opens_at = curr.opens_at;
-      tempDay.closes_at = curr.closes_at;
+      tempDay = {
+        day,
+        opens_at: curr.opens_at,
+        closes_at: curr.closes_at,
+      };
       newSchedule.push(tempDay);
     });
   });
@@ -438,7 +439,7 @@ const getAddresses = (state) => {
   return addresses;
 };
 
-class OrganizationEditPage extends React.Component {
+class OrganizationEditPage extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -626,8 +627,8 @@ class OrganizationEditPage extends React.Component {
   postServices = (servicesObj, promises, postAddressPromises) => {
     if (!servicesObj) return;
     const { resource, addresses } = this.state;
-    const newServices = [];
-    const newServicesAddressHandles = [];
+    const newServices: any[] = [];
+    const newServicesAddressHandles: any[] = [];
     const unsavedAddresses =
       addresses.length > 0 ? addresses : resource.addresses;
 
@@ -651,7 +652,7 @@ class OrganizationEditPage extends React.Component {
       );
     };
 
-    Object.entries(servicesObj).forEach(([key, value]) => {
+    Object.entries(servicesObj).forEach(([key, value]: any) => {
       const currentService = deepClone(value);
       if (key < 0) {
         // Create new service
@@ -683,15 +684,9 @@ class OrganizationEditPage extends React.Component {
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
-        postInstructions(currentService.instructions, promises, {
-          path: "services",
-          id: key,
-        });
+        postInstructions(currentService.instructions, promises);
         delete currentService.instructions;
-        postDocuments(currentService.documents, promises, {
-          path: "services",
-          id: key,
-        });
+        postDocuments(currentService.documents, promises);
         delete currentService.documents;
         delete currentService.shouldInheritScheduleFromParent;
         const { addressHandles } = currentService;
@@ -862,12 +857,12 @@ class OrganizationEditPage extends React.Component {
 
       let newServices = null;
       if (changeType.type === "removed") {
-        const removedAddressHandle = changeType.handle;
+        const removedAddressHandle: any = changeType.handle;
         // Adjust the address handles on the services to reflect the new
         // indexes.
         newServices = Object.fromEntries(
-          Object.entries(oldServices).map(([key, service]) => {
-            let oldServiceAddressHandles = null;
+          Object.entries(oldServices).map(([key, service]: any) => {
+            let oldServiceAddressHandles: any = null;
             if (service.addressHandles) {
               // If we had previously made a change to the service's addresses,
               // then they should be on this.state.services[x].addressHandles, and
@@ -914,7 +909,7 @@ class OrganizationEditPage extends React.Component {
         // has a handle to that address, remove it from the service.
         const removedAddressHandle = changeType.handle;
         const someServiceHasStaleHandle = Object.values(oldServices).some(
-          (service) => {
+          (service: any) => {
             let addressHandles;
             if (service.addressHandles) {
               ({ addressHandles } = service);
@@ -936,7 +931,7 @@ class OrganizationEditPage extends React.Component {
         );
         if (someServiceHasStaleHandle) {
           newServices = Object.fromEntries(
-            Object.entries(oldServices).map(([key, service]) => {
+            Object.entries(oldServices).map(([key, service]: any) => {
               const filteredHandles = service.addressHandles.filter(
                 (handle) => handle !== removedAddressHandle
               );
@@ -946,7 +941,7 @@ class OrganizationEditPage extends React.Component {
         }
       }
 
-      const updates = { addresses, inputsDirty: true };
+      const updates: any = { addresses, inputsDirty: true };
       if (newServices !== null) {
         updates.services = newServices;
       }
@@ -1034,10 +1029,10 @@ class OrganizationEditPage extends React.Component {
       short_description,
       website,
     } = this.state;
-    const promises = [];
+    const promises: any[] = [];
 
     // Resource
-    const resourceChangeRequest = {};
+    const resourceChangeRequest: any = {};
     let resourceModified = false;
     if (name !== resource.name) {
       resourceChangeRequest.name = name;
@@ -1116,8 +1111,8 @@ class OrganizationEditPage extends React.Component {
 
   handleDeactivation(type, id) {
     const { history } = this.props;
-    let confirmMessage = null;
-    let path = null;
+    let confirmMessage: string | null = null;
+    let path: string | null = null;
     if (type === "resource") {
       confirmMessage = "Are you sure you want to deactive this resource?";
       path = `/api/resources/${id}`;
@@ -1126,7 +1121,7 @@ class OrganizationEditPage extends React.Component {
       path = `/api/services/${id}`;
     }
     // eslint-disable-next-line no-alert
-    if (window.confirm(confirmMessage) === true) {
+    if (window.confirm(confirmMessage as any) === true) {
       if (id < 0) {
         this.setState(({ deactivatedServiceIds }) => {
           const newDeactivatedServiceIds = new Set(deactivatedServiceIds);
@@ -1135,7 +1130,7 @@ class OrganizationEditPage extends React.Component {
         });
       } else {
         dataService
-          .APIDelete(path, { change_request: { status: "2" } })
+          .APIDelete(path as any, { change_request: { status: "2" } } as any)
           .then(() => {
             alert(
               "Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know."
@@ -1162,9 +1157,10 @@ class OrganizationEditPage extends React.Component {
   handleResourceFieldChange(e) {
     const { field } = e.target.dataset;
     const { value } = e.target;
-    const object = {};
-    object[field] = value;
-    object.inputsDirty = true;
+    const object = {
+      [field]: value,
+      inputsDirty: true,
+    };
     this.setState(object);
   }
 
@@ -1199,7 +1195,7 @@ class OrganizationEditPage extends React.Component {
     this.addService();
     const newService = document.getElementById("new-service-button");
     // eslint-disable-next-line react/no-find-dom-node
-    const domNode = ReactDOM.findDOMNode(newService);
+    const domNode = ReactDOM.findDOMNode(newService) as any;
     domNode.scrollIntoView({ behavior: "smooth" });
   }
 
@@ -1395,17 +1391,20 @@ class OrganizationEditPage extends React.Component {
   }
 }
 
-OrganizationEditPage.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }).isRequired,
-  }).isRequired,
-  history: PropTypes.object.isRequired,
-  showPopUpMessage: PropTypes.func.isRequired,
-};
+// Leaving propTypes definitions here for reference. Remove when we add proper
+// TypeScript types to this component's props.
+//
+// OrganizationEditPage.propTypes = {
+//   location: PropTypes.shape({
+//     pathname: PropTypes.string.isRequired,
+//   }).isRequired,
+//   match: PropTypes.shape({
+//     params: PropTypes.shape({
+//       id: PropTypes.string,
+//     }).isRequired,
+//   }).isRequired,
+//   history: PropTypes.object.isRequired,
+//   showPopUpMessage: PropTypes.func.isRequired,
+// };
 
 export default withRouter(OrganizationEditPage);

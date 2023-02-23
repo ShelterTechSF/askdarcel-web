@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 /* eslint-disable react/no-multi-comp */
-class EditNote extends Component {
+class EditNote extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ class EditNote extends Component {
   }
 
   render() {
-    let note = null;
+    let note: any = null;
     const { index, note: currentNote, removeNote } = this.props;
     if (!currentNote.isRemoved) {
       note = (

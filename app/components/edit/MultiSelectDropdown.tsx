@@ -11,7 +11,7 @@ function dataToSelectValue(data) {
   };
 }
 
-class MultiSelectDropdown extends Component {
+class MultiSelectDropdown extends Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -57,19 +57,22 @@ class MultiSelectDropdown extends Component {
   }
 }
 
-MultiSelectDropdown.propTypes = {
-  selectedItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-  handleSelectChange: PropTypes.func.isRequired,
-  optionsRoute: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-};
+// Leaving propTypes definitions here for reference. Remove when we add proper
+// TypeScript types to this component's props.
+//
+// MultiSelectDropdown.propTypes = {
+//   selectedItems: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       name: PropTypes.string.isRequired,
+//     }).isRequired
+//   ),
+//   handleSelectChange: PropTypes.func.isRequired,
+//   optionsRoute: PropTypes.string.isRequired,
+//   label: PropTypes.string.isRequired,
+// };
 
-MultiSelectDropdown.defaultProps = {
+(MultiSelectDropdown as any).defaultProps = {
   selectedItems: [],
 };
 
