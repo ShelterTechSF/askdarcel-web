@@ -24,7 +24,7 @@ export const UCSF_RESOURCES: ResourceItem[] = [
   {
     id: "2000003",
     name: "Substance Use",
-    icon: "hospital",
+    icon: "substance-use",
     checked: false,
     slug: "ucsf-substance-use-resources",
   },

@@ -3,6 +3,7 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import qs from "qs";
 import ReactGA from "react-ga";
 
+import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { Section } from "components/ucsf/Section/Section";
 import { Layout } from "components/ucsf/Layout/Layout";
@@ -19,6 +20,7 @@ import {
 } from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
 
 import { CATEGORIES } from "../ServiceDiscoveryForm/constants";
+import { UCSF_RESOURCES } from "../UcsfHomePage/ucsfResourceConstants";
 import { useSubcategoriesForCategory } from "../../hooks/APIHooks";
 
 import styles from "./UcsfDiscoveryForm.module.scss";
@@ -40,7 +42,6 @@ const Page = () => {
   const { selectedResourceSlug } = match.params as MatchParams;
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
   const category = CATEGORIES.find((c) => c.slug === selectedResourceSlug);
-
   const [selectedEligibilities, setSelectedEligibilities] =
     useState<SelectedEligibilities>(
       defaultSelectedEligibilities(resourceEligibilityGroups)
@@ -51,6 +52,11 @@ const Page = () => {
 
   const subcategories: SubcategoryRefinement[] =
     useSubcategoriesForCategory(category?.id ?? null) || [];
+
+  const getResourceIcon = () => {
+    const selectedResource = UCSF_RESOURCES.find((c) => c.slug === selectedResourceSlug);
+    return selectedResource?.icon ?? '';
+  };
 
   if (!category) {
     history.push("/");
@@ -154,7 +160,18 @@ const Page = () => {
 
   return (
     <div className={styles.discoveryFormPage}>
-      <Section title={servicesName} />
+      <Section
+        title={
+          <div className={styles.formTitle}>
+            <img
+              src={icon(getResourceIcon())}
+              alt=""
+              className={styles.icon}
+            />
+            {servicesName}
+          </div>
+        }
+      />
       <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
       <div className={styles.refinementsContainer}>
         <div className={styles.refinementsBox}>{refinementsComponent}</div>
