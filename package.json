@@ -103,6 +103,8 @@
     "dev": "cross-env NODE_ENV=development webpack serve --inline --open --mode=development",
     "lint": "eslint --ext=.js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext=.js,.jsx,.ts,.tsx .",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "test": "cross-env NODE_ENV=test mocha --require ts-node/register --exit --reporter spec testing/mocha.js app/**/*.spec.{j,t}s*",
     "test:coverage": "nyc --extension .jsx --reporter=text npm test -- --exit",
     "test:watch": "npm run test -- --watch --watch-extensions jsx --inspect",
