@@ -1,5 +1,3 @@
-// Disabling eslint quote props because prettier clashes with eslint here
-/* eslint-disable quote-props */
 const path = require("path");
 
 module.exports = {
@@ -174,10 +172,6 @@ module.exports = {
         // CJS-style imports.
         // https://github.com/benmosher/eslint-plugin-import/issues/1469
         "import/no-unused-modules": "off",
-        // Most ESLint rules names have characters which must be quoted, such as
-        // '-' or '/', so it's easier to read if all things under "rules" are
-        // consistently quoted.
-        "quote-props": ["error", "consistent-as-needed"],
       },
     },
   ],
