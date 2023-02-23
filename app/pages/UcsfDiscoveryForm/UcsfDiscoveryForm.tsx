@@ -54,8 +54,10 @@ const Page = () => {
     useSubcategoriesForCategory(category?.id ?? null) || [];
 
   const getResourceIcon = () => {
-    const selectedResource = UCSF_RESOURCES.find((c) => c.slug === selectedResourceSlug);
-    return selectedResource?.icon ?? '';
+    const selectedResource = UCSF_RESOURCES.find(
+      (c) => c.slug === selectedResourceSlug
+    );
+    return selectedResource?.icon ?? "";
   };
 
   if (!category) {
@@ -163,11 +165,7 @@ const Page = () => {
       <Section
         title={
           <div className={styles.formTitle}>
-            <img
-              src={icon(getResourceIcon())}
-              alt=""
-              className={styles.icon}
-            />
+            <img src={icon(getResourceIcon())} alt="" className={styles.icon} />
             {servicesName}
           </div>
         }
