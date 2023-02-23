@@ -2,13 +2,13 @@ import React from "react";
 
 import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
-import { Eligibility, EligibilityGroup } from "./ucsfEligibilitiesMap";
+import {
+  Eligibility,
+  EligibilityGroup,
+  SelectedEligibilities,
+} from "./ucsfEligibilitiesMap";
 
 import styles from "./Refinements.module.scss";
-
-interface SelectedEligibilities {
-  [key: string]: boolean;
-}
 
 export const EligibilityRefinements = ({
   resourceEligibilityGroups,

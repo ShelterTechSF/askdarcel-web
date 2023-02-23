@@ -6,9 +6,17 @@ import ReactGA from "react-ga";
 import { Button } from "components/ui/inline/Button/Button";
 import { Section } from "components/ucsf/Section/Section";
 import { Layout } from "components/ucsf/Layout/Layout";
-import { SubcategoryRefinements } from "components/ucsf/RefinementLists/SubcategoryRefinements";
+import {
+  SubcategoryRefinements,
+  SelectedSubcategories,
+  defaultSelectedSubcategories,
+} from "components/ucsf/RefinementLists/SubcategoryRefinements";
 import { EligibilityRefinements } from "components/ucsf/RefinementLists/EligibilityRefinements";
-import { eligibilityMap } from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
+import {
+  eligibilityMap,
+  defaultSelectedEligibilities,
+  SelectedEligibilities,
+} from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
 
 import { CATEGORIES } from "../ServiceDiscoveryForm/constants";
 import { useSubcategoriesForCategory } from "../../hooks/APIHooks";
@@ -20,30 +28,25 @@ interface SubcategoryRefinement {
   id: number;
 }
 
-interface SelectedSubcategories {
-  [key: number]: boolean;
-}
-
 const seeAllPseudoId = -1;
 
 const Page = () => {
-  interface SelectedEligibilities {
-    [key: string]: boolean;
-  }
-
-  const [selectedEligibilities, setSelectedEligibilities] =
-    useState<SelectedEligibilities>({});
-  const [selectedSubcategories, setSelectedSubcategories] =
-    useState<SelectedSubcategories>({});
-
   const history = useHistory();
   const match = useRouteMatch();
   interface MatchParams {
     selectedResourceSlug: string;
   }
+
   const { selectedResourceSlug } = match.params as MatchParams;
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
   const category = CATEGORIES.find((c) => c.slug === selectedResourceSlug);
+
+  const [selectedEligibilities, setSelectedEligibilities] =
+    useState<SelectedEligibilities>(
+      defaultSelectedEligibilities(resourceEligibilityGroups)
+    );
+  const [selectedSubcategories, setSelectedSubcategories] =
+    useState<SelectedSubcategories>(defaultSelectedSubcategories);
   const [currentStep, setCurrentStep] = useState(0);
 
   const subcategories: SubcategoryRefinement[] =
@@ -153,7 +156,7 @@ const Page = () => {
     <div className={styles.discoveryFormPage}>
       <Section title={servicesName} />
       <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
-      <div className={styles.eligibilitiesContainer}>
+      <div className={styles.refinementsContainer}>
         <div className={styles.refinementsBox}>{refinementsComponent}</div>
         <div className={styles.navigationButtons}>
           <Button addClass={styles.goBackBtn} onClick={backToResourceSelection}>
@@ -174,7 +177,7 @@ const Page = () => {
 };
 
 export const UcsfDiscoveryForm = () => (
-  <Layout>
+  <Layout customClass={styles.discoveryLayout}>
     <Page />
   </Layout>
 );

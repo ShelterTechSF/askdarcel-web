@@ -1,5 +1,9 @@
 @import "~styles/utils/_helpers.scss";
 
+.discoveryLayout {
+  padding-top: 48px;
+}
+
 .discoveryFormPage {
   grid-column: 2 / span 10;
 
@@ -12,9 +16,14 @@
   margin-top: 21px;
 }
 
+.refinementsContainer {
+  display: grid;
+  gap: 16px;
+}
+
 .refinementsBox {
   display: flex;
-  margin: 16px 0;
+  margin-top: 16px;
   padding: 32px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 0px 4px rgba(0, 0, 0, 0.1);
 
@@ -27,23 +36,23 @@
 .navigationButtons {
   display: flex;
   justify-content: right;
-  column-gap: 8px;
-  // position: sticky;
-  // top: 10px;
-  // bottom: 20px;
+  gap: 8px;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     justify-content: center;
+    flex-direction: column-reverse;
   }
 }
 
-// .nextBtn,
-// .goBackBtn {
-//   border-radius: 3px;
-//   height: 49px;
-//   padding: 12px 72px;
-// }
+.nextBtn,
+.goBackBtn {
+  border-radius: 3px;
+  height: 49px;
+  padding: 12px 72px;
+}
 
-// .goBackBtn {
-//   background-color: #fff;
-// }
+.goBackBtn {
+  background-color: #fff;
+  color: $color-brand;
+  border: solid 1px $color-brand;
+}

@@ -2,6 +2,10 @@ import React, { ReactNode } from "react";
 
 import styles from "./Layout.module.scss";
 
-export const Layout = ({ children }: { children: ReactNode }) => (
-  <div className={styles.grid}>{children}</div>
-);
+export const Layout = ({
+  children,
+  customClass = "",
+}: {
+  children: ReactNode;
+  customClass?: string;
+}) => <div className={`${styles.grid} ${customClass}`}>{children}</div>;

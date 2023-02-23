@@ -20,7 +20,7 @@ module.exports = {
     },
   },
   rules: {
-    "camelcase": "off",
+    camelcase: "off",
     "import/extensions": [
       "error",
       {
@@ -144,7 +144,7 @@ module.exports = {
       rules: {
         "newline-per-chained-call": "off",
         "lines-between-class-members": "off",
-        "indent": "off",
+        indent: "off",
       },
     },
     // Node.js scripts
@@ -172,10 +172,6 @@ module.exports = {
         // CJS-style imports.
         // https://github.com/benmosher/eslint-plugin-import/issues/1469
         "import/no-unused-modules": "off",
-        // Most ESLint rules names have characters which must be quoted, such as
-        // '-' or '/', so it's easier to read if all things under "rules" are
-        // consistently quoted.
-        "quote-props": ["error", "consistent-as-needed"],
       },
     },
   ],
