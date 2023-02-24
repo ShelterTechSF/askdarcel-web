@@ -32,8 +32,8 @@ export const ServicePdfPage = () => {
     () => (service ? generateServiceDetails(service) : []),
     [service]
   );
-  const { search } = useLocation();
 
+  const { search } = useLocation();
   const urlParams = new URLSearchParams(search);
   const targetLangCode = urlParams.get("lang");
 
@@ -49,8 +49,8 @@ export const ServicePdfPage = () => {
   }, [id]);
 
   useEffect(() => {
-    // The below lines compress CSS contained in the style element so as to decrease the
-    // character count that is sent to the Translation API
+    // The below lines compress the CSS contained in the style element so as to decrease
+    // the character count that is sent to the Translation API
     // https://dev.to/derder56/how-to-build-a-css-minifier-with-8-lines-of-javascript-4bj3
     const styleElement = styleRef.current;
     if (styleElement) {
