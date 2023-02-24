@@ -87,7 +87,10 @@ module.exports = {
     // Temporarily disable certain ESLint rules for Edit page files until we
     // improve the type annotations.
     {
-      files: ["app/components/edit/*.tsx", "app/pages/OrganizationEditPage.tsx"],
+      files: [
+        "app/components/edit/*.tsx",
+        "app/pages/OrganizationEditPage.tsx",
+      ],
       extends: [
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
       ],
