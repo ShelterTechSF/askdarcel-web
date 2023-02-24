@@ -4,7 +4,7 @@ import EditScheduleDay from "./EditScheduleDay";
 
 import "./EditSchedule.scss";
 
-class EditSchedule extends Component {
+class EditSchedule extends Component<any, any> {
   setScheduleDaysForDay = (day, scheduleDays) => {
     const { handleScheduleChange, scheduleDaysByDay } = this.props;
     handleScheduleChange({
@@ -67,16 +67,19 @@ class EditSchedule extends Component {
   }
 }
 
-EditSchedule.propTypes = {
-  scheduleDaysByDay: PropTypes.object.isRequired,
-  canInheritFromParent: PropTypes.bool.isRequired,
-  shouldInheritFromParent: PropTypes.bool.isRequired,
-  setShouldInheritFromParent: PropTypes.func,
-  handleScheduleChange: PropTypes.func.isRequired,
-  scheduleId: PropTypes.number,
-};
+// Leaving propTypes definitions here for reference. Remove when we add proper
+// TypeScript types to this component's props.
+//
+// EditSchedule.propTypes = {
+//   scheduleDaysByDay: PropTypes.object.isRequired,
+//   canInheritFromParent: PropTypes.bool.isRequired,
+//   shouldInheritFromParent: PropTypes.bool.isRequired,
+//   setShouldInheritFromParent: PropTypes.func,
+//   handleScheduleChange: PropTypes.func.isRequired,
+//   scheduleId: PropTypes.number,
+// };
 
-EditSchedule.defaultProps = {
+(EditSchedule as any).defaultProps = {
   setShouldInheritFromParent: null,
   scheduleId: null,
 };

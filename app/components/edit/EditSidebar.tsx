@@ -26,7 +26,7 @@ const EditSidebar = ({
   newServices,
   resource,
   submitting,
-}) => {
+}: any) => {
   let actionButtons = [
     <SaveButton key="submit" disabled={submitting} onClick={handleSubmit}>
       Save Changes
@@ -71,7 +71,7 @@ const EditSidebar = ({
   // Populate existing services so they show up on the sidebar
   // Do a 2-level-deep clone of the newServices object
   const allServices = Object.entries(newServices).reduce(
-    (acc, [id, service]) => ({ ...acc, [id]: { ...service } }),
+    (acc, [id, service]: any) => ({ ...acc, [id]: { ...service } }),
     {}
   );
   if (resource.services) {
@@ -101,14 +101,14 @@ const EditSidebar = ({
           </button>
         </h3>
         <ul className={styles.list}>
-          {Object.entries(allServices).map(([key, service]) => (
+          {Object.entries(allServices).map(([key, service]: any) => (
             <li key={key} className={styles.listItem}>
               <a
                 href={`#${key}`}
                 style={{ display: "block" }}
                 onClick={(e) => {
                   e.preventDefault();
-                  const topOfElement = document.getElementById(key).offsetTop;
+                  const topOfElement = document.getElementById(key)!.offsetTop;
                   window.scroll({ top: topOfElement, behavior: "smooth" });
                 }}
               >
@@ -128,16 +128,19 @@ EditSidebar.defaultProps = {
   newServices: {},
 };
 
-EditSidebar.propTypes = {
-  certifyHAP: PropTypes.func.isRequired,
-  createResource: PropTypes.func.isRequired,
-  handleDeactivation: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  newResource: PropTypes.bool.isRequired,
-  newServices: PropTypes.object,
-  resource: PropTypes.object.isRequired,
-  submitting: PropTypes.bool.isRequired,
-};
+// Leaving propTypes definitions here for reference. Remove when we add proper
+// TypeScript types to this component's props.
+//
+// EditSidebar.propTypes = {
+//   certifyHAP: PropTypes.func.isRequired,
+//   createResource: PropTypes.func.isRequired,
+//   handleDeactivation: PropTypes.func.isRequired,
+//   handleCancel: PropTypes.func.isRequired,
+//   handleSubmit: PropTypes.func.isRequired,
+//   newResource: PropTypes.bool.isRequired,
+//   newServices: PropTypes.object,
+//   resource: PropTypes.object.isRequired,
+//   submitting: PropTypes.bool.isRequired,
+// };
 
 export default withRouter(EditSidebar);

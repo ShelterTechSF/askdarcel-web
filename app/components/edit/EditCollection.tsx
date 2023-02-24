@@ -11,8 +11,8 @@ export default function editCollectionHOC(
   label,
   blankTemplateObj,
   buttonText
-) {
-  return class EditCollection extends Component {
+): any {
+  return class EditCollection extends Component<any, any> {
     constructor(props) {
       super(props);
 
