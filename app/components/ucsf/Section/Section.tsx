@@ -8,7 +8,7 @@ export const Section = ({
   body,
   addClass,
 }: {
-  title?: string | JSX.Element;
+  title?: React.ReactNode;
   subtitle?: string;
   body?: string;
   addClass?: string;
