@@ -220,6 +220,36 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
                   description: "English",
                   url: `/service-handout/${entryId}`,
                 },
+                {
+                  key: -2,
+                  description: "Spanish",
+                  url: `/service-handout/${entryId}?lang=es`,
+                },
+                {
+                  key: -3,
+                  description: "Tagalog",
+                  url: `/service-handout/${entryId}?lang=tl`,
+                },
+                {
+                  key: -4,
+                  description: "Chinese (Traditional)",
+                  url: `/service-handout/${entryId}?lang=zh-TW`,
+                },
+                {
+                  key: -5,
+                  description: "Vietnamese",
+                  url: `/service-handout/${entryId}?lang=vi`,
+                },
+                {
+                  key: -6,
+                  description: "Russian",
+                  url: `/service-handout/${entryId}?lang=ru`,
+                },
+                {
+                  key: -7,
+                  description: "Arabic",
+                  url: `/service-handout/${entryId}?lang=ar`,
+                },
               ]
         }
       />

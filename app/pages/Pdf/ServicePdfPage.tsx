@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import qs from "qs";
 
 import config from "../../config";
@@ -32,8 +32,13 @@ export const ServicePdfPage = () => {
     () => (service ? generateServiceDetails(service) : []),
     [service]
   );
+  const { search } = useLocation();
+
+  const urlParams = new URLSearchParams(search);
+  const targetLangCode = urlParams.get("lang");
 
   const ref = useRef<HTMLDivElement>(null);
+  const styleRef = useRef<HTMLStyleElement>(null);
 
   useEffect(() => {
     if (id) {
@@ -44,10 +49,24 @@ export const ServicePdfPage = () => {
   }, [id]);
 
   useEffect(() => {
+    // The below lines compress CSS contained in the style element so as to decrease the
+    // character count that is sent to the Translation API
+    // https://dev.to/derder56/how-to-build-a-css-minifier-with-8-lines-of-javascript-4bj3
+    const styleElement = styleRef.current;
+    if (styleElement) {
+      styleElement.innerHTML = styleElement.innerHTML
+        .replace(/([^0-9a-zA-Z.#])\s+/g, "$1")
+        .replace(/;}/g, "}")
+        .replace(/\/\*.*?\*\//g, "");
+    }
+
     if (mapImgSrc !== null && !pdfSource) {
       // Map image has been fetched. We're now ready to make our request to the PDF conversion endpoint
       fetch(`/api/services/html_to_pdf`, {
-        body: JSON.stringify({ html: ref.current?.outerHTML }),
+        body: JSON.stringify({
+          html: ref.current?.outerHTML,
+          target_language: targetLangCode ?? null,
+        }),
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -57,7 +76,7 @@ export const ServicePdfPage = () => {
           setPdfSource(window.URL.createObjectURL(blob));
         });
     }
-  }, [mapImgSrc, pdfSource]);
+  }, [mapImgSrc, pdfSource, targetLangCode]);
 
   if (!service) {
     return <Loader />;
@@ -111,14 +130,13 @@ export const ServicePdfPage = () => {
           <Loader />
         </>
       )}
-      ;
       {!pdfSource && (
         <div
           ref={ref}
           className={`serviceHandoutPdf ${styles.handoutInvisible}`}
         >
           {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles */}
-          <style>
+          <style translate="no" ref={styleRef}>
             {`
           .serviceHandoutPdf * {
             margin: 0;
@@ -183,12 +201,20 @@ export const ServicePdfPage = () => {
             padding-bottom: 6px;
           }
 
+          .sectionTitle {
+            text-transform: capitalize;
+          }
+
           .contactInfo table tr th,
           .contactInfo table tr td,
           .detailsSection table tr th,
           .detailsSection table tr td {
             padding-left: 0;
             padding-top: 0;
+          }
+
+          .detailsSection table tr th {
+            text-transform: capitalize;
           }
 
           .contactInfo {
@@ -268,8 +294,7 @@ export const ServicePdfPage = () => {
 
           .serviceHours table.compact tr th,
           .serviceHours table.compact tr td {
-            padding-bottom: 2px;
-            padding-top: 6px;
+            padding: 6px 0 2px;
           }
 
           .serviceHours table tr th {
@@ -284,11 +309,12 @@ export const ServicePdfPage = () => {
           .serviceHandoutPdf .map {
             height: 300px;
           }
-
         `}
           </style>
           <header className="titleSection">
-            <h1 className="serviceTitle">{service.name}</h1>
+            <h1 translate="no" className="serviceTitle">
+              {service.name}
+            </h1>
             <ServiceProgramDetails service={service} organization={resource} />
           </header>
 
@@ -368,7 +394,7 @@ const ServiceListingSection = ({
   ...props
 }: ServiceListingSectionProps) => (
   <section {...props}>
-    {{ title } && <h2>{title}</h2>}
+    {{ title } && <h2 className="sectionTitle">{title}</h2>}
     {children}
   </section>
 );
@@ -386,7 +412,9 @@ const ServiceProgramDetails = ({
     A service
     {service.program ? ` in the ${service.program.name} program` : null}
     {" offered by "}
-    <span className="subtitle_orgName">{organization.name}</span>
+    <span className="subtitle_orgName" translate="no">
+      {organization.name}
+    </span>
   </p>
 );
 
@@ -399,8 +427,10 @@ const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
   const { address_1, address_2, city, state_province, postal_code } = address;
   return (
     <div>
-      <p className="resourceName">{resourceName}</p>
-      <p>
+      <p translate="no" className="resourceName">
+        {resourceName}
+      </p>
+      <p translate="no">
         <span>{address_1}</span>
         {address_2 && (
           <span>
@@ -409,7 +439,7 @@ const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
           </span>
         )}
       </p>
-      <p>
+      <p translate="no">
         <span>{city}</span>, <span>{state_province}</span>{" "}
         <span>{postal_code}</span>
       </p>
@@ -446,7 +476,12 @@ const TableOfContactInfo = ({ service }: { service: Service }) => {
           <tr>
             <th>Website</th>
             <td>
-              <a target="_blank" rel="noopener noreferrer" href={website}>
+              <a
+                translate="no"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={website}
+              >
                 {website}
               </a>
             </td>
@@ -457,7 +492,9 @@ const TableOfContactInfo = ({ service }: { service: Service }) => {
           <tr>
             <th>Email</th>
             <td>
-              <a href={`mailto:${email}`}>{email}</a>
+              <a translate="no" href={`mailto:${email}`}>
+                {email}
+              </a>
             </td>
           </tr>
         ) : null}
@@ -468,7 +505,7 @@ const TableOfContactInfo = ({ service }: { service: Service }) => {
             <td>
               <ul>
                 {phones.map((phone) => (
-                  <li key={phone.number}>
+                  <li translate="no" key={phone.number}>
                     <a href={`tel:${phone.number}`}>{phone.number}</a>{" "}
                     {phone.service_type && `(${phone.service_type})`}
                   </li>
@@ -502,8 +539,13 @@ const TableOfOpeningTimes = ({
               data-cy="opening-times-row"
               className="compactRow"
             >
-              <th className="compactHeader">{interval.opensAt.dayString()}</th>
-              <td className="compactData">{`${opensAt} - ${closesAt}`}</td>
+              <th translate="no" className="compactHeader">
+                {interval.opensAt.dayString()}
+              </th>
+              <td
+                translate="no"
+                className="compactData"
+              >{`${opensAt} - ${closesAt}`}</td>
             </tr>
           );
         })) || (
