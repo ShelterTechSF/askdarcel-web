@@ -1,7 +1,12 @@
-import React, { Fragment } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
-const FormTextArea = ({ label, placeholder, value, setValue }) => (
+type Props = {
+  label: string;
+  placeholder: string;
+  value: string;
+  setValue: (x: string) => void;
+};
+const FormTextArea = ({ label, placeholder, value, setValue }: Props) => (
   <>
     <label htmlFor="textarea">{label}</label>
     <textarea
@@ -11,12 +16,5 @@ const FormTextArea = ({ label, placeholder, value, setValue }) => (
     />
   </>
 );
-
-FormTextArea.propTypes = {
-  label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired, // A function to call when setting a new value
-};
 
 export default FormTextArea;
