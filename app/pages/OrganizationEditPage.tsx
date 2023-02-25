@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Prompt, withRouter } from "react-router-dom";
+import type { RouteComponentProps } from "react-router";
 import _ from "lodash";
 
 import { Loader } from "components/ui";
@@ -11,6 +12,7 @@ import EditSchedule from "../components/edit/EditSchedule";
 import EditPhones from "../components/edit/EditPhones";
 import EditSidebar from "../components/edit/EditSidebar";
 import { buildScheduleDays } from "../components/edit/ProvidedService";
+import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import * as dataService from "../utils/DataService";
 import "./OrganizationEditPage.scss";
 
@@ -439,8 +441,20 @@ const getAddresses = (state) => {
   return addresses;
 };
 
-class OrganizationEditPage extends React.Component<any, any> {
-  constructor(props) {
+/** The type of route parameters coming from react-router, based on our routes.
+ *
+ * The `id` property comes from the `:id` in our edit route, where it is
+ * mandatory, but is optional in this type because it is not present in the new
+ * route.
+ */
+type RouteParams = { id?: string };
+
+type Props = RouteComponentProps<RouteParams> & {
+  showPopUpMessage: (p: PopupMessageProp) => void;
+};
+
+class OrganizationEditPage extends React.Component<Props, any> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -1390,21 +1404,5 @@ class OrganizationEditPage extends React.Component<any, any> {
     );
   }
 }
-
-// Leaving propTypes definitions here for reference. Remove when we add proper
-// TypeScript types to this component's props.
-//
-// OrganizationEditPage.propTypes = {
-//   location: PropTypes.shape({
-//     pathname: PropTypes.string.isRequired,
-//   }).isRequired,
-//   match: PropTypes.shape({
-//     params: PropTypes.shape({
-//       id: PropTypes.string,
-//     }).isRequired,
-//   }).isRequired,
-//   history: PropTypes.object.isRequired,
-//   showPopUpMessage: PropTypes.func.isRequired,
-// };
 
 export default withRouter(OrganizationEditPage);
