@@ -999,7 +999,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     });
   };
 
-  keepOnPage(e) {
+  keepOnPage(e: BeforeUnloadEvent): void {
     const { inputsDirty } = this.state;
     if (inputsDirty) {
       const message =
@@ -1205,8 +1205,14 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState({ phones: phoneCollection, inputsDirty: true });
   }
 
-  handleResourceFieldChange(e) {
+  handleResourceFieldChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { field } = e.target.dataset;
+    assertDefined(
+      field,
+      "Called handleResourceFieldChange() on a form element missing the data-field attribute."
+    );
     const { value } = e.target;
     const object = {
       [field]: value,
