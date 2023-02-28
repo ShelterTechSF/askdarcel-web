@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Prompt, withRouter } from "react-router-dom";
+import type { RouteComponentProps } from "react-router";
 import _ from "lodash";
 
 import { Loader } from "components/ui";
@@ -11,8 +12,18 @@ import EditSchedule from "../components/edit/EditSchedule";
 import EditPhones from "../components/edit/EditPhones";
 import EditSidebar from "../components/edit/EditSidebar";
 import { buildScheduleDays } from "../components/edit/ProvidedService";
+import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import * as dataService from "../utils/DataService";
 import "./OrganizationEditPage.scss";
+
+/** Assert that the argument is not `undefined`.
+ *
+ * This is a type checking helper that allows us to create a runtime type check
+ * that removes `undefined` from the possible types that x can be.
+ */
+function assertDefined<T>(x: T | undefined, msg: string): asserts x is T {
+  if (x === undefined) throw new Error(msg);
+}
 
 const ACTION_INSERT = "insert";
 const ACTION_EDIT = "edit";
@@ -439,8 +450,44 @@ const getAddresses = (state) => {
   return addresses;
 };
 
-class OrganizationEditPage extends React.Component<any, any> {
-  constructor(props) {
+/** The type of route parameters coming from react-router, based on our routes.
+ *
+ * The `id` property comes from the `:id` in our edit route, where it is
+ * mandatory, but is optional in this type because it is not present in the new
+ * route.
+ */
+type RouteParams = { id?: string };
+
+type Props = RouteComponentProps<RouteParams> & {
+  showPopUpMessage: (p: PopupMessageProp) => void;
+};
+
+type State = {
+  // Properties that are set at initialization time.
+  scheduleObj: Record<any, any>;
+  addresses: Record<any, any>[];
+  services: Record<any, any>;
+  deactivatedServiceIds: Set<any>;
+  notes: Record<any, any>;
+  phones: Record<any, any>[];
+  submitting: boolean;
+  newResource: boolean;
+  inputsDirty: boolean;
+  latestServiceId: number;
+
+  // Properties that are added after initialization.
+  alternate_name?: string;
+  email?: string;
+  legal_status?: string;
+  long_description?: string;
+  name?: string;
+  resource?: Record<any, any>;
+  short_description?: string;
+  website?: string;
+};
+
+class OrganizationEditPage extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -627,6 +674,7 @@ class OrganizationEditPage extends React.Component<any, any> {
   postServices = (servicesObj, promises, postAddressPromises) => {
     if (!servicesObj) return;
     const { resource, addresses } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
     const newServices: any[] = [];
     const newServicesAddressHandles: any[] = [];
     const unsavedAddresses =
@@ -820,6 +868,7 @@ class OrganizationEditPage extends React.Component<any, any> {
   // this.state.addresses only contains modifications to the addresses
   getFlattenedAddresses = () => {
     const { resource, addresses } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
     const { addresses: resourceAddresses = [] } = resource;
     if (!_.isEmpty(addresses)) {
       return addresses;
@@ -849,6 +898,7 @@ class OrganizationEditPage extends React.Component<any, any> {
       //
       // This page _really_ needs to be completely rewritten.
       const { resource, services: oldServices } = state;
+      assertDefined(resource, "Tried to access resource before it was defined");
       const oldAddresses = getAddresses(state);
       const changeType = computeTypeOfChangeToAddresses(
         oldAddresses,
@@ -949,7 +999,7 @@ class OrganizationEditPage extends React.Component<any, any> {
     });
   };
 
-  keepOnPage(e) {
+  keepOnPage(e: BeforeUnloadEvent): void {
     const { inputsDirty } = this.state;
     if (inputsDirty) {
       const message =
@@ -1029,6 +1079,7 @@ class OrganizationEditPage extends React.Component<any, any> {
       short_description,
       website,
     } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
     const promises: any[] = [];
 
     // Resource
@@ -1093,7 +1144,7 @@ class OrganizationEditPage extends React.Component<any, any> {
     const that = this;
     Promise.all(promises)
       .then(() => {
-        history.push(`/organizations/${that.state.resource.id}`);
+        history.push(`/organizations/${resource.id}`);
         showPopUpMessage({
           type: "success",
           message: "Successfully saved your changes.",
@@ -1154,13 +1205,19 @@ class OrganizationEditPage extends React.Component<any, any> {
     this.setState({ phones: phoneCollection, inputsDirty: true });
   }
 
-  handleResourceFieldChange(e) {
+  handleResourceFieldChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { field } = e.target.dataset;
+    assertDefined(
+      field,
+      "Called handleResourceFieldChange() on a form element missing the data-field attribute."
+    );
     const { value } = e.target;
     const object = {
       [field]: value,
       inputsDirty: true,
-    };
+    } as any;
     this.setState(object);
   }
 
@@ -1173,18 +1230,22 @@ class OrganizationEditPage extends React.Component<any, any> {
   }
 
   certifyHAP() {
-    const {
-      resource: { id: resourceId },
-    } = this.state;
+    const { resource } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
+    const { id: resourceId } = resource;
     dataService
       .post(`/api/resources/${resourceId}/certify`)
       .then((response) => {
         // TODO: Do not use alert() for user notifications.
         if (response.ok) {
           alert("HAP Certified. Thanks!"); // eslint-disable-line no-alert
-          const { resource } = this.state;
-          resource.certified = response.ok;
-          this.setState({ resource });
+          const { resource: prevResource } = this.state;
+          assertDefined(
+            prevResource,
+            "Tried to access resource before it was defined"
+          );
+          prevResource.certified = response.ok;
+          this.setState({ resource: prevResource });
         } else {
           alert("Issue verifying resource. Please try again."); // eslint-disable-line no-alert
         }
@@ -1201,6 +1262,7 @@ class OrganizationEditPage extends React.Component<any, any> {
 
   renderSectionFields() {
     const { resource, scheduleObj } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
@@ -1321,10 +1383,12 @@ class OrganizationEditPage extends React.Component<any, any> {
 
   renderServices() {
     const {
-      resource: { services },
+      resource,
       services: serviceChanges,
       deactivatedServiceIds: serviceDeletions,
     } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
+    const { services } = resource;
     const flattenedServices = applyChanges(
       services,
       serviceChanges,
@@ -1390,21 +1454,5 @@ class OrganizationEditPage extends React.Component<any, any> {
     );
   }
 }
-
-// Leaving propTypes definitions here for reference. Remove when we add proper
-// TypeScript types to this component's props.
-//
-// OrganizationEditPage.propTypes = {
-//   location: PropTypes.shape({
-//     pathname: PropTypes.string.isRequired,
-//   }).isRequired,
-//   match: PropTypes.shape({
-//     params: PropTypes.shape({
-//       id: PropTypes.string,
-//     }).isRequired,
-//   }).isRequired,
-//   history: PropTypes.object.isRequired,
-//   showPopUpMessage: PropTypes.func.isRequired,
-// };
 
 export default withRouter(OrganizationEditPage);
