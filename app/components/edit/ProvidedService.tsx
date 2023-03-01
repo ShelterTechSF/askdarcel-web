@@ -37,7 +37,7 @@ interface InternalScheduleDay {
  * track of which properties have been edited and therefore need to be synced
  * back to the server.
  */
-interface InternalSchedule {
+export interface InternalSchedule {
   Monday: InternalScheduleDay[];
   Tuesday: InternalScheduleDay[];
   Wednesday: InternalScheduleDay[];

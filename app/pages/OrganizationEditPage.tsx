@@ -12,7 +12,9 @@ import EditSchedule from "../components/edit/EditSchedule";
 import EditPhones from "../components/edit/EditPhones";
 import EditSidebar from "../components/edit/EditSidebar";
 import { buildScheduleDays } from "../components/edit/ProvidedService";
+import type { InternalSchedule } from "../components/edit/ProvidedService";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
+import type { Organization, Schedule, Service } from "../models";
 import * as dataService from "../utils/DataService";
 import "./OrganizationEditPage.scss";
 
@@ -450,6 +452,46 @@ const getAddresses = (state) => {
   return addresses;
 };
 
+// Types for objects internal to the Edit page.
+//
+// Several of the objects coming from the API are transformed on the Edit page
+// in order to keep track of internal UI state. The following are type
+// definitions that extend but override fields on the API type definitions in
+// the models/ directory.
+
+/** Internal shape of an Organization (a.k.a. Resource).
+ *
+ * This has the following differences from the Organization coming from the API:
+ *
+ * - All fields except for `schedule` are optional, since on the Create New
+ *   Resource page, we initialize the main React Component's `resource` state
+ *   variable with an almost empty object.
+ * - `schedule` can either be an API Schedule or a Record<string, never>, which
+ *   is a fancy way of saying an object with no fields. Note that `schedule` is
+ *   a real API schedule, unlike the main React Component's `scheduleObj` state
+ *   variable, which is an `InternalSchedule`.
+ * - `services` is an array of `InternalService`s. See `InternalService`'s
+ *   comments for more details.
+ */
+interface InternalOrganization
+  extends Partial<Omit<Organization, "schedule" | "services">> {
+  schedule: Record<string, never> | Schedule;
+  services?: InternalService[];
+}
+
+/** Internal shape of a Service.
+ *
+ * This differs from the Service coming from the API in that the `addresses`
+ * field has been replaced with an `addressHandles` field.
+ */
+interface InternalService extends Omit<Service, "addresses"> {
+  /** References to addresses in the parent Organization.
+   *
+   * These are the numeric indexes into the Organization's `addresses` array.
+   */
+  addressHandles: number[];
+}
+
 /** The type of route parameters coming from react-router, based on our routes.
  *
  * The `id` property comes from the `:id` in our edit route, where it is
@@ -464,7 +506,7 @@ type Props = RouteComponentProps<RouteParams> & {
 
 type State = {
   // Properties that are set at initialization time.
-  scheduleObj: Record<any, any>;
+  scheduleObj: Record<string, never> | InternalSchedule;
   addresses: Record<any, any>[];
   services: Record<any, any>;
   deactivatedServiceIds: Set<any>;
@@ -481,7 +523,7 @@ type State = {
   legal_status?: string;
   long_description?: string;
   name?: string;
-  resource?: Record<any, any>;
+  resource?: InternalOrganization;
   short_description?: string;
   website?: string;
 };
@@ -515,7 +557,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.sidebarAddService = this.sidebarAddService.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const {
       location: { pathname },
       match: { params },
@@ -542,7 +584,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     window.removeEventListener("beforeunload", this.keepOnPage);
   }
 
-  handleAPIGetResource = (resource) => {
+  handleAPIGetResource = (resource: Organization): void => {
     // Transform the original API response such that all addresses on services
     // are replaced with handles to the corresponding address on the resource.
     // This ensures that there is only one canonical copy of an address, which
@@ -566,18 +608,20 @@ class OrganizationEditPage extends React.Component<Props, State> {
     // Transformed version of services where the `addresses` property has been
     // replaced with an `addressHandles` property, which only contains the index
     // of an address within the resourceAddresses array.
-    const transformedServices = rawServices.map((service) => {
-      const { addresses = [], ...serviceWithoutAddresses } = service;
-      // It is safe to compare addresses using the  `id` here because at this
-      // point, all addresses came from the API response and therefore have
-      // database primary key IDs assigned. Addresses that are added in the Edit
-      // page are not assigned IDs until after saving the page, so this
-      // assumption is not safe to make after this point in time.
-      const addressHandles = addresses.map((a) =>
-        resourceAddresses.findIndex((ra) => ra.id === a.id)
-      );
-      return { ...serviceWithoutAddresses, addressHandles };
-    });
+    const transformedServices: InternalService[] = rawServices.map(
+      (service) => {
+        const { addresses = [], ...serviceWithoutAddresses } = service;
+        // It is safe to compare addresses using the  `id` here because at this
+        // point, all addresses came from the API response and therefore have
+        // database primary key IDs assigned. Addresses that are added in the Edit
+        // page are not assigned IDs until after saving the page, so this
+        // assumption is not safe to make after this point in time.
+        const addressHandles = addresses.map((a) =>
+          resourceAddresses.findIndex((ra) => ra.id === a.id)
+        );
+        return { ...serviceWithoutAddresses, addressHandles };
+      }
+    );
     // Build new version of the resource that has the services replaced with the
     // transformed services.
     const transformedResource = { ...resource, services: transformedServices };
@@ -681,6 +725,19 @@ class OrganizationEditPage extends React.Component<Props, State> {
       addresses.length > 0 ? addresses : resource.addresses;
 
     const getAddressIDFromHandle = (handle) => {
+      // The only case where unsavedAddresses can be undefined is if
+      // resource.addresses is undefined, and that can only happen when creating a
+      // new Organization. However, if we're calling this
+      // getAddressIDFromHandle() function, then that means that we have an
+      // address handle in the service we're about to save. That either means
+      // that we're pointing to an address in the top-level addresses state
+      // variable, which must be defined, or we're pointing to an address in the
+      // original GET API response's Resource (Organization) object.
+      assertDefined(
+        unsavedAddresses,
+        "unsavedAddresses should not be undefined"
+      );
+
       if (unsavedAddresses[handle] && unsavedAddresses[handle].id) {
         // Associating with an address that already existed, which means
         // we can simply grab its ID.
@@ -755,8 +812,19 @@ class OrganizationEditPage extends React.Component<Props, State> {
           // addresses from the service.
           if (addressHandles === undefined) return;
 
+          // resource.services should not be undefined if we are editing an
+          // existing service, since that implies that there should have been
+          // services that came on the original resource.
+          assertDefined(
+            resource.services,
+            "Did not expect resource.services to be undefined"
+          );
           const originalService = resource.services.find(
             (s) => s.id === currentService.id
+          );
+          assertDefined(
+            originalService,
+            `Could not find the original service corresponding to edited service with ID ${currentService.id}`
           );
           const oldAddressHandleSet = new Set(originalService.addressHandles);
           const newAddressHandleSet = new Set(addressHandles);
@@ -919,6 +987,12 @@ class OrganizationEditPage extends React.Component<Props, State> {
               // we should use that list.
               oldServiceAddressHandles = service.addressHandles;
             } else {
+              // TODO: This could possibly break on the Create New Resource
+              // page.
+              assertDefined(
+                resource.services,
+                "Did not expect resource.services to be undefined"
+              );
               const serviceOnResource = resource.services.find(
                 (s) => s.id === service.id
               );
@@ -964,6 +1038,17 @@ class OrganizationEditPage extends React.Component<Props, State> {
             if (service.addressHandles) {
               ({ addressHandles } = service);
             } else {
+              // It shouldn't be possible for resource.services to be undefined.
+              // This is always at least set to the empty array when we are
+              // editing an Organization that was previously saved to the DB, so
+              // this could only happen on the Create New Organization page.
+              // However, this change type corresponds to marking an address for
+              // removal on the DB, which cannot be the case for a new
+              // Organization that hasn't been saved yet.
+              assertDefined(
+                resource.services,
+                "Did not expect resource.services to be undefined"
+              );
               const serviceOnResource = resource.services.find(
                 (s) => s.id === service.id
               );
@@ -1287,7 +1372,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
               className="input"
               placeholder="What it's known as in the community"
               data-field="alternate_name"
-              defaultValue={resource.alternate_name}
+              defaultValue={resource.alternate_name ?? ""}
               onChange={this.handleResourceFieldChange}
             />
           </li>
@@ -1309,7 +1394,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
               type="url"
               className="input"
               placeholder="http://"
-              defaultValue={resource.website}
+              defaultValue={resource.website ?? ""}
               data-field="website"
               onChange={this.handleResourceFieldChange}
             />
@@ -1321,7 +1406,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
               id="edit-email-input"
               type="email"
               className="input"
-              defaultValue={resource.email}
+              defaultValue={resource.email ?? ""}
               data-field="email"
               onChange={this.handleResourceFieldChange}
             />
@@ -1333,7 +1418,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
               id="edit-description-input"
               className="input"
               placeholder="Describe the organization in 1-2 sentences. Avoid listing the services it provides and instead explaint the organization's mission."
-              defaultValue={resource.long_description}
+              defaultValue={resource.long_description ?? ""}
               data-field="long_description"
               onChange={this.handleResourceFieldChange}
             />
@@ -1358,7 +1443,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
               type="text"
               className="input"
               placeholder="ex. non-profit, government, business"
-              defaultValue={resource.legal_status}
+              defaultValue={resource.legal_status ?? ""}
               data-field="legal_status"
               onChange={this.handleResourceFieldChange}
             />
