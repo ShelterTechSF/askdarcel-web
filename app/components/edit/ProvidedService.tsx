@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import EditNotes from "./EditNotes";
 import EditSchedule from "./EditSchedule";
@@ -7,10 +7,22 @@ import FormTextArea from "./FormTextArea";
 import { AddressListItem } from "./EditAddress";
 import EditPatientHandout from "./EditPatientHandout";
 import { EditServiceChildCollection } from "./EditServiceChildCollection";
+import type { Schedule } from "../../models";
 
 import s from "./ProvidedService.module.scss";
 
-/** Build UI state schedule from API schedule.
+interface InternalScheduleDay {
+  opens_at: number | null;
+  closes_at: number | null;
+  /** The DB ID of the ScheduleDay. */
+  id?: number | null;
+  /** The DB ID of the Schedule that this ScheduleDay is attached to. */
+  scheduleId?: number | null;
+  openChanged?: boolean;
+  closeChanged?: boolean;
+}
+
+/** Schedule model used internally on the Edit Page.
  *
  * The difference between the schedule that comes from the API and the schedule
  * that is saved as React UI state is that the UI state schedule's schema groups
@@ -20,11 +32,30 @@ import s from "./ProvidedService.module.scss";
  * no open and close time but that is attached to a day of week. This feature is
  * required for the UI because the blank time needs to appear under a day of
  * week before an open and close time is set.
+ *
+ * We also have a number of extra fields on the InternalScheduleDay that keep
+ * track of which properties have been edited and therefore need to be synced
+ * back to the server.
  */
-const buildScheduleDays = (schedule) => {
+export interface InternalSchedule {
+  Monday: InternalScheduleDay[];
+  Tuesday: InternalScheduleDay[];
+  Wednesday: InternalScheduleDay[];
+  Thursday: InternalScheduleDay[];
+  Friday: InternalScheduleDay[];
+  Saturday: InternalScheduleDay[];
+  Sunday: InternalScheduleDay[];
+}
+
+/** Build UI state schedule from API schedule.
+ *
+ * Returns an InternalSchedule.
+ */
+const buildScheduleDays = (
+  schedule: Schedule | undefined
+): InternalSchedule => {
   const scheduleId = schedule ? schedule.id : null;
-  const currSchedule = {};
-  let finalSchedule = {};
+  const currSchedule: Partial<InternalSchedule> = {};
 
   const is24Hours = {
     Monday: false,
@@ -62,8 +93,9 @@ const buildScheduleDays = (schedule) => {
           ];
         } else {
           Object.assign(day, { openChanged: false, closeChanged: false });
-          if (currSchedule[currDay]) {
-            currSchedule[day.day].unshift(day);
+          const currScheduleDay = currSchedule[currDay];
+          if (currScheduleDay) {
+            currScheduleDay.unshift(day);
           } else {
             currSchedule[day.day] = [day];
           }
@@ -71,8 +103,7 @@ const buildScheduleDays = (schedule) => {
       }
     });
   }
-  finalSchedule = { ...tempSchedule, ...currSchedule };
-  return finalSchedule;
+  return { ...tempSchedule, ...currSchedule };
 };
 export { buildScheduleDays };
 
