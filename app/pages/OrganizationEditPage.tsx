@@ -476,15 +476,48 @@ const getAddresses = (state) => {
 interface InternalOrganization
   extends Partial<Omit<Organization, "schedule" | "services">> {
   schedule: Record<string, never> | Schedule;
-  services?: InternalService[];
+  services?: InternalOrganizationService[];
 }
 
-/** Internal shape of a Service.
+/** Internal shape of a Service stored at the top-level of the component state.
  *
  * This differs from the Service coming from the API in that the `addresses`
- * field has been replaced with an `addressHandles` field.
+ * field has been replaced with an `addressHandles` field. This also makes most
+ * of the original properties from the API Service optional, and it also adds a
+ * few new properties. See documentation on the individual fields for more
+ * information.
  */
-interface InternalService extends Omit<Service, "addresses"> {
+interface InternalTopLevelService
+  extends Partial<Omit<Service, "addresses" | "schedule">> {
+  /** References to addresses in the parent Organization.
+   *
+   * These are the numeric indexes into the Organization's `addresses` array.
+   */
+  addressHandles?: number[];
+
+  /** A Schedule attached to the service.
+   *
+   * Mostly matches the shape of the API schedule, but can also omit all fields
+   * except for a 0-length schedule_days array.
+   */
+  schedule?: Schedule | { schedule_days: never[] };
+
+  /** A Schedule attached to the service in the form of an InternalSchedule. */
+  scheduleObj: InternalSchedule;
+
+  /** Whether the Service should inherit its schedule from its parent Organization. */
+  shouldInheritScheduleFromParent: boolean;
+}
+
+/** Internal shape of a Service as nested under the Organization object.
+ *
+ * This differs from the Service coming from the API in that the `addresses`
+ * field has been replaced with an `addressHandles` field. This is generally not
+ * changed after the initial API GET request that returns the Organization and
+ * everything nested underneath it. All edits on the Edit Page actually change
+ * the top-level services objects.
+ */
+interface InternalOrganizationService extends Omit<Service, "addresses"> {
   /** References to addresses in the parent Organization.
    *
    * These are the numeric indexes into the Organization's `addresses` array.
@@ -508,7 +541,8 @@ type State = {
   // Properties that are set at initialization time.
   scheduleObj: Record<string, never> | InternalSchedule;
   addresses: Record<any, any>[];
-  services: Record<any, any>;
+  /** Mapping from service ID to service. */
+  services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<any>;
   notes: Record<any, any>;
   phones: Record<any, any>[];
@@ -608,7 +642,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     // Transformed version of services where the `addresses` property has been
     // replaced with an `addressHandles` property, which only contains the index
     // of an address within the resourceAddresses array.
-    const transformedServices: InternalService[] = rawServices.map(
+    const transformedServices: InternalOrganizationService[] = rawServices.map(
       (service) => {
         const { addresses = [], ...serviceWithoutAddresses } = service;
         // It is safe to compare addresses using the  `id` here because at this
@@ -628,7 +662,9 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
     // Prebuild some data to get saved to this.state.services, which otherwise
     // only contains edits to the original data from the API response.
-    const services = transformedServices.reduce(
+    const services = transformedServices.reduce<
+      Record<number, InternalTopLevelService>
+    >(
       (acc, service) => ({
         ...acc,
         [service.id]: {
@@ -979,7 +1015,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         // Adjust the address handles on the services to reflect the new
         // indexes.
         newServices = Object.fromEntries(
-          Object.entries(oldServices).map(([key, service]: any) => {
+          Object.entries(oldServices).map(([key, service]) => {
             let oldServiceAddressHandles: any = null;
             if (service.addressHandles) {
               // If we had previously made a change to the service's addresses,
