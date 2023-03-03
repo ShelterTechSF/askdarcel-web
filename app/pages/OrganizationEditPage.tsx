@@ -473,7 +473,7 @@ const getAddresses = (state) => {
  * - `services` is an array of `InternalService`s. See `InternalService`'s
  *   comments for more details.
  */
-interface InternalOrganization
+export interface InternalOrganization
   extends Partial<Omit<Organization, "schedule" | "services">> {
   schedule: Record<string, never> | Schedule;
   services?: InternalOrganizationService[];
@@ -487,7 +487,7 @@ interface InternalOrganization
  * few new properties. See documentation on the individual fields for more
  * information.
  */
-interface InternalTopLevelService
+export interface InternalTopLevelService
   extends Partial<Omit<Service, "addresses" | "schedule">> {
   /** References to addresses in the parent Organization.
    *
@@ -1281,7 +1281,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       });
   }
 
-  handleDeactivation(type, id) {
+  handleDeactivation(type: "resource" | "service", id: number): void {
     const { history } = this.props;
     let confirmMessage: string | null = null;
     let path: string | null = null;
@@ -1535,7 +1535,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
     const showPrompt = inputsDirty && !submitting;
 
-    return !resource && !newResource ? (
+    return !resource ? (
       <Loader />
     ) : (
       <div className="edit">
