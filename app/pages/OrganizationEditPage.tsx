@@ -32,7 +32,10 @@ const ACTION_EDIT = "edit";
 const ACTION_REMOVE = "remove";
 
 /**
- * Apply a set of changes to a base array of items.
+ * Apply a set of changes to a base array of Services.
+ *
+ * This function makes assumptions that are only safe for how Services are
+ * represented on the Edit page.
  *
  * Constraints:
  * - Original ordering of base array should be preserved
@@ -40,13 +43,17 @@ const ACTION_REMOVE = "remove";
  *   This assumes that the IDs for new items start with -1 and decrement for
  *   each new item
  *
- * @param {object[]} baseItems - An array of items, each with an `id` field
- * @param {object} changesById - An object mapping IDs to changes
- * @param {set} deletedIds - Optional. A set of IDs of items to delete
+ * @param baseItems - An array of items, each with an `id` field
+ * @param changesById - An object mapping IDs to changes
+ * @param deletedIds - Optional. A set of IDs of items to delete
  *
- * @return {object[]} An array of items with the changes applied
+ * @return An array of items with the changes applied
  */
-const applyChanges = (baseItems, changesById, deletedIds: any = undefined) => {
+const applyChanges = (
+  baseItems: InternalOrganizationService[],
+  changesById: Record<number, InternalTopLevelService>,
+  deletedIds?: Set<number>
+): InternalFlattenedService[] => {
   const baseItemIds = new Set(baseItems.map((i) => i.id));
   // Order the new IDs in decreasing order, since that's the order they should
   // appear on the page.
@@ -64,7 +71,13 @@ const applyChanges = (baseItems, changesById, deletedIds: any = undefined) => {
     if (item.id in changesById) {
       return { ...item, ...changesById[item.id] };
     }
-    return item;
+    // This case should not be reachable because changesById comes from
+    // this.state.services, and upon fetching the resource from the API for the
+    // first time, we prepopulate this.state.services with an item for each
+    // service that was already on the resource.
+    throw new Error(
+      `Expected changesById to contain an entry for every ID in baseItems. Item with id ${item.id} was not found in changesById`
+    );
   });
   if (deletedIds) {
     transformedItems = transformedItems.filter(
@@ -525,6 +538,18 @@ interface InternalOrganizationService extends Omit<Service, "addresses"> {
   addressHandles: number[];
 }
 
+/** The result of flattening the InternalOrganizationService into
+ * InternalTopLevelService.
+ *
+ * The `applyChanges()` function takes the InternalTopLevelServices and applies
+ * them like diffs on top of the InternalOrganizationServices. The result is a
+ * type that is mostly like InternalOrganizationServices except that the `id`
+ * field is required.
+ */
+interface InternalFlattenedService extends InternalTopLevelService {
+  id: number;
+}
+
 /** The type of route parameters coming from react-router, based on our routes.
  *
  * The `id` property comes from the `:id` in our edit route, where it is
@@ -543,7 +568,7 @@ type State = {
   addresses: Record<any, any>[];
   /** Mapping from service ID to service. */
   services: Record<number, InternalTopLevelService>;
-  deactivatedServiceIds: Set<any>;
+  deactivatedServiceIds: Set<number>;
   notes: Record<any, any>;
   phones: Record<any, any>[];
   submitting: boolean;
@@ -1510,6 +1535,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
     const { services } = resource;
+    assertDefined(services, "Expected resource.services to be defined");
     const flattenedServices = applyChanges(
       services,
       serviceChanges,
