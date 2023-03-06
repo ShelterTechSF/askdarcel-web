@@ -546,7 +546,7 @@ interface InternalOrganizationService extends Omit<Service, "addresses"> {
  * type that is mostly like InternalOrganizationServices except that the `id`
  * field is required.
  */
-interface InternalFlattenedService extends InternalTopLevelService {
+export interface InternalFlattenedService extends InternalTopLevelService {
   id: number;
 }
 
@@ -948,11 +948,14 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
   /** @method editServiceById
    * @description Updates the service with any changes made
-   * @param {number} id a unique identifier to find a service
-   * @param {object} service the service to be updated
-   * @returns {void}
+   * @param id a unique identifier to find a service
+   * @param service the service to be updated
+   * @returns
    */
-  editServiceById = (id, changes) => {
+  editServiceById = (
+    id: number,
+    changes: Partial<InternalTopLevelService>
+  ): void => {
     this.setState(({ services }) => {
       const oldService = services[id] || {};
       const newService = { ...oldService, ...changes };
@@ -966,7 +969,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
   /** @method addService
    * @description Creates a brand new service
    */
-  addService = () => {
+  addService = (): void => {
     const { services, latestServiceId } = this.state;
     const nextServiceId = latestServiceId - 1;
 
