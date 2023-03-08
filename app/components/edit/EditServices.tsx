@@ -1,6 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ProvidedService from "./ProvidedService";
+
+import type { InternalFlattenedService } from "../../pages/OrganizationEditPage";
+
+type Props = {
+  addService: () => void;
+  editServiceById: (
+    id: number,
+    changes: Partial<InternalFlattenedService>
+  ) => void;
+  handleDeactivation: (type: "resource" | "service", id: number) => void;
+  services: InternalFlattenedService[];
+  resourceAddresses: Record<any, any>[];
+};
 
 const EditServices = ({
   addService,
@@ -8,7 +20,7 @@ const EditServices = ({
   handleDeactivation,
   services,
   resourceAddresses,
-}) => (
+}: Props) => (
   <li className="edit--section--list--item">
     <ul className="edit--section--list--item--sublist edit--service--list">
       {services.map((service, index) => (
@@ -33,12 +45,5 @@ const EditServices = ({
     </button>
   </li>
 );
-
-EditServices.propTypes = {
-  handleDeactivation: PropTypes.func.isRequired,
-  editServiceById: PropTypes.func.isRequired,
-  addService: PropTypes.func.isRequired,
-  services: PropTypes.array.isRequired,
-};
 
 export default EditServices;

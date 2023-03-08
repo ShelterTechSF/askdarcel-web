@@ -32,7 +32,10 @@ const ACTION_EDIT = "edit";
 const ACTION_REMOVE = "remove";
 
 /**
- * Apply a set of changes to a base array of items.
+ * Apply a set of changes to a base array of Services.
+ *
+ * This function makes assumptions that are only safe for how Services are
+ * represented on the Edit page.
  *
  * Constraints:
  * - Original ordering of base array should be preserved
@@ -40,13 +43,17 @@ const ACTION_REMOVE = "remove";
  *   This assumes that the IDs for new items start with -1 and decrement for
  *   each new item
  *
- * @param {object[]} baseItems - An array of items, each with an `id` field
- * @param {object} changesById - An object mapping IDs to changes
- * @param {set} deletedIds - Optional. A set of IDs of items to delete
+ * @param baseItems - An array of items, each with an `id` field
+ * @param changesById - An object mapping IDs to changes
+ * @param deletedIds - Optional. A set of IDs of items to delete
  *
- * @return {object[]} An array of items with the changes applied
+ * @return An array of items with the changes applied
  */
-const applyChanges = (baseItems, changesById, deletedIds: any = undefined) => {
+const applyChanges = (
+  baseItems: InternalOrganizationService[],
+  changesById: Record<number, InternalTopLevelService>,
+  deletedIds?: Set<number>
+): InternalFlattenedService[] => {
   const baseItemIds = new Set(baseItems.map((i) => i.id));
   // Order the new IDs in decreasing order, since that's the order they should
   // appear on the page.
@@ -64,7 +71,13 @@ const applyChanges = (baseItems, changesById, deletedIds: any = undefined) => {
     if (item.id in changesById) {
       return { ...item, ...changesById[item.id] };
     }
-    return item;
+    // This case should not be reachable because changesById comes from
+    // this.state.services, and upon fetching the resource from the API for the
+    // first time, we prepopulate this.state.services with an item for each
+    // service that was already on the resource.
+    throw new Error(
+      `Expected changesById to contain an entry for every ID in baseItems. Item with id ${item.id} was not found in changesById`
+    );
   });
   if (deletedIds) {
     transformedItems = transformedItems.filter(
@@ -473,23 +486,68 @@ const getAddresses = (state) => {
  * - `services` is an array of `InternalService`s. See `InternalService`'s
  *   comments for more details.
  */
-interface InternalOrganization
+export interface InternalOrganization
   extends Partial<Omit<Organization, "schedule" | "services">> {
   schedule: Record<string, never> | Schedule;
-  services?: InternalService[];
+  services?: InternalOrganizationService[];
 }
 
-/** Internal shape of a Service.
+/** Internal shape of a Service stored at the top-level of the component state.
  *
  * This differs from the Service coming from the API in that the `addresses`
- * field has been replaced with an `addressHandles` field.
+ * field has been replaced with an `addressHandles` field. This also makes most
+ * of the original properties from the API Service optional, and it also adds a
+ * few new properties. See documentation on the individual fields for more
+ * information.
  */
-interface InternalService extends Omit<Service, "addresses"> {
+export interface InternalTopLevelService
+  extends Partial<Omit<Service, "addresses" | "schedule">> {
+  /** References to addresses in the parent Organization.
+   *
+   * These are the numeric indexes into the Organization's `addresses` array.
+   */
+  addressHandles?: number[];
+
+  /** A Schedule attached to the service.
+   *
+   * Mostly matches the shape of the API schedule, but can also omit all fields
+   * except for a 0-length schedule_days array.
+   */
+  schedule?: Schedule | { schedule_days: never[] };
+
+  /** A Schedule attached to the service in the form of an InternalSchedule. */
+  scheduleObj: InternalSchedule;
+
+  /** Whether the Service should inherit its schedule from its parent Organization. */
+  shouldInheritScheduleFromParent: boolean;
+}
+
+/** Internal shape of a Service as nested under the Organization object.
+ *
+ * This differs from the Service coming from the API in that the `addresses`
+ * field has been replaced with an `addressHandles` field. This is generally not
+ * changed after the initial API GET request that returns the Organization and
+ * everything nested underneath it. All edits on the Edit Page actually change
+ * the top-level services objects.
+ */
+interface InternalOrganizationService extends Omit<Service, "addresses"> {
   /** References to addresses in the parent Organization.
    *
    * These are the numeric indexes into the Organization's `addresses` array.
    */
   addressHandles: number[];
+}
+
+/** The result of flattening the InternalOrganizationService into
+ * InternalTopLevelService.
+ *
+ * The `applyChanges()` function takes the InternalTopLevelServices and applies
+ * them like diffs on top of the InternalOrganizationServices. The result is a
+ * type that is mostly like InternalOrganizationServices except that the `id`
+ * field is required.
+ */
+export interface InternalFlattenedService extends InternalTopLevelService {
+  id: number;
 }
 
 /** The type of route parameters coming from react-router, based on our routes.
@@ -508,8 +566,9 @@ type State = {
   // Properties that are set at initialization time.
   scheduleObj: Record<string, never> | InternalSchedule;
   addresses: Record<any, any>[];
-  services: Record<any, any>;
-  deactivatedServiceIds: Set<any>;
+  /** Mapping from service ID to service. */
+  services: Record<number, InternalTopLevelService>;
+  deactivatedServiceIds: Set<number>;
   notes: Record<any, any>;
   phones: Record<any, any>[];
   submitting: boolean;
@@ -608,7 +667,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     // Transformed version of services where the `addresses` property has been
     // replaced with an `addressHandles` property, which only contains the index
     // of an address within the resourceAddresses array.
-    const transformedServices: InternalService[] = rawServices.map(
+    const transformedServices: InternalOrganizationService[] = rawServices.map(
       (service) => {
         const { addresses = [], ...serviceWithoutAddresses } = service;
         // It is safe to compare addresses using the  `id` here because at this
@@ -628,7 +687,9 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
     // Prebuild some data to get saved to this.state.services, which otherwise
     // only contains edits to the original data from the API response.
-    const services = transformedServices.reduce(
+    const services = transformedServices.reduce<
+      Record<number, InternalTopLevelService>
+    >(
       (acc, service) => ({
         ...acc,
         [service.id]: {
@@ -887,11 +948,14 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
   /** @method editServiceById
    * @description Updates the service with any changes made
-   * @param {number} id a unique identifier to find a service
-   * @param {object} service the service to be updated
-   * @returns {void}
+   * @param id a unique identifier to find a service
+   * @param service the service to be updated
+   * @returns
    */
-  editServiceById = (id, changes) => {
+  editServiceById = (
+    id: number,
+    changes: Partial<InternalTopLevelService>
+  ): void => {
     this.setState(({ services }) => {
       const oldService = services[id] || {};
       const newService = { ...oldService, ...changes };
@@ -905,7 +969,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
   /** @method addService
    * @description Creates a brand new service
    */
-  addService = () => {
+  addService = (): void => {
     const { services, latestServiceId } = this.state;
     const nextServiceId = latestServiceId - 1;
 
@@ -979,7 +1043,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         // Adjust the address handles on the services to reflect the new
         // indexes.
         newServices = Object.fromEntries(
-          Object.entries(oldServices).map(([key, service]: any) => {
+          Object.entries(oldServices).map(([key, service]) => {
             let oldServiceAddressHandles: any = null;
             if (service.addressHandles) {
               // If we had previously made a change to the service's addresses,
@@ -1247,7 +1311,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       });
   }
 
-  handleDeactivation(type, id) {
+  handleDeactivation(type: "resource" | "service", id: number): void {
     const { history } = this.props;
     let confirmMessage: string | null = null;
     let path: string | null = null;
@@ -1476,6 +1540,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
     const { services } = resource;
+    assertDefined(services, "Expected resource.services to be defined");
     const flattenedServices = applyChanges(
       services,
       serviceChanges,
@@ -1501,7 +1566,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
     const showPrompt = inputsDirty && !submitting;
 
-    return !resource && !newResource ? (
+    return !resource ? (
       <Loader />
     ) : (
       <div className="edit">
