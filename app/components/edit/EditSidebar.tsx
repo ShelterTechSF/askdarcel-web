@@ -119,7 +119,9 @@ const EditSidebar = ({
           </li>
         </ul>
 
-        <h3 className={`${styles.listHeading} ${newResource && styles.disabled}`}>
+        <h3
+          className={`${styles.listHeading} ${newResource && styles.disabled}`}
+        >
           <a href="#services">Services</a>
           <button
             type="button"
