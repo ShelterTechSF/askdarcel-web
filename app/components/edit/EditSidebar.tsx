@@ -119,16 +119,22 @@ const EditSidebar = ({
           </li>
         </ul>
 
-        <h3 className={styles.listHeading}>
+        <h3 className={`${styles.listHeading} ${newResource && styles.disabled}`}>
           <a href="#services">Services</a>
           <button
             type="button"
             className={styles.serviceActionButton}
             onClick={addService}
+            disabled={newResource}
           >
             <i className="material-icons">add_circle_outline</i>
           </button>
         </h3>
+        {newResource && (
+          <p className={styles.servicesDisabledText}>
+            The organization must be created before you can add services.
+          </p>
+        )}
         <ul className={styles.list}>
           {Object.entries(allServices).map(([key, service]: any) => (
             <li key={key} className={styles.listItem}>
