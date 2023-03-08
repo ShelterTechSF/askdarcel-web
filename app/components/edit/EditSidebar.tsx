@@ -132,7 +132,7 @@ const EditSidebar = ({
         </h3>
         {newResource && (
           <p className={styles.servicesDisabledText}>
-            The organization must be created before you can add services.
+            The organization must be submitted before you can add services.
           </p>
         )}
         <ul className={styles.list}>
