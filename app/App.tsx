@@ -72,10 +72,9 @@ export const App = () => {
   const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
 
   useEffect(() => {
-    getLocation()
-      .then((loc) => {
-        setUserLocation(loc);
-      });
+    getLocation().then((loc) => {
+      setUserLocation(loc);
+    });
 
     ReactGA.initialize(config.GOOGLE_ANALYTICS_ID);
     ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
