@@ -59,7 +59,7 @@ const covidResources = [
   },
   {
     name: "Substance Use Resources",
-    icon: "health-safety",
+    icon: "substance-use",
     categorySlug: "substance-use-resources",
   },
 ];
