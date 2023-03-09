@@ -26,6 +26,7 @@
     "react-cookie": "^4.1.1",
     "react-dom": "^16.8.6",
     "react-ga": "^2.4.1",
+    "react-ga4": "^2.1.0",
     "react-helmet-async": "^1.0.4",
     "react-hot-loader": "^4.12.12",
     "react-icons": "^4.2.0",
