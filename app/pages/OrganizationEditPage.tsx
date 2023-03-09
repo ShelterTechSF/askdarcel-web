@@ -1167,6 +1167,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       website,
       email,
       addresses,
+      legal_status,
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
@@ -1182,6 +1183,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       notes: notes.notes ? prepNotesData(notes.notes) : [],
       schedule: { schedule_days: schedule },
       phones,
+      legal_status,
     };
     const requestString = "/api/resources";
 
