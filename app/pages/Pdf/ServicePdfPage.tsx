@@ -49,18 +49,18 @@ export const ServicePdfPage = () => {
   }, [id]);
 
   useEffect(() => {
-    // The below lines compress the CSS contained in the style element so as to decrease
-    // the character count that is sent to the Translation API
-    // https://dev.to/derder56/how-to-build-a-css-minifier-with-8-lines-of-javascript-4bj3
-    const styleElement = styleRef.current;
-    if (styleElement) {
-      styleElement.innerHTML = styleElement.innerHTML
-        .replace(/([^0-9a-zA-Z.#])\s+/g, "$1")
-        .replace(/;}/g, "}")
-        .replace(/\/\*.*?\*\//g, "");
-    }
-
     if (mapImgSrc !== null && !pdfSource) {
+      // The below lines compress the CSS contained in the style element so as to decrease
+      // the character count that is sent to the Translation API
+      // https://dev.to/derder56/how-to-build-a-css-minifier-with-8-lines-of-javascript-4bj3
+      const styleElement = styleRef.current;
+      if (styleElement) {
+        styleElement.innerHTML = styleElement.innerHTML
+          .replace(/([^0-9a-zA-Z.#])\s+/g, "$1")
+          .replace(/;}/g, "}")
+          .replace(/\/\*.*?\*\//g, "");
+      }
+
       // Map image has been fetched. We're now ready to make our request to the PDF conversion endpoint
       fetch(`/api/services/html_to_pdf`, {
         body: JSON.stringify({
