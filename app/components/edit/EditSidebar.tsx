@@ -1,10 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import type { RouteComponentProps } from "react-router";
 
+import type {
+  InternalOrganization,
+  InternalTopLevelService,
+} from "../../pages/OrganizationEditPage";
 import styles from "./EditSidebar.module.scss";
 
-const SaveButton = ({ children, disabled, onClick }) => (
+type SaveButtonProps = {
+  children: React.ReactNode;
+  disabled: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+};
+const SaveButton = ({ children, disabled, onClick }: SaveButtonProps) => (
   <button
     type="button"
     className={styles.actionButton}
@@ -15,6 +24,19 @@ const SaveButton = ({ children, disabled, onClick }) => (
   </button>
 );
 
+type EditSidebarProps = RouteComponentProps & {
+  addService: () => void;
+  certifyHAP: () => void;
+  createResource: () => void;
+  handleCancel: () => void;
+  handleDeactivation: (type: "resource" | "service", id: number) => void;
+  handleSubmit: React.MouseEventHandler<HTMLButtonElement>;
+  newResource: boolean;
+  newServices?: Record<number, InternalTopLevelService>;
+  resource: InternalOrganization;
+  submitting: boolean;
+};
+
 const EditSidebar = ({
   addService,
   certifyHAP,
@@ -23,25 +45,32 @@ const EditSidebar = ({
   handleDeactivation,
   handleSubmit,
   newResource,
-  newServices,
+  newServices = {},
   resource,
   submitting,
-}) => {
-  let actionButtons = [
-    <SaveButton key="submit" disabled={submitting} onClick={handleSubmit}>
-      Save Changes
-    </SaveButton>,
-    <button
-      type="button"
-      className={`${styles.actionButton} ${styles.deactivate}`}
-      key="deactive"
-      disabled={submitting || resource.status === "inactive"}
-      onClick={() => handleDeactivation("resource", resource.id)}
-    >
-      Deactivate
-    </button>,
-  ];
-  if (newResource) {
+}: EditSidebarProps) => {
+  let actionButtons: JSX.Element[];
+  if (!newResource) {
+    const resourceID = resource.id;
+    if (resourceID === undefined)
+      throw new Error(
+        "resource.id should not be undefined for existing resource"
+      );
+    actionButtons = [
+      <SaveButton key="submit" disabled={submitting} onClick={handleSubmit}>
+        Save Changes
+      </SaveButton>,
+      <button
+        type="button"
+        className={`${styles.actionButton} ${styles.deactivate}`}
+        key="deactive"
+        disabled={submitting || resource.status === "inactive"}
+        onClick={() => handleDeactivation("resource", resourceID)}
+      >
+        Deactivate
+      </button>,
+    ];
+  } else {
     actionButtons = [
       <SaveButton key="submit" disabled={submitting} onClick={createResource}>
         Submit
@@ -71,7 +100,7 @@ const EditSidebar = ({
   // Populate existing services so they show up on the sidebar
   // Do a 2-level-deep clone of the newServices object
   const allServices = Object.entries(newServices).reduce(
-    (acc, [id, service]) => ({ ...acc, [id]: { ...service } }),
+    (acc, [id, service]: any) => ({ ...acc, [id]: { ...service } }),
     {}
   );
   if (resource.services) {
@@ -90,25 +119,33 @@ const EditSidebar = ({
           </li>
         </ul>
 
-        <h3 className={styles.listHeading}>
+        <h3
+          className={`${styles.listHeading} ${newResource && styles.disabled}`}
+        >
           <a href="#services">Services</a>
           <button
             type="button"
             className={styles.serviceActionButton}
             onClick={addService}
+            disabled={newResource}
           >
             <i className="material-icons">add_circle_outline</i>
           </button>
         </h3>
+        {newResource && (
+          <p className={styles.servicesDisabledText}>
+            The organization must be submitted before you can add services.
+          </p>
+        )}
         <ul className={styles.list}>
-          {Object.entries(allServices).map(([key, service]) => (
+          {Object.entries(allServices).map(([key, service]: any) => (
             <li key={key} className={styles.listItem}>
               <a
                 href={`#${key}`}
                 style={{ display: "block" }}
                 onClick={(e) => {
                   e.preventDefault();
-                  const topOfElement = document.getElementById(key).offsetTop;
+                  const topOfElement = document.getElementById(key)!.offsetTop;
                   window.scroll({ top: topOfElement, behavior: "smooth" });
                 }}
               >
@@ -122,22 +159,6 @@ const EditSidebar = ({
       <div className={styles.actions}>{actionButtons}</div>
     </nav>
   );
-};
-
-EditSidebar.defaultProps = {
-  newServices: {},
-};
-
-EditSidebar.propTypes = {
-  certifyHAP: PropTypes.func.isRequired,
-  createResource: PropTypes.func.isRequired,
-  handleDeactivation: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  newResource: PropTypes.bool.isRequired,
-  newServices: PropTypes.object,
-  resource: PropTypes.object.isRequired,
-  submitting: PropTypes.bool.isRequired,
 };
 
 export default withRouter(EditSidebar);

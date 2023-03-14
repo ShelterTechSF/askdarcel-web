@@ -14,5 +14,5 @@ export const PopUpMessage = ({
 export interface PopupMessageProp {
   message: string;
   type: "success" | "error";
-  visible: boolean;
+  visible?: boolean;
 }

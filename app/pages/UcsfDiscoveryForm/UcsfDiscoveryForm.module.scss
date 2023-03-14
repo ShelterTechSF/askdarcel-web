@@ -12,6 +12,17 @@
   }
 }
 
+.formTitle {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+}
+
 .subtitleMargin {
   margin-top: 21px;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import { Prompt, withRouter } from "react-router-dom";
+import type { RouteComponentProps } from "react-router";
 import _ from "lodash";
 
 import { Loader } from "components/ui";
@@ -12,15 +12,30 @@ import EditSchedule from "../components/edit/EditSchedule";
 import EditPhones from "../components/edit/EditPhones";
 import EditSidebar from "../components/edit/EditSidebar";
 import { buildScheduleDays } from "../components/edit/ProvidedService";
+import type { InternalSchedule } from "../components/edit/ProvidedService";
+import type { PopupMessageProp } from "../components/ui/PopUpMessage";
+import type { Organization, Schedule, Service } from "../models";
 import * as dataService from "../utils/DataService";
 import "./OrganizationEditPage.scss";
+
+/** Assert that the argument is not `undefined`.
+ *
+ * This is a type checking helper that allows us to create a runtime type check
+ * that removes `undefined` from the possible types that x can be.
+ */
+function assertDefined<T>(x: T | undefined, msg: string): asserts x is T {
+  if (x === undefined) throw new Error(msg);
+}
 
 const ACTION_INSERT = "insert";
 const ACTION_EDIT = "edit";
 const ACTION_REMOVE = "remove";
 
 /**
- * Apply a set of changes to a base array of items.
+ * Apply a set of changes to a base array of Services.
+ *
+ * This function makes assumptions that are only safe for how Services are
+ * represented on the Edit page.
  *
  * Constraints:
  * - Original ordering of base array should be preserved
@@ -28,13 +43,17 @@ const ACTION_REMOVE = "remove";
  *   This assumes that the IDs for new items start with -1 and decrement for
  *   each new item
  *
- * @param {object[]} baseItems - An array of items, each with an `id` field
- * @param {object} changesById - An object mapping IDs to changes
- * @param {set} deletedIds - Optional. A set of IDs of items to delete
+ * @param baseItems - An array of items, each with an `id` field
+ * @param changesById - An object mapping IDs to changes
+ * @param deletedIds - Optional. A set of IDs of items to delete
  *
- * @return {object[]} An array of items with the changes applied
+ * @return An array of items with the changes applied
  */
-const applyChanges = (baseItems, changesById, deletedIds = undefined) => {
+const applyChanges = (
+  baseItems: InternalOrganizationService[],
+  changesById: Record<number, InternalTopLevelService>,
+  deletedIds?: Set<number>
+): InternalFlattenedService[] => {
   const baseItemIds = new Set(baseItems.map((i) => i.id));
   // Order the new IDs in decreasing order, since that's the order they should
   // appear on the page.
@@ -52,7 +71,13 @@ const applyChanges = (baseItems, changesById, deletedIds = undefined) => {
     if (item.id in changesById) {
       return { ...item, ...changesById[item.id] };
     }
-    return item;
+    // This case should not be reachable because changesById comes from
+    // this.state.services, and upon fetching the resource from the API for the
+    // first time, we prepopulate this.state.services with an item for each
+    // service that was already on the resource.
+    throw new Error(
+      `Expected changesById to contain an entry for every ID in baseItems. Item with id ${item.id} was not found in changesById`
+    );
   });
   if (deletedIds) {
     transformedItems = transformedItems.filter(
@@ -123,7 +148,7 @@ function postCollection(
     if (item.isRemoved) {
       deletCollectionObject(item, path, promises);
     } else if (i < originalCollection.length && item.dirty) {
-      const diffObj = getDiffObject(item, originalCollection[i]);
+      const diffObj: any = getDiffObject(item, originalCollection[i]);
       if (!_.isEmpty(diffObj)) {
         delete diffObj.dirty;
         updateCollectionObject(diffObj, item.id, path, promises);
@@ -143,8 +168,8 @@ function postSchedule(scheduleObj, promises) {
   if (!scheduleObj) {
     return;
   }
-  let currDay = [];
-  let value = {};
+  let currDay: any[] = [];
+  let value: any = {};
   Object.keys(scheduleObj).forEach((day) => {
     currDay = scheduleObj[day];
     currDay.forEach((curr) => {
@@ -191,7 +216,7 @@ function postSchedule(scheduleObj, promises) {
 function postNotes(notesObj, promises, uriObj) {
   if (notesObj && notesObj.notes) {
     const { notes } = notesObj;
-    Object.entries(notes).forEach(([key, currentNote]) => {
+    Object.entries(notes).forEach(([key, currentNote]: any) => {
       if (key < 0) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
         promises.push(dataService.post(uri, { note: currentNote }));
@@ -307,17 +332,18 @@ const postAddresses = (addresses, uriObj) =>
 // existing services.
 function createFullSchedule(scheduleObj) {
   if (scheduleObj) {
-    const newSchedule = [];
+    const newSchedule: any[] = [];
     let tempDay = {};
     Object.keys(scheduleObj).forEach((day) => {
       scheduleObj[day].forEach((curr) => {
         if (curr.opens_at === null || curr.closes_at === null) {
           return;
         }
-        tempDay = {};
-        tempDay.day = day;
-        tempDay.opens_at = curr.opens_at;
-        tempDay.closes_at = curr.closes_at;
+        tempDay = {
+          day,
+          opens_at: curr.opens_at,
+          closes_at: curr.closes_at,
+        };
         newSchedule.push(tempDay);
       });
     });
@@ -330,17 +356,18 @@ function createFullSchedule(scheduleObj) {
 const prepNotesData = (notes) => Object.values(notes).map((note) => ({ note }));
 
 const prepSchedule = (scheduleObj) => {
-  const newSchedule = [];
+  const newSchedule: any[] = [];
   let tempDay = {};
   Object.keys(scheduleObj).forEach((day) => {
     scheduleObj[day].forEach((curr) => {
       if (curr.opens_at === null || curr.closes_at === null) {
         return;
       }
-      tempDay = {};
-      tempDay.day = day;
-      tempDay.opens_at = curr.opens_at;
-      tempDay.closes_at = curr.closes_at;
+      tempDay = {
+        day,
+        opens_at: curr.opens_at,
+        closes_at: curr.closes_at,
+      };
       newSchedule.push(tempDay);
     });
   });
@@ -438,8 +465,130 @@ const getAddresses = (state) => {
   return addresses;
 };
 
-class OrganizationEditPage extends React.Component {
-  constructor(props) {
+// Types for objects internal to the Edit page.
+//
+// Several of the objects coming from the API are transformed on the Edit page
+// in order to keep track of internal UI state. The following are type
+// definitions that extend but override fields on the API type definitions in
+// the models/ directory.
+
+/** Internal shape of an Organization (a.k.a. Resource).
+ *
+ * This has the following differences from the Organization coming from the API:
+ *
+ * - All fields except for `schedule` are optional, since on the Create New
+ *   Resource page, we initialize the main React Component's `resource` state
+ *   variable with an almost empty object.
+ * - `schedule` can either be an API Schedule or a Record<string, never>, which
+ *   is a fancy way of saying an object with no fields. Note that `schedule` is
+ *   a real API schedule, unlike the main React Component's `scheduleObj` state
+ *   variable, which is an `InternalSchedule`.
+ * - `services` is an array of `InternalService`s. See `InternalService`'s
+ *   comments for more details.
+ */
+export interface InternalOrganization
+  extends Partial<Omit<Organization, "schedule" | "services">> {
+  schedule: Record<string, never> | Schedule;
+  services?: InternalOrganizationService[];
+}
+
+/** Internal shape of a Service stored at the top-level of the component state.
+ *
+ * This differs from the Service coming from the API in that the `addresses`
+ * field has been replaced with an `addressHandles` field. This also makes most
+ * of the original properties from the API Service optional, and it also adds a
+ * few new properties. See documentation on the individual fields for more
+ * information.
+ */
+export interface InternalTopLevelService
+  extends Partial<Omit<Service, "addresses" | "schedule">> {
+  /** References to addresses in the parent Organization.
+   *
+   * These are the numeric indexes into the Organization's `addresses` array.
+   */
+  addressHandles?: number[];
+
+  /** A Schedule attached to the service.
+   *
+   * Mostly matches the shape of the API schedule, but can also omit all fields
+   * except for a 0-length schedule_days array.
+   */
+  schedule?: Schedule | { schedule_days: never[] };
+
+  /** A Schedule attached to the service in the form of an InternalSchedule. */
+  scheduleObj: InternalSchedule;
+
+  /** Whether the Service should inherit its schedule from its parent Organization. */
+  shouldInheritScheduleFromParent: boolean;
+}
+
+/** Internal shape of a Service as nested under the Organization object.
+ *
+ * This differs from the Service coming from the API in that the `addresses`
+ * field has been replaced with an `addressHandles` field. This is generally not
+ * changed after the initial API GET request that returns the Organization and
+ * everything nested underneath it. All edits on the Edit Page actually change
+ * the top-level services objects.
+ */
+interface InternalOrganizationService extends Omit<Service, "addresses"> {
+  /** References to addresses in the parent Organization.
+   *
+   * These are the numeric indexes into the Organization's `addresses` array.
+   */
+  addressHandles: number[];
+}
+
+/** The result of flattening the InternalOrganizationService into
+ * InternalTopLevelService.
+ *
+ * The `applyChanges()` function takes the InternalTopLevelServices and applies
+ * them like diffs on top of the InternalOrganizationServices. The result is a
+ * type that is mostly like InternalOrganizationServices except that the `id`
+ * field is required.
+ */
+export interface InternalFlattenedService extends InternalTopLevelService {
+  id: number;
+}
+
+/** The type of route parameters coming from react-router, based on our routes.
+ *
+ * The `id` property comes from the `:id` in our edit route, where it is
+ * mandatory, but is optional in this type because it is not present in the new
+ * route.
+ */
+type RouteParams = { id?: string };
+
+type Props = RouteComponentProps<RouteParams> & {
+  showPopUpMessage: (p: PopupMessageProp) => void;
+};
+
+type State = {
+  // Properties that are set at initialization time.
+  scheduleObj: Record<string, never> | InternalSchedule;
+  addresses: Record<any, any>[];
+  /** Mapping from service ID to service. */
+  services: Record<number, InternalTopLevelService>;
+  deactivatedServiceIds: Set<number>;
+  notes: Record<any, any>;
+  phones: Record<any, any>[];
+  submitting: boolean;
+  newResource: boolean;
+  inputsDirty: boolean;
+  latestServiceId: number;
+
+  // Properties that are added after initialization.
+  alternate_name?: string;
+  email?: string;
+  legal_status?: string;
+  long_description?: string;
+  name?: string;
+  resource?: InternalOrganization;
+  short_description?: string;
+  website?: string;
+};
+
+class OrganizationEditPage extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -467,7 +616,7 @@ class OrganizationEditPage extends React.Component {
     this.sidebarAddService = this.sidebarAddService.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const {
       location: { pathname },
       match: { params },
@@ -494,7 +643,7 @@ class OrganizationEditPage extends React.Component {
     window.removeEventListener("beforeunload", this.keepOnPage);
   }
 
-  handleAPIGetResource = (resource) => {
+  handleAPIGetResource = (resource: Organization): void => {
     // Transform the original API response such that all addresses on services
     // are replaced with handles to the corresponding address on the resource.
     // This ensures that there is only one canonical copy of an address, which
@@ -518,25 +667,29 @@ class OrganizationEditPage extends React.Component {
     // Transformed version of services where the `addresses` property has been
     // replaced with an `addressHandles` property, which only contains the index
     // of an address within the resourceAddresses array.
-    const transformedServices = rawServices.map((service) => {
-      const { addresses = [], ...serviceWithoutAddresses } = service;
-      // It is safe to compare addresses using the  `id` here because at this
-      // point, all addresses came from the API response and therefore have
-      // database primary key IDs assigned. Addresses that are added in the Edit
-      // page are not assigned IDs until after saving the page, so this
-      // assumption is not safe to make after this point in time.
-      const addressHandles = addresses.map((a) =>
-        resourceAddresses.findIndex((ra) => ra.id === a.id)
-      );
-      return { ...serviceWithoutAddresses, addressHandles };
-    });
+    const transformedServices: InternalOrganizationService[] = rawServices.map(
+      (service) => {
+        const { addresses = [], ...serviceWithoutAddresses } = service;
+        // It is safe to compare addresses using the  `id` here because at this
+        // point, all addresses came from the API response and therefore have
+        // database primary key IDs assigned. Addresses that are added in the Edit
+        // page are not assigned IDs until after saving the page, so this
+        // assumption is not safe to make after this point in time.
+        const addressHandles = addresses.map((a) =>
+          resourceAddresses.findIndex((ra) => ra.id === a.id)
+        );
+        return { ...serviceWithoutAddresses, addressHandles };
+      }
+    );
     // Build new version of the resource that has the services replaced with the
     // transformed services.
     const transformedResource = { ...resource, services: transformedServices };
 
     // Prebuild some data to get saved to this.state.services, which otherwise
     // only contains edits to the original data from the API response.
-    const services = transformedServices.reduce(
+    const services = transformedServices.reduce<
+      Record<number, InternalTopLevelService>
+    >(
       (acc, service) => ({
         ...acc,
         [service.id]: {
@@ -626,12 +779,26 @@ class OrganizationEditPage extends React.Component {
   postServices = (servicesObj, promises, postAddressPromises) => {
     if (!servicesObj) return;
     const { resource, addresses } = this.state;
-    const newServices = [];
-    const newServicesAddressHandles = [];
+    assertDefined(resource, "Tried to access resource before it was defined");
+    const newServices: any[] = [];
+    const newServicesAddressHandles: any[] = [];
     const unsavedAddresses =
       addresses.length > 0 ? addresses : resource.addresses;
 
     const getAddressIDFromHandle = (handle) => {
+      // The only case where unsavedAddresses can be undefined is if
+      // resource.addresses is undefined, and that can only happen when creating a
+      // new Organization. However, if we're calling this
+      // getAddressIDFromHandle() function, then that means that we have an
+      // address handle in the service we're about to save. That either means
+      // that we're pointing to an address in the top-level addresses state
+      // variable, which must be defined, or we're pointing to an address in the
+      // original GET API response's Resource (Organization) object.
+      assertDefined(
+        unsavedAddresses,
+        "unsavedAddresses should not be undefined"
+      );
+
       if (unsavedAddresses[handle] && unsavedAddresses[handle].id) {
         // Associating with an address that already existed, which means
         // we can simply grab its ID.
@@ -651,7 +818,7 @@ class OrganizationEditPage extends React.Component {
       );
     };
 
-    Object.entries(servicesObj).forEach(([key, value]) => {
+    Object.entries(servicesObj).forEach(([key, value]: any) => {
       const currentService = deepClone(value);
       if (key < 0) {
         // Create new service
@@ -683,15 +850,9 @@ class OrganizationEditPage extends React.Component {
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
         delete currentService.scheduleObj;
-        postInstructions(currentService.instructions, promises, {
-          path: "services",
-          id: key,
-        });
+        postInstructions(currentService.instructions, promises);
         delete currentService.instructions;
-        postDocuments(currentService.documents, promises, {
-          path: "services",
-          id: key,
-        });
+        postDocuments(currentService.documents, promises);
         delete currentService.documents;
         delete currentService.shouldInheritScheduleFromParent;
         const { addressHandles } = currentService;
@@ -712,8 +873,19 @@ class OrganizationEditPage extends React.Component {
           // addresses from the service.
           if (addressHandles === undefined) return;
 
+          // resource.services should not be undefined if we are editing an
+          // existing service, since that implies that there should have been
+          // services that came on the original resource.
+          assertDefined(
+            resource.services,
+            "Did not expect resource.services to be undefined"
+          );
           const originalService = resource.services.find(
             (s) => s.id === currentService.id
+          );
+          assertDefined(
+            originalService,
+            `Could not find the original service corresponding to edited service with ID ${currentService.id}`
           );
           const oldAddressHandleSet = new Set(originalService.addressHandles);
           const newAddressHandleSet = new Set(addressHandles);
@@ -776,11 +948,14 @@ class OrganizationEditPage extends React.Component {
 
   /** @method editServiceById
    * @description Updates the service with any changes made
-   * @param {number} id a unique identifier to find a service
-   * @param {object} service the service to be updated
-   * @returns {void}
+   * @param id a unique identifier to find a service
+   * @param service the service to be updated
+   * @returns
    */
-  editServiceById = (id, changes) => {
+  editServiceById = (
+    id: number,
+    changes: Partial<InternalTopLevelService>
+  ): void => {
     this.setState(({ services }) => {
       const oldService = services[id] || {};
       const newService = { ...oldService, ...changes };
@@ -794,7 +969,7 @@ class OrganizationEditPage extends React.Component {
   /** @method addService
    * @description Creates a brand new service
    */
-  addService = () => {
+  addService = (): void => {
     const { services, latestServiceId } = this.state;
     const nextServiceId = latestServiceId - 1;
 
@@ -825,6 +1000,7 @@ class OrganizationEditPage extends React.Component {
   // this.state.addresses only contains modifications to the addresses
   getFlattenedAddresses = () => {
     const { resource, addresses } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
     const { addresses: resourceAddresses = [] } = resource;
     if (!_.isEmpty(addresses)) {
       return addresses;
@@ -854,6 +1030,7 @@ class OrganizationEditPage extends React.Component {
       //
       // This page _really_ needs to be completely rewritten.
       const { resource, services: oldServices } = state;
+      assertDefined(resource, "Tried to access resource before it was defined");
       const oldAddresses = getAddresses(state);
       const changeType = computeTypeOfChangeToAddresses(
         oldAddresses,
@@ -862,18 +1039,24 @@ class OrganizationEditPage extends React.Component {
 
       let newServices = null;
       if (changeType.type === "removed") {
-        const removedAddressHandle = changeType.handle;
+        const removedAddressHandle: any = changeType.handle;
         // Adjust the address handles on the services to reflect the new
         // indexes.
         newServices = Object.fromEntries(
           Object.entries(oldServices).map(([key, service]) => {
-            let oldServiceAddressHandles = null;
+            let oldServiceAddressHandles: any = null;
             if (service.addressHandles) {
               // If we had previously made a change to the service's addresses,
               // then they should be on this.state.services[x].addressHandles, and
               // we should use that list.
               oldServiceAddressHandles = service.addressHandles;
             } else {
+              // TODO: This could possibly break on the Create New Resource
+              // page.
+              assertDefined(
+                resource.services,
+                "Did not expect resource.services to be undefined"
+              );
               const serviceOnResource = resource.services.find(
                 (s) => s.id === service.id
               );
@@ -914,11 +1097,22 @@ class OrganizationEditPage extends React.Component {
         // has a handle to that address, remove it from the service.
         const removedAddressHandle = changeType.handle;
         const someServiceHasStaleHandle = Object.values(oldServices).some(
-          (service) => {
+          (service: any) => {
             let addressHandles;
             if (service.addressHandles) {
               ({ addressHandles } = service);
             } else {
+              // It shouldn't be possible for resource.services to be undefined.
+              // This is always at least set to the empty array when we are
+              // editing an Organization that was previously saved to the DB, so
+              // this could only happen on the Create New Organization page.
+              // However, this change type corresponds to marking an address for
+              // removal on the DB, which cannot be the case for a new
+              // Organization that hasn't been saved yet.
+              assertDefined(
+                resource.services,
+                "Did not expect resource.services to be undefined"
+              );
               const serviceOnResource = resource.services.find(
                 (s) => s.id === service.id
               );
@@ -936,7 +1130,7 @@ class OrganizationEditPage extends React.Component {
         );
         if (someServiceHasStaleHandle) {
           newServices = Object.fromEntries(
-            Object.entries(oldServices).map(([key, service]) => {
+            Object.entries(oldServices).map(([key, service]: any) => {
               const filteredHandles = service.addressHandles.filter(
                 (handle) => handle !== removedAddressHandle
               );
@@ -946,7 +1140,7 @@ class OrganizationEditPage extends React.Component {
         }
       }
 
-      const updates = { addresses, inputsDirty: true };
+      const updates: any = { addresses, inputsDirty: true };
       if (newServices !== null) {
         updates.services = newServices;
       }
@@ -954,7 +1148,7 @@ class OrganizationEditPage extends React.Component {
     });
   };
 
-  keepOnPage(e) {
+  keepOnPage(e: BeforeUnloadEvent): void {
     const { inputsDirty } = this.state;
     if (inputsDirty) {
       const message =
@@ -973,6 +1167,7 @@ class OrganizationEditPage extends React.Component {
       website,
       email,
       addresses,
+      legal_status,
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
@@ -988,6 +1183,7 @@ class OrganizationEditPage extends React.Component {
       notes: notes.notes ? prepNotesData(notes.notes) : [],
       schedule: { schedule_days: schedule },
       phones,
+      legal_status,
     };
     const requestString = "/api/resources";
 
@@ -1034,10 +1230,11 @@ class OrganizationEditPage extends React.Component {
       short_description,
       website,
     } = this.state;
-    const promises = [];
+    assertDefined(resource, "Tried to access resource before it was defined");
+    const promises: any[] = [];
 
     // Resource
-    const resourceChangeRequest = {};
+    const resourceChangeRequest: any = {};
     let resourceModified = false;
     if (name !== resource.name) {
       resourceChangeRequest.name = name;
@@ -1098,7 +1295,7 @@ class OrganizationEditPage extends React.Component {
     const that = this;
     Promise.all(promises)
       .then(() => {
-        history.push(`/organizations/${that.state.resource.id}`);
+        history.push(`/organizations/${resource.id}`);
         showPopUpMessage({
           type: "success",
           message: "Successfully saved your changes.",
@@ -1114,10 +1311,10 @@ class OrganizationEditPage extends React.Component {
       });
   }
 
-  handleDeactivation(type, id) {
+  handleDeactivation(type: "resource" | "service", id: number): void {
     const { history } = this.props;
-    let confirmMessage = null;
-    let path = null;
+    let confirmMessage: string | null = null;
+    let path: string | null = null;
     if (type === "resource") {
       confirmMessage = "Are you sure you want to deactive this resource?";
       path = `/api/resources/${id}`;
@@ -1126,7 +1323,7 @@ class OrganizationEditPage extends React.Component {
       path = `/api/services/${id}`;
     }
     // eslint-disable-next-line no-alert
-    if (window.confirm(confirmMessage) === true) {
+    if (window.confirm(confirmMessage as any) === true) {
       if (id < 0) {
         this.setState(({ deactivatedServiceIds }) => {
           const newDeactivatedServiceIds = new Set(deactivatedServiceIds);
@@ -1135,7 +1332,7 @@ class OrganizationEditPage extends React.Component {
         });
       } else {
         dataService
-          .APIDelete(path, { change_request: { status: "2" } })
+          .APIDelete(path as any, { change_request: { status: "2" } } as any)
           .then(() => {
             alert(
               "Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know."
@@ -1159,12 +1356,19 @@ class OrganizationEditPage extends React.Component {
     this.setState({ phones: phoneCollection, inputsDirty: true });
   }
 
-  handleResourceFieldChange(e) {
+  handleResourceFieldChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { field } = e.target.dataset;
+    assertDefined(
+      field,
+      "Called handleResourceFieldChange() on a form element missing the data-field attribute."
+    );
     const { value } = e.target;
-    const object = {};
-    object[field] = value;
-    object.inputsDirty = true;
+    const object = {
+      [field]: value,
+      inputsDirty: true,
+    } as any;
     this.setState(object);
   }
 
@@ -1177,18 +1381,22 @@ class OrganizationEditPage extends React.Component {
   }
 
   certifyHAP() {
-    const {
-      resource: { id: resourceId },
-    } = this.state;
+    const { resource } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
+    const { id: resourceId } = resource;
     dataService
       .post(`/api/resources/${resourceId}/certify`)
       .then((response) => {
         // TODO: Do not use alert() for user notifications.
         if (response.ok) {
           alert("HAP Certified. Thanks!"); // eslint-disable-line no-alert
-          const { resource } = this.state;
-          resource.certified = response.ok;
-          this.setState({ resource });
+          const { resource: prevResource } = this.state;
+          assertDefined(
+            prevResource,
+            "Tried to access resource before it was defined"
+          );
+          prevResource.certified = response.ok;
+          this.setState({ resource: prevResource });
         } else {
           alert("Issue verifying resource. Please try again."); // eslint-disable-line no-alert
         }
@@ -1199,12 +1407,13 @@ class OrganizationEditPage extends React.Component {
     this.addService();
     const newService = document.getElementById("new-service-button");
     // eslint-disable-next-line react/no-find-dom-node
-    const domNode = ReactDOM.findDOMNode(newService);
+    const domNode = ReactDOM.findDOMNode(newService) as any;
     domNode.scrollIntoView({ behavior: "smooth" });
   }
 
   renderSectionFields() {
     const { resource, scheduleObj } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
@@ -1229,7 +1438,7 @@ class OrganizationEditPage extends React.Component {
               className="input"
               placeholder="What it's known as in the community"
               data-field="alternate_name"
-              defaultValue={resource.alternate_name}
+              defaultValue={resource.alternate_name ?? ""}
               onChange={this.handleResourceFieldChange}
             />
           </li>
@@ -1251,7 +1460,7 @@ class OrganizationEditPage extends React.Component {
               type="url"
               className="input"
               placeholder="http://"
-              defaultValue={resource.website}
+              defaultValue={resource.website ?? ""}
               data-field="website"
               onChange={this.handleResourceFieldChange}
             />
@@ -1263,7 +1472,7 @@ class OrganizationEditPage extends React.Component {
               id="edit-email-input"
               type="email"
               className="input"
-              defaultValue={resource.email}
+              defaultValue={resource.email ?? ""}
               data-field="email"
               onChange={this.handleResourceFieldChange}
             />
@@ -1275,7 +1484,7 @@ class OrganizationEditPage extends React.Component {
               id="edit-description-input"
               className="input"
               placeholder="Describe the organization in 1-2 sentences. Avoid listing the services it provides and instead explaint the organization's mission."
-              defaultValue={resource.long_description}
+              defaultValue={resource.long_description ?? ""}
               data-field="long_description"
               onChange={this.handleResourceFieldChange}
             />
@@ -1300,7 +1509,7 @@ class OrganizationEditPage extends React.Component {
               type="text"
               className="input"
               placeholder="ex. non-profit, government, business"
-              defaultValue={resource.legal_status}
+              defaultValue={resource.legal_status ?? ""}
               data-field="legal_status"
               onChange={this.handleResourceFieldChange}
             />
@@ -1325,10 +1534,13 @@ class OrganizationEditPage extends React.Component {
 
   renderServices() {
     const {
-      resource: { services },
+      resource,
       services: serviceChanges,
       deactivatedServiceIds: serviceDeletions,
     } = this.state;
+    assertDefined(resource, "Tried to access resource before it was defined");
+    const { services } = resource;
+    assertDefined(services, "Expected resource.services to be defined");
     const flattenedServices = applyChanges(
       services,
       serviceChanges,
@@ -1354,7 +1566,7 @@ class OrganizationEditPage extends React.Component {
 
     const showPrompt = inputsDirty && !submitting;
 
-    return !resource && !newResource ? (
+    return !resource ? (
       <Loader />
     ) : (
       <div className="edit">
@@ -1394,18 +1606,5 @@ class OrganizationEditPage extends React.Component {
     );
   }
 }
-
-OrganizationEditPage.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }).isRequired,
-  }).isRequired,
-  history: PropTypes.object.isRequired,
-  showPopUpMessage: PropTypes.func.isRequired,
-};
 
 export default withRouter(OrganizationEditPage);

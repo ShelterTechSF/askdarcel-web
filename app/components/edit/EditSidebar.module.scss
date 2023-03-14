@@ -48,12 +48,28 @@
   font-weight: 600;
   color: $color-grey7;
 
+  &.disabled {
+    opacity: 0.6;
+    a {
+      cursor: default;
+    }
+    a:hover {
+      color: $color-grey7;
+    }
+  }
+
   a {
     color: $color-grey7;
     &:hover {
       color: $color-brand;
     }
   }
+}
+
+.servicesDisabledText {
+  padding: 0 25px;
+  font-size: 14px;
+  font-style: italic;
 }
 
 .serviceActionButton {
@@ -63,7 +79,14 @@
   height: 100%;
   float: right;
 
-  &:hover {
+  &:disabled {
+    cursor: default;
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  &:enabled:hover {
     box-shadow: none;
     color: $color-brand;
   }

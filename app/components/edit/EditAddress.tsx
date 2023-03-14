@@ -24,7 +24,7 @@ const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
   const submitButtonText = isEdit ? "Save Address" : "Add New Address";
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const formData: any = new FormData(e.currentTarget);
     const newData = Object.fromEntries(formData.entries());
     if (isEdit) {
       newData.id = defaultData.id;
@@ -155,7 +155,7 @@ export const AddressListItem = ({
   address,
   onEdit,
   onRemove,
-}) => (
+}: any) => (
   <div className={s.listItemContainer}>
     <div className={s.listItemIndex}>{`${displayIndex}.`}</div>
     <div className={s.listItemName}>{address.name}</div>
@@ -183,7 +183,7 @@ export const AddressListItem = ({
 // type ModalState = { type: "closed" } | { type: "add" } | { type: "edit"; editingIndex: number };
 
 const EditAddresses = ({ addresses, setAddresses }) => {
-  const [modalState, setModalState] = useState({ type: "closed" });
+  const [modalState, setModalState] = useState<any>({ type: "closed" });
 
   const closeModal = () => setModalState({ type: "closed" });
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import EditNote from "./EditNote";
 
-class EditNotes extends Component {
+class EditNotes extends Component<any, any> {
   constructor(props) {
     super(props);
 
