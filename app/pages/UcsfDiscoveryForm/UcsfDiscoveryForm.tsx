@@ -113,13 +113,13 @@ const Page = () => {
       const search = qs.stringify(searchState, { encodeValuesOnly: true });
 
       ReactGA.event({
-        category: "UCSF Resource Inquiry",
-        action: "Refined UCSF Resource Inquiry",
+        category: "DC Nav Resource Inquiry",
+        action: "Refined DC Nav Resource Inquiry",
         label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
       });
       ReactGA_4.event({
-        category: "UCSF Resource Inquiry",
-        action: "Refined UCSF Resource Inquiry",
+        category: "DC Nav Resource Inquiry",
+        action: "Refined DC Nav Resource Inquiry",
         label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
       });
 

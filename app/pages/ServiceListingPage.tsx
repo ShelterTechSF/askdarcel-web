@@ -27,8 +27,6 @@ import {
   Service,
 } from "../models";
 
-const { title: whiteLabelTitle } = whiteLabel;
-
 // Page at /services/123
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -79,7 +77,7 @@ export const ServiceListingPage = () => {
   return (
     <div className="listing-container">
       <Helmet>
-        <title>{`${service.name} | ${whiteLabelTitle}`}</title>
+        <title>{`${service.name} | ${whiteLabel.title}`}</title>
         <meta name="description" content={service.long_description} />
       </Helmet>
       <article className="listing" id="service">

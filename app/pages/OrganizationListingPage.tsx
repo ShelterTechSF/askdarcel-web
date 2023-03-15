@@ -20,7 +20,7 @@ import {
   WebsiteRenderer,
 } from "../components/listing";
 import { Loader } from "../components/ui";
-import whitelabel from "../utils/whitelabel";
+import whiteLabel from "../utils/whitelabel";
 import {
   fetchOrganization,
   getOrganizationActions,
@@ -74,7 +74,7 @@ export const OrganizationListingPage = () => {
   return (
     <div className="org-container">
       <Helmet>
-        <title>{`${org.name} | ${whitelabel.title}`}</title>
+        <title>{`${org.name} | ${whiteLabel.title}`}</title>
         <meta name="description" content={org.long_description || ""} />
       </Helmet>
       <article className="org" id="resource">
