@@ -65,7 +65,7 @@ export const ServicePdfPage = () => {
       fetch(`/api/services/html_to_pdf`, {
         body: JSON.stringify({
           html: ref.current?.outerHTML,
-          target_language: targetLangCode ?? null,
+          target_language: targetLangCode,
         }),
         method: "POST",
         mode: "cors",
