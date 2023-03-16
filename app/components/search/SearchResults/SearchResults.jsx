@@ -195,6 +195,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     basePath = "services";
     entryId = serviceId;
   }
+  const handoutApiUrl = `/service-handout/${entryId}`;
 
   return (
     <div className={styles.searchResult}>
@@ -218,7 +219,37 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
                 {
                   key: -1,
                   description: "English",
-                  url: `/service-handout/${entryId}`,
+                  url: `${handoutApiUrl}`,
+                },
+                {
+                  key: -2,
+                  description: "Spanish",
+                  url: `${handoutApiUrl}?lang=es`,
+                },
+                {
+                  key: -3,
+                  description: "Tagalog",
+                  url: `${handoutApiUrl}?lang=tl`,
+                },
+                {
+                  key: -4,
+                  description: "Chinese (Traditional)",
+                  url: `${handoutApiUrl}?lang=zh-TW`,
+                },
+                {
+                  key: -5,
+                  description: "Vietnamese",
+                  url: `${handoutApiUrl}?lang=vi`,
+                },
+                {
+                  key: -6,
+                  description: "Russian",
+                  url: `${handoutApiUrl}?lang=ru`,
+                },
+                {
+                  key: -7,
+                  description: "Arabic",
+                  url: `${handoutApiUrl}?lang=ar`,
                 },
               ]
         }
