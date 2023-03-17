@@ -4,9 +4,7 @@ import { push as Menu, State } from "react-burger-menu";
 import whiteLabel from "../../utils/whitelabel";
 import styles from "./HamburgerMenu.module.scss";
 
-const {
-  showReportCrisis,
-} = whiteLabel;
+const { showReportCrisis } = whiteLabel;
 
 const burgerStyles = {
   bmBurgerButton: {
@@ -61,15 +59,26 @@ export const HamburgerMenu = ({
     width="275px"
   >
     {links.map(({ to, text, exact = false }) => (
-      <MenuItem key={to} to={to} onClick={toggleHamburgerMenu} exact={exact} linkStyles={styles.menuItem}>
+      <MenuItem
+        key={to}
+        to={to}
+        onClick={toggleHamburgerMenu}
+        exact={exact}
+        linkStyles={styles.menuItem}
+      >
         {text}
       </MenuItem>
     ))}
-    { showReportCrisis &&
-      <MenuItem to="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions" onClick={toggleHamburgerMenu} exact={false} linkStyles={`${styles.menuItem} ${styles.emphasized}`}>
+    {showReportCrisis && (
+      <MenuItem
+        to="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
+        onClick={toggleHamburgerMenu}
+        exact={false}
+        linkStyles={`${styles.menuItem} ${styles.emphasized}`}
+      >
         Report Street Crisis
       </MenuItem>
-    }
+    )}
   </Menu>
 );
 
