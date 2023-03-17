@@ -1,7 +1,12 @@
 import React, { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { push as Menu, State } from "react-burger-menu";
+import whiteLabel from "../../utils/whitelabel";
 import styles from "./HamburgerMenu.module.scss";
+
+const {
+  showReportCrisis,
+} = whiteLabel;
 
 const burgerStyles = {
   bmBurgerButton: {
@@ -56,10 +61,15 @@ export const HamburgerMenu = ({
     width="275px"
   >
     {links.map(({ to, text, exact = false }) => (
-      <MenuItem key={to} to={to} onClick={toggleHamburgerMenu} exact={exact}>
+      <MenuItem key={to} to={to} onClick={toggleHamburgerMenu} exact={exact} linkStyles={styles.menuItem}>
         {text}
       </MenuItem>
     ))}
+    { showReportCrisis &&
+      <MenuItem to="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions" onClick={toggleHamburgerMenu} exact={false} linkStyles={`${styles.menuItem} ${styles.emphasized}`}>
+        Report Street Crisis
+      </MenuItem>
+    }
   </Menu>
 );
 
@@ -68,14 +78,16 @@ const MenuItem = ({
   onClick,
   to,
   exact,
+  linkStyles,
 }: {
   children: ReactNode;
   onClick: () => void;
   to: string;
   exact: boolean;
+  linkStyles: string;
 }) =>
   to.startsWith("http") || to.startsWith("mailto:") ? (
-    <a className={styles.menuItem} href={to}>
+    <a className={linkStyles} href={to}>
       {children}
     </a>
   ) : (
