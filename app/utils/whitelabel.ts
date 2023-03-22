@@ -146,6 +146,7 @@ const SFServiceGuide: WhiteLabelSite = {
   intercom: true,
   siteUrl: "https://sfserviceguide.org",
   title: "SF Service Guide",
+  showReportCrisis: true,
 } as const;
 
 const LinkSF: WhiteLabelSite = {
@@ -169,6 +170,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   intercom: true,
   siteUrl: "https://askdarcel.org",
   title: "AskDarcel",
+  showReportCrisis: true,
 } as const;
 
 const Ucsf: WhiteLabelSite = {

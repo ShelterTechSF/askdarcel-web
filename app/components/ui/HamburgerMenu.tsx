@@ -48,15 +48,16 @@ const links: {
   { to: "https://twitter.com/sheltertechorg", text: "Twitter", external: true },
   { to: "/terms-of-service", text: "Terms of Service" },
   { to: "/privacy-policy", text: "Privacy Policy" },
-  {
+];
+
+if (showReportCrisis) {
+  links.push({
     to: "https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions",
     text: "Report Street Crisis",
     external: true,
-    linkStyles: `${styles.menuItem} ${styles.emphasized} ${
-      !showReportCrisis && styles.hidden
-    }`,
-  },
-];
+    linkStyles: `${styles.menuItem} ${styles.emphasized}`,
+  });
+}
 
 export const HamburgerMenu = ({
   isOpen,
