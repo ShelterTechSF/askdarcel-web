@@ -22,8 +22,18 @@ const burgerStyles = {
   },
 };
 
-const links = [
-  { to: "/", text: "Home", exact: true },
+const links: {
+  to: string;
+  text: string;
+  exact?: boolean;
+  external?: boolean;
+  linkStyles?: string;
+}[] = [
+  {
+    to: "/",
+    text: "Home",
+    exact: true,
+  },
   { to: "/about", text: "About" },
   { to: "https://help.sfserviceguide.org", text: "FAQ" },
   {
@@ -38,6 +48,14 @@ const links = [
   { to: "https://twitter.com/sheltertechorg", text: "Twitter", external: true },
   { to: "/terms-of-service", text: "Terms of Service" },
   { to: "/privacy-policy", text: "Privacy Policy" },
+  {
+    to: "https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions",
+    text: "Report Street Crisis",
+    external: true,
+    linkStyles: `${styles.menuItem} ${styles.emphasized} ${
+      !showReportCrisis && styles.hidden
+    }`,
+  },
 ];
 
 export const HamburgerMenu = ({
@@ -62,28 +80,25 @@ export const HamburgerMenu = ({
     styles={burgerStyles}
     width="275px"
   >
-    {links.map(({ to, text, exact = false, external = false }) => (
-      <MenuItem
-        key={to}
-        to={to}
-        onClick={toggleHamburgerMenu}
-        exact={exact}
-        linkStyles={styles.menuItem}
-        external={external}
-      >
-        {text}
-      </MenuItem>
-    ))}
-    {showReportCrisis && (
-      <MenuItem
-        to="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
-        onClick={toggleHamburgerMenu}
-        exact={false}
-        linkStyles={`${styles.menuItem} ${styles.emphasized}`}
-        external={true}
-      >
-        Report Street Crisis
-      </MenuItem>
+    {links.map(
+      ({
+        to,
+        text,
+        exact = false,
+        external = false,
+        linkStyles = styles.menuItem,
+      }) => (
+        <MenuItem
+          key={to}
+          to={to}
+          onClick={toggleHamburgerMenu}
+          exact={exact}
+          linkStyles={linkStyles}
+          external={external}
+        >
+          {text}
+        </MenuItem>
+      )
     )}
   </Menu>
 );
@@ -114,7 +129,7 @@ const MenuItem = ({
     </a>
   ) : (
     <NavLink
-      className={styles.menuItem}
+      className={linkStyles}
       activeClassName={styles.active}
       to={to}
       onClick={onClick}
