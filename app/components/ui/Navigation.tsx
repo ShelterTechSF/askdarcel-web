@@ -119,6 +119,8 @@ const SiteLinks = () => (
           aria-label="report street crisis"
           href="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
           className={styles.buttonLink}
+          target="blank"
+          rel="noopener noreferrer"
         >
           Report Street Crisis
         </a>

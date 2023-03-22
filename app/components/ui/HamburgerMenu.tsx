@@ -30,8 +30,12 @@ const links = [
     to: "https://help.sfserviceguide.org/en/collections/1719243-contact-us",
     text: "Contact Us",
   },
-  { to: "https://www.facebook.com/ShelterTechOrg/", text: "Facebook" },
-  { to: "https://twitter.com/sheltertechorg", text: "Twitter" },
+  {
+    to: "https://www.facebook.com/ShelterTechOrg/",
+    text: "Facebook",
+    external: true,
+  },
+  { to: "https://twitter.com/sheltertechorg", text: "Twitter", external: true },
   { to: "/terms-of-service", text: "Terms of Service" },
   { to: "/privacy-policy", text: "Privacy Policy" },
 ];
@@ -58,13 +62,14 @@ export const HamburgerMenu = ({
     styles={burgerStyles}
     width="275px"
   >
-    {links.map(({ to, text, exact = false }) => (
+    {links.map(({ to, text, exact = false, external = false }) => (
       <MenuItem
         key={to}
         to={to}
         onClick={toggleHamburgerMenu}
         exact={exact}
         linkStyles={styles.menuItem}
+        external={external}
       >
         {text}
       </MenuItem>
@@ -75,6 +80,7 @@ export const HamburgerMenu = ({
         onClick={toggleHamburgerMenu}
         exact={false}
         linkStyles={`${styles.menuItem} ${styles.emphasized}`}
+        external={true}
       >
         Report Street Crisis
       </MenuItem>
@@ -88,15 +94,22 @@ const MenuItem = ({
   to,
   exact,
   linkStyles,
+  external,
 }: {
   children: ReactNode;
   onClick: () => void;
   to: string;
   exact: boolean;
   linkStyles: string;
+  external: boolean;
 }) =>
   to.startsWith("http") || to.startsWith("mailto:") ? (
-    <a className={linkStyles} href={to}>
+    <a
+      className={linkStyles}
+      href={to}
+      rel="noopener noreferrer"
+      target={external ? "_blank" : "_self"}
+    >
       {children}
     </a>
   ) : (
