@@ -99,7 +99,7 @@ services and re-entry programs.`,
   showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
-  showReportCrisis: true,
+  showReportCrisis: false,
   siteNavStyle: styles.siteNav,
   userWay: false,
 } as const;
