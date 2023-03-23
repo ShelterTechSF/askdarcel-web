@@ -47,6 +47,7 @@ interface WhiteLabelSite {
   showMobileNav: boolean;
   showPrintResultsBtn: boolean;
   showSearch: boolean;
+  showReportCrisis: boolean;
   siteNavStyle: string;
   siteUrl: string;
   title: string;
@@ -98,6 +99,7 @@ services and re-entry programs.`,
   showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
+  showReportCrisis: false,
   siteNavStyle: styles.siteNav,
   userWay: false,
 } as const;
@@ -144,6 +146,7 @@ const SFServiceGuide: WhiteLabelSite = {
   intercom: true,
   siteUrl: "https://sfserviceguide.org",
   title: "SF Service Guide",
+  showReportCrisis: true,
 } as const;
 
 const LinkSF: WhiteLabelSite = {
@@ -167,6 +170,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   intercom: true,
   siteUrl: "https://askdarcel.org",
   title: "AskDarcel",
+  showReportCrisis: true,
 } as const;
 
 const Ucsf: WhiteLabelSite = {

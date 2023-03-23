@@ -11,6 +11,7 @@ const {
   logoLinkDestination,
   navLogoStyle,
   showMobileNav,
+  showReportCrisis,
   siteNavStyle,
   title,
 } = whiteLabel;
@@ -111,6 +112,20 @@ const SiteLinks = () => (
         Contact Us
       </a>
     </li>
+    {showReportCrisis && (
+      <li>
+        <a
+          type="button"
+          aria-label="report street crisis"
+          href="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
+          className={styles.buttonLink}
+          target="blank"
+          rel="noopener noreferrer"
+        >
+          Report Street Crisis
+        </a>
+      </li>
+    )}
     <Translate />
   </ul>
 );
