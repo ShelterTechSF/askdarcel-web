@@ -79,14 +79,19 @@ export const App = () => {
     ReactGA.initialize(config.GOOGLE_ANALYTICS_ID);
     ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
     return history.listen((loc) => {
-      const page = loc.pathname + loc.search;
-      ReactGA_4.send({
-        hitType: "pageview",
-        page,
-      });
+      setTimeout(() => {
+        /* We call setTimeout here to give our views time to update the document title before
+           GA sends its page view event
+        */
+        const page = loc.pathname + loc.search;
+        ReactGA_4.send({
+          hitType: "pageview",
+          page,
+        });
 
-      ReactGA.set({ page });
-      ReactGA.pageview(page);
+        ReactGA.set({ page });
+        ReactGA.pageview(page);
+      }, 500);
     });
   }, [history]);
 
