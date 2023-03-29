@@ -80,6 +80,9 @@ export const App = () => {
     ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
     return history.listen((loc) => {
       setTimeout(() => {
+        /* We call setTimeout here to give our views time to update the document title before
+           GA sends its page view event
+        */
         const page = loc.pathname + loc.search;
         ReactGA_4.send({
           hitType: "pageview",
