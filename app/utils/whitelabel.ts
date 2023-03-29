@@ -169,7 +169,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   ...whiteLabelDefaults,
   intercom: true,
   siteUrl: "https://askdarcel.org",
-  title: "AskDarcel",
+  title: "SF Service Guide",
   showReportCrisis: true,
 } as const;
 

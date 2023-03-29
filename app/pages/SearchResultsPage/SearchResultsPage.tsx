@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, Configure, SearchBox } from "react-instantsearch/dom";
 import qs, { ParsedQs } from "qs";
 
-import { GeoCoordinates, useAppContext } from "utils";
+import { GeoCoordinates, useAppContext, whiteLabel } from "utils";
 
 import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
@@ -89,6 +90,15 @@ const InnerSearchResults = ({
 
   return (
     <div className={styles.container}>
+      <Helmet>
+        <title>{`${searchState.query ?? 'Services'} in San Francisco | ${
+          whiteLabel.title
+        }`}</title>
+        <meta
+          name="description"
+          content={`A list of ${searchState.query ?? 'services'} in San Francisco`}
+        />
+      </Helmet>
       <Header
         resultsTitle={searchState.query || ""}
         expandList={expandList}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
 import { Notes } from "./Notes";
 import { Service, RecurringSchedule } from "../../models";
 
@@ -16,14 +17,10 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
       id={`service-${service.id}`}
       data-cy="service-list-item"
     >
-      {/* <div className="service--meta disabled-feature">
-        <p><ServiceCategory category={service.category} /></p>
-        <p>updated {service.updated_at}</p>
-      </div> */}
       <h2 className="service--header">
-        <a href={`/services/${service.id}`} translate="no">
+        <Link to={{ pathname: `/services/${service.id}` }} translate="no">
           {service.name}
-        </a>
+        </Link>
       </h2>
       <ReactMarkdown
         className="rendered-markdown service--description"
