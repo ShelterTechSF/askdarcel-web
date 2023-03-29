@@ -1,14 +1,14 @@
 ## How to Implement Routing and Navigation [![img](https://img.shields.io/badge/discussion-join-green.svg?style=flat-square)](https://github.com/kriasoft/react-starter-kit/issues/116)
 
- * [Step 1: Basic Routing](#step-1-basic-routing)
- * [Step 2: Asynchronous Routes](#step-2-asynchronous-routes)
- * [Step 3: Parameterized Routes](#step-3-parameterized-routes)
- * Step 4: Handling Redirects
- * Step 5: Setting Page Title and Meta Tags
- * Step 6: Code Splitting
- * Step 7: Nested Routes
- * Step 8: Integration with Flux
- * Step 9: Server-side Rendering
+- [Step 1: Basic Routing](#step-1-basic-routing)
+- [Step 2: Asynchronous Routes](#step-2-asynchronous-routes)
+- [Step 3: Parameterized Routes](#step-3-parameterized-routes)
+- Step 4: Handling Redirects
+- Step 5: Setting Page Title and Meta Tags
+- Step 6: Code Splitting
+- Step 7: Nested Routes
+- Step 8: Integration with Flux
+- Step 9: Server-side Rendering
 
 ### Step 1: Basic Routing
 
@@ -17,23 +17,31 @@ is mapped to a React component:
 
 ```js
 // client.js
-import React from 'react';
-import Layout from './components/Layout';
-import HomePage from './components/HomePage';
-import AboutPage from './components/AboutPage';
-import NotFoundPage from './components/NotFoundPage';
-import ErrorPage from './components/ErrorPage';
+import React from "react";
+import Layout from "./components/Layout";
+import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
+import NotFoundPage from "./components/NotFoundPage";
+import ErrorPage from "./components/ErrorPage";
 
 const routes = {
-  '/':      <Layout><HomePage /></Layout>,
-  '/about': <Layout><AboutPage /></Layout>
+  "/": (
+    <Layout>
+      <HomePage />
+    </Layout>
+  ),
+  "/about": (
+    <Layout>
+      <AboutPage />
+    </Layout>
+  ),
 };
 
-const container = document.getElementById('app');
+const container = document.getElementById("app");
 
 function render() {
   try {
-    const path = window.location.hash.substr(1) || '/';
+    const path = window.location.hash.substr(1) || "/";
     const component = routes[path] || <NotFoundPage />;
     React.render(component, container);
   } catch (err) {
@@ -41,7 +49,7 @@ function render() {
   }
 }
 
-window.addEventListener('hashchange', () => render());
+window.addEventListener("hashchange", () => render());
 render();
 ```
 
@@ -50,32 +58,44 @@ render();
 Just wrap React components inside your routes into asynchronous functions:
 
 ```js
-import React from 'react';
-import fetch from './core/fetch';
-import Layout from './components/Layout';
-import HomePage from './components/HomePage';
-import AboutPage from './components/AboutPage';
-import NotFoundPage from './components/NotFoundPage';
-import ErrorPage from './components/ErrorPage';
+import React from "react";
+import fetch from "./core/fetch";
+import Layout from "./components/Layout";
+import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
+import NotFoundPage from "./components/NotFoundPage";
+import ErrorPage from "./components/ErrorPage";
 
 const routes = {
-  '/': async () => {
-    const response = await fetch('/graphql?query={content(path:"/"){title,html}}');
+  "/": async () => {
+    const response = await fetch(
+      '/graphql?query={content(path:"/"){title,html}}'
+    );
     const data = await response.json();
-    return <Layout><HomePage {...data} /></Layout>
+    return (
+      <Layout>
+        <HomePage {...data} />
+      </Layout>
+    );
   },
-  '/about': async () => {
-    const response = await fetch('/graphql?query={content(path:"/about"){title,html}}');
+  "/about": async () => {
+    const response = await fetch(
+      '/graphql?query={content(path:"/about"){title,html}}'
+    );
     const data = await response.json();
-    return <Layout><AboutPage {...data} /></Layout>;
-  }
+    return (
+      <Layout>
+        <AboutPage {...data} />
+      </Layout>
+    );
+  },
 };
 
-const container = document.getElementById('app');
+const container = document.getElementById("app");
 
 async function render() {
   try {
-    const path = window.location.hash.substr(1) || '/';
+    const path = window.location.hash.substr(1) || "/";
     const route = routes[path];
     const component = route ? await route() : <NotFoundPage />;
     React.render(component, container);
@@ -84,7 +104,7 @@ async function render() {
   }
 }
 
-window.addEventListener('hashchange', () => render());
+window.addEventListener("hashchange", () => render());
 render();
 ```
 

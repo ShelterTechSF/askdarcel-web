@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import editCollectionHOC from './EditCollection';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import _ from "lodash";
+import editCollectionHOC from "./EditCollection";
 
-class EditPhone extends Component {
+class EditPhone extends Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -57,18 +57,21 @@ class EditPhone extends Component {
   }
 }
 
-EditPhone.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  item: PropTypes.shape({
-    country_code: PropTypes.string,
-    extension: PropTypes.string,
-    id: PropTypes.number,
-    number: PropTypes.string,
-    service_type: PropTypes.string,
-  }).isRequired,
-};
+// Leaving propTypes definitions here for reference. Remove when we add proper
+// TypeScript types to this component's props.
+//
+// EditPhone.propTypes = {
+//   handleChange: PropTypes.func.isRequired,
+//   index: PropTypes.number.isRequired,
+//   item: PropTypes.shape({
+//     country_code: PropTypes.string,
+//     extension: PropTypes.string,
+//     id: PropTypes.number,
+//     number: PropTypes.string,
+//     service_type: PropTypes.string,
+//   }).isRequired,
+// };
 
-const EditPhones = editCollectionHOC(EditPhone, 'Phones', {}, 'Add Phone');
-EditPhones.displayName = 'EditPhones';
+const EditPhones = editCollectionHOC(EditPhone, "Phones", {}, "Add Phone");
+EditPhones.displayName = "EditPhones";
 export default EditPhones;

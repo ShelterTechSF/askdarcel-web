@@ -1,12 +1,16 @@
 .menuItem {
   display: block;
   font-size: 18px;
-  line-height: calc(26/18);
+  line-height: calc(26 / 18);
   padding: 12px 17px;
   border-bottom: 1px solid #f4f4f4;
 
   &.active {
     background: #276ce5;
     color: #ffffff;
+  }
+
+  &.emphasized {
+    font-weight: 600;
   }
 }

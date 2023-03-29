@@ -2,7 +2,7 @@
  * Data structures used for consistently representing time throughout the app.
  */
 
-import { invert, minBy, sortBy } from 'lodash';
+import { invert, minBy, sortBy } from "lodash";
 
 // WARNING: This must match Moment.js's day of week to integer mapping.
 export const DAY_TO_INT = Object.freeze({
@@ -27,13 +27,12 @@ const MINUTES_IN_WEEK = MINUTES_IN_HOUR * HOURS_IN_DAY * DAYS_IN_WEEK;
  * Return new array with RecurringIntervals sorted by opening time, with Sunday
  * midnight as the earliest time.
  */
-const sortIntervals = (intervals: RecurringInterval[]): RecurringInterval[] => (
+const sortIntervals = (intervals: RecurringInterval[]): RecurringInterval[] =>
   sortBy(intervals, [
-    i => i.opensAt.day,
-    i => i.opensAt.hour,
-    i => i.opensAt.minute,
-  ])
-);
+    (i) => i.opensAt.day,
+    (i) => i.opensAt.hour,
+    (i) => i.opensAt.minute,
+  ]);
 
 /**
  * Models a time duration, such as 2 days, 1 hour, 30 minutes.
@@ -73,7 +72,7 @@ export class Duration {
   }
 }
 
-type RecurringTimeOptions = { day: number; hour: number; minute: number};
+type RecurringTimeOptions = { day: number; hour: number; minute: number };
 
 export class RecurringTime {
   day: number;
@@ -115,14 +114,13 @@ export class RecurringTime {
      * Normalize RecurringTime into a number of minutes since Sunday midnight.
      */
     const asMinutes = (time: RecurringTime): number => {
-      const hours = (time.day * HOURS_IN_DAY) + time.hour;
+      const hours = time.day * HOURS_IN_DAY + time.hour;
       return hours * MINUTES_IN_HOUR + time.minute;
     };
 
-    return Duration.fromMinutes(modulo(
-      asMinutes(this) - asMinutes(otherTime),
-      MINUTES_IN_WEEK,
-    ));
+    return Duration.fromMinutes(
+      modulo(asMinutes(this) - asMinutes(otherTime), MINUTES_IN_WEEK)
+    );
   }
 
   /**
@@ -136,14 +134,14 @@ export class RecurringTime {
    * Format the time as hh:mm AM/PM.
    */
   timeString(): string {
-    const ampm = this.hour > 11 ? 'PM' : 'AM';
+    const ampm = this.hour > 11 ? "PM" : "AM";
     let normalizedHour = this.hour;
     if (normalizedHour === 0) {
       normalizedHour = 12;
     } else if (normalizedHour > 12) {
       normalizedHour -= 12;
     }
-    const formattedMinute = this.minute.toString().padStart(2, '0');
+    const formattedMinute = this.minute.toString().padStart(2, "0");
     return `${normalizedHour}:${formattedMinute} ${ampm}`;
   }
 
@@ -157,12 +155,15 @@ export class RecurringTime {
   }
 }
 
-type RecurringIntervalOptions = { opensAt: RecurringTime; closesAt: RecurringTime };
+type RecurringIntervalOptions = {
+  opensAt: RecurringTime;
+  closesAt: RecurringTime;
+};
 
 export class RecurringInterval {
-  opensAt: RecurringTime
+  opensAt: RecurringTime;
 
-  closesAt: RecurringTime
+  closesAt: RecurringTime;
 
   /**
    * Create a RecurringInterval, which consists of a pair of recurring open and
@@ -178,10 +179,10 @@ export class RecurringInterval {
 
   is24Hours(): boolean {
     return (
-      this.opensAt.hour === 0
-      && this.opensAt.minute === 0
-      && this.closesAt.hour === 23
-      && this.closesAt.minute === 59
+      this.opensAt.hour === 0 &&
+      this.opensAt.minute === 0 &&
+      this.closesAt.hour === 23 &&
+      this.closesAt.minute === 59
     );
   }
 
@@ -210,7 +211,10 @@ export class RecurringInterval {
 
     // Given a modular interval [a, b) mod n, x is within the interval iff
     // (x - a) mod n < (b - a) mod n.
-    return targetTime.difference(this.opensAt) < this.closesAt.difference(this.opensAt);
+    return (
+      targetTime.difference(this.opensAt) <
+      this.closesAt.difference(this.opensAt)
+    );
   }
 
   /**
@@ -221,7 +225,10 @@ export class RecurringInterval {
   }
 }
 
-type RecurringScheduleOptions = { intervals: RecurringInterval[]; hoursKnown?: boolean};
+type RecurringScheduleOptions = {
+  intervals: RecurringInterval[];
+  hoursKnown?: boolean;
+};
 
 export class RecurringSchedule {
   intervals: RecurringInterval[];
@@ -245,7 +252,7 @@ export class RecurringSchedule {
   isOpen24_7(): boolean {
     // HACK: This assumes that there are no overlapping days of the week and
     // that schedule days don't span more than one day.
-    const daysOpen24 = this.intervals.filter(i => i.is24Hours());
+    const daysOpen24 = this.intervals.filter((i) => i.is24Hours());
     return daysOpen24.length === 7;
   }
 
@@ -256,22 +263,23 @@ export class RecurringSchedule {
    * Otherwise, return the interval that will start the soonest after the target
    * time.
    */
-  findNearestInterval(targetTime: RecurringTime): RecurringInterval | undefined {
+  findNearestInterval(
+    targetTime: RecurringTime
+  ): RecurringInterval | undefined {
     if (!this.intervals.length) {
       return undefined;
     }
 
-    const overlappingInterval = this.intervals.find(
-      interval => interval.overlapsTime(targetTime),
+    const overlappingInterval = this.intervals.find((interval) =>
+      interval.overlapsTime(targetTime)
     );
     if (overlappingInterval) {
       return overlappingInterval;
     }
 
     // If we don't overlap anything, find the nearest schedule by opensAt time.
-    const nextByOpensAt = minBy(
-      this.intervals,
-      interval => interval.opensAt.difference(targetTime),
+    const nextByOpensAt = minBy(this.intervals, (interval) =>
+      interval.opensAt.difference(targetTime)
     );
     return nextByOpensAt;
   }

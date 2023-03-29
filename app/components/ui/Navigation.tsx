@@ -1,28 +1,29 @@
-import React, { FormEvent, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import cn from 'classnames';
-import qs from 'qs';
-import Translate from './Translate';
-import whiteLabel from '../../utils/whitelabel';
-import styles from './Navigation.module.scss';
+import React, { FormEvent, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import cn from "classnames";
+import qs from "qs";
+import Translate from "./Translate";
+import whiteLabel from "../../utils/whitelabel";
+import styles from "./Navigation.module.scss";
 
 const {
-  appImages: {
-    logoSmall,
-  },
+  appImages: { logoSmall },
   logoLinkDestination,
   navLogoStyle,
   showMobileNav,
+  showReportCrisis,
   siteNavStyle,
-  siteUrl,
   title,
 } = whiteLabel;
 
-export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
+export const Navigation = ({
+  showSearch,
+  toggleHamburgerMenu,
+}: {
   showSearch: boolean;
   toggleHamburgerMenu: () => void;
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [showSecondarySearch, setShowSecondarySearch] = useState(false);
   const searchProps = { query, setQuery };
 
@@ -36,14 +37,26 @@ export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
       <div className={styles.primaryRow}>
         <div className={styles.navLeft}>
           <SiteLogo />
-          { showSearch && <SiteSearch extraClasses={styles.navSearchFull} {...searchProps} /> }
+          {showSearch && (
+            <SiteSearch extraClasses={styles.navSearchFull} {...searchProps} />
+          )}
         </div>
         <SiteLinks />
 
         {showMobileNav && (
           <div className={styles.mobileNavigation}>
-            <button type="button" aria-label="search for a service" className={styles.searchButton} onClick={() => setShowSecondarySearch(!showSecondarySearch)} />
-            <button type="button" aria-label="navigation menu" className={styles.hamburgerButton} onClick={toggleHamburgerMenu} />
+            <button
+              type="button"
+              aria-label="search for a service"
+              className={styles.searchButton}
+              onClick={() => setShowSecondarySearch(!showSecondarySearch)}
+            />
+            <button
+              type="button"
+              aria-label="navigation menu"
+              className={styles.hamburgerButton}
+              onClick={toggleHamburgerMenu}
+            />
           </div>
         )}
       </div>
@@ -51,7 +64,10 @@ export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
       {showSecondarySearch && (
         <div className={styles.secondaryRowWrapper}>
           <div className={styles.secondaryRow}>
-            <SiteSearch extraClasses={styles.mobileNavigation} {...searchProps} />
+            <SiteSearch
+              extraClasses={styles.mobileNavigation}
+              {...searchProps}
+            />
           </div>
         </div>
       )}
@@ -59,40 +75,66 @@ export const Navigation = ({ showSearch, toggleHamburgerMenu }: {
   );
 };
 
-const SiteLogo = () => (/^https?:\/\//.test(logoLinkDestination)
-  ? (
-    <a className={`${navLogoStyle} ${styles.navLogo}`} href={siteUrl}>
+const SiteLogo = () =>
+  /^https?:\/\//.test(logoLinkDestination) ? (
+    <a
+      className={`${navLogoStyle} ${styles.navLogo}`}
+      href={logoLinkDestination}
+    >
       <img src={logoSmall} alt={title} />
     </a>
-  )
-  : (
+  ) : (
     <Link className={`${navLogoStyle} ${styles.navLogo}`} to="/">
       <img src={logoSmall} alt={title} />
     </Link>
-  ));
+  );
 
 const SiteLinks = () => (
   <ul className={styles.navRight}>
     <li>
-      <Link to="/about">
-        About
-      </Link>
+      <Link to="/about">About</Link>
     </li>
     <li>
-      <a href="https://help.sfserviceguide.org" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://help.sfserviceguide.org"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         FAQ
       </a>
     </li>
     <li>
-      <a href="https://help.sfserviceguide.org/en/collections/1719243-contact-us" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://help.sfserviceguide.org/en/collections/1719243-contact-us"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Contact Us
       </a>
     </li>
+    {showReportCrisis && (
+      <li>
+        <a
+          type="button"
+          aria-label="report street crisis"
+          href="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
+          className={styles.buttonLink}
+          target="blank"
+          rel="noopener noreferrer"
+        >
+          Report Street Crisis
+        </a>
+      </li>
+    )}
     <Translate />
   </ul>
 );
 
-const SiteSearch = ({ query, setQuery, extraClasses }: {
+const SiteSearch = ({
+  query,
+  setQuery,
+  extraClasses,
+}: {
   extraClasses?: string;
   query: string;
   setQuery: (q: string) => void;
@@ -111,11 +153,16 @@ const SiteSearch = ({ query, setQuery, extraClasses }: {
   return (
     <form
       onSubmit={submitSearch}
-      className={cn([styles.navSearch, extraClasses, 'search-container', 'form-row'])}
+      className={cn([
+        styles.navSearch,
+        extraClasses,
+        "search-container",
+        "form-row",
+      ])}
       role="search"
     >
       <input
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         value={query}
         type="text"
         className={styles.searchField}

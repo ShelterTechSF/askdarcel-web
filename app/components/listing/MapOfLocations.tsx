@@ -1,13 +1,20 @@
-import React, { ReactElement } from 'react';
-import GoogleMap from 'google-map-react';
-import config from '../../config';
-import { LocationDetails } from '../../models';
-import { Loader } from '../ui';
-import { Accordion, AccordionItem } from '../ui/Accordion';
-import { createMapOptions, CustomMarker, UserLocationMarker } from '../ui/MapElements';
-import { useAppContext } from '../../utils';
+import React, { ReactElement } from "react";
+import GoogleMap from "google-map-react";
+import config from "../../config";
+import { LocationDetails } from "../../models";
+import { Loader } from "../ui";
+import { Accordion, AccordionItem } from "../ui/Accordion";
+import {
+  createMapOptions,
+  CustomMarker,
+  UserLocationMarker,
+} from "../ui/MapElements";
+import { useAppContext } from "../../utils";
 
-export const MapOfLocations = ({ locationRenderer, locations }: {
+export const MapOfLocations = ({
+  locationRenderer,
+  locations,
+}: {
   locations: LocationDetails[];
   locationRenderer: (loc: LocationDetails) => ReactElement;
 }) => {
@@ -29,42 +36,51 @@ export const MapOfLocations = ({ locationRenderer, locations }: {
           options={createMapOptions}
         >
           <UserLocationMarker lat={lat} lng={lng} />
-          { locations.map(({ address, id }, i) => <CustomMarker key={id} lat={address?.latitude || 0} lng={address?.longitude || 0} text={`${i + 1}`} />) }
+          {locations.map(({ address, id }, i) => (
+            <CustomMarker
+              key={id}
+              lat={address?.latitude || 0}
+              lng={address?.longitude || 0}
+              text={`${i + 1}`}
+            />
+          ))}
         </GoogleMap>
       </div>
-      { locationRenderer
-        && (
-          <Accordion>
-            { locations.map((loc, i) => (
-              <AccordionItem
-                key={loc.address.id}
-                headerRenderer={(
-                  <div>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td className="iconcell">
-                            {i + 1}
-                            .
-                          </td>
-                          <td><strong translate="no">{loc.address.address_1}</strong></td>
-                          <td className="iconcell">
-                            <div className="selector">
-                              <i className="material-icons">keyboard_arrow_down</i>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    {/* TODO Transportation options */}
-                  </div>
-                )}
-              >
-                { locationRenderer(loc) }
-              </AccordionItem>
-            ))}
-          </Accordion>
-        )}
+      {locationRenderer && (
+        <Accordion>
+          {locations.map((loc, i) => (
+            <AccordionItem
+              key={loc.address.id}
+              headerRenderer={
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="iconcell">{i + 1}.</td>
+                        <td>
+                          <strong translate="no">
+                            {loc.address.address_1}
+                          </strong>
+                        </td>
+                        <td className="iconcell">
+                          <div className="selector">
+                            <i className="material-icons">
+                              keyboard_arrow_down
+                            </i>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {/* TODO Transportation options */}
+                </div>
+              }
+            >
+              {locationRenderer(loc)}
+            </AccordionItem>
+          ))}
+        </Accordion>
+      )}
       {/* <table>
         <tbody>
           { locations.map((loc, i) => (

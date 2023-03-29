@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import ReactModal from 'react-modal';
-import { icon } from 'assets';
-import styles from './Texting.module.scss';
-import * as dataService from '../../utils/DataService';
-import { FormView } from './components/FormView';
-import { Loader } from '../ui';
-import { SentView } from './components/SentView';
-import { ErrorView } from './components/ErrorView';
+import React, { useState } from "react";
+import ReactModal from "react-modal";
+import { icon } from "assets";
+import styles from "./Texting.module.scss";
+import * as dataService from "../../utils/DataService";
+import { FormView } from "./components/FormView";
+import { Loader } from "../ui";
+import { SentView } from "./components/SentView";
+import { ErrorView } from "./components/ErrorView";
 
 /** A view of a Service from within the Texting component.
  *
@@ -26,33 +26,43 @@ export interface APITexting {
 
 // Text resource informations to the user phone
 
-export const Texting = ({ closeModal, service, isShowing }:
-  { closeModal: () => void; service: TextingService; isShowing: boolean }) => {
-  const [view, setView] = useState('');
+export const Texting = ({
+  closeModal,
+  service,
+  isShowing,
+}: {
+  closeModal: () => void;
+  service: TextingService;
+  isShowing: boolean;
+}) => {
+  const [view, setView] = useState("");
 
   // Send data to backend
-  const sendData = (data: APITexting) => dataService.post('/api/textings', { data }).then(response => {
-    if (response.ok) {
-      setView('sentView');
-    }
-  })
-    .catch(() => setView('errorView'));
+  const sendData = (data: APITexting) =>
+    dataService
+      .post("/api/textings", { data })
+      .then((response) => {
+        if (response.ok) {
+          setView("sentView");
+        }
+      })
+      .catch(() => setView("errorView"));
 
   const handleSubmit = (data: APITexting) => {
-    setView('loader');
+    setView("loader");
     sendData(data);
   };
 
   let activeView;
 
   switch (view) {
-    case 'loader':
+    case "loader":
       activeView = <Loader />;
       break;
-    case 'sentView':
+    case "sentView":
       activeView = <SentView />;
       break;
-    case 'errorView':
+    case "errorView":
       activeView = <ErrorView />;
       break;
     default:
@@ -72,16 +82,12 @@ export const Texting = ({ closeModal, service, isShowing }:
       isOpen={isShowing}
       onRequestClose={closeModal}
       ariaHideApp={false}
-      parentSelector={() => document.querySelector('#root')!}
+      parentSelector={() => document.querySelector("#root")!}
     >
-      <button
-        className={styles.closeButton}
-        onClick={closeModal}
-        type="button"
-      >
-        <img src={icon('close')} alt="Close" />
+      <button className={styles.closeButton} onClick={closeModal} type="button">
+        <img src={icon("close")} alt="Close" />
       </button>
-      { activeView }
+      {activeView}
     </ReactModal>
   );
 };

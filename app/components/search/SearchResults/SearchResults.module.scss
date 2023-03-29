@@ -1,4 +1,4 @@
-@import '~styles/utils/_helpers.scss';
+@import "~styles/utils/_helpers.scss";
 
 .searchResultsAndMapContainer {
   display: grid;
@@ -161,7 +161,7 @@
 
 .expandListSlider {
   display: none;
-  @media screen and ( max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-s) {
     display: block;
   }
 }
@@ -179,7 +179,10 @@
       display: none;
     }
 
-    a, button, input, textarea {
+    a,
+    button,
+    input,
+    textarea {
       // In the Firefox print view, input and anchor elements are not hidden due to the transition
       // delay on changing the visibility value.
       transition: none !important;

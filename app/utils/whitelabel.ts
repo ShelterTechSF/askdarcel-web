@@ -1,18 +1,25 @@
-import BackgroundImage from '../assets/img/bg.png';
-import SearchByAlgoliaImage from '../assets/img/search-by-algolia.png';
-import SFFamiliesLogo from '../assets/img/sf-families.svg';
-import SFServiceLogo from '../assets/img/sf-service.svg';
-import UcsfServiceLogo from '../assets/img/ic-dcnav.png';
-import SFSeal from '../assets/img/sf-seal.png';
-import LinkSFLogo from '../assets/img/link-sf.png';
-import config from '../config';
-import styles from '../components/ui/Navigation.module.scss';
+import BackgroundImage from "../assets/img/bg.png";
+import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
+import Our415Logo from "../assets/img/Our415_logo-hori.svg";
+import SFServiceLogo from "../assets/img/sf-service.svg";
+import UcsfServiceLogo from "../assets/img/ic-dcnav.png";
+import SFSeal from "../assets/img/sf-seal.png";
+import LinkSFLogo from "../assets/img/link-sf.png";
+import config from "../config";
+import styles from "../components/ui/Navigation.module.scss";
 
 // Include new white label here
-type WhiteLabelSiteKey = 'defaultWhiteLabel' | 'SFServiceGuide' | 'SFFamilies' | 'LinkSF' | 'Ucsf';
-type homepageComponentEnums = 'HomePage' | 'UcsfHomePage';
+type WhiteLabelSiteKey =
+  | "defaultWhiteLabel"
+  | "SFServiceGuide"
+  | "SFFamilies"
+  | "LinkSF"
+  | "Ucsf";
+type homepageComponentEnums = "HomePage" | "UcsfHomePage";
 
 interface WhiteLabelSite {
+  aboutPageText: string;
+  aboutPageTitle: string;
   appImages: {
     background: string;
     logoLarge: string;
@@ -20,7 +27,14 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  enableTranslation: boolean;
+  /** A list of languages to enable automatic translations for.
+   *
+   * The language codes must match the Google Translate API [1].
+   * Set to the empty array to disable automatic translation.
+   *
+   * [1]: https://cloud.google.com/translate/docs/languages
+   */
+  enabledTranslations: readonly string[];
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
@@ -33,6 +47,7 @@ interface WhiteLabelSite {
   showMobileNav: boolean;
   showPrintResultsBtn: boolean;
   showSearch: boolean;
+  showReportCrisis: boolean;
   siteNavStyle: string;
   siteUrl: string;
   title: string;
@@ -42,28 +57,39 @@ interface WhiteLabelSite {
 // Include a domain in config.js
 function determineWhiteLabelSite(): WhiteLabelSiteKey {
   const domain = window.location.host;
-  const subdomain = domain.split('.')[0];
-  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) => (
-    subdomain === whiteLabelSubdomain || subdomain === `${whiteLabelSubdomain}-staging`
-  );
+  const subdomain = domain.split(".")[0];
+  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) =>
+    subdomain === whiteLabelSubdomain ||
+    subdomain === `${whiteLabelSubdomain}-staging`;
 
-  if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return 'SFFamilies';
-  if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return 'LinkSF';
-  if (checkWhiteLabelSubdomain(config.UCSF_DOMAIN)) return 'Ucsf';
-  if (subdomain === String(config.MOHCD_DOMAIN) || domain === `staging.${String(config.MOHCD_DOMAIN)}.org`) return 'SFServiceGuide';
+  if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return "SFFamilies";
+  if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return "LinkSF";
+  if (checkWhiteLabelSubdomain(config.UCSF_DOMAIN)) return "Ucsf";
+  if (
+    subdomain === String(config.MOHCD_DOMAIN) ||
+    domain === `staging.${String(config.MOHCD_DOMAIN)}.org`
+  )
+    return "SFServiceGuide";
   // N.B. The qaone environment can be used to test various whitelabels as needed
-  if (subdomain === 'qaone') return 'Ucsf';
+  if (subdomain === "qaone") return "Ucsf";
 
-  return 'defaultWhiteLabel';
+  return "defaultWhiteLabel";
 }
 
 const configKey = determineWhiteLabelSite();
 
 const whiteLabelDefaults = {
-  enableTranslation: true,
-  homePageComponent: 'HomePage',
+  aboutPageText: `The SF Service Guide is an online directory of human services in San
+Francisco. Our goal is to help anyone with access to a smartphone,
+tablet, or computer find the services they need. The guide's
+focus is on homelessness and housing services, but also covers a
+variety of other services, from education and legal aid to senior
+services and re-entry programs.`,
+  aboutPageTitle: "SF Service Guide",
+  enabledTranslations: ["en", "es", "tl", "zh-TW"],
+  homePageComponent: "HomePage",
   intercom: false,
-  logoLinkDestination: '/',
+  logoLinkDestination: "/",
   navLogoStyle: styles.siteNav,
   refinementListLimit: 10,
   showPrintResultsBtn: true,
@@ -73,6 +99,7 @@ const whiteLabelDefaults = {
   showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
+  showReportCrisis: false,
   siteNavStyle: styles.siteNav,
   userWay: false,
 } as const;
@@ -92,20 +119,20 @@ const appImageDefaults = {
 const SFFamilies: WhiteLabelSite = {
   appImages: {
     ...appImageDefaults,
-    logoLarge: SFFamiliesLogo,
-    logoSmall: SFFamiliesLogo,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
-  enableTranslation: true,
-  logoLinkDestination: 'https://www.sffamilies.org/',
+  enabledTranslations: ["en", "es", "tl", "zh-TW", "vi", "ar", "ru"],
+  logoLinkDestination: "https://www.our415.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
   showMobileNav: false,
   showPrintResultsBtn: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
-  siteUrl: 'https://sffamilies.sfserviceguide.org/',
-  title: 'SF Families',
+  siteUrl: "https://our415.sfserviceguide.org/",
+  title: "Our 415",
   userWay: true,
 } as const;
 
@@ -117,8 +144,9 @@ const SFServiceGuide: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   intercom: true,
-  siteUrl: 'https://sfserviceguide.org',
-  title: 'SF Service Guide',
+  siteUrl: "https://sfserviceguide.org",
+  title: "SF Service Guide",
+  showReportCrisis: true,
 } as const;
 
 const LinkSF: WhiteLabelSite = {
@@ -128,8 +156,8 @@ const LinkSF: WhiteLabelSite = {
     logoSmall: LinkSFLogo,
   },
   ...whiteLabelDefaults,
-  siteUrl: 'https://linksf.sfserviceguide.org',
-  title: 'Link SF',
+  siteUrl: "https://linksf.sfserviceguide.org",
+  title: "Link SF",
 } as const;
 
 const defaultWhiteLabel: WhiteLabelSite = {
@@ -140,8 +168,9 @@ const defaultWhiteLabel: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   intercom: true,
-  siteUrl: 'https://askdarcel.org',
-  title: 'AskDarcel',
+  siteUrl: "https://askdarcel.org",
+  title: "SF Service Guide",
+  showReportCrisis: true,
 } as const;
 
 const Ucsf: WhiteLabelSite = {
@@ -151,8 +180,15 @@ const Ucsf: WhiteLabelSite = {
     logoSmall: UcsfServiceLogo,
   },
   ...whiteLabelDefaults,
-  enableTranslation: false,
-  homePageComponent: 'UcsfHomePage',
+  aboutPageText: `The Discharge Navigator is a clinician-focused tool designed to empower medical providers
+with real-time access to information about social resources around San Francisco. Clinicians
+can utilize this database to identify and share targeted resources for patients based on social
+needs, language requirements, and demographics. This project is the result of collaboration
+among experts across the SF Department of Public Health, Zuckerberg SF General Emergency
+Department, and UCSF School of Medicine in partnership with SF Service Guide.`,
+  aboutPageTitle: "Discharge Navigator",
+  enabledTranslations: [],
+  homePageComponent: "UcsfHomePage",
   navLogoStyle: styles.navLogoUcsf,
   refinementListLimit: 15,
   showBanner: false,
@@ -160,8 +196,8 @@ const Ucsf: WhiteLabelSite = {
   showHandoutsIcon: true,
   showHeaderQrCode: true,
   showPrintResultsBtn: false,
-  siteUrl: 'https://dcnav.sfserviceguide.org',
-  title: 'Discharge Navigator',
+  siteUrl: "https://dcnav.sfserviceguide.org",
+  title: "Discharge Navigator",
 } as const;
 
 /*

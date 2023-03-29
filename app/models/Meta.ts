@@ -1,4 +1,4 @@
-import { RecurringSchedule } from './RecurringSchedule';
+import { RecurringSchedule } from "./RecurringSchedule";
 
 export interface Address {
   id: number;

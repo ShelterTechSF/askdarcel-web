@@ -1,32 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './Partners.scss';
-import STLogo from './assets/STLogo.png';
-import MOHCDLogo from './assets/MOHCDLogo.png';
-import JDCLogo from './assets/JDCLogo.png';
-import BenetechLogo from './assets/BenetechLogo.png';
-import SFFamiliesLogo from './assets/SFFamiliesLogo.png';
-import BridgeLogo from './assets/BridgeLogo.png';
+import "./Partners.scss";
+import STLogo from "./assets/STLogo.png";
+import MOHCDLogo from "./assets/MOHCDLogo.png";
+import JDCLogo from "./assets/JDCLogo.png";
+import BenetechLogo from "./assets/BenetechLogo.png";
+import SFFamiliesLogo from "./assets/SFFamiliesLogo.png";
+import BridgeLogo from "./assets/BridgeLogo.png";
 
 export const Partners = () => (
   <div className="partners">
     <ul>
       <li>
         <header>Powered By:</header>
-        <a href="http://sheltertech.org" rel="noopener" className="image-container">
+        <a
+          href="http://sheltertech.org"
+          rel="noopener"
+          className="image-container"
+        >
           <img src={STLogo} alt="ShelterTech" />
         </a>
       </li>
       <li>
         <header>In Partnership With:</header>
-        <a href="https://sfmohcd.org/" rel="noopener" className="image-container">
+        <a
+          href="https://sfmohcd.org/"
+          rel="noopener"
+          className="image-container"
+        >
           <img src={MOHCDLogo} alt="MOHCD" />
         </a>
       </li>
       <li>
         <header />
-        <a href="http://www.sfbar.org/jdc/legal-services/hap/" rel="noopener" className="image-container">
+        <a
+          href="http://www.sfbar.org/jdc/legal-services/hap/"
+          rel="noopener"
+          className="image-container"
+        >
           <img src={JDCLogo} alt="JDC" />
         </a>
       </li>

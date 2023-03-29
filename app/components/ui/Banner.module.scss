@@ -1,4 +1,4 @@
-@import '../../styles/utils/_helpers.scss';
+@import "../../styles/utils/_helpers.scss";
 
 .bannerContainer {
   display: grid;
@@ -14,7 +14,7 @@
   }
   @media screen and (max-width: $break-tablet-s) {
     font-size: calc-em(16px);
-    padding: calc-em(10px)
+    padding: calc-em(10px);
   }
 }
 
@@ -39,7 +39,9 @@
 
 .bannerLink {
   text-decoration: underline;
-  &:hover, &:active, &:focus {
+  &:hover,
+  &:active,
+  &:focus {
     text-decoration: underline;
   }
 }

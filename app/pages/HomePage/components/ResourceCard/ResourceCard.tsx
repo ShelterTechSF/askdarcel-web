@@ -1,8 +1,8 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { icon as assetIcon } from 'assets';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { icon as assetIcon } from "assets";
 
-import styles from './ResourceCard.module.scss';
+import styles from "./ResourceCard.module.scss";
 
 export interface Resource {
   link?: string;
@@ -12,9 +12,7 @@ export interface Resource {
 }
 
 const ResourceCard = ({ resource }: { resource: Resource }) => {
-  const {
-    link = '', name = '', icon = '', categorySlug,
-  } = resource;
+  const { link = "", name = "", icon = "", categorySlug } = resource;
 
   const history = useHistory();
 
@@ -22,21 +20,18 @@ const ResourceCard = ({ resource }: { resource: Resource }) => {
 
   if (categorySlug) {
     anchorTagProps = {
-      role: 'button',
+      role: "button",
       onClick: () => history.push(`/${categorySlug}/form`),
     };
   } else {
     anchorTagProps = {
       href: link,
-      target: '_blank',
+      target: "_blank",
     };
   }
 
   return (
-    <a
-      className={styles.card}
-      {...anchorTagProps}
-    >
+    <a className={styles.card} {...anchorTagProps}>
       <img src={assetIcon(icon)} alt={name} className={styles.icon} />
       <span className={styles.name}>{name}</span>
     </a>

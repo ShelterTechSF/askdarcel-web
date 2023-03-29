@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ResourceGuidesData } from './data';
-import styles from './ResourceGuides.module.scss';
-import { Footer } from '../../components/ui';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ResourceGuidesData } from "./data";
+import styles from "./ResourceGuides.module.scss";
+import { Footer } from "../../components/ui";
 
 export const ResourceGuides = () => (
   <>
@@ -10,13 +10,12 @@ export const ResourceGuides = () => (
       <h1>Resource Guides</h1>
 
       <ul>
-        { ResourceGuidesData.map(guide => (
+        {ResourceGuidesData.map((guide) => (
           <li>
             <Link to={`/resource-guides/${guide.id}`}>{guide.name}</Link>
           </li>
-        )) }
+        ))}
       </ul>
-
     </div>
     <Footer />
   </>

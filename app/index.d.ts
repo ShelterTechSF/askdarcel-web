@@ -9,7 +9,7 @@
 //
 // https://stackoverflow.com/a/59221178
 // https://stackoverflow.com/a/68063415/7433423
-declare module '*.module.scss' {
+declare module "*.module.scss" {
   const classes: { [key: string]: string };
   export default classes;
 }
@@ -18,32 +18,32 @@ declare module '*.module.scss' {
 // will normally import as a string URL to the image or an embedded data: URL.
 //
 // https://webpack.js.org/guides/typescript/#importing-other-assets
-declare module '*.svg' {
+declare module "*.svg" {
   const content: any;
   export default content;
 }
 
-declare module '*.jpg' {
+declare module "*.jpg" {
   const content: any;
   export default content;
 }
 
-declare module '*.png' {
+declare module "*.png" {
   const content: any;
   export default content;
 }
 
-declare module '*.jpeg' {
+declare module "*.jpeg" {
   const content: any;
   export default content;
 }
 
-declare module '*.pdf' {
+declare module "*.pdf" {
   const content: any;
   export default content;
 }
 
-declare module '*.ico' {
+declare module "*.ico" {
   const content: any;
   export default content;
 }

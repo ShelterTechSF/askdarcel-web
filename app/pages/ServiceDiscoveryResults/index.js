@@ -1,1 +1,1 @@
-export { ServiceDiscoveryResults } from './ServiceDiscoveryResults';
+export { ServiceDiscoveryResults } from "./ServiceDiscoveryResults";

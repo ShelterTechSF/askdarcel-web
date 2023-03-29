@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import Heading from './Heading';
-import Privacy from './Privacy';
-import Buttons from './Buttons';
-import styles from './Form.module.scss';
-import type { APITexting, TextingService } from '../../Texting';
+import React, { useState } from "react";
+import Heading from "./Heading";
+import Privacy from "./Privacy";
+import Buttons from "./Buttons";
+import styles from "./Form.module.scss";
+import type { APITexting, TextingService } from "../../Texting";
 
 const initialState = {
-  recipientName: '',
-  phoneNumber: '',
+  recipientName: "",
+  phoneNumber: "",
   agreed: false,
 } as const;
 
-export const FormView = ({ service, handleSubmit, closeModal }:
-  { service: TextingService;
-    handleSubmit: (data: APITexting) => void;
-    closeModal: () => void; }) => {
+export const FormView = ({
+  service,
+  handleSubmit,
+  closeModal,
+}: {
+  service: TextingService;
+  handleSubmit: (data: APITexting) => void;
+  closeModal: () => void;
+}) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
   const { serviceName, serviceId } = service;
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      type,
-      name,
-      value,
-      checked,
-    } = evt.target;
-    const newValue = type === 'checkbox' ? checked : value;
-    setState(prevState => ({ ...prevState, [name]: newValue }));
+    const { type, name, value, checked } = evt.target;
+    const newValue = type === "checkbox" ? checked : value;
+    setState((prevState) => ({ ...prevState, [name]: newValue }));
   };
 
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

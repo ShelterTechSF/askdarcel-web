@@ -1,4 +1,4 @@
-@import '../../styles/utils/helpers';
+@import "../../styles/utils/helpers";
 
 .action-sidebar {
   margin: $padding-xlarge 0;
@@ -57,7 +57,7 @@
   background-color: $color-white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  @media screen and (max-width: 767px ) {
+  @media screen and (max-width: 767px) {
     top: 5%;
     width: 100%;
     height: 95%;

@@ -5,31 +5,31 @@ export interface TagType {
 
 export const TAG_LIST = [
   {
-    tag: 'Contact Information',
+    tag: "Contact Information",
     selected: false,
   },
   {
-    tag: 'Hours',
+    tag: "Hours",
     selected: false,
   },
   {
-    tag: 'Address',
+    tag: "Address",
     selected: false,
   },
   {
-    tag: 'Website Link',
+    tag: "Website Link",
     selected: false,
   },
   {
-    tag: 'Information missing',
+    tag: "Information missing",
     selected: false,
   },
   {
-    tag: 'Other',
+    tag: "Other",
     selected: false,
   },
 ] as const;
 
-export type VoteType = 'upvote' | 'downvote' | 'neither';
-export type StepState = 'start' | 'tags' | 'review';
-export type SubmittedState = 'submitting' | 'submitted' | null;
+export type VoteType = "upvote" | "downvote" | "neither";
+export type StepState = "start" | "tags" | "review";
+export type SubmittedState = "submitting" | "submitted" | null;

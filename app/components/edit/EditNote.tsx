@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 /* eslint-disable react/no-multi-comp */
-class EditNote extends Component {
+class EditNote extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,10 @@ class EditNote extends Component {
 
   handleFieldChange(e) {
     const { note } = this.state;
-    const { handleChange, note: { key } } = this.props;
+    const {
+      handleChange,
+      note: { key },
+    } = this.props;
     note.note = e.target.value;
     this.setState({ note });
 
@@ -20,7 +23,7 @@ class EditNote extends Component {
   }
 
   render() {
-    let note = null;
+    let note: any = null;
     const { index, note: currentNote, removeNote } = this.props;
     if (!currentNote.isRemoved) {
       note = (
@@ -46,9 +49,7 @@ class EditNote extends Component {
         </li>
       );
     }
-    return (
-      note
-    );
+    return note;
   }
 }
 

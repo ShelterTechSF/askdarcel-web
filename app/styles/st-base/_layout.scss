@@ -1,13 +1,12 @@
-@import '../utils/_colors.scss';
-@import '../utils/_layoututils.scss';
-
+@import "../utils/_colors.scss";
+@import "../utils/_layoututils.scss";
 
 .ReactModal__Body--open {
   position: fixed;
 }
 
 pre {
-  background: #EEE;
+  background: #eee;
   margin: $padding-large;
   padding: $padding-large;
   border-radius: $padding-default;
@@ -16,7 +15,7 @@ pre {
 
 // Card Styles
 .card {
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   width: 100%;
   // min-width: 440px;
   border-radius: 2px;
@@ -28,10 +27,11 @@ pre {
 
   &:hover {
     text-decoration: none;
-    background: #EEE;
+    background: #eee;
   }
 
-  img { // TODO This assumes only one image per card
+  img {
+    // TODO This assumes only one image per card
     float: right;
     max-width: 100px;
     margin-left: $padding-default;
@@ -51,13 +51,13 @@ pre {
         display: inline-block;
 
         &::after {
-          content: ' • ';
+          content: " • ";
           padding: $padding-default;
         }
 
         &:last-of-type {
           &::after {
-            content: ''
+            content: "";
           }
         }
       }
@@ -74,7 +74,7 @@ pre {
 
   &:hover {
     .arrow-regular {
-      background: #EEE;
+      background: #eee;
     }
   }
 
@@ -89,7 +89,7 @@ pre {
 
   &:hover {
     .arrow-regular {
-      background: #EEE;
+      background: #eee;
     }
   }
 

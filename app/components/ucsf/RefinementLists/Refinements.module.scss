@@ -1,26 +1,14 @@
-@import '~styles/utils/_helpers.scss';
+@import "~styles/utils/_helpers.scss";
 
-.refinementsBox {
-  display: flex;
-  margin: 16px 0;
-  padding: 32px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 0px 4px rgba(0, 0, 0, 0.1);
+.refinementsBox_title {
+  color: $color-grey8;
+  @extend %font-size-large;
+  width: 86px;
+  margin-right: 26px;
 
   @media screen and (max-width: $break-tablet-s) {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  &_title {
-    color: $color-brand;
-    @extend %font-size-large;
-    width: 86px;
-    margin-right: 26px;
-
-    @media screen and (max-width: $break-tablet-s) {
-      width: auto;
-      margin: auto auto 15px;
-    }
+    width: auto;
+    margin: auto auto 15px;
   }
 }
 

@@ -1,22 +1,27 @@
-import React from 'react';
+import React from "react";
 
-import { Checkbox } from 'components/ui/inline/Checkbox/Checkbox';
+import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
-import styles from './Refinements.module.scss';
+import styles from "./Refinements.module.scss";
 
 interface SubcategoryRefinement {
   name: string;
   id: number;
 }
 
-interface SelectedSubcategories {
+export interface SelectedSubcategories {
   [key: number]: boolean;
 }
 
 const seeAllPseudoId = -1;
 
+export const defaultSelectedSubcategories: Readonly<SelectedSubcategories> = {
+  [seeAllPseudoId]: true,
+};
+
 export const SubcategoryRefinements = ({
-  subcategories, selectedSubcategories,
+  subcategories,
+  selectedSubcategories,
   setSelectedSubcategories,
 }: {
   subcategories: SubcategoryRefinement[];
@@ -25,7 +30,7 @@ export const SubcategoryRefinements = ({
 }) => {
   // Add generic "See All" element to subcategory array if it is not there yet
   if (!subcategories[0] || subcategories[0].id !== seeAllPseudoId) {
-    subcategories.unshift({ id: seeAllPseudoId, name: 'See All' });
+    subcategories.unshift({ id: seeAllPseudoId, name: "See All" });
   }
 
   const handleSubcategoryClick = (targetSubcategoryId: number) => {
@@ -37,7 +42,7 @@ export const SubcategoryRefinements = ({
       if (seeAllIsTargetElement) {
         // If "See All" is target refinement, deselect all other subcategories. This is done because
         // showing all services requires that we do not include any refinements in our query
-        subcategories.forEach(category => {
+        subcategories.forEach((category) => {
           updatedSubcategories[category.id] = false;
         });
       } else {
@@ -47,21 +52,24 @@ export const SubcategoryRefinements = ({
       }
     }
 
-    setSelectedSubcategories({ ...updatedSubcategories, [targetSubcategoryId]: newValue });
+    setSelectedSubcategories({
+      ...updatedSubcategories,
+      [targetSubcategoryId]: newValue,
+    });
   };
 
   return (
-    <div className={styles.refinementsBox}>
+    <>
       <div className={styles.refinementsBox_title}>Service Type</div>
 
       <ul className={styles.refinementsList}>
-        {subcategories.map(item => (
+        {subcategories.map((item) => (
           <li key={item.name}>
             <Checkbox
               onChange={() => handleSubcategoryClick(item.id)}
               name="serviceTypes"
               id={item.name}
-              checked={selectedSubcategories[item.id] || false}
+              checked={selectedSubcategories[item.id] ?? false}
             />
             <label className={styles.refinementsLabel} htmlFor={item.name}>
               {item.name}
@@ -69,6 +77,6 @@ export const SubcategoryRefinements = ({
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };

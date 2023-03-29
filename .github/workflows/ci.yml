@@ -5,9 +5,9 @@ name: testsuite
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
   NODE_VERSION: 18.x
@@ -28,6 +28,7 @@ jobs:
           restore-keys: npm-
       - run: npm ci
       - run: cp config.example.yml config.yml
+      - run: npm run prettier
       - run: npm run lint
 
   test_unit:

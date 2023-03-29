@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 /**
  *
@@ -10,9 +10,9 @@ export default function editCollectionHOC(
   ResourceObjectItem,
   label,
   blankTemplateObj,
-  buttonText,
-) {
-  return class EditCollection extends Component {
+  buttonText
+): any {
+  return class EditCollection extends Component<any, any> {
     constructor(props) {
       super(props);
 
@@ -61,7 +61,10 @@ export default function editCollectionHOC(
         .map((item, index) => [item, index])
         .filter(([item]) => !item.isRemoved)
         .map(([item, index]) => (
-          <div key={index} className="edit--section--list--item--collection-container">
+          <div
+            key={index}
+            className="edit--section--list--item--collection-container"
+          >
             <ResourceObjectItem
               index={index}
               item={item}
@@ -85,7 +88,11 @@ export default function editCollectionHOC(
           <ul className="edit--section--list--item--sublist">
             {this.createItemComponents()}
           </ul>
-          <button type="button" className="edit--section--list--item--button solid-brand" onClick={this.addItem}>
+          <button
+            type="button"
+            className="edit--section--list--item--button solid-brand"
+            onClick={this.addItem}
+          >
             {buttonText}
           </button>
         </li>

@@ -1,37 +1,33 @@
-import React from 'react';
-import { Footer } from '../../../components/ui';
+import React from "react";
+import { whiteLabel } from "../../../utils";
 
-import styles from '../AboutPage.module.scss';
-import STLogo from '../assets/STLogo.png';
-import MOHCDLogo from '../assets/MOHCDLogo.png';
-import JDCLogo from '../assets/JDCLogo.png';
-import BenetechLogo from '../assets/BenetechLogo.png';
-import SFFamiliesLogo from '../assets/SFFamiliesLogo.png';
-import BridgeLogo from '../assets/BridgeLogo.png';
-import LarkinLogo from '../assets/LarkinLogo.png';
-import WeworkLogo from '../assets/WeworkLogo.png';
-import CompassLogo from '../assets/Compass.png';
-import EDCLogo from '../assets/EDC.png';
-import HomeownershipSFLogo from '../assets/HomeownershipSF.png';
+import { Footer } from "../../../components/ui";
 
-export const SfServiceGuideJsx = () => (
+import styles from "../AboutPage.module.scss";
+import STLogo from "../assets/STLogo.png";
+import MOHCDLogo from "../assets/MOHCDLogo.png";
+import JDCLogo from "../assets/JDCLogo.png";
+import BenetechLogo from "../assets/BenetechLogo.png";
+import SFFamiliesLogo from "../assets/SFFamiliesLogo.png";
+import BridgeLogo from "../assets/BridgeLogo.png";
+import LarkinLogo from "../assets/LarkinLogo.png";
+import WeworkLogo from "../assets/WeworkLogo.png";
+import CompassLogo from "../assets/Compass.png";
+import EDCLogo from "../assets/EDC.png";
+import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
+
+const { aboutPageText, aboutPageTitle } = whiteLabel;
+
+export const SfServiceGuide = () => (
   <div className={styles.about}>
     <article className={styles.textPage} id="about">
       <header className={styles.aboutHeader}>
         <h1>
           About the
           <br />
-          SF Service Guide
+          {aboutPageTitle}
         </h1>
-        <p>
-          The SF Service Guide is an online directory of human services
-          in San Francisco. Our goal is to help anyone with access to a
-          smartphone, tablet, or computer find the services they need.
-          The guide&apos;s focus is on homelessness and housing services,
-          but also covers a variety of other services, from education and
-          legal aid to senior services and re-entry programs.
-          {' '}
-        </p>
+        <p>{aboutPageText} </p>
       </header>
       <section className={styles.aboutSection}>
         <h3>Powered by:</h3>
@@ -44,10 +40,9 @@ export const SfServiceGuideJsx = () => (
             <img src={STLogo} alt="ShelterTech" />
           </a>
           <p>
-            The SF Service Guide is developed and maintained by
-            ShelterTech, a volunteer-only 501c(3) non-profit that builds
-            tech products for homeless and at risk communities.
-            {' '}
+            The {aboutPageTitle} is developed and maintained by ShelterTech, a
+            volunteer-only 501c(3) non-profit that builds tech products for
+            homeless and at risk communities.{" "}
             <a href="http://sheltertech.org" rel="noopener">
               Learn more here.
             </a>
@@ -65,7 +60,7 @@ export const SfServiceGuideJsx = () => (
             <img src={MOHCDLogo} alt="MOHCD" />
           </a>
           <p>
-            The SF Service Guide is supported by a grant from the SF
+            The {aboutPageTitle} is supported by a grant from the SF
             Mayor&apos;s Office of Housing and Community Development.
           </p>
         </div>
@@ -87,34 +82,22 @@ export const SfServiceGuideJsx = () => (
         <h3>Strategic partners:</h3>
         <ul className={styles.partnersList}>
           <li>
-            <a
-              href="https://larkinstreetyouth.org/"
-              rel="noopener"
-            >
+            <a href="https://larkinstreetyouth.org/" rel="noopener">
               <img src={LarkinLogo} alt="Larkin Street Youth Services" />
             </a>
           </li>
           <li>
-            <a
-              href="http://evictiondefense.org/"
-              rel="noopener"
-            >
+            <a href="http://evictiondefense.org/" rel="noopener">
               <img src={EDCLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a
-              href="https://homeownershipsf.org/"
-              rel="noopener"
-            >
+            <a href="https://homeownershipsf.org/" rel="noopener">
               <img src={HomeownershipSFLogo} alt="WeWork" />
             </a>
           </li>
           <li>
-            <a
-              href="https://www.compass-sf.org/"
-              rel="noopener"
-            >
+            <a href="https://www.compass-sf.org/" rel="noopener">
               <img src={CompassLogo} alt="WeWork" />
             </a>
           </li>
@@ -124,10 +107,7 @@ export const SfServiceGuideJsx = () => (
             </a>
           </li>
           <li>
-            <a
-              href="https://www.sffamilies.org/"
-              rel="noopener"
-            >
+            <a href="https://www.sffamilies.org/" rel="noopener">
               <img src={SFFamiliesLogo} alt="SF Families" />
             </a>
           </li>

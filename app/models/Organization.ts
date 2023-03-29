@@ -1,14 +1,8 @@
-import { get } from '../utils/DataService';
-import { Service, shouldServiceInheritScheduleFromOrg } from './Service';
-import { Schedule, parseAPISchedule } from './Schedule';
-import {
-  Address,
-  Category,
-  LocationDetails,
-  Note,
-  PhoneNumber,
-} from './Meta';
-import { RecurringSchedule } from './RecurringSchedule';
+import { get } from "../utils/DataService";
+import { Service, shouldServiceInheritScheduleFromOrg } from "./Service";
+import { Schedule, parseAPISchedule } from "./Schedule";
+import { Address, Category, LocationDetails, Note, PhoneNumber } from "./Meta";
+import { RecurringSchedule } from "./RecurringSchedule";
 
 // An Organization used to be called a 'Resource', and represents
 // an institution that provides services to those experiencing homelessness
@@ -31,13 +25,14 @@ export interface Organization {
   services: Service[];
   short_description: string | null;
   source_attribution: string;
-  status: 'pending' | 'approved' | 'rejected' | 'inactive';
+  status: "pending" | "approved" | "rejected" | "inactive";
   updated_at: string;
   verified_at: string | null;
   website: string | null;
 }
 
-export interface OrganizationParams extends Omit<Partial<Organization>, 'notes'> {
+export interface OrganizationParams
+  extends Omit<Partial<Organization>, "notes"> {
   notes?: Partial<Note>[];
 }
 
@@ -54,26 +49,30 @@ export interface OrganizationAction {
  * Also perform a transformation from the raw API representation of schedules
  * into a nicer-to-use data model of RecurringSchedules.
  */
-export const fetchOrganization = (id: string): Promise<Organization> => get(`/api/resources/${id}`)
-  .then(({ resource }: { resource: Organization }) => {
-    const recurringSchedule = parseAPISchedule(resource.schedule);
-    return {
-      ...resource,
-      recurringSchedule,
-      services: resource.services.map(service => ({
-        ...service,
-        recurringSchedule: shouldServiceInheritScheduleFromOrg(service)
-          ? parseAPISchedule(service.schedule)
-          : recurringSchedule,
-      })),
-    };
-  });
+export const fetchOrganization = (id: string): Promise<Organization> =>
+  get(`/api/resources/${id}`).then(
+    ({ resource }: { resource: Organization }) => {
+      const recurringSchedule = parseAPISchedule(resource.schedule);
+      return {
+        ...resource,
+        recurringSchedule,
+        services: resource.services.map((service) => ({
+          ...service,
+          recurringSchedule: shouldServiceInheritScheduleFromOrg(service)
+            ? parseAPISchedule(service.schedule)
+            : recurringSchedule,
+        })),
+      };
+    }
+  );
 
-export const getOrganizationLocations = (org: Organization): LocationDetails[] => {
+export const getOrganizationLocations = (
+  org: Organization
+): LocationDetails[] => {
   const { addresses } = org;
   if (!addresses || !addresses.length) return [];
 
-  return addresses.map(address => ({
+  return addresses.map((address) => ({
     id: address.id,
     address,
     name: org.name,
@@ -81,7 +80,9 @@ export const getOrganizationLocations = (org: Organization): LocationDetails[] =
   }));
 };
 
-export const getOrganizationActions = (org: Organization): OrganizationAction[] => {
+export const getOrganizationActions = (
+  org: Organization
+): OrganizationAction[] => {
   const phoneNumber = org?.phones?.[0]?.number;
   const latitude = org?.addresses?.[0]?.latitude;
   const longitude = org?.addresses?.[0]?.longitude;
@@ -93,27 +94,27 @@ export const getOrganizationActions = (org: Organization): OrganizationAction[] 
     //   to: `/organizations/${resource.id}/edit`,
     // },
     {
-      name: 'Print',
-      icon: 'print',
+      name: "Print",
+      icon: "print",
     },
     {
-      name: 'Share Feedback',
-      icon: 'feedback',
+      name: "Share Feedback",
+      icon: "feedback",
     },
   ];
 
   if (phoneNumber) {
     actions.push({
-      name: 'Call',
-      icon: 'phone',
+      name: "Call",
+      icon: "phone",
       link: `tel:${phoneNumber}`,
     });
   }
 
   if (latitude && longitude) {
     actions.push({
-      name: 'Directions',
-      icon: 'directions',
+      name: "Directions",
+      icon: "directions",
       link: `http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
     });
   }
