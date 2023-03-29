@@ -88,7 +88,7 @@ export const App = () => {
 
         ReactGA.set({ page });
         ReactGA.pageview(page);
-      }, 500)
+      }, 500);
     });
   }, [history]);
 

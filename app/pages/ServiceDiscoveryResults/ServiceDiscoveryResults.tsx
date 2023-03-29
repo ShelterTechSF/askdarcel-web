@@ -148,7 +148,10 @@ const InnerServiceDiscoveryResults = ({
     <div className={styles.container}>
       <Helmet>
         <title>{`${categoryName} in San Francisco | ${whiteLabel.title}`}</title>
-        <meta name="description" content={`A list of ${categoryName} in San Francisco`} />
+        <meta
+          name="description"
+          content={`A list of ${categoryName} in San Francisco`}
+        />
       </Helmet>
       <Header
         resultsTitle={categoryName}

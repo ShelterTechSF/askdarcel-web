@@ -91,12 +91,14 @@ const InnerSearchResults = ({
   return (
     <div className={styles.container}>
       <Helmet>
-        <title>{`${searchState.query ?? 'Services'} in San Francisco | ${
+        <title>{`${searchState.query ?? "Services"} in San Francisco | ${
           whiteLabel.title
         }`}</title>
         <meta
           name="description"
-          content={`A list of ${searchState.query ?? 'services'} in San Francisco`}
+          content={`A list of ${
+            searchState.query ?? "services"
+          } in San Francisco`}
         />
       </Helmet>
       <Header
