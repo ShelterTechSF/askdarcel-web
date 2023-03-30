@@ -2,7 +2,7 @@ import * as User from "./User";
 
 export { User };
 
-export * from './BreakingNewsItem';
+export * from './BreakingNewsArticle';
 export * from './ChangeRequest';
 export * from './Meta';
 export * from './Organization';
