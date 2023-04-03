@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import EditNotes from "./EditNotes";
 import EditSchedule from "./EditSchedule";
 import MultiSelectDropdown from "./MultiSelectDropdown";
@@ -109,13 +108,19 @@ const buildScheduleDays = (
 export { buildScheduleDays };
 
 type InputFieldProps = {
-  type?: string,
-  label: string,
-  placeholder: string,
-  value?: string | null | undefined,
-  setValue: (x: string) => void,
-}
-const InputField = ({ type = "text", label, placeholder, value = "", setValue }: InputFieldProps) => (
+  type?: string;
+  label: string;
+  placeholder: string;
+  value?: string | null | undefined;
+  setValue: (x: string) => void;
+};
+const InputField = ({
+  type = "text",
+  label,
+  placeholder,
+  value = "",
+  setValue,
+}: InputFieldProps) => (
   <>
     <label htmlFor="input">{label}</label>
     <input
