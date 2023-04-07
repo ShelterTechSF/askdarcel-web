@@ -10,7 +10,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@sentry/browser": "^4.0.6",
-    "@typeform/embed": "^0.13.1",
     "algoliasearch": "^4.10.5",
     "classnames": "^2.2.6",
     "copy-webpack-plugin": "^11.0.0",

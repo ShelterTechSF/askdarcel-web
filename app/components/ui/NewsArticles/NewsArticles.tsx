@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   CarouselProvider,
   Slider,
   Slide,
   ButtonBack,
   ButtonNext,
-  DotGroup
-} from 'pure-react-carousel';
-
+  DotGroup,
+} from "pure-react-carousel";
 
 import * as dataService from "../../../utils/DataService";
 
-import styles from './NewsArticles.module.scss';
+import styles from "./NewsArticles.module.scss";
 
 interface NewsArticle {
   id: string;
@@ -23,9 +22,12 @@ interface NewsArticle {
   url?: string;
 }
 
-const formatDate = (date: string): string => (
-  new Date(date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric' })
-);
+const formatDate = (date: string): string =>
+  new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
 const ArticleItem = ({ article }: { article: NewsArticle }) => (
   <div className={styles.articleItem}>
@@ -48,20 +50,20 @@ const ArticleItem = ({ article }: { article: NewsArticle }) => (
 );
 
 export const NewsArticles = () => {
-    const [collapseCarousel, setCollapseCarousel] = useState(false);
-    const [breakingNewsArticles, setBreakingNewsArticles] = useState<
-      NewsArticle[]
-    >([]);
+  const [collapseCarousel, setCollapseCarousel] = useState(false);
+  const [breakingNewsArticles, setBreakingNewsArticles] = useState<
+    NewsArticle[]
+  >([]);
 
-    useEffect(() => {
-      const fetchBreakingNewsArticles = async () => {
-        const response = await dataService.get("/api/news_articles");
-        const { news_articles }: { news_articles: NewsArticle[] } = response;
-        setBreakingNewsArticles(news_articles);
-      }
+  useEffect(() => {
+    const fetchBreakingNewsArticles = async () => {
+      const response = await dataService.get("/api/news_articles");
+      const { news_articles }: { news_articles: NewsArticle[] } = response;
+      setBreakingNewsArticles(news_articles);
+    };
 
-      fetchBreakingNewsArticles();
-    }, []);
+    fetchBreakingNewsArticles();
+  }, []);
 
   if (breakingNewsArticles.length === 0) return null;
 

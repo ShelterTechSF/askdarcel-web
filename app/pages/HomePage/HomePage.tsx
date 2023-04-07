@@ -82,9 +82,7 @@ export const HomePage = () => {
 
   return (
     <div className="find-page">
-      <HomePageSection
-        title="Find essential services in San Francisco"
-      >
+      <HomePageSection title="Find essential services in San Francisco">
         <ResourceList resources={covidResources} />
       </HomePageSection>
       <HomePageSection
