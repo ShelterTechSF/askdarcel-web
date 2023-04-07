@@ -126,7 +126,7 @@ export const ServicePdfPage = () => {
       )}
       {!pdfSource && (
         <>
-          <p className={styles.loaderText}>Fetching PDF...</p>
+          <p className={styles.loaderText}>Generating PDF</p>
           <Loader />
         </>
       )}
