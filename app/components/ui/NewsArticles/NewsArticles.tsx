@@ -48,6 +48,7 @@ const ArticleItem = ({ article }: { article: NewsArticle }) => (
 );
 
 export const NewsArticles = () => {
+    const [collapseCarousel, setCollapseCarousel] = useState(false);
     const [breakingNewsArticles, setBreakingNewsArticles] = useState<
       NewsArticle[]
     >([]);
@@ -62,13 +63,12 @@ export const NewsArticles = () => {
       fetchBreakingNewsArticles();
     }, []);
 
-  const [showCarousel, setShowCarousel] = useState(true);
   if (breakingNewsArticles.length === 0) return null;
 
   return (
     <div
       className={`${styles.container} ${
-        !showCarousel && styles.carouselHidden
+        collapseCarousel && styles.carouselCollapsed
       }`}
     >
       <div>
@@ -77,18 +77,20 @@ export const NewsArticles = () => {
           <button
             type="button"
             className={`${styles.toggleCarouselButton}`}
-            onClick={() => setShowCarousel(!showCarousel)}
+            onClick={() => setCollapseCarousel(!collapseCarousel)}
           >
             <i
               className={`material-icons ${
-                showCarousel ? styles.hideCarouselChev : styles.showCarouselChev
+                collapseCarousel
+                  ? styles.expandCarouselChev
+                  : styles.collapseCarouselChev
               }`}
             >
               keyboard_arrow_down
             </i>
           </button>
         </div>
-        {showCarousel && (
+        {!collapseCarousel && (
           <div className={styles.carouselContainer}>
             <CarouselProvider
               // naturalSlideWidth and Height are overwritten by our CSS but they need to
