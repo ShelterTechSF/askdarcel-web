@@ -8,7 +8,6 @@ import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
-import BreakingNews from "./components/BreakingNews/BreakingNews";
 
 const covidResources = [
   { name: "Food", icon: "food", categorySlug: "food-resources" },
@@ -83,7 +82,6 @@ export const HomePage = () => {
 
   return (
     <div className="find-page">
-      <BreakingNews />
       <HomePageSection
         title="Find essential services in San Francisco"
       >

@@ -13,6 +13,7 @@ import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext, GeoCoordinates, getLocation, whiteLabel } from "./utils";
 import {
   Banner,
+  NewsArticles,
   HamburgerMenu,
   Navigation,
   PopUpMessage,
@@ -133,6 +134,7 @@ export const App = () => {
             toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
           />
           {showBanner && <Banner />}
+          <NewsArticles />
           <div className="container">
             <Switch>
               <Route
