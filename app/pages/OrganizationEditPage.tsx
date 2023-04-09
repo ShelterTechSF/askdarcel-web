@@ -1242,12 +1242,9 @@ class OrganizationEditPage extends React.Component<Props, State> {
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
-    // TODO: Stop sending the country field after it is no longer required on the
-    // API side.
-    const modifiedAddresses = addresses.map((a) => ({ country: "USA", ...a }));
     const newResource = {
       name,
-      addresses: modifiedAddresses,
+      addresses,
       long_description,
       email,
       website,

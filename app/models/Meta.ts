@@ -11,7 +11,6 @@ export interface Address {
   city: string;
   state_province: string;
   postal_code: string;
-  country: string;
   latitude: string;
   longitude: string;
 }
