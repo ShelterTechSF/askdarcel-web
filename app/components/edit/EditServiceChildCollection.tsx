@@ -31,7 +31,7 @@ export const EditServiceChildCollection = <T extends CollectionItem>({
   buttonText,
   propertyKeyName,
 }: {
-  initialCollectionData: any[];
+  initialCollectionData: any[] | undefined;
   handleCollectionChange: (field: string, value: T[]) => void;
   CollectionItemComponent: FC<ComponentProps>;
   label: string;

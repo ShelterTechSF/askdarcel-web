@@ -84,7 +84,18 @@ const applyChanges = (
       (item) => !deletedIds.has(item.id)
     );
   }
-  return transformedItems;
+
+  // This block of code allows us to assert that `schedule` is always defined on
+  // the flattened service while preserving the type information for TypeScript.
+  const newTransformedItems: InternalFlattenedService[] = [];
+  transformedItems.forEach((flattenedService) => {
+    const { schedule } = flattenedService;
+    if (schedule === undefined)
+      throw new Error("Expected flattened service to have a schedule");
+    newTransformedItems.push({ ...flattenedService, schedule });
+  });
+
+  return newTransformedItems;
 };
 
 function getDiffObject(curr, orig) {
@@ -545,9 +556,14 @@ interface InternalOrganizationService extends Omit<Service, "addresses"> {
  * them like diffs on top of the InternalOrganizationServices. The result is a
  * type that is mostly like InternalOrganizationServices except that the `id`
  * field is required.
+ *
+ * In addition, the `schedule` field is assumed to always be defined, since
+ * either the Schedule came from the original API response or it should have
+ * been initialized on the InternalFlattenedService when adding a new Service.
  */
 export interface InternalFlattenedService extends InternalTopLevelService {
   id: number;
+  schedule: Schedule | { schedule_days: never[] };
 }
 
 /** The type of route parameters coming from react-router, based on our routes.
