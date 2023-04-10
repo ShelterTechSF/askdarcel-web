@@ -72,7 +72,7 @@ export const NewsArticles = () => {
     fetchBreakingNewsArticles();
   }, []);
 
-  if (breakingNewsArticles.length === 0) return null;
+  if (!breakingNewsArticles || breakingNewsArticles.length === 0) return null;
 
   return (
     <div

@@ -49,6 +49,7 @@ const {
   homePageComponent,
   intercom,
   showBanner,
+  showBreakingNews,
   showSearch,
   siteUrl,
   title,
@@ -134,7 +135,7 @@ export const App = () => {
             toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
           />
           {showBanner && <Banner />}
-          <NewsArticles />
+          {showBreakingNews && <NewsArticles />}
           <div className="container">
             <Switch>
               <Route
