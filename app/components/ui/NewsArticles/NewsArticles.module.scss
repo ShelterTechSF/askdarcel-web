@@ -1,7 +1,7 @@
 @import "app/styles/utils/_helpers.scss";
 
 $carouselButtonDimension: 40px;
-$carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px;
+$carouselButtonOffset: $carouselButtonDimension * 2 + 5px;
 
 .container {
   background-color: #f5f5f5;
@@ -63,9 +63,36 @@ $carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px
   margin: auto;
   width: 90%;
   margin-bottom: 9px;
+  opacity: 1;
+  transform: scale(1);
+  animation: grow 0.3s ease-in-out;
   @media screen and (max-width: $break-tablet-p) {
     width: calc(100% - $carouselButtonOffset);
     margin-bottom: 0;
+  }
+
+  &.collapse {
+    display: none;
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes grow {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -75,6 +102,7 @@ $carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px
 
 .slider {
   overflow: hidden;
+  background-color: #fff;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
 }
 
@@ -87,7 +115,7 @@ $carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px
   width: $carouselButtonDimension;
   position: absolute;
   top: 50%;
-  margin-top: -($carouselButtonDimension / 2) + 2px;
+  margin-top: -(calc(($carouselButtonDimension / 2) - 2px));
 
   // Button overrides
   padding: 0;
@@ -125,10 +153,12 @@ $carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 15px;
   background-color: #fff;
 
   @media screen and (max-width: $break-tablet-p) {
     padding: 8px;
+    gap: 8px;
   }
 }
 
@@ -177,6 +207,7 @@ $carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px
 }
 
 .articleLink {
+  flex-shrink: 0;
   @media screen and (max-width: $break-tablet-p) {
     flex-grow: 1;
   }
@@ -195,6 +226,17 @@ $carouselButtonOffset: $carouselButtonDimension + $carouselButtonDimension + 5px
 
 .linkText_mobile {
   display: none;
+  @media screen and (max-width: $break-tablet-p) {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    text-align: right;
+  }
+
+  .mobileLinkChevron {
+    top: 0;
+    width: 14px;
+  }
 }
 
 .dotGroup {

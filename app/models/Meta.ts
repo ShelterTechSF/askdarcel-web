@@ -23,6 +23,16 @@ export interface LocationDetails {
   recurringSchedule: RecurringSchedule;
 }
 
+export interface NewsArticle {
+  id: string;
+  body: string | null;
+  effective_date: string | null;
+  expiration_date: string | null;
+  headline: string | null;
+  priority: number | null;
+  url: string | null;
+}
+
 export interface PhoneNumber {
   id: number;
   number: string;

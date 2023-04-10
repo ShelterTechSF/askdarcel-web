@@ -9,18 +9,9 @@ import {
 } from "pure-react-carousel";
 
 import * as dataService from "../../../utils/DataService";
+import { NewsArticle } from "../../../models";
 
 import styles from "./NewsArticles.module.scss";
-
-interface NewsArticle {
-  id: string;
-  headline: string;
-  effective_date: string;
-  expiration_date: string;
-  body: string;
-  priority: number;
-  url?: string;
-}
 
 const formatDate = (date: string): string =>
   new Date(date).toLocaleDateString("en-US", {
@@ -33,17 +24,33 @@ const ArticleItem = ({ article }: { article: NewsArticle }) => (
   <div className={styles.articleItem}>
     <div className={styles.newsContent}>
       <p className={styles.articleTitle}>
-        {article.headline} <span className={styles.dateSeperator}>|</span>{" "}
-        <span className={styles.articleDate}>
-          {formatDate(article.effective_date)}
-        </span>
+        {article.headline}
+        {article.effective_date && (
+          <>
+            {" "}
+            <span className={styles.dateSeperator}>|</span>{" "}
+            <span className={styles.articleDate}>
+              {formatDate(article.effective_date)}
+            </span>
+          </>
+        )}
       </p>
       <p className={styles.articleBody}>{article.body}</p>
     </div>
     {article.url && (
-      <a href={article.url} className={styles.articleLink}>
+      <a
+        href={article.url}
+        className={styles.articleLink}
+        target="_blank"
+        rel="noreferrer"
+      >
         <span className={styles.linkText}>Read more →</span>
-        <span className={styles.linkText_mobile}>More</span>
+        <span className={styles.linkText_mobile}>
+          More{" "}
+          <i className={`material-icons ${styles.mobileLinkChevron}`}>
+            keyboard_arrow_right
+          </i>
+        </span>
       </a>
     )}
   </div>
@@ -73,68 +80,68 @@ export const NewsArticles = () => {
         collapseCarousel && styles.carouselCollapsed
       }`}
     >
-      <div>
-        <div className={styles.articlesHeader}>
-          <p className={styles.title}>News</p>
-          <button
-            type="button"
-            className={`${styles.toggleCarouselButton}`}
-            onClick={() => setCollapseCarousel(!collapseCarousel)}
+      <div className={styles.articlesHeader}>
+        <p className={styles.title}>News</p>
+        <button
+          type="button"
+          className={`${styles.toggleCarouselButton}`}
+          onClick={() => setCollapseCarousel(!collapseCarousel)}
+        >
+          <i
+            className={`material-icons ${
+              collapseCarousel
+                ? styles.expandCarouselChev
+                : styles.collapseCarouselChev
+            }`}
           >
-            <i
-              className={`material-icons ${
-                collapseCarousel
-                  ? styles.expandCarouselChev
-                  : styles.collapseCarouselChev
-              }`}
+            keyboard_arrow_down
+          </i>
+        </button>
+      </div>
+      <div
+        className={`${styles.carouselContainer} ${
+          collapseCarousel && styles.collapse
+        }`}
+      >
+        <CarouselProvider
+          // naturalSlideWidth and Height are overwritten by our CSS but they need to
+          // be included per the Carousel TS type
+          naturalSlideWidth={300}
+          naturalSlideHeight={400}
+          isIntrinsicHeight
+          totalSlides={breakingNewsArticles.length}
+        >
+          <div className={styles.sliderContainer}>
+            <Slider
+              className={styles.slider}
+              classNameAnimation={styles.animation}
             >
-              keyboard_arrow_down
-            </i>
-          </button>
-        </div>
-        {!collapseCarousel && (
-          <div className={styles.carouselContainer}>
-            <CarouselProvider
-              // naturalSlideWidth and Height are overwritten by our CSS but they need to
-              // be included per the Carousel TS type
-              naturalSlideWidth={300}
-              naturalSlideHeight={400}
-              isIntrinsicHeight
-              totalSlides={breakingNewsArticles.length}
+              {breakingNewsArticles.map((article, index) => (
+                <Slide key={article.id} index={index}>
+                  <ArticleItem article={article} />
+                </Slide>
+              ))}
+            </Slider>
+            <ButtonBack
+              className={`${styles.carouselButton} ${styles.carouselButton_prev}`}
             >
-              <div className={styles.sliderContainer}>
-                <Slider
-                  className={styles.slider}
-                  classNameAnimation={styles.animation}
-                >
-                  {breakingNewsArticles.map((article, index) => (
-                    <Slide key={article.id} index={index}>
-                      <ArticleItem article={article} />
-                    </Slide>
-                  ))}
-                </Slider>
-                <ButtonBack
-                  className={`${styles.carouselButton} ${styles.carouselButton_prev}`}
-                >
-                  <i className={`material-icons ${styles.chevronControls}`}>
-                    keyboard_arrow_left
-                  </i>
-                </ButtonBack>
-                <ButtonNext
-                  className={`${styles.carouselButton}  ${styles.chevronControls} ${styles.carouselButton_next}`}
-                >
-                  <i className={`material-icons ${styles.chevronControls}`}>
-                    keyboard_arrow_right
-                  </i>
-                </ButtonNext>
-              </div>
-              <DotGroup
-                className={styles.dotGroup}
-                showAsSelectedForCurrentSlideOnly
-              />
-            </CarouselProvider>
+              <i className={`material-icons ${styles.chevronControls}`}>
+                keyboard_arrow_left
+              </i>
+            </ButtonBack>
+            <ButtonNext
+              className={`${styles.carouselButton}  ${styles.chevronControls} ${styles.carouselButton_next}`}
+            >
+              <i className={`material-icons ${styles.chevronControls}`}>
+                keyboard_arrow_right
+              </i>
+            </ButtonNext>
           </div>
-        )}
+          <DotGroup
+            className={styles.dotGroup}
+            showAsSelectedForCurrentSlideOnly
+          />
+        </CarouselProvider>
       </div>
     </div>
   );
