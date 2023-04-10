@@ -56,17 +56,19 @@ const EditSidebar = ({
   const handleActivation = (id: number): void => {
     /* eslint-disable no-alert */
     if (window.confirm("Are you sure you want to reactivate this resource?")) {
-      dataService.post(`/api/resources/${resource.id}/change_requests`, {
-        change_request: { status: "approved" },
-      }).then(() => {
-        alert(
-          "The resource has been activated. Thank you for your assistance!"
-        );
-        history.go(0);
-      });
+      dataService
+        .post(`/api/resources/${resource.id}/change_requests`, {
+          change_request: { status: "approved" },
+        })
+        .then(() => {
+          alert(
+            "The resource has been activated. Thank you for your assistance!"
+          );
+          history.go(0);
+        });
     }
     /* eslint-enable no-alert */
-  }
+  };
 
   if (!newResource) {
     const resourceID = resource.id;
@@ -89,7 +91,7 @@ const EditSidebar = ({
             : handleDeactivation("resource", resourceID)
         }
       >
-        {`${resource.status === "inactive" ? 'Activate' : 'Deactivate'}`}
+        {`${resource.status === "inactive" ? "Activate" : "Deactivate"}`}
       </button>,
     ];
   } else {
