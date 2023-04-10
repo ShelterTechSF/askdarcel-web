@@ -8,6 +8,7 @@ import { AddressListItem } from "./EditAddress";
 import EditPatientHandout from "./EditPatientHandout";
 import { EditServiceChildCollection } from "./EditServiceChildCollection";
 import type { Schedule } from "../../models";
+import type { InternalFlattenedService } from "../../pages/OrganizationEditPage";
 
 import s from "./ProvidedService.module.scss";
 
@@ -52,9 +53,9 @@ export interface InternalSchedule {
  * Returns an InternalSchedule.
  */
 const buildScheduleDays = (
-  schedule: Schedule | undefined
+  schedule: Schedule | { schedule_days: never[] } | undefined
 ): InternalSchedule => {
-  const scheduleId = schedule ? schedule.id : null;
+  const scheduleId = schedule && "id" in schedule ? schedule.id : null;
   const currSchedule: Partial<InternalSchedule> = {};
 
   const is24Hours = {
@@ -220,13 +221,24 @@ const TEXT_AREAS = [
   },
 ];
 
+type ProvidedServiceProps = {
+  editServiceById: (
+    id: number,
+    changes: Partial<InternalFlattenedService>
+  ) => void;
+  handleDeactivation: (type: "resource" | "service", id: number) => void;
+  index: number;
+  service: InternalFlattenedService;
+  resourceAddresses: Record<any, any>[];
+};
+
 const ProvidedService = ({
   editServiceById,
   handleDeactivation,
   index,
   service,
   resourceAddresses,
-}) => {
+}: ProvidedServiceProps) => {
   const handleChange = (field, value) => {
     const { id } = service;
     editServiceById(id, { id, [field]: value });
@@ -387,7 +399,9 @@ const ProvidedService = ({
           canInheritFromParent
           shouldInheritFromParent={service.shouldInheritScheduleFromParent}
           setShouldInheritFromParent={setShouldInheritScheduleFromParent}
-          scheduleId={service.schedule.id}
+          scheduleId={
+            "id" in service.schedule ? service.schedule.id : undefined
+          }
           scheduleDaysByDay={service.scheduleObj}
           handleScheduleChange={(value) => handleChange("scheduleObj", value)}
         />
@@ -408,28 +422,6 @@ const ProvidedService = ({
       </ul>
     </li>
   );
-};
-
-ProvidedService.propTypes = {
-  service: PropTypes.shape({
-    id: PropTypes.number,
-    fee: PropTypes.string,
-    categories: PropTypes.array,
-    notes: PropTypes.array,
-    schedule: PropTypes.object,
-    documents: PropTypes.array,
-    eligibilities: PropTypes.array,
-    email: PropTypes.string,
-    instructions: PropTypes.array,
-    name: PropTypes.string,
-    required_documents: PropTypes.string,
-    application_process: PropTypes.string,
-    long_description: PropTypes.string,
-    shouldInheritScheduleFromParent: PropTypes.bool.isRequired,
-  }).isRequired,
-  handleDeactivation: PropTypes.func.isRequired,
-  editServiceById: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default ProvidedService;

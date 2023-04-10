@@ -1,11 +1,12 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import type { RouteComponentProps } from "react-router";
 
 import type {
   InternalOrganization,
   InternalTopLevelService,
 } from "../../pages/OrganizationEditPage";
+import * as dataService from "../../utils/DataService";
 import styles from "./EditSidebar.module.scss";
 
 type SaveButtonProps = {
@@ -49,7 +50,26 @@ const EditSidebar = ({
   resource,
   submitting,
 }: EditSidebarProps) => {
+  const history = useHistory();
   let actionButtons: JSX.Element[];
+
+  const handleActivation = (id: number): void => {
+    /* eslint-disable no-alert */
+    if (window.confirm("Are you sure you want to reactivate this resource?")) {
+      dataService
+        .post(`/api/resources/${resource.id}/change_requests`, {
+          change_request: { status: "approved" },
+        })
+        .then(() => {
+          alert(
+            "The resource has been activated. Thank you for your assistance!"
+          );
+          history.go(0);
+        });
+    }
+    /* eslint-enable no-alert */
+  };
+
   if (!newResource) {
     const resourceID = resource.id;
     if (resourceID === undefined)
@@ -64,10 +84,14 @@ const EditSidebar = ({
         type="button"
         className={`${styles.actionButton} ${styles.deactivate}`}
         key="deactive"
-        disabled={submitting || resource.status === "inactive"}
-        onClick={() => handleDeactivation("resource", resourceID)}
+        disabled={submitting}
+        onClick={() =>
+          resource.status === "inactive"
+            ? handleActivation(resourceID)
+            : handleDeactivation("resource", resourceID)
+        }
       >
-        Deactivate
+        {`${resource.status === "inactive" ? "Activate" : "Deactivate"}`}
       </button>,
     ];
   } else {
