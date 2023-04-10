@@ -1329,17 +1329,20 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
   handleDeactivation(type: "resource" | "service", id: number): void {
     const { history } = this.props;
-    let confirmMessage: string | null = null;
-    let path: string | null = null;
+    let confirmMessage: string;
+    let path: string;
     if (type === "resource") {
-      confirmMessage = "Are you sure you want to deactive this resource?";
+      confirmMessage = "Are you sure you want to deactivate this resource?";
       path = `/api/resources/${id}`;
     } else if (type === "service") {
       confirmMessage = "Are you sure you want to remove this service?";
       path = `/api/services/${id}`;
+    } else {
+      throw new Error(`Unexpected type: ${type}`);
     }
+
     // eslint-disable-next-line no-alert
-    if (window.confirm(confirmMessage as any) === true) {
+    if (window.confirm(confirmMessage)) {
       if (id < 0) {
         this.setState(({ deactivatedServiceIds }) => {
           const newDeactivatedServiceIds = new Set(deactivatedServiceIds);
@@ -1348,11 +1351,12 @@ class OrganizationEditPage extends React.Component<Props, State> {
         });
       } else {
         dataService
-          .APIDelete(path as any, { change_request: { status: "2" } } as any)
+          .APIDelete(path, { change_request: { status: "2" } } as any)
           .then(() => {
+            // eslint-disable-next-line no-alert
             alert(
               "Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know."
-            ); // eslint-disable-line no-alert
+            );
             if (type === "resource") {
               // Resource successfully deactivated. Redirect to home.
               history.push({ pathname: "/" });
