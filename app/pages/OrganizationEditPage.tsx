@@ -1329,15 +1329,18 @@ class OrganizationEditPage extends React.Component<Props, State> {
 
   handleDeactivation(type: "resource" | "service", id: number): void {
     const { history } = this.props;
-    let confirmMessage: string | undefined;
-    let path: string | null = null;
+    let confirmMessage: string;
+    let path: string;
     if (type === "resource") {
       confirmMessage = "Are you sure you want to deactivate this resource?";
       path = `/api/resources/${id}`;
     } else if (type === "service") {
       confirmMessage = "Are you sure you want to remove this service?";
       path = `/api/services/${id}`;
+    } else {
+      throw new Error(`Unexpected type: ${type}`);
     }
+
     // eslint-disable-next-line no-alert
     if (window.confirm(confirmMessage)) {
       if (id < 0) {
@@ -1348,7 +1351,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         });
       } else {
         dataService
-          .APIDelete(path as string, { change_request: { status: "2" } } as any)
+          .APIDelete(path, { change_request: { status: "2" } } as any)
           .then(() => {
             // eslint-disable-next-line no-alert
             alert(
