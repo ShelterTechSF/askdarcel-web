@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import EditNotes from "./EditNotes";
 import EditSchedule from "./EditSchedule";
 import MultiSelectDropdown from "./MultiSelectDropdown";
@@ -108,7 +107,20 @@ const buildScheduleDays = (
 };
 export { buildScheduleDays };
 
-const InputField = ({ type, label, placeholder, value, setValue }) => (
+type InputFieldProps = {
+  type?: string;
+  label: string;
+  placeholder: string;
+  value?: string | null | undefined;
+  setValue: (x: string) => void;
+};
+const InputField = ({
+  type = "text",
+  label,
+  placeholder,
+  value = "",
+  setValue,
+}: InputFieldProps) => (
   <>
     <label htmlFor="input">{label}</label>
     <input
@@ -119,19 +131,6 @@ const InputField = ({ type, label, placeholder, value, setValue }) => (
     />
   </>
 );
-
-InputField.propTypes = {
-  type: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  setValue: PropTypes.func.isRequired, // A function to call when setting a new value
-};
-
-InputField.defaultProps = {
-  type: "text",
-  value: "",
-};
 
 const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
   const selectableOptions = resourceAddresses.flatMap((address, handle) => {
