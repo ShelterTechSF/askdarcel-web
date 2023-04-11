@@ -72,13 +72,15 @@ export const NewsArticles = () => {
     fetchBreakingNewsArticles();
   }, []);
 
-  if (!breakingNewsArticles || breakingNewsArticles.length === 0) return null;
-
   return (
     <div
-      className={`${styles.container} ${
-        collapseCarousel && styles.carouselCollapsed
-      }`}
+      className={`${styles.container}
+      ${
+        breakingNewsArticles && breakingNewsArticles.length === 0
+          ? ""
+          : styles.showCarousel
+      }
+      ${collapseCarousel ? styles.carouselCollapsed : ""}`}
     >
       <div className={styles.articlesHeader}>
         <p className={styles.title}>News</p>
@@ -100,7 +102,7 @@ export const NewsArticles = () => {
       </div>
       <div
         className={`${styles.carouselContainer} ${
-          collapseCarousel && styles.collapse
+          collapseCarousel ? styles.collapse : ""
         }`}
       >
         <CarouselProvider
