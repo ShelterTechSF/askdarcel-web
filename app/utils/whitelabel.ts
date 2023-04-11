@@ -41,6 +41,7 @@ interface WhiteLabelSite {
   navLogoStyle: string;
   refinementListLimit: number;
   showBanner: boolean;
+  showBreakingNews: boolean;
   showClinicianAction: boolean;
   showHandoutsIcon: boolean;
   showHeaderQrCode: boolean;
@@ -94,6 +95,7 @@ services and re-entry programs.`,
   refinementListLimit: 10,
   showPrintResultsBtn: true,
   showBanner: true,
+  showBreakingNews: false,
   showClinicianAction: false,
   showHandoutsIcon: false,
   showHeaderQrCode: false,
@@ -145,6 +147,7 @@ const SFServiceGuide: WhiteLabelSite = {
   ...whiteLabelDefaults,
   intercom: true,
   siteUrl: "https://sfserviceguide.org",
+  showBreakingNews: true,
   title: "SF Service Guide",
   showReportCrisis: true,
 } as const;
@@ -157,6 +160,7 @@ const LinkSF: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   siteUrl: "https://linksf.sfserviceguide.org",
+  showBreakingNews: true,
   title: "Link SF",
 } as const;
 
@@ -169,6 +173,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   ...whiteLabelDefaults,
   intercom: true,
   siteUrl: "https://askdarcel.org",
+  showBreakingNews: true,
   title: "SF Service Guide",
   showReportCrisis: true,
 } as const;

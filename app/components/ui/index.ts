@@ -1,4 +1,5 @@
 export * from "./Banner";
+export { NewsArticles } from "./NewsArticles/NewsArticles";
 export * from "./Datatable";
 export * from "./Footer";
 export * from "./HamburgerMenu";
