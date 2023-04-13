@@ -44,6 +44,7 @@ $carouselButtonOffset: $carouselButtonDimension * 2 + 5px;
   background-color: transparent;
   height: $carouselButtonDimension;
   width: $carouselButtonDimension;
+  text-align: right;
 
   // Button overrides
   padding: 0;
@@ -146,7 +147,7 @@ $carouselButtonOffset: $carouselButtonDimension * 2 + 5px;
   background-color: #fff;
 
   @media screen and (max-width: $break-tablet-p) {
-    padding: 8px;
+    padding: 10px;
     gap: 8px;
   }
 }

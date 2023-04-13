@@ -3,11 +3,14 @@ import { useHistory } from "react-router-dom";
 import qs from "qs";
 
 import { getResourceCount } from "utils/DataService";
-import { Footer } from "components/ui";
+import { Footer, NewsArticles } from "components/ui";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
+import { whiteLabel } from "../../utils";
+
+const { showBreakingNews } = whiteLabel;
 
 const covidResources = [
   { name: "Food", icon: "food", categorySlug: "food-resources" },
@@ -81,7 +84,8 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <div className="find-page">
+    <>
+      {showBreakingNews && <NewsArticles />}
       <HomePageSection title="Find essential services in San Francisco">
         <ResourceList resources={covidResources} />
       </HomePageSection>
@@ -100,6 +104,6 @@ export const HomePage = () => {
       </HomePageSection>
       <Partners />
       <Footer />
-    </div>
+    </>
   );
 };
