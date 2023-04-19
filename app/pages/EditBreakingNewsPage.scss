@@ -1,3 +1,5 @@
+@import "~styles/utils/_helpers.scss";
+
 .breaking-news-header {
     text-align: center;
     font-size: 28px;
@@ -40,4 +42,8 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+}
+
+.labelSubtext {
+    color: $color-grey5;
 }

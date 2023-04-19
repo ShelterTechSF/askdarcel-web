@@ -9,4 +9,3 @@ export * from "./Organization";
 export * from "./Schedule";
 export * from "./RecurringSchedule";
 export * from "./Service";
-export * from "./BreakingNewsArticle";

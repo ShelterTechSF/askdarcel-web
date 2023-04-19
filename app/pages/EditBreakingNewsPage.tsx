@@ -22,31 +22,41 @@ export const EditBreakingNewsPage = () => {
   }
 
   const onAddNew = async () => {
-    const response = await dataService.post('/api/news_articles', {
-      effective_date: new Date().toISOString().split('T')[0]
-    });
-    const { news_article } = await response.json();
-
     setBreakingNewsArticles([
       ...breakingNewsArticles,
       {
-        ...news_article,
-        effective_date: formatDate(news_article.effective_date),
-        expiration_date: formatDate(news_article.expiration_date)
+        id: '',
+        body: '',
+        effective_date: '',
+        expiration_date: '',
+        headline: '',
+        priority: null,
+        url: '',
       }
     ]);
   }
 
   const onSave = (articleId: number) => {
     const article = breakingNewsArticles.find(({ id }: any) => id === articleId);
-    dataService.put(`/api/news_articles/${articleId}`, article);
+    const route = `/api/news_articles/${articleId ?? ''}`;
+
+    if (articleId) {
+      dataService.put(route, article);
+    } else {
+      dataService.post(route, article);
+    }
   };
 
-  const onDelete = async (articleId: number) => {
-    await dataService.APIDelete(`/api/news_articles/${articleId}`);
-    const updatedNewsArticles = breakingNewsArticles.filter(({ id }: any) => id !== articleId);
+  const onDelete = async (articleId: number, index: number) => {
+    const updatedBreakingNewsArticles = [...breakingNewsArticles]
+    updatedBreakingNewsArticles.splice(index, 1);
 
-    setBreakingNewsArticles(updatedNewsArticles);
+    if (articleId) {
+      await dataService.APIDelete(`/api/news_articles/${articleId}`);
+      // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
+    }
+
+    setBreakingNewsArticles(updatedBreakingNewsArticles);
   };
 
   const onFieldChange = (articleId: number, { target }: any) => {
@@ -72,7 +82,7 @@ export const EditBreakingNewsPage = () => {
           <RiSave3Line />
           Save
         </button>
-        <button type="button" onClick={() => onDelete(article.id)}>
+        <button type="button" onClick={() => onDelete(article.id, index)}>
           <RiDeleteBin5Line />
           Delete
         </button>
@@ -84,18 +94,18 @@ export const EditBreakingNewsPage = () => {
           placeholder="Headline"
           data-field="headline"
           defaultValue={article.headline}
-          onChange={e => onFieldChange(article.id, e)}
+          onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
       <div className="form-section">
         <label>
-          Priority
+          Priority (optional)
           <input
             type="number"
             placeholder="Priority"
             data-field="priority"
             defaultValue={article.priority}
-            onChange={e => onFieldChange(article.id, e)}
+            onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
         <label>
@@ -104,7 +114,7 @@ export const EditBreakingNewsPage = () => {
             type="date"
             data-field="effective_date"
             defaultValue={article.effective_date}
-            onChange={e => onFieldChange(article.id, e)}
+            onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
         <label>
@@ -113,7 +123,7 @@ export const EditBreakingNewsPage = () => {
             type="date"
             data-field="expiration_date"
             defaultValue={article.expiration_date}
-            onChange={e => onFieldChange(article.id, e)}
+            onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
       </div>
@@ -123,7 +133,19 @@ export const EditBreakingNewsPage = () => {
           placeholder="Body"
           data-field="body"
           defaultValue={article.body}
-          onChange={e => onFieldChange(article.id, e)}
+          onChange={(e) => onFieldChange(article.id, e)}
+          maxLength={250}
+        />
+      </label>
+      <label>
+        URL (optional)
+        <p className="labelSubtext">Add an optional URL where the user can read more about the breaking news</p>
+        <input
+          type="text"
+          placeholder="https://www.readmore.com"
+          data-field="url"
+          defaultValue={article.url ?? ""}
+          onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
     </form>
