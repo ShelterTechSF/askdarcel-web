@@ -9,7 +9,6 @@ export const EditBreakingNewsPage = () => {
   const [breakingNewsArticles, setBreakingNewsArticles] = useState<Array<NewsArticle>>([]);
   useEffect(() => {
     dataService.get('/api/news_articles').then(({ news_articles }) => {
-      console.log('news_articles', news_articles);
       setBreakingNewsArticles(news_articles.map((article: NewsArticle) => ({
         ...article,
         effective_date: formatDate(article.effective_date),
@@ -27,7 +26,6 @@ export const EditBreakingNewsPage = () => {
       effective_date: new Date().toISOString().split('T')[0]
     });
     const { news_article } = await response.json();
-    console.log(news_article);
 
     setBreakingNewsArticles([
       ...breakingNewsArticles,
@@ -41,14 +39,12 @@ export const EditBreakingNewsPage = () => {
 
   const onSave = (articleId: number) => {
     const article = breakingNewsArticles.find(({ id }: any) => id === articleId);
-    console.log(article);
     dataService.put(`/api/news_articles/${articleId}`, article);
   };
 
   const onDelete = async (articleId: number) => {
     await dataService.APIDelete(`/api/news_articles/${articleId}`);
     const updatedNewsArticles = breakingNewsArticles.filter(({ id }: any) => id !== articleId);
-    console.log(updatedNewsArticles);
 
     setBreakingNewsArticles(updatedNewsArticles);
   };
