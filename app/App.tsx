@@ -39,7 +39,7 @@ import { TermsOfServicePage } from "./pages/legal/TermsOfService";
 import { UcsfHomePage } from "./pages/UcsfHomePage/UcsfHomePage";
 import { UcsfDiscoveryForm } from "./pages/UcsfDiscoveryForm/UcsfDiscoveryForm";
 import OrganizationEditPage from "./pages/OrganizationEditPage";
-import { EditBreakingNewsPage } from './pages/EditBreakingNewsPage';
+import { EditBreakingNewsPage } from "./pages/EditBreakingNewsPage";
 import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
 import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
 
