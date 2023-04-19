@@ -28,6 +28,7 @@ jobs:
           restore-keys: npm-
       - run: npm ci
       - run: cp config.example.yml config.yml
+      - run: npm run prettier
       - run: npm run lint
 
   test_unit:

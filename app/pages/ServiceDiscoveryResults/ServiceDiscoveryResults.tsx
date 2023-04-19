@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, Configure } from "react-instantsearch/dom";
 import qs from "qs";
+import { Helmet } from "react-helmet-async";
 
 import { match as Match, RouteComponentProps } from "react-router-dom";
 
 import * as dataService from "utils/DataService";
-import { useAppContext } from "utils";
+import { useAppContext, whiteLabel } from "utils";
 
 import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
@@ -145,6 +146,13 @@ const InnerServiceDiscoveryResults = ({
 
   return (
     <div className={styles.container}>
+      <Helmet>
+        <title>{`${categoryName} in San Francisco | ${whiteLabel.title}`}</title>
+        <meta
+          name="description"
+          content={`A list of ${categoryName} in San Francisco`}
+        />
+      </Helmet>
       <Header
         resultsTitle={categoryName}
         expandList={expandList}

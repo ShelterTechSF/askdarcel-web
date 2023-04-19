@@ -5,7 +5,7 @@
   grid-template-columns: repeat(12, 1fr);
   grid-column-gap: 16px;
   max-width: 1450px;
-  padding: (200px - $header-height) 48px 20px;
+  padding: 114px 48px 20px;
   @media screen and (max-width: $break-tablet-s) {
     padding: 25px 20px 20px;
   }

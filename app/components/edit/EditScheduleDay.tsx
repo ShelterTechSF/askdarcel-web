@@ -92,7 +92,7 @@ const DAYS_OF_WEEK = Object.freeze({
   Sunday: "Su",
 });
 
-class EditScheduleDay extends Component {
+class EditScheduleDay extends Component<any, any> {
   setScheduleDayForIndex = (index, scheduleDay) => {
     const { scheduleDays, setScheduleDays } = this.props;
     const newScheduleDays = [
@@ -195,15 +195,18 @@ class EditScheduleDay extends Component {
   }
 }
 
-EditScheduleDay.propTypes = {
-  scheduleDays: PropTypes.arrayOf(
-    PropTypes.shape({
-      closes_at: PropTypes.number,
-      opens_at: PropTypes.number,
-    })
-  ).isRequired,
-  day: PropTypes.string.isRequired,
-  setScheduleDays: PropTypes.func.isRequired,
-};
+// Leaving propTypes definitions here for reference. Remove when we add proper
+// TypeScript types to this component's props.
+//
+// EditScheduleDay.propTypes = {
+//   scheduleDays: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       closes_at: PropTypes.number,
+//       opens_at: PropTypes.number,
+//     })
+//   ).isRequired,
+//   day: PropTypes.string.isRequired,
+//   setScheduleDays: PropTypes.func.isRequired,
+// };
 
 export default EditScheduleDay;

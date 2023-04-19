@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, useRouteMatch } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import qs from "qs";
-import ReactGA from "react-ga";
 
+// Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
+// package and all references to it:
+// https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
+import ReactGA from "react-ga";
+import ReactGA_4 from "react-ga4";
+
+import { whiteLabel } from "utils";
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
@@ -84,7 +91,7 @@ const InnerServiceDiscoveryForm = ({
   selectedSubcategory: number | null;
   setSelectedSubcategory: (item: number | null) => void;
 }) => {
-  const { steps, slug: categorySlug } = category;
+  const { name, steps, slug: categorySlug } = category;
 
   const [currentStep, setCurrentStep] = useState(0);
   const history = useHistory();
@@ -123,6 +130,13 @@ const InnerServiceDiscoveryForm = ({
 
   return (
     <>
+      <Helmet>
+        <title>{`Search for ${name} in San Francisco | ${whiteLabel.title}`}</title>
+        <meta
+          name="description"
+          content={`Find ${name} in San Francisco that meet your needs`}
+        />
+      </Helmet>
       <Header onGoBack={goBack} />
       <Content
         steps={steps}
@@ -242,6 +256,11 @@ const Content = ({
       const eligibilitiesRefinements =
         searchState.refinementList.eligibilities.join("; ") || "NONE";
       ReactGA.event({
+        category: "Resource Inquiry",
+        action: "Refined Resource Inquiry",
+        label: `${categorySlug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
+      });
+      ReactGA_4.event({
         category: "Resource Inquiry",
         action: "Refined Resource Inquiry",
         label: `${categorySlug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,

@@ -4,6 +4,7 @@ declare global {
 
 interface Config {
   GOOGLE_ANALYTICS_ID: string;
+  GOOGLE_ANALYTICS_GA4_ID: string;
   LINKSF_DOMAIN: string;
   MOHCD_DOMAIN: string;
   MOHCD_SUBDOMAIN: string;
@@ -16,11 +17,11 @@ const config: Config = {
   ALGOLIA_APPLICATION_ID: CONFIG.ALGOLIA_APPLICATION_ID,
   ALGOLIA_INDEX_PREFIX: CONFIG.ALGOLIA_INDEX_PREFIX,
   ALGOLIA_READ_ONLY_API_KEY: CONFIG.ALGOLIA_READ_ONLY_API_KEY,
+  // When GA sunsets Universal Analytics wit GA4 in July 2023, this prop can be removed
   GOOGLE_ANALYTICS_ID:
-    process.env.NODE_ENV === "production" ||
-    window.location.host === "www.askdarcel.org"
-      ? "UA-116318550-1"
-      : "UA-116318550-2", // TODO This should probably be in whitelabel
+    process.env.NODE_ENV === "production" ? "UA-116318550-1" : "UA-116318550-2",
+  GOOGLE_ANALYTICS_GA4_ID:
+    process.env.NODE_ENV === "production" ? "G-91R319RLN0" : "G-NSEENP26HN",
   GOOGLE_API_KEY: CONFIG.GOOGLE_API_KEY,
   INTERCOM_APP_ID: "w50oz3tb",
   LINKSF_DOMAIN: CONFIG.LINKSF_DOMAIN,

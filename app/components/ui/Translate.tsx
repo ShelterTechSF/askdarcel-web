@@ -9,7 +9,7 @@ const Translate = () => {
   const { search } = useLocation();
 
   const languages = whiteLabel.enabledTranslations;
-  if (languages && languages.length > 0) {
+  if (languages.length > 0) {
     // Google Translate determines translation source and target
     // with a "googtrans" cookie.
     // When the user navigates with a `lang` query param,

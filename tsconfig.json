@@ -7,6 +7,7 @@
     "jsx": "react",
     "noEmit": true, // No need to emit .d.ts files, since we're not publishing a package.
     "strict": true,
+    "noImplicitAny": false, // Temporarily allow implicit any as we are migrating the codebase
     "moduleResolution": "node",
     "esModuleInterop": true, // Allows us to use default imports with CommonJS modules (which some third-party packages use)
     "skipLibCheck": true // Don't type check .d.ts files, which mostly come from third party libraries.

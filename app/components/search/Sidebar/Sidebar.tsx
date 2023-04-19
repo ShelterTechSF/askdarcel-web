@@ -32,8 +32,8 @@ const Sidebar = ({
   subcategoryNames?: string[];
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
-  let categoryRefinementJsx = null;
-  let eligibilityRefinementJsx = null;
+  let categoryRefinementJsx: React.ReactElement | null = null;
+  let eligibilityRefinementJsx: React.ReactElement | null = null;
   const orderByLabel = (a: { label: string }, b: { label: string }) =>
     a.label.localeCompare(b.label);
   const onChangeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {

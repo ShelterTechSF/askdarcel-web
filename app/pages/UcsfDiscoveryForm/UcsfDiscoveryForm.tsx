@@ -1,16 +1,31 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import qs from "qs";
-import ReactGA from "react-ga";
 
+// Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
+// package and all references to it:
+// https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
+import ReactGA from "react-ga";
+import ReactGA_4 from "react-ga4";
+
+import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { Section } from "components/ucsf/Section/Section";
 import { Layout } from "components/ucsf/Layout/Layout";
-import { SubcategoryRefinements } from "components/ucsf/RefinementLists/SubcategoryRefinements";
+import {
+  SubcategoryRefinements,
+  SelectedSubcategories,
+  defaultSelectedSubcategories,
+} from "components/ucsf/RefinementLists/SubcategoryRefinements";
 import { EligibilityRefinements } from "components/ucsf/RefinementLists/EligibilityRefinements";
-import { eligibilityMap } from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
+import {
+  eligibilityMap,
+  defaultSelectedEligibilities,
+  SelectedEligibilities,
+} from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
 
 import { CATEGORIES } from "../ServiceDiscoveryForm/constants";
+import { UCSF_RESOURCES } from "../UcsfHomePage/ucsfResourceConstants";
 import { useSubcategoriesForCategory } from "../../hooks/APIHooks";
 
 import styles from "./UcsfDiscoveryForm.module.scss";
@@ -20,43 +35,40 @@ interface SubcategoryRefinement {
   id: number;
 }
 
-interface SelectedSubcategories {
-  [key: number]: boolean;
-}
-
 const seeAllPseudoId = -1;
 
 const Page = () => {
-  interface SelectedEligibilities {
-    [key: string]: boolean;
-  }
-
-  const [selectedEligibilities, setSelectedEligibilities] =
-    useState<SelectedEligibilities>({});
-  const [selectedSubcategories, setSelectedSubcategories] =
-    useState<SelectedSubcategories>({});
-
-  interface LocationState {
+  const history = useHistory();
+  const match = useRouteMatch();
+  interface MatchParams {
     selectedResourceSlug: string;
-    selectedEligibilityNames: string[];
   }
 
-  const history = useHistory<LocationState>();
-  const { state } = history.location;
-  const selectedResourceSlug = state && state.selectedResourceSlug;
+  const { selectedResourceSlug } = match.params as MatchParams;
   const resourceEligibilityGroups = eligibilityMap[selectedResourceSlug];
   const category = CATEGORIES.find((c) => c.slug === selectedResourceSlug);
-
+  const [selectedEligibilities, setSelectedEligibilities] =
+    useState<SelectedEligibilities>(
+      defaultSelectedEligibilities(resourceEligibilityGroups)
+    );
+  const [selectedSubcategories, setSelectedSubcategories] =
+    useState<SelectedSubcategories>(defaultSelectedSubcategories);
   const [currentStep, setCurrentStep] = useState(0);
 
   const subcategories: SubcategoryRefinement[] =
     useSubcategoriesForCategory(category?.id ?? null) || [];
+
+  const selectedResource = UCSF_RESOURCES.find(
+    (c) => c.slug === selectedResourceSlug
+  );
+  const iconName = selectedResource?.icon ?? "";
 
   if (!category) {
     history.push("/");
     return null;
   }
 
+  const servicesName = category.abbreviatedName ?? "";
   const { steps } = category;
   const stepName = steps[currentStep];
 
@@ -105,6 +117,11 @@ const Page = () => {
         action: "Refined UCSF Resource Inquiry",
         label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
       });
+      ReactGA_4.event({
+        category: "UCSF Resource Inquiry",
+        action: "Refined UCSF Resource Inquiry",
+        label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
+      });
 
       history.push(`/${slug}/results?${search}`);
       return;
@@ -121,12 +138,11 @@ const Page = () => {
     }
   };
 
-  let stepSubtitle = `Step ${currentStep + 2}: `;
+  let stepSubtitle =
+    "Can you tell us more about the services that your patient is looking for?";
   if (stepName === "eligibilities") {
-    stepSubtitle += "Can you tell us more about your client and their needs?";
-  } else {
-    stepSubtitle +=
-      "Can you tell us more about the services that your client is looking for?";
+    stepSubtitle =
+      "Can you tell us more about your patient and their specific needs?";
   }
 
   const nextStepName = steps[currentStep + 1];
@@ -134,30 +150,43 @@ const Page = () => {
   if (nextStepName === "subcategories") {
     nextButtonText += "Service Type";
   } else if (nextStepName === "results") {
-    nextButtonText += "Service List";
+    nextButtonText += "Show Results";
   }
+
+  const refinementsComponent =
+    stepName === "eligibilities" ? (
+      <EligibilityRefinements
+        resourceEligibilityGroups={resourceEligibilityGroups}
+        selectedEligibilities={selectedEligibilities}
+        setSelectedEligibilities={setSelectedEligibilities}
+      />
+    ) : (
+      <SubcategoryRefinements
+        subcategories={subcategories}
+        selectedSubcategories={selectedSubcategories}
+        setSelectedSubcategories={setSelectedSubcategories}
+      />
+    );
 
   return (
     <div className={styles.discoveryFormPage}>
+      <Section
+        title={
+          <div className={styles.formTitle}>
+            <img src={icon(iconName)} alt="" className={styles.icon} />
+            {servicesName}
+          </div>
+        }
+      />
       <Section addClass={styles.subtitleMargin} subtitle={stepSubtitle} />
-      <div className={styles.eligibilitiesContainer}>
-        {stepName === "eligibilities" ? (
-          <EligibilityRefinements
-            resourceEligibilityGroups={resourceEligibilityGroups}
-            selectedEligibilities={selectedEligibilities}
-            setSelectedEligibilities={setSelectedEligibilities}
-          />
-        ) : (
-          <SubcategoryRefinements
-            subcategories={subcategories}
-            selectedSubcategories={selectedSubcategories}
-            setSelectedSubcategories={setSelectedSubcategories}
-          />
-        )}
-
+      <div className={styles.refinementsContainer}>
+        <div className={styles.refinementsBox}>{refinementsComponent}</div>
         <div className={styles.navigationButtons}>
-          <Button onClick={backToResourceSelection}>Back</Button>
+          <Button addClass={styles.goBackBtn} onClick={backToResourceSelection}>
+            Back
+          </Button>
           <Button
+            addClass={styles.nextBtn}
             onClick={() => {
               goToNextStep(selectedResourceSlug);
             }}
@@ -171,7 +200,7 @@ const Page = () => {
 };
 
 export const UcsfDiscoveryForm = () => (
-  <Layout>
+  <Layout customClass={styles.discoveryLayout}>
     <Page />
   </Layout>
 );

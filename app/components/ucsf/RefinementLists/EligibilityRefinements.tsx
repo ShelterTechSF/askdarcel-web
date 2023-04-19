@@ -2,13 +2,13 @@ import React from "react";
 
 import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
-import { Eligibility, EligibilityGroup } from "./ucsfEligibilitiesMap";
+import {
+  Eligibility,
+  EligibilityGroup,
+  SelectedEligibilities,
+} from "./ucsfEligibilitiesMap";
 
 import styles from "./Refinements.module.scss";
-
-interface SelectedEligibilities {
-  [key: string]: boolean;
-}
 
 export const EligibilityRefinements = ({
   resourceEligibilityGroups,
@@ -51,7 +51,7 @@ export const EligibilityRefinements = ({
   };
 
   return (
-    <div className={styles.refinementsBox}>
+    <>
       <div className={styles.refinementsBox_title}>Client Identity</div>
       <ol className={styles.refinementsLabels}>
         {resourceEligibilityGroups.map((eligibilityGroup) => (
@@ -87,6 +87,6 @@ export const EligibilityRefinements = ({
           </li>
         ))}
       </ol>
-    </div>
+    </>
   );
 };

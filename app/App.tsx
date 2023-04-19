@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
+
+// Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
+// package and all references to it:
+// https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
 import ReactGA from "react-ga";
+import ReactGA_4 from "react-ga4";
+
 import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
@@ -67,22 +73,26 @@ export const App = () => {
   const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
 
   useEffect(() => {
-    getLocation()
-      .then((loc) => {
-        setUserLocation(loc);
-      })
-      .catch((err) => {
-        console.log(
-          "Could not obtain location, defaulting to San Francisco.",
-          err
-        ); // eslint-disable-line no-console
-      });
+    getLocation().then((loc) => {
+      setUserLocation(loc);
+    });
 
     ReactGA.initialize(config.GOOGLE_ANALYTICS_ID);
+    ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
     return history.listen((loc) => {
-      const page = loc.pathname + loc.search;
-      ReactGA.set({ page });
-      ReactGA.pageview(page);
+      setTimeout(() => {
+        /* We call setTimeout here to give our views time to update the document title before
+           GA sends its page view event
+        */
+        const page = loc.pathname + loc.search;
+        ReactGA_4.send({
+          hitType: "pageview",
+          page,
+        });
+
+        ReactGA.set({ page });
+        ReactGA.pageview(page);
+      }, 500);
     });
   }, [history]);
 
@@ -207,7 +217,7 @@ export const App = () => {
               {/* UCSF white label paths */}
               <Route
                 exact
-                path="/find-services"
+                path="/find-services/:selectedResourceSlug"
                 component={UcsfDiscoveryForm}
               />
 

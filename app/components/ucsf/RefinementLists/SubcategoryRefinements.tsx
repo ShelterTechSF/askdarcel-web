@@ -9,11 +9,15 @@ interface SubcategoryRefinement {
   id: number;
 }
 
-interface SelectedSubcategories {
+export interface SelectedSubcategories {
   [key: number]: boolean;
 }
 
 const seeAllPseudoId = -1;
+
+export const defaultSelectedSubcategories: Readonly<SelectedSubcategories> = {
+  [seeAllPseudoId]: true,
+};
 
 export const SubcategoryRefinements = ({
   subcategories,
@@ -55,7 +59,7 @@ export const SubcategoryRefinements = ({
   };
 
   return (
-    <div className={styles.refinementsBox}>
+    <>
       <div className={styles.refinementsBox_title}>Service Type</div>
 
       <ul className={styles.refinementsList}>
@@ -65,7 +69,7 @@ export const SubcategoryRefinements = ({
               onChange={() => handleSubcategoryClick(item.id)}
               name="serviceTypes"
               id={item.name}
-              checked={selectedSubcategories[item.id] || false}
+              checked={selectedSubcategories[item.id] ?? false}
             />
             <label className={styles.refinementsLabel} htmlFor={item.name}>
               {item.name}
@@ -73,6 +77,6 @@ export const SubcategoryRefinements = ({
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };

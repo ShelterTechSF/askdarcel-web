@@ -11,6 +11,11 @@ import {
   Program,
 } from "./Meta";
 
+export interface Instruction {
+  id: number;
+  instruction: string;
+}
+
 // A Service is provided by an Organization
 export interface Service {
   id: number;
@@ -22,10 +27,12 @@ export interface Service {
   categories: Category[];
   certified_at: string | null;
   certified: boolean;
+  documents: unknown[];
   eligibilities: Eligibility[];
   email: string | null;
   featured: boolean | null;
   fee: string | null;
+  instructions: Instruction[];
   interpretation_services: string | null;
   long_description: string;
   notes: Note[];

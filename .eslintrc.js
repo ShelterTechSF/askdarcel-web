@@ -20,7 +20,7 @@ module.exports = {
     },
   },
   rules: {
-    "camelcase": "off",
+    camelcase: "off",
     "import/extensions": [
       "error",
       {
@@ -84,6 +84,34 @@ module.exports = {
         "spaced-comment": ["error", "always", { markers: ["/"] }],
       },
     },
+    // Temporarily disable certain ESLint rules for Edit page files until we
+    // improve the type annotations.
+    {
+      files: [
+        "app/components/edit/*.tsx",
+        "app/pages/OrganizationEditPage.tsx",
+      ],
+      extends: [
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      ],
+      parser: "@typescript-eslint/parser",
+      parserOptions: {
+        project: "./tsconfig.json",
+      },
+      rules: {
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "react/sort-comp": "off",
+      },
+    },
     {
       // Non-TypeScript, JavaScript files
       files: ["*.js", "*.jsx"],
@@ -144,7 +172,7 @@ module.exports = {
       rules: {
         "newline-per-chained-call": "off",
         "lines-between-class-members": "off",
-        "indent": "off",
+        indent: "off",
       },
     },
     // Node.js scripts
@@ -172,10 +200,6 @@ module.exports = {
         // CJS-style imports.
         // https://github.com/benmosher/eslint-plugin-import/issues/1469
         "import/no-unused-modules": "off",
-        // Most ESLint rules names have characters which must be quoted, such as
-        // '-' or '/', so it's easier to read if all things under "rules" are
-        // consistently quoted.
-        "quote-props": ["error", "consistent-as-needed"],
       },
     },
   ],

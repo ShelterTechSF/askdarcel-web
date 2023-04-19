@@ -27,19 +27,28 @@ interface WhiteLabelSite {
     algolia: string;
     mohcdSeal: string;
   };
-  enabledTranslations: ReadonlyArray<string>; // empty to disable translation
+  /** A list of languages to enable automatic translations for.
+   *
+   * The language codes must match the Google Translate API [1].
+   * Set to the empty array to disable automatic translation.
+   *
+   * [1]: https://cloud.google.com/translate/docs/languages
+   */
+  enabledTranslations: readonly string[];
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
   refinementListLimit: number;
   showBanner: boolean;
+  showBreakingNews: boolean;
   showClinicianAction: boolean;
   showHandoutsIcon: boolean;
   showHeaderQrCode: boolean;
   showMobileNav: boolean;
   showPrintResultsBtn: boolean;
   showSearch: boolean;
+  showReportCrisis: boolean;
   siteNavStyle: string;
   siteUrl: string;
   title: string;
@@ -86,11 +95,13 @@ services and re-entry programs.`,
   refinementListLimit: 10,
   showPrintResultsBtn: true,
   showBanner: true,
+  showBreakingNews: false,
   showClinicianAction: false,
   showHandoutsIcon: false,
   showHeaderQrCode: false,
   showMobileNav: true,
   showSearch: true,
+  showReportCrisis: false,
   siteNavStyle: styles.siteNav,
   userWay: false,
 } as const;
@@ -136,7 +147,9 @@ const SFServiceGuide: WhiteLabelSite = {
   ...whiteLabelDefaults,
   intercom: true,
   siteUrl: "https://sfserviceguide.org",
+  showBreakingNews: true,
   title: "SF Service Guide",
+  showReportCrisis: true,
 } as const;
 
 const LinkSF: WhiteLabelSite = {
@@ -147,6 +160,7 @@ const LinkSF: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   siteUrl: "https://linksf.sfserviceguide.org",
+  showBreakingNews: true,
   title: "Link SF",
 } as const;
 
@@ -159,7 +173,9 @@ const defaultWhiteLabel: WhiteLabelSite = {
   ...whiteLabelDefaults,
   intercom: true,
   siteUrl: "https://askdarcel.org",
-  title: "AskDarcel",
+  showBreakingNews: true,
+  title: "SF Service Guide",
+  showReportCrisis: true,
 } as const;
 
 const Ucsf: WhiteLabelSite = {

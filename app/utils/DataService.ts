@@ -20,7 +20,7 @@ function setAuthHeaders(resp: Response): void {
 
 export function post(
   url: RequestInfo | URL,
-  body: any,
+  body?: any,
   headers?: HeadersInit
 ): Promise<Response> {
   let queryHeaders = {
@@ -71,7 +71,7 @@ export function get(
 export function put(
   url: RequestInfo | URL,
   body: any,
-  headers: HeadersInit
+  headers?: HeadersInit
 ): Promise<Response> {
   let queryHeaders = {
     Accept: "application/json",
@@ -96,7 +96,7 @@ export function put(
 
 export function APIDelete(
   url: RequestInfo | URL,
-  headers: HeadersInit
+  headers?: HeadersInit
 ): Promise<void> {
   let queryHeaders = {
     "Content-Type": "application/json",
