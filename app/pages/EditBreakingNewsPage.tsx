@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { RiAddBoxLine, RiDeleteBin5Line, RiSave3Line } from "react-icons/ri";
 
-import * as dataService from "../utils/DataService";
 import { NewsArticle } from "models";
+import * as dataService from "../utils/DataService";
 import "./EditBreakingNewsPage.scss";
 
 export const EditBreakingNewsPage = () => {
@@ -12,6 +12,7 @@ export const EditBreakingNewsPage = () => {
   useEffect(() => {
     dataService.get("/api/news_articles").then(({ news_articles }) => {
       setBreakingNewsArticles(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         news_articles.map((article: NewsArticle) => ({
           ...article,
           effective_date: formatDate(article.effective_date),
@@ -21,11 +22,12 @@ export const EditBreakingNewsPage = () => {
     });
   }, []);
 
+  // eslint-disable-next-line arrow-body-style
   const formatDate = (date: string): string | null => {
     return date ? new Date(date).toISOString().split("T")[0] : null;
   };
 
-  const onAddNew = async () => {
+  const onAddNew = () => {
     setBreakingNewsArticles([
       ...breakingNewsArticles,
       {
@@ -53,12 +55,12 @@ export const EditBreakingNewsPage = () => {
     }
   };
 
-  const onDelete = async (articleId: number, index: number) => {
+  const onDelete = (articleId: number, index: number) => {
     const updatedBreakingNewsArticles = [...breakingNewsArticles];
     updatedBreakingNewsArticles.splice(index, 1);
 
     if (articleId) {
-      await dataService.APIDelete(`/api/news_articles/${articleId}`);
+      dataService.APIDelete(`/api/news_articles/${articleId}`);
       // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
     }
 
@@ -167,6 +169,7 @@ export const EditBreakingNewsPage = () => {
       <h1 className="breaking-news-header">Edit Breaking News Articles</h1>
       <div>
         {breakingNewsArticles.map((article: any, index: number) =>
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           renderForm(article, index)
         )}
       </div>
