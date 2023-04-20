@@ -15,8 +15,12 @@ export const EditBreakingNewsPage = () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         news_articles.map((article: NewsArticle) => ({
           ...article,
-          effective_date: formatDate(article.effective_date),
-          expiration_date: formatDate(article.expiration_date),
+          effective_date: article.effective_date
+            ? formatDate(article.effective_date)
+            : "",
+          expiration_date: article.expiration_date
+            ? formatDate(article.expiration_date)
+            : "",
         }))
       );
     });
@@ -42,7 +46,7 @@ export const EditBreakingNewsPage = () => {
     ]);
   };
 
-  const onSave = (articleId: number) => {
+  const onSave = (articleId: string) => {
     const article = breakingNewsArticles.find(
       ({ id }: any) => id === articleId
     );
@@ -55,7 +59,7 @@ export const EditBreakingNewsPage = () => {
     }
   };
 
-  const onDelete = (articleId: number, index: number) => {
+  const onDelete = (articleId: string, index: number) => {
     const updatedBreakingNewsArticles = [...breakingNewsArticles];
     updatedBreakingNewsArticles.splice(index, 1);
 
@@ -67,7 +71,7 @@ export const EditBreakingNewsPage = () => {
     setBreakingNewsArticles(updatedBreakingNewsArticles);
   };
 
-  const onFieldChange = (articleId: number, { target }: any) => {
+  const onFieldChange = (articleId: string, { target }: any) => {
     const { value, dataset } = target;
     const { field } = dataset;
 
@@ -103,7 +107,7 @@ export const EditBreakingNewsPage = () => {
           type="text"
           placeholder="Headline"
           data-field="headline"
-          defaultValue={article.headline}
+          defaultValue={article.headline ?? ''}
           onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
@@ -114,7 +118,7 @@ export const EditBreakingNewsPage = () => {
             type="number"
             placeholder="Priority"
             data-field="priority"
-            defaultValue={article.priority}
+            defaultValue={article.priority ?? ''}
             onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
@@ -123,7 +127,7 @@ export const EditBreakingNewsPage = () => {
           <input
             type="date"
             data-field="effective_date"
-            defaultValue={article.effective_date}
+            defaultValue={article.effective_date ?? ''}
             onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
@@ -132,7 +136,7 @@ export const EditBreakingNewsPage = () => {
           <input
             type="date"
             data-field="expiration_date"
-            defaultValue={article.expiration_date}
+            defaultValue={article.expiration_date ?? ''}
             onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
@@ -142,7 +146,7 @@ export const EditBreakingNewsPage = () => {
         <textarea
           placeholder="Body"
           data-field="body"
-          defaultValue={article.body}
+          defaultValue={article.body ?? ''}
           onChange={(e) => onFieldChange(article.id, e)}
           maxLength={250}
         />
