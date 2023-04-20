@@ -107,7 +107,7 @@ export const EditBreakingNewsPage = () => {
           type="text"
           placeholder="Headline"
           data-field="headline"
-          defaultValue={article.headline ?? ''}
+          defaultValue={article.headline ?? ""}
           onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
@@ -118,7 +118,7 @@ export const EditBreakingNewsPage = () => {
             type="number"
             placeholder="Priority"
             data-field="priority"
-            defaultValue={article.priority ?? ''}
+            defaultValue={article.priority ?? ""}
             onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
@@ -127,7 +127,7 @@ export const EditBreakingNewsPage = () => {
           <input
             type="date"
             data-field="effective_date"
-            defaultValue={article.effective_date ?? ''}
+            defaultValue={article.effective_date ?? ""}
             onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
@@ -136,7 +136,7 @@ export const EditBreakingNewsPage = () => {
           <input
             type="date"
             data-field="expiration_date"
-            defaultValue={article.expiration_date ?? ''}
+            defaultValue={article.expiration_date ?? ""}
             onChange={(e) => onFieldChange(article.id, e)}
           />
         </label>
@@ -146,7 +146,7 @@ export const EditBreakingNewsPage = () => {
         <textarea
           placeholder="Body"
           data-field="body"
-          defaultValue={article.body ?? ''}
+          defaultValue={article.body ?? ""}
           onChange={(e) => onFieldChange(article.id, e)}
           maxLength={250}
         />
