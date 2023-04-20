@@ -1,0 +1,49 @@
+@import "~styles/utils/_helpers.scss";
+
+.breaking-news-header {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  padding: 20px 0px;
+  border-bottom: 1px solid grey;
+}
+
+.form {
+  margin: 20px;
+  padding: 0px 20px 20px;
+  border-bottom: 1px solid grey;
+}
+
+.form-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin-left: 20px;
+  }
+  margin-bottom: 20px;
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  label {
+    flex-grow: 1;
+  }
+}
+
+.breaking-news-footer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.labelSubtext {
+  color: $color-grey5;
+}
