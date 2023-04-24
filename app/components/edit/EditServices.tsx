@@ -2,6 +2,7 @@ import React from "react";
 import ProvidedService from "./ProvidedService";
 
 import type {
+  InternalAddress,
   InternalFlattenedService,
   InternalTopLevelService,
 } from "../../pages/OrganizationEditPage";
@@ -14,7 +15,7 @@ type Props = {
   ) => void;
   handleDeactivation: (type: "resource" | "service", id: number) => void;
   services: InternalFlattenedService[];
-  resourceAddresses: Record<any, any>[];
+  resourceAddresses: InternalAddress[];
 };
 
 const EditServices = ({

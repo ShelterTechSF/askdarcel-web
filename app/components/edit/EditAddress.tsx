@@ -1,15 +1,34 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import PropTypes from "prop-types";
 import {
   RiDeleteBin5Line,
   RiEditBoxLine,
   RiArrowLeftLine,
 } from "react-icons/ri";
+import type { InternalAddress } from "../../pages/OrganizationEditPage";
+import type { Address } from "../../models";
 
 import s from "./EditAddress.module.scss";
 
 // Subcomponents
+
+// Note: This must be manually updated to match the actual <input> fields in the
+// EditAddressModal component below.
+interface EditAddressFormData {
+  name: string;
+  address_1: string;
+  address_2: string;
+  city: string;
+  state_province: string;
+  postal_code: string;
+}
+
+type EditAddressModalProps = {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  defaultData: InternalAddress | Record<string, never>;
+  onSave: (address: InternalAddress) => void;
+};
 
 /** Modal containing the edit and add new address form.
  *
@@ -18,14 +37,26 @@ import s from "./EditAddress.module.scss";
  * "Cancel" button. Therefore, we have chosen to implement the form inputs as
  * uncontrolled components.
  */
-const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
-  const isEdit = !!defaultData.id;
+const EditAddressModal = ({
+  isOpen,
+  onRequestClose,
+  defaultData,
+  onSave,
+}: EditAddressModalProps) => {
+  const isEdit = "id" in defaultData && !!defaultData.id;
   const title = isEdit ? "Edit Address" : "Add New Address";
   const submitButtonText = isEdit ? "Save Address" : "Add New Address";
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData: any = new FormData(e.currentTarget);
-    const newData = Object.fromEntries(formData.entries());
+    const formData = new FormData(e.currentTarget);
+    // We need to perform a double type assertion with the intermediate `as
+    // unknown` because the types for FormData.entries() don't exactly line up
+    // with EditAddressFormData. FormData.entries() allows values to either be
+    // strings or files, but EditAddressFormData's values can only be strings.
+    // Our form doesn't include a file upload, so we cast it away.
+    const newData: EditAddressFormData & { id?: number } = Object.fromEntries(
+      formData.entries()
+    ) as unknown as EditAddressFormData;
     if (isEdit) {
       newData.id = defaultData.id;
     }
@@ -49,7 +80,7 @@ const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
               type="text"
               name="name"
               placeholder="Name"
-              defaultValue={defaultData.name}
+              defaultValue={defaultData.name ?? undefined}
             />
           </label>
           <div className={s.formControlGroup}>
@@ -67,7 +98,7 @@ const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
               type="text"
               name="address_2"
               placeholder="Apartment, suite, unit, building, floor, etc."
-              defaultValue={defaultData.address_2}
+              defaultValue={defaultData.address_2 ?? undefined}
             />
           </div>
           <label className={s.inputLabel}>
@@ -123,10 +154,6 @@ const EditAddressModal = ({ isOpen, onRequestClose, defaultData, onSave }) => {
   );
 };
 
-EditAddressModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-};
-
 /** Format address as a single line. */
 const compactAddressDisplay = ({
   address_1,
@@ -136,7 +163,7 @@ const compactAddressDisplay = ({
   city,
   state_province,
   postal_code,
-}) => {
+}: Partial<Address>) => {
   // No comma between state and postal code
   const state_postal = `${state_province} ${postal_code}`;
   const lines = [
@@ -150,12 +177,19 @@ const compactAddressDisplay = ({
   return lines.filter((x) => x).join(", ");
 };
 
+type AddressListItemProps = {
+  displayIndex: number;
+  address: InternalAddress;
+  onEdit?: () => void;
+  onRemove: () => void;
+};
+
 export const AddressListItem = ({
   displayIndex,
   address,
   onEdit,
   onRemove,
-}: any) => (
+}: AddressListItemProps) => (
   <div className={s.listItemContainer}>
     <div className={s.listItemIndex}>{`${displayIndex}.`}</div>
     <div className={s.listItemName}>{address.name}</div>
@@ -179,17 +213,23 @@ export const AddressListItem = ({
 
 // Main component
 
-// For when we actually add TypeScript support
-// type ModalState = { type: "closed" } | { type: "add" } | { type: "edit"; editingIndex: number };
+type ModalState =
+  | { type: "closed" }
+  | { type: "add" }
+  | { type: "edit"; editingIndex: number };
 
-const EditAddresses = ({ addresses, setAddresses }) => {
-  const [modalState, setModalState] = useState<any>({ type: "closed" });
+type EditAddressesProps = {
+  addresses: InternalAddress[];
+  setAddresses: (addresses: InternalAddress[]) => void;
+};
+const EditAddresses = ({ addresses, setAddresses }: EditAddressesProps) => {
+  const [modalState, setModalState] = useState<ModalState>({ type: "closed" });
 
   const closeModal = () => setModalState({ type: "closed" });
 
   const modalIsOpen = modalState.type !== "closed";
-  let modalDefaultData;
-  let modalOnSave;
+  let modalDefaultData: InternalAddress | Record<string, never>;
+  let modalOnSave: (address: InternalAddress) => void;
   switch (modalState.type) {
     case "closed":
       modalDefaultData = {};
@@ -213,10 +253,10 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       throw new Error(`Unexpected modal state: ${modalState}`);
   }
 
-  const removeAddress = (index) => {
+  const removeAddress = (index: number) => {
     const address = addresses[index];
     const newAddresses = addresses.slice();
-    if (address.id) {
+    if ("id" in address) {
       newAddresses[index] = { ...address, isRemoved: true };
     } else {
       newAddresses.splice(index, 1);
@@ -236,14 +276,14 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       <div className={s.addressListTitle}>Location</div>
       <div className={s.addressList}>
         {addresses
-          .map((address, arrayIndex) => [address, arrayIndex])
+          .map((address, arrayIndex) => [address, arrayIndex] as const)
           .filter(([address]) => !address.isRemoved)
           // The displayIndex should skip over any elements that have been
           // marked for removal, but the arrayIndex must be the actual index of
           // the element in the addresses array
           .map(([address, arrayIndex], displayIndexMinusOne) => (
             <AddressListItem
-              key={address.id || JSON.stringify(address)}
+              key={"id" in address ? address.id : JSON.stringify(address)}
               displayIndex={displayIndexMinusOne + 1}
               address={address}
               onEdit={() =>
@@ -263,11 +303,6 @@ const EditAddresses = ({ addresses, setAddresses }) => {
       </button>
     </li>
   );
-};
-
-EditAddresses.propTypes = {
-  addresses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setAddresses: PropTypes.func.isRequired,
 };
 
 export default EditAddresses;
