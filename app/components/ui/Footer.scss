@@ -56,6 +56,18 @@
   }
 }
 
+.site-footer__sfseal-center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  img {
+    width: 150px;
+    @media screen and (max-width: 767px) {
+      width: 120px;
+    }
+  }
+}
+
 .service-guide {
   flex: 2 2 0;
   display: flex;

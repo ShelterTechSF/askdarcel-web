@@ -19,7 +19,7 @@ import {
   TableOfOpeningTimes,
   WebsiteRenderer,
 } from "../components/listing";
-import { Loader } from "../components/ui";
+import { Footer, Loader } from "../components/ui";
 import whitelabel from "../utils/whitelabel";
 import {
   fetchOrganization,
@@ -184,6 +184,7 @@ export const OrganizationListingPage = () => {
           </div>
         </div>
       </article>
+      {whitelabel.footerOptions.showOnListingPages && <Footer />}
     </div>
   );
 };
