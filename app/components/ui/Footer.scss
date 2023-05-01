@@ -1,3 +1,5 @@
+@import "../../styles/utils/_helpers.scss";
+
 .site-footer {
   display: flex;
   align-items: center;
@@ -51,7 +53,7 @@
   height: 100%;
   width: 1280px;
   margin: 0 auto;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $break-tablet-s) {
     width: auto;
   }
 }
@@ -62,7 +64,7 @@
   justify-content: center;
   img {
     width: 150px;
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: $break-tablet-s) {
       width: 120px;
     }
   }
@@ -96,7 +98,7 @@
 .site-footer__disclosure {
   text-align: center;
   padding-top: 80px;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: $break-tablet-s) {
     display: block;
     text-align: center;
     padding: 25px;
