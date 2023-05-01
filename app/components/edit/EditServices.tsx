@@ -1,13 +1,16 @@
 import React from "react";
 import ProvidedService from "./ProvidedService";
 
-import type { InternalFlattenedService } from "../../pages/OrganizationEditPage";
+import type {
+  InternalFlattenedService,
+  InternalTopLevelService,
+} from "../../pages/OrganizationEditPage";
 
 type Props = {
   addService: () => void;
   editServiceById: (
     id: number,
-    changes: Partial<InternalFlattenedService>
+    changes: Partial<InternalTopLevelService>
   ) => void;
   handleDeactivation: (type: "resource" | "service", id: number) => void;
   services: InternalFlattenedService[];

@@ -29,15 +29,13 @@ export const EditServiceChildCollection = <T extends CollectionItem>({
   label,
   blankItemTemplate,
   buttonText,
-  propertyKeyName,
 }: {
   initialCollectionData: any[] | undefined;
-  handleCollectionChange: (field: string, value: T[]) => void;
+  handleCollectionChange: (value: T[]) => void;
   CollectionItemComponent: FC<ComponentProps>;
   label: string;
   blankItemTemplate: T;
   buttonText: string;
-  propertyKeyName: string;
 }) => {
   const [itemCollection, setItemCollection] = useState<T[]>(
     initialCollectionData || []
@@ -60,7 +58,7 @@ export const EditServiceChildCollection = <T extends CollectionItem>({
     ];
 
     setItemCollection(newCollection);
-    handleCollectionChange(propertyKeyName, newCollection);
+    handleCollectionChange(newCollection);
   };
 
   const removeItem = (index: number) => {
@@ -81,7 +79,7 @@ export const EditServiceChildCollection = <T extends CollectionItem>({
     }
 
     setItemCollection(newCollection);
-    handleCollectionChange(propertyKeyName, newCollection);
+    handleCollectionChange(newCollection);
   };
 
   const itemComponents = itemCollection.flatMap((item, index) => {

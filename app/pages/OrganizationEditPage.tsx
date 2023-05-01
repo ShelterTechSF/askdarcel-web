@@ -14,7 +14,7 @@ import EditSidebar from "../components/edit/EditSidebar";
 import { buildScheduleDays } from "../components/edit/ProvidedService";
 import type { InternalSchedule } from "../components/edit/ProvidedService";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
-import type { Organization, Schedule, Service } from "../models";
+import type { Instruction, Organization, Schedule, Service } from "../models";
 import * as dataService from "../utils/DataService";
 import "./OrganizationEditPage.scss";
 
@@ -503,6 +503,20 @@ export interface InternalOrganization
   services?: InternalOrganizationService[];
 }
 
+/** Internal version of an Instruction.
+ *
+ * This differs from the Instruction that comes from the API in that the
+ * `service_id` exists.
+ */
+interface InternalInstruction extends Instruction {
+  /** The ID of the service this instruction is attached to.
+   *
+   * TODO: Why is this needed? Shouldn't the InternalTopLevelService that this
+   * is attached to know its ID?
+   */
+  service_id: number;
+}
+
 /** Internal shape of a Service stored at the top-level of the component state.
  *
  * This differs from the Service coming from the API in that the `addresses`
@@ -518,6 +532,16 @@ export interface InternalTopLevelService
    * These are the numeric indexes into the Organization's `addresses` array.
    */
   addressHandles?: number[];
+
+  /** Changes to the instructions attached to the service.
+   *
+   * This differs from the `instructions` field on the API Service type in that
+   * this one also has a `service_id` field.
+   */
+  instructions?: InternalInstruction[];
+
+  /** Changes to the notes attached to this service. */
+  notesObj?: any;
 
   /** A Schedule attached to the service.
    *
