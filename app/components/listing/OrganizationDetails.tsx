@@ -66,7 +66,7 @@ const buildLocation = (address: Address) => {
 };
 
 export const AddressInfoRenderer = ({ address }: { address: Address }) => (
-  <span className="address" translate="no">
+  <span className="address notranslate" translate="no">
     {buildLocation(address)}
   </span>
 );

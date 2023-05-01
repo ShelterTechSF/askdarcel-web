@@ -58,7 +58,7 @@ export const MapOfLocations = ({
                       <tr>
                         <td className="iconcell">{i + 1}.</td>
                         <td>
-                          <strong translate="no">
+                          <strong className="notranslate" translate="no">
                             {loc.address.address_1}
                           </strong>
                         </td>

@@ -78,13 +78,13 @@ export const OrganizationListingPage = () => {
         <meta name="description" content={org.long_description || ""} />
       </Helmet>
       <article className="org" id="resource">
-        <div className="org--main">
+        <div className="org--main weglot-dynamic">
           <div className="org--main--left">
             <header className="org--main--header">
               <div className="org--main--header--title-container">
                 <h1
                   data-cy="org-page-title"
-                  className="org--main--header--title"
+                  className="org--main--header--title notranslate"
                   translate="no"
                 >
                   {org.name}
