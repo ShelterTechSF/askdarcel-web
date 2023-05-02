@@ -34,8 +34,6 @@
   }
 
   header {
-    padding: $padding-xlarge 0;
-
     p {
       font-size: 13px;
     }
@@ -62,6 +60,10 @@
       padding: calc-em(20px) 0;
     }
   }
+}
+
+.service--program--details {
+  padding: $padding-default;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
