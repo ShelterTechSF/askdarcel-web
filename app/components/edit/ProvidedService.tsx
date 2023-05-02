@@ -7,7 +7,10 @@ import { AddressListItem } from "./EditAddress";
 import EditPatientHandout from "./EditPatientHandout";
 import { EditServiceChildCollection } from "./EditServiceChildCollection";
 import type { Schedule } from "../../models";
-import type { InternalFlattenedService } from "../../pages/OrganizationEditPage";
+import type {
+  InternalFlattenedService,
+  InternalTopLevelService,
+} from "../../pages/OrganizationEditPage";
 
 import s from "./ProvidedService.module.scss";
 
@@ -218,7 +221,7 @@ const TEXT_AREAS = [
     placeholder: "What interpretation services do they offer?",
     field: "interpretation_services",
   },
-];
+] as const;
 
 type ProvidedServiceProps = {
   editServiceById: (
@@ -238,7 +241,10 @@ const ProvidedService = ({
   service,
   resourceAddresses,
 }: ProvidedServiceProps) => {
-  const handleChange = (field, value) => {
+  const handleChange = <K extends keyof InternalTopLevelService>(
+    field: K,
+    value: InternalTopLevelService[K]
+  ) => {
     const { id } = service;
     editServiceById(id, { id, [field]: value });
   };
@@ -246,11 +252,17 @@ const ProvidedService = ({
   const setShouldInheritScheduleFromParent = (shouldInherit) => {
     const { scheduleObj: scheduleDaysByDay } = service;
 
-    let tempScheduleDays = {};
+    let tempScheduleDays: InternalSchedule;
 
     if (shouldInherit) {
-      tempScheduleDays = Object.entries(scheduleDaysByDay).reduce(
-        (acc, [day, scheduleDays]: any) => ({
+      // We perform the reduce() with a type of Partial<InternalSchedule>, since
+      // we're building up the InternalSchedule day by day, but we know that
+      // we'll have all the keys in the end, so we cast back to
+      // InternalSchedule.
+      tempScheduleDays = Object.entries(scheduleDaysByDay).reduce<
+        Partial<InternalSchedule>
+      >(
+        (acc, [day, scheduleDays]) => ({
           ...acc,
           [day]: scheduleDays.map((scheduleDay) => ({
             ...scheduleDay,
@@ -261,7 +273,7 @@ const ProvidedService = ({
           })),
         }),
         {}
-      );
+      ) as InternalSchedule;
     } else {
       tempScheduleDays = buildScheduleDays(service.schedule);
     }
@@ -332,12 +344,13 @@ const ProvidedService = ({
         <li className="edit--section--list--item">
           <EditServiceChildCollection
             initialCollectionData={service.documents}
-            handleCollectionChange={handleChange}
+            handleCollectionChange={(newValue) =>
+              handleChange("documents", newValue)
+            }
             CollectionItemComponent={EditPatientHandout}
             label="Patient Handouts"
             buttonText="Add Handout"
             blankItemTemplate={{ service_id: service.id }}
-            propertyKeyName="documents"
           />
         </li>
 
