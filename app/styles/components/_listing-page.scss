@@ -84,7 +84,6 @@
   display: flex;
   &--left {
     width: calc-em(660px);
-    border-right: 1px solid #ddd;
     padding-right: $padding-large;
     position: relative;
     display: flex;
@@ -95,7 +94,6 @@
   @include r_max($break-tablet-s) {
     margin-top: 0;
     &--left {
-      border-right: none;
       padding-right: 0;
     }
   }
