@@ -227,7 +227,7 @@ export const ServiceProgramDetails = ({
   service,
   organization,
 }: ServiceProgramDetailsProps) => (
-  <span>
+  <span className="service--program--details">
     A service
     {service.program ? ` in the ${service.program.name} program` : null}
     {" offered by "}
