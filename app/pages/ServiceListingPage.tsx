@@ -15,7 +15,7 @@ import {
   TableOfContactInfo,
   TableOfOpeningTimes,
 } from "components/listing";
-import { Datatable, Loader } from "components/ui";
+import { Datatable, Footer, Loader } from "components/ui";
 import whiteLabel from "../utils/whitelabel";
 import {
   fetchService,
@@ -27,7 +27,8 @@ import {
   Service,
 } from "../models";
 
-const { title: whiteLabelTitle } = whiteLabel;
+const { title: whiteLabelTitle, footerOptions: whiteLabelFooterOpts } =
+  whiteLabel;
 
 // Page at /services/123
 export const ServiceListingPage = () => {
@@ -196,6 +197,7 @@ export const ServiceListingPage = () => {
           </div>
         </div>
       </article>
+      {whiteLabelFooterOpts.showOnListingPages && <Footer />}
     </div>
   );
 };

@@ -35,6 +35,12 @@ interface WhiteLabelSite {
    * [1]: https://cloud.google.com/translate/docs/languages
    */
   enabledTranslations: readonly string[];
+  footerOptions: {
+    showOnListingPages: boolean;
+    showTitle: boolean;
+    showLinks: boolean;
+    showSFSeal: boolean;
+  };
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
@@ -88,6 +94,12 @@ variety of other services, from education and legal aid to senior
 services and re-entry programs.`,
   aboutPageTitle: "SF Service Guide",
   enabledTranslations: ["en", "es", "tl", "zh-TW"],
+  footerOptions: {
+    showOnListingPages: false,
+    showTitle: true,
+    showLinks: true,
+    showSFSeal: false,
+  },
   homePageComponent: "HomePage",
   intercom: false,
   logoLinkDestination: "/",
@@ -126,6 +138,12 @@ const SFFamilies: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   enabledTranslations: ["en", "es", "tl", "zh-TW", "vi", "ar", "ru"],
+  footerOptions: {
+    showOnListingPages: true,
+    showTitle: false,
+    showLinks: false,
+    showSFSeal: true,
+  },
   logoLinkDestination: "https://www.our415.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
