@@ -85,8 +85,9 @@ export const SearchResultsPage = () => {
 
   if (!searchStateResolved) {
     // In some case(s) -- e.g. when waiting to receive a translation from the API -- the search state
-    // is set asynchronously; thus, we want to wait rather than pasing Algolia an empty search query
-    // (via InstantSearch) followed by the actual search query, which can cause a UI flash
+    // is set asynchronously; thus, we want to wait until the search state resolves. Otherwise,
+    // our code will query Algolia twice - first with an empty string and secondly with the translated
+    // search query, which can cause a UI flash as well as the needless first call
     return null;
   }
 
