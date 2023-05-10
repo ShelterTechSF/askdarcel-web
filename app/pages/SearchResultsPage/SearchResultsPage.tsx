@@ -36,7 +36,7 @@ interface SearchState extends ParsedQs {
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const SearchResultsPage = () => {
-  const [cookies,] = useCookies(["googtrans"]);
+  const [cookies] = useCookies(["googtrans"]);
   const history = useHistory();
   const { search } = useLocation();
   const { userLocation } = useAppContext();
@@ -48,7 +48,7 @@ export const SearchResultsPage = () => {
   );
   // In cases where we translate a non-English query into English (to query Alglolia), we use this
   // state var to cache the user's orginal, untranslated query to display on the results page
-  const [untranslatedQuery, setUntranslatedQuery] = useState('');
+  const [untranslatedQuery, setUntranslatedQuery] = useState("");
   const [searchStateResolved, setSearchStateResolved] = useState(false);
 
   useEffect(() => {
