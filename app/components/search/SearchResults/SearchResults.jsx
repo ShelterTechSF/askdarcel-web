@@ -221,32 +221,32 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
           {
             key: -2,
             description: "Spanish",
-            url: `${handoutApiUrl}?lang=es`,
+            url: `${handoutApiUrl}?handoutLanguage=es`,
           },
           {
             key: -3,
             description: "Tagalog",
-            url: `${handoutApiUrl}?lang=tl`,
+            url: `${handoutApiUrl}?handoutLanguage=tl`,
           },
           {
             key: -4,
             description: "Chinese (Traditional)",
-            url: `${handoutApiUrl}?lang=zh-TW`,
+            url: `${handoutApiUrl}?handoutLanguage=zh-TW`,
           },
           {
             key: -5,
             description: "Vietnamese",
-            url: `${handoutApiUrl}?lang=vi`,
+            url: `${handoutApiUrl}?handoutLanguage=vi`,
           },
           {
             key: -6,
             description: "Russian",
-            url: `${handoutApiUrl}?lang=ru`,
+            url: `${handoutApiUrl}?handoutLanguage=ru`,
           },
           {
             key: -7,
             description: "Arabic",
-            url: `${handoutApiUrl}?lang=ar`,
+            url: `${handoutApiUrl}?handoutLanguage=ar`,
           },
         ]}
       />

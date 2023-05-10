@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { Helmet } from "react-helmet-async";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, Configure, SearchBox } from "react-instantsearch/dom";
 import qs, { ParsedQs } from "qs";
 
 import { GeoCoordinates, useAppContext, whiteLabel } from "utils";
+import { post } from "utils/DataService";
 
 import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
@@ -34,22 +36,63 @@ interface SearchState extends ParsedQs {
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const SearchResultsPage = () => {
+  const [cookies,] = useCookies(["googtrans"]);
+  const history = useHistory();
+  const { search } = useLocation();
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
-  const { search } = useLocation();
   const [expandList, setExpandList] = useState(false);
-
-  const searchState: SearchState = useMemo(
-    () => qs.parse(search.slice(1)),
-    [search]
-  );
+  const [searchState, setSearchState] = useState<SearchState>({});
   const [searchRadius, setSearchRadius] = useState(
     searchState?.configure?.aroundRadius ?? "all"
   );
+  // In cases where we translate a non-English query into English (to query Alglolia), we use this
+  // state var to cache the user's orginal, untranslated query to display on the results page
+  const [untranslatedQuery, setUntranslatedQuery] = useState('');
+  const [searchStateResolved, setSearchStateResolved] = useState(false);
+
+  useEffect(() => {
+    const queryParams = qs.parse(search.slice(1));
+    const { query } = queryParams;
+    setUntranslatedQuery(query as string);
+
+    // Google Translate determines translation source and target with a
+    // "googtrans" cookie. If the cookie exists, we assume that the
+    // the query should be translated into English prior to querying Algolia
+    const translationCookie = cookies.googtrans;
+
+    if (query && translationCookie) {
+      const [, targetLanguage] = translationCookie.split("/en/") as string;
+      if (targetLanguage !== "en") {
+        post("/api/translation/translate_text", {
+          text: query,
+          target_language: targetLanguage,
+        }).then((resp) =>
+          resp.json().then((body) => {
+            setSearchState({
+              ...queryParams,
+              query: body.result,
+            });
+            setSearchStateResolved(true);
+          })
+        );
+      }
+    } else {
+      setSearchState(queryParams);
+      setSearchStateResolved(true);
+    }
+  }, [cookies.googtrans, search, untranslatedQuery]);
+
+  if (!searchStateResolved) {
+    // In some case(s) -- e.g. when waiting to receive a translation from the API -- the search state
+    // is set asynchronously; thus, we want to wait rather than pasing Algolia an empty search query
+    // (via InstantSearch) followed by the actual search query, which can cause a UI flash
+    return null;
+  }
 
   return (
     <InnerSearchResults
-      history={useHistory()}
+      history={history}
       userLocation={userLocation}
       lastPush={lastPush}
       setLastPush={setLastPush}
@@ -58,6 +101,7 @@ export const SearchResultsPage = () => {
       searchState={searchState}
       searchRadius={searchRadius}
       setSearchRadius={setSearchRadius}
+      untranslatedQuery={untranslatedQuery}
     />
   );
 };
@@ -73,6 +117,7 @@ const InnerSearchResults = ({
   searchState,
   searchRadius,
   setSearchRadius,
+  untranslatedQuery,
 }: {
   history: any;
   userLocation: GeoCoordinates | null;
@@ -83,6 +128,7 @@ const InnerSearchResults = ({
   searchState: SearchState;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
+  untranslatedQuery: string;
 }) => {
   if (userLocation === null) {
     return <Loader />;
@@ -102,7 +148,8 @@ const InnerSearchResults = ({
         />
       </Helmet>
       <Header
-        resultsTitle={searchState.query || ""}
+        translateResultsTitle={false}
+        resultsTitle={untranslatedQuery || ""}
         expandList={expandList}
         setExpandList={setExpandList}
       />
@@ -131,10 +178,6 @@ const InnerSearchResults = ({
           aroundRadius={searchRadius}
           aroundPrecision={1600}
         />
-        {/* <div className={styles.searchBox}>
-          todo: part of the next stage of multiple location development
-          <SearchBox />
-        </div> */}
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}
