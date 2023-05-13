@@ -85,7 +85,6 @@ export const OrganizationListingPage = () => {
                 <h1
                   data-cy="org-page-title"
                   className="org--main--header--title notranslate"
-                  translate="no"
                 >
                   {org.name}
                 </h1>

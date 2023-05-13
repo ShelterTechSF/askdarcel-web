@@ -21,7 +21,6 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
         <Link
           className="notranslate"
           to={{ pathname: `/services/${service.id}` }}
-          translate="no"
         >
           {service.name}
         </Link>

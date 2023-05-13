@@ -8,9 +8,6 @@ const onLoad = (apiKey: string, targetLangCode: string | null) => {
     api_key: apiKey,
     auto_switch: false,
     // Force WeGlot to avoid translating elements with this class
-    // TODO: Google Translate also respects the `.notranslate` class,
-    // so we should replace all instances of the translate="no" attribute
-    // with the .notranslate class name so we have one convention only.
     excluded_blocks: [
       {
         value: ".notranslate",
