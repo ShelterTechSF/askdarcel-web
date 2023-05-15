@@ -1,11 +1,23 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import EditScheduleDay from "./EditScheduleDay";
+import type { InternalSchedule, InternalScheduleDay } from "./ProvidedService";
 
 import "./EditSchedule.scss";
 
-class EditSchedule extends Component<any, any> {
-  setScheduleDaysForDay = (day, scheduleDays) => {
+type Props = {
+  scheduleDaysByDay: InternalSchedule;
+  canInheritFromParent: boolean;
+  shouldInheritFromParent: boolean;
+  setShouldInheritFromParent?: (shouldInherit: boolean) => void;
+  handleScheduleChange: (scheduleObj: InternalSchedule) => void;
+  scheduleId: number | undefined;
+};
+
+class EditSchedule extends Component<Props> {
+  setScheduleDaysForDay = (
+    day: keyof InternalSchedule,
+    scheduleDays: InternalScheduleDay[]
+  ) => {
     const { handleScheduleChange, scheduleDaysByDay } = this.props;
     handleScheduleChange({
       ...scheduleDaysByDay,
@@ -36,9 +48,13 @@ class EditSchedule extends Component<any, any> {
                 className="input-checkbox"
                 type="checkbox"
                 checked={shouldInheritFromParent}
-                onChange={() =>
-                  setShouldInheritFromParent(!shouldInheritFromParent)
-                }
+                onChange={() => {
+                  if (!setShouldInheritFromParent)
+                    throw new Error(
+                      "setShouldInheritFromParent was undefined, but it must be defined if canInheritFromParent is true"
+                    );
+                  setShouldInheritFromParent(!shouldInheritFromParent);
+                }}
               />
               Inherit schedule from parent organization
             </label>
@@ -48,17 +64,28 @@ class EditSchedule extends Component<any, any> {
           <div>
             <span className="label open-24-label">24 hrs?</span>
             <ul className="edit-hours-list">
-              {Object.entries(scheduleDaysByDay).map(([day, scheduleDays]) => (
-                <EditScheduleDay
-                  key={day}
-                  day={day}
-                  scheduleId={scheduleId}
-                  scheduleDays={scheduleDays}
-                  setScheduleDays={(newScheduleDays) =>
-                    this.setScheduleDaysForDay(day, newScheduleDays)
-                  }
-                />
-              ))}
+              {Object.entries(scheduleDaysByDay).map((entry) => {
+                // TypeScript cannot infer the precise types of `day` and
+                // `scheduleDays`, since `Object.entries()` may return more
+                // properties than we were expecting. This should be replaced
+                // with a type-specific iterator, where we only iterate over
+                // keys that we expect.
+                const [day, scheduleDays] = entry as [
+                  keyof InternalSchedule,
+                  InternalScheduleDay[]
+                ];
+                return (
+                  <EditScheduleDay
+                    key={day}
+                    day={day}
+                    scheduleId={scheduleId}
+                    scheduleDays={scheduleDays}
+                    setScheduleDays={(newScheduleDays) =>
+                      this.setScheduleDaysForDay(day, newScheduleDays)
+                    }
+                  />
+                );
+              })}
             </ul>
           </div>
         )}
@@ -66,22 +93,5 @@ class EditSchedule extends Component<any, any> {
     );
   }
 }
-
-// Leaving propTypes definitions here for reference. Remove when we add proper
-// TypeScript types to this component's props.
-//
-// EditSchedule.propTypes = {
-//   scheduleDaysByDay: PropTypes.object.isRequired,
-//   canInheritFromParent: PropTypes.bool.isRequired,
-//   shouldInheritFromParent: PropTypes.bool.isRequired,
-//   setShouldInheritFromParent: PropTypes.func,
-//   handleScheduleChange: PropTypes.func.isRequired,
-//   scheduleId: PropTypes.number,
-// };
-
-(EditSchedule as any).defaultProps = {
-  setShouldInheritFromParent: null,
-  scheduleId: null,
-};
 
 export default EditSchedule;

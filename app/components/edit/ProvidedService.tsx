@@ -14,7 +14,7 @@ import type {
 
 import s from "./ProvidedService.module.scss";
 
-interface InternalScheduleDay {
+export interface InternalScheduleDay {
   opens_at: number | null;
   closes_at: number | null;
   /** The DB ID of the ScheduleDay. */
@@ -48,6 +48,15 @@ export interface InternalSchedule {
   Friday: InternalScheduleDay[];
   Saturday: InternalScheduleDay[];
   Sunday: InternalScheduleDay[];
+}
+
+/** If the argument is either an InternalSchedule or an empty object, return
+ *  true if it is an InternalSchedule.
+ */
+export function isNonEmptyInternalSchedule(
+  schedule: InternalSchedule | Record<string, never>
+): schedule is InternalSchedule {
+  return "Monday" in schedule;
 }
 
 /** Build UI state schedule from API schedule.
@@ -249,7 +258,7 @@ const ProvidedService = ({
     editServiceById(id, { id, [field]: value });
   };
 
-  const setShouldInheritScheduleFromParent = (shouldInherit) => {
+  const setShouldInheritScheduleFromParent = (shouldInherit: boolean) => {
     const { scheduleObj: scheduleDaysByDay } = service;
 
     let tempScheduleDays: InternalSchedule;

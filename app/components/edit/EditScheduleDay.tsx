@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import type { InternalScheduleDay } from "./ProvidedService";
 import { stringToTime, timeToTimeInputValue } from "../../utils/time";
+
+type TimeInputRowProps = {
+  dayOfWeekAbbrev: (typeof DAYS_OF_WEEK)[keyof typeof DAYS_OF_WEEK];
+  index: number;
+  scheduleDay: InternalScheduleDay;
+  is24Hours: boolean;
+  setScheduleDay: (s: InternalScheduleDay) => void;
+};
 
 const TimeInputRow = ({
   dayOfWeekAbbrev,
@@ -8,7 +16,7 @@ const TimeInputRow = ({
   scheduleDay,
   is24Hours,
   setScheduleDay,
-}) => {
+}: TimeInputRowProps) => {
   const removeTime = () => {
     const newScheduleDay = {
       ...scheduleDay,
@@ -24,7 +32,10 @@ const TimeInputRow = ({
     setScheduleDay(newScheduleDay);
   };
 
-  const changeOpenOrCloseTime = (field, value) => {
+  const changeOpenOrCloseTime = (
+    field: "opens_at" | "closes_at",
+    value: string
+  ) => {
     const parsedTime = stringToTime(value);
     const changedField = field === "opens_at" ? "openChanged" : "closeChanged";
     const newScheduleDay = {
@@ -82,7 +93,7 @@ const TimeInputRow = ({
   );
 };
 
-const DAYS_OF_WEEK = Object.freeze({
+const DAYS_OF_WEEK = {
   Monday: "M",
   Tuesday: "T",
   Wednesday: "W",
@@ -90,10 +101,20 @@ const DAYS_OF_WEEK = Object.freeze({
   Friday: "F",
   Saturday: "S",
   Sunday: "Su",
-});
+} as const;
 
-class EditScheduleDay extends Component<any, any> {
-  setScheduleDayForIndex = (index, scheduleDay) => {
+type EditScheduleDayProps = {
+  scheduleDays: InternalScheduleDay[];
+  day: keyof typeof DAYS_OF_WEEK;
+  setScheduleDays: (x: InternalScheduleDay[]) => void;
+  scheduleId: number | undefined;
+};
+
+class EditScheduleDay extends Component<EditScheduleDayProps> {
+  setScheduleDayForIndex = (
+    index: number,
+    scheduleDay: InternalScheduleDay
+  ) => {
     const { scheduleDays, setScheduleDays } = this.props;
     const newScheduleDays = [
       ...scheduleDays.slice(0, index),
@@ -112,7 +133,7 @@ class EditScheduleDay extends Component<any, any> {
     setScheduleDays(tempDaySchedule);
   };
 
-  setIs24Hours = (is24Hours) => {
+  setIs24Hours = (is24Hours: boolean) => {
     const { scheduleId, scheduleDays, setScheduleDays } = this.props;
 
     const oldScheduleDay = scheduleDays[0];
@@ -194,19 +215,5 @@ class EditScheduleDay extends Component<any, any> {
     );
   }
 }
-
-// Leaving propTypes definitions here for reference. Remove when we add proper
-// TypeScript types to this component's props.
-//
-// EditScheduleDay.propTypes = {
-//   scheduleDays: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       closes_at: PropTypes.number,
-//       opens_at: PropTypes.number,
-//     })
-//   ).isRequired,
-//   day: PropTypes.string.isRequired,
-//   setScheduleDays: PropTypes.func.isRequired,
-// };
 
 export default EditScheduleDay;
