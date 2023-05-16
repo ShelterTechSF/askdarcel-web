@@ -84,7 +84,7 @@ export const ServiceListingPage = () => {
         <meta name="description" content={service.long_description} />
       </Helmet>
       <article className="listing" id="service">
-        <div className="listing--main">
+        <div className="listing--main weglot-dynamic">
           <div className="listing--main--left">
             <header>
               <div className="org--main--header--title-container">

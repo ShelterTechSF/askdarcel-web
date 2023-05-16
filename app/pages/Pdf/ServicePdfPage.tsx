@@ -136,7 +136,7 @@ export const ServicePdfPage = () => {
           className={`serviceHandoutPdf ${styles.handoutInvisible}`}
         >
           {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles */}
-          <style translate="no" ref={styleRef}>
+          <style className="notranslate" ref={styleRef}>
             {`
           .serviceHandoutPdf * {
             margin: 0;
@@ -312,9 +312,7 @@ export const ServicePdfPage = () => {
         `}
           </style>
           <header className="titleSection">
-            <h1 translate="no" className="serviceTitle">
-              {service.name}
-            </h1>
+            <h1 className="serviceTitle notranslate">{service.name}</h1>
             <ServiceProgramDetails service={service} organization={resource} />
           </header>
 
@@ -412,9 +410,7 @@ const ServiceProgramDetails = ({
     A service
     {service.program ? ` in the ${service.program.name} program` : null}
     {" offered by "}
-    <span className="subtitle_orgName" translate="no">
-      {organization.name}
-    </span>
+    <span className="subtitle_orgName notranslate">{organization.name}</span>
   </p>
 );
 
@@ -427,10 +423,8 @@ const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
   const { address_1, address_2, city, state_province, postal_code } = address;
   return (
     <div>
-      <p translate="no" className="resourceName">
-        {resourceName}
-      </p>
-      <p translate="no">
+      <p className="resourceName notranslate">{resourceName}</p>
+      <p className="notranslate">
         <span>{address_1}</span>
         {address_2 && (
           <span>
@@ -439,7 +433,7 @@ const ServiceAddress = ({ resourceName, address }: ServiceAddressProps) => {
           </span>
         )}
       </p>
-      <p translate="no">
+      <p className="notranslate">
         <span>{city}</span>, <span>{state_province}</span>{" "}
         <span>{postal_code}</span>
       </p>
@@ -477,7 +471,7 @@ const TableOfContactInfo = ({ service }: { service: Service }) => {
             <th>Website</th>
             <td>
               <a
-                translate="no"
+                className="notranslate"
                 target="_blank"
                 rel="noopener noreferrer"
                 href={website}
@@ -492,7 +486,7 @@ const TableOfContactInfo = ({ service }: { service: Service }) => {
           <tr>
             <th>Email</th>
             <td>
-              <a translate="no" href={`mailto:${email}`}>
+              <a className="notranslate" href={`mailto:${email}`}>
                 {email}
               </a>
             </td>
@@ -505,7 +499,7 @@ const TableOfContactInfo = ({ service }: { service: Service }) => {
             <td>
               <ul>
                 {phones.map((phone) => (
-                  <li translate="no" key={phone.number}>
+                  <li className="notranslate" key={phone.number}>
                     <a href={`tel:${phone.number}`}>{phone.number}</a>{" "}
                     {phone.service_type && `(${phone.service_type})`}
                   </li>
@@ -539,13 +533,10 @@ const TableOfOpeningTimes = ({
               data-cy="opening-times-row"
               className="compactRow"
             >
-              <th translate="no" className="compactHeader">
+              <th className="compactHeader notranslate">
                 {interval.opensAt.dayString()}
               </th>
-              <td
-                translate="no"
-                className="compactData"
-              >{`${opensAt} - ${closesAt}`}</td>
+              <td className="compactData notranslate">{`${opensAt} - ${closesAt}`}</td>
             </tr>
           );
         })) || (

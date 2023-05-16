@@ -1,50 +1,36 @@
 import React from "react";
-import { useCookies } from "react-cookie";
-import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 import { whiteLabel } from "../../utils";
+import { WeGlot } from "./WeGlot";
+import { GoogleTranslate } from "./GoogleTranslate";
 
 const Translate = () => {
-  const [, setCookie] = useCookies(["googtrans"]);
   const { search } = useLocation();
 
-  const languages = whiteLabel.enabledTranslations;
-  if (languages.length > 0) {
-    // Google Translate determines translation source and target
-    // with a "googtrans" cookie.
-    // When the user navigates with a `lang` query param,
-    // interpret that as an explicit ask to translate the site
-    // into that target language.
-    const params = new URLSearchParams(search);
-    const targetLangCode = params.get("lang");
-    if (targetLangCode && languages.includes(targetLangCode)) {
-      setCookie("googtrans", `/en/${targetLangCode}`, { path: "/" });
-    }
+  const params = new URLSearchParams(search);
+  const targetLangCode = params.get("lang");
 
+  if (whiteLabel.weGlot) {
+    /**
+     * Use WeGlot instead of Google Translate if configured.
+     *
+     * NOTE: checking `whiteLabel.availableLanguages` is not useful here,
+     * the available languages are entirely pre-determined by the site's WeGlot config.
+     */
     return (
-      <li>
-        <Helmet>
-          <script type="text/javascript">
-            {`
-              function googleTranslateElementInit() {
-                new google.translate.TranslateElement({
-                  includedLanguages: '${languages.join(",")}',
-                  pageLanguage: 'en',
-                }, 'google_translate_element');
-              }
-            `}
-          </script>
-          <script
-            type="text/javascript"
-            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          />
-        </Helmet>
-        <div id="google_translate_element" />
-      </li>
+      <WeGlot
+        apiKey={whiteLabel.weGlot.apiKey}
+        queryLangCode={targetLangCode}
+      />
     );
   }
-
-  return null;
+  // May return null if no translations enabled.
+  return (
+    <GoogleTranslate
+      languages={whiteLabel.enabledTranslations}
+      queryLangCode={targetLangCode}
+    />
+  );
 };
 
 export default Translate;
