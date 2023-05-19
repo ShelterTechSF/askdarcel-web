@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Helmet } from "react-helmet-async";
@@ -42,52 +42,68 @@ export const SearchResultsPage = () => {
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
   const [expandList, setExpandList] = useState(false);
-  const [searchState, setSearchState] = useState<SearchState>({});
+
+  const [searchState, setSearchState] = useState<SearchState | null>(null);
   const [searchRadius, setSearchRadius] = useState(
     searchState?.configure?.aroundRadius ?? "all"
   );
-  // In cases where we translate a non-English query into English (to query Alglolia), we use this
-  // state var to cache the user's orginal, untranslated query to display on the results page
-  const [untranslatedQuery, setUntranslatedQuery] = useState("");
-  const [searchStateResolved, setSearchStateResolved] = useState(false);
+
+  // In cases where we translate a query into English, we use this ref
+  // to represent the user's original, untranslated input. The untranslatedQuery
+  // is displayed in the UI and stored in the URL params.
+  // This untranslatedQuery value is also checked against when a new search is triggered
+  // to determine if the user has input a different query (vs. merely selecting refinements),
+  // in which case we need to call the translation API again
+  const untranslatedQuery = useRef<string | null | undefined>(null);
+  const translatedQuery = useRef(null);
 
   useEffect(() => {
-    const queryParams = qs.parse(search.slice(1));
-    const { query } = queryParams;
-    setUntranslatedQuery(query as string);
+    const urlParams: SearchState = qs.parse(search.slice(1));
+    const { query }: SearchState = urlParams;
+    let queryLanguage = "en";
 
     // Google Translate determines translation source and target with a
     // "googtrans" cookie. If the cookie exists, we assume that the
     // the query should be translated into English prior to querying Algolia
     const translationCookie = cookies.googtrans;
-
-    if (query && translationCookie) {
-      const [, targetLanguage] = translationCookie.split("/en/") as string;
-      if (targetLanguage !== "en") {
-        post("/api/translation/translate_text", {
-          text: query,
-          target_language: targetLanguage,
-        }).then((resp) =>
-          resp.json().then((body) => {
-            setSearchState({
-              ...queryParams,
-              query: body.result,
-            });
-            setSearchStateResolved(true);
-          })
-        );
-      }
-    } else {
-      setSearchState(queryParams);
-      setSearchStateResolved(true);
+    if (translationCookie) {
+      [, queryLanguage] = translationCookie.split("/en/");
     }
-  }, [cookies.googtrans, search, untranslatedQuery]);
 
-  if (!searchStateResolved) {
-    // In some case(s) -- e.g. when waiting to receive a translation from the API -- the search state
-    // is set asynchronously; thus, we want to wait until the search state resolves. Otherwise,
-    // our code will query Algolia twice - first with an empty string and secondly with the translated
-    // search query, which can cause a UI flash as well as the needless first call
+    const isNewQuery = untranslatedQuery.current !== urlParams.query;
+    const queryNeedsToBeTranslated = isNewQuery && queryLanguage !== "en";
+
+    if (queryNeedsToBeTranslated) {
+      untranslatedQuery.current = urlParams.query;
+      post("/api/translation/translate_text", {
+        text: query,
+        source_language: queryLanguage,
+      }).then((resp) =>
+        resp.json().then((body) => {
+          translatedQuery.current = body.result;
+          // The query has now been translated to English. Pass the English translation to
+          // the searchState.
+          setSearchState({
+            ...urlParams,
+            query: body.result,
+          });
+        })
+      );
+    } else if (translatedQuery.current) {
+      // The query was translated during a prior search, but the user has (de)-selected refinements,
+      // which have triggered the current effect. Pass the new refinements to the searchState with the
+      // already translated query rather than the untranslated query contained in the urlParams
+      setSearchState({
+        ...urlParams,
+        query: translatedQuery.current,
+      });
+    } else {
+      // A simple English language search
+      setSearchState(urlParams);
+    }
+  }, [search, cookies.googtrans, searchState?.query]);
+
+  if (searchState === null) {
     return null;
   }
 
@@ -102,7 +118,7 @@ export const SearchResultsPage = () => {
       searchState={searchState}
       searchRadius={searchRadius}
       setSearchRadius={setSearchRadius}
-      untranslatedQuery={untranslatedQuery}
+      untranslatedQuery={untranslatedQuery.current}
     />
   );
 };
@@ -129,7 +145,7 @@ const InnerSearchResults = ({
   searchState: SearchState;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
-  untranslatedQuery: string;
+  untranslatedQuery: string | undefined | null;
 }) => {
   if (userLocation === null) {
     return <Loader />;
@@ -159,12 +175,23 @@ const InnerSearchResults = ({
         searchClient={searchClient}
         indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
         searchState={searchState}
-        onSearchStateChange={(nextSearchState: any) => {
+        onSearchStateChange={(nextSearchState: SearchState) => {
           const THRESHOLD = 700;
           const newPush = Date.now();
           setLastPush(newPush);
+          const urlParams = {
+            ...nextSearchState,
+            // With our setup, the onSearchStateChange event only runs as a result of editing
+            // refinements. It is not called when the user enters a new query in the search
+            // input field. Thus, the query value will not have changed. However, of relavance to
+            // non-English queries, the nextSearchState arg that's passed to this callback includes
+            // the the _translated_ query rather than the user's original untranslated input.
+            // For various reasons, we want to urlParams query value to be the untranslated query.
+            query: untranslatedQuery ?? nextSearchState.query,
+          };
+
           const newUrl = nextSearchState
-            ? `search?${qs.stringify(nextSearchState)}`
+            ? `search?${qs.stringify(urlParams)}`
             : "";
           if (lastPush && newPush - lastPush <= THRESHOLD) {
             history.replace(newUrl);
