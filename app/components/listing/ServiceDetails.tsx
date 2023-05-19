@@ -18,7 +18,10 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
       data-cy="service-list-item"
     >
       <h2 className="service--header">
-        <Link to={{ pathname: `/services/${service.id}` }} translate="no">
+        <Link
+          className="notranslate"
+          to={{ pathname: `/services/${service.id}` }}
+        >
           {service.name}
         </Link>
       </h2>

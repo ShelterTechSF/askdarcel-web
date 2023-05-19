@@ -19,7 +19,7 @@ import {
   TableOfOpeningTimes,
   WebsiteRenderer,
 } from "../components/listing";
-import { Loader } from "../components/ui";
+import { Footer, Loader } from "../components/ui";
 import whitelabel from "../utils/whitelabel";
 import {
   fetchOrganization,
@@ -78,14 +78,13 @@ export const OrganizationListingPage = () => {
         <meta name="description" content={org.long_description || ""} />
       </Helmet>
       <article className="org" id="resource">
-        <div className="org--main">
+        <div className="org--main weglot-dynamic">
           <div className="org--main--left">
             <header className="org--main--header">
               <div className="org--main--header--title-container">
                 <h1
                   data-cy="org-page-title"
-                  className="org--main--header--title"
-                  translate="no"
+                  className="org--main--header--title notranslate"
                 >
                   {org.name}
                 </h1>
@@ -184,6 +183,7 @@ export const OrganizationListingPage = () => {
           </div>
         </div>
       </article>
+      {whitelabel.footerOptions.showOnListingPages && <Footer />}
     </div>
   );
 };

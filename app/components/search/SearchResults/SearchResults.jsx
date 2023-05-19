@@ -252,16 +252,17 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
       />
       <div className={styles.searchText}>
         <div className={styles.title}>
-          <Link to={{ pathname: `/${basePath}/${entryId}` }} translate="no">{`${
-            index + 1
-          }. ${hit.name}`}</Link>
+          <Link
+            to={{ pathname: `/${basePath}/${entryId}` }}
+            className="notranslate"
+          >{`${index + 1}. ${hit.name}`}</Link>
         </div>
         <div className={styles.serviceOf}>
-          <Link to={`/organizations/${resourceId}`} translate="no">
+          <Link to={`/organizations/${resourceId}`} className="notranslate">
             {hit.service_of}
           </Link>
         </div>
-        <div className={styles.address} translate="no">
+        <div className={`notranslate ${styles.address}`}>
           {renderAddressMetadata(hit)}
         </div>
         <ReactMarkdown

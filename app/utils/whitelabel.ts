@@ -35,6 +35,12 @@ interface WhiteLabelSite {
    * [1]: https://cloud.google.com/translate/docs/languages
    */
   enabledTranslations: readonly string[];
+  footerOptions: {
+    showOnListingPages: boolean;
+    showTitle: boolean;
+    showLinks: boolean;
+    showSFSeal: boolean;
+  };
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
   logoLinkDestination: string;
@@ -53,6 +59,9 @@ interface WhiteLabelSite {
   siteUrl: string;
   title: string;
   userWay: boolean;
+  weGlot?: {
+    apiKey: string;
+  };
 }
 
 // Include a domain in config.js
@@ -88,6 +97,12 @@ variety of other services, from education and legal aid to senior
 services and re-entry programs.`,
   aboutPageTitle: "SF Service Guide",
   enabledTranslations: ["en", "es", "tl", "zh-TW"],
+  footerOptions: {
+    showOnListingPages: false,
+    showTitle: true,
+    showLinks: true,
+    showSFSeal: false,
+  },
   homePageComponent: "HomePage",
   intercom: false,
   logoLinkDestination: "/",
@@ -126,6 +141,12 @@ const SFFamilies: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   enabledTranslations: ["en", "es", "tl", "zh-TW", "vi", "ar", "ru"],
+  footerOptions: {
+    showOnListingPages: true,
+    showTitle: false,
+    showLinks: false,
+    showSFSeal: true,
+  },
   logoLinkDestination: "https://www.our415.org/",
   navLogoStyle: styles.navLogoSFFamilies,
   showBanner: false,
@@ -136,6 +157,9 @@ const SFFamilies: WhiteLabelSite = {
   siteUrl: "https://our415.sfserviceguide.org/",
   title: "Our 415",
   userWay: true,
+  weGlot: {
+    apiKey: "wg_5d69415032907833ac16f892ee6369778",
+  },
 } as const;
 
 const SFServiceGuide: WhiteLabelSite = {

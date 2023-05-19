@@ -1,36 +1,37 @@
 @import "../../styles/utils/helpers";
 
 .action-sidebar {
-  margin: $padding-xlarge 0;
-
   li {
     text-align: center;
-    border: 1px solid $color-grey2;
-    width: 128px;
-    height: 128px;
+    border: 1px solid $color-grey3;
+    width: 110px;
+    height: 110px;
 
     a {
       color: $color-textfade;
-      padding: $padding-default 0;
+      padding-top: $padding-default;
       display: flex;
+      gap: 12px;
       flex-direction: column;
-      width: 128px;
-      height: 128px;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
 
       img {
-        display: block;
-        margin: $padding-default $padding-default $padding-large;
-        font-size: $padding-xxlarge;
-        max-height: 72px;
+        height: 36px;
+        width: 36px;
+        margin: 0 auto;
       }
 
       span {
         font-size: $padding-large;
+        color: $color-grey6;
+        line-height: 1.2;
       }
     }
 
     &:hover {
-      background: $color-grey2;
+      background: $color-grey3;
       color: $color-title;
     }
   }
