@@ -91,7 +91,7 @@ export const SearchResultsPage = () => {
       );
     } else if (translatedQuery.current) {
       // The query was translated during a prior search, but the user has (de)-selected refinements,
-      // which have triggered the current effect. Pass the new refinements to the searchState with the
+      // which has triggered the current effect. Pass the new refinements to the searchState with the
       // already translated query rather than the untranslated query contained in the urlParams
       setSearchState({
         ...urlParams,
@@ -166,7 +166,7 @@ const InnerSearchResults = ({
       </Helmet>
       <Header
         translateResultsTitle={false}
-        resultsTitle={untranslatedQuery || ""}
+        resultsTitle={untranslatedQuery ?? ""}
         expandList={expandList}
         setExpandList={setExpandList}
       />
@@ -185,7 +185,7 @@ const InnerSearchResults = ({
             // refinements. It is not called when the user enters a new query in the search
             // input field. Thus, the query value will not have changed. However, of relavance to
             // non-English queries, the nextSearchState arg that's passed to this callback includes
-            // the the _translated_ query rather than the user's original untranslated input.
+            // the _translated_ query rather than the user's original untranslated input.
             // For various reasons, we want to urlParams query value to be the untranslated query.
             query: untranslatedQuery ?? nextSearchState.query,
           };
