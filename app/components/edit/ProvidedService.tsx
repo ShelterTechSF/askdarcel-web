@@ -53,10 +53,10 @@ export interface InternalSchedule {
 /** If the argument is either an InternalSchedule or an empty object, return
  *  true if it is an InternalSchedule.
  */
-export function isNonEmptyInternalSchedule(
+export function isEmptyInternalSchedule(
   schedule: InternalSchedule | Record<string, never>
-): schedule is InternalSchedule {
-  return "Monday" in schedule;
+): schedule is Record<string, never> {
+  return !("Monday" in schedule);
 }
 
 /** Build UI state schedule from API schedule.
