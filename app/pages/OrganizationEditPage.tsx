@@ -11,7 +11,10 @@ import EditNotes from "../components/edit/EditNotes";
 import EditSchedule from "../components/edit/EditSchedule";
 import EditPhones from "../components/edit/EditPhones";
 import EditSidebar from "../components/edit/EditSidebar";
-import { buildScheduleDays } from "../components/edit/ProvidedService";
+import {
+  buildScheduleDays,
+  isEmptyInternalSchedule,
+} from "../components/edit/ProvidedService";
 import type { InternalSchedule } from "../components/edit/ProvidedService";
 import type { State as EditNotesState } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
@@ -1426,7 +1429,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState(object);
   }
 
-  handleScheduleChange(scheduleObj) {
+  handleScheduleChange(scheduleObj: InternalSchedule) {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
@@ -1468,6 +1471,8 @@ class OrganizationEditPage extends React.Component<Props, State> {
   renderSectionFields() {
     const { resource, scheduleObj } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
+    if (isEmptyInternalSchedule(scheduleObj))
+      throw new Error("Expected scheduleObj to not be empty");
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
