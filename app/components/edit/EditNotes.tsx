@@ -1,15 +1,42 @@
 import React, { Component } from "react";
 import EditNote from "./EditNote";
+import { Note } from "../../models";
 
-class EditNotes extends Component<any, any> {
-  constructor(props) {
+export interface InternalNote extends Partial<Note> {
+  key: number;
+  isRemoved?: boolean;
+}
+
+export interface InternalNoteChanges {
+  note?: string;
+  isRemoved?: boolean;
+}
+
+type Props = {
+  notes: Note[] | undefined;
+  handleNotesChange: (n: State) => void;
+};
+
+export type State = {
+  notes: Record<number, InternalNoteChanges>;
+  existingNotes: InternalNote[];
+  uuid: number;
+};
+
+class EditNotes extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       notes: {},
       existingNotes: props.notes
         ? props.notes.map((note) => {
-            const newNote = note;
+            // HACK: This is bad because we are mutating the props to this
+            // component, which should never happen in a component. We should
+            // create a copy of the original Note before doing this, but before
+            // changing this code, we need to make sure that nothing else is relying on
+            // that mutation happening to the original Note props.
+            const newNote = note as InternalNote;
             newNote.key = note.id;
             return newNote;
           })
@@ -23,7 +50,7 @@ class EditNotes extends Component<any, any> {
     this.removeNote = this.removeNote.bind(this);
   }
 
-  handleNoteChange(key, note) {
+  handleNoteChange(key: number, note: InternalNoteChanges): void {
     const { notes } = this.state;
     const { handleNotesChange } = this.props;
     notes[key] = note;
@@ -32,6 +59,10 @@ class EditNotes extends Component<any, any> {
         notes,
       },
       () => {
+        // HACK: This is really strange, to pass in the entirety of the State of
+        // this component to a change handler. We should really be more
+        // selectively deciding what state should be synchronized to the parent
+        // component.
         handleNotesChange(this.state);
       }
     );
@@ -46,12 +77,15 @@ class EditNotes extends Component<any, any> {
     this.setState({ existingNotes, uuid: newUUID });
   }
 
-  removeNote(index) {
+  removeNote(index: number) {
     const { handleNotesChange } = this.props;
     const { existingNotes, notes } = this.state;
     const currentNote = existingNotes[index];
     currentNote.isRemoved = true;
     const { key } = currentNote;
+    // HACK: This is really bad, and we shouldn't be directly mutating the state
+    // like this. Instead we should create a copy of the state variables we want
+    // to mutate and use `setState()` to update them.
     // If we haven't created the note in our DB yet
     // just remove it from the object locally
     if (key < 0) {
