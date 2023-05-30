@@ -43,7 +43,7 @@ export const SearchResultsPage = () => {
   const [lastPush, setLastPush] = useState(Date.now());
   const [expandList, setExpandList] = useState(false);
 
-  const [searchState, setSearchState] = useState<SearchState | null >(null);
+  const [searchState, setSearchState] = useState<SearchState | null>(null);
   const [searchRadius, setSearchRadius] = useState(
     searchState?.configure?.aroundRadius ?? "all"
   );
@@ -54,13 +54,17 @@ export const SearchResultsPage = () => {
   // This untranslatedQuery value is also checked against when a new search is triggered
   // to determine if the user has input a different query (vs. merely selecting refinements),
   // in which case we need to call the translation API again
-  const [untranslatedQuery, setUntranslatedQuery] = useState<string | null >(null);
+  const [untranslatedQuery, setUntranslatedQuery] = useState<string | null>(
+    null
+  );
   const [translatedQuery, setTranslatedQuery] = useState<string | null>(null);
-  const [nonQuerySearchParams, setNonQuerySearchParams] = useState<SearchState>({});
+  const [nonQuerySearchParams, setNonQuerySearchParams] = useState<SearchState>(
+    {}
+  );
 
   useEffect(() => {
     const qsParams = qs.parse(search.slice(1));
-    setUntranslatedQuery(qsParams.query ? qsParams.query as string : '');
+    setUntranslatedQuery(qsParams.query ? (qsParams.query as string) : "");
     delete qsParams.query;
     setNonQuerySearchParams(qsParams);
   }, [search]);
@@ -96,10 +100,7 @@ export const SearchResultsPage = () => {
 
   useEffect(() => {
     setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
-  }, [
-    translatedQuery,
-    nonQuerySearchParams,
-  ]);
+  }, [translatedQuery, nonQuerySearchParams]);
 
   if (translatedQuery === null || searchState === null) {
     return null;
