@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { Helmet } from "react-helmet-async";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, Configure, SearchBox } from "react-instantsearch/dom";
 import qs, { ParsedQs } from "qs";
 
 import { GeoCoordinates, useAppContext, whiteLabel } from "utils";
+import { post } from "utils/DataService";
 
 import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
@@ -28,28 +30,84 @@ interface ConfigureState {
 
 interface SearchState extends ParsedQs {
   configure?: ConfigureState;
-  query?: string;
+  query?: string | null;
   [key: string]: any;
 }
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const SearchResultsPage = () => {
+  const [cookies] = useCookies(["googtrans"]);
+  const history = useHistory();
+  const { search } = useLocation();
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
-  const { search } = useLocation();
   const [expandList, setExpandList] = useState(false);
 
-  const searchState: SearchState = useMemo(
-    () => qs.parse(search.slice(1)),
-    [search]
-  );
+  const [searchState, setSearchState] = useState<SearchState | null >(null);
   const [searchRadius, setSearchRadius] = useState(
     searchState?.configure?.aroundRadius ?? "all"
   );
 
+  // In cases where we translate a query into English, we use this value
+  // to represent the user's original, untranslated input. The untranslatedQuery
+  // is displayed in the UI and stored in the URL params.
+  // This untranslatedQuery value is also checked against when a new search is triggered
+  // to determine if the user has input a different query (vs. merely selecting refinements),
+  // in which case we need to call the translation API again
+  const [untranslatedQuery, setUntranslatedQuery] = useState<string | null >(null);
+  const [translatedQuery, setTranslatedQuery] = useState<string | null>(null);
+  const [nonQuerySearchParams, setNonQuerySearchParams] = useState<SearchState>({});
+
+  useEffect(() => {
+    const qsParams = qs.parse(search.slice(1));
+    setUntranslatedQuery(qsParams.query ? qsParams.query as string : '');
+    delete qsParams.query;
+    setNonQuerySearchParams(qsParams);
+  }, [search]);
+
+  useEffect(() => {
+    if (untranslatedQuery === null) {
+      return;
+    }
+
+    let queryLanguage = "en";
+    // Google Translate determines translation source and target with a
+    // "googtrans" cookie. If the cookie exists, we assume that the
+    // the query should be translated into English prior to querying Algolia
+    const translationCookie = cookies.googtrans;
+    if (translationCookie) {
+      [, queryLanguage] = translationCookie.split("/en/");
+    }
+
+    const emptyQuery = untranslatedQuery.length === 0;
+    if (queryLanguage === "en" || emptyQuery) {
+      setTranslatedQuery(untranslatedQuery);
+    } else if (untranslatedQuery) {
+      post("/api/translation/translate_text", {
+        text: untranslatedQuery,
+        source_language: queryLanguage,
+      }).then((resp) =>
+        resp.json().then((body) => {
+          setTranslatedQuery(body.result as string);
+        })
+      );
+    }
+  }, [untranslatedQuery, cookies.googtrans]);
+
+  useEffect(() => {
+    setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
+  }, [
+    translatedQuery,
+    nonQuerySearchParams,
+  ]);
+
+  if (translatedQuery === null || searchState === null) {
+    return null;
+  }
+
   return (
     <InnerSearchResults
-      history={useHistory()}
+      history={history}
       userLocation={userLocation}
       lastPush={lastPush}
       setLastPush={setLastPush}
@@ -58,6 +116,7 @@ export const SearchResultsPage = () => {
       searchState={searchState}
       searchRadius={searchRadius}
       setSearchRadius={setSearchRadius}
+      untranslatedQuery={untranslatedQuery}
     />
   );
 };
@@ -73,6 +132,7 @@ const InnerSearchResults = ({
   searchState,
   searchRadius,
   setSearchRadius,
+  untranslatedQuery,
 }: {
   history: any;
   userLocation: GeoCoordinates | null;
@@ -83,6 +143,7 @@ const InnerSearchResults = ({
   searchState: SearchState;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
+  untranslatedQuery: string | undefined | null;
 }) => {
   if (userLocation === null) {
     return <Loader />;
@@ -102,7 +163,8 @@ const InnerSearchResults = ({
         />
       </Helmet>
       <Header
-        resultsTitle={searchState.query || ""}
+        translateResultsTitle={false}
+        resultsTitle={untranslatedQuery ?? ""}
         expandList={expandList}
         setExpandList={setExpandList}
       />
@@ -111,12 +173,23 @@ const InnerSearchResults = ({
         searchClient={searchClient}
         indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
         searchState={searchState}
-        onSearchStateChange={(nextSearchState: any) => {
+        onSearchStateChange={(nextSearchState: SearchState) => {
           const THRESHOLD = 700;
           const newPush = Date.now();
           setLastPush(newPush);
+          const urlParams = {
+            ...nextSearchState,
+            // With our setup, the onSearchStateChange event only runs as a result of editing
+            // refinements. It is not called when the user enters a new query in the search
+            // input field. Thus, the query value will not have changed. However, of relevance to
+            // non-English queries, the nextSearchState arg that's passed to this callback includes
+            // the _translated_ query rather than the user's original untranslated input.
+            // For various reasons, we want to urlParams query value to be the untranslated query.
+            query: untranslatedQuery,
+          };
+
           const newUrl = nextSearchState
-            ? `search?${qs.stringify(nextSearchState)}`
+            ? `search?${qs.stringify(urlParams)}`
             : "";
           if (lastPush && newPush - lastPush <= THRESHOLD) {
             history.replace(newUrl);
@@ -131,10 +204,6 @@ const InnerSearchResults = ({
           aroundRadius={searchRadius}
           aroundPrecision={1600}
         />
-        {/* <div className={styles.searchBox}>
-          todo: part of the next stage of multiple location development
-          <SearchBox />
-        </div> */}
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}

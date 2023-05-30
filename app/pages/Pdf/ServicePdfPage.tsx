@@ -35,7 +35,7 @@ export const ServicePdfPage = () => {
 
   const { search } = useLocation();
   const urlParams = new URLSearchParams(search);
-  const targetLangCode = urlParams.get("lang");
+  const targetLangCode = urlParams.get("handoutLanguage");
 
   const ref = useRef<HTMLDivElement>(null);
   const styleRef = useRef<HTMLStyleElement>(null);

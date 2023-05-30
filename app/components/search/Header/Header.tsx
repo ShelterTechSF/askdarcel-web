@@ -11,10 +11,12 @@ const { showHeaderQrCode, showPrintResultsBtn } = whiteLabel;
 
 export const Header = ({
   resultsTitle,
+  translateResultsTitle = true,
   expandList,
   setExpandList,
 }: {
   resultsTitle: string;
+  translateResultsTitle?: boolean;
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
 }) => {
@@ -22,7 +24,13 @@ export const Header = ({
 
   return (
     <div className={styles.header}>
-      <h1 className={styles.title}>{resultsTitle}</h1>
+      <h1
+        className={`${styles.title} ${
+          translateResultsTitle ? "" : "notranslate"
+        }`}
+      >
+        {resultsTitle}
+      </h1>
       <Button
         onClick={() => {
           setQrCodeModalOpen(true);
