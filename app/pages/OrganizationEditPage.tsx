@@ -11,8 +11,12 @@ import EditNotes from "../components/edit/EditNotes";
 import EditSchedule from "../components/edit/EditSchedule";
 import EditPhones from "../components/edit/EditPhones";
 import EditSidebar from "../components/edit/EditSidebar";
-import { buildScheduleDays } from "../components/edit/ProvidedService";
+import {
+  buildScheduleDays,
+  isEmptyInternalSchedule,
+} from "../components/edit/ProvidedService";
 import type { InternalSchedule } from "../components/edit/ProvidedService";
+import type { State as EditNotesState } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type { Instruction, Organization, Schedule, Service } from "../models";
 import * as dataService from "../utils/DataService";
@@ -30,6 +34,11 @@ function assertDefined<T>(x: T | undefined, msg: string): asserts x is T {
 const ACTION_INSERT = "insert";
 const ACTION_EDIT = "edit";
 const ACTION_REMOVE = "remove";
+
+interface UriObj {
+  id: number | undefined;
+  path: string;
+}
 
 /**
  * Apply a set of changes to a base array of Services.
@@ -224,7 +233,11 @@ function postSchedule(scheduleObj, promises) {
   });
 }
 
-function postNotes(notesObj, promises, uriObj) {
+function postNotes(
+  notesObj: Partial<EditNotesState>,
+  promises: Promise<unknown>[],
+  uriObj: UriObj
+) {
   if (notesObj && notesObj.notes) {
     const { notes } = notesObj;
     Object.entries(notes).forEach(([key, currentNote]: any) => {
@@ -541,7 +554,7 @@ export interface InternalTopLevelService
   instructions?: InternalInstruction[];
 
   /** Changes to the notes attached to this service. */
-  notesObj?: any;
+  notesObj?: EditNotesState;
 
   /** A Schedule attached to the service.
    *
@@ -609,7 +622,7 @@ type State = {
   /** Mapping from service ID to service. */
   services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<number>;
-  notes: Record<any, any>;
+  notes: Partial<EditNotesState>;
   phones: Record<any, any>[];
   submitting: boolean;
   newResource: boolean;
@@ -1416,11 +1429,11 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState(object);
   }
 
-  handleScheduleChange(scheduleObj) {
+  handleScheduleChange(scheduleObj: InternalSchedule) {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
-  handleNotesChange(notesObj) {
+  handleNotesChange(notesObj: EditNotesState) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
 
@@ -1458,6 +1471,8 @@ class OrganizationEditPage extends React.Component<Props, State> {
   renderSectionFields() {
     const { resource, scheduleObj } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
+    if (isEmptyInternalSchedule(scheduleObj))
+      throw new Error("Expected scheduleObj to not be empty");
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">

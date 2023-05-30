@@ -1,8 +1,19 @@
 import React, { Component } from "react";
+import type { InternalNote, InternalNoteChanges } from "./EditNotes";
 
-/* eslint-disable react/no-multi-comp */
-class EditNote extends Component<any, any> {
-  constructor(props) {
+type Props = {
+  index: number;
+  note: InternalNote;
+  handleChange: (key: number, note: InternalNoteChanges) => void;
+  removeNote: (index: number) => void;
+};
+
+type State = {
+  note: InternalNoteChanges;
+};
+
+class EditNote extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       note: {},
@@ -10,7 +21,7 @@ class EditNote extends Component<any, any> {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  handleFieldChange(e) {
+  handleFieldChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const { note } = this.state;
     const {
       handleChange,
@@ -23,7 +34,7 @@ class EditNote extends Component<any, any> {
   }
 
   render() {
-    let note: any = null;
+    let note: JSX.Element | null = null;
     const { index, note: currentNote, removeNote } = this.props;
     if (!currentNote.isRemoved) {
       note = (
