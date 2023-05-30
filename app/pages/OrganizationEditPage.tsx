@@ -18,7 +18,13 @@ import {
 import type { InternalSchedule } from "../components/edit/ProvidedService";
 import type { State as EditNotesState } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
-import type { Instruction, Organization, Schedule, Service } from "../models";
+import type {
+  Instruction,
+  Organization,
+  PhoneNumber,
+  Schedule,
+  Service,
+} from "../models";
 import * as dataService from "../utils/DataService";
 import "./OrganizationEditPage.scss";
 
@@ -603,6 +609,17 @@ export interface InternalFlattenedService extends InternalTopLevelService {
   schedule: Schedule | { schedule_days: never[] };
 }
 
+/** Internal shape of a Phone number on the top-level state.
+ *
+ * Differs from a real PhoneNumber in that the `extension` and `country_code`
+ * fields are omitted. Also differs in that all the fields are possibly
+ * undefined, in the case when the form fields for a new phone number are first
+ * added, but before the user fills them out.
+ */
+export type InternalPhoneNumber = Partial<
+  Pick<PhoneNumber, "id" | "number" | "service_type">
+>;
+
 /** The type of route parameters coming from react-router, based on our routes.
  *
  * The `id` property comes from the `:id` in our edit route, where it is
@@ -623,7 +640,7 @@ type State = {
   services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<number>;
   notes: Partial<EditNotesState>;
-  phones: Record<any, any>[];
+  phones: InternalPhoneNumber[];
   submitting: boolean;
   newResource: boolean;
   inputsDirty: boolean;
@@ -1409,7 +1426,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     }
   }
 
-  handlePhoneChange(phoneCollection) {
+  handlePhoneChange(phoneCollection: InternalPhoneNumber[]) {
     this.setState({ phones: phoneCollection, inputsDirty: true });
   }
 
