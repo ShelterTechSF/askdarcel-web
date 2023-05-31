@@ -121,7 +121,7 @@ export { buildScheduleDays };
 
 type InputFieldProps = {
   type?: string;
-  label: string;
+  label: React.ReactNode;
   placeholder: string;
   value?: string | null | undefined;
   setValue: (x: string) => void;
@@ -306,6 +306,26 @@ const ProvidedService = ({
 
       <ul className="edit--section--list">
         <li className="edit--section--list--item">
+          <FormTextArea
+            textareaClassName="edit-section-internal-note"
+            label={
+              <div>
+                <p className="internal-note-label-text">
+                  Internal Notes about Editing this Service
+                </p>
+                <p className="internal-note-label-subtext">
+                  (These notes will NOT be displayed to users. They are for
+                  internal use only, to help with content editing.)
+                </p>
+              </div>
+            }
+            placeholder="Add any info that future content editors should be aware of when updating this service. Adding dates to your notes will help with tracking changes."
+            value={service.internal_note ?? ""}
+            setValue={(value) => handleChange("internal_note", value)}
+          />
+        </li>
+
+        <li className="edit--section--list--item">
           <InputField
             label="Name of the Service"
             placeholder="What is this service called?"
@@ -344,7 +364,7 @@ const ProvidedService = ({
             <FormTextArea
               label={textArea.label}
               placeholder={textArea.placeholder}
-              value={service[textArea.field] || ""}
+              value={service[textArea.field] ?? ""}
               setValue={(value) => handleChange(textArea.field, value)}
             />
           </li>
