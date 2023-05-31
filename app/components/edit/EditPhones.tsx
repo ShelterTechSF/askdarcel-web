@@ -1,10 +1,20 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import _ from "lodash";
 import editCollectionHOC from "./EditCollection";
+import type { InternalPhoneNumber } from "../../pages/OrganizationEditPage";
 
-class EditPhone extends Component<any, any> {
-  constructor(props) {
+type Props = {
+  item: InternalPhoneNumber;
+  handleChange: (index: number, newPhone: InternalPhoneNumber) => void;
+  index: number;
+};
+
+type State = {
+  phone: InternalPhoneNumber;
+};
+
+class EditPhone extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const { item } = this.props;
@@ -16,11 +26,14 @@ class EditPhone extends Component<any, any> {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  handleFieldChange(e) {
+  handleFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
     const { field } = e.target.dataset;
     const { phone } = this.state;
     const { handleChange, index, item } = this.props;
+
+    if (field === undefined)
+      throw new Error("Expected field to not be undefined");
 
     if (phone[field] || value !== item[field]) {
       phone[field] = value;
@@ -56,21 +69,6 @@ class EditPhone extends Component<any, any> {
     );
   }
 }
-
-// Leaving propTypes definitions here for reference. Remove when we add proper
-// TypeScript types to this component's props.
-//
-// EditPhone.propTypes = {
-//   handleChange: PropTypes.func.isRequired,
-//   index: PropTypes.number.isRequired,
-//   item: PropTypes.shape({
-//     country_code: PropTypes.string,
-//     extension: PropTypes.string,
-//     id: PropTypes.number,
-//     number: PropTypes.string,
-//     service_type: PropTypes.string,
-//   }).isRequired,
-// };
 
 const EditPhones = editCollectionHOC(EditPhone, "Phones", {}, "Add Phone");
 EditPhones.displayName = "EditPhones";

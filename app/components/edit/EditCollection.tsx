@@ -1,19 +1,69 @@
 import React, { Component } from "react";
 
+/** Base properties expected on an item. */
+interface BaseItem {
+  id?: number;
+  isRemoved?: boolean;
+  dirty?: boolean;
+}
+
+/** The props of the single EditItem component that gets passed to editCollectionHOC. */
+type EditSingleItemProps<T> = {
+  index: number;
+  item: T;
+  handleChange: (index: number, newItem: T) => void;
+};
+
 /**
  *
  * @param {Component} ResourceObjectItem individual component to have a collection for
  * @param {string} label title field for items
  * @param {Object} blankTemplateObj blank template to fill new items in the collection with
  */
-export default function editCollectionHOC(
-  ResourceObjectItem,
-  label,
-  blankTemplateObj,
-  buttonText
-): any {
-  return class EditCollection extends Component<any, any> {
-    constructor(props) {
+export default function editCollectionHOC<T extends BaseItem>(
+  ResourceObjectItem: typeof Component<EditSingleItemProps<T>>,
+  label: string,
+  blankTemplateObj: T,
+  buttonText: string
+) {
+  type Props = {
+    collection?: T[];
+    handleChange: (newCollection: T[]) => void;
+  };
+  // WARNING: The way we are calling setState() on this component is extremely
+  // weird, since we pass the `collection` array as the first argument, rather
+  // than an object that looks like `{ collection }`. What this actually means
+  // is that the `collection` array gets interpreted as an object, where the
+  // keys are the numeric indices (converted to strings), and the values are the
+  // item at that index. This means that after a single call to `setState()`,
+  // the state actually looks something like this:
+  //
+  // {
+  //    collection: [item0, item1, ...],
+  //    0: item0,
+  //    1: item1,
+  //    ...
+  // }
+  //
+  // This was probably unintentional, and the only reason why this higher order
+  // component works at all is because we are directly mutating the objects
+  // within the state before calling `setState()`, which is also bad because you
+  // are not supposed to directly mutate state on React components.
+  //
+  // To appease TypeScript, we cast the arguments to `setState()` to `any`, but
+  // we should really fix this by not directly mutating state and by not trying
+  // to set the state to an array.
+  type State = {
+    collection: T[];
+  };
+  return class EditCollection extends Component<Props, State> {
+    // ESLint Airbnb rules conflict with TypeScript here, since we have no other
+    // way to declare a static property that is assigned outside of the class
+    // declaration.
+    // eslint-disable-next-line react/static-property-placement
+    static displayName: string;
+
+    constructor(props: Props) {
       super(props);
 
       const { collection = [] } = this.props;
@@ -31,19 +81,21 @@ export default function editCollectionHOC(
     addItem() {
       const { collection } = this.state;
       collection.push(blankTemplateObj);
-      this.setState(collection);
+      // HACK: see comment on State.
+      this.setState(collection as any);
     }
 
-    handleChange(index, item) {
+    handleChange(index: number, item: T) {
       const { handleChange } = this.props;
       const { collection } = this.state;
       /* eslint-disable no-param-reassign */
       item.dirty = true;
       collection[index] = item;
-      this.setState(collection, () => handleChange(collection));
+      // HACK: see comment on State.
+      this.setState(collection as any, () => handleChange(collection));
     }
 
-    removeItem(index, item) {
+    removeItem(index: number, item: T) {
       const { handleChange } = this.props;
       const { collection } = this.state;
       if (collection[index].id) {
@@ -52,13 +104,14 @@ export default function editCollectionHOC(
         collection.splice(index, 1);
       }
 
-      this.setState(collection, () => handleChange(collection));
+      // HACK: see comment on State.
+      this.setState(collection as any, () => handleChange(collection));
     }
 
     createItemComponents() {
       const { collection } = this.state;
       return collection
-        .map((item, index) => [item, index])
+        .map((item, index) => [item, index] as const)
         .filter(([item]) => !item.isRemoved)
         .map(([item, index]) => (
           <div
