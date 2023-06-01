@@ -37,7 +37,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://www.sheltertech.org/get-involved"
+                    href="https://www.sheltertech.org/volunteer"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
