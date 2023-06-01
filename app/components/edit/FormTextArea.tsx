@@ -1,15 +1,23 @@
 import React from "react";
 
 type Props = {
-  label: string;
+  label: React.ReactNode;
   placeholder: string;
-  value: string;
   setValue: (x: string) => void;
+  textareaClassName?: string;
+  value: string;
 };
-const FormTextArea = ({ label, placeholder, value, setValue }: Props) => (
+const FormTextArea = ({
+  label,
+  placeholder,
+  value,
+  setValue,
+  textareaClassName = "",
+}: Props) => (
   <>
     <label htmlFor="textarea">{label}</label>
     <textarea
+      className={textareaClassName}
       placeholder={placeholder}
       value={value}
       onChange={(evt) => setValue(evt.target.value)}

@@ -16,6 +16,7 @@ export interface Organization {
   certified: boolean;
   email: string | null;
   featured: boolean;
+  internal_note: string | null;
   legal_status: string | null;
   long_description: string | null;
   notes: Note[];

@@ -158,6 +158,10 @@
       }
     }
 
+    .edit-section-internal-note {
+      height: 100px;
+    }
+
     &--sublist .edit--section--list--item {
       margin-right: 0;
     }
@@ -242,4 +246,14 @@
     background: $color-red;
     color: $color-white;
   }
+}
+
+.internal-note-label-text {
+  color: $color-red;
+}
+
+.internal-note-label-subtext {
+  color: $color-red;
+  font-style: italic;
+  font-size: 14px;
 }

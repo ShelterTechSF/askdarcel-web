@@ -649,6 +649,7 @@ type State = {
   // Properties that are added after initialization.
   alternate_name?: string;
   email?: string;
+  internal_note?: string;
   legal_status?: string;
   long_description?: string;
   name?: string;
@@ -1289,6 +1290,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       addresses,
       alternate_name,
       email,
+      internal_note,
       legal_status,
       long_description,
       name,
@@ -1332,6 +1334,10 @@ class OrganizationEditPage extends React.Component<Props, State> {
     }
     if (legal_status !== resource.legal_status) {
       resourceChangeRequest.legal_status = legal_status;
+      resourceModified = true;
+    }
+    if (internal_note !== resource.internal_note) {
+      resourceChangeRequest.internal_note = internal_note;
       resourceModified = true;
     }
     // fire off resource request
@@ -1493,6 +1499,26 @@ class OrganizationEditPage extends React.Component<Props, State> {
     return (
       <section id="info" className="edit--section">
         <ul className="edit--section--list">
+          <li key="internal_note" className="edit--section--list--item">
+            <label htmlFor="edit-internal-note-input">
+              <p className="internal-note-label-text">
+                Internal Notes about Editing this Organization
+              </p>
+              <p className="internal-note-label-subtext">
+                (These notes will NOT be displayed to users. They are for
+                internal use only, to help with content editing.)
+              </p>
+            </label>
+            <textarea
+              id="edit-internal-note-input"
+              className="input edit-section-internal-note"
+              placeholder="Add any info that future content editors should be aware of updating this resource. Adding dates to your notes will help with tracking changes."
+              defaultValue={resource.internal_note ?? ""}
+              data-field="internal_note"
+              onChange={this.handleResourceFieldChange}
+            />
+          </li>
+
           <li key="name" className="edit--section--list--item">
             <label htmlFor="edit-name-input">Name of the Organization</label>
             <input

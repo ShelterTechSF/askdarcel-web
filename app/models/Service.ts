@@ -33,6 +33,7 @@ export interface Service {
   featured: boolean | null;
   fee: string | null;
   instructions: Instruction[];
+  internal_note: string | null;
   interpretation_services: string | null;
   long_description: string;
   notes: Note[];
