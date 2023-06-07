@@ -19,6 +19,7 @@ import type { InternalSchedule } from "../components/edit/ProvidedService";
 import type { State as EditNotesState } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type {
+  Address,
   Instruction,
   Organization,
   PhoneNumber,
@@ -107,7 +108,11 @@ const applyChanges = (
     const { schedule } = flattenedService;
     if (schedule === undefined)
       throw new Error("Expected flattened service to have a schedule");
-    newTransformedItems.push({ ...flattenedService, schedule });
+    newTransformedItems.push({
+      addressHandles: [],
+      ...flattenedService,
+      schedule,
+    });
   });
 
   return newTransformedItems;
@@ -318,9 +323,13 @@ function postDocuments(documents, promises) {
  *
  * Otherwise, assume that the address is unmodified and don't do anything.
  */
-const postAddresses = (addresses, uriObj) =>
+const postAddresses = (
+  addresses: InternalAddress[],
+  uriObj: { path: string; id: number | undefined }
+): Promise<unknown>[] =>
   addresses.map((address) => {
-    const { id, isRemoved, dirty } = address;
+    const { isRemoved, dirty } = address;
+    const id = "id" in address ? address.id : undefined;
     const { id: parent_resource_id } = uriObj;
     const postableAddress = { ..._.omit(address, ["dirty", "isRemoved"]) };
 
@@ -406,6 +415,12 @@ const prepSchedule = (scheduleObj) => {
 
 const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
 
+type AddressChangeType =
+  | { type: "markedForRemoval"; handle: number }
+  | { type: "removed"; handle: number }
+  | { type: "modified"; handle: number }
+  | { type: "added" };
+
 /** Determine the type of change between oldAddresses and newAddresses.
  *
  * Given the complete arrays of both the old and new addresses, attempt to
@@ -429,7 +444,10 @@ const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
  * - { type: "modified", handle: number }
  * - { type: "added" } (no handle, because it doesn't exist in oldAddresses)
  */
-const computeTypeOfChangeToAddresses = (oldAddresses, newAddresses) => {
+const computeTypeOfChangeToAddresses = (
+  oldAddresses: InternalAddress[],
+  newAddresses: InternalAddress[]
+): AddressChangeType => {
   if (oldAddresses.length > newAddresses.length) {
     // In this case, we assume that an address was deleted, so we attempt to
     // identify which index was removed so that we can adjust the address
@@ -479,7 +497,7 @@ const setDifference = (set1, set2) =>
 // locations in order to build the complete picture.
 
 /** Get latest list of addresses. */
-const getAddresses = (state) => {
+const getAddresses = (state: State): InternalAddress[] => {
   const { addresses } = state;
   // addresses could be empty if we haven't added, removed, or modified an
   // address. In this case, we want to use the addresses on
@@ -490,7 +508,7 @@ const getAddresses = (state) => {
   // address in the first place, but in that case, using either state.addresses
   // or state.resources.addresses should both give the same result.
   if (addresses.length === 0) {
-    return state.resource.addresses || [];
+    return state.resource?.addresses || [];
   }
   return addresses;
 };
@@ -603,10 +621,17 @@ interface InternalOrganizationService extends Omit<Service, "addresses"> {
  * In addition, the `schedule` field is assumed to always be defined, since
  * either the Schedule came from the original API response or it should have
  * been initialized on the InternalFlattenedService when adding a new Service.
+ *
+ * The `addressHandles` field is also assumed to be defined, since in the case
+ * where the Service already existed on a Resource, the `handleAPIGetResource()`
+ * method will define that field on all Services, and in the case where we
+ * create a new Service, the `addService()` method will initialize it to the
+ * empty array.
  */
 export interface InternalFlattenedService extends InternalTopLevelService {
   id: number;
   schedule: Schedule | { schedule_days: never[] };
+  addressHandles: number[];
 }
 
 /** Internal shape of a Phone number on the top-level state.
@@ -619,6 +644,27 @@ export interface InternalFlattenedService extends InternalTopLevelService {
 export type InternalPhoneNumber = Partial<
   Pick<PhoneNumber, "id" | "number" | "service_type">
 >;
+
+/** Shape of a new address that is being created.
+ *
+ * Note that optional fields are still guaranteed to be set, but will have the
+ * empty string as their value.
+ */
+interface NewAddress {
+  name: string;
+  address_1: string;
+  address_2: string;
+  city: string;
+  state_province: string;
+  postal_code: string;
+}
+
+/** Shape of the `addresses` State variable, which can either come from an
+ * existing address or a new address. */
+export type InternalAddress = (Address | NewAddress) & {
+  isRemoved?: boolean;
+  dirty?: boolean;
+};
 
 /** The type of route parameters coming from react-router, based on our routes.
  *
@@ -635,7 +681,7 @@ type Props = RouteComponentProps<RouteParams> & {
 type State = {
   // Properties that are set at initialization time.
   scheduleObj: Record<string, never> | InternalSchedule;
-  addresses: Record<any, any>[];
+  addresses: InternalAddress[];
   /** Mapping from service ID to service. */
   services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<number>;
@@ -856,7 +902,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     const unsavedAddresses =
       addresses.length > 0 ? addresses : resource.addresses;
 
-    const getAddressIDFromHandle = (handle) => {
+    const getAddressIDFromHandle = (handle: number) => {
       // The only case where unsavedAddresses can be undefined is if
       // resource.addresses is undefined, and that can only happen when creating a
       // new Organization. However, if we're calling this
@@ -870,10 +916,11 @@ class OrganizationEditPage extends React.Component<Props, State> {
         "unsavedAddresses should not be undefined"
       );
 
-      if (unsavedAddresses[handle] && unsavedAddresses[handle].id) {
+      const unsavedAddress = unsavedAddresses[handle];
+      if (unsavedAddress && "id" in unsavedAddress && unsavedAddress.id) {
         // Associating with an address that already existed, which means
         // we can simply grab its ID.
-        return Promise.resolve(unsavedAddresses[handle].id);
+        return Promise.resolve(unsavedAddress.id);
       }
       if (postAddressPromises[handle]) {
         // Associating with an address that was just created, which means
@@ -1069,7 +1116,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
   // Whoops!)
   //
   // this.state.addresses only contains modifications to the addresses
-  getFlattenedAddresses = () => {
+  getFlattenedAddresses = (): InternalAddress[] => {
     const { resource, addresses } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
     const { addresses: resourceAddresses = [] } = resource;
@@ -1082,7 +1129,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     return [];
   };
 
-  setAddresses = (addresses) => {
+  setAddresses = (addresses: InternalAddress[]) => {
     this.setState((state) => {
       // Update addresses, and possibly update services as well due to addresses
       // being removed.
@@ -1108,14 +1155,18 @@ class OrganizationEditPage extends React.Component<Props, State> {
         addresses
       );
 
-      let newServices = null;
+      // A mapping from service ID to service. The key is a string and not a
+      // number because putting a number in an object causes it to be converted
+      // to a string. We should probably be using Maps and not Objects when
+      // using non-string keys to avoid that conversion.
+      let newServices: Record<string, InternalTopLevelService> | null = null;
       if (changeType.type === "removed") {
-        const removedAddressHandle: any = changeType.handle;
+        const removedAddressHandle = changeType.handle;
         // Adjust the address handles on the services to reflect the new
         // indexes.
         newServices = Object.fromEntries(
           Object.entries(oldServices).map(([key, service]) => {
-            let oldServiceAddressHandles: any = null;
+            let oldServiceAddressHandles: number[];
             if (service.addressHandles) {
               // If we had previously made a change to the service's addresses,
               // then they should be on this.state.services[x].addressHandles, and
@@ -1143,7 +1194,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
                 return [key, service];
               }
             }
-            const newAddressHandles = oldServiceAddressHandles.reduce(
+            const newAddressHandles = oldServiceAddressHandles.reduce<number[]>(
               (handles, handle) => {
                 if (handle < removedAddressHandle) {
                   // Address unchanged
@@ -1168,8 +1219,8 @@ class OrganizationEditPage extends React.Component<Props, State> {
         // has a handle to that address, remove it from the service.
         const removedAddressHandle = changeType.handle;
         const someServiceHasStaleHandle = Object.values(oldServices).some(
-          (service: any) => {
-            let addressHandles;
+          (service) => {
+            let addressHandles: number[];
             if (service.addressHandles) {
               ({ addressHandles } = service);
             } else {
@@ -1201,7 +1252,10 @@ class OrganizationEditPage extends React.Component<Props, State> {
         );
         if (someServiceHasStaleHandle) {
           newServices = Object.fromEntries(
-            Object.entries(oldServices).map(([key, service]: any) => {
+            Object.entries(oldServices).map(([key, service]) => {
+              if (service.addressHandles === undefined) {
+                return [key, service];
+              }
               const filteredHandles = service.addressHandles.filter(
                 (handle) => handle !== removedAddressHandle
               );
@@ -1211,11 +1265,21 @@ class OrganizationEditPage extends React.Component<Props, State> {
         }
       }
 
-      const updates: any = { addresses, inputsDirty: true };
+      type StateUpdate = {
+        addresses: InternalAddress[];
+        inputsDirty: boolean;
+        services?: Record<number, InternalTopLevelService>;
+      };
+      const updates: StateUpdate = { addresses, inputsDirty: true };
       if (newServices !== null) {
         updates.services = newServices;
       }
-      return updates;
+      // There's a bug in the TypeScript types for setState() where it doesn't
+      // correctly infer the right types if the return type of this function has
+      // more than one shape and/or has an optional key. We explicitly cast up
+      // to make the `services` key required, helping setState() infer something
+      // reasonable for the case where the `services` key is present.
+      return updates as Required<StateUpdate>;
     });
   };
 
@@ -1242,12 +1306,9 @@ class OrganizationEditPage extends React.Component<Props, State> {
     } = this.state;
     const { history } = this.props;
     const schedule = prepSchedule(scheduleObj);
-    // TODO: Stop sending the country field after it is no longer required on the
-    // API side.
-    const modifiedAddresses = addresses.map((a) => ({ country: "USA", ...a }));
     const newResource = {
       name,
-      addresses: modifiedAddresses,
+      addresses,
       long_description,
       email,
       website,

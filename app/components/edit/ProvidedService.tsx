@@ -8,6 +8,7 @@ import EditPatientHandout from "./EditPatientHandout";
 import { EditServiceChildCollection } from "./EditServiceChildCollection";
 import type { Schedule } from "../../models";
 import type {
+  InternalAddress,
   InternalFlattenedService,
   InternalTopLevelService,
 } from "../../pages/OrganizationEditPage";
@@ -144,7 +145,19 @@ const InputField = ({
   </>
 );
 
-const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
+type EditAddressesProps = {
+  service: InternalFlattenedService;
+  resourceAddresses: InternalAddress[];
+  handleChange: <K extends keyof InternalTopLevelService>(
+    field: K,
+    value: InternalTopLevelService[K]
+  ) => void;
+};
+const EditAddresses = ({
+  service,
+  resourceAddresses,
+  handleChange,
+}: EditAddressesProps) => {
   const selectableOptions = resourceAddresses.flatMap((address, handle) => {
     // Don't include addresses that have already been added to the service
     if (service.addressHandles.includes(handle)) {
@@ -163,7 +176,7 @@ const EditAddresses = ({ service, resourceAddresses, handleChange }) => {
     }
     return [{ value: handle, label: address.name || address.address_1 }];
   });
-  const handleSelectChange = (e) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(e.target.value, 10);
     handleChange("addressHandles", [...service.addressHandles, selectedValue]);
   };
@@ -240,7 +253,7 @@ type ProvidedServiceProps = {
   handleDeactivation: (type: "resource" | "service", id: number) => void;
   index: number;
   service: InternalFlattenedService;
-  resourceAddresses: Record<any, any>[];
+  resourceAddresses: InternalAddress[];
 };
 
 const ProvidedService = ({
