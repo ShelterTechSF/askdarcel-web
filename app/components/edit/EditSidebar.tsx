@@ -123,10 +123,9 @@ const EditSidebar = ({
   }
   // Populate existing services so they show up on the sidebar
   // Do a 2-level-deep clone of the newServices object
-  const allServices = Object.entries(newServices).reduce(
-    (acc, [id, service]: any) => ({ ...acc, [id]: { ...service } }),
-    {}
-  );
+  const allServices: Record<number, InternalTopLevelService> = Object.entries(
+    newServices
+  ).reduce((acc, [id, service]) => ({ ...acc, [id]: { ...service } }), {});
   if (resource.services) {
     resource.services.forEach((service) => {
       allServices[service.id].name = service.name;
@@ -162,7 +161,7 @@ const EditSidebar = ({
           </p>
         )}
         <ul className={styles.list}>
-          {Object.entries(allServices).map(([key, service]: any) => (
+          {Object.entries(allServices).map(([key, service]) => (
             <li key={key} className={styles.listItem}>
               <a
                 href={`#${key}`}
