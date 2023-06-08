@@ -56,7 +56,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     id: "1000007",
     name: "Internet Access",
     slug: "internet-access-resources",
-    steps: ["results"],
+    steps: ["subcategories", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
