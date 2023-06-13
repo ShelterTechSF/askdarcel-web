@@ -4,8 +4,6 @@ import EditSchedule from "./EditSchedule";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import FormTextArea from "./FormTextArea";
 import { AddressListItem } from "./EditAddress";
-import EditPatientHandout from "./EditPatientHandout";
-import { EditServiceChildCollection } from "./EditServiceChildCollection";
 import type { Schedule } from "../../models";
 import type {
   InternalAddress,
@@ -382,19 +380,6 @@ const ProvidedService = ({
             />
           </li>
         ))}
-
-        <li className="edit--section--list--item">
-          <EditServiceChildCollection
-            initialCollectionData={service.documents}
-            handleCollectionChange={(newValue) =>
-              handleChange("documents", newValue)
-            }
-            CollectionItemComponent={EditPatientHandout}
-            label="Patient Handouts"
-            buttonText="Add Handout"
-            blankItemTemplate={{ service_id: service.id }}
-          />
-        </li>
 
         <li className="edit--section--list--item">
           <FormTextArea
