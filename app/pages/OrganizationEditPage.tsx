@@ -118,7 +118,9 @@ const applyChanges = (
   return newTransformedItems;
 };
 
-function getDiffObject(curr, orig) {
+/** Return an object that contains only the key-value pairs in `curr` that are different than `orig`.
+ */
+function getDiffObject<T extends {}>(curr: T, orig: T): Partial<T> {
   return Object.entries(curr).reduce((acc, [key, value]) => {
     if (!_.isEqual(orig[key], value)) {
       acc[key] = value;
@@ -413,7 +415,8 @@ const prepSchedule = (scheduleObj) => {
   return newSchedule;
 };
 
-const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+const deepClone = <T extends unknown>(obj: T): T =>
+  JSON.parse(JSON.stringify(obj));
 
 type AddressChangeType =
   | { type: "markedForRemoval"; handle: number }
@@ -486,7 +489,7 @@ const computeTypeOfChangeToAddresses = (
  * This recipe was copied from
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
  */
-const setDifference = (set1, set2) =>
+const setDifference = <T extends unknown>(set1: Set<T>, set2: Set<T>): Set<T> =>
   new Set([...set1].filter((x) => !set2.has(x)));
 
 // Helper functions for computing views on state.
@@ -973,7 +976,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         postDocuments(currentService.documents, promises);
         delete currentService.documents;
         delete currentService.shouldInheritScheduleFromParent;
-        const { addressHandles } = currentService;
+        const { addressHandles }: { addressHandles: number[] } = currentService;
         delete currentService.addressHandles;
         if (!_.isEmpty(currentService)) {
           promises.push(
