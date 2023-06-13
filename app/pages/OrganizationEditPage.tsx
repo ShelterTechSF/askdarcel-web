@@ -15,15 +15,23 @@ import {
   buildScheduleDays,
   isEmptyInternalSchedule,
 } from "../components/edit/ProvidedService";
-import type { InternalSchedule } from "../components/edit/ProvidedService";
-import type { State as EditNotesState } from "../components/edit/EditNotes";
+import type {
+  InternalSchedule,
+  InternalScheduleDay,
+} from "../components/edit/ProvidedService";
+import type {
+  State as EditNotesState,
+  InternalNoteChanges,
+} from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type {
   Address,
   Instruction,
+  Note,
   Organization,
   PhoneNumber,
   Schedule,
+  ScheduleDay,
   Service,
 } from "../models";
 import * as dataService from "../utils/DataService";
@@ -394,17 +402,54 @@ function createFullSchedule(scheduleObj) {
   return { schedule_days: [] };
 }
 
-const prepNotesData = (notes) => Object.values(notes).map((note) => ({ note }));
+/** A new Note object that is about to be POSTed to the API. */
+type NewNote = Omit<Note, "id">;
 
-const prepSchedule = (scheduleObj) => {
-  const newSchedule: any[] = [];
-  let tempDay = {};
-  Object.keys(scheduleObj).forEach((day) => {
-    scheduleObj[day].forEach((curr) => {
+/** Prepare new notes to be created along with a new Resource.
+ *
+ * This function may look more complicated than it needs to be, but it's due to
+ * technical debt in the EditNotes component, which prevents us from precisely
+ * describing the type of the InternalNoteChanges. InternalNoteChanges.note is
+ * only only undefined in the case where we are removing an existing note, but
+ * on the New Resource page, we cannot remove any notes because none of them
+ * have been created on the API side in the first place. Therefore, we know that
+ * the `note` field on all `InternalNoteChanges` should be defined. We add a
+ * runtime type assertion here to ensure this invariant is held even if we
+ * refactor the EditNotes component.
+ */
+const prepNotesData = (
+  notes: Record<number, InternalNoteChanges>
+): { note: NewNote }[] =>
+  Object.values(notes).map((note) => {
+    const noteValue = note.note;
+    assertDefined(
+      noteValue,
+      "Expected all notes to have a defined `note` field"
+    );
+    return { note: { note: noteValue } };
+  });
+
+/** A new ScheduleDay object that is about to be POSTed to the API. */
+type NewScheduleDay = Omit<ScheduleDay, "id">;
+
+const prepSchedule = (
+  scheduleObj: Record<string, never> | InternalSchedule
+): NewScheduleDay[] => {
+  const newSchedule: NewScheduleDay[] = [];
+  Object.keys(scheduleObj).forEach((untypedDay) => {
+    // Object.keys() always returns strings, even when we know(?) that the keys
+    // are a more precise type, since object types in TypeScript only desrcibe
+    // the minimum set of keys required, and there could always be more keys
+    // present than we are aware of. We explicitly perform this type assertion
+    // to constrain `day` to just the days of the week. In the future, we should
+    // avoid using Object.keys() and Object.entries().
+    const day = untypedDay as keyof InternalSchedule;
+    const scheduleDays: InternalScheduleDay[] = scheduleObj[day];
+    scheduleDays.forEach((curr) => {
       if (curr.opens_at === null || curr.closes_at === null) {
         return;
       }
-      tempDay = {
+      const tempDay = {
         day,
         opens_at: curr.opens_at,
         closes_at: curr.closes_at,
@@ -1295,6 +1340,10 @@ class OrganizationEditPage extends React.Component<Props, State> {
     }
   }
 
+  /** Submit a POST request to create a new Resource with the current state.
+   *
+   * For editing an existing Resource, see `handleSubmit()`.
+   */
   createResource() {
     const {
       scheduleObj,
