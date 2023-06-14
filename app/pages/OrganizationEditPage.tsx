@@ -55,6 +55,32 @@ interface UriObj {
   path: string;
 }
 
+/** Safely parse a string as a decimal integer or throw an error.
+ *
+ * This is primarily intended for the use case where we have an object with
+ * numeric keys, since objects always coerce the keys to strings.
+ * Object.entries() will therefore always return string keys. Previously, we
+ * were relying on JavaScript's automatic coercion from string to number when
+ * comparing the string key to a number literal (e.g. `key < 0` would attempt to
+ * coerce `key` to a number, even if it's actually a string). TypeScript
+ * disallows these coercions (rightfully so, since this is terrifying!).
+ *
+ * We currently have to call parseInt() on the string key to convert it back to
+ * a number, but parseInt() is itself full of landmines (see the MDN
+ * documentation for it). We also have to check for failure by checking if it
+ * returned a NaN (not a number), and checking for NaNs is also full of
+ * landmines because most operations on NaNs return NaN, so the only correct way
+ * to check for NaNs is to call Number.isNaN(). It's amazing how this kind of
+ * just worked before but lacked type safety at multiple levels.
+ *
+ * TODO: Stop using objects with number keys, and instead use the new Map type.
+ */
+function safeParseDecimalInt(x: string): number {
+  const num = parseInt(x, 10);
+  if (Number.isNaN(num)) throw new Error(`${x} is not a number`);
+  return num;
+}
+
 /**
  * Apply a set of changes to a base array of Services.
  *
@@ -137,7 +163,12 @@ function getDiffObject<T extends {}>(curr: T, orig: T): Partial<T> {
   }, {});
 }
 
-function updateCollectionObject(object, id, path, promises) {
+function updateCollectionObject(
+  object: Record<string, unknown>,
+  id: number,
+  path: string,
+  promises: Promise<unknown>[]
+) {
   promises.push(
     dataService.post(`/api/${path}/${id}/change_requests`, {
       change_request: { action: ACTION_EDIT, field_changes: object },
@@ -148,7 +179,12 @@ function updateCollectionObject(object, id, path, promises) {
 /**
  * Create a change request for a new object.
  */
-function createCollectionObject(object, path, promises, resourceID) {
+function createCollectionObject(
+  object: Record<string, unknown>,
+  path: string,
+  promises: Promise<unknown>[],
+  resourceID: number
+) {
   promises.push(
     dataService.post("/api/change_requests", {
       change_request: object,
@@ -158,7 +194,11 @@ function createCollectionObject(object, path, promises, resourceID) {
   );
 }
 
-function createNewPhoneNumber(item, resourceID, promises) {
+function createNewPhoneNumber(
+  item: Record<string, unknown>,
+  resourceID: number,
+  promises: Promise<unknown>[]
+) {
   promises.push(
     dataService.post("/api/change_requests", {
       change_request: {
@@ -171,27 +211,39 @@ function createNewPhoneNumber(item, resourceID, promises) {
   );
 }
 
-function deletCollectionObject(item, path, promises) {
+function deletCollectionObject(
+  item: { id: number },
+  path: string,
+  promises: Promise<unknown>[]
+) {
   if (path === "phones") {
     promises.push(dataService.APIDelete(`/api/phones/${item.id}`));
   }
 }
 
-function postCollection(
-  collection,
-  originalCollection,
-  path,
-  promises,
-  resourceID
+function postCollection<T extends { id?: number }>(
+  collection: (InternalEditState & T)[],
+  originalCollection: T[],
+  path: string,
+  promises: Promise<unknown>[],
+  resourceID: number
 ) {
   for (let i = 0; i < collection.length; i += 1) {
     const item = collection[i];
     if (item.isRemoved) {
-      deletCollectionObject(item, path, promises);
+      assertDefined(item.id, "Items to be removed should have an id");
+      deletCollectionObject(item as { id: number }, path, promises);
     } else if (i < originalCollection.length && item.dirty) {
-      const diffObj: any = getDiffObject(item, originalCollection[i]);
+      const diffObj = getDiffObject<InternalEditState & T>(
+        item,
+        originalCollection[i]
+      );
       if (!_.isEmpty(diffObj)) {
         delete diffObj.dirty;
+        assertDefined(
+          item.id,
+          "Expected collection item with index < originalCollection.length to have an id field"
+        );
         updateCollectionObject(diffObj, item.id, path, promises);
       }
     } else if (item.dirty) {
@@ -205,25 +257,35 @@ function postCollection(
   }
 }
 
-function postSchedule(scheduleObj, promises) {
-  if (!scheduleObj) {
+function postSchedule(
+  scheduleObj: Record<string, never> | InternalSchedule,
+  promises: Promise<unknown>[]
+) {
+  if (isEmptyInternalSchedule(scheduleObj)) {
     return;
   }
-  let currDay: any[] = [];
-  let value: any = {};
-  Object.keys(scheduleObj).forEach((day) => {
+
+  let currDay: InternalScheduleDay[] = [];
+  Object.keys(scheduleObj).forEach((untypedDay) => {
+    // Object.keys() always returns strings, even when we know(?) that the keys
+    // are a more precise type, since object types in TypeScript only describe
+    // the minimum set of keys required, and there could always be more keys
+    // present than we are aware of. We explicitly perform this type assertion
+    // to constrain `day` to just the days of the week. In the future, we should
+    // avoid using Object.keys() and Object.entries().
+    const day = untypedDay as keyof InternalSchedule;
     currDay = scheduleObj[day];
     currDay.forEach((curr) => {
-      value = {};
       if (curr.id) {
         if (!curr.openChanged && !curr.closeChanged) {
           return;
         }
+        const value: { opens_at?: number; closes_at?: number } = {};
         if (curr.openChanged) {
-          value.opens_at = curr.opens_at;
+          value.opens_at = curr.opens_at!;
         }
         if (curr.closeChanged) {
-          value.closes_at = curr.closes_at;
+          value.closes_at = curr.closes_at!;
         }
 
         promises.push(
@@ -232,7 +294,20 @@ function postSchedule(scheduleObj, promises) {
           })
         );
       } else {
-        value = {
+        if (!curr.scheduleId)
+          throw new Error(
+            "scheduleId must be defined when creating a new ScheduleDay."
+          );
+        type ScheduleDayChangeRequest = {
+          change_request: {
+            day: keyof InternalSchedule;
+            opens_at?: number;
+            closes_at?: number;
+          };
+          type: "schedule_days";
+          schedule_id: number;
+        };
+        const value: ScheduleDayChangeRequest = {
           change_request: {
             day,
           },
@@ -240,10 +315,10 @@ function postSchedule(scheduleObj, promises) {
           schedule_id: curr.scheduleId,
         };
         if (curr.openChanged) {
-          value.change_request.opens_at = curr.opens_at;
+          value.change_request.opens_at = curr.opens_at!;
         }
         if (curr.closeChanged) {
-          value.change_request.closes_at = curr.closes_at;
+          value.change_request.closes_at = curr.closes_at!;
         }
         if (!curr.openChanged && !curr.closeChanged) {
           return;
@@ -261,8 +336,9 @@ function postNotes(
 ) {
   if (notesObj && notesObj.notes) {
     const { notes } = notesObj;
-    Object.entries(notes).forEach(([key, currentNote]: any) => {
-      if (key < 0) {
+    Object.entries(notes).forEach(([key, currentNote]) => {
+      const numberKey = safeParseDecimalInt(key);
+      if (numberKey < 0) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
         promises.push(dataService.post(uri, { note: currentNote }));
       } else if (currentNote.isRemoved) {
@@ -276,8 +352,11 @@ function postNotes(
   }
 }
 
-function postInstructions(instructions, promises) {
-  if (instructions?.length > 0) {
+function postInstructions(
+  instructions: InternalInstruction[] | undefined,
+  promises: Promise<unknown>[]
+) {
+  if (instructions && instructions.length > 0) {
     // Todo: The API is returning instructions as an array of objects whereas we really
     // only need one instructions object. When the API returns the instructions as an
     // object rather than an array, we can remove this loop.
@@ -360,18 +439,35 @@ const postAddresses = (
     return Promise.resolve(null);
   });
 
-// THis is only called for schedules for new services, not for resources nor for
+/** A new ScheduleDay object that is about to be POSTed to the API. */
+type NewScheduleDay = Omit<ScheduleDay, "id">;
+
+/** A new Schedule object that is about to be POSTed to the API.
+ *
+ * TODO: Why are we not sending hours_known to the API?
+ */
+type NewSchedule = Omit<Schedule, "id" | "hours_known" | "schedule_days"> & {
+  schedule_days: NewScheduleDay[];
+};
+
+// This is only called for schedules for new services, not for resources nor for
 // existing services.
-function createFullSchedule(scheduleObj) {
+function createFullSchedule(scheduleObj: InternalSchedule): NewSchedule {
   if (scheduleObj) {
-    const newSchedule: any[] = [];
-    let tempDay = {};
-    Object.keys(scheduleObj).forEach((day) => {
+    const newSchedule: NewScheduleDay[] = [];
+    Object.keys(scheduleObj).forEach((untypedDay) => {
+      // Object.keys() always returns strings, even when we know(?) that the keys
+      // are a more precise type, since object types in TypeScript only describe
+      // the minimum set of keys required, and there could always be more keys
+      // present than we are aware of. We explicitly perform this type assertion
+      // to constrain `day` to just the days of the week. In the future, we should
+      // avoid using Object.keys() and Object.entries().
+      const day = untypedDay as keyof InternalSchedule;
       scheduleObj[day].forEach((curr) => {
         if (curr.opens_at === null || curr.closes_at === null) {
           return;
         }
-        tempDay = {
+        const tempDay = {
           day,
           opens_at: curr.opens_at,
           closes_at: curr.closes_at,
@@ -411,9 +507,6 @@ const prepNotesData = (
     );
     return { note: { note: noteValue } };
   });
-
-/** A new ScheduleDay object that is about to be POSTed to the API. */
-type NewScheduleDay = Omit<ScheduleDay, "id">;
 
 const prepSchedule = (
   scheduleObj: Record<string, never> | InternalSchedule
@@ -550,6 +643,31 @@ const getAddresses = (state: State): InternalAddress[] => {
 // in order to keep track of internal UI state. The following are type
 // definitions that extend but override fields on the API type definitions in
 // the models/ directory.
+
+/** Common fields found on most of the Internal interfaces.
+ *
+ * These are generally extra bookkeeping state for managing the UI state and
+ * determining what needs to be synced back to the API endpoint, but these are
+ * not fields on the actual API objects.
+ *
+ * This has to be a `type`, not an `interface`, or else we hit errors like
+ *
+ *   Argument of type 'InternalEditState & T' is not assignable to parameter of
+ *   type 'Record<string, unknown>'.
+ *
+ * https://stackoverflow.com/a/65799591
+ */
+type InternalEditState = {
+  /** Set to true when the object originally existed in the DB but is now marked for deletion.
+   */
+  isRemoved?: boolean;
+
+  /** Set to true when the object needs to be synced back to the API.
+   *
+   * Note that this is also true for new objects that should be created.
+   */
+  dirty?: boolean;
+};
 
 /** Internal shape of an Organization (a.k.a. Resource).
  *
@@ -924,12 +1042,22 @@ class OrganizationEditPage extends React.Component<Props, State> {
    * HACK: WE CANNOT ACTUALLY IMPLEMENT SCENARIOS 3 AND 4 BECAUSE THE API DOES
    * NOT RESPOND WITH THE NEWLY CREATED ADDRESSES' IDS.
    */
-  postServices = (servicesObj, promises, postAddressPromises) => {
+  postServices = (
+    servicesObj: Record<number, InternalTopLevelService>,
+    promises: Promise<unknown>[],
+    postAddressPromises: readonly Promise<unknown>[]
+  ) => {
     if (!servicesObj) return;
     const { resource, addresses } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
-    const newServices: any[] = [];
-    const newServicesAddressHandles: any[] = [];
+    const newServices: unknown[] = [];
+    /** A two-level array of address handles per service.
+     *
+     * The first layer of array should correspond 1-1 with a service in the
+     * `newServices` array, and the second level should be a list of all address
+     * handles associated with that service.
+     */
+    const newServicesAddressHandles: number[][] = [];
     const unsavedAddresses =
       addresses.length > 0 ? addresses : resource.addresses;
 
@@ -953,7 +1081,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         // we can simply grab its ID.
         return Promise.resolve(unsavedAddress.id);
       }
-      if (postAddressPromises[handle]) {
+      if (handle < postAddressPromises.length) {
         // Associating with an address that was just created, which means
         // we have to index into postAddressPromises in order to obtain
         // its ID from the API response.
@@ -967,22 +1095,35 @@ class OrganizationEditPage extends React.Component<Props, State> {
       );
     };
 
-    Object.entries(servicesObj).forEach(([key, value]: any) => {
+    Object.entries(servicesObj).forEach(([key, value]) => {
+      // NOTE: currentService is basically impossible to describe in TypeScript
+      // because we are gradually morphing it from a value of type
+      // InternalTopLevelService to a type that is closer to the actual API
+      // Service, though with various fields like `id` possibly omitted.
+      // TypeScript cannot be used to model objects whose shapes are constantly
+      // changing. We explicitly disable TypeScript with @ts-ignore on any lines
+      // below that are not possible to get checking.
+      // This function needs to be rewritten such that we just create a brand
+      // new object to POST instead of transforming an existing one.
       const currentService = deepClone(value);
-      if (key < 0) {
+      const numberKey = safeParseDecimalInt(key);
+      if (numberKey < 0) {
         // Create new service
         if (currentService.notesObj) {
           const notes = Object.values(currentService.notesObj.notes);
           delete currentService.notesObj;
+          // @ts-ignore
           currentService.notes = notes;
         }
 
+        // @ts-ignore
         currentService.schedule = createFullSchedule(
           currentService.scheduleObj
         );
+        // @ts-ignore
         delete currentService.scheduleObj;
 
-        const { addressHandles } = currentService;
+        const { addressHandles = [] } = currentService;
         delete currentService.addressHandles;
 
         if (!_.isEmpty(currentService)) {
@@ -992,18 +1133,21 @@ class OrganizationEditPage extends React.Component<Props, State> {
       } else {
         // Edit an existing service
         const uri = `/api/services/${key}/change_requests`;
+        // @ts-ignore
         postNotes(currentService.notesObj, promises, {
           path: "services",
           id: key,
         });
         delete currentService.notesObj;
         postSchedule(currentService.scheduleObj, promises);
+        // @ts-ignore
         delete currentService.scheduleObj;
         postInstructions(currentService.instructions, promises);
         delete currentService.instructions;
         delete currentService.documents;
+        // @ts-ignore
         delete currentService.shouldInheritScheduleFromParent;
-        const { addressHandles }: { addressHandles: number[] } = currentService;
+        const { addressHandles = [] } = currentService;
         delete currentService.addressHandles;
         if (!_.isEmpty(currentService)) {
           promises.push(
@@ -1398,10 +1542,10 @@ class OrganizationEditPage extends React.Component<Props, State> {
       website,
     } = this.state;
     assertDefined(resource, "Tried to access resource before it was defined");
-    const promises: any[] = [];
+    const promises: Promise<unknown>[] = [];
 
     // Resource
-    const resourceChangeRequest: any = {};
+    const resourceChangeRequest: Partial<Organization> = {};
     let resourceModified = false;
     if (name !== resource.name) {
       resourceChangeRequest.name = name;
@@ -1445,7 +1589,15 @@ class OrganizationEditPage extends React.Component<Props, State> {
     }
 
     // Fire off phone requests
-    postCollection(phones, resource.phones, "phones", promises, resource.id);
+    assertDefined(resource.phones, "resource.phones should not be undefined");
+    assertDefined(resource.id, "resource.id should not be undefined");
+    postCollection<InternalPhoneNumber>(
+      phones,
+      resource.phones,
+      "phones",
+      promises,
+      resource.id
+    );
 
     // schedule
     postSchedule(scheduleObj, promises);
