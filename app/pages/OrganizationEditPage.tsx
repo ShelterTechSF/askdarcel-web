@@ -297,23 +297,6 @@ function postInstructions(instructions, promises) {
   }
 }
 
-function postDocuments(documents, promises) {
-  if (documents?.length > 0) {
-    documents.forEach((currentDocument) => {
-      if (currentDocument.isRemoved) {
-        const uri = `/api/documents/${currentDocument.id}`;
-        promises.push(dataService.APIDelete(uri));
-      } else if (currentDocument.id) {
-        const uri = `/api/documents/${currentDocument.id}`;
-        promises.push(dataService.put(uri, { document: currentDocument }));
-      } else {
-        const uri = "/api/documents";
-        promises.push(dataService.post(uri, { document: currentDocument }));
-      }
-    });
-  }
-}
-
 /** Return an array of Promises performing the correct update operation.
  *
  * Note that this will return a promise that resolves to null for addresses that
@@ -1018,7 +1001,6 @@ class OrganizationEditPage extends React.Component<Props, State> {
         delete currentService.scheduleObj;
         postInstructions(currentService.instructions, promises);
         delete currentService.instructions;
-        postDocuments(currentService.documents, promises);
         delete currentService.documents;
         delete currentService.shouldInheritScheduleFromParent;
         const { addressHandles }: { addressHandles: number[] } = currentService;

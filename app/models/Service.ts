@@ -27,6 +27,7 @@ export interface Service {
   categories: Category[];
   certified_at: string | null;
   certified: boolean;
+  documents: unknown[];
   eligibilities: Eligibility[];
   email: string | null;
   featured: boolean | null;
