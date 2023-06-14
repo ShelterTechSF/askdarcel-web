@@ -438,7 +438,7 @@ const prepSchedule = (
   const newSchedule: NewScheduleDay[] = [];
   Object.keys(scheduleObj).forEach((untypedDay) => {
     // Object.keys() always returns strings, even when we know(?) that the keys
-    // are a more precise type, since object types in TypeScript only desrcibe
+    // are a more precise type, since object types in TypeScript only describe
     // the minimum set of keys required, and there could always be more keys
     // present than we are aware of. We explicitly perform this type assertion
     // to constrain `day` to just the days of the week. In the future, we should
