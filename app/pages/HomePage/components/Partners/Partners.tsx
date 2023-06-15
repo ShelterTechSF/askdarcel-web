@@ -52,7 +52,7 @@ export const Partners = () => (
       <li>
         <header />
         <a href="https://www.our415.org/" rel="noopener">
-          <img src={Our415Logo} alt="Our 415" className='our415Logo' />
+          <img src={Our415Logo} alt="Our 415" className="our415Logo" />
         </a>
       </li>
       <li>
