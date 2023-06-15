@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 
 import "./Partners.scss";
 import STLogo from "./assets/STLogo.png";
-import MOHCDLogo from "./assets/MOHCDLogo.png";
 import JDCLogo from "./assets/JDCLogo.png";
+import MOHCDLogo from "./assets/MOHCDLogo.png";
 import BenetechLogo from "./assets/BenetechLogo.png";
-import SFFamiliesLogo from "./assets/SFFamiliesLogo.png";
+import Our415Logo from "../../../../assets/img/Our415_logo-hori.svg";
+
 import BridgeLogo from "./assets/BridgeLogo.png";
 
 export const Partners = () => (
@@ -35,7 +36,7 @@ export const Partners = () => (
       <li>
         <header />
         <a
-          href="http://www.sfbar.org/jdc/legal-services/hap/"
+          href="https://www.sfbar.org/jdc/jdc-legal-services-programs/hap/"
           rel="noopener"
           className="image-container"
         >
@@ -50,8 +51,8 @@ export const Partners = () => (
       </li>
       <li>
         <header />
-        <a href="https://www.sffamilies.org/" rel="noopener">
-          <img src={SFFamiliesLogo} alt="SF Families" />
+        <a href="https://www.our415.org/" rel="noopener">
+          <img src={Our415Logo} alt="Our 415" className="our415Logo" />
         </a>
       </li>
       <li>

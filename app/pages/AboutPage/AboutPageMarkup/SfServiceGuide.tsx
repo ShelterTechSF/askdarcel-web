@@ -8,7 +8,7 @@ import STLogo from "../assets/STLogo.png";
 import MOHCDLogo from "../assets/MOHCDLogo.png";
 import JDCLogo from "../assets/JDCLogo.png";
 import BenetechLogo from "../assets/BenetechLogo.png";
-import SFFamiliesLogo from "../assets/SFFamiliesLogo.png";
+import Our415Logo from "../../../assets/img/Our415_logo-hori.svg";
 import BridgeLogo from "../assets/BridgeLogo.png";
 import LarkinLogo from "../assets/LarkinLogo.png";
 import WeworkLogo from "../assets/WeworkLogo.png";
@@ -66,7 +66,7 @@ export const SfServiceGuide = () => (
         </div>
         <div className={styles.aboutRow}>
           <a
-            href="http://www.sfbar.org/jdc/legal-services/hap/"
+            href="https://www.sfbar.org/jdc/jdc-legal-services-programs/hap/"
             rel="noopener"
             className={styles.imageContainer}
           >
@@ -107,8 +107,12 @@ export const SfServiceGuide = () => (
             </a>
           </li>
           <li>
-            <a href="https://www.sffamilies.org/" rel="noopener">
-              <img src={SFFamiliesLogo} alt="SF Families" />
+            <a href="https://www.our415.org/" rel="noopener">
+              <img
+                src={Our415Logo}
+                alt="Our 415"
+                className={styles.our415Logo}
+              />
             </a>
           </li>
           <li>
