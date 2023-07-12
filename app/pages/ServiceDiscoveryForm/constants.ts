@@ -162,4 +162,13 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     steps: ["eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
+    {
+    algoliaCategoryName: "Ucsf-intimatepartnerviolence",
+    id: "2000006",
+    name: "Intimate Partner Violence Resources",
+    abbreviatedName: "Intimate Partner Violence",
+    slug: "ucsf-partner-violence-resources",
+    steps: ["eligibilities", "subcategories", "results"],
+    subcategorySubheading: defaultSubheading,
+  },
 ];

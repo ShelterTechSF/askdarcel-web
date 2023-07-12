@@ -229,6 +229,56 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
       ],
     },
   ],
+
+  "ucsf-partner-violence-resources": [
+    {
+      label: "Other identities/categories",
+      eligibilities: [
+        { isSeeAll: true, checkedId: "35", name: "See All", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "47",
+          name: "API (Asian/Pacific Islander)",
+          alias: "Asian and Pacific Islander",
+          checked: false,
+        },
+        { isSeeAll: false, checkedId: "37", name: "HIV/AIDS", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "48",
+          name: "Latinx",
+          alias: "Latinx/Hispanic",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "49",
+          name: "Middle Eastern and North African",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "50",
+          name: "Youth (below 21 years old)",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "51",
+          name: "African/Black",
+          checked: false,
+        },
+        { isSeeAll: false, checkedId: "52", name: "Jewish", checked: false },
+        { isSeeAll: false, checkedId: "53", name: "LGBTQ+", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "54",
+          name: "Anyone in Need",
+          checked: false,
+        },
+      ],
+    },
+  ],
 };
 
 export interface SelectedEligibilities {
