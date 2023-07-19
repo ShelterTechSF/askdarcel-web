@@ -91,8 +91,8 @@ const SearchResult = ({ hit, index }) => {
 
   const listing = {
     listingName: hit.name,
-    serviceId: hit.type === 'service' ? hit.id : null,
-    resourceId: hit.type === 'resource' ? hit.id : null,
+    serviceId: hit.type === "service" ? hit.id : null,
+    resourceId: hit.type === "resource" ? hit.id : null,
   };
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);

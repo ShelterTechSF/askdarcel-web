@@ -8,7 +8,6 @@ import { Loader } from "../ui";
 import { SentView } from "./components/SentView";
 import { ErrorView } from "./components/ErrorView";
 
-
 export interface TextListing {
   listingName: string;
   serviceId?: number;
