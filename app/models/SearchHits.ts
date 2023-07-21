@@ -1,12 +1,14 @@
 import { Service } from "./Service";
 import { Organization } from "./Organization";
 import { ScheduleDay, parseAlgoliaSchedule } from "./Schedule";
+import { PhoneNumber } from "./Meta";
 import { RecurringSchedule } from "./RecurringSchedule";
 
 export interface ServiceHit
   extends Omit<Service, "schedule" | "recurringSchedule" | "instructions"> {
   type: "service";
   instructions: string[];
+  phones: PhoneNumber[];
   recurringSchedule: RecurringSchedule | null;
   resource_id: number;
   resource_schedule: ScheduleDay[];
