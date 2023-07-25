@@ -148,7 +148,7 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
     return <span>No address found</span>;
   };
 
-  const phoneNumber = hit.phones[0]?.number;
+  const phoneNumber = hit?.phones?.[0]?.number;
   const formatPhoneNumber = (number) => {
     // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
     // If the input doesn't match regex, function returns number's original value
@@ -268,17 +268,19 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
         <div
           className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ""}
         >
-          <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
-            <img
-              src={icon("phone-blue")}
-              alt="phone"
-              className={styles.sideLinkIcon}
-            />
-            <a
-              href={`tel:${phoneNumber}`}
-              className={styles.sideLinkText}
-            >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
-          </div>
+          {phoneNumber && (
+            <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
+              <img
+                src={icon("phone-blue")}
+                alt="phone"
+                className={styles.sideLinkIcon}
+              />
+              <a
+                href={`tel:${phoneNumber}`}
+                className={styles.sideLinkText}
+              >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
+            </div>
+          )}
           <div />
           {url && (
             <div className={styles.sideLink}>
