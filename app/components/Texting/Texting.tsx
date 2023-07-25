@@ -8,31 +8,27 @@ import { Loader } from "../ui";
 import { SentView } from "./components/SentView";
 import { ErrorView } from "./components/ErrorView";
 
-/** A view of a Service from within the Texting component.
- *
- * TODO: Replace this with an app-wide Service type.
- */
-export interface TextingService {
-  serviceName: string;
-  serviceId: number;
-}
+export type TextListing = { listingName: string } & (
+  | { serviceId: number; type: "service" }
+  | { resourceId: number; type: "resource" }
+);
 
 /** Payload for the create Texting API endpoint. */
 export interface APITexting {
   recipient_name: string;
   phone_number: string;
-  service_id: number;
+  service_id?: number;
+  resource_id?: number;
 }
 
-// Text resource informations to the user phone
-
+// This component texts resource or service informations to the user's phone
 export const Texting = ({
   closeModal,
-  service,
+  listing,
   isShowing,
 }: {
   closeModal: () => void;
-  service: TextingService;
+  listing: TextListing;
   isShowing: boolean;
 }) => {
   const [view, setView] = useState("");
@@ -69,7 +65,7 @@ export const Texting = ({
       activeView = (
         <FormView
           handleSubmit={handleSubmit}
-          service={service}
+          listing={listing}
           closeModal={closeModal}
         />
       );
