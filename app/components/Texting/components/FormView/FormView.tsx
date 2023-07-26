@@ -22,7 +22,7 @@ export const FormView = ({
 }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
-  const { listingName, serviceId, resourceId } = listing;
+  const { listingName } = listing;
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, checked } = evt.target;
     const newValue = type === "checkbox" ? checked : value;
@@ -34,8 +34,8 @@ export const FormView = ({
     const data = {
       recipient_name: recipientName,
       phone_number: phoneNumber,
-      service_id: serviceId,
-      resource_id: resourceId,
+      service_id: listing.type === "service" ? listing.serviceId : undefined,
+      resource_id: listing.type === "resource" ? listing.resourceId : undefined,
     };
     handleSubmit(data);
   };

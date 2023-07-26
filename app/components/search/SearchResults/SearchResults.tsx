@@ -7,8 +7,10 @@ import { whiteLabel } from "utils";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { Texting } from "components/Texting";
+
 import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
 import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
+import { TextListing } from "components/Texting/Texting";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
 import styles from "./SearchResults.module.scss";
@@ -71,11 +73,20 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
 
-  const listing = {
-    listingName: hit.name,
-    serviceId: hit.type === "service" ? hit.id : undefined,
-    resourceId: hit.type === "resource" ? hit.id : undefined,
-  };
+  let listing: TextListing;
+  if (hit.type === "service") {
+    listing = {
+      listingName: hit.name,
+      type: hit.type,
+      serviceId: hit.id,
+    };
+  } else {
+    listing = {
+      listingName: hit.name,
+      type: hit.type,
+      resourceId: hit.id,
+    };
+  }
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
 

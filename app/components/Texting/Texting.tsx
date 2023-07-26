@@ -8,11 +8,10 @@ import { Loader } from "../ui";
 import { SentView } from "./components/SentView";
 import { ErrorView } from "./components/ErrorView";
 
-export interface TextListing {
-  listingName: string;
-  serviceId?: number;
-  resourceId?: number;
-}
+export type TextListing = { listingName: string } & (
+  | { serviceId: number; type: "service" }
+  | { resourceId: number; type: "resource" }
+);
 
 /** Payload for the create Texting API endpoint. */
 export interface APITexting {
