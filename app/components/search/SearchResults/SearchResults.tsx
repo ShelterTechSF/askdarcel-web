@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { connectStateResults } from "react-instantsearch/connectors";
-import { Props as GoogleMapProps, Coords } from "google-map-react";
+import {
+  connectStateResults,
+  SearchResults as SearchResultsProps,
+} from "react-instantsearch/connectors";
 import { whiteLabel } from "utils";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
@@ -15,12 +17,17 @@ import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
 import styles from "./SearchResults.module.scss";
 
-const SearchResults = ({ searchResults, expandList }) => {
+const SearchResults = ({
+  searchResults,
+  expandList,
+}: {
+  searchResults: SearchResultsProps;
+  expandList: boolean;
+}) => {
   const [centerCoords] = useState(null);
-  interface MapObjectProps extends GoogleMapProps {
-    setCenter: (coords: Coords) => void;
-  }
-  const [googleMapObject, setMapObject] = useState<MapObjectProps | null>(null);
+  const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
+    null
+  );
 
   useEffect(() => {
     if (centerCoords && googleMapObject) {
@@ -35,7 +42,7 @@ const SearchResults = ({ searchResults, expandList }) => {
 
   if (!searchResults) return null;
 
-  const hits = transformHits(searchResults.hits as SearchHit[]);
+  const hits = transformHits(searchResults.hits as unknown as SearchHit[]);
 
   return (
     <div className={styles.searchResultsAndMapContainer}>
@@ -52,8 +59,7 @@ const SearchResults = ({ searchResults, expandList }) => {
           No results found in your area. Try a different location, category, or
           search term.
         </div>
-        {hits.length &&
-          hits.map((hit, index) => (
+        {hits.map((hit, index) => (
             <SearchResult hit={hit} index={index} key={hit.id} />
           ))}
         <ResultsPagination noResults={!hits || !hits.length} />
