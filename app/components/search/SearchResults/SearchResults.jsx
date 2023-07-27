@@ -84,15 +84,16 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   );
 };
 
-// eslint-disable-next-line no-unused-vars
-const SearchResult = ({ hit, index, setCenterCoords }) => {
+const SearchResult = ({ hit, index }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
 
-  const service = {
-    serviceName: hit.name,
-    serviceId: hit.service_id,
+  const listing = {
+    listingName: hit.name,
+    serviceId: hit.type === "service" ? hit.id : undefined,
+    resourceId: hit.type === "resource" ? hit.id : undefined,
+    type: hit.type,
   };
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
@@ -201,7 +202,7 @@ const SearchResult = ({ hit, index, setCenterCoords }) => {
     <div className={styles.searchResult}>
       <Texting
         closeModal={toggleTextingModal}
-        service={service}
+        listing={listing}
         isShowing={textingIsOpen}
       />
       <ClinicianActions

@@ -3,7 +3,7 @@ import Heading from "./Heading";
 import Privacy from "./Privacy";
 import Buttons from "./Buttons";
 import styles from "./Form.module.scss";
-import type { APITexting, TextingService } from "../../Texting";
+import type { APITexting, TextListing } from "../../Texting";
 
 const initialState = {
   recipientName: "",
@@ -12,17 +12,17 @@ const initialState = {
 } as const;
 
 export const FormView = ({
-  service,
+  listing,
   handleSubmit,
   closeModal,
 }: {
-  service: TextingService;
+  listing: TextListing;
   handleSubmit: (data: APITexting) => void;
   closeModal: () => void;
 }) => {
   const [state, setState] = useState(initialState);
   const { recipientName, phoneNumber, agreed } = state;
-  const { serviceName, serviceId } = service;
+  const { listingName } = listing;
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { type, name, value, checked } = evt.target;
     const newValue = type === "checkbox" ? checked : value;
@@ -34,14 +34,15 @@ export const FormView = ({
     const data = {
       recipient_name: recipientName,
       phone_number: phoneNumber,
-      service_id: serviceId,
+      service_id: listing.type === "service" ? listing.serviceId : undefined,
+      resource_id: listing.type === "resource" ? listing.resourceId : undefined,
     };
     handleSubmit(data);
   };
 
   return (
     <div>
-      <Heading serviceName={serviceName} />
+      <Heading listingName={listingName} />
       <div className={styles.inputField}>
         <label className={styles.label}>
           First name (optional)
