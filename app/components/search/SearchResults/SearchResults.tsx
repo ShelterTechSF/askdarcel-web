@@ -60,8 +60,8 @@ const SearchResults = ({
           search term.
         </div>
         {hits.map((hit, index) => (
-            <SearchResult hit={hit} index={index} key={hit.id} />
-          ))}
+          <SearchResult hit={hit} index={index} key={hit.id} />
+        ))}
         <ResultsPagination noResults={!hits || !hits.length} />
       </div>
       <SearchMap
