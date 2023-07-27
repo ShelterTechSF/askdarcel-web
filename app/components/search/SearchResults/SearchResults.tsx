@@ -42,7 +42,6 @@ const SearchResults = ({
 
   if (!searchResults) return null;
 
-
   const hits = transformHits(searchResults.hits as unknown as SearchHit[]);
 
   return (
