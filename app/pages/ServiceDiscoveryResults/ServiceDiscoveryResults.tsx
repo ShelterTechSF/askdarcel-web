@@ -183,10 +183,7 @@ const InnerServiceDiscoveryResults = ({
           />
 
           <div className={styles.results}>
-            <SearchResults
-              expandList={expandList}
-              setExpandList={setExpandList}
-            />
+            <SearchResults expandList={expandList} />
           </div>
         </div>
       </InstantSearch>

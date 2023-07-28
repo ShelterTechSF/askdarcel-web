@@ -1,16 +1,26 @@
 import { Service } from "./Service";
 import { Organization } from "./Organization";
 import { ScheduleDay, parseAlgoliaSchedule } from "./Schedule";
+import { PhoneNumber } from "./Meta";
+import { RecurringSchedule } from "./RecurringSchedule";
 
-export interface ServiceHit extends Omit<Service, "schedule"> {
+export interface ServiceHit
+  extends Omit<Service, "schedule" | "recurringSchedule" | "instructions"> {
   type: "service";
+  instructions: string[];
+  phones: PhoneNumber[];
+  recurringSchedule: RecurringSchedule | null;
+  resource_id: number;
   resource_schedule: ScheduleDay[];
   schedule: ScheduleDay[];
+  service_of: string;
 }
 
-export interface OrganizationHit extends Omit<Organization, "schedule"> {
+export interface OrganizationHit
+  extends Omit<Organization, "schedule" | "recurringSchedule"> {
   type: "resource";
   schedule: ScheduleDay[];
+  recurringSchedule: RecurringSchedule | null;
 }
 
 export type SearchHit = ServiceHit | OrganizationHit;
@@ -20,7 +30,7 @@ export type SearchHit = ServiceHit | OrganizationHit;
  * uses the time helper classes.
  */
 export const transformHits = (hits: SearchHit[]) =>
-  hits.map((hit) => {
+  hits.flatMap((hit) => {
     switch (hit.type) {
       case "resource":
         return {
@@ -39,6 +49,8 @@ export const transformHits = (hits: SearchHit[]) =>
         };
       }
       default:
-        return null;
+        // The item is neither a service or resource and should be removed.
+        // A 0 element array removes the item from the mapped array
+        return [];
     }
   });
