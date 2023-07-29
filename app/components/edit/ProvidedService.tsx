@@ -279,7 +279,11 @@ const ProvidedService = ({
       // we're building up the InternalSchedule day by day, but we know that
       // we'll have all the keys in the end, so we cast back to
       // InternalSchedule.
-      tempScheduleDays = Object.entries(scheduleDaysByDay).reduce<
+      const scheduleDaysByDayEntries = Object.entries(scheduleDaysByDay) as [
+        keyof InternalSchedule,
+        InternalFlattenedService[]
+      ][];
+      tempScheduleDays = scheduleDaysByDayEntries.reduce<
         Partial<InternalSchedule>
       >(
         (acc, [day, scheduleDays]) => ({
