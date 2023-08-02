@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import type { HelmetTags } from "react-helmet-async";
 
 const onLoad = (apiKey: string, targetLangCode: string | null) => {
   // HACK: suppress TS compile errors when accessing the global WeGlot instance created by the script.
@@ -59,7 +60,10 @@ export const WeGlot = ({
    * Instead, when the cdn.weglot.com script is added on the client, add an event listener when it loads
    * to trigger a React effect to run the Weglot initialization logic above.
    */
-  const handleChangeClientState = (newState, addedTags) => {
+  const handleChangeClientState = (
+    newState: unknown,
+    addedTags: HelmetTags
+  ) => {
     if (addedTags && addedTags.scriptTags) {
       const foundScript = addedTags.scriptTags.find(
         ({ src }) => src === WEGLOT_SRC
