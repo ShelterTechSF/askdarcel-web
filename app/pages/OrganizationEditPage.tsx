@@ -154,13 +154,21 @@ const applyChanges = (
 
 /** Return an object that contains only the key-value pairs in `curr` that are different than `orig`.
  */
-function getDiffObject<T extends {}>(curr: T, orig: T): Partial<T> {
-  return Object.entries(curr).reduce((acc, [key, value]) => {
-    if (!_.isEqual(orig[key], value)) {
-      acc[key] = value;
-    }
-    return acc;
-  }, {});
+function getDiffObject<T extends Record<string, unknown>>(
+  curr: T,
+  orig: T
+): Partial<T> {
+  return Object.entries(curr).reduce<Partial<T>>(
+    (acc, [untypedKey, untypedValue]) => {
+      const key = untypedKey as keyof T;
+      const value = untypedValue as T[typeof key];
+      if (!_.isEqual(orig[key], value)) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {}
+  );
 }
 
 function updateCollectionObject(
@@ -1218,7 +1226,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         .then((resp) => resp.json())
         // After new services are created, grab their IDs and associate them
         // with addresses.
-        .then((resp) =>
+        .then((resp: { services: { service: Service }[] }) =>
           Promise.all(
             resp.services.map(({ service }, i) => {
               const serviceAddressPromises = newServicesAddressHandles[i].map(

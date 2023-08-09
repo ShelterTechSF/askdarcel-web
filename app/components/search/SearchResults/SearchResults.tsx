@@ -1,45 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { connectStateResults } from "react-instantsearch/connectors";
+import {
+  connectStateResults,
+  SearchResults as SearchResultsProps,
+} from "react-instantsearch/connectors";
 import { whiteLabel } from "utils";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { Texting } from "components/Texting";
+
 import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
 import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
+import { TextListing } from "components/Texting/Texting";
+import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
-import { parseAlgoliaSchedule } from "../../../models";
 import styles from "./SearchResults.module.scss";
 
-/**
- * Transform Algolia search hits such that each hit has a recurringSchedule that
- * uses the time helper classes.
- */
-const transformHits = (hits) =>
-  hits.map((hit) => {
-    const inheritedSchedule =
-      hit.schedule && hit.schedule.length
-        ? hit.schedule
-        : hit.resource_schedule;
-    const recurringSchedule =
-      inheritedSchedule && inheritedSchedule.length
-        ? parseAlgoliaSchedule(inheritedSchedule)
-        : null;
-    return { ...hit, recurringSchedule };
-  });
-
-// Todo: setExpandList will be used as part of next stage of multiple location work
-// eslint-disable-next-line no-unused-vars
-const SearchResults = ({ searchResults, expandList, setExpandList }) => {
-  const [centerCoords, setCenterCoords] = useState(null);
-  const [googleMapObject, setMapObject] = useState(null);
+const SearchResults = ({
+  searchResults,
+  expandList,
+  categoryId,
+}: {
+  searchResults: SearchResultsProps;
+  expandList: boolean;
+  categoryId?: string;
+}) => {
+  const [centerCoords] = useState(null);
+  const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
+    null
+  );
 
   useEffect(() => {
-    if (centerCoords) {
+    if (centerCoords && googleMapObject) {
       googleMapObject.setCenter(centerCoords);
     }
     document.body.classList.add("searchResultsPage");
+
     return () => {
       document.body.classList.remove("searchResultsPage");
     };
@@ -47,7 +44,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
 
   if (!searchResults) return null;
 
-  const hits = transformHits(searchResults.hits);
+  const hits = transformHits(searchResults.hits as unknown as SearchHit[]);
 
   return (
     <div className={styles.searchResultsAndMapContainer}>
@@ -68,7 +65,7 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
           <SearchResult
             hit={hit}
             index={index}
-            setCenterCoords={setCenterCoords}
+            categoryId={categoryId}
             key={hit.id}
           />
         ))}
@@ -84,17 +81,44 @@ const SearchResults = ({ searchResults, expandList, setExpandList }) => {
   );
 };
 
-const SearchResult = ({ hit, index }) => {
+const SearchResult = ({
+  hit,
+  index,
+  categoryId,
+}: {
+  hit: SearchHit;
+  index: number;
+  categoryId: string | undefined;
+}) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
+  type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
+  const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
+    const baseRoute =
+      categoryId === "2000006"
+        ? "intimate-partner-violence-handout"
+        : "service-handout";
 
-  const listing = {
-    listingName: hit.name,
-    serviceId: hit.type === "service" ? hit.id : undefined,
-    resourceId: hit.type === "resource" ? hit.id : undefined,
-    type: hit.type,
+    return `/${baseRoute}/${hitId}${
+      language ? `?handoutLanguage=${language}` : ""
+    }`;
   };
+
+  let listing: TextListing;
+  if (hit.type === "service") {
+    listing = {
+      listingName: hit.name,
+      type: hit.type,
+      serviceId: hit.id,
+    };
+  } else {
+    listing = {
+      listingName: hit.name,
+      type: hit.type,
+      resourceId: hit.id,
+    };
+  }
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
 
@@ -154,7 +178,7 @@ const SearchResult = ({ hit, index }) => {
     </div>
   );
 
-  const renderAddressMetadata = (hit_) => {
+  const renderAddressMetadata = (hit_: SearchHit) => {
     if (!hit_.addresses || hit_.addresses.length === 0) {
       return <span>No address found</span>;
     }
@@ -168,7 +192,7 @@ const SearchResult = ({ hit, index }) => {
   };
 
   const phoneNumber = hit?.phones?.[0]?.number;
-  const formatPhoneNumber = (number) => {
+  const formatPhoneNumber = (number: string | number) => {
     // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
     // If the input doesn't match regex, function returns number's original value
     if (!number) {
@@ -184,19 +208,11 @@ const SearchResult = ({ hit, index }) => {
     return number;
   };
 
-  const url = hit.url || hit.website;
-  const serviceId = hit.service_id;
-  const resourceId = hit.resource_id;
+  const url = hit.type === "service" ? hit.url : hit.website;
   const showDischargeSidelinks =
     whiteLabel.showClinicianAction && whiteLabel.showHandoutsIcon;
-  // Href structure varies depending on whether the hit is a resource or location
-  let basePath = "organizations";
-  let entryId = resourceId;
-  if (hit.type === "service") {
-    basePath = "services";
-    entryId = serviceId;
-  }
-  const handoutApiUrl = `/service-handout/${entryId}`;
+
+  const basePath = hit.type === "service" ? `services` : `organizations`;
 
   return (
     <div className={styles.searchResult}>
@@ -205,70 +221,79 @@ const SearchResult = ({ hit, index }) => {
         listing={listing}
         isShowing={textingIsOpen}
       />
-      <ClinicianActions
-        isOpen={clinicianActionsIsOpen}
-        setIsOpen={toggleClinicianActionsModal}
-        actions={hit?.instructions?.[0] ?? ""}
-      />
-      <ClientHandouts
-        isOpen={handoutModalIsOpen}
-        setIsOpen={toggleHandoutModal}
-        handoutCollection={[
-          {
-            key: -1,
-            description: "English",
-            url: `${handoutApiUrl}`,
-          },
-          {
-            key: -2,
-            description: "Spanish",
-            url: `${handoutApiUrl}?handoutLanguage=es`,
-          },
-          {
-            key: -3,
-            description: "Tagalog",
-            url: `${handoutApiUrl}?handoutLanguage=tl`,
-          },
-          {
-            key: -4,
-            description: "Chinese (Traditional)",
-            url: `${handoutApiUrl}?handoutLanguage=zh-TW`,
-          },
-          {
-            key: -5,
-            description: "Vietnamese",
-            url: `${handoutApiUrl}?handoutLanguage=vi`,
-          },
-          {
-            key: -6,
-            description: "Russian",
-            url: `${handoutApiUrl}?handoutLanguage=ru`,
-          },
-          {
-            key: -7,
-            description: "Arabic",
-            url: `${handoutApiUrl}?handoutLanguage=ar`,
-          },
-        ]}
-      />
+      {hit.type === "service" && (
+        <ClinicianActions
+          isOpen={clinicianActionsIsOpen}
+          setIsOpen={toggleClinicianActionsModal}
+          actions={hit.instructions?.[0] ?? ""}
+        />
+      )}
+      {hit.type === "service" && (
+        <ClientHandouts
+          isOpen={handoutModalIsOpen}
+          setIsOpen={toggleHandoutModal}
+          handoutCollection={[
+            {
+              key: -1,
+              description: "English",
+              url: handoutUrl(hit.id, null),
+            },
+            {
+              key: -2,
+              description: "Spanish",
+              url: handoutUrl(hit.id, "es"),
+            },
+            {
+              key: -3,
+              description: "Tagalog",
+              url: handoutUrl(hit.id, "tl"),
+            },
+            {
+              key: -4,
+              description: "Chinese (Traditional)",
+              url: handoutUrl(hit.id, "zh-TW"),
+            },
+            {
+              key: -5,
+              description: "Vietnamese",
+              url: handoutUrl(hit.id, "vi"),
+            },
+            {
+              key: -6,
+              description: "Russian",
+              url: handoutUrl(hit.id, "ru"),
+            },
+            {
+              key: -7,
+              description: "Arabic",
+              url: handoutUrl(hit.id, "ar"),
+            },
+          ]}
+        />
+      )}
       <div className={styles.searchText}>
         <div className={styles.title}>
           <Link
-            to={{ pathname: `/${basePath}/${entryId}` }}
+            to={{ pathname: `/${basePath}/${hit.id}` }}
             className="notranslate"
           >{`${index + 1}. ${hit.name}`}</Link>
         </div>
-        <div className={styles.serviceOf}>
-          <Link to={`/organizations/${resourceId}`} className="notranslate">
-            {hit.service_of}
-          </Link>
-        </div>
+        {hit.type === "service" && (
+          <div className={styles.serviceOf}>
+            <Link
+              to={`/organizations/${hit.resource_id}`}
+              className="notranslate"
+            >
+              {hit.service_of}
+            </Link>
+          </div>
+        )}
         <div className={`notranslate ${styles.address}`}>
           {renderAddressMetadata(hit)}
         </div>
         <ReactMarkdown
           className={`rendered-markdown ${styles.description}`}
-          source={hit.long_description}
+          source={hit.long_description ?? undefined}
           linkTarget="_blank"
         />
       </div>
@@ -278,7 +303,9 @@ const SearchResult = ({ hit, index }) => {
             showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
           }
         >
-          {!!hit.instructions?.length && clinicianActionsLink}
+          {hit.type === "service" &&
+            !!hit.instructions?.length &&
+            clinicianActionsLink}
           {handoutsLink}
         </div>
         <div

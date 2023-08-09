@@ -213,10 +213,7 @@ const InnerSearchResults = ({
           />
 
           <div className={styles.results}>
-            <SearchResults
-              expandList={expandList}
-              setExpandList={setExpandList}
-            />
+            <SearchResults expandList={expandList} />
           </div>
         </div>
         <div className={styles.hiddenSearchBox}>

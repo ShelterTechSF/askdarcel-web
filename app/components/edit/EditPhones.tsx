@@ -34,6 +34,12 @@ class EditPhone extends Component<Props, State> {
 
     if (field === undefined)
       throw new Error("Expected field to not be undefined");
+    // This condition needs to be kept up to date with the `data-field`
+    // attributes on the `<input>` tags rendered on this component.
+    if (field !== "number" && field !== "service_type")
+      throw new Error(
+        "Expectied field to be either `number` or `service_type`"
+      );
 
     if (phone[field] || value !== item[field]) {
       phone[field] = value;
