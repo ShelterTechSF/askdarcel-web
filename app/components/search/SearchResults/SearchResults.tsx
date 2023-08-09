@@ -20,9 +20,11 @@ import styles from "./SearchResults.module.scss";
 const SearchResults = ({
   searchResults,
   expandList,
+  categoryId,
 }: {
   searchResults: SearchResultsProps;
   expandList: boolean;
+  categoryId?: string;
 }) => {
   const [centerCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
@@ -60,7 +62,12 @@ const SearchResults = ({
           search term.
         </div>
         {hits.map((hit, index) => (
-          <SearchResult hit={hit} index={index} key={hit.id} />
+          <SearchResult
+            hit={hit}
+            index={index}
+            categoryId={categoryId}
+            key={hit.id}
+          />
         ))}
         <ResultsPagination noResults={!hits || !hits.length} />
       </div>
@@ -74,10 +81,29 @@ const SearchResults = ({
   );
 };
 
-const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
+const SearchResult = ({
+  hit,
+  index,
+  categoryId,
+}: {
+  hit: SearchHit;
+  index: number;
+  categoryId: string | undefined;
+}) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
+  type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
+  const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
+    const baseRoute =
+      categoryId === "2000006"
+        ? "intimate-partner-violence-handout"
+        : "service-handout";
+
+    return `/${baseRoute}/${hitId}${
+      language ? `?handoutLanguage=${language}` : ""
+    }`;
+  };
 
   let listing: TextListing;
   if (hit.type === "service") {
@@ -166,7 +192,7 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
   };
 
   const phoneNumber = hit?.phones?.[0]?.number;
-  const formatPhoneNumber = (number) => {
+  const formatPhoneNumber = (number: string | number) => {
     // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
     // If the input doesn't match regex, function returns number's original value
     if (!number) {
@@ -210,37 +236,37 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
             {
               key: -1,
               description: "English",
-              url: `/service-handout/${hit.id}`,
+              url: handoutUrl(hit.id, null),
             },
             {
               key: -2,
               description: "Spanish",
-              url: `/service-handout/${hit.id}?handoutLanguage=es`,
+              url: handoutUrl(hit.id, "es"),
             },
             {
               key: -3,
               description: "Tagalog",
-              url: `/service-handout/${hit.id}?handoutLanguage=tl`,
+              url: handoutUrl(hit.id, "tl"),
             },
             {
               key: -4,
               description: "Chinese (Traditional)",
-              url: `/service-handout/${hit.id}?handoutLanguage=zh-TW`,
+              url: handoutUrl(hit.id, "zh-TW"),
             },
             {
               key: -5,
               description: "Vietnamese",
-              url: `/service-handout/${hit.id}?handoutLanguage=vi`,
+              url: handoutUrl(hit.id, "vi"),
             },
             {
               key: -6,
               description: "Russian",
-              url: `/service-handout/${hit.id}?handoutLanguage=ru`,
+              url: handoutUrl(hit.id, "ru"),
             },
             {
               key: -7,
               description: "Arabic",
-              url: `/service-handout/${hit.id}?handoutLanguage=ar`,
+              url: handoutUrl(hit.id, "ar"),
             },
           ]}
         />

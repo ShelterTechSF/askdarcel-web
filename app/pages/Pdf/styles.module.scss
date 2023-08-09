@@ -6,7 +6,10 @@
 }
 
 .handoutInvisible {
+  // Hides page from user while the PDF request is in flight
   visibility: hidden;
+  height: 0;
+  overflow: hidden;
 }
 
 .loaderText {

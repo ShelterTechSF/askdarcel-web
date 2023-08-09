@@ -42,7 +42,7 @@ export const UCSF_RESOURCES: ResourceItem[] = [
     checked: false,
     slug: "ucsf-immigration-resources",
   },
-    {
+  {
     id: "2000006",
     name: "Intimate Partner Violence",
     icon: "warning",
