@@ -346,7 +346,7 @@ export const IntimatePartnerViolencePdfPage = () => {
               </div>
               <ul className="generalResources">
                 {generalResources.map((r) => (
-                  <li>
+                  <li key={r.header}>
                     <GeneralResource
                       header={r.header}
                       resourceItems={r.resourceItems}
@@ -356,7 +356,7 @@ export const IntimatePartnerViolencePdfPage = () => {
               </ul>
             </div>
             <div className="rightColumn">
-              <img className="checklistImage" src={Checklist} alt="" />
+              <img className="checklistImage" src={`${window.location.origin}${Checklist}`} alt="" />
               <div className="recommendedResource">
                 <div className="resourceContent">
                   <div>
