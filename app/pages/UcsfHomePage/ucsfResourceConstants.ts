@@ -45,7 +45,7 @@ export const UCSF_RESOURCES: ResourceItem[] = [
   {
     id: "2000006",
     name: "Intimate Partner Violence",
-    icon: "warning",
+    icon: "care",
     checked: false,
     slug: "ucsf-partner-violence-resources",
   },
