@@ -189,6 +189,11 @@
     }
     &--description {
       margin-top: calc-em(15px);
+      p {
+        white-space: pre-line;
+        padding-right: 6px;
+        margin-top: calc-em(10px);
+      }
     }
     &--details-toggle {
       margin-top: calc-em(20px);
