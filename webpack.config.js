@@ -159,10 +159,6 @@ module.exports = {
       "/api-docs": {
         target: process.env.API_URL || "http://localhost:3000",
       },
-      "/api/v2/": {
-        target: process.env.API_GO_URL || "http://localhost:3001",
-        pathRewrite: { "^/api/v2/": "/api/" },
-      },
       "/api/": {
         target: process.env.API_URL || "http://localhost:3000",
         pathRewrite: { "^/api/": "" },
