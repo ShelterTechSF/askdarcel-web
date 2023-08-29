@@ -1,4 +1,7 @@
-import React, { Component, useState, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+} from "react";
 import EditNote from "./EditNote";
 import { Note } from "../../models";
 
@@ -14,8 +17,10 @@ export interface InternalNoteChanges {
 
 interface Props {
   existingNotes: Note[] | undefined;
-  handleNotesChange: (notesDictionary: Record<number, InternalNoteChanges>) => void;
-};
+  handleNotesChange: (
+    notesDictionary: Record<number, InternalNoteChanges>
+  ) => void;
+}
 
 export type State = {
   notes: Record<number, InternalNoteChanges>;
@@ -24,14 +29,16 @@ export type State = {
 };
 
 const EditNotes = ({ existingNotes, handleNotesChange }: Props) => {
-  const internalNotes = existingNotes ? existingNotes.map((note) => {
-    const newNote: InternalNote = {
-      ...note,
-      key: note.id,
-    };
+  const internalNotes = existingNotes
+    ? existingNotes.map((note) => {
+        const newNote: InternalNote = {
+          ...note,
+          key: note.id,
+        };
 
-    return newNote;
-  }) : [];
+        return newNote;
+      })
+    : [];
 
   const [notes, setNotes] = useState(internalNotes);
   const [uuid, setUuid] = useState(-1);
@@ -46,18 +53,15 @@ const EditNotes = ({ existingNotes, handleNotesChange }: Props) => {
   const handleNoteChange = (key: number, note: InternalNoteChanges): void => {
     setNotesDictionary({
       ...notesDictionary,
-      [key]: note
-    })
-  }
+      [key]: note,
+    });
+  };
 
   const addNote = () => {
     setUuid(uuid - 1);
 
-    setNotes([
-      ...notes,
-      {key: uuid}
-    ])
-  }
+    setNotes([...notes, { key: uuid }]);
+  };
 
   const removeNote = (index: number) => {
     const targetNote = notes[index];
@@ -74,7 +78,7 @@ const EditNotes = ({ existingNotes, handleNotesChange }: Props) => {
     newNotes.splice(index, 1);
     setNotes(newNotes);
     setNotesDictionary(newNotesDictionary);
-  }
+  };
 
   const renderNotes = () =>
     notes.map((note, i) => (
@@ -85,34 +89,31 @@ const EditNotes = ({ existingNotes, handleNotesChange }: Props) => {
         handleChange={handleNoteChange}
         removeNote={removeNote}
       />
-    )
-  );
+    ));
 
   return (
-      <li className="edit--section--list--item edit--notes">
-        <label htmlFor="add-note">Notes</label>
-        <p>
-          <a
-            href="https://github.github.com/gfm/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Markdown
-          </a>{" "}
-          is also supported for notes.
-        </p>
-        <ul className="edit--section--list--item--sublist">
-          {renderNotes()}
-        </ul>
-        <button
-          type="button"
-          className="edit--section--list--item--button"
-          onClick={addNote}
+    <li className="edit--section--list--item edit--notes">
+      <label htmlFor="add-note">Notes</label>
+      <p>
+        <a
+          href="https://github.github.com/gfm/"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <i className="material-icons">add_box</i> Add Note
-        </button>
-      </li>
-    );
+          Markdown
+        </a>{" "}
+        is also supported for notes.
+      </p>
+      <ul className="edit--section--list--item--sublist">{renderNotes()}</ul>
+      <button
+        type="button"
+        className="edit--section--list--item--button"
+        onClick={addNote}
+      >
+        <i className="material-icons">add_box</i> Add Note
+      </button>
+    </li>
+  );
 };
 
-export default EditNotes
+export default EditNotes;

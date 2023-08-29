@@ -261,7 +261,6 @@ const ProvidedService = ({
   service,
   resourceAddresses,
 }: ProvidedServiceProps) => {
-
   const handleChange = <K extends keyof InternalTopLevelService>(
     field: K,
     value: InternalTopLevelService[K]
