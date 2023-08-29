@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import EditNotes from "./EditNotes";
 import EditSchedule from "./EditSchedule";
 import MultiSelectDropdown from "./MultiSelectDropdown";
@@ -261,12 +261,17 @@ const ProvidedService = ({
   service,
   resourceAddresses,
 }: ProvidedServiceProps) => {
+
   const handleChange = <K extends keyof InternalTopLevelService>(
     field: K,
     value: InternalTopLevelService[K]
   ) => {
     const { id } = service;
-    editServiceById(id, { id, [field]: value });
+    const valueChanged = service[field] !== value;
+
+    if (valueChanged) {
+      editServiceById(id, { id, [field]: value });
+    }
   };
 
   const setShouldInheritScheduleFromParent = (shouldInherit: boolean) => {
@@ -450,7 +455,7 @@ const ProvidedService = ({
         />
 
         <EditNotes
-          notes={service.notes}
+          existingNotes={service.notes}
           handleNotesChange={(value) => handleChange("notesObj", value)}
         />
 

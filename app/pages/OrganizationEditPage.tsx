@@ -338,13 +338,12 @@ function postSchedule(
 }
 
 function postNotes(
-  notesObj: Partial<EditNotesState>,
+  changedNotes: Record<number, InternalNoteChanges>,
   promises: Promise<unknown>[],
   uriObj: UriObj
 ) {
-  if (notesObj && notesObj.notes) {
-    const { notes } = notesObj;
-    Object.entries(notes).forEach(([key, currentNote]) => {
+  if (changedNotes) {
+    Object.entries(changedNotes).forEach(([key, currentNote]) => {
       const numberKey = safeParseDecimalInt(key);
       if (numberKey < 0) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
@@ -735,7 +734,7 @@ export interface InternalTopLevelService
   instructions?: InternalInstruction[];
 
   /** Changes to the notes attached to this service. */
-  notesObj?: EditNotesState;
+  notesObj?: Record<number, InternalNoteChanges>;
 
   /** A Schedule attached to the service.
    *
@@ -1118,7 +1117,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       if (numberKey < 0) {
         // Create new service
         if (currentService.notesObj) {
-          const notes = Object.values(currentService.notesObj.notes);
+          const notes = Object.values(currentService.notesObj);
           delete currentService.notesObj;
           // @ts-ignore
           currentService.notes = notes;
@@ -1711,7 +1710,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
-  handleNotesChange(notesObj: EditNotesState) {
+  handleNotesChange(notesObj: Record<number, InternalNoteChanges>) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
 
@@ -1881,7 +1880,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
           />
 
           <EditNotes
-            notes={resource.notes}
+            existingNotes={resource.notes}
             handleNotesChange={this.handleNotesChange}
           />
         </ul>
@@ -1903,6 +1902,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       serviceChanges,
       serviceDeletions
     );
+
     return (
       <ul className="edit--section--list">
         <EditServices
