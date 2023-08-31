@@ -19,9 +19,7 @@ import type {
   InternalSchedule,
   InternalScheduleDay,
 } from "../components/edit/ProvidedService";
-import type {
-  NotesObject
-} from "../components/edit/EditNotes";
+import type { NotesObject } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type {
   Address,
@@ -500,9 +498,7 @@ type NewNote = Omit<Note, "id">;
  * runtime type assertion here to ensure this invariant is held even if we
  * refactor the EditNotes component.
  */
-const prepNotesData = (
-  notes: NotesObject
-): { note: NewNote }[] =>
+const prepNotesData = (notes: NotesObject): { note: NewNote }[] =>
   Object.values(notes).map((note) => {
     const noteValue = note.note;
     assertDefined(

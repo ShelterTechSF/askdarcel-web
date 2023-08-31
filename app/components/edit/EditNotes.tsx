@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import EditNote from "./EditNote";
 import { Note } from "../../models";
 
@@ -21,7 +18,6 @@ type Props = {
   notes: Note[] | undefined;
   handleNotesChange: (notesObject: NotesObject) => void;
 };
-
 
 const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
   const internalNotes = notes.map((note) => {

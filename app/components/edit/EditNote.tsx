@@ -32,12 +32,15 @@ class EditNote extends Component<Props, State> {
       note: e.target.value,
     };
 
-    this.setState({
-      note: newNote,
-    }, () => {
-      const {note: stateNote} = this.state;
-      handleChange(key, stateNote);
-    });
+    this.setState(
+      {
+        note: newNote,
+      },
+      () => {
+        const { note: stateNote } = this.state;
+        handleChange(key, stateNote);
+      }
+    );
   }
 
   render() {
