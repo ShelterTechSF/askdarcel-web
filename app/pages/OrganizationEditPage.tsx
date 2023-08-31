@@ -341,21 +341,19 @@ function postNotes(
   promises: Promise<unknown>[],
   uriObj: UriObj
 ) {
-  if (notesObj) {
-    Object.entries(notesObj).forEach(([key, currentNote]) => {
-      const numberKey = safeParseDecimalInt(key);
-      if (numberKey < 0) {
-        const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
-        promises.push(dataService.post(uri, { note: currentNote }));
-      } else if (currentNote.isRemoved) {
-        const uri = `/api/notes/${key}`;
-        promises.push(dataService.APIDelete(uri));
-      } else {
-        const uri = `/api/notes/${key}/change_requests`;
-        promises.push(dataService.post(uri, { change_request: currentNote }));
-      }
-    });
-  }
+  Object.entries(notesObj).forEach(([key, currentNote]) => {
+    const numberKey = safeParseDecimalInt(key);
+    if (numberKey < 0) {
+      const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
+      promises.push(dataService.post(uri, { note: currentNote }));
+    } else if (currentNote.isRemoved) {
+      const uri = `/api/notes/${key}`;
+      promises.push(dataService.APIDelete(uri));
+    } else {
+      const uri = `/api/notes/${key}/change_requests`;
+      promises.push(dataService.post(uri, { change_request: currentNote }));
+    }
+  });
 }
 
 function postInstructions(

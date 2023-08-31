@@ -15,14 +15,13 @@ export interface InternalNoteChanges {
   isRemoved?: boolean;
 }
 
+export type NotesObject = Record<number, InternalNoteChanges>;
+
 type Props = {
   notes: Note[] | undefined;
-  handleNotesChange: (
-    notesObject: Record<number, InternalNoteChanges>
-  ) => void;
-}
+  handleNotesChange: (notesObject: NotesObject) => void;
+};
 
-export type NotesObject = Record<number, InternalNoteChanges>;
 
 const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
   const internalNotes = notes.map((note) => {
@@ -36,9 +35,7 @@ const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
 
   const [notesList, setNotesList] = useState(internalNotes);
   const [uuid, setUuid] = useState(-1);
-  const [notesObject, setNotesObject] = useState<
-    Record<number, InternalNoteChanges>
-  >({});
+  const [notesObject, setNotesObject] = useState<NotesObject>({});
 
   useEffect(() => {
     handleNotesChange(notesObject);
