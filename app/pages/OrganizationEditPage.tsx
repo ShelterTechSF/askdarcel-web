@@ -20,8 +20,7 @@ import type {
   InternalScheduleDay,
 } from "../components/edit/ProvidedService";
 import type {
-  State as EditNotesState,
-  InternalNoteChanges,
+  NotesObject
 } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type {
@@ -338,12 +337,12 @@ function postSchedule(
 }
 
 function postNotes(
-  changedNotes: Record<number, InternalNoteChanges>,
+  notesObj: NotesObject,
   promises: Promise<unknown>[],
   uriObj: UriObj
 ) {
-  if (changedNotes) {
-    Object.entries(changedNotes).forEach(([key, currentNote]) => {
+  if (notesObj) {
+    Object.entries(notesObj).forEach(([key, currentNote]) => {
       const numberKey = safeParseDecimalInt(key);
       if (numberKey < 0) {
         const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
@@ -496,7 +495,7 @@ type NewNote = Omit<Note, "id">;
  * This function may look more complicated than it needs to be, but it's due to
  * technical debt in the EditNotes component, which prevents us from precisely
  * describing the type of the InternalNoteChanges. InternalNoteChanges.note is
- * only only undefined in the case where we are removing an existing note, but
+ * only undefined in the case where we are removing an existing note, but
  * on the New Resource page, we cannot remove any notes because none of them
  * have been created on the API side in the first place. Therefore, we know that
  * the `note` field on all `InternalNoteChanges` should be defined. We add a
@@ -504,7 +503,7 @@ type NewNote = Omit<Note, "id">;
  * refactor the EditNotes component.
  */
 const prepNotesData = (
-  notes: Record<number, InternalNoteChanges>
+  notes: NotesObject
 ): { note: NewNote }[] =>
   Object.values(notes).map((note) => {
     const noteValue = note.note;
@@ -734,7 +733,7 @@ export interface InternalTopLevelService
   instructions?: InternalInstruction[];
 
   /** Changes to the notes attached to this service. */
-  notesObj?: Record<number, InternalNoteChanges>;
+  notesObj?: NotesObject;
 
   /** A Schedule attached to the service.
    *
@@ -841,7 +840,7 @@ type State = {
   /** Mapping from service ID to service. */
   services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<number>;
-  notes: Partial<EditNotesState>;
+  notes: NotesObject;
   phones: InternalPhoneNumber[];
   submitting: boolean;
   newResource: boolean;
@@ -1497,7 +1496,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       long_description,
       email,
       website,
-      notes: notes.notes ? prepNotesData(notes.notes) : [],
+      notes: notes ? prepNotesData(notes) : [],
       schedule: { schedule_days: schedule },
       phones,
       legal_status,
@@ -1710,7 +1709,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
-  handleNotesChange(notesObj: Record<number, InternalNoteChanges>) {
+  handleNotesChange(notesObj: NotesObject) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
 
@@ -1880,7 +1879,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
           />
 
           <EditNotes
-            existingNotes={resource.notes}
+            notes={resource.notes}
             handleNotesChange={this.handleNotesChange}
           />
         </ul>

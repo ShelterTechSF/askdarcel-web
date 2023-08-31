@@ -15,73 +15,66 @@ export interface InternalNoteChanges {
   isRemoved?: boolean;
 }
 
-interface Props {
-  existingNotes: Note[] | undefined;
+type Props = {
+  notes: Note[] | undefined;
   handleNotesChange: (
-    notesDictionary: Record<number, InternalNoteChanges>
+    notesObject: Record<number, InternalNoteChanges>
   ) => void;
 }
 
-export type State = {
-  notes: Record<number, InternalNoteChanges>;
-  existingNotes: InternalNote[];
-  uuid: number;
-};
+export type NotesObject = Record<number, InternalNoteChanges>;
 
-const EditNotes = ({ existingNotes, handleNotesChange }: Props) => {
-  const internalNotes = existingNotes
-    ? existingNotes.map((note) => {
-        const newNote: InternalNote = {
-          ...note,
-          key: note.id,
-        };
+const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
+  const internalNotes = notes.map((note) => {
+    const newNote: InternalNote = {
+      ...note,
+      key: note.id,
+    };
 
-        return newNote;
-      })
-    : [];
+    return newNote;
+  });
 
-  const [notes, setNotes] = useState(internalNotes);
+  const [notesList, setNotesList] = useState(internalNotes);
   const [uuid, setUuid] = useState(-1);
-  const [notesDictionary, setNotesDictionary] = useState<
+  const [notesObject, setNotesObject] = useState<
     Record<number, InternalNoteChanges>
   >({});
 
   useEffect(() => {
-    handleNotesChange(notesDictionary);
-  }, [notesDictionary, handleNotesChange]);
+    handleNotesChange(notesObject);
+  }, [notesObject, handleNotesChange]);
 
   const handleNoteChange = (key: number, note: InternalNoteChanges): void => {
-    setNotesDictionary({
-      ...notesDictionary,
+    setNotesObject({
+      ...notesObject,
       [key]: note,
     });
   };
 
   const addNote = () => {
     setUuid(uuid - 1);
-
-    setNotes([...notes, { key: uuid }]);
+    setNotesList([...notesList, { key: uuid }]);
   };
 
   const removeNote = (index: number) => {
-    const targetNote = notes[index];
+    const targetNote = notesList[index];
     const { key } = targetNote;
-    const newNotes = [...notes];
-    const newNotesDictionary = { ...notesDictionary };
+    const newNotes = [...notesList];
+    const newNotesObject = { ...notesObject };
 
     if (key < 0) {
-      delete newNotesDictionary[key];
+      delete newNotesObject[key];
     } else {
-      newNotesDictionary[key] = { isRemoved: true };
+      newNotesObject[key] = { isRemoved: true };
     }
 
     newNotes.splice(index, 1);
-    setNotes(newNotes);
-    setNotesDictionary(newNotesDictionary);
+    setNotesList(newNotes);
+    setNotesObject(newNotesObject);
   };
 
   const renderNotes = () =>
-    notes.map((note, i) => (
+    notesList.map((note, i) => (
       <EditNote
         key={note.key}
         index={i}

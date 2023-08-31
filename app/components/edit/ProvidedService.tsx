@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import EditNotes from "./EditNotes";
 import EditSchedule from "./EditSchedule";
 import MultiSelectDropdown from "./MultiSelectDropdown";
@@ -454,7 +454,7 @@ const ProvidedService = ({
         />
 
         <EditNotes
-          existingNotes={service.notes}
+          notes={service.notes}
           handleNotesChange={(value) => handleChange("notesObj", value)}
         />
 
