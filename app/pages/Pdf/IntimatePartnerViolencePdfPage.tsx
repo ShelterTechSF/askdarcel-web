@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, useLocation } from "react-router-dom";
 import Checklist from "assets/img/domestic-violence-checklist.png";
+import type { PhoneNumber } from "../../models/Meta";
 
 import { whiteLabel } from "utils";
 
@@ -77,6 +78,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
   const { resource, recurringSchedule } = service;
   const locations = getServiceLocations(service, resource, recurringSchedule);
+  const checklistItems = ['Spending time with supportive friends and family', "Thinking about what you feel grateful for", "Prayer", "Counseling", "Exercise", "Helping others", "Listening to music", "Other: __________________"]
 
   return (
     <div>
@@ -103,6 +105,9 @@ export const IntimatePartnerViolencePdfPage = () => {
           {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles */}
           <style className="notranslate" ref={styleRef}>
             {`
+
+          @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
           .serviceHandoutPdf * {
             margin: 0;
             font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
@@ -201,7 +206,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           .contentContainer {
             display: grid;
             grid-template-columns: 47fr 53fr;
-            gap: 20px;
+            gap: 18px;
           }
 
           .rightColumn,
@@ -211,8 +216,75 @@ export const IntimatePartnerViolencePdfPage = () => {
             gap: 30px;
           }
 
+          .leftColumn {
+            z-index: 1;
+          }
+
+          .checklistContainer {
+            position: relative;
+            margin-left: -20px;
+          }
+
+          .checklistBody {
+            position: absolute;
+            top: 65px;
+            bottom: 15px;
+            left: 75px;
+            right: 35px;
+          }
+
+          .checklistContainer,
           .checklistImage {
-            width: 100%;
+            width: 400px;
+            height: auto;
+          }
+
+          .checklistHeader {
+            font-weight: 700;
+            margin-bottom: 18px;
+          }
+
+          .checklist {
+            display: grid;
+            gap: 6px;
+            margin: 0;
+            padding: 0;
+          }
+
+          .checklistItem {
+            line-height: 1.3;
+            font-family: 'Architects Daughter', cursive;
+            font-weight: 500;
+            display: flex;
+            gap: 6px;
+            flex-direction: row;
+            margin: 0;
+            padding: 0;
+          }
+
+          .checkbox {
+            position: relative;
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+          }
+
+          .checkboxBackground {
+            position: absolute;
+            background-color: white;
+            top: -1px;
+            left: 0;
+            right: -1px;
+            bottom: 0;
+            border-radius: 33%;
+          }
+
+          .checkboxBorder {
+            border: solid 1px black;
+            border-radius: 3px;
+            z-index: 1;
+            position: relative;
+            height: 100%;
           }
 
           .blurb {
@@ -252,6 +324,32 @@ export const IntimatePartnerViolencePdfPage = () => {
             font-weight: 400;
             font-size: 22px;
             margin-bottom: 10px;
+          }
+
+          .generalResourceList {
+            margin: 0;
+            padding: 0;
+            list-style-position: inside;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+          }
+
+          .generalResourceItem {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+          }
+
+          .generalResourceItem::before {
+            content: "";
+            flex-shrink: 0;
+            background-color: #F3911E;
+            display: inline-block;
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
           }
 
           .recommendedResource {
@@ -318,6 +416,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           .hoursTitle {
             font-weight: 600;
             text-decoration: underline;
+            margin-bottom: 2px;
           }
         `}
           </style>
@@ -356,7 +455,31 @@ export const IntimatePartnerViolencePdfPage = () => {
               </ul>
             </div>
             <div className="rightColumn">
-              <img className="checklistImage" src={`${window.location.origin}${Checklist}`} alt="" />
+              <div className="checklistContainer">
+                <div className="checklistBody">
+                  <p className="checklistHeader">
+                    What have you tried in the past 30 days to cope or feel
+                    better:
+                  </p>
+                  <ul className="checklist">
+                    {checklistItems.map((item) => (
+                      <li key={item} className="checklistItem">
+                        <div className="checkbox">
+                          <div className="checkboxBorder" />
+                          <div className="checkboxBackground" />
+                        </div>
+
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <img
+                  className="checklistImage"
+                  src="https://i.ibb.co/17PF7ZP/domestic-violence-checklist.png"
+                  alt=""
+                />
+              </div>
               <div className="recommendedResource">
                 <div className="resourceContent">
                   <div>
@@ -372,13 +495,6 @@ export const IntimatePartnerViolencePdfPage = () => {
                         linkTarget="_blank"
                       />
                     </div>
-                    <p className="serviceUrl">
-                      (See{" "}
-                      <a
-                        href={`${whiteLabel.siteUrl}/${service.id}`}
-                      >{`${whiteLabel.siteUrl}/${service.id}`}</a>{" "}
-                      for more details)
-                    </p>
                   </div>
 
                   <div className="locationInfo">
@@ -388,6 +504,7 @@ export const IntimatePartnerViolencePdfPage = () => {
                           <ServiceAddress
                             address={locations[0].address}
                             resourceName={service.resource.name}
+                            phones={service.resource.phones}
                           />
                           <div className="serviceHours">
                             <p className="hoursTitle">Hours</p>
@@ -435,12 +552,12 @@ const generalResources: GeneralResourceItem[] = [
     header: "FIND COMMUNITY RESOURCES",
     resourceItems: [
       {
-        description: "Behavioral Health Access Center Mon-Fri  9am-4pm:",
+        description: "Behavioral Health Access Center Mon-Fri  9am-4pm",
         contact: "415-255-3737 or 888-246-3333",
       },
       {
         description:
-          "24/7 Information and Referrals for food, shelter, child care, senior services, etc.:",
+          "24/7 Information and Referrals for food, shelter, child care, senior services, etc.",
         contact: "Call 3–1–1",
       },
     ],
@@ -449,17 +566,17 @@ const generalResources: GeneralResourceItem[] = [
     header: "24/7 HOTLINES",
     resourceItems: [
       {
-        description: "Suicide and Crisis Lifeline:",
+        description: "Suicide and Crisis Lifeline",
         contact: "988 or 415-781-0500",
         contactNewLine: true,
       },
       {
-        description: "La Casa de Las Madres:",
+        description: "La Casa de Las Madres",
         contact: "877-503-1850",
         contactNewLine: true,
       },
       {
-        description: "W.O.M.A.N. Inc:",
+        description: "W.O.M.A.N. Inc",
         contact: "\n877-384-3578",
         contactNewLine: true,
       },
@@ -476,16 +593,18 @@ const GeneralResource = ({
 }) => (
   <>
     <h3 className="generalResourceHeader">{header}</h3>
-    <ul>
+    <ul className="generalResourceList">
       {resourceItems.map((item) => (
-        <li>
-          {item.description}{" "}
-          <span
-            className={`resourceItemContact ${
-              item.contactNewLine ? "contactNewLine" : ""
-            }`}
-          >
-            {item.contact}
+        <li className="generalResourceItem" key={item.contact}>
+          <span>
+            {item.description}{" "}
+            <span
+              className={`resourceItemContact ${
+                item.contactNewLine ? "contactNewLine" : ""
+              }`}
+            >
+              {item.contact}
+            </span>
           </span>
         </li>
       ))}
@@ -497,14 +616,17 @@ type ServiceAddressProps = {
   resourceName: string;
   address: Address;
   website?: string | null;
+  phones: PhoneNumber[];
 };
 
 const ServiceAddress = ({
   resourceName,
   address,
   website,
+  phones,
 }: ServiceAddressProps) => {
   const { address_1, address_2, city, state_province, postal_code } = address;
+  const phone = phones?.[0];
   return (
     <div>
       <p className="resourceName">{resourceName}</p>
@@ -520,6 +642,10 @@ const ServiceAddress = ({
       <p>
         <span>{city}</span>, <span>{state_province}</span>{" "}
         <span>{postal_code}</span>
+      </p>
+      <p>
+        <span>{phone.number}</span>{" "}
+        {phone.service_type && `(${phone.service_type})`}
       </p>
       {website && <p>{website}</p>}
     </div>
