@@ -37,7 +37,7 @@ server {
         resolver <%= open('/etc/resolv.conf').read.match(/nameserver (.*)/)[1] rescue '8.8.8.8' %>;
         resolver_timeout 5s;
 
-        set api_url <%= env_api_go_url.chomp '/' %>;
+        set $api_url <%= env_api_go_url.chomp '/' %>;
         proxy_pass $api_url/api/$1$is_args$args;
         proxy_redirect off;
     }
