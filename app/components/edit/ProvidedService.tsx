@@ -225,6 +225,12 @@ const TEXT_AREAS = [
     field: "long_description",
   },
   {
+    label: "Service Short Description (NOTE: THIS SHOULD ONLY BE MODIFIED FOR CERTAIN, SPECIAL CIRCUMSTANCES)",
+    placeholder:
+      "Describe what you'll receive from this service in a few sentences.",
+    field: "short_description",
+  },
+  {
     label: "Application Process",
     placeholder: "How do you apply for this service?",
     field: "application_process",
