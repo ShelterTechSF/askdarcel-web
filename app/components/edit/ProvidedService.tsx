@@ -273,7 +273,11 @@ const ProvidedService = ({
     value: InternalTopLevelService[K]
   ) => {
     const { id } = service;
-    editServiceById(id, { id, [field]: value });
+    const valueChanged = service[field] !== value;
+
+    if (valueChanged) {
+      editServiceById(id, { id, [field]: value });
+    }
   };
 
   const setShouldInheritScheduleFromParent = (shouldInherit: boolean) => {

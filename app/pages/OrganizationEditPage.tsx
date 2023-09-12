@@ -19,10 +19,7 @@ import type {
   InternalSchedule,
   InternalScheduleDay,
 } from "../components/edit/ProvidedService";
-import type {
-  State as EditNotesState,
-  InternalNoteChanges,
-} from "../components/edit/EditNotes";
+import type { NewNotes } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type {
   Address,
@@ -338,26 +335,23 @@ function postSchedule(
 }
 
 function postNotes(
-  notesObj: Partial<EditNotesState>,
+  notesObj: NewNotes,
   promises: Promise<unknown>[],
   uriObj: UriObj
 ) {
-  if (notesObj && notesObj.notes) {
-    const { notes } = notesObj;
-    Object.entries(notes).forEach(([key, currentNote]) => {
-      const numberKey = safeParseDecimalInt(key);
-      if (numberKey < 0) {
-        const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
-        promises.push(dataService.post(uri, { note: currentNote }));
-      } else if (currentNote.isRemoved) {
-        const uri = `/api/notes/${key}`;
-        promises.push(dataService.APIDelete(uri));
-      } else {
-        const uri = `/api/notes/${key}/change_requests`;
-        promises.push(dataService.post(uri, { change_request: currentNote }));
-      }
-    });
-  }
+  Object.entries(notesObj).forEach(([key, currentNote]) => {
+    const numberKey = safeParseDecimalInt(key);
+    if (numberKey < 0) {
+      const uri = `/api/${uriObj.path}/${uriObj.id}/notes`;
+      promises.push(dataService.post(uri, { note: currentNote }));
+    } else if (currentNote.isRemoved) {
+      const uri = `/api/notes/${key}`;
+      promises.push(dataService.APIDelete(uri));
+    } else {
+      const uri = `/api/notes/${key}/change_requests`;
+      promises.push(dataService.post(uri, { change_request: currentNote }));
+    }
+  });
 }
 
 function postInstructions(
@@ -497,16 +491,14 @@ type NewNote = Omit<Note, "id">;
  * This function may look more complicated than it needs to be, but it's due to
  * technical debt in the EditNotes component, which prevents us from precisely
  * describing the type of the InternalNoteChanges. InternalNoteChanges.note is
- * only only undefined in the case where we are removing an existing note, but
+ * only undefined in the case where we are removing an existing note, but
  * on the New Resource page, we cannot remove any notes because none of them
  * have been created on the API side in the first place. Therefore, we know that
  * the `note` field on all `InternalNoteChanges` should be defined. We add a
  * runtime type assertion here to ensure this invariant is held even if we
  * refactor the EditNotes component.
  */
-const prepNotesData = (
-  notes: Record<number, InternalNoteChanges>
-): { note: NewNote }[] =>
+const prepNotesData = (notes: NewNotes): { note: NewNote }[] =>
   Object.values(notes).map((note) => {
     const noteValue = note.note;
     assertDefined(
@@ -735,7 +727,7 @@ export interface InternalTopLevelService
   instructions?: InternalInstruction[];
 
   /** Changes to the notes attached to this service. */
-  notesObj?: EditNotesState;
+  notesObj?: NewNotes;
 
   /** A Schedule attached to the service.
    *
@@ -842,7 +834,7 @@ type State = {
   /** Mapping from service ID to service. */
   services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<number>;
-  notes: Partial<EditNotesState>;
+  notes: NewNotes;
   phones: InternalPhoneNumber[];
   submitting: boolean;
   newResource: boolean;
@@ -1118,7 +1110,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       if (numberKey < 0) {
         // Create new service
         if (currentService.notesObj) {
-          const notes = Object.values(currentService.notesObj.notes);
+          const notes = Object.values(currentService.notesObj);
           delete currentService.notesObj;
           // @ts-ignore
           currentService.notes = notes;
@@ -1498,7 +1490,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       long_description,
       email,
       website,
-      notes: notes.notes ? prepNotesData(notes.notes) : [],
+      notes: notes ? prepNotesData(notes) : [],
       schedule: { schedule_days: schedule },
       phones,
       legal_status,
@@ -1711,7 +1703,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
-  handleNotesChange(notesObj: EditNotesState) {
+  handleNotesChange(notesObj: NewNotes) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
 
@@ -1903,6 +1895,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       serviceChanges,
       serviceDeletions
     );
+
     return (
       <ul className="edit--section--list">
         <EditServices
