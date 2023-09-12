@@ -19,7 +19,7 @@ import type {
   InternalSchedule,
   InternalScheduleDay,
 } from "../components/edit/ProvidedService";
-import type { NotesObject } from "../components/edit/EditNotes";
+import type { NewNotes } from "../components/edit/EditNotes";
 import type { PopupMessageProp } from "../components/ui/PopUpMessage";
 import type {
   Address,
@@ -335,7 +335,7 @@ function postSchedule(
 }
 
 function postNotes(
-  notesObj: NotesObject,
+  notesObj: NewNotes,
   promises: Promise<unknown>[],
   uriObj: UriObj
 ) {
@@ -498,7 +498,7 @@ type NewNote = Omit<Note, "id">;
  * runtime type assertion here to ensure this invariant is held even if we
  * refactor the EditNotes component.
  */
-const prepNotesData = (notes: NotesObject): { note: NewNote }[] =>
+const prepNotesData = (notes: NewNotes): { note: NewNote }[] =>
   Object.values(notes).map((note) => {
     const noteValue = note.note;
     assertDefined(
@@ -727,7 +727,7 @@ export interface InternalTopLevelService
   instructions?: InternalInstruction[];
 
   /** Changes to the notes attached to this service. */
-  notesObj?: NotesObject;
+  notesObj?: NewNotes;
 
   /** A Schedule attached to the service.
    *
@@ -834,7 +834,7 @@ type State = {
   /** Mapping from service ID to service. */
   services: Record<number, InternalTopLevelService>;
   deactivatedServiceIds: Set<number>;
-  notes: NotesObject;
+  notes: NewNotes;
   phones: InternalPhoneNumber[];
   submitting: boolean;
   newResource: boolean;
@@ -1703,7 +1703,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     this.setState({ scheduleObj, inputsDirty: true });
   }
 
-  handleNotesChange(notesObj: NotesObject) {
+  handleNotesChange(notesObj: NewNotes) {
     this.setState({ notes: notesObj, inputsDirty: true });
   }
 

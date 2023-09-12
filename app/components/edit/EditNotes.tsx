@@ -12,11 +12,11 @@ export interface InternalNoteChanges {
   isRemoved?: boolean;
 }
 
-export type NotesObject = Record<number, InternalNoteChanges>;
+export type NewNotes = Record<number, InternalNoteChanges>;
 
 type Props = {
   notes: Note[] | undefined;
-  handleNotesChange: (notesObject: NotesObject) => void;
+  handleNotesChange: (newNotes: NewNotes) => void;
 };
 
 const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
@@ -29,45 +29,45 @@ const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
     return newNote;
   });
 
-  const [notesList, setNotesList] = useState(internalNotes);
+  const [existingNotes, setExistingNotes] = useState(internalNotes);
   const [uuid, setUuid] = useState(-1);
-  const [notesObject, setNotesObject] = useState<NotesObject>({});
+  const [newNotes, setNewNotes] = useState<NewNotes>({});
 
   useEffect(() => {
-    handleNotesChange(notesObject);
-  }, [notesObject, handleNotesChange]);
+    handleNotesChange(newNotes);
+  }, [newNotes, handleNotesChange]);
 
   const handleNoteChange = (key: number, note: InternalNoteChanges): void => {
-    setNotesObject({
-      ...notesObject,
+    setNewNotes({
+      ...newNotes,
       [key]: note,
     });
   };
 
   const addNote = () => {
     setUuid(uuid - 1);
-    setNotesList([...notesList, { key: uuid }]);
+    setExistingNotes([...existingNotes, { key: uuid }]);
   };
 
   const removeNote = (index: number) => {
-    const targetNote = notesList[index];
+    const targetNote = existingNotes[index];
     const { key } = targetNote;
-    const newNotes = [...notesList];
-    const newNotesObject = { ...notesObject };
+    const updatedExistingNotes = [...existingNotes];
+    const updatedNewNotes = { ...newNotes };
 
     if (key < 0) {
-      delete newNotesObject[key];
+      delete updatedNewNotes[key];
     } else {
-      newNotesObject[key] = { isRemoved: true };
+      updatedNewNotes[key] = { isRemoved: true };
     }
 
-    newNotes.splice(index, 1);
-    setNotesList(newNotes);
-    setNotesObject(newNotesObject);
+    updatedExistingNotes.splice(index, 1);
+    setExistingNotes(updatedExistingNotes);
+    setNewNotes(updatedNewNotes);
   };
 
   const renderNotes = () =>
-    notesList.map((note, i) => (
+    existingNotes.map((note, i) => (
       <EditNote
         key={note.key}
         index={i}
