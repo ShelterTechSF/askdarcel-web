@@ -1,7 +1,3 @@
-import * as User from "./User";
-
-export { User };
-
 export * from "./SearchHits";
 export * from "./ChangeRequest";
 export * from "./Meta";
