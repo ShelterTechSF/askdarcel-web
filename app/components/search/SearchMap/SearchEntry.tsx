@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import whiteLabel from "utils/whitelabel";
 import { RelativeOpeningTime } from "components/listing/RelativeOpeningTime";
+import type { SearchHit } from "models/SearchHits";
 import "./SearchEntry.scss";
 
 const {
   appImages: { mohcdSeal },
 } = whiteLabel;
 
-export default class SearchEntry extends Component {
+type Props = {
+  hitNumber: string;
+  hit: SearchHit;
+};
+
+export default class SearchEntry extends Component<Props> {
   renderAddressMetadata() {
     const { hit } = this.props;
     const { addresses: rawAddresses } = hit;

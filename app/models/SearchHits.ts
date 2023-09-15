@@ -4,20 +4,28 @@ import { ScheduleDay, parseAlgoliaSchedule } from "./Schedule";
 import { PhoneNumber } from "./Meta";
 import { RecurringSchedule } from "./RecurringSchedule";
 
+interface BaseHit {
+  _geoloc: { lat: number; lng: number };
+  is_mohcd_funded: boolean;
+  resource_id: number;
+}
+
 export interface ServiceHit
-  extends Omit<Service, "schedule" | "recurringSchedule" | "instructions"> {
+  extends Omit<Service, "schedule" | "recurringSchedule" | "instructions">,
+    BaseHit {
   type: "service";
   instructions: string[];
   phones: PhoneNumber[];
   recurringSchedule: RecurringSchedule | null;
-  resource_id: number;
   resource_schedule: ScheduleDay[];
   schedule: ScheduleDay[];
+  service_id: number;
   service_of: string;
 }
 
 export interface OrganizationHit
-  extends Omit<Organization, "schedule" | "recurringSchedule"> {
+  extends Omit<Organization, "schedule" | "recurringSchedule">,
+    BaseHit {
   type: "resource";
   schedule: ScheduleDay[];
   recurringSchedule: RecurringSchedule | null;

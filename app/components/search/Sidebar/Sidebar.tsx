@@ -23,7 +23,7 @@ const Sidebar = ({
   subcategories = [],
   subcategoryNames = [],
 }: {
-  setSearchRadius: (radius: any) => void;
+  setSearchRadius: (radius: string) => void;
   searchRadius: string;
   isSearchResultsPage: boolean;
   eligibilities?: object[];
