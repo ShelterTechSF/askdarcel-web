@@ -192,7 +192,7 @@ const SearchResult = ({
   };
 
   const phoneNumber = hit?.phones?.[0]?.number;
-  const formatPhoneNumber = (number: string | number) => {
+  const formatPhoneNumber = (number: string) => {
     // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
     // If the input doesn't match regex, function returns number's original value
     if (!number) {

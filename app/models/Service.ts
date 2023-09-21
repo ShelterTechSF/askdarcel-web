@@ -42,6 +42,7 @@ export interface Service {
   required_documents: any;
   resource: Organization;
   schedule: Schedule;
+  short_description: string;
   source_attribution: string;
   status: "pending" | "approved" | "rejected" | "inactive";
   updated_at: string;
