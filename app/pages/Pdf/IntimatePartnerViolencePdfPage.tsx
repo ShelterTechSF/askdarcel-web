@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, useLocation } from "react-router-dom";
-import Checklist from "assets/img/domestic-violence-checklist.png";
 import type { PhoneNumber } from "../../models/Meta";
 
-import { whiteLabel } from "utils";
 
 import {
   fetchService,
@@ -227,7 +225,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .checklistBody {
             position: absolute;
-            top: 65px;
+            top: 55px;
             bottom: 15px;
             left: 75px;
             right: 35px;
@@ -241,7 +239,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .checklistHeader {
             font-weight: 700;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
           }
 
           .checklist {
@@ -353,18 +351,18 @@ export const IntimatePartnerViolencePdfPage = () => {
           }
 
           .recommendedResource {
-            margin-top: 20px;
+            margin-top: 14px;
             margin-left: 18px;
             border: solid 2px #a6a6a6;
             border-radius: 10px;
-            padding: 18px 15px;
+            padding: 14px;
             flex-grow: 1;
             margin-top: auto;
           }
 
           .resourceContent {
             display: grid;
-            gap: 12px;
+            gap: 4px;
           }
 
           .serviceName {
@@ -379,17 +377,10 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .descriptionContainer {
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 9;
             -webkit-box-orient: vertical;
             line-height: 1.5;
             overflow: hidden;
-            -webkit-mask-image: linear-gradient(180deg, #000 56%, transparent);
-          }
-
-          .serviceUrl {
-            margin-top: 4px;
-            font-size: 14px;
-            font-style: italic;
           }
 
           .resourceName {
@@ -397,7 +388,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           }
 
           .serviceHours {
-            margin-top: 18px;
+            margin-top: 10px;
           }
 
           .serviceHours table.compact tr th,
@@ -491,7 +482,7 @@ export const IntimatePartnerViolencePdfPage = () => {
                     <div className="descriptionContainer">
                       <ReactMarkdown
                         className="renderedMarkdown"
-                        source={service.long_description}
+                        source={service.short_description}
                         linkTarget="_blank"
                       />
                     </div>
