@@ -901,7 +901,9 @@ class OrganizationEditPage extends React.Component<Props, State> {
       const url = `/api/resources/${resourceID}`;
       fetch(url)
         .then((r) => r.json())
-        .then((data) => this.handleAPIGetResource(data.resource));
+        .then((data) =>
+          this.handleAPIGetResource(data.resource as Organization)
+        );
     }
   }
 
@@ -1522,6 +1524,10 @@ class OrganizationEditPage extends React.Component<Props, State> {
       });
   }
 
+  // Reordering this code is too disruptive of a change for now. We're moving
+  // away from class-based components, anyway, so it's easier to not enforce the
+  // method ordering required by react/sort-comp.
+  // eslint-disable-next-line react/sort-comp
   handleSubmit() {
     const { history, showPopUpMessage } = this.props;
     this.setState({ submitting: true });
@@ -1615,7 +1621,6 @@ class OrganizationEditPage extends React.Component<Props, State> {
     // Notes
     postNotes(notes, promises, { path: "resources", id: resource.id });
 
-    const that = this;
     Promise.all(promises)
       .then(() => {
         history.push(`/organizations/${resource.id}`);
@@ -1657,24 +1662,22 @@ class OrganizationEditPage extends React.Component<Props, State> {
           return { deactivatedServiceIds: newDeactivatedServiceIds };
         });
       } else {
-        dataService
-          .APIDelete(path, { change_request: { status: "2" } } as any)
-          .then(() => {
-            // eslint-disable-next-line no-alert
-            alert(
-              "Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know."
-            );
-            if (type === "resource") {
-              // Resource successfully deactivated. Redirect to home.
-              history.push({ pathname: "/" });
-            } else {
-              // Service successfully deactivated. Mark deactivated in local state.
-              this.setState((state) => {
-                state.deactivatedServiceIds.add(id);
-                return state;
-              });
-            }
-          });
+        dataService.APIDelete(path).then(() => {
+          // eslint-disable-next-line no-alert
+          alert(
+            "Successful! \n \nIf this was a mistake, please let someone from the ShelterTech team know."
+          );
+          if (type === "resource") {
+            // Resource successfully deactivated. Redirect to home.
+            history.push({ pathname: "/" });
+          } else {
+            // Service successfully deactivated. Mark deactivated in local state.
+            this.setState((state) => {
+              state.deactivatedServiceIds.add(id);
+              return state;
+            });
+          }
+        });
       }
     }
   }
@@ -1686,13 +1689,13 @@ class OrganizationEditPage extends React.Component<Props, State> {
   handleResourceFieldChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const { field } = e.target.dataset;
+    const field = e.target.dataset.field as keyof State;
     assertDefined(
       field,
       "Called handleResourceFieldChange() on a form element missing the data-field attribute."
     );
     const { value } = e.target;
-    const object = {
+    const object: Pick<State, keyof State> = {
       [field]: value,
       inputsDirty: true,
     } as any;
