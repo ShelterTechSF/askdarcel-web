@@ -78,13 +78,6 @@ export default function editCollectionHOC<T extends BaseItem>(
       this.removeItem = this.removeItem.bind(this);
     }
 
-    addItem() {
-      const { collection } = this.state;
-      collection.push(blankTemplateObj);
-      // HACK: see comment on State.
-      this.setState(collection as any);
-    }
-
     handleChange(index: number, item: T) {
       const { handleChange } = this.props;
       const { collection } = this.state;
@@ -92,7 +85,16 @@ export default function editCollectionHOC<T extends BaseItem>(
       item.dirty = true;
       collection[index] = item;
       // HACK: see comment on State.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.setState(collection as any, () => handleChange(collection));
+    }
+
+    addItem() {
+      const { collection } = this.state;
+      collection.push(blankTemplateObj);
+      // HACK: see comment on State.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      this.setState(collection as any);
     }
 
     removeItem(index: number, item: T) {
@@ -105,6 +107,7 @@ export default function editCollectionHOC<T extends BaseItem>(
       }
 
       // HACK: see comment on State.
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.setState(collection as any, () => handleChange(collection));
     }
 
