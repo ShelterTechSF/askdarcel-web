@@ -53,7 +53,7 @@ const EditSidebar = ({
   const history = useHistory();
   let actionButtons: JSX.Element[];
 
-  const handleActivation = (id: number): void => {
+  const handleActivation = (): void => {
     /* eslint-disable no-alert */
     if (window.confirm("Are you sure you want to reactivate this resource?")) {
       dataService
@@ -87,7 +87,7 @@ const EditSidebar = ({
         disabled={submitting}
         onClick={() =>
           resource.status === "inactive"
-            ? handleActivation(resourceID)
+            ? handleActivation()
             : handleDeactivation("resource", resourceID)
         }
       >

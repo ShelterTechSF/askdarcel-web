@@ -1,13 +1,31 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connectRefinementList } from "react-instantsearch/connectors";
+import type { Hit } from "react-instantsearch-core";
 import styles from "./RefinementFilters.module.scss";
+
+type Item = {
+  count: number;
+  isRefined: boolean;
+  label: string;
+  value: string[];
+};
+
+type Props = {
+  items: Hit<Item>[];
+  refine: (value: string[]) => void;
+  currentRefinement: string[];
+  mapping: Record<string, string[]>;
+};
+
+type State = {
+  isChecked: Record<string, boolean>;
+};
 
 // Todo: This component could potentially be consolidated with the the Refinement List Filter
 // component when categories/eligibilities are standardized across the homepage Service
 // Pathways results and the Search Results pages
-class FacetRefinementList extends Component {
-  constructor(props) {
+class FacetRefinementList extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.changeRefinement = this.changeRefinement.bind(this);
     this.setChecks = this.setChecks.bind(this);
@@ -17,7 +35,7 @@ class FacetRefinementList extends Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     const { currentRefinement } = this.props;
     if (
       currentRefinement.sort().join(",") !==
@@ -29,17 +47,17 @@ class FacetRefinementList extends Component {
     }
   }
 
-  setChecks() {
+  setChecks(): Record<string, boolean> {
     const { mapping } = this.props;
     const mapKeys = Object.keys(mapping);
-    const checks = {};
+    const checks: Record<string, boolean> = {};
     mapKeys.forEach((key) => {
       checks[key] = this.keyHasAtLeastOneRefined(key);
     });
     return checks;
   }
 
-  changeRefinement(key) {
+  changeRefinement(key: string) {
     // eslint-disable-line no-unused-vars
     const { refine } = this.props;
     const { currentRefinement } = this.props;
@@ -58,13 +76,13 @@ class FacetRefinementList extends Component {
     refine(newRefinement);
   }
 
-  keyHasAtLeastOneRefined(key) {
+  keyHasAtLeastOneRefined(key: string) {
     const { currentRefinement } = this.props;
     const { mapping } = this.props;
     return mapping[key].some((value) => currentRefinement.includes(value));
   }
 
-  refinementHasResults(key) {
+  refinementHasResults(key: string) {
     // this check that a key (checkbox) has at least one sub-elements that is refined
     // e.g if Learning Disabilities is can be refined but not Visual Impairment,
     // Disability is still enabled as a checkbox
@@ -109,10 +127,4 @@ class FacetRefinementList extends Component {
   }
 }
 
-FacetRefinementList.propTypes = {
-  items: PropTypes.array.isRequired,
-  refine: PropTypes.func.isRequired,
-  currentRefinement: PropTypes.array.isRequired,
-};
-
-export default connectRefinementList(FacetRefinementList);
+export default connectRefinementList<Props>(FacetRefinementList);
