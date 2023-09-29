@@ -242,7 +242,7 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           alias: "Asian and Pacific Islander",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "37", name: "HIV/AIDS", checked: false },
+        { isSeeAll: false, checkedId: "37", name: "Pregnant", checked: false },
         {
           isSeeAll: false,
           checkedId: "48",
@@ -265,14 +265,20 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
         {
           isSeeAll: false,
           checkedId: "51",
+          name: "Families with children below 18 years old",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "52",
           name: "African/Black",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "52", name: "Jewish", checked: false },
-        { isSeeAll: false, checkedId: "53", name: "LGBTQ+", checked: false },
+        { isSeeAll: false, checkedId: "53", name: "Jewish", checked: false },
+        { isSeeAll: false, checkedId: "54", name: "LGBTQ+", checked: false },
         {
           isSeeAll: false,
-          checkedId: "54",
+          checkedId: "55",
           name: "Anyone in Need",
           checked: false,
         },
