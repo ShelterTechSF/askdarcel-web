@@ -43,7 +43,7 @@ module.exports = {
     "react/forbid-prop-types": "off",
     "react/prefer-stateless-function": "off",
     "react/prop-types": "off",
-    "react/jsx-filename-extension": ["error", { extensions: [".tsx", ".jsx"] }],
+    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
     "react/function-component-definition": [
       "error",
       { namedComponents: "arrow-function" },
@@ -82,34 +82,6 @@ module.exports = {
         "react/jsx-props-no-spreading": "off",
         "max-classes-per-file": "off",
         "spaced-comment": ["error", "always", { markers: ["/"] }],
-      },
-    },
-    // Temporarily disable certain ESLint rules for Edit page files until we
-    // improve the type annotations.
-    {
-      files: [
-        "app/components/edit/*.tsx",
-        "app/pages/OrganizationEditPage.tsx",
-      ],
-      extends: [
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-      ],
-      parser: "@typescript-eslint/parser",
-      parserOptions: {
-        project: "./tsconfig.json",
-      },
-      rules: {
-        "@typescript-eslint/no-floating-promises": "off",
-        "@typescript-eslint/no-unsafe-argument": "off",
-        "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-call": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off",
-        "@typescript-eslint/no-unsafe-return": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/restrict-plus-operands": "off",
-        "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/unbound-method": "off",
-        "react/sort-comp": "off",
       },
     },
     {

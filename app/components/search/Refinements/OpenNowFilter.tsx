@@ -1,8 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { connectRefinementList } from "react-instantsearch/connectors";
 import { getCurrentDayTime } from "utils/index";
 import styles from "./RefinementFilters.module.scss";
+
+type Props = {
+  currentRefinement: string[];
+  refine: (value: string[]) => void;
+};
 
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
@@ -21,7 +25,7 @@ import styles from "./RefinementFilters.module.scss";
  * filter should filter for organizations or services which have 'Su-10:00' in
  * the open_times array.
  */
-const OpenNowFilter = ({ currentRefinement, refine }) => {
+const OpenNowFilter = ({ currentRefinement, refine }: Props) => {
   const isActive = currentRefinement.length !== 0;
   const toggleRefinement = () => {
     if (isActive) {
@@ -39,17 +43,12 @@ const OpenNowFilter = ({ currentRefinement, refine }) => {
         name="openNow"
         id="openNow"
         className={styles.refinementInput}
-        value={isActive}
+        value="openNow"
         checked={isActive}
         onChange={toggleRefinement}
       />
     </label>
   );
-};
-
-OpenNowFilter.propTypes = {
-  currentRefinement: PropTypes.arrayOf(PropTypes.string).isRequired,
-  refine: PropTypes.func.isRequired,
 };
 
 export default connectRefinementList(OpenNowFilter);
