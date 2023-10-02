@@ -17,7 +17,10 @@ const RefinementListFilter = ({ items, refine }: Props) => (
   <ul>
     {items.map((item) => (
       <label key={item.label} className={styles.checkBox}>
-        {item.label}
+        <span style={{ fontWeight: 800, color: "black", marginLeft: "auto" }}>
+          ({item.count})
+        </span>
+        <span>{item.label}</span>
         <input
           className={styles.refinementInput}
           type="checkbox"
