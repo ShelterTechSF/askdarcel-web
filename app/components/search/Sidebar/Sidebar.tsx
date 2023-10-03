@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 
-import { whiteLabel } from "utils";
 import {
   eligibilitiesMapping,
   categoriesMapping,
