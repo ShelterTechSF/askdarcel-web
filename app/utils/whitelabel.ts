@@ -45,7 +45,6 @@ interface WhiteLabelSite {
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
-  refinementListLimit: number;
   showBanner: boolean;
   showBreakingNews: boolean;
   showClinicianAction: boolean;
@@ -107,7 +106,6 @@ services and re-entry programs.`,
   intercom: false,
   logoLinkDestination: "/",
   navLogoStyle: styles.siteNav,
-  refinementListLimit: 10,
   showPrintResultsBtn: true,
   showBanner: false,
   showBreakingNews: false,
@@ -218,7 +216,6 @@ Department, and UCSF School of Medicine in partnership with SF Service Guide.`,
   enabledTranslations: [],
   homePageComponent: "UcsfHomePage",
   navLogoStyle: styles.navLogoUcsf,
-  refinementListLimit: 15,
   showClinicianAction: true,
   showHandoutsIcon: true,
   showHeaderQrCode: true,
