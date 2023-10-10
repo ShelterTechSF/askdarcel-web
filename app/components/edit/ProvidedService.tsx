@@ -226,7 +226,7 @@ const TEXT_AREAS = [
   },
   {
     label:
-      "Service Short Description (NOTE: THIS SHOULD ONLY BE MODIFIED FOR CERTAIN, SPECIAL CIRCUMSTANCES)",
+      "Service Short Description (NOTE: THIS FIELD IS CURRENTLY ONLY USED FOR SERVICES ON THE UCSF INTIMATE PARTNER VIOLENCE TILE. PLEASE DO NOT EDIT THIS UNLESS YOU ARE SPECIFICALLY UPDATING IT FOR THIS REASON.)",
     placeholder:
       "Describe what you'll receive from this service in a few sentences.",
     field: "short_description",
