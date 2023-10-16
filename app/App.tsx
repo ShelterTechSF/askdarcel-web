@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 // Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
 // package and all references to it:
@@ -9,6 +9,7 @@ import ReactGA_4 from "react-ga4";
 import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import auth0 from "auth0-js";
 
 import { AppContext, GeoCoordinates, getLocation, whiteLabel } from "./utils";
 import {
@@ -42,8 +43,13 @@ import OrganizationEditPage from "./pages/OrganizationEditPage";
 import { EditBreakingNewsPage } from "./pages/EditBreakingNewsPage";
 import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
 import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
+import { SignInPage } from "./pages/Auth/SignInPage";
+import { SignUpPage } from "./pages/Auth/SignUpPage";
 
 import styles from "./App.module.scss";
+
+
+
 
 const {
   homePageComponent,
@@ -96,10 +102,52 @@ export const App = () => {
     });
   }, [history]);
 
+  console.log(AppContext);
+
+  const contextValue = useMemo(() => {
+
+
+      const passwordlessStart = (
+        evt: React.SyntheticEvent,
+        email: string,
+        callback: () => void
+      ) => {
+        evt.preventDefault();
+        webAuth.passwordlessStart(
+          {
+            connection: "email",
+            send: "code",
+            email,
+          },
+          (err) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+
+            callback();
+          }
+        );
+      };
+
+    return {
+      userLocation,
+      authState: {
+        isAuthenticated: false,
+        user: {
+          name: '',
+          email: '',
+        }
+      },
+      webAuth,
+      passwordlessStart,
+    }
+  }, [userLocation]);
+
   return (
     <div id={outerContainerId} className={styles.outerContainer}>
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <AppContext.Provider value={{ userLocation }}>
+      <AppContext.Provider value={contextValue}>
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
@@ -213,6 +261,8 @@ export const App = () => {
                 path="/breaking-news/edit"
                 component={EditBreakingNewsPage}
               />
+              <Route exact path="/sign-in" component={SignInPage} />
+              <Route exact path="/sign-up" component={SignUpPage} />
 
               {/* UCSF white label paths */}
               <Route
