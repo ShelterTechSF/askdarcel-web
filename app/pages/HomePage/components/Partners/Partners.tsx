@@ -7,8 +7,8 @@ import JDCLogo from "./assets/JDCLogo.png";
 import MOHCDLogo from "./assets/MOHCDLogo.png";
 import BenetechLogo from "./assets/BenetechLogo.png";
 import Our415Logo from "../../../../assets/img/Our415_logo-hori.svg";
-
 import BridgeLogo from "./assets/BridgeLogo.png";
+import DcNavLogo from "./assets/DcNavAcuteCareLogo.jpg";
 
 export const Partners = () => (
   <div className="partners">
@@ -53,6 +53,12 @@ export const Partners = () => (
         <header />
         <a href="https://www.our415.org/" rel="noopener">
           <img src={Our415Logo} alt="Our 415" className="our415Logo" />
+        </a>
+      </li>
+      <li>
+        <header />
+        <a href="https://acutecare.ucsf.edu/" rel="noopener">
+          <img src={DcNavLogo} alt="Acute Care Lab Discharge Navigator" />
         </a>
       </li>
       <li>

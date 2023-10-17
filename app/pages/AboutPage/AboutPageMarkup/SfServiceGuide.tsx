@@ -15,6 +15,7 @@ import WeworkLogo from "../assets/WeworkLogo.png";
 import CompassLogo from "../assets/Compass.png";
 import EDCLogo from "../assets/EDC.png";
 import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
+import DcNavLogo from "../assets/DcNavAcuteCareLogo.jpg";
 
 const { aboutPageText, aboutPageTitle } = whiteLabel;
 
@@ -121,6 +122,12 @@ export const SfServiceGuide = () => (
           <li>
             <a href="https://www.wework.com" rel="noopener">
               <img src={WeworkLogo} alt="WeWork" />
+            </a>
+          </li>
+          <li>
+            <header />
+            <a href="https://acutecare.ucsf.edu/" rel="noopener">
+              <img src={DcNavLogo} alt="Acute Care Lab Discharge Navigator" />
             </a>
           </li>
         </ul>
