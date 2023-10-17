@@ -8,7 +8,7 @@ import MOHCDLogo from "./assets/MOHCDLogo.png";
 import BenetechLogo from "./assets/BenetechLogo.png";
 import Our415Logo from "../../../../assets/img/Our415_logo-hori.svg";
 import BridgeLogo from "./assets/BridgeLogo.png";
-import DcNavLogo from "./assets/DcNavAcuteCareLogo.jpg";
+import DcNavLogo from "../../../../assets/img/DcNavAcuteCareLogo.jpg";
 
 export const Partners = () => (
   <div className="partners">

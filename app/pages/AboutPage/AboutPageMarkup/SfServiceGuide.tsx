@@ -14,8 +14,8 @@ import LarkinLogo from "../assets/LarkinLogo.png";
 import WeworkLogo from "../assets/WeworkLogo.png";
 import CompassLogo from "../assets/Compass.png";
 import EDCLogo from "../assets/EDC.png";
+import DcNavLogo from "../../../assets/img/DcNavAcuteCareLogo.jpg";
 import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
-import DcNavLogo from "../assets/DcNavAcuteCareLogo.jpg";
 
 const { aboutPageText, aboutPageTitle } = whiteLabel;
 
