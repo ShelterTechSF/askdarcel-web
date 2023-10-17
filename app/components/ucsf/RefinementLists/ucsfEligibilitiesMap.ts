@@ -275,7 +275,7 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           checked: false,
         },
         { isSeeAll: false, checkedId: "53", name: "Jewish", checked: false },
-        { isSeeAll: false, checkedId: "54", name: "LGBTQ+", checked: false }
+        { isSeeAll: false, checkedId: "54", name: "LGBTQ+", checked: false },
       ],
     },
   ],

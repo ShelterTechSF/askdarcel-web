@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import { useParams, useLocation } from "react-router-dom";
 import type { PhoneNumber } from "../../models/Meta";
 
-
 import {
   fetchService,
   getServiceLocations,
@@ -76,7 +75,43 @@ export const IntimatePartnerViolencePdfPage = () => {
 
   const { resource, recurringSchedule } = service;
   const locations = getServiceLocations(service, resource, recurringSchedule);
-  const checklistItems = ['Spending time with supportive friends and family', "Thinking about what you feel grateful for", "Prayer", "Counseling", "Exercise", "Helping others", "Listening to music", "Other: __________________"]
+  const checklistItems = [
+    "Spending time with supportive friends and family",
+    "Thinking about what you feel grateful for",
+    "Prayer",
+    "Counseling",
+    "Exercise",
+    "Helping others",
+    "Listening to music",
+    "Other: __________________",
+  ];
+
+  const includesBlacklistedTerms = (content: string) => {
+    /*
+      UCSF has requested that we do not include the below terms on the PDF to protect the patient's
+      privacy. This function checks a given string for the blacklisted terms. We currently
+      check the service name, service description, and resource name for these terms. If
+      any contain the terms, we either replace the offending string or remove it entirely.
+    */
+    const blacklistedTerms = [
+      "domestic violence",
+      "intimate partner violence",
+      "family violence",
+      "abuse",
+    ];
+
+    if (!content) {
+      return false;
+    }
+
+    for (let i = 0; i < blacklistedTerms.length; i += 1) {
+      if (content.toLowerCase().includes(blacklistedTerms[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   return (
     <div>
@@ -110,10 +145,11 @@ export const IntimatePartnerViolencePdfPage = () => {
             margin: 0;
             font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
             color: #000;
+            font-size: 15px;
           }
 
           .serviceHandoutPdf {
-            padding: 0 4px 9px;
+            padding: 0 4px 8px;
             background-color: #fff;
           }
 
@@ -124,12 +160,12 @@ export const IntimatePartnerViolencePdfPage = () => {
           .serviceHandoutPdf table tr th {
             font-weight: bold;
             color: #666;
-            padding: 9px 9px 5px;
+            padding: 7px 7px 5px;
             text-align: left;
           }
 
           .serviceHandoutPdf table tr td {
-            padding: 7px 7px 6px;
+            padding: 5px 5px 6px;
             text-align: left;
           }
 
@@ -141,7 +177,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .titleSection {
             display: grid;
-            gap: 6px;
+            gap: 5px;
             border-bottom: solid 3px #31adb5;
             padding-bottom: 9px;
           }
@@ -149,7 +185,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           .serviceTitle {
             color: #31adb5;
             font-weight: 600;
-            font-size: 30px;
+            font-size: 28px;
             line-height: 1;
           }
 
@@ -169,7 +205,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .renderedMarkdown ol,
           .renderedMarkdown ul {
-            padding: 6px 18px;
+            padding: 5px 18px;
           }
 
           .renderedMarkdown ul li {
@@ -189,14 +225,15 @@ export const IntimatePartnerViolencePdfPage = () => {
           }
 
           .renderedMarkdown h1 {
-            font-size: 16px;
+            margin-top: 3px;
+            font-size: 15px;
             font-family: "Open Sans", "San Francisco", "Roboto", "Arial", sans-serif;
           }
 
           .locationContainer {
             display: grid;
             grid-template-columns: auto 6fr;
-            gap: 9px;
+            gap: 6px;
             align-items: center;
             justify-items: end;
           }
@@ -211,7 +248,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           .leftColumn {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 18px;
           }
 
           .leftColumn {
@@ -220,7 +257,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .checklistContainer {
             position: relative;
-            margin-left: -20px;
+            margin-left: -10px;
           }
 
           .checklistBody {
@@ -233,18 +270,18 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .checklistContainer,
           .checklistImage {
-            width: 400px;
+            width: 385px;
             height: auto;
           }
 
           .checklistHeader {
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
           }
 
           .checklist {
             display: grid;
-            gap: 6px;
+            gap: 5px;
             margin: 0;
             padding: 0;
           }
@@ -254,7 +291,7 @@ export const IntimatePartnerViolencePdfPage = () => {
             font-family: 'Architects Daughter', cursive;
             font-weight: 500;
             display: flex;
-            gap: 6px;
+            gap: 5px;
             flex-direction: row;
             margin: 0;
             padding: 0;
@@ -263,8 +300,8 @@ export const IntimatePartnerViolencePdfPage = () => {
           .checkbox {
             position: relative;
             flex-shrink: 0;
-            width: 20px;
-            height: 20px;
+            width: 19px;
+            height: 19px;
           }
 
           .checkboxBackground {
@@ -286,9 +323,9 @@ export const IntimatePartnerViolencePdfPage = () => {
           }
 
           .blurb {
-            margin-top: 30px;
+            margin-top: 28px;
             display: grid;
-            gap: 22px;
+            gap: 20px;
           }
 
           .introSentence {
@@ -320,7 +357,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           .generalResourceHeader {
             color: #311b76;
             font-weight: 400;
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 10px;
           }
 
@@ -377,7 +414,7 @@ export const IntimatePartnerViolencePdfPage = () => {
 
           .descriptionContainer {
             display: -webkit-box;
-            -webkit-line-clamp: 9;
+            -webkit-line-clamp: 12;
             -webkit-box-orient: vertical;
             line-height: 1.5;
             overflow: hidden;
@@ -388,7 +425,7 @@ export const IntimatePartnerViolencePdfPage = () => {
           }
 
           .serviceHours {
-            margin-top: 10px;
+            margin-top: 8px;
           }
 
           .serviceHours table.compact tr th,
@@ -408,6 +445,14 @@ export const IntimatePartnerViolencePdfPage = () => {
             font-weight: 600;
             text-decoration: underline;
             margin-bottom: 2px;
+          }
+
+          .openingTimesRow {
+            vertical-align: top;
+          }
+
+          .open24_7 {
+            font-weight: 600;
           }
         `}
           </style>
@@ -474,15 +519,22 @@ export const IntimatePartnerViolencePdfPage = () => {
               <div className="recommendedResource">
                 <div className="resourceContent">
                   <div>
-                    <p className="sampleResource">Sample Resource:</p>
-                    <p className="serviceName">{service.name}</p>
+                    <p className="serviceName">
+                      {includesBlacklistedTerms(service.name)
+                        ? "Recommended Service"
+                        : service.name}
+                    </p>
                   </div>
 
                   <div>
                     <div className="descriptionContainer">
                       <ReactMarkdown
                         className="renderedMarkdown"
-                        source={service.short_description}
+                        source={
+                          includesBlacklistedTerms(service.short_description)
+                            ? ""
+                            : service.short_description
+                        }
                         linkTarget="_blank"
                       />
                     </div>
@@ -494,7 +546,11 @@ export const IntimatePartnerViolencePdfPage = () => {
                         <div className="addressInfo">
                           <ServiceAddress
                             address={locations[0].address}
-                            resourceName={service.resource.name}
+                            resourceName={
+                              includesBlacklistedTerms(service.resource.name)
+                                ? ""
+                                : service.resource.name
+                            }
                             phones={service.resource.phones}
                           />
                           <div className="serviceHours">
@@ -647,36 +703,81 @@ const TableOfOpeningTimes = ({
   recurringSchedule,
 }: {
   recurringSchedule: RecurringSchedule;
-}) => (
-  // NB This component was copied from our compoonents directory to be used
+}) => {
+  // NB This component was copied from our components directory to be used
   // in this file so that future developers would not need to worry about this file
-  // when updating our code
-  <table className="compact">
-    <tbody>
-      {(recurringSchedule.hoursKnown &&
-        recurringSchedule.intervals.map((interval) => {
-          const opensAt = interval.opensAt.timeString();
-          const closesAt = interval.closesAt.timeString();
-          return (
-            <tr
-              key={interval.key()}
-              data-cy="opening-times-row"
-              className="compactRow"
-            >
-              <th className="compactHeader openDay">
-                {interval.opensAt.dayString()}
-              </th>
-              <td className="compactData">{`${opensAt} - ${closesAt}`}</td>
+  // when updating our code. It has been slightly altered.
+  interface DaysMap {
+    [key: string]: string;
+  }
+
+  const getAbbreviatedDayName = (fullDayName: string) => {
+    const days: DaysMap = {
+      sunday: "Sun",
+      monday: "Mon",
+      tuesday: "Tue",
+      wednesday: "Wed",
+      thursday: "Thu",
+      friday: "Fri",
+      saturday: "Sat",
+    };
+
+    return days[fullDayName.toLowerCase()];
+  };
+
+  const daysMap: DaysMap = {};
+  let isOpen24_7 = false;
+
+  if (recurringSchedule.isOpen24_7()) {
+    isOpen24_7 = true;
+  } else {
+    recurringSchedule.intervals.forEach((interval) => {
+      const { opensAt, closesAt } = interval;
+      const dayString = getAbbreviatedDayName(opensAt.dayString());
+      const timeRange = `${opensAt.timeString()} – ${closesAt.timeString()}`;
+
+      // The below checks to see if there are multiple time spans on a single day;
+      // if so, it concatenates the time ranges so they may be displayed on a single line
+      if (daysMap[dayString]) {
+        daysMap[dayString] += `; ${timeRange}`;
+      } else {
+        daysMap[dayString] = timeRange;
+      }
+    });
+  }
+
+  const daysEntries = Object.entries(daysMap);
+
+  return (
+    <table className="compact">
+      <tbody>
+        {(daysEntries.length &&
+          daysEntries.map((entry) => {
+            const [key, value] = entry;
+            return (
+              <tr
+                key={key}
+                data-cy="opening-times-row"
+                className="compactRow openingTimesRow"
+              >
+                <th className="compactHeader openDay">{key}</th>
+                <td className="compactData">{value}</td>
+              </tr>
+            );
+          })) ||
+          (isOpen24_7 && (
+            <tr>
+              <td className="open24_7">Open 24/7</td>
             </tr>
-          );
-        })) || (
-        <tr>
-          <th>Call for Hours</th>
-        </tr>
-      )}
-    </tbody>
-  </table>
-);
+          )) || (
+            <tr>
+              <td>Call for Hours</td>
+            </tr>
+          )}
+      </tbody>
+    </table>
+  );
+};
 
 const Loader = () => (
   // NB This component was copied from our compoonents directory to be used
