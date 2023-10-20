@@ -11,8 +11,11 @@
 .partnersLists {
   display: flex;
   gap: 20px;
-  width: 80%;
+  width: 90%;
   max-width: 1600px;
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
 }
 
 .partners ul {
