@@ -62,7 +62,15 @@
   justify-content: flex-start;
   li {
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
     margin: 20px;
+    max-height: 84px;
+  }
+
+  img {
+    max-height: 84px;
+    max-width: 100%;
   }
 }
 

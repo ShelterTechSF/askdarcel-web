@@ -11,10 +11,9 @@ import BenetechLogo from "../assets/BenetechLogo.png";
 import Our415Logo from "../../../assets/img/Our415_logo-hori.svg";
 import BridgeLogo from "../assets/BridgeLogo.png";
 import LarkinLogo from "../assets/LarkinLogo.png";
-import WeworkLogo from "../assets/WeworkLogo.png";
 import CompassLogo from "../assets/Compass.png";
 import EDCLogo from "../assets/EDC.png";
-import DcNavLogo from "../../../assets/img/DcNavAcuteCareLogo.jpg";
+import AcuteCareLogo from "../../../assets/img/ucsf-acute-care-innovation-center-logo.png";
 import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
 
 const { aboutPageText, aboutPageTitle } = whiteLabel;
@@ -89,17 +88,17 @@ export const SfServiceGuide = () => (
           </li>
           <li>
             <a href="http://evictiondefense.org/" rel="noopener">
-              <img src={EDCLogo} alt="WeWork" />
+              <img src={EDCLogo} alt="Eviction Defenese Collaborative" />
             </a>
           </li>
           <li>
             <a href="https://homeownershipsf.org/" rel="noopener">
-              <img src={HomeownershipSFLogo} alt="WeWork" />
+              <img src={HomeownershipSFLogo} alt="Homeownership SF" />
             </a>
           </li>
           <li>
             <a href="https://www.compass-sf.org/" rel="noopener">
-              <img src={CompassLogo} alt="WeWork" />
+              <img src={CompassLogo} alt="Compass SF" />
             </a>
           </li>
           <li>
@@ -117,18 +116,12 @@ export const SfServiceGuide = () => (
             </a>
           </li>
           <li>
-            <img src={BridgeLogo} alt="Bridge" />
-          </li>
-          <li>
-            <a href="https://www.wework.com" rel="noopener">
-              <img src={WeworkLogo} alt="WeWork" />
-            </a>
-          </li>
-          <li>
-            <header />
             <a href="https://acutecare.ucsf.edu/" rel="noopener">
-              <img src={DcNavLogo} alt="Acute Care Lab Discharge Navigator" />
+              <img src={AcuteCareLogo} alt="Acute Care Lab Discharge Navigator" />
             </a>
+          </li>
+          <li>
+            <img src={BridgeLogo} alt="Bridge" />
           </li>
         </ul>
       </section>
