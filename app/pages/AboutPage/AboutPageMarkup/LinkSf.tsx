@@ -9,12 +9,12 @@ import BenetechLogo from "../assets/BenetechLogo.png";
 import Our415Logo from "../../../assets/img/Our415_logo-hori.svg";
 import BridgeLogo from "../assets/BridgeLogo.png";
 import LarkinLogo from "../assets/LarkinLogo.png";
-import WeworkLogo from "../assets/WeworkLogo.png";
 import CompassLogo from "../assets/Compass.png";
 import EDCLogo from "../assets/EDC.png";
 import HomeownershipSFLogo from "../assets/HomeownershipSF.png";
 import ZenDeskLogo from "../assets/ZenDeskLogo.jpg";
 import TLTechLabLogo from "../assets/TLTechLabLogo.png";
+import AcuteCareLogo from "../../../assets/img/ucsf-acute-care-innovation-center-logo.png";
 
 export const LinkSf = () => (
   <div className={styles.about}>
@@ -154,17 +154,17 @@ export const LinkSf = () => (
           </li>
           <li>
             <a href="http://evictiondefense.org/" rel="noopener">
-              <img src={EDCLogo} alt="WeWork" />
+              <img src={EDCLogo} alt="Eviction Defense Collaborative" />
             </a>
           </li>
           <li>
             <a href="https://homeownershipsf.org/" rel="noopener">
-              <img src={HomeownershipSFLogo} alt="WeWork" />
+              <img src={HomeownershipSFLogo} alt="Homeownership SF" />
             </a>
           </li>
           <li>
             <a href="https://www.compass-sf.org/" rel="noopener">
-              <img src={CompassLogo} alt="WeWork" />
+              <img src={CompassLogo} alt="Compass SF" />
             </a>
           </li>
           <li>
@@ -182,12 +182,12 @@ export const LinkSf = () => (
             </a>
           </li>
           <li>
-            <img src={BridgeLogo} alt="Bridge" />
+            <a href="https://acutecare.ucsf.edu/" rel="noopener">
+              <img src={AcuteCareLogo} alt="Acute Care Innovation Center" />
+            </a>
           </li>
           <li>
-            <a href="https://www.wework.com" rel="noopener">
-              <img src={WeworkLogo} alt="WeWork" />
-            </a>
+            <img src={BridgeLogo} alt="Bridge" />
           </li>
         </ul>
       </section>
