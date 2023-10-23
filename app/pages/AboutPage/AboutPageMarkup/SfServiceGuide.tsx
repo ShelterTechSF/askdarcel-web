@@ -88,7 +88,7 @@ export const SfServiceGuide = () => (
           </li>
           <li>
             <a href="http://evictiondefense.org/" rel="noopener">
-              <img src={EDCLogo} alt="Eviction Defenese Collaborative" />
+              <img src={EDCLogo} alt="Eviction Defense Collaborative" />
             </a>
           </li>
           <li>
