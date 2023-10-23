@@ -117,10 +117,7 @@ export const SfServiceGuide = () => (
           </li>
           <li>
             <a href="https://acutecare.ucsf.edu/" rel="noopener">
-              <img
-                src={AcuteCareLogo}
-                alt="Acute Care Lab Discharge Navigator"
-              />
+              <img src={AcuteCareLogo} alt="Acute Care Innovation Center" />
             </a>
           </li>
           <li>
