@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
 
-import auth0 from "auth0-js";
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
-import { whiteLabel } from "../../utils";
+import { whiteLabel, useAppContext, AuthService } from "../../utils";
 
 const { showBreakingNews } = whiteLabel;
 
@@ -69,6 +68,7 @@ const covidResources = [
 ];
 
 export const HomePage = () => {
+  const { webAuth, setAuthState } = useAppContext();
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
@@ -82,45 +82,20 @@ export const HomePage = () => {
 
   useEffect(() => {
     getResourceCount().then((count: number) => setResourceCount(count));
+  });
 
+  useEffect(() => {
+    if (!window.location.hash) return;
 
-
-    webAuth.parseHash({ hash: window.location.hash }, (err, authResult) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(authResult)
-      if (authResult?.accessToken) {
-        window.foobar = authResult.accessToken;
-        webAuth.client.userInfo(authResult.accessToken, (tokenErr, user) => {
-          if (tokenErr) {
-            console.log(tokenErr);
-          }
-          console.log(user);
-          // alert(`Welcome, ${user.email}!`);
-        });
-      }
-    });
-  }, []);
-
-  const secureApiCall = () => {
-    console.log('hi: ', window.foobar)
-    fetch("/api/resources/548", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${window.foobar}`,
-      },
-    }).then(resp => {
-      console.log(resp)
-    });
-  };
+    AuthService.persistUser(window.location.hash, webAuth, setAuthState);
+    history.replace(window.location.pathname + window.location.search);
+  }, [history, setAuthState, webAuth]);
 
   return (
     <>
       {showBreakingNews && <NewsArticles />}
       <HomePageSection title="Find essential services in San Francisco">
         <ResourceList resources={covidResources} />
-        <button onClick={secureApiCall}>Hi Buddy!</button>
       </HomePageSection>
       <HomePageSection
         title="Browse Directory"

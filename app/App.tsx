@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
 // package and all references to it:
@@ -9,9 +9,8 @@ import ReactGA_4 from "react-ga4";
 import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import auth0 from "auth0-js";
 
-import { AppContext, GeoCoordinates, getLocation, whiteLabel } from "./utils";
+import { GeoCoordinates, getLocation, whiteLabel } from "./utils";
 import {
   Banner,
   HamburgerMenu,
@@ -20,6 +19,10 @@ import {
   PopupMessageProp,
   UserWay,
 } from "./components/ui";
+import {
+  AppProvider
+} from "./components/AppProvider";
+
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
 
@@ -47,9 +50,6 @@ import { SignInPage } from "./pages/Auth/SignInPage";
 import { SignUpPage } from "./pages/Auth/SignUpPage";
 
 import styles from "./App.module.scss";
-
-
-
 
 const {
   homePageComponent,
@@ -102,52 +102,9 @@ export const App = () => {
     });
   }, [history]);
 
-  console.log(AppContext);
-
-  const contextValue = useMemo(() => {
-
-
-      const passwordlessStart = (
-        evt: React.SyntheticEvent,
-        email: string,
-        callback: () => void
-      ) => {
-        evt.preventDefault();
-        webAuth.passwordlessStart(
-          {
-            connection: "email",
-            send: "code",
-            email,
-          },
-          (err) => {
-            if (err) {
-              console.log(err);
-              return;
-            }
-
-            callback();
-          }
-        );
-      };
-
-    return {
-      userLocation,
-      authState: {
-        isAuthenticated: false,
-        user: {
-          name: '',
-          email: '',
-        }
-      },
-      webAuth,
-      passwordlessStart,
-    }
-  }, [userLocation]);
-
   return (
     <div id={outerContainerId} className={styles.outerContainer}>
-      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <AppContext.Provider value={contextValue}>
+      <AppProvider userLocation={userLocation}>
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
@@ -289,7 +246,7 @@ export const App = () => {
           </div>
           {popUpMessage && <PopUpMessage popUpMessage={popUpMessage} />}
         </div>
-      </AppContext.Provider>
+      </AppProvider>
     </div>
   );
 };
