@@ -11,39 +11,10 @@ export const SignInPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const { webAuth } = useAppContext();
-
+  const { passwordlessStart, passwordlessVerify } = AuthService;
   const signIn = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    webAuth.passwordlessStart(
-      {
-        connection: "email",
-        send: "code",
-        email,
-      },
-      (err) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-
-        setModalIsOpen(true);
-      }
-    );
-  };
-
-  const loginWithCode = (verificationCode: string) => {
-    webAuth.passwordlessLogin(
-      {
-        connection: "email",
-        email,
-        verificationCode,
-      },
-      (err) => {
-        if (err) {
-          console.log(err);
-        }
-      }
-    );
+    passwordlessStart(evt, webAuth, email, () => setModalIsOpen(true));
   };
 
   return (
@@ -51,7 +22,7 @@ export const SignInPage = () => {
       <h1 className={styles.title}>For Case Managers</h1>
       <Link to="/sign-up">New here? Sign up!</Link>
       <VerificationModal
-        verifyCode={(code) => loginWithCode(code)}
+        verifyCode={(code) => passwordlessVerify(webAuth, email, code)}
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
       />

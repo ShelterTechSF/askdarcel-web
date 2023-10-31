@@ -10,7 +10,10 @@ export const AppContext = createContext({
       id: "",
       email: "",
     },
-    accessToken: ""
+    accessTokenObject: {
+      expiresAt: new Date(1970, 0, 1),
+      token: "",
+    }
   },
   setAuthState: <(state: any) => void><unknown>null,
   webAuth: <WebAuth | null>null,

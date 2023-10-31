@@ -1,20 +1,13 @@
-// interface AccessTokenObject {
-//   token: string;
-//   expiresAt: Date;
-// }
-
-// interface UserObject {
-//   email: string;
-//   id: string;
-// }
-
 interface AuthObject {
     isAuthenticated: boolean;
     user: {
         id: string;
         email: string;
     };
-    accessToken: string;
+    accessTokenObject: {
+      token: string;
+      expiresAt: Date;
+    };
 }
 
 export default class SessionCacher {
@@ -37,9 +30,9 @@ export default class SessionCacher {
   // }
 
 
-  static getAuthObject() {
-    const object = localStorage.getItem('authObject') || "";
-    return JSON.parse(object);
+  static getAuthObject(): AuthObject {
+    const object = sessionStorage.getItem('authObject');
+    return object ? JSON.parse(object) : null;
   }
 
   static setAuthObject(authObject: AuthObject) {

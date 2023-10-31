@@ -20,10 +20,9 @@ export default class AuthService {
   static persistUser(hash: string, webAuth: WebAuth, setAuthState: any) {
     webAuth.parseHash({ hash }, (err, authResult) => {
       if (err) {
-        console.log(err)
+        // TODO: Handle errors
       }
 
-      console.log(authResult);
 
       if (authResult?.accessToken) {
         const { accessToken, expiresIn, idTokenPayload } = authResult;
@@ -40,39 +39,37 @@ export default class AuthService {
         };
 
         setAuthState(authObject);
-        // return Promise.resolve(null);
       }
-
-      // return Promise.reject(err);
     });
   }
 
   static passwordlessStart = (
     evt: React.SyntheticEvent,
-    email: string,
     webAuth: any,
-    callback: () => void
+    email: string,
+    callback?: () => void
   ) => {
-    console.log("calling from here!");
     evt.preventDefault();
     webAuth.passwordlessStart(
       {
-        connection: "emaidl",
+        connection: "email",
         send: "code",
         email,
       },
       (err: AuthError) => {
         if (err) {
-          console.log(err);
+          // TODO: Handle errors
           return;
         }
 
-        callback();
+        if (callback) {
+          callback();
+        }
       }
     );
   };
 
-  static passwordlessVerify = (email: string, verificationCode: string, webAuth: any) => {
+  static passwordlessVerify = (webAuth: any, email: string, verificationCode: string) => {
     webAuth.passwordlessLogin(
       {
         connection: "email",
@@ -81,7 +78,7 @@ export default class AuthService {
       },
       (err: AuthError) => {
         if (err) {
-          console.log(err);
+          // TODO: Handle errors
         }
       }
     );

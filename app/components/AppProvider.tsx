@@ -3,6 +3,7 @@ import auth0 from "auth0-js";
 
 import { AppContext, GeoCoordinates } from "utils";
 import SessionCacher from "utils/SessionCacher";
+import type AuthObject from "utils/SessionCacher";
 
 export const AppProvider = ({
   children,
@@ -11,14 +12,20 @@ export const AppProvider = ({
   children: React.ReactNode;
   userLocation: GeoCoordinates | null;
 }) => {
-  const [authState, setAuthState] = useState({
+  const defaultAuthObject: AuthObject = {
     isAuthenticated: false,
     user: {
       id: "",
       email: "",
     },
-    accessToken: "",
-  });
+    accessToken: {
+      token: "",
+      expiresAt: new Date(1970, 0, 1),
+    },
+  };
+
+  const authObject = SessionCacher.getAuthObject() ?? defaultAuthObject;
+  const [authState, setAuthState] = useState(authObject);
 
   useEffect(() => {
     SessionCacher.setAuthObject(authState);

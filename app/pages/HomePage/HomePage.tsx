@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
+import type { WebAuth } from "auth0-js";
 
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
@@ -87,7 +88,7 @@ export const HomePage = () => {
   useEffect(() => {
     if (!window.location.hash) return;
 
-    AuthService.persistUser(window.location.hash, webAuth, setAuthState);
+    AuthService.persistUser(window.location.hash, webAuth as WebAuth, setAuthState);
     history.replace(window.location.pathname + window.location.search);
   }, [history, setAuthState, webAuth]);
 
