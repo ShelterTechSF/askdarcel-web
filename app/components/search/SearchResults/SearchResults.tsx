@@ -95,12 +95,12 @@ const SearchResult = ({
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
   type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
   const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
-    const baseRoute =
+    const handoutRoute =
       categoryId === "2000006"
         ? "intimate-partner-violence-handout"
         : "service-handout";
 
-    return `/${baseRoute}/${hitId}${
+    return `/${handoutRoute}/${hitId}${
       language ? `?handoutLanguage=${language}` : ""
     }`;
   };

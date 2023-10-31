@@ -16,6 +16,7 @@ import styles from "./styles.module.scss";
 // Note: Much of the code/styling/components in this file were copied over from the Service
 // Listing Page. This file is a standalone file that exists to render PDFs of service data.
 // It should not be referenced elsewhere.
+
 // Once this component has rendered, an effect hook is run that gets the HTML of this component
 // and passes it to our Rails API which then relays the HTML to an HTML to PDF conversion 3rd party
 // API. The PDF is passed back to the client and is then displayed
@@ -24,12 +25,13 @@ export const IntimatePartnerViolencePdfPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
   const [pdfSource, setPdfSource] = useState("");
+  const [pdfFetched, setPdfFetched] = useState(false);
 
   const { search } = useLocation();
   const urlParams = new URLSearchParams(search);
   const targetLangCode = urlParams.get("handoutLanguage");
 
-  const ref = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
   const styleRef = useRef<HTMLStyleElement>(null);
 
   useEffect(() => {
@@ -40,8 +42,13 @@ export const IntimatePartnerViolencePdfPage = () => {
     }
   }, [id]);
 
+  // Despite not listing deps in the useEffect argument, an infinite chain of updates will
+  // not occur. This is because the code within this hook only runs if hasPdfFetched is false;
+  // it is set to true within the effect function and never set back to false; thus the effect
+  // function doesn't meaningfully run after its first execution.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (!pdfSource && ref.current) {
+    if (!pdfSource && pageRef.current && !pdfFetched) {
       // The below lines compress the CSS contained in the style element so as to decrease
       // the character count that is sent to the Translation API
       // https://dev.to/derder56/how-to-build-a-css-minifier-with-8-lines-of-javascript-4bj3
@@ -53,9 +60,10 @@ export const IntimatePartnerViolencePdfPage = () => {
           .replace(/\/\*.*?\*\//g, "");
       }
 
+      setPdfFetched(true);
       fetch(`/api/services/html_to_pdf`, {
         body: JSON.stringify({
-          html: ref.current?.outerHTML,
+          html: pageRef.current?.outerHTML,
           target_language: targetLangCode,
         }),
         method: "POST",
@@ -89,9 +97,8 @@ export const IntimatePartnerViolencePdfPage = () => {
   const includesBlacklistedTerms = (content: string) => {
     /*
       UCSF has requested that we do not include the below terms on the PDF to protect the patient's
-      privacy. This function checks a given string for the blacklisted terms. We currently
-      check the service name, service description, and resource name for these terms. If
-      any contain the terms, we either replace the offending string or remove it entirely.
+      privacy and to maintain discretion. This function checks if the passed argument "content"
+      contains any of the blacklisted terms.
     */
     const blacklistedTerms = [
       "domestic violence",
@@ -132,10 +139,12 @@ export const IntimatePartnerViolencePdfPage = () => {
       )}
       {!pdfSource && (
         <div
-          ref={ref}
+          ref={pageRef}
           className={`serviceHandoutPdf ${styles.handoutInvisible}`}
         >
-          {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles */}
+          {/* The below styles contain some overrides of global .renderedMarkdown and table tag selector styles
+           *  The font import is to match a font that UCSF uses on its PDF prototype
+           */}
           <style className="notranslate" ref={styleRef}>
             {`
 
@@ -737,7 +746,8 @@ const TableOfOpeningTimes = ({
       const timeRange = `${opensAt.timeString()} – ${closesAt.timeString()}`;
 
       // The below checks to see if there are multiple time spans on a single day;
-      // if so, it concatenates the time ranges so they may be displayed on a single line
+      // if so, it concatenates the time ranges so they may be displayed on a single line.
+      // This is to better ensure all content remains on 1 page
       if (daysMap[dayString]) {
         daysMap[dayString] += `; ${timeRange}`;
       } else {
