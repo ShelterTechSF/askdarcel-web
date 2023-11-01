@@ -1,9 +1,20 @@
 import React, { useState, useMemo, useEffect } from "react";
-import auth0 from "auth0-js";
+import auth0, { Auth0Result } from "auth0-js";
 
-import { AppContext, GeoCoordinates } from "utils";
-import SessionCacher from "utils/SessionCacher";
-import type AuthObject from "utils/SessionCacher";
+import { AppContext, GeoCoordinates, SessionCacher, AuthService } from "utils";
+import AuthObject from "utils/SessionCacher";
+
+export const defaultAuthObject: AuthObject = {
+  isAuthenticated: false,
+  user: {
+    id: "",
+    email: "",
+  },
+  accessTokenObject: {
+    token: "",
+    expiresAt: new Date(1970, 0, 1),
+  },
+};
 
 export const AppProvider = ({
   children,
@@ -12,22 +23,10 @@ export const AppProvider = ({
   children: React.ReactNode;
   userLocation: GeoCoordinates | null;
 }) => {
-  const defaultAuthObject: AuthObject = {
-    isAuthenticated: false,
-    user: {
-      id: "",
-      email: "",
-    },
-    accessToken: {
-      token: "",
-      expiresAt: new Date(1970, 0, 1),
-    },
-  };
-
   const authObject = SessionCacher.getAuthObject() ?? defaultAuthObject;
   const [authState, setAuthState] = useState(authObject);
-
   useEffect(() => {
+    // This ensures that the sessionStorage authObject is synced to the AppContext's authState
     SessionCacher.setAuthObject(authState);
   }, [authState]);
 
@@ -47,6 +46,32 @@ export const AppProvider = ({
       webAuth,
     };
   }, [authState, userLocation]);
+
+  if (
+    authObject.isAuthenticated && authObject.accessTokenObject.expiresAt &&
+    AuthService.tokenExpired(new Date(authObject.accessTokenObject.expiresAt))
+  ) {
+    AuthService.refreshAuthToken(contextValue.webAuth)
+      .then((result: unknown) => {
+        const authResult = result as Auth0Result;
+        if (authResult.accessToken && typeof authResult.expiresIn !== "undefined") {
+          setAuthState({
+            ...authState,
+            accessTokenObject: {
+              token: authResult.accessToken,
+              expiresAt: AuthService.calculateExpirationTime(
+                authResult.expiresIn
+              ),
+            },
+          });
+        } else {
+          throw new Error("Unexpected result format");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>

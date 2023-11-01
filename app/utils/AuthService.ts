@@ -1,19 +1,11 @@
-import type { WebAuth, Auth0Error } from "auth0-js";
-
-
-// We need to make the error prop on the Auth0Error interface optional and this
-// is the only way that I could figure out how to do so w/o making the TS
-// compiler complain
-type OptionalAuth0Error = {
-    [K in keyof Auth0Error]?: Auth0Error[K] | undefined;
-};
-interface AuthError extends OptionalAuth0Error {}
+import type { WebAuth, Auth0Result } from "auth0-js";
+import { defaultAuthObject } from "components/AppProvider";
 
 export default class AuthService {
-  private static calculateExpirationTime(secondsUntilExpiration: number) {
+  static calculateExpirationTime(secondsUntilExpiration: number) {
     const currentTime = new Date();
     const expirationTime = new Date(currentTime.getTime() + secondsUntilExpiration * 1000);
-
+    console.log(expirationTime);
     return expirationTime;
   }
 
@@ -22,7 +14,6 @@ export default class AuthService {
       if (err) {
         // TODO: Handle errors
       }
-
 
       if (authResult?.accessToken) {
         const { accessToken, expiresIn, idTokenPayload } = authResult;
@@ -45,7 +36,7 @@ export default class AuthService {
 
   static passwordlessStart = (
     evt: React.SyntheticEvent,
-    webAuth: any,
+    webAuth: WebAuth,
     email: string,
     callback?: () => void
   ) => {
@@ -56,7 +47,7 @@ export default class AuthService {
         send: "code",
         email,
       },
-      (err: AuthError) => {
+      (err) => {
         if (err) {
           // TODO: Handle errors
           return;
@@ -69,19 +60,45 @@ export default class AuthService {
     );
   };
 
-  static passwordlessVerify = (webAuth: any, email: string, verificationCode: string) => {
+  static passwordlessVerify = (webAuth: WebAuth, email: string, verificationCode: string) => {
     webAuth.passwordlessLogin(
       {
         connection: "email",
         email,
         verificationCode,
       },
-      (err: AuthError) => {
+      (err) => {
         if (err) {
           // TODO: Handle errors
         }
       }
     );
   };
-}
 
+  static logout = (webAuth: WebAuth, clientId: string, setAuthState) => {
+    // Resets authState which in turn triggers an effect that clears sessionStorage
+    setAuthState(defaultAuthObject);
+
+    webAuth.logout({
+      returnTo: 'http://localhost:8080',
+      clientID: clientId
+    });
+  };
+
+  static tokenExpired = (tokenExpiration: Date) => {
+    return tokenExpiration && (new Date(tokenExpiration) < new Date());
+  }
+
+  static refreshAuthToken = (webAuth: WebAuth) => {
+    return new Promise((resolve, reject) => {
+      webAuth.checkSession({}, (err, authResult: Auth0Result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(authResult);
+        }
+      })
+    });
+  }
+
+}

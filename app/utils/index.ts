@@ -3,4 +3,5 @@ export * from "./numbers";
 export * from "./time";
 export * from "./useAppContext";
 export { default as AuthService } from "./AuthService";
+export { default as SessionCacher } from "./SessionCacher";
 export { default as whiteLabel } from "./whitelabel";
