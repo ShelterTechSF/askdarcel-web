@@ -88,7 +88,11 @@ export const HomePage = () => {
   useEffect(() => {
     if (!window.location.hash) return;
 
-    AuthService.persistUser(window.location.hash, webAuth as WebAuth, setAuthState);
+    AuthService.persistUser(
+      window.location.hash,
+      webAuth as WebAuth,
+      setAuthState
+    );
     history.replace(window.location.pathname + window.location.search);
   }, [history, setAuthState, webAuth]);
 

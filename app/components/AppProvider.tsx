@@ -1,10 +1,21 @@
 import React, { useState, useMemo, useEffect } from "react";
 import auth0, { Auth0Result } from "auth0-js";
-
+import * as Sentry from "@sentry/browser";
 import { AppContext, GeoCoordinates, SessionCacher, AuthService } from "utils";
-import AuthObject from "utils/SessionCacher";
 
-export const defaultAuthObject: AuthObject = {
+export interface AuthState {
+  isAuthenticated: boolean;
+  user: {
+    id: string;
+    email: string;
+  };
+  accessTokenObject: {
+    token: string;
+    expiresAt: Date;
+  };
+}
+
+export const defaultAuthObject: AuthState = {
   isAuthenticated: false,
   user: {
     id: "",
@@ -48,13 +59,17 @@ export const AppProvider = ({
   }, [authState, userLocation]);
 
   if (
-    authObject.isAuthenticated && authObject.accessTokenObject.expiresAt &&
+    authObject.isAuthenticated &&
+    authObject.accessTokenObject.expiresAt &&
     AuthService.tokenExpired(new Date(authObject.accessTokenObject.expiresAt))
   ) {
     AuthService.refreshAuthToken(contextValue.webAuth)
       .then((result: unknown) => {
         const authResult = result as Auth0Result;
-        if (authResult.accessToken && typeof authResult.expiresIn !== "undefined") {
+        if (
+          authResult.accessToken &&
+          typeof authResult.expiresIn !== "undefined"
+        ) {
           setAuthState({
             ...authState,
             accessTokenObject: {
@@ -65,11 +80,11 @@ export const AppProvider = ({
             },
           });
         } else {
-          throw new Error("Unexpected result format");
+          throw new Error("Token does not exist or is in unexpected token");
         }
       })
       .catch((err) => {
-        console.log(err);
+        Sentry.captureException(err);
       });
   }
 

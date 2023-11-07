@@ -19,9 +19,7 @@ import {
   PopupMessageProp,
   UserWay,
 } from "./components/ui";
-import {
-  AppProvider
-} from "./components/AppProvider";
+import { AppProvider } from "./components/AppProvider";
 
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
@@ -48,6 +46,7 @@ import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
 import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
 import { SignInPage } from "./pages/Auth/SignInPage";
 import { SignUpPage } from "./pages/Auth/SignUpPage";
+import { SignOutPage } from "./pages/Auth/SignOutPage";
 
 import styles from "./App.module.scss";
 
@@ -148,7 +147,6 @@ export const App = () => {
               />
               <Route exact path="/about" component={AboutPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
-
               {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
                 step will be interpreted as an ID and will thus break the OrganizationEditPage */}
               <Route
@@ -220,6 +218,7 @@ export const App = () => {
               />
               <Route exact path="/sign-in" component={SignInPage} />
               <Route exact path="/sign-up" component={SignUpPage} />
+              <Route exact path="/sign-out" component={SignOutPage} />
 
               {/* UCSF white label paths */}
               <Route
@@ -227,7 +226,6 @@ export const App = () => {
                 path="/find-services/:selectedResourceSlug"
                 component={UcsfDiscoveryForm}
               />
-
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />
               <Route
@@ -240,7 +238,6 @@ export const App = () => {
                 path="/resource"
                 component={RedirectToOrganizations}
               />
-
               <Redirect to="/" />
             </Switch>
           </div>

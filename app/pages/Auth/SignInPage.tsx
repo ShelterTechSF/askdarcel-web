@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { WebAuth } from "auth0-js";
 import { Button } from "components/ui/inline/Button/Button";
 import { useAppContext, AuthService } from "utils";
 
@@ -10,39 +11,49 @@ import styles from "./Auth.module.scss";
 export const SignInPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const { webAuth } = useAppContext();
+  const webAuth = useAppContext().webAuth as WebAuth;
   const { passwordlessStart, passwordlessVerify } = AuthService;
+
   const signIn = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    passwordlessStart(evt, webAuth, email, () => setModalIsOpen(true));
+    passwordlessStart(webAuth, email).then(() => {
+      setModalIsOpen(true);
+    });
   };
 
   return (
     <div className={styles.authPage}>
       <h1 className={styles.title}>For Case Managers</h1>
       <Link to="/sign-up">New here? Sign up!</Link>
-      <VerificationModal
-        verifyCode={(code) => passwordlessVerify(webAuth, email, code)}
-        modalIsOpen={modalIsOpen}
-        setModalIsOpen={setModalIsOpen}
-      />
+      <p>
+        We want to make sure that your account information is safe, so you will
+        be sent a verification code to your email each time you log in. Please
+        enter in your email address and then check your email to find a 5-number
+        verification code.
+      </p>
       <form className={styles.authForm} onSubmit={signIn}>
-        <label htmlFor="email">
-          Email
-          <input
-            type="text"
-            name="email"
-            placeholder="Email"
-            value={email}
-            onChange={(evt) => {
-              setEmail(evt.target.value);
-            }}
-          />
-        </label>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email address"
+          value={email}
+          onChange={(evt) => {
+            setEmail(evt.target.value);
+          }}
+        />
         <Button addClass={styles.authFormButton} buttonType="submit">
           Sign In
         </Button>
       </form>
+
+      <VerificationModal
+        email={email}
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+        verifyCode={(code) => passwordlessVerify(webAuth, email, code)}
+        resendCode={() => passwordlessStart(webAuth, email)}
+        buttonText="Log in"
+      />
     </div>
   );
 };

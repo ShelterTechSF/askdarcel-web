@@ -1,22 +1,12 @@
-interface AuthObject {
-    isAuthenticated: boolean;
-    user: {
-        id: string;
-        email: string;
-    };
-    accessTokenObject: {
-      token: string;
-      expiresAt: Date;
-    };
-}
+import type { AuthState } from "components/AppProvider";
 
 export default class SessionCacher {
-  static getAuthObject(): AuthObject {
-    const object = sessionStorage.getItem('authObject');
+  static getAuthObject(): AuthState {
+    const object = sessionStorage.getItem("authObject");
     return object ? JSON.parse(object) : null;
   }
 
-  static setAuthObject(authObject: AuthObject) {
+  static setAuthObject(authObject: AuthState) {
     sessionStorage.setItem("authObject", JSON.stringify(authObject));
   }
 

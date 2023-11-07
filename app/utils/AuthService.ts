@@ -1,11 +1,14 @@
 import type { WebAuth, Auth0Result } from "auth0-js";
 import { defaultAuthObject } from "components/AppProvider";
+import type { AuthState } from "components/AppProvider";
 
 export default class AuthService {
   static calculateExpirationTime(secondsUntilExpiration: number) {
     const currentTime = new Date();
-    const expirationTime = new Date(currentTime.getTime() + secondsUntilExpiration * 1000);
-    console.log(expirationTime);
+    const expirationTime = new Date(
+      currentTime.getTime() + secondsUntilExpiration * 1000
+    );
+
     return expirationTime;
   }
 
@@ -25,8 +28,10 @@ export default class AuthService {
           },
           accessTokenObject: {
             token: accessToken,
-            expiresAt: expiresIn ? this.calculateExpirationTime(expiresIn) : null,
-          }
+            expiresAt: expiresIn
+              ? this.calculateExpirationTime(expiresIn)
+              : null,
+          },
         };
 
         setAuthState(authObject);
@@ -34,33 +39,31 @@ export default class AuthService {
     });
   }
 
-  static passwordlessStart = (
-    evt: React.SyntheticEvent,
-    webAuth: WebAuth,
-    email: string,
-    callback?: () => void
-  ) => {
-    evt.preventDefault();
-    webAuth.passwordlessStart(
-      {
-        connection: "email",
-        send: "code",
-        email,
-      },
-      (err) => {
-        if (err) {
-          // TODO: Handle errors
-          return;
-        }
+  static passwordlessStart = (webAuth: WebAuth, email: string) => {
+    return new Promise((resolve, reject) => {
+      webAuth.passwordlessStart(
+        {
+          connection: "email",
+          send: "code",
+          email,
+        },
+        (err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
 
-        if (callback) {
-          callback();
+          resolve(true);
         }
-      }
-    );
+      );
+    });
   };
 
-  static passwordlessVerify = (webAuth: WebAuth, email: string, verificationCode: string) => {
+  static passwordlessVerify = (
+    webAuth: WebAuth,
+    email: string,
+    verificationCode: string
+  ) => {
     webAuth.passwordlessLogin(
       {
         connection: "email",
@@ -75,19 +78,23 @@ export default class AuthService {
     );
   };
 
-  static logout = (webAuth: WebAuth, clientId: string, setAuthState) => {
+  static logout = (
+    webAuth: WebAuth,
+    clientId: string,
+    setAuthState: (state: AuthState) => void
+  ) => {
     // Resets authState which in turn triggers an effect that clears sessionStorage
     setAuthState(defaultAuthObject);
 
     webAuth.logout({
-      returnTo: 'http://localhost:8080',
-      clientID: clientId
+      returnTo: "http://localhost:8080",
+      clientID: clientId,
     });
   };
 
   static tokenExpired = (tokenExpiration: Date) => {
-    return tokenExpiration && (new Date(tokenExpiration) < new Date());
-  }
+    return tokenExpiration && new Date(tokenExpiration) < new Date();
+  };
 
   static refreshAuthToken = (webAuth: WebAuth) => {
     return new Promise((resolve, reject) => {
@@ -97,8 +104,7 @@ export default class AuthService {
         } else {
           resolve(authResult);
         }
-      })
+      });
     });
-  }
-
+  };
 }

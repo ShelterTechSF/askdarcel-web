@@ -1,17 +1,23 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import { Modal } from "components/ui/Modal/Modal";
 import { Button } from "components/ui/inline/Button/Button";
 
 import styles from "./Auth.module.scss";
 
 export const VerificationModal = ({
+  email,
   verifyCode,
   modalIsOpen,
   setModalIsOpen,
+  resendCode,
+  buttonText,
 }: {
+  email: string;
   verifyCode: (code: string) => void;
   modalIsOpen: boolean;
   setModalIsOpen: (isOpen: boolean) => void;
+  resendCode: () => Promise<unknown>;
+  buttonText: string;
 }) => {
   const initialVerificationCode = ["", "", "", "", "", ""];
   const [verificationCode, setVerificationCode] = useState(
@@ -66,6 +72,7 @@ export const VerificationModal = ({
     >
       <div className={styles.modalContent}>
         <h2 className={styles.title}>Please check your email</h2>
+        <p>We&apos;ve sent a code to {email}</p>
         <div className={styles.verificationDigits}>
           {verificationCode.map((digit, index) => (
             <input
@@ -83,8 +90,47 @@ export const VerificationModal = ({
             />
           ))}
         </div>
-        <Button onClick={onSubmitCode}>Verify Account</Button>
+        <ResendCode resendCode={resendCode} />
+        <Button onClick={onSubmitCode}>{buttonText}</Button>
       </div>
     </Modal>
+  );
+};
+
+const ResendCode = ({ resendCode }: { resendCode: () => Promise<unknown> }) => {
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [codeResent, setCodeResent] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timeLeft === 0) {
+        clearInterval(interval);
+        resendCode();
+        setCodeResent(true);
+        return;
+      }
+
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [resendCode, setTimeLeft, timeLeft]);
+
+  return (
+    <div>
+      {codeResent ? (
+        <p>
+          Didn&apos;t receive a code?
+          <button type="button" onClick={() => {resendCode()}}>
+            Try again
+          </button>
+        </p>
+      ) : (
+        <>
+          <strong>Resend code in:</strong>
+          {timeLeft}
+        </>
+      )}
+    </div>
   );
 };

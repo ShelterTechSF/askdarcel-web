@@ -13,9 +13,9 @@ export const AppContext = createContext({
     accessTokenObject: {
       expiresAt: new Date(1970, 0, 1),
       token: "",
-    }
+    },
   },
-  setAuthState: <(state: any) => void><unknown>null,
+  setAuthState: <(state: any) => void>(<unknown>null),
   webAuth: <WebAuth | null>null,
 });
 

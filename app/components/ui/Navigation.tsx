@@ -2,9 +2,9 @@ import React, { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import cn from "classnames";
 import qs from "qs";
-import { useAppContext, AuthService } from "utils";
+import { WebAuth } from "auth0-js";
+import { useAppContext, AuthService, whiteLabel } from "utils";
 import Translate from "./Translate";
-import whiteLabel from "../../utils/whitelabel";
 import styles from "./Navigation.module.scss";
 
 const {
@@ -92,24 +92,13 @@ const SiteLogo = () =>
 
 const SiteLinks = () => {
   const context = useAppContext();
-  const { authState, webAuth, setAuthState } = context;
+  const { authState } = context;
 
   return (
     <ul className={styles.navRight}>
       {authState.isAuthenticated && (
         <li>
-          <button
-            type="button"
-            onClick={() =>
-              AuthService.logout(
-                webAuth,
-                "UcnuRrX6S0SeDEhW9PRe01wEhcvIRuwc",
-                setAuthState
-              )
-            }
-          >
-            Sign Out
-          </button>
+          <Link to="/sign-out">Sign Out</Link>
         </li>
       )}
       <li>
@@ -149,7 +138,8 @@ const SiteLinks = () => {
       )}
       <Translate />
     </ul>
-  );};
+  );
+};
 
 const SiteSearch = ({
   query,
