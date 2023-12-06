@@ -28,29 +28,64 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Age and Dependents",
       eligibilities: [
-        { isSeeAll: true, checkedId: "0", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "1", name: "Elderly", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "0",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "1",
+          name: "Elderly",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "2",
           name: "Adolescents",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "3", name: "Pregnant", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "3",
+          name: "Pregnant",
+          checked: false,
+        },
       ],
     },
     {
       label: "Gender",
       eligibilities: [
-        { isSeeAll: true, checkedId: "4", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "5", name: "Women", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "4",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "5",
+          name: "Women",
+          checked: false,
+        },
       ],
     },
     {
       label: "Health Related",
       eligibilities: [
-        { isSeeAll: true, checkedId: "6", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "7", name: "HIV/AIDS", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "6",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "7",
+          name: "HIV/AIDS",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "8",
@@ -68,8 +103,18 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Other identities/categories",
       eligibilities: [
-        { isSeeAll: true, checkedId: "10", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "11", name: "LGBTQ+", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "10",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "11",
+          name: "LGBTQ+",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "12",
@@ -82,9 +127,24 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           name: "Sex Worker",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "14", name: "Veterans", checked: false },
-        { isSeeAll: false, checkedId: "15", name: "Latinx", checked: false },
-        { isSeeAll: false, checkedId: "16", name: "Homeless", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "14",
+          name: "Veterans",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "15",
+          name: "Latinx",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "16",
+          name: "Homeless",
+          checked: false,
+        },
       ],
     },
   ],
@@ -93,24 +153,59 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Age and Dependents",
       eligibilities: [
-        { isSeeAll: true, checkedId: "17", name: "See All", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "17",
+          name: "See All",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "18",
           name: "Families with children below 18 years old",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "19", name: "Age 12-17", checked: false },
-        { isSeeAll: false, checkedId: "20", name: "Age 18-24", checked: false },
-        { isSeeAll: false, checkedId: "21", name: "Pregnant", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "19",
+          name: "Age 12-17",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "20",
+          name: "Age 18-24",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "21",
+          name: "Pregnant",
+          checked: false,
+        },
       ],
     },
     {
       label: "Gender",
       eligibilities: [
-        { isSeeAll: true, checkedId: "22", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "23", name: "Women", checked: false },
-        { isSeeAll: false, checkedId: "24", name: "Men", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "22",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "23",
+          name: "Women",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "24",
+          name: "Men",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "25",
@@ -122,7 +217,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Health Related",
       eligibilities: [
-        { isSeeAll: true, checkedId: "26", name: "See All", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "26",
+          name: "See All",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "27",
@@ -134,9 +234,24 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Other identities/categories",
       eligibilities: [
-        { isSeeAll: true, checkedId: "28", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "29", name: "LGBTQ+", checked: false },
-        { isSeeAll: false, checkedId: "30", name: "Veterans", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "28",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "29",
+          name: "LGBTQ+",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "30",
+          name: "Veterans",
+          checked: false,
+        },
       ],
     },
   ],
@@ -145,8 +260,18 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Age and Dependents",
       eligibilities: [
-        { isSeeAll: true, checkedId: "31", name: "See All", checked: false },
-        { isSeeAll: false, checkedId: "32", name: "Pregnant", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "31",
+          name: "See All",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "32",
+          name: "Pregnant",
+          checked: false,
+        },
       ],
     },
   ],
@@ -155,7 +280,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Age and Dependents",
       eligibilities: [
-        { isSeeAll: true, checkedId: "33", name: "See All", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "33",
+          name: "See All",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "34",
@@ -170,7 +300,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Other identities/categories",
       eligibilities: [
-        { isSeeAll: true, checkedId: "35", name: "See All", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "35",
+          name: "See All",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "36",
@@ -178,7 +313,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           alias: "Asian and Pacific Islander",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "37", name: "HIV/AIDS", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "37",
+          name: "HIV/AIDS",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "38",
@@ -210,9 +350,24 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           name: "Gender-Based Violence",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "43", name: "Jewish", checked: false },
-        { isSeeAll: false, checkedId: "44", name: "LGBTQ+", checked: false },
-        { isSeeAll: false, checkedId: "45", name: "Women", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "43",
+          name: "Jewish",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "44",
+          name: "LGBTQ+",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
+          checkedId: "45",
+          name: "Women",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "46",
@@ -227,7 +382,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
     {
       label: "Other identities/categories",
       eligibilities: [
-        { isSeeAll: true, checkedId: "35", name: "See All", checked: false },
+        {
+          isSeeAll: true,
+          checkedId: "35",
+          name: "See All",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "52",
@@ -241,7 +401,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           alias: "Asian and Pacific Islander",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "53", name: "Jewish", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "53",
+          name: "Jewish",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "48",
@@ -249,7 +414,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           alias: "Latinx/Hispanic",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "54", name: "LGBTQ+", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "54",
+          name: "LGBTQ+",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "49",
@@ -262,7 +432,12 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
           name: "Families with children below 18 years old",
           checked: false,
         },
-        { isSeeAll: false, checkedId: "37", name: "Pregnant", checked: false },
+        {
+          isSeeAll: false,
+          checkedId: "37",
+          name: "Pregnant",
+          checked: false,
+        },
         {
           isSeeAll: false,
           checkedId: "50",
