@@ -14,17 +14,17 @@ export const SignUpPage = () => {
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const webAuth = useAppContext().webAuth as WebAuth;
-  const { passwordlessStart, passwordlessVerify } = AuthService;
+  const { passwordlessStart, passwordlessVerify, signUpUser } = AuthService;
 
   const signUp = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    /* Todo: We will need to:
-      a) save the user's name/org to our database
-      b) check if the user email already exists and display an error message if so
-    */
-    passwordlessStart(webAuth, email).then(() => {
+    signUpUser(webAuth, email).then(() => {
       setModalIsOpen(true);
-    });
+    }, (error) => {
+      if (error.message === 'userExists') {
+        alert('Oops, there is already a user with that email in our system. Please try logging in instead.');
+      }
+    })
   };
 
   return (

@@ -122,7 +122,7 @@ const ResendCode = ({ resendCode }: { resendCode: () => Promise<unknown> }) => {
         <p>
           Didn&apos;t receive a code?
           <button type="button" onClick={() => {resendCode()}}>
-            Try again
+            Resend
           </button>
         </p>
       ) : (
