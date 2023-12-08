@@ -8,13 +8,21 @@
   margin-top: 70px;
 }
 
-.partners ul {
+.partnersLists {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 50px;
+  justify-content: center;
+  gap: 20px;
   width: 90%;
   max-width: 1600px;
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
+}
+
+.partners ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
   @media screen and (max-width: 767px) {
     flex-direction: column;
     align-items: center;
@@ -27,11 +35,19 @@
   margin: 15px;
 }
 
+.partners li:not(:first-child) {
+  padding-top: 30px;
+}
+
 .partners li header {
   font-size: 11px;
   font-weight: bold;
   margin-bottom: 15px;
   color: rgba(0, 0, 0, 0.38);
+}
+
+.partners img {
+  max-height: 100%;
 }
 
 .our415Logo {

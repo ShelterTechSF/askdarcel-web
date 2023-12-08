@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 
-import { whiteLabel } from "utils";
 import {
   eligibilitiesMapping,
   categoriesMapping,
@@ -78,24 +77,37 @@ const Sidebar = ({
       />
     );
   } else {
-    const transformEligibilities = (items: { label: string }[]) => {
-      let itemsList = items;
-      if (eligibilityNames.length > 0) {
-        itemsList = items.filter(({ label }) =>
-          eligibilityNames.includes(label)
-        );
-      }
-
-      return itemsList.sort(orderByLabel);
-    };
-
     // Service Results Page
     if (eligibilities.length) {
       eligibilityRefinementJsx = (
         <RefinementListFilter
           attribute="eligibilities"
-          limit={whiteLabel.refinementListLimit}
-          transformItems={transformEligibilities}
+          /*
+            The eligibilityNames array represents a static list of eligibilites that are displayed
+            in the ServiceDiscovery form of the parent tile category. (Currently, only the UCSF
+            whitelabel uses this mechanism.)
+
+            If the eligibilityNames array is > 0, we use it to filter out Algolia's returned set
+            of eligibilities. For such cases, we want Algolia to return a large number of
+            eligiblities to ensure that the returned eligibilities include those on the static list.
+            If eligibilityNames is < 1, we just pass Algolia's default limit, 10, and accept those
+            10 without filtering them.
+
+            N.B.: Eligibilities, and refinements in general, are returned by Algolia in order of
+            `[count:desc`, name:asc`]. In other words, the 10 default eligibilities are the most
+            tagged eligibilities of the returned services, with `name:asc` acting as a tiebreaker.
+          */
+          limit={eligibilityNames.length > 0 ? 100 : 10}
+          transformItems={(items: { label: string }[]) => {
+            let itemsList = items;
+            if (eligibilityNames.length > 0) {
+              itemsList = items.filter(({ label }) =>
+                eligibilityNames.includes(label)
+              );
+            }
+
+            return itemsList.sort(orderByLabel);
+          }}
         />
       );
     }
@@ -103,7 +115,16 @@ const Sidebar = ({
       categoryRefinementJsx = (
         <RefinementListFilter
           attribute="categories"
-          limit={whiteLabel.refinementListLimit}
+          /*
+            Algolia returns all categories that the union of returned services are tagged with.
+            The transformItems method filters out any of these categories that are not children
+            of the parent tile category (these children are members of the subcategoryNames
+            array). Since the number of tagged categories returned by Algolia can be very large,
+            we need to set an artificially high limit to ensure that the returned set contains
+            the desired subcategories; these are the initial subcategories displayed to the user
+            as checkboxes in the ServiceDiscoveryForm view.
+          */
+          limit={100}
           transformItems={(items: { label: string }[]) =>
             items
               .filter(({ label }) => subcategoryNames.includes(label))

@@ -163,14 +163,16 @@ const InnerServiceDiscoveryResults = ({
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
-        <Configure
-          filters={`categories:'${algoliaCategoryName}'`}
-          {...(category.disableGeoLocation !== true && {
-            aroundLatLng: userLatLng,
-            aroundRadius: searchRadius,
-            aroundPrecision: 1600,
-          })}
-        />
+        {category.disableGeoLocation ? (
+          <Configure filters={`categories:'${algoliaCategoryName}'`} />
+        ) : (
+          <Configure
+            filters={`categories:'${algoliaCategoryName}'`}
+            aroundLatLng={userLatLng}
+            aroundRadius={searchRadius}
+            aroundPrecision={1600}
+          />
+        )}
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}
