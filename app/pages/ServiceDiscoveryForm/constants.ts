@@ -124,7 +124,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Mental Health Resources",
     abbreviatedName: "Mental Health",
     slug: "ucsf-mental-health-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -133,7 +133,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Shelter Resources",
     abbreviatedName: "Shelter",
     slug: "ucsf-shelter-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -142,7 +142,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Substance Use Resources",
     abbreviatedName: "Substance Use",
     slug: "ucsf-substance-use-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -151,7 +151,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Food Insecurity Resources",
     abbreviatedName: "Food Insecurity",
     slug: "ucsf-food-insecurity-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -170,7 +170,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Intimate Partner Violence Resources",
     abbreviatedName: "Intimate Partner Violence",
     slug: "ucsf-partner-violence-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
 ];
