@@ -37,8 +37,11 @@ export type SearchHit = ServiceHit | OrganizationHit;
  * Transform Algolia search hits such that each hit has a recurringSchedule that
  * uses the time helper classes.
  */
-export const transformHits = (hits: SearchHit[]) =>
-  hits.flatMap((hit) => {
+export const transformHits = (
+  hits: SearchHit[],
+  sortAlphabetically: boolean = false
+) => {
+  const hitsWithSchedule = hits.flatMap((hit) => {
     switch (hit.type) {
       case "resource":
         return {
@@ -62,3 +65,8 @@ export const transformHits = (hits: SearchHit[]) =>
         return [];
     }
   });
+
+  return sortAlphabetically
+    ? hitsWithSchedule.sort((a, b) => (a.name < b.name ? -1 : 1))
+    : hitsWithSchedule;
+};

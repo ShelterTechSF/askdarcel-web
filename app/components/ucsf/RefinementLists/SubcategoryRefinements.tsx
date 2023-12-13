@@ -28,6 +28,8 @@ export const SubcategoryRefinements = ({
   selectedSubcategories: SelectedSubcategories;
   setSelectedSubcategories: (categories: SelectedSubcategories) => void;
 }) => {
+  if (subcategories.length === 0) return null;
+
   // Add generic "See All" element to subcategory array if it is not there yet
   if (!subcategories[0] || subcategories[0].id !== seeAllPseudoId) {
     subcategories.unshift({ id: seeAllPseudoId, name: "See All" });
