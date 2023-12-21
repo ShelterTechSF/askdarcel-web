@@ -46,10 +46,10 @@ const SearchResults = ({
   if (!searchResults) return null;
 
   const category = CATEGORIES.find((c) => c.id === categoryId);
-  const alphabetizeResults = category && category.alphabetizeResults;
+  const sortBy24HourAvailability = category && category.sortBy24HourAvailability ? category.sortBy24HourAvailability  : false;
   const hits = transformHits(
     searchResults.hits as unknown as SearchHit[],
-    alphabetizeResults
+    sortBy24HourAvailability
   );
 
   return (

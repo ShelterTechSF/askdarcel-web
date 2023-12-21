@@ -39,9 +39,9 @@ export type SearchHit = ServiceHit | OrganizationHit;
  */
 export const transformHits = (
   hits: SearchHit[],
-  sortAlphabetically: boolean = false
+  sortBy24HourAvailability: boolean = false
 ) => {
-  const hitsWithSchedule = hits.flatMap((hit) => {
+  const hitsWithRecurringSchedule = hits.flatMap((hit) => {
     switch (hit.type) {
       case "resource":
         return {
@@ -66,7 +66,27 @@ export const transformHits = (
     }
   });
 
-  return sortAlphabetically
-    ? hitsWithSchedule.sort((a, b) => (a.name < b.name ? -1 : 1))
-    : hitsWithSchedule;
+  return sortBy24HourAvailability
+    // Some of our tile category results that may provide more urgent services need to be sorted
+    // by 24 hour availability. Moreover, in some cases, certain services, that have "24/7" in
+    // their name should be prioritized as well. Thus, this logic orders hits by 24/7
+    // availability, and if there are ties, where both services in the comparison are open 24/7,
+    // the logic breaks the tie by alphabetical rank – this is a heuristic of sorts
+    // to prioritize services with names beginning with the numeric "24".
+    ? hitsWithRecurringSchedule.sort((a, b) => {
+      const aIsOpen24_7 = a.recurringSchedule && a.recurringSchedule.isOpen24_7();
+      const bIsOpen24_7 = b.recurringSchedule && b.recurringSchedule.isOpen24_7();
+      if (aIsOpen24_7 === bIsOpen24_7) {
+        // If both services are 24/7 tiebreak by alphabetical order. This is to preference
+        // services that start with the numeric
+        return a.name <= b.name ? -1 : 1;
+      }
+
+      if (aIsOpen24_7) {
+        return -1;
+      }
+
+      return 1;
+    })
+    : hitsWithRecurringSchedule;
 };

@@ -7,7 +7,7 @@ export type Step =
 
 export interface ServiceCategory {
   algoliaCategoryName: string;
-  alphabetizeResults?: boolean;
+  sortBy24HourAvailability?: boolean;
   disableGeoLocation?: boolean;
   id: string;
   name: string;
@@ -166,7 +166,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   },
   {
     algoliaCategoryName: "Ucsf-intimatepartnerviolence",
-    alphabetizeResults: true,
+    sortBy24HourAvailability: true,
     disableGeoLocation: true,
     id: "2000006",
     name: "Intimate Partner Violence Resources",

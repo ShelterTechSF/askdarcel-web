@@ -28,6 +28,7 @@ export const SubcategoryRefinements = ({
   selectedSubcategories: SelectedSubcategories;
   setSelectedSubcategories: (categories: SelectedSubcategories) => void;
 }) => {
+  // This prevents the UI from flashing before the subcategories are fetched
   if (subcategories.length === 0) return null;
 
   // Add generic "See All" element to subcategory array if it is not there yet
