@@ -6,6 +6,7 @@ import {
   SearchResults as SearchResultsProps,
 } from "react-instantsearch/connectors";
 import { whiteLabel } from "utils";
+import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { Texting } from "components/Texting";
