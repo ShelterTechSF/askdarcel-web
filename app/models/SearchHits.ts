@@ -77,8 +77,6 @@ export const transformHits = (
       const aIsOpen24_7 = a.recurringSchedule && a.recurringSchedule.isOpen24_7();
       const bIsOpen24_7 = b.recurringSchedule && b.recurringSchedule.isOpen24_7();
       if (aIsOpen24_7 === bIsOpen24_7) {
-        // If both services are 24/7 tiebreak by alphabetical order. This is to preference
-        // services that start with the numeric
         return a.name <= b.name ? -1 : 1;
       }
 
