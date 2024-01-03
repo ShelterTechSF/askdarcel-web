@@ -127,7 +127,7 @@ export default class AuthService {
 
   static userExists = (email: string) => {
     return new Promise((resolve, reject) => {
-      const response = get(`/api/users/user_exists?email=${email}`);
+      const response = get(`/api/auth/user_exists?email=${email}`);
       response.then((result) => {
         resolve(result.user_exists);
       }, (error) => {
