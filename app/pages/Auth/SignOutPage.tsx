@@ -2,16 +2,17 @@ import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { WebAuth } from "auth0-js";
 import { useAppContext, AuthService } from "../../utils";
+import Config from "../../config";
 
 export const SignOutPage = () => {
   const context = useAppContext();
   const { setAuthState } = context;
-  const webAuth = context.webAuth as WebAuth;
+  const authClient = context.authClient as WebAuth;
 
   useEffect(() => {
     AuthService.logout(
-      webAuth,
-      "UcnuRrX6S0SeDEhW9PRe01wEhcvIRuwc",
+      authClient,
+      Config.AUTH0_CLIENT_ID,
       setAuthState
     );
   });

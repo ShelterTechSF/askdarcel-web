@@ -13,15 +13,17 @@ export const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
-  const webAuth = useAppContext().webAuth as WebAuth;
+  const authClient = useAppContext().authClient as WebAuth;
   const { passwordlessStart, passwordlessVerify, signUpUser } = AuthService;
 
   const signUp = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    signUpUser(webAuth, email).then(() => {
+    signUpUser(authClient, email).then(() => {
       setModalIsOpen(true);
     }, (error) => {
       if (error.message === 'userExists') {
+        // eslint-disable-next-line no-alert
+        // Todo: Handle this case with a proper error message
         alert('Oops, there is already a user with that email in our system. Please try logging in instead.');
       }
     })
@@ -68,8 +70,8 @@ export const SignUpPage = () => {
         email={email}
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
-        verifyCode={(code) => passwordlessVerify(webAuth, email, code)}
-        resendCode={() => passwordlessStart(webAuth, email)}
+        verifyCode={(code) => passwordlessVerify(authClient, email, code)}
+        resendCode={() => passwordlessStart(authClient, email)}
         buttonText="Sign up"
       />
     </div>

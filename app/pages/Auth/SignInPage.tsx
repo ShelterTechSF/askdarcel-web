@@ -11,12 +11,12 @@ import styles from "./Auth.module.scss";
 export const SignInPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const webAuth = useAppContext().webAuth as WebAuth;
+  const authClient = useAppContext().authClient as WebAuth;
   const { passwordlessStart, passwordlessVerify } = AuthService;
 
   const signIn = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    passwordlessStart(webAuth, email).then(() => {
+    passwordlessStart(authClient, email).then(() => {
       setModalIsOpen(true);
     });
   };
@@ -50,8 +50,8 @@ export const SignInPage = () => {
         email={email}
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
-        verifyCode={(code) => passwordlessVerify(webAuth, email, code)}
-        resendCode={() => passwordlessStart(webAuth, email)}
+        verifyCode={(code) => passwordlessVerify(authClient, email, code)}
+        resendCode={() => passwordlessStart(authClient, email)}
         buttonText="Log in"
       />
     </div>

@@ -69,7 +69,7 @@ const covidResources = [
 ];
 
 export const HomePage = () => {
-  const { webAuth, setAuthState } = useAppContext();
+  const { authClient, setAuthState } = useAppContext();
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
@@ -86,15 +86,19 @@ export const HomePage = () => {
   });
 
   useEffect(() => {
-    if (!window.location.hash) return;
+    // Todo: This effect should be moved to the case worker UI homepage when that page is created
+    const { hash } = window.location;
+    if (!hash || !hash.includes("access_token")) return;
 
     AuthService.persistUser(
       window.location.hash,
-      webAuth as WebAuth,
+      authClient as WebAuth,
       setAuthState
     );
+
+    // Remove the url query params set by Auth0
     history.replace(window.location.pathname + window.location.search);
-  }, [history, setAuthState, webAuth]);
+  }, [history, setAuthState, authClient]);
 
   return (
     <>

@@ -2,8 +2,7 @@ import React, { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import cn from "classnames";
 import qs from "qs";
-import { WebAuth } from "auth0-js";
-import { useAppContext, AuthService, whiteLabel } from "utils";
+import { useAppContext, whiteLabel } from "utils";
 import Translate from "./Translate";
 import styles from "./Navigation.module.scss";
 
@@ -96,6 +95,10 @@ const SiteLinks = () => {
 
   return (
     <ul className={styles.navRight}>
+      {/* Todo: This will eventually be replaced by a user icon with a dropdown menu of account related options.
+          The designs are still forthcoming. For now, it serves as a basic sign-out functionality for the purposes
+          of development and testing.
+      */}
       {authState.isAuthenticated && (
         <li>
           <Link to="/sign-out">Sign Out</Link>

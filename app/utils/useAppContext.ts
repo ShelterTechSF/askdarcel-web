@@ -16,7 +16,7 @@ export const AppContext = createContext({
     },
   },
   setAuthState: <(state: any) => void>(<unknown>null),
-  webAuth: <WebAuth | null>null,
+  authClient: <WebAuth | null>null,
 });
 
 export const useAppContext = () => useContext(AppContext);
