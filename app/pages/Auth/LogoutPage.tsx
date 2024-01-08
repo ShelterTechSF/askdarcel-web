@@ -4,7 +4,7 @@ import { WebAuth } from "auth0-js";
 import { useAppContext, AuthService } from "../../utils";
 import Config from "../../config";
 
-export const SignOutPage = () => {
+export const LogoutPage = () => {
   const context = useAppContext();
   const { setAuthState } = context;
   const authClient = context.authClient as WebAuth;

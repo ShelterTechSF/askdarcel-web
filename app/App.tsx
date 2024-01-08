@@ -44,9 +44,9 @@ import OrganizationEditPage from "./pages/OrganizationEditPage";
 import { EditBreakingNewsPage } from "./pages/EditBreakingNewsPage";
 import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
 import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
-import { SignInPage } from "./pages/Auth/SignInPage";
+import { LoginPage } from "./pages/Auth/LoginPage";
 import { SignUpPage } from "./pages/Auth/SignUpPage";
-import { SignOutPage } from "./pages/Auth/SignOutPage";
+import { LogoutPage } from "./pages/Auth/LogoutPage";
 
 import styles from "./App.module.scss";
 
@@ -216,9 +216,9 @@ export const App = () => {
                 path="/breaking-news/edit"
                 component={EditBreakingNewsPage}
               />
-              <Route exact path="/sign-in" component={SignInPage} />
+              <Route exact path="/log-in" component={LoginPage} />
               <Route exact path="/sign-up" component={SignUpPage} />
-              <Route exact path="/sign-out" component={SignOutPage} />
+              <Route exact path="/log-out" component={LogoutPage} />
 
               {/* UCSF white label paths */}
               <Route

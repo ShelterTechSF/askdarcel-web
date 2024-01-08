@@ -8,13 +8,13 @@ import { VerificationModal } from "./VerificationModal";
 
 import styles from "./Auth.module.scss";
 
-export const SignInPage = () => {
+export const LoginPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const authClient = useAppContext().authClient as WebAuth;
   const { passwordlessStart, passwordlessVerify } = AuthService;
 
-  const signIn = (evt: React.SyntheticEvent) => {
+  const logIn = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
     passwordlessStart(authClient, email).then(() => {
       setModalIsOpen(true);
@@ -31,7 +31,7 @@ export const SignInPage = () => {
         enter in your email address and then check your email to find a 6 digit
         verification code.
       </p>
-      <form className={styles.authForm} onSubmit={signIn}>
+      <form className={styles.authForm} onSubmit={logIn}>
         <input
           type="text"
           name="email"
