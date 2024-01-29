@@ -8,6 +8,8 @@ import qs from "qs";
 import ReactGA from "react-ga";
 import ReactGA_4 from "react-ga4";
 
+import type { Category } from "models/Meta";
+
 import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { Section } from "components/ucsf/Section/Section";
@@ -30,11 +32,6 @@ import { useSubcategoriesForCategory } from "../../hooks/APIHooks";
 
 import styles from "./UcsfDiscoveryForm.module.scss";
 
-interface SubcategoryRefinement {
-  name: string;
-  id: number;
-}
-
 const seeAllPseudoId = -1;
 
 const Page = () => {
@@ -55,7 +52,7 @@ const Page = () => {
     useState<SelectedSubcategories>(defaultSelectedSubcategories);
   const [currentStep, setCurrentStep] = useState(0);
 
-  const subcategories: SubcategoryRefinement[] =
+  const subcategories: Category[] =
     useSubcategoriesForCategory(category?.id ?? null) || [];
 
   const selectedResource = UCSF_RESOURCES.find(

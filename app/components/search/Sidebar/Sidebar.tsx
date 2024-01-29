@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
 
+import type { Category } from "models/Meta";
+
 import {
   eligibilitiesMapping,
   categoriesMapping,
@@ -21,20 +23,42 @@ const Sidebar = ({
   categorySlug = "",
   subcategories = [],
   subcategoryNames = [],
+  sortAlgoliaSubcategoryRefinements = false,
 }: {
   setSearchRadius: (radius: string) => void;
   searchRadius: string;
   isSearchResultsPage: boolean;
   eligibilities?: object[];
   categorySlug?: string;
-  subcategories?: object[];
+  subcategories?: Category[];
   subcategoryNames?: string[];
+  sortAlgoliaSubcategoryRefinements?: boolean;
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   let categoryRefinementJsx: React.ReactElement | null = null;
   let eligibilityRefinementJsx: React.ReactElement | null = null;
   const orderByLabel = (a: { label: string }, b: { label: string }) =>
     a.label.localeCompare(b.label);
+
+  const orderByPriorityRanking = (
+    a: { label: string },
+    b: { label: string }
+  ) => {
+    // Our API has the ability to sort subcategories using the "child_priority_rank" on the
+    // CategoryRelationship table. In cases where we want to sort our sidebar categories
+    // following this order, we can use this sorting function, which sorts the categories
+    // that we receive from Algolia using the order that we get from the API.
+    const priorityA = subcategoryNames.indexOf(a.label);
+    const priorityB = subcategoryNames.indexOf(b.label);
+
+    // If an element in the data returned from Algolia does not exist in the API's ordered array
+    // (i.e., Algolia is out of sync with our API), move the element to the back of the list.
+    if (priorityA < 0) return 1;
+    if (priorityB < 0) return -1;
+
+    return priorityA - priorityB;
+  };
+
   const onChangeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setSearchRadius(evt.target.value);
   };
@@ -128,7 +152,11 @@ const Sidebar = ({
           transformItems={(items: { label: string }[]) =>
             items
               .filter(({ label }) => subcategoryNames.includes(label))
-              .sort(orderByLabel)
+              .sort(
+                sortAlgoliaSubcategoryRefinements
+                  ? orderByPriorityRanking
+                  : orderByLabel
+              )
           }
         />
       );
