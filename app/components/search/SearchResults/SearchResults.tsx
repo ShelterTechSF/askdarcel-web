@@ -6,6 +6,7 @@ import {
   SearchResults as SearchResultsProps,
 } from "react-instantsearch/connectors";
 import { whiteLabel } from "utils";
+import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { Texting } from "components/Texting";
@@ -44,7 +45,12 @@ const SearchResults = ({
 
   if (!searchResults) return null;
 
-  const hits = transformHits(searchResults.hits as unknown as SearchHit[]);
+  const category = CATEGORIES.find((c) => c.id === categoryId);
+  const sortBy24HourAvailability = Boolean(category?.sortBy24HourAvailability);
+  const hits = transformHits(
+    searchResults.hits as unknown as SearchHit[],
+    sortBy24HourAvailability
+  );
 
   return (
     <div className={styles.searchResultsAndMapContainer}>

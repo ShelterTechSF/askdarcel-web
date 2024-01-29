@@ -149,6 +149,8 @@ const Page = () => {
   let nextButtonText = "Next: ";
   if (nextStepName === "subcategories") {
     nextButtonText += "Service Type";
+  } else if (nextStepName === "eligibilities") {
+    nextButtonText += "Patient Identity";
   } else if (nextStepName === "results") {
     nextButtonText += "Show Results";
   }
