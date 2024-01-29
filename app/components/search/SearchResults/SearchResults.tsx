@@ -46,7 +46,7 @@ const SearchResults = ({
   if (!searchResults) return null;
 
   const category = CATEGORIES.find((c) => c.id === categoryId);
-  const sortBy24HourAvailability = category && category.sortBy24HourAvailability ? category.sortBy24HourAvailability  : false;
+  const sortBy24HourAvailability = Boolean(category?.sortBy24HourAvailability);
   const hits = transformHits(
     searchResults.hits as unknown as SearchHit[],
     sortBy24HourAvailability
