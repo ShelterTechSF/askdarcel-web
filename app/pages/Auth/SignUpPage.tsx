@@ -32,7 +32,7 @@ export const SignUpPage = () => {
   return (
     <div className={styles.authPage}>
       <h1 className={styles.title}>For Case Managers</h1>
-      <Link to="/sign-in">Already have an account? Log in!</Link>
+      <Link to="/log-in">Already have an account? Log in!</Link>
       <form className={styles.authForm} onSubmit={signUp}>
         <input
           type="text"

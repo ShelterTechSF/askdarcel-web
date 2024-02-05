@@ -82,7 +82,7 @@ export default class AuthService {
   };
 
   // This method passes the user's verification code to Auth0's server, which
-  // completes their sign-up/sign-in action
+  // completes their sign-up/log-in action
   static passwordlessVerify = (
     authClient: WebAuth,
     email: string,

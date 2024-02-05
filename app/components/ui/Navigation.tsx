@@ -96,12 +96,12 @@ const SiteLinks = () => {
   return (
     <ul className={styles.navRight}>
       {/* Todo: This will eventually be replaced by a user icon with a dropdown menu of account related options.
-          The designs are still forthcoming. For now, it serves as a basic sign-out functionality for the purposes
+          The designs are still forthcoming. For now, it serves as a basic log-out functionality for the purposes
           of development and testing.
       */}
       {authState.isAuthenticated && (
         <li>
-          <Link to="/sign-out">Sign Out</Link>
+          <Link to="/log-out">Sign Out</Link>
         </li>
       )}
       <li>
