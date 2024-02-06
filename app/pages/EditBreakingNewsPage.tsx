@@ -52,10 +52,14 @@ export const EditBreakingNewsPage = () => {
     );
     const route = `/api/news_articles/${articleId ?? ""}`;
 
-    if (articleId) {
-      dataService.put(route, article);
-    } else {
-      dataService.post(route, article);
+    if (article) {
+      if (articleId){
+        dataService.put(route, article);
+        alert(`Article "${article.headline}" has been updated!`)
+      } else {
+        dataService.post(route, article);
+        alert(`Article "${article.headline}" has been created!`)
+      }
     }
   };
 
@@ -92,14 +96,6 @@ export const EditBreakingNewsPage = () => {
     <form className="form" key={article.id}>
       <div className="form-header">
         <h2>{`Breaking News Article #${index + 1}`}</h2>
-        <button type="button" onClick={() => onSave(article.id)}>
-          <RiSave3Line />
-          Save
-        </button>
-        <button type="button" onClick={() => onDelete(article.id, index)}>
-          <RiDeleteBin5Line />
-          Delete
-        </button>
       </div>
       <label>
         Headline
@@ -165,6 +161,20 @@ export const EditBreakingNewsPage = () => {
           onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
+      <div className="breaking-news-form-buttons">
+        <button
+          type="button"
+          className="button-with-margin"
+          onClick={() => onSave(article.id)}
+        >
+          <RiSave3Line />
+          Save
+        </button>
+        <button type="button" onClick={() => onDelete(article.id, index)}>
+          <RiDeleteBin5Line />
+          Delete
+        </button>
+      </div>
     </form>
   );
 

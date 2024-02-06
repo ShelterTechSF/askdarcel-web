@@ -38,6 +38,16 @@
   }
 }
 
+.breaking-news-form-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+}
+
+.button-with-margin {
+  margin-right: 10px;
+}
+
 .breaking-news-footer {
   display: flex;
   justify-content: center;
