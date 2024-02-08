@@ -57,3 +57,23 @@
 .labelSubtext {
   color: $color-grey5;
 }
+
+.round-edges {
+  width: 80px;
+  height: 30px;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.active-status {
+  color: white;
+  background-color: $color-status-amber;
+}
+
+.inactive-status {
+  color: white;
+  background-color: red;
+}

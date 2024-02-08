@@ -46,20 +46,25 @@ export const EditBreakingNewsPage = () => {
     ]);
   };
 
-  const onSave = (articleId: string) => {
-    const article = breakingNewsArticles.find(
-      ({ id }: any) => id === articleId
-    );
+  const isActive = (article: NewsArticle): boolean => {
+    const today = new Date();
+    const isEffective = !article.effective_date || new Date(article.effective_date) <= today;
+    const isNotExpired = !article.expiration_date || new Date(article.expiration_date) >= today;
+
+    return Boolean(article.id && isEffective && isNotExpired);
+  };
+
+  const onSave = (index: number) => {
+    const articleFromState = breakingNewsArticles[index];
+    const articleId = articleFromState.id
     const route = `/api/news_articles/${articleId ?? ""}`;
 
-    if (article) {
-      if (articleId){
-        dataService.put(route, article);
-        alert(`Article "${article.headline}" has been updated!`)
-      } else {
-        dataService.post(route, article);
-        alert(`Article "${article.headline}" has been created!`)
-      }
+    if (articleId){
+      dataService.put(route, articleFromState);
+      alert(`Article "${articleFromState.headline}" has been updated!`)
+    } else {
+      dataService.post(route, articleFromState);
+      alert(`Article "${articleFromState.headline}" has been created!`);
     }
   };
 
@@ -97,6 +102,13 @@ export const EditBreakingNewsPage = () => {
       <div className="form-header">
         <h2>{`Breaking News Article #${index + 1}`}</h2>
       </div>
+      {
+        isActive(article) ? (
+          <div className={'round-edges active-status'}>Active</div>
+        ) : (
+          <div className={'round-edges inactive-status'}>Inactive</div>
+        )
+      }
       <label>
         Headline
         <input
@@ -165,7 +177,7 @@ export const EditBreakingNewsPage = () => {
         <button
           type="button"
           className="button-with-margin"
-          onClick={() => onSave(article.id)}
+          onClick={() => onSave(index)}
         >
           <RiSave3Line />
           Save
