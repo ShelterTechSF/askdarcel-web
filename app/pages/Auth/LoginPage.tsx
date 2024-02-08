@@ -12,7 +12,7 @@ export const LoginPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const authClient = useAppContext().authClient as WebAuth;
-  const { passwordlessStart, passwordlessVerify } = AuthService;
+  const { passwordlessStart, passwordlessLogin } = AuthService;
 
   const logIn = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
@@ -50,7 +50,7 @@ export const LoginPage = () => {
         email={email}
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
-        verifyCode={(code) => passwordlessVerify(authClient, email, code)}
+        verifyCode={(code) => passwordlessLogin(authClient, email, code)}
         resendCode={() => passwordlessStart(authClient, email)}
         buttonText="Log in"
       />

@@ -14,11 +14,12 @@ export const SignUpPage = () => {
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const authClient = useAppContext().authClient as WebAuth;
-  const { passwordlessStart, passwordlessVerify, signUpUser } = AuthService;
+  const { passwordlessStart, completeUserSignup, initializeUserSignUp } =
+    AuthService;
 
   const signUp = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    signUpUser(authClient, email).then(() => {
+    initializeUserSignUp(authClient, email).then(() => {
       setModalIsOpen(true);
     }, (error) => {
       if (error.message === 'userExists') {
@@ -70,7 +71,7 @@ export const SignUpPage = () => {
         email={email}
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
-        verifyCode={(code) => passwordlessVerify(authClient, email, code)}
+        verifyCode={(code) => completeUserSignup(authClient, code, email, name, organization)}
         resendCode={() => passwordlessStart(authClient, email)}
         buttonText="Sign up"
       />
