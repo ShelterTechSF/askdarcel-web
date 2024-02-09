@@ -9,6 +9,7 @@ export interface ServiceCategory {
   algoliaCategoryName: string;
   sortBy24HourAvailability?: boolean;
   disableGeoLocation?: boolean;
+  sortAlgoliaSubcategoryRefinements?: boolean;
   id: string;
   name: string;
   abbreviatedName?: string;
@@ -174,5 +175,6 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     slug: "ucsf-partner-violence-resources",
     steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
+    sortAlgoliaSubcategoryRefinements: true,
   },
 ];

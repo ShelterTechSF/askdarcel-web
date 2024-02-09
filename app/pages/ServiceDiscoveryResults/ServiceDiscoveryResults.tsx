@@ -140,7 +140,12 @@ const InnerServiceDiscoveryResults = ({
   userLatLng: string;
 }) => {
   const subcategoryNames = subcategories.map((c) => c.name);
-  const { name: categoryName, slug: categorySlug, id: categoryId } = category;
+  const {
+    name: categoryName,
+    slug: categorySlug,
+    id: categoryId,
+    sortAlgoliaSubcategoryRefinements,
+  } = category;
 
   return (
     <div className={styles.container}>
@@ -182,6 +187,9 @@ const InnerServiceDiscoveryResults = ({
             categorySlug={categorySlug}
             subcategories={subcategories}
             subcategoryNames={subcategoryNames}
+            sortAlgoliaSubcategoryRefinements={
+              sortAlgoliaSubcategoryRefinements
+            }
           />
 
           <div className={styles.results}>
