@@ -86,11 +86,11 @@ export const HomePage = () => {
   });
 
   useEffect(() => {
-    // Todo: This effect should be moved to the case worker UI homepage when that page is created
+    // TODO: This effect should be moved to the case worker UI homepage when that page is created
     const { hash } = window.location;
     if (!hash || !hash.includes("access_token")) return;
 
-    AuthService.persistUser(
+    AuthService.initializeUserSession(
       window.location.hash,
       authClient as WebAuth,
       setAuthState

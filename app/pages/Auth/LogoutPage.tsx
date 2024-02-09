@@ -10,11 +10,7 @@ export const LogoutPage = () => {
   const authClient = context.authClient as WebAuth;
 
   useEffect(() => {
-    AuthService.logout(
-      authClient,
-      Config.AUTH0_CLIENT_ID,
-      setAuthState
-    );
+    AuthService.logout(authClient, Config.AUTH0_CLIENT_ID, setAuthState);
   });
 
   return <Redirect to="/" />;

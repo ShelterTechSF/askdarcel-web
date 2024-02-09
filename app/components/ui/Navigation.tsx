@@ -101,7 +101,7 @@ const SiteLinks = () => {
       */}
       {authState.isAuthenticated && (
         <li>
-          <Link to="/log-out">Sign Out</Link>
+          <Link to="/log-out">Log Out</Link>
         </li>
       )}
       <li>

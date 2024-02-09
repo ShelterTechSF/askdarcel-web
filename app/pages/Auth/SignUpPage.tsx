@@ -19,15 +19,20 @@ export const SignUpPage = () => {
 
   const signUp = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    initializeUserSignUp(authClient, email).then(() => {
-      setModalIsOpen(true);
-    }, (error) => {
-      if (error.message === 'userExists') {
-        // eslint-disable-next-line no-alert
-        // Todo: Handle this case with a proper error message
-        alert('Oops, there is already a user with that email in our system. Please try logging in instead.');
+    initializeUserSignUp(authClient, email).then(
+      () => {
+        setModalIsOpen(true);
+      },
+      (error) => {
+        if (error.message === "userExists") {
+          // eslint-disable-next-line no-alert
+          // TODO: Handle this case with a proper error message
+          alert(
+            "Oops, it looks like you may have already signed up. Please try logging in instead."
+          );
+        }
       }
-    })
+    );
   };
 
   return (
@@ -71,7 +76,9 @@ export const SignUpPage = () => {
         email={email}
         modalIsOpen={modalIsOpen}
         setModalIsOpen={setModalIsOpen}
-        verifyCode={(code) => completeUserSignup(authClient, code, email, name, organization)}
+        verifyCode={(code) =>
+          completeUserSignup(authClient, code, email, name, organization)
+        }
         resendCode={() => passwordlessStart(authClient, email)}
         buttonText="Sign up"
       />

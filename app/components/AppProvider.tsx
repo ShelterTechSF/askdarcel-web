@@ -63,7 +63,9 @@ export const AppProvider = ({
   if (
     authObject.isAuthenticated &&
     authObject.accessTokenObject.expiresAt &&
-    AuthService.hasAccessTokenExpired(new Date(authObject.accessTokenObject.expiresAt))
+    AuthService.hasAccessTokenExpired(
+      new Date(authObject.accessTokenObject.expiresAt)
+    )
   ) {
     AuthService.refreshAccessToken(contextValue.authClient)
       .then((result: unknown) => {
@@ -82,7 +84,7 @@ export const AppProvider = ({
             },
           });
         } else {
-          throw new Error("Token does not exist or is in unexpected token");
+          throw new Error("Token does not exist or is unexpected token");
         }
       })
       .catch((err) => {

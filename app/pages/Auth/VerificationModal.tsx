@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, createRef } from "react";
 import { Modal } from "components/ui/Modal/Modal";
 import { Button } from "components/ui/inline/Button/Button";
 
@@ -98,39 +98,19 @@ export const VerificationModal = ({
 };
 
 const ResendCode = ({ resendCode }: { resendCode: () => Promise<unknown> }) => {
-  const [timeLeft, setTimeLeft] = useState(60);
-  const [codeResent, setCodeResent] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (timeLeft === 0) {
-        clearInterval(interval);
-        resendCode();
-        setCodeResent(true);
-        return;
-      }
-
-      setTimeLeft(timeLeft - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [resendCode, setTimeLeft, timeLeft]);
-
   return (
     <div>
-      {codeResent ? (
-        <p>
-          Didn&apos;t receive a code?
-          <button type="button" onClick={() => {resendCode()}}>
-            Resend
-          </button>
-        </p>
-      ) : (
-        <>
-          <strong>Resend code in:</strong>
-          {timeLeft}
-        </>
-      )}
+      <p>
+        Didn&apos;t receive a code? Please check your spam folder.
+        <button
+          type="button"
+          onClick={() => {
+            resendCode();
+          }}
+        >
+          Send another code.
+        </button>
+      </p>
     </div>
   );
 };
