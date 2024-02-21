@@ -14,22 +14,18 @@ export const SignUpPage = () => {
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const authClient = useAppContext().authClient as WebAuth;
-  const { passwordlessStart, completeUserSignup, initializeUserSignUp } =
+  const { passwordlessStart, completeUserSignup } =
     AuthService;
 
   const signUp = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
-    initializeUserSignUp(authClient, email).then(
+    passwordlessStart(authClient, email).then(
       () => {
         setModalIsOpen(true);
       },
       (error) => {
-        if (error.message === "userExists") {
-          // eslint-disable-next-line no-alert
-          // TODO: Handle this case with a proper error message
-          alert(
-            "Oops, it looks like you may have already signed up. Please try logging in instead."
-          );
+        if (error) {
+          // TODO: Handle errors
         }
       }
     );

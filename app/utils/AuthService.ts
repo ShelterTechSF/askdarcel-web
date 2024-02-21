@@ -1,7 +1,8 @@
 import type { WebAuth, Auth0Result } from "auth0-js";
 import { defaultAuthObject } from "components/AppProvider";
 import { post } from "utils/DataService";
-import type { AuthState } from "components/AppProvider";
+import { SessionCacher } from "utils";
+import type { AuthState, UserSignUpData } from "components/AppProvider";
 
 /*
   This class provides a set of methods that serve as an interface between our application
@@ -49,21 +50,7 @@ export default class AuthService {
     });
   }
 
-  static initializeUserSignUp = (authClient: WebAuth, email: string) => {
-    return new Promise((resolve, reject) => {
-      this.userExists(email).then((exists) => {
-        if (exists) {
-          reject(new Error("userExists"));
-        } else {
-          this.passwordlessStart(authClient, email).then((result) => {
-            resolve(result);
-          });
-        }
-      });
-    });
-  };
-
-  // Invokes the passwordlessLogin method and following that saves the user to our database
+  // Invokes the passwordlessLogin method and following that stores the new user data in sessionStorage
   static completeUserSignup = (
     authClient: WebAuth,
     verificationCode: string,
@@ -72,19 +59,8 @@ export default class AuthService {
     organization: string | null = null
   ) => {
     this.passwordlessLogin(authClient, email, verificationCode);
-    // We need to optimistically save the user to our database here. The user is saved to the _Auth0_
-    // database after the passwordlessLogin method succeeds. Following that we need to save user data in our
-    // backend. Ideally, this should be done after a success callback after passwordlessLogin succceds;
-    // however, the passwordlessLogin success callback does not fire within our app, because, upon success, Auth0
-    // triggers a redirect to our home page. At that point, we do not have the user's name or organization,
-    // which we need to save in our database. Thus, we save the user here.
-    //
-    // If for some reason, the passwordlessLogin method errors, this code still save the user in our DB.
-    // At that point, the worst case scenario is that the user will be informed that they have already
-    // signed up if they try to sign up again and to log in instead. The Auth0 passwordless flow does
-    // not have a sign-up process separate from its log-in process, and thus the user will still be
-    // created within Auth0 upon going through our site's log-in flow.
-    this.saveUser(email, name, organization);
+    // Store user sign up data, which will be saved to our backend after Auth0 success redirect
+    SessionCacher.setUserSignUpData({email, name, organization});
   };
 
   // This method initiates the log-in/sign-up process by sending a code
@@ -159,32 +135,13 @@ export default class AuthService {
     });
   };
 
-  static userExists = (email: string) => {
-    return new Promise((resolve, reject) => {
-      post("/api/users/user_exists", {
-        email,
-      }).then(
-        (resp) => {
-          resp.json().then((result) => resolve(result.user_exists));
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  };
-
   static saveUser = (
-    email: string,
-    name: string,
-    organization: string | null = null
+    userSignUpData: UserSignUpData,
+    auth0UserId: string,
+    authToken: string
   ) => {
     return new Promise((resolve, reject) => {
-      const response = post("/api/users", {
-        email,
-        name,
-        organization,
-      });
+      const response = post("/api/users", {...userSignUpData, auth0_user_id: auth0UserId}, {"Authorization": `Bearer ${authToken}`});
       response.then(
         (result) => {
           resolve(result);

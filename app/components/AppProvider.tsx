@@ -16,6 +16,12 @@ export interface AuthState {
   };
 }
 
+export interface UserSignUpData {
+  email: string;
+  name: string;
+  organization: string | null;
+}
+
 export const defaultAuthObject: AuthState = {
   isAuthenticated: false,
   user: {
@@ -41,6 +47,16 @@ export const AppProvider = ({
     // This effect runs after any changes to the AppContext's authState and syncs the changes
     // to the authObject in sessionStorage.
     SessionCacher.setAuthObject(authState);
+
+    // If the SessionCacher has userSignUpData object, that means a user has just been created
+    // in Auth0 and a redirect has occurred. Therefore, we save the new user data to our database.
+    // The authState must also have propagated or else we won't have the token yet; thus the
+    // `authState.isAuthenticated` check
+    const newUserData = SessionCacher.getUserSignUpData();
+    if (newUserData && authState.isAuthenticated) {
+      SessionCacher.clearUserSignUpData();
+      AuthService.saveUser(newUserData, authState.user.id, authState.accessTokenObject.token);
+    }
   }, [authState]);
 
   const contextValue = useMemo(() => {

@@ -1,4 +1,4 @@
-import type { AuthState } from "components/AppProvider";
+import type { AuthState, UserSignUpData } from "components/AppProvider";
 
 /*
   This class exists to sync a user's auth state, which is managed by the AppProvider
@@ -18,5 +18,18 @@ export default class SessionCacher {
 
   static clearSession() {
     sessionStorage.removeItem("authObject");
+  }
+
+  static setUserSignUpData(userData: UserSignUpData) {
+    sessionStorage.setItem("userSignUpData", JSON.stringify(userData));
+  }
+
+  static getUserSignUpData(): UserSignUpData {
+    const object = sessionStorage.getItem("userSignUpData");
+    return object ? JSON.parse(object) : null;
+  }
+
+  static clearUserSignUpData() {
+    sessionStorage.removeItem("userSignUpData");
   }
 }
