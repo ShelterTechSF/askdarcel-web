@@ -14,8 +14,7 @@ export const SignUpPage = () => {
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
   const authClient = useAppContext().authClient as WebAuth;
-  const { passwordlessStart, completeUserSignup } =
-    AuthService;
+  const { passwordlessStart, completeUserSignup } = AuthService;
 
   const signUp = (evt: React.SyntheticEvent) => {
     evt.preventDefault();

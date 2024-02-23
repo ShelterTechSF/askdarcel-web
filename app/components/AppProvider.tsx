@@ -55,7 +55,11 @@ export const AppProvider = ({
     const newUserData = SessionCacher.getUserSignUpData();
     if (newUserData && authState.isAuthenticated) {
       SessionCacher.clearUserSignUpData();
-      AuthService.saveUser(newUserData, authState.user.id, authState.accessTokenObject.token);
+      AuthService.saveUser(
+        newUserData,
+        authState.user.id,
+        authState.accessTokenObject.token
+      );
     }
   }, [authState]);
 

@@ -60,7 +60,7 @@ export default class AuthService {
   ) => {
     this.passwordlessLogin(authClient, email, verificationCode);
     // Store user sign up data, which will be saved to our backend after Auth0 success redirect
-    SessionCacher.setUserSignUpData({email, name, organization});
+    SessionCacher.setUserSignUpData({ email, name, organization });
   };
 
   // This method initiates the log-in/sign-up process by sending a code
@@ -141,7 +141,11 @@ export default class AuthService {
     authToken: string
   ) => {
     return new Promise((resolve, reject) => {
-      const response = post("/api/users", {...userSignUpData, user_external_id: userExternalId}, {"Authorization": `Bearer ${authToken}`});
+      const response = post(
+        "/api/users",
+        { ...userSignUpData, user_external_id: userExternalId },
+        { Authorization: `Bearer ${authToken}` }
+      );
       response.then(
         (result) => {
           resolve(result);
