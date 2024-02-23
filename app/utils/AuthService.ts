@@ -137,11 +137,11 @@ export default class AuthService {
 
   static saveUser = (
     userSignUpData: UserSignUpData,
-    auth0UserId: string,
+    userExternalId: string,
     authToken: string
   ) => {
     return new Promise((resolve, reject) => {
-      const response = post("/api/users", {...userSignUpData, auth0_user_id: auth0UserId}, {"Authorization": `Bearer ${authToken}`});
+      const response = post("/api/users", {...userSignUpData, user_external_id: userExternalId}, {"Authorization": `Bearer ${authToken}`});
       response.then(
         (result) => {
           resolve(result);
