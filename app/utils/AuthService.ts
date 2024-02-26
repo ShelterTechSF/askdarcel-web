@@ -3,6 +3,7 @@ import { defaultAuthObject } from "components/AppProvider";
 import { post } from "utils/DataService";
 import { SessionCacher } from "utils";
 import type { AuthState, UserSignUpData } from "components/AppProvider";
+import config from "../config";
 
 /*
   This class provides a set of methods that serve as an interface between our application
@@ -114,7 +115,7 @@ export default class AuthService {
     setAuthState(defaultAuthObject);
 
     authClient.logout({
-      returnTo: "http://localhost:8080",
+      returnTo: config.AUTH0_REDIRECT_URI,
       clientID: clientId,
     });
   };
