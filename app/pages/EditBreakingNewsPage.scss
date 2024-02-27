@@ -42,10 +42,7 @@
   display: flex;
   justify-content: center;
   margin: 10px 0px;
-}
-
-.button-with-margin {
-  margin-right: 10px;
+  gap: 1em;
 }
 
 .breaking-news-footer {
@@ -58,22 +55,25 @@
   color: $color-grey5;
 }
 
-.round-edges {
-  width: 80px;
-  height: 30px;
-  border-radius: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.breaking-news-round-edges {
+  min-width: 2em;
+  padding: 0.5em;
+  border-radius: 5%;
+  display: inline-block;
   font-weight: bold;
 }
 
-.active-status {
+.breaking-news-scheduled-status {
   color: white;
   background-color: $color-status-amber;
 }
 
-.inactive-status {
+.breaking-news-active-status {
   color: white;
-  background-color: red;
+  background-color: $color-status-green;
+}
+
+.breaking-news-expired-status {
+  color: white;
+  background-color: $color-status-red;
 }
