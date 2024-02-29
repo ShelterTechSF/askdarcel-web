@@ -10,21 +10,24 @@ export const EditBreakingNewsPage = () => {
     Array<NewsArticle>
   >([]);
   useEffect(() => {
-    dataService.get("/api/news_articles").then(({ news_articles }) => {
-      setBreakingNewsArticles(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        news_articles.map((article: NewsArticle) => ({
-          ...article,
-          effective_date: article.effective_date
-            ? formatDate(article.effective_date)
-            : "",
-          expiration_date: article.expiration_date
-            ? formatDate(article.expiration_date)
-            : "",
-        }))
-      );
+  dataService.get("/api/news_articles").then(({ news_articles }) => {
+    const sortedArticles = news_articles.map((article: NewsArticle) => ({
+      ...article,
+      effective_date: article.effective_date ? formatDate(article.effective_date) : "",
+      expiration_date: article.expiration_date ? formatDate(article.expiration_date) : "",
+    }));
+
+    sortedArticles.sort((a, b) => {
+      const statusOrder = ["Scheduled", "Active", "Expired"];
+      const statusA = articleStatus(a).props.children;
+      const statusB = articleStatus(b).props.children;
+
+      return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
     });
-  }, []);
+
+    setBreakingNewsArticles(sortedArticles);
+  });
+}, []);
 
   // eslint-disable-next-line arrow-body-style
   const formatDate = (date: string): string | null => {
@@ -48,36 +51,24 @@ export const EditBreakingNewsPage = () => {
 
   const articleStatus = (article: NewsArticle): JSX.Element | null => {
     const today = new Date();
-    const isEffective =
-      !article.effective_date || new Date(article.effective_date) <= today;
-    const isNotExpired =
-      !article.expiration_date || new Date(article.expiration_date) > today;
+    const isEffective = !article.effective_date || new Date(article.effective_date) <= today;
+    const isNotExpired = !article.expiration_date || new Date(article.expiration_date) > today;
 
-    if (isEffective && isNotExpired) {
-      return (
-        <div
-          className={"breaking-news-round-edges breaking-news-active-status"}
-        >
-          Active
-        </div>
-      );
-    } else if (!isEffective && isNotExpired) {
-      return (
-        <div
-          className={"breaking-news-round-edges breaking-news-scheduled-status"}
-        >
-          Scheduled
-        </div>
-      );
-    } else {
-      return (
-        <div
-          className={"breaking-news-round-edges breaking-news-expired-status"}
-        >
-          Expired
-        </div>
-      );
-    }
+    const getStatusClassName = () => {
+      if (isEffective && isNotExpired) {
+        return "breaking-news-active-status";
+      } else if (!isEffective && isNotExpired) {
+        return "breaking-news-scheduled-status";
+      } else {
+        return "breaking-news-expired-status";
+      }
+    };
+
+    return (
+      <div className={`breaking-news-status-badge ${getStatusClassName()}`}>
+        {isEffective && isNotExpired ? "Active" : isNotExpired ? "Scheduled" : "Expired"}
+      </div>
+    );
   };
 
   const onSave = (index: number) => {
