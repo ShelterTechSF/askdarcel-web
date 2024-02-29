@@ -10,24 +10,28 @@ export const EditBreakingNewsPage = () => {
     Array<NewsArticle>
   >([]);
   useEffect(() => {
-  dataService.get("/api/news_articles").then(({ news_articles }) => {
-    const sortedArticles = news_articles.map((article: NewsArticle) => ({
-      ...article,
-      effective_date: article.effective_date ? formatDate(article.effective_date) : "",
-      expiration_date: article.expiration_date ? formatDate(article.expiration_date) : "",
-    }));
+    dataService.get("/api/news_articles").then(({ news_articles }) => {
+      const sortedArticles = news_articles.map((article: NewsArticle) => ({
+        ...article,
+        effective_date: article.effective_date
+          ? formatDate(article.effective_date)
+          : "",
+        expiration_date: article.expiration_date
+          ? formatDate(article.expiration_date)
+          : "",
+      }));
 
-    sortedArticles.sort((a, b) => {
-      const statusOrder = ["Scheduled", "Active", "Expired"];
-      const statusA = articleStatus(a).props.children;
-      const statusB = articleStatus(b).props.children;
+      sortedArticles.sort((a, b) => {
+        const statusOrder = ["Scheduled", "Active", "Expired"];
+        const statusA = articleStatus(a).props.children;
+        const statusB = articleStatus(b).props.children;
 
-      return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+        return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+      });
+
+      setBreakingNewsArticles(sortedArticles);
     });
-
-    setBreakingNewsArticles(sortedArticles);
-  });
-}, []);
+  }, []);
 
   // eslint-disable-next-line arrow-body-style
   const formatDate = (date: string): string | null => {
@@ -51,8 +55,10 @@ export const EditBreakingNewsPage = () => {
 
   const articleStatus = (article: NewsArticle): JSX.Element | null => {
     const today = new Date();
-    const isEffective = !article.effective_date || new Date(article.effective_date) <= today;
-    const isNotExpired = !article.expiration_date || new Date(article.expiration_date) > today;
+    const isEffective =
+      !article.effective_date || new Date(article.effective_date) <= today;
+    const isNotExpired =
+      !article.expiration_date || new Date(article.expiration_date) > today;
 
     const getStatusClassName = () => {
       if (isEffective && isNotExpired) {
@@ -66,7 +72,11 @@ export const EditBreakingNewsPage = () => {
 
     return (
       <div className={`breaking-news-status-badge ${getStatusClassName()}`}>
-        {isEffective && isNotExpired ? "Active" : isNotExpired ? "Scheduled" : "Expired"}
+        {isEffective && isNotExpired
+          ? "Active"
+          : isNotExpired
+          ? "Scheduled"
+          : "Expired"}
       </div>
     );
   };
