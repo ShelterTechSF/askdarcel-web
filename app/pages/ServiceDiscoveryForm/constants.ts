@@ -7,6 +7,9 @@ export type Step =
 
 export interface ServiceCategory {
   algoliaCategoryName: string;
+  sortBy24HourAvailability?: boolean;
+  disableGeoLocation?: boolean;
+  sortAlgoliaSubcategoryRefinements?: boolean;
   id: string;
   name: string;
   abbreviatedName?: string;
@@ -123,7 +126,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Mental Health Resources",
     abbreviatedName: "Mental Health",
     slug: "ucsf-mental-health-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -132,7 +135,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Shelter Resources",
     abbreviatedName: "Shelter",
     slug: "ucsf-shelter-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -141,7 +144,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Substance Use Resources",
     abbreviatedName: "Substance Use",
     slug: "ucsf-substance-use-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -150,7 +153,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     name: "Food Insecurity Resources",
     abbreviatedName: "Food Insecurity",
     slug: "ucsf-food-insecurity-resources",
-    steps: ["eligibilities", "subcategories", "results"],
+    steps: ["subcategories", "eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
   },
   {
@@ -161,5 +164,17 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     slug: "ucsf-immigration-resources",
     steps: ["eligibilities", "results"],
     subcategorySubheading: defaultSubheading,
+  },
+  {
+    algoliaCategoryName: "Ucsf-intimatepartnerviolence",
+    sortBy24HourAvailability: true,
+    disableGeoLocation: true,
+    id: "2000006",
+    name: "Intimate Partner Violence Resources",
+    abbreviatedName: "Intimate Partner Violence",
+    slug: "ucsf-partner-violence-resources",
+    steps: ["subcategories", "eligibilities", "results"],
+    subcategorySubheading: defaultSubheading,
+    sortAlgoliaSubcategoryRefinements: true,
   },
 ];

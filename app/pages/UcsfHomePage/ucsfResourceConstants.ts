@@ -42,4 +42,11 @@ export const UCSF_RESOURCES: ResourceItem[] = [
     checked: false,
     slug: "ucsf-immigration-resources",
   },
+  {
+    id: "2000006",
+    name: "Intimate Partner Violence",
+    icon: "care",
+    checked: false,
+    slug: "ucsf-partner-violence-resources",
+  },
 ];

@@ -97,8 +97,7 @@ export const ServiceDiscoveryResults = ({
       <InnerServiceDiscoveryResults
         eligibilities={eligibilities}
         subcategories={subcategories}
-        categoryName={category.name}
-        categorySlug={categorySlug}
+        category={category}
         algoliaCategoryName={parentCategory.name}
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
@@ -118,8 +117,7 @@ export const ServiceDiscoveryResults = ({
 const InnerServiceDiscoveryResults = ({
   eligibilities,
   subcategories,
-  categoryName,
-  categorySlug,
+  category,
   algoliaCategoryName,
   searchState,
   onSearchStateChange,
@@ -131,8 +129,7 @@ const InnerServiceDiscoveryResults = ({
 }: {
   eligibilities: object[];
   subcategories: Category[];
-  categoryName: string;
-  categorySlug: string;
+  category: ServiceCategory;
   algoliaCategoryName: string;
   searchState: SearchState;
   onSearchStateChange: (nextSearchState: SearchState) => void;
@@ -143,6 +140,12 @@ const InnerServiceDiscoveryResults = ({
   userLatLng: string;
 }) => {
   const subcategoryNames = subcategories.map((c) => c.name);
+  const {
+    name: categoryName,
+    slug: categorySlug,
+    id: categoryId,
+    sortAlgoliaSubcategoryRefinements,
+  } = category;
 
   return (
     <div className={styles.container}>
@@ -165,12 +168,16 @@ const InnerServiceDiscoveryResults = ({
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
-        <Configure
-          filters={`categories:'${algoliaCategoryName}'`}
-          aroundLatLng={userLatLng}
-          aroundRadius={searchRadius}
-          aroundPrecision={1600}
-        />
+        {category.disableGeoLocation ? (
+          <Configure filters={`categories:'${algoliaCategoryName}'`} />
+        ) : (
+          <Configure
+            filters={`categories:'${algoliaCategoryName}'`}
+            aroundLatLng={userLatLng}
+            aroundRadius={searchRadius}
+            aroundPrecision={1600}
+          />
+        )}
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}
@@ -180,10 +187,13 @@ const InnerServiceDiscoveryResults = ({
             categorySlug={categorySlug}
             subcategories={subcategories}
             subcategoryNames={subcategoryNames}
+            sortAlgoliaSubcategoryRefinements={
+              sortAlgoliaSubcategoryRefinements
+            }
           />
 
           <div className={styles.results}>
-            <SearchResults expandList={expandList} />
+            <SearchResults expandList={expandList} categoryId={categoryId} />
           </div>
         </div>
       </InstantSearch>
