@@ -52,7 +52,7 @@ export const EligibilityRefinements = ({
 
   return (
     <>
-      <div className={styles.refinementsBox_title}>Client Identity</div>
+      <div className={styles.refinementsBox_title}>Patient Identity</div>
       <ol className={styles.refinementsLabels}>
         {resourceEligibilityGroups.map((eligibilityGroup) => (
           <li key={eligibilityGroup.label} className={styles.listContainer}>

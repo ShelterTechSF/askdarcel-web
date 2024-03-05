@@ -45,6 +45,7 @@ interface WhiteLabelSite {
   intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
+  refinementListLimit: number;
   showBanner: boolean;
   showBreakingNews: boolean;
   showClinicianAction: boolean;
@@ -106,6 +107,7 @@ services and re-entry programs.`,
   intercom: false,
   logoLinkDestination: "/",
   navLogoStyle: styles.siteNav,
+  refinementListLimit: 10,
   showPrintResultsBtn: true,
   showBanner: false,
   showBreakingNews: false,
@@ -216,6 +218,13 @@ Department, and UCSF School of Medicine in partnership with SF Service Guide.`,
   enabledTranslations: [],
   homePageComponent: "UcsfHomePage",
   navLogoStyle: styles.navLogoUcsf,
+  /*
+    This number must be high to ensure that all associated refinements are returned. We filter out all
+    refinements that are not on the UcsfEligiblitiesMap, as well as all subcategory refinements
+    that are not returned by the API's subcategories endpoint. Thus, there is no risk of displaying
+    100 refinements to the user, since we use static lists to filter them down.
+  */
+  refinementListLimit: 100,
   showClinicianAction: true,
   showHandoutsIcon: true,
   showHeaderQrCode: true,

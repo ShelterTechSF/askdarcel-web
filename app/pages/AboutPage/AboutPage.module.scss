@@ -60,9 +60,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
   li {
     flex-shrink: 0;
     margin: 20px;
+  }
+
+  img {
+    max-height: 84px;
   }
 }
 

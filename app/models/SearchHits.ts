@@ -37,8 +37,11 @@ export type SearchHit = ServiceHit | OrganizationHit;
  * Transform Algolia search hits such that each hit has a recurringSchedule that
  * uses the time helper classes.
  */
-export const transformHits = (hits: SearchHit[]) =>
-  hits.flatMap((hit) => {
+export const transformHits = (
+  hits: SearchHit[],
+  sortBy24HourAvailability: boolean = false
+) => {
+  const hitsWithRecurringSchedule = hits.flatMap((hit) => {
     switch (hit.type) {
       case "resource":
         return {
@@ -62,3 +65,28 @@ export const transformHits = (hits: SearchHit[]) =>
         return [];
     }
   });
+
+  // Some of our tile category results that may provide more urgent services need to be sorted
+  // by 24 hour availability. Moreover, in some cases, certain services, that have "24/7" in
+  // their name should be prioritized as well. Thus, this logic orders hits by 24/7
+  // availability, and if there are ties, where both services in the comparison are open 24/7,
+  // the logic breaks the tie by alphabetical rank – this is a heuristic of sorts
+  // to prioritize services with names beginning with the numeric "24".
+  return sortBy24HourAvailability
+    ? hitsWithRecurringSchedule.sort((a, b) => {
+        const aIsOpen24_7 =
+          a.recurringSchedule && a.recurringSchedule.isOpen24_7();
+        const bIsOpen24_7 =
+          b.recurringSchedule && b.recurringSchedule.isOpen24_7();
+        if (aIsOpen24_7 === bIsOpen24_7) {
+          return a.name <= b.name ? -1 : 1;
+        }
+
+        if (aIsOpen24_7) {
+          return -1;
+        }
+
+        return 1;
+      })
+    : hitsWithRecurringSchedule;
+};
