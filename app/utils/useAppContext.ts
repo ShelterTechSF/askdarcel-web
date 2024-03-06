@@ -2,8 +2,27 @@ import { createContext, useContext } from "react";
 import { WebAuth } from "auth0-js";
 import { GeoCoordinates } from "./location";
 
-export const AppContext = createContext({
-  userLocation: <GeoCoordinates | null>null,
+interface AuthState {
+  isAuthenticated: boolean;
+  user: {
+    id: string;
+    email: string;
+  };
+  accessTokenObject: {
+    expiresAt: Date;
+    token: string;
+  };
+}
+
+interface Context {
+  userLocation: GeoCoordinates | null;
+  authState: AuthState;
+  setAuthState: (state: AuthState) => void;
+  authClient: WebAuth | null;
+}
+
+export const AppContext = createContext<Context>({
+  userLocation: null,
   authState: {
     isAuthenticated: false,
     user: {
@@ -15,8 +34,8 @@ export const AppContext = createContext({
       token: "",
     },
   },
-  setAuthState: <(state: any) => void>(<unknown>null),
-  authClient: <WebAuth | null>null,
+  setAuthState: () => {},
+  authClient: null,
 });
 
 export const useAppContext = () => useContext(AppContext);
