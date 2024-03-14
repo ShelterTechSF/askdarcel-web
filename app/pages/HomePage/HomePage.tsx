@@ -84,7 +84,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     getResourceCount().then((count: number) => setResourceCount(count));
-  });
+  }, []);
 
   useEffect(() => {
     // TODO: This effect should be moved to the case worker UI homepage when that page is created

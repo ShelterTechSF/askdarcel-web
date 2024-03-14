@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { WebAuth } from "auth0-js";
 import { GeoCoordinates } from "./location";
 
-interface AuthState {
+export interface AuthState {
   isAuthenticated: boolean;
   user: {
     id: string;

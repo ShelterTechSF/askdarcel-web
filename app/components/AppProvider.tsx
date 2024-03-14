@@ -3,20 +3,8 @@ import auth0, { Auth0Result } from "auth0-js";
 import * as Sentry from "@sentry/browser";
 import * as SessionCacher from "utils/SessionCacher";
 import * as AuthService from "utils/AuthService";
-import { AppContext, GeoCoordinates } from "utils";
+import { AuthState, AppContext, GeoCoordinates } from "utils";
 import config from "../config";
-
-export interface AuthState {
-  isAuthenticated: boolean;
-  user: {
-    id: string;
-    email: string;
-  };
-  accessTokenObject: {
-    token: string;
-    expiresAt: Date;
-  };
-}
 
 export interface UserSignUpData {
   email: string;
@@ -90,12 +78,9 @@ export const AppProvider = ({
     )
   ) {
     AuthService.refreshAccessToken(contextValue.authClient)
-      .then((result: unknown) => {
-        const authResult = result as Auth0Result;
-        if (
-          authResult.accessToken &&
-          typeof authResult.expiresIn !== "undefined"
-        ) {
+      .then((result: Auth0Result) => {
+        const authResult = result;
+        if (authResult.accessToken && authResult.expiresIn !== undefined) {
           setAuthState({
             ...authState,
             accessTokenObject: {

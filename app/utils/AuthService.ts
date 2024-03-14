@@ -1,8 +1,9 @@
 import type { WebAuth, Auth0Result } from "auth0-js";
-import { defaultAuthObject } from "components/AppProvider";
 import { post } from "utils/DataService";
 import * as SessionCacher from "utils";
-import type { AuthState, UserSignUpData } from "components/AppProvider";
+import { defaultAuthObject } from "components/AppProvider";
+import type { UserSignUpData } from "components/AppProvider";
+import type { AuthState } from "utils";
 import config from "../config";
 
 /**
@@ -22,7 +23,7 @@ export const calculateSessionExpiration = (secondsUntilExpiration: number) => {
 export const initializeUserSession = (
   hash: string,
   authClient: WebAuth,
-  setAuthState: any
+  setAuthState: (a: AuthState) => void
 ) => {
   authClient.parseHash({ hash }, (err, authResult) => {
     if (err) {
@@ -39,7 +40,9 @@ export const initializeUserSession = (
         },
         accessTokenObject: {
           token: accessToken,
-          expiresAt: expiresIn ? calculateSessionExpiration(expiresIn) : null,
+          expiresAt: expiresIn
+            ? calculateSessionExpiration(expiresIn)
+            : new Date(1970, 0, 1),
         },
       };
 
@@ -61,8 +64,9 @@ export const completeUserSignup = (
   SessionCacher.setUserSignUpData({ email, name, organization });
 };
 
-// This method initiates the log-in/sign-up process by sending a code
-// to the user's inbox.
+/** This method initiates the log-in/sign-up process by sending a code
+    to the user's inbox.
+*/
 export const passwordlessStart = (authClient: WebAuth, email: string) => {
   return new Promise((resolve, reject) => {
     authClient.passwordlessStart(
@@ -83,8 +87,11 @@ export const passwordlessStart = (authClient: WebAuth, email: string) => {
   });
 };
 
-// This method passes the user's verification code to Auth0's server, which
-// completes their sign-up/log-in action
+/** This method passes the user's verification code to Auth0's server, which
+    completes their sign-up/log-in action. Upon success, the Auth0 library
+    will initiate a redirect, which is why this function doesn't have a
+    meaningful return value.
+*/
 export const passwordlessLogin = (
   authClient: WebAuth,
   email: string,
@@ -121,7 +128,9 @@ export const hasAccessTokenExpired = (tokenExpiration: Date) => {
   return !tokenExpiration || new Date(tokenExpiration) < new Date();
 };
 
-export const refreshAccessToken = (authClient: WebAuth) => {
+export const refreshAccessToken = (
+  authClient: WebAuth
+): Promise<Auth0Result> => {
   return new Promise((resolve, reject) => {
     authClient.checkSession({}, (err, authResult: Auth0Result) => {
       if (err) {
@@ -138,19 +147,9 @@ export const saveUser = (
   userExternalId: string,
   authToken: string
 ) => {
-  return new Promise((resolve, reject) => {
-    const response = post(
-      "/api/users",
-      { ...userSignUpData, user_external_id: userExternalId },
-      { Authorization: `Bearer ${authToken}` }
-    );
-    response.then(
-      (result) => {
-        resolve(result);
-      },
-      (error) => {
-        reject(error);
-      }
-    );
-  });
+  return post(
+    "/api/users",
+    { ...userSignUpData, user_external_id: userExternalId },
+    { Authorization: `Bearer ${authToken}` }
+  );
 };
