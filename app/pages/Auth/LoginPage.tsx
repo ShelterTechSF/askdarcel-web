@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { WebAuth } from "auth0-js";
 import { Button } from "components/ui/inline/Button/Button";
-import { useAppContext, AuthService } from "utils";
+import * as AuthService from "utils/AuthService";
+import { useAppContext } from "utils";
 
 import { VerificationModal } from "./VerificationModal";
 

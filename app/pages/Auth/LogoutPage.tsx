@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { WebAuth } from "auth0-js";
-import { useAppContext, AuthService } from "../../utils";
+import * as AuthService from "utils/AuthService";
+import { useAppContext } from "../../utils";
+
 import Config from "../../config";
 
 export const LogoutPage = () => {

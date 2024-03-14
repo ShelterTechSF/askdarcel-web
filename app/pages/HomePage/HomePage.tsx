@@ -5,11 +5,12 @@ import type { WebAuth } from "auth0-js";
 
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
+import * as AuthService from "utils/AuthService";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
-import { whiteLabel, useAppContext, AuthService } from "../../utils";
+import { whiteLabel, useAppContext } from "../../utils";
 
 const { showBreakingNews } = whiteLabel;
 

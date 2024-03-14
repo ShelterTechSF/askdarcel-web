@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react";
 import auth0, { Auth0Result } from "auth0-js";
 import * as Sentry from "@sentry/browser";
-import { AppContext, GeoCoordinates, SessionCacher, AuthService } from "utils";
+import * as SessionCacher from "utils/SessionCacher";
+import * as AuthService from "utils/AuthService";
+import { AppContext, GeoCoordinates } from "utils";
 import config from "../config";
 
 export interface AuthState {
