@@ -92,7 +92,6 @@ export const AppProvider = ({
 
   if (
     authObject &&
-    authObject.accessTokenObject.expiresAt &&
     AuthService.hasAccessTokenExpired(
       new Date(authObject.accessTokenObject.expiresAt)
     )
@@ -100,15 +99,19 @@ export const AppProvider = ({
     AuthService.refreshAccessToken(contextValue.authClient)
       .then((result: Auth0Result) => {
         const authResult = result;
-        if (authState && authResult.accessToken && authResult.expiresIn !== undefined) {
+        if (
+          authState &&
+          authResult.accessToken &&
+          authResult.expiresIn !== undefined
+        ) {
           setAuthState({
             ...authState,
             accessTokenObject: {
               token: authResult.accessToken,
               expiresAt: AuthService.calculateSessionExpiration(
                 authResult.expiresIn
-                ),
-              },
+              ),
+            },
           });
         } else {
           throw new Error("Token does not exist or is unexpected token");
