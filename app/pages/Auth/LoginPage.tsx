@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { WebAuth } from "auth0-js";
 import { Button } from "components/ui/inline/Button/Button";
-import * as AuthService from "utils/AuthService";
-import { useAppContext } from "utils";
+import { useAppContext, passwordlessLogin, passwordlessStart } from "utils";
 
 import { VerificationModal } from "./VerificationModal";
 
@@ -13,7 +12,6 @@ export const LoginPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const authClient = useAppContext().authClient as WebAuth;
-  const { passwordlessStart, passwordlessLogin } = AuthService;
 
   const logIn = (evt: React.SyntheticEvent) => {
     evt.preventDefault();

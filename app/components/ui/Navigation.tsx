@@ -99,7 +99,7 @@ const SiteLinks = () => {
           The designs are still forthcoming. For now, it serves as a basic log-out functionality for the purposes
           of development and testing.
       */}
-      {authState.isAuthenticated && (
+      {authState && (
         <li>
           <Link to="/log-out">Log Out</Link>
         </li>

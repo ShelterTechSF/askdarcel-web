@@ -1,5 +1,4 @@
-import type { UserSignUpData } from "components/AppProvider";
-import type { AuthState } from "utils";
+import type { AuthState, UserSignUpData } from "utils";
 
 /**
   This file provides methods to sync a user's auth state, which is managed by the AppProvider

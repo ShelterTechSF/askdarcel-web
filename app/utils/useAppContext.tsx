@@ -1,9 +1,15 @@
-import React, { useState, useMemo, useEffect } from "react";
-import auth0, { Auth0Result } from "auth0-js";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  createContext,
+  useContext,
+} from "react";
+import auth0, { Auth0Result, WebAuth } from "auth0-js";
 import * as Sentry from "@sentry/browser";
 import * as SessionCacher from "utils/SessionCacher";
 import * as AuthService from "utils/AuthService";
-import { AuthState, AppContext, GeoCoordinates } from "utils";
+import { GeoCoordinates } from "utils";
 import config from "../config";
 
 export interface UserSignUpData {
@@ -12,17 +18,40 @@ export interface UserSignUpData {
   organization: string | null;
 }
 
-export const defaultAuthObject: AuthState = {
-  isAuthenticated: false,
+export type AuthState = {
   user: {
-    id: "",
-    email: "",
-  },
+    id: string;
+    email: string;
+  };
   accessTokenObject: {
-    token: "",
-    expiresAt: new Date(1970, 0, 1),
-  },
-};
+    expiresAt: Date;
+    token: string;
+  };
+} | null;
+
+interface Context {
+  userLocation: GeoCoordinates | null;
+  authState: AuthState;
+  setAuthState: (state: AuthState) => void;
+  authClient: WebAuth | null;
+}
+
+export const AppContext = createContext<Context>({
+  userLocation: null,
+  authState: null,
+  setAuthState: () => {},
+  authClient: null,
+});
+
+export const useAppContext = () => useContext(AppContext);
+
+const authClient = new auth0.WebAuth({
+  audience: config.AUTH0_AUDIENCE,
+  clientID: config.AUTH0_CLIENT_ID,
+  domain: config.AUTH0_DOMAIN,
+  redirectUri: config.AUTH0_REDIRECT_URI,
+  responseType: "token id_token",
+});
 
 export const AppProvider = ({
   children,
@@ -31,8 +60,17 @@ export const AppProvider = ({
   children: React.ReactNode;
   userLocation: GeoCoordinates | null;
 }) => {
-  const authObject = SessionCacher.getAuthObject() ?? defaultAuthObject;
-  const [authState, setAuthState] = useState(authObject);
+  const authObject = SessionCacher.getAuthObject();
+  const [authState, setAuthState] = useState<AuthState>(authObject);
+  const contextValue = useMemo(() => {
+    return {
+      userLocation,
+      authState,
+      setAuthState,
+      authClient,
+    };
+  }, [authState, userLocation]);
+
   useEffect(() => {
     // This effect runs after any changes to the AppContext's authState and syncs the changes
     // to the authObject in sessionStorage.
@@ -40,10 +78,9 @@ export const AppProvider = ({
 
     // If the SessionCacher has userSignUpData object, that means a user has just been created
     // in Auth0 and a redirect has occurred. Therefore, we save the new user data to our database.
-    // The authState must also have propagated or else we won't have the token yet; thus the
-    // `authState.isAuthenticated` check
+    // The authState must also have propagated or else we won't have the token yet.
     const newUserData = SessionCacher.getUserSignUpData();
-    if (newUserData && authState.isAuthenticated) {
+    if (newUserData && authState) {
       SessionCacher.clearUserSignUpData();
       AuthService.saveUser(
         newUserData,
@@ -53,25 +90,8 @@ export const AppProvider = ({
     }
   }, [authState]);
 
-  const contextValue = useMemo(() => {
-    const authClient = new auth0.WebAuth({
-      audience: config.AUTH0_AUDIENCE,
-      clientID: config.AUTH0_CLIENT_ID,
-      domain: config.AUTH0_DOMAIN,
-      redirectUri: config.AUTH0_REDIRECT_URI,
-      responseType: "token id_token",
-    });
-
-    return {
-      userLocation,
-      authState,
-      setAuthState,
-      authClient,
-    };
-  }, [authState, userLocation]);
-
   if (
-    authObject.isAuthenticated &&
+    authObject &&
     authObject.accessTokenObject.expiresAt &&
     AuthService.hasAccessTokenExpired(
       new Date(authObject.accessTokenObject.expiresAt)
@@ -80,15 +100,15 @@ export const AppProvider = ({
     AuthService.refreshAccessToken(contextValue.authClient)
       .then((result: Auth0Result) => {
         const authResult = result;
-        if (authResult.accessToken && authResult.expiresIn !== undefined) {
+        if (authState && authResult.accessToken && authResult.expiresIn !== undefined) {
           setAuthState({
             ...authState,
             accessTokenObject: {
               token: authResult.accessToken,
               expiresAt: AuthService.calculateSessionExpiration(
                 authResult.expiresIn
-              ),
-            },
+                ),
+              },
           });
         } else {
           throw new Error("Token does not exist or is unexpected token");

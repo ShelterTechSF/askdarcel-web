@@ -1,9 +1,7 @@
 import type { WebAuth, Auth0Result } from "auth0-js";
 import { post } from "utils/DataService";
-import * as SessionCacher from "utils";
-import { defaultAuthObject } from "components/AppProvider";
-import type { UserSignUpData } from "components/AppProvider";
-import type { AuthState } from "utils";
+import type { AuthState, UserSignUpData } from "utils";
+import { setUserSignUpData } from "utils";
 import config from "../config";
 
 /**
@@ -33,7 +31,6 @@ export const initializeUserSession = (
     if (authResult?.accessToken) {
       const { accessToken, expiresIn, idTokenPayload } = authResult;
       const authObject = {
-        isAuthenticated: true,
         user: {
           email: idTokenPayload.email,
           id: idTokenPayload.sub,
@@ -61,7 +58,7 @@ export const completeUserSignup = (
 ) => {
   passwordlessLogin(authClient, email, verificationCode);
   // Store user sign up data, which will be saved to our backend after Auth0 success redirect
-  SessionCacher.setUserSignUpData({ email, name, organization });
+  setUserSignUpData({ email, name, organization });
 };
 
 /** This method initiates the log-in/sign-up process by sending a code
@@ -116,7 +113,7 @@ export const logout = (
   clientId: string,
   setAuthState: (state: AuthState) => void
 ) => {
-  setAuthState(defaultAuthObject);
+  setAuthState(null);
 
   authClient.logout({
     returnTo: config.AUTH0_REDIRECT_URI,

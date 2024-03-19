@@ -10,7 +10,7 @@ import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 
-import { GeoCoordinates, getLocation, whiteLabel } from "./utils";
+import { GeoCoordinates, getLocation, whiteLabel, AppProvider } from "./utils";
 import {
   Banner,
   HamburgerMenu,
@@ -19,7 +19,6 @@ import {
   PopupMessageProp,
   UserWay,
 } from "./components/ui";
-import { AppProvider } from "./components/AppProvider";
 
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
