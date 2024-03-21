@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
-import type { WebAuth } from "auth0-js";
 
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
