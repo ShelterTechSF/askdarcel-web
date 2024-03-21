@@ -90,8 +90,7 @@ const SiteLogo = () =>
   );
 
 const SiteLinks = () => {
-  const context = useAppContext();
-  const { authState } = context;
+  const { authState } = useAppContext();
 
   return (
     <ul className={styles.navRight}>

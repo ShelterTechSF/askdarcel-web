@@ -33,17 +33,8 @@ interface Context {
   userLocation: GeoCoordinates | null;
   authState: AuthState;
   setAuthState: (state: AuthState) => void;
-  authClient: WebAuth | null;
+  authClient: WebAuth;
 }
-
-export const AppContext = createContext<Context>({
-  userLocation: null,
-  authState: null,
-  setAuthState: () => {},
-  authClient: null,
-});
-
-export const useAppContext = () => useContext(AppContext);
 
 const authClient = new auth0.WebAuth({
   audience: config.AUTH0_AUDIENCE,
@@ -52,6 +43,15 @@ const authClient = new auth0.WebAuth({
   redirectUri: config.AUTH0_REDIRECT_URI,
   responseType: "token id_token",
 });
+
+export const AppContext = createContext<Context>({
+  userLocation: null,
+  authState: null,
+  setAuthState: () => {},
+  authClient,
+});
+
+export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = ({
   children,

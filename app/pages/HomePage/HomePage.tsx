@@ -93,7 +93,7 @@ export const HomePage = () => {
 
     AuthService.initializeUserSession(
       window.location.hash,
-      authClient as WebAuth,
+      authClient,
       setAuthState
     );
 

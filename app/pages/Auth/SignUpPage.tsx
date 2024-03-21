@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { WebAuth } from "auth0-js";
 import { Link } from "react-router-dom";
 import { Button } from "components/ui/inline/Button/Button";
 import * as AuthService from "utils/AuthService";
@@ -14,7 +13,7 @@ export const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
-  const authClient = useAppContext().authClient as WebAuth;
+  const { authClient } = useAppContext();
   const { passwordlessStart, completeUserSignup } = AuthService;
 
   const signUp = (evt: React.SyntheticEvent) => {
