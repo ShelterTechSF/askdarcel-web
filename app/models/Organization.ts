@@ -51,7 +51,7 @@ export interface OrganizationAction {
  * into a nicer-to-use data model of RecurringSchedules.
  */
 export const fetchOrganization = (id: string): Promise<Organization> =>
-  get(`/api/resources/${id}`).then(
+  get(`/api/v2/resources/${id}`).then(
     ({ resource }: { resource: Organization }) => {
       const recurringSchedule = parseAPISchedule(resource.schedule);
       return {
