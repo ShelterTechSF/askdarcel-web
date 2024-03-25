@@ -26,7 +26,7 @@ export const SignUpPage = () => {
       (error) => {
         if (error) {
           // TODO: Inform user of the error?
-          Sentry.captureException(err);
+          Sentry.captureException(error);
         }
       }
     );
