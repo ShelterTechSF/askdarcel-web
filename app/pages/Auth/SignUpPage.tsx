@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as Sentry from "@sentry/browser";
 import { Link } from "react-router-dom";
 import { Button } from "components/ui/inline/Button/Button";
 import * as AuthService from "utils/AuthService";
@@ -24,7 +25,8 @@ export const SignUpPage = () => {
       },
       (error) => {
         if (error) {
-          // TODO: Handle errors
+          // TODO: Inform user of the error?
+          Sentry.captureException(err);
         }
       }
     );

@@ -1,4 +1,5 @@
 import type { WebAuth, Auth0Result } from "auth0-js";
+import * as Sentry from "@sentry/browser";
 import { post } from "utils/DataService";
 import type { AuthState, UserSignUpData } from "utils";
 import { setUserSignUpData } from "utils";
@@ -25,7 +26,8 @@ export const initializeUserSession = (
 ) => {
   authClient.parseHash({ hash }, (err, authResult) => {
     if (err) {
-      // TODO: Handle errors
+      // TODO: Inform user of the error?
+      Sentry.captureException(err);
     }
 
     if (authResult?.accessToken) {
@@ -39,7 +41,7 @@ export const initializeUserSession = (
           token: accessToken,
           expiresAt: expiresIn
             ? calculateSessionExpiration(expiresIn)
-            : new Date(1970, 0, 1),
+            : new Date(1970, 1, 1),
         },
       };
 
@@ -102,7 +104,8 @@ export const passwordlessLogin = (
     },
     (err) => {
       if (err) {
-        // TODO: Handle errors
+        // TODO: Inform user of the error?
+        Sentry.captureException(err);
       }
     }
   );
@@ -122,7 +125,7 @@ export const logout = (
 };
 
 export const hasAccessTokenExpired = (tokenExpiration: Date) => {
-  return !tokenExpiration || new Date(tokenExpiration) < new Date();
+  return !tokenExpiration || tokenExpiration < new Date();
 };
 
 export const refreshAccessToken = (
