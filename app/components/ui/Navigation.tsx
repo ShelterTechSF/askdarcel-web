@@ -2,8 +2,8 @@ import React, { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import cn from "classnames";
 import qs from "qs";
+import { useAppContext, whiteLabel } from "utils";
 import Translate from "./Translate";
-import whiteLabel from "../../utils/whitelabel";
 import styles from "./Navigation.module.scss";
 
 const {
@@ -89,46 +89,59 @@ const SiteLogo = () =>
     </Link>
   );
 
-const SiteLinks = () => (
-  <ul className={styles.navRight}>
-    <li>
-      <Link to="/about">About</Link>
-    </li>
-    <li>
-      <a
-        href="https://help.sfserviceguide.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        FAQ
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://help.sfserviceguide.org/en/collections/1719243-contact-us"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Contact Us
-      </a>
-    </li>
-    {showReportCrisis && (
+const SiteLinks = () => {
+  const { authState } = useAppContext();
+
+  return (
+    <ul className={styles.navRight}>
+      {/* Todo: This will eventually be replaced by a user icon with a dropdown menu of account related options.
+          The designs are still forthcoming. For now, it serves as a basic log-out functionality for the purposes
+          of development and testing.
+      */}
+      {authState && (
+        <li>
+          <Link to="/log-out">Log Out</Link>
+        </li>
+      )}
+      <li>
+        <Link to="/about">About</Link>
+      </li>
       <li>
         <a
-          type="button"
-          aria-label="report street crisis"
-          href="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
-          className={styles.buttonLink}
-          target="blank"
+          href="https://help.sfserviceguide.org"
+          target="_blank"
           rel="noopener noreferrer"
         >
-          Report Street Crisis
+          FAQ
         </a>
       </li>
-    )}
-    <Translate />
-  </ul>
-);
+      <li>
+        <a
+          href="https://help.sfserviceguide.org/en/collections/1719243-contact-us"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact Us
+        </a>
+      </li>
+      {showReportCrisis && (
+        <li>
+          <a
+            type="button"
+            aria-label="report street crisis"
+            href="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
+            className={styles.buttonLink}
+            target="blank"
+            rel="noopener noreferrer"
+          >
+            Report Street Crisis
+          </a>
+        </li>
+      )}
+      <Translate />
+    </ul>
+  );
+};
 
 const SiteSearch = ({
   query,

@@ -74,6 +74,7 @@ module.exports = {
         "@typescript-eslint/require-await": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/unbound-method": "off",
+        "arrow-body-style": "off",
         "no-unused-expressions": "off",
         "no-unused-vars": "off",
         "no-use-before-define": "off",

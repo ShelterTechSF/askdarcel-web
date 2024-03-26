@@ -10,7 +10,7 @@ import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 
-import { AppContext, GeoCoordinates, getLocation, whiteLabel } from "./utils";
+import { GeoCoordinates, getLocation, whiteLabel, AppProvider } from "./utils";
 import {
   Banner,
   HamburgerMenu,
@@ -19,6 +19,7 @@ import {
   PopupMessageProp,
   UserWay,
 } from "./components/ui";
+
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
 
@@ -43,6 +44,9 @@ import OrganizationEditPage from "./pages/OrganizationEditPage";
 import { EditBreakingNewsPage } from "./pages/EditBreakingNewsPage";
 import { ServiceDiscoveryForm } from "./pages/ServiceDiscoveryForm";
 import { ServiceDiscoveryResults } from "./pages/ServiceDiscoveryResults";
+import { LoginPage } from "./pages/Auth/LoginPage";
+import { SignUpPage } from "./pages/Auth/SignUpPage";
+import { LogoutPage } from "./pages/Auth/LogoutPage";
 
 import styles from "./App.module.scss";
 
@@ -99,8 +103,7 @@ export const App = () => {
 
   return (
     <div id={outerContainerId} className={styles.outerContainer}>
-      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <AppContext.Provider value={{ userLocation }}>
+      <AppProvider userLocation={userLocation}>
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
@@ -144,7 +147,6 @@ export const App = () => {
               />
               <Route exact path="/about" component={AboutPage} />
               <Route exact path="/demo/listing" component={ListingDebugPage} />
-
               {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
                 step will be interpreted as an ID and will thus break the OrganizationEditPage */}
               <Route
@@ -219,6 +221,9 @@ export const App = () => {
                 path="/breaking-news/edit"
                 component={EditBreakingNewsPage}
               />
+              <Route exact path="/log-in" component={LoginPage} />
+              <Route exact path="/sign-up" component={SignUpPage} />
+              <Route exact path="/log-out" component={LogoutPage} />
 
               {/* UCSF white label paths */}
               <Route
@@ -226,7 +231,6 @@ export const App = () => {
                 path="/find-services/:selectedResourceSlug"
                 component={UcsfDiscoveryForm}
               />
-
               {/* Legacy redirects */}
               <Redirect path="/resource/new" to="/organizations/new" />
               <Route
@@ -239,13 +243,12 @@ export const App = () => {
                 path="/resource"
                 component={RedirectToOrganizations}
               />
-
               <Redirect to="/" />
             </Switch>
           </div>
           {popUpMessage && <PopUpMessage popUpMessage={popUpMessage} />}
         </div>
-      </AppContext.Provider>
+      </AppProvider>
     </div>
   );
 };
