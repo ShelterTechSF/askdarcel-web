@@ -39,7 +39,7 @@ interface Context {
 const authClient = new auth0.WebAuth({
   audience: config.AUTH0_AUDIENCE,
   clientID: config.AUTH0_CLIENT_ID,
-  domain: "staging-login.sfserviceguide.org",
+  domain: config.AUTH0_DOMAIN,
   redirectUri: config.AUTH0_REDIRECT_URI,
   responseType: "token id_token",
 });
