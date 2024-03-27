@@ -53,21 +53,6 @@ server {
 
     location / {
         # Respond to the OPTIONS preflight request
-        if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'https://qaone.sfserviceguide.org';
-            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-            add_header 'Access-Control-Allow-Headers' 'X-Requested-With, Content-Type, Authorization';
-            add_header 'Access-Control-Allow-Credentials' 'true';
-            add_header 'Content-Length' '0';
-            add_header 'Content-Type' 'text/plain; charset=UTF-8';
-            return 204;
-        }
-
-         # Add headers to enable CORS
-        add_header 'Access-Control-Allow-Origin' 'https://qaone.sfserviceguide.org' always;
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
-        add_header 'Access-Control-Allow-Headers' 'X-Requested-With, Content-Type, Authorization' always;
-        add_header 'Access-Control-Allow-Credentials' 'true' always;
 
         try_files /index.html =404;
     }
