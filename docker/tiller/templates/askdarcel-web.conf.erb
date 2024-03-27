@@ -4,12 +4,6 @@ server {
 
     root /app/askdarcel;
 
-    # Add headers to enable CORS
-    add_header 'Access-Control-Allow-Origin' 'https://qaone.sfserviceguide.org' always;
-    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
-    add_header 'Access-Control-Allow-Headers' 'X-Requested-With, Content-Type, Authorization' always;
-    add_header 'Access-Control-Allow-Credentials' 'true' always;
-
     location ~ /api-docs {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -87,6 +81,12 @@ server {
             add_header 'Content-Type' 'text/plain; charset=UTF-8';
             return 204;
         }
+
+        # Add headers to enable CORS
+        add_header 'Access-Control-Allow-Origin' 'https://qaone.sfserviceguide.org' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'X-Requested-With, Content-Type, Authorization' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
 
         try_files /index.html =404;
     }
