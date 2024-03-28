@@ -38,6 +38,13 @@
   }
 }
 
+.breaking-news-form-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+  gap: 1em;
+}
+
 .breaking-news-footer {
   display: flex;
   justify-content: center;
@@ -46,4 +53,27 @@
 
 .labelSubtext {
   color: $color-grey5;
+}
+
+.breaking-news-status-badge {
+  min-width: 2em;
+  padding: 0.5em;
+  border-radius: 5%;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.breaking-news-scheduled-status {
+  color: white;
+  background-color: $color-status-amber;
+}
+
+.breaking-news-active-status {
+  color: white;
+  background-color: $color-status-green;
+}
+
+.breaking-news-expired-status {
+  color: white;
+  background-color: $color-status-red;
 }

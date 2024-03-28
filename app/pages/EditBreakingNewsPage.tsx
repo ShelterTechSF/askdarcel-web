@@ -11,18 +11,25 @@ export const EditBreakingNewsPage = () => {
   >([]);
   useEffect(() => {
     dataService.get("/api/news_articles").then(({ news_articles }) => {
-      setBreakingNewsArticles(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        news_articles.map((article: NewsArticle) => ({
-          ...article,
-          effective_date: article.effective_date
-            ? formatDate(article.effective_date)
-            : "",
-          expiration_date: article.expiration_date
-            ? formatDate(article.expiration_date)
-            : "",
-        }))
-      );
+      const sortedArticles = news_articles.map((article: NewsArticle) => ({
+        ...article,
+        effective_date: article.effective_date
+          ? formatDate(article.effective_date)
+          : "",
+        expiration_date: article.expiration_date
+          ? formatDate(article.expiration_date)
+          : "",
+      }));
+
+      sortedArticles.sort((a, b) => {
+        const statusOrder = ["Scheduled", "Active", "Expired"];
+        const statusA = articleStatus(a).props.children;
+        const statusB = articleStatus(b).props.children;
+
+        return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+      });
+
+      setBreakingNewsArticles(sortedArticles);
     });
   }, []);
 
@@ -46,29 +53,60 @@ export const EditBreakingNewsPage = () => {
     ]);
   };
 
-  const onSave = (articleId: string) => {
-    const article = breakingNewsArticles.find(
-      ({ id }: any) => id === articleId
+  const articleStatus = (article: NewsArticle): JSX.Element | null => {
+    const today = new Date();
+    const isEffective =
+      !article.effective_date || new Date(article.effective_date) <= today;
+    const isNotExpired =
+      !article.expiration_date || new Date(article.expiration_date) > today;
+
+    const getStatusClassName = () => {
+      if (isEffective && isNotExpired) {
+        return "breaking-news-active-status";
+      } else if (!isEffective && isNotExpired) {
+        return "breaking-news-scheduled-status";
+      } else {
+        return "breaking-news-expired-status";
+      }
+    };
+
+    return (
+      <div className={`breaking-news-status-badge ${getStatusClassName()}`}>
+        {isEffective && isNotExpired
+          ? "Active"
+          : isNotExpired
+          ? "Scheduled"
+          : "Expired"}
+      </div>
     );
+  };
+
+  const onSave = (index: number) => {
+    const articleFromState = breakingNewsArticles[index];
+    const articleId = articleFromState.id;
     const route = `/api/news_articles/${articleId ?? ""}`;
 
     if (articleId) {
-      dataService.put(route, article);
+      dataService.put(route, articleFromState);
+      alert(`Article "${articleFromState.headline}" has been updated!`);
     } else {
-      dataService.post(route, article);
+      dataService.post(route, articleFromState);
+      alert(`Article "${articleFromState.headline}" has been created!`);
     }
   };
 
   const onDelete = (articleId: string, index: number) => {
-    const updatedBreakingNewsArticles = [...breakingNewsArticles];
-    updatedBreakingNewsArticles.splice(index, 1);
+    if (window.confirm("Are you sure you want to delete this article?")) {
+      const updatedBreakingNewsArticles = [...breakingNewsArticles];
+      updatedBreakingNewsArticles.splice(index, 1);
 
-    if (articleId) {
-      dataService.APIDelete(`/api/news_articles/${articleId}`);
-      // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
+      if (articleId) {
+        dataService.APIDelete(`/api/news_articles/${articleId}`);
+        // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
+      }
+
+      setBreakingNewsArticles(updatedBreakingNewsArticles);
     }
-
-    setBreakingNewsArticles(updatedBreakingNewsArticles);
   };
 
   const onFieldChange = (articleId: string, { target }: any) => {
@@ -92,15 +130,8 @@ export const EditBreakingNewsPage = () => {
     <form className="form" key={article.id}>
       <div className="form-header">
         <h2>{`Breaking News Article #${index + 1}`}</h2>
-        <button type="button" onClick={() => onSave(article.id)}>
-          <RiSave3Line />
-          Save
-        </button>
-        <button type="button" onClick={() => onDelete(article.id, index)}>
-          <RiDeleteBin5Line />
-          Delete
-        </button>
       </div>
+      <div>{articleStatus(article)}</div>
       <label>
         Headline
         <input
@@ -165,6 +196,16 @@ export const EditBreakingNewsPage = () => {
           onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
+      <div className="breaking-news-form-buttons">
+        <button type="button" onClick={() => onSave(index)}>
+          <RiSave3Line />
+          Save
+        </button>
+        <button type="button" onClick={() => onDelete(article.id, index)}>
+          <RiDeleteBin5Line />
+          Delete
+        </button>
+      </div>
     </form>
   );
 
