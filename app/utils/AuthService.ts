@@ -19,10 +19,10 @@ export const calculateSessionExpiration = (secondsUntilExpiration: number) => {
 export const initializeUserSession = (
   hash: string,
   authClient: WebAuth,
-  setAuthState: (a: AuthState) => void,
+  setAuthState: (a: AuthState) => void
 ) => {
   const promise = new Promise((resolve, reject) => {
-      authClient.parseHash({ hash }, (err, authResult) => {
+    authClient.parseHash({ hash }, (err, authResult) => {
       if (err) {
         Sentry.captureException(err);
         reject(err);

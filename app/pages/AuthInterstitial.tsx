@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import * as AuthService from "utils/AuthService";
 import { useAppContext } from "utils";
@@ -14,11 +14,10 @@ export const AuthInterstitial = () => {
       return;
     }
 
-
     AuthService.initializeUserSession(
       window.location.hash,
       authClient,
-      setAuthState,
+      setAuthState
     ).then(() => {
       history.push("navigator-dashboard");
     });
@@ -26,8 +25,8 @@ export const AuthInterstitial = () => {
 
   return (
     <div>
-      <Loader/>
+      <Loader />
       Preparing your dashboard...
     </div>
   );
-}
+};

@@ -1,11 +1,6 @@
-
-import React, { useState } from "react";
+import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import {
-  whiteLabel,
-  ProtectedRoute,
-  useAppContext,
-} from "utils";
+import { whiteLabel, ProtectedRoute, useAppContext } from "utils";
 
 import { AuthInterstitial } from "pages/AuthInterstitial";
 import { HomePage } from "pages/HomePage";
@@ -35,16 +30,13 @@ import { SignUpPage } from "pages/Auth/SignUpPage";
 import { LogoutPage } from "pages/Auth/LogoutPage";
 import { PopupMessageProp } from "components/ui";
 
-const {
-  homePageComponent,
-} = whiteLabel;
+const { homePageComponent } = whiteLabel;
 
-export const Router = () => {
-  const [, setPopUpMessage] = useState<PopupMessageProp>({
-    message: "",
-    visible: false,
-    type: "success",
-  });
+export const Router = ({
+  setPopUpMessage,
+}: {
+  setPopUpMessage: (msg: PopupMessageProp) => void;
+}) => {
   const { authState } = useAppContext();
 
   const homePageDictionary = {

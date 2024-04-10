@@ -9,10 +9,11 @@ export const NavigatorDashboard = () => {
         <p className={styles.blurb}>
           Please use the search bar to find specific resources for the homeless
           individuals you are assisting. You can enter keywords, such as
-          &ldquo;shelter,&ldquo; &ldquo;food assistance,&ldquo; or &ldquo;employment support,&ldquo; to discover
-          relevant programs and services.
+          &ldquo;shelter,&ldquo; &ldquo;food assistance,&ldquo; or
+          &ldquo;employment support,&ldquo; to discover relevant programs and
+          services.
         </p>
       </div>
     </div>
   );
-}
+};

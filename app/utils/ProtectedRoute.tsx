@@ -8,7 +8,8 @@ import {
 
 interface ProtectedRouteProps extends RouteProps {
   // The type here is copied from the react-router component typing in react-router/index.d.ts
-  component: React.ComponentType<RouteComponentProps<any>>
+  component:
+    | React.ComponentType<RouteComponentProps<any>>
     | React.ComponentType<any>;
   isAuthenticated: boolean;
 }

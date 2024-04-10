@@ -8,9 +8,15 @@ import ReactGA_4 from "react-ga4";
 
 import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import { GeoCoordinates, getLocation, whiteLabel, AppProvider, Router } from "./utils";
+import {
+  GeoCoordinates,
+  getLocation,
+  whiteLabel,
+  AppProvider,
+  Router,
+} from "./utils";
 import {
   Banner,
   HamburgerMenu,
@@ -25,21 +31,15 @@ import MetaImage from "./assets/img/sfsg-preview.png";
 
 import styles from "./App.module.scss";
 
-const {
-  intercom,
-  showBanner,
-  showSearch,
-  siteUrl,
-  title,
-  userWay,
-} = whiteLabel;
+const { intercom, showBanner, showSearch, siteUrl, title, userWay } =
+  whiteLabel;
 const outerContainerId = "outer-container";
 const pageWrapId = "page-wrap";
 
 export const App = () => {
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [popUpMessage,] = useState<PopupMessageProp>({
+  const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({
     message: "",
     visible: false,
     type: "success",
@@ -108,7 +108,7 @@ export const App = () => {
           />
           {showBanner && <Banner />}
           <div className="container">
-            <Router/>
+            <Router setPopUpMessage={setPopUpMessage} />
           </div>
           {popUpMessage && <PopUpMessage popUpMessage={popUpMessage} />}
         </div>
