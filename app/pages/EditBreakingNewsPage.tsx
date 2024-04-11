@@ -5,32 +5,40 @@ import { NewsArticle } from "models";
 import * as dataService from "../utils/DataService";
 import "./EditBreakingNewsPage.scss";
 
+const statusOrder = ["Scheduled", "Active", "Expired"] as const;
+
+// Extract the literal types of the elements from the array above
+type ArticleStatus = (typeof statusOrder)[number];
+
 export const EditBreakingNewsPage = () => {
   const [breakingNewsArticles, setBreakingNewsArticles] = useState<
     Array<NewsArticle>
   >([]);
   useEffect(() => {
-    dataService.get("/api/news_articles").then(({ news_articles }) => {
-      const sortedArticles = news_articles.map((article: NewsArticle) => ({
-        ...article,
-        effective_date: article.effective_date
-          ? formatDate(article.effective_date)
-          : "",
-        expiration_date: article.expiration_date
-          ? formatDate(article.expiration_date)
-          : "",
-      }));
+    dataService
+      .get("/api/news_articles")
+      .then(({ news_articles }: { news_articles: NewsArticle[] }) => {
+        const sortedArticles = news_articles.map<NewsArticle>(
+          (article: NewsArticle) => ({
+            ...article,
+            effective_date: article.effective_date
+              ? formatDate(article.effective_date)
+              : "",
+            expiration_date: article.expiration_date
+              ? formatDate(article.expiration_date)
+              : "",
+          })
+        );
 
-      sortedArticles.sort((a, b) => {
-        const statusOrder = ["Scheduled", "Active", "Expired"];
-        const statusA = articleStatus(a).props.children;
-        const statusB = articleStatus(b).props.children;
+        sortedArticles.sort((a, b) => {
+          const statusA = getArticleStatus(a);
+          const statusB = getArticleStatus(b);
 
-        return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+          return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+        });
+
+        setBreakingNewsArticles(sortedArticles);
       });
-
-      setBreakingNewsArticles(sortedArticles);
-    });
   }, []);
 
   // eslint-disable-next-line arrow-body-style
@@ -53,30 +61,46 @@ export const EditBreakingNewsPage = () => {
     ]);
   };
 
-  const articleStatus = (article: NewsArticle): JSX.Element | null => {
+  const getArticleStatus = (article: NewsArticle): ArticleStatus => {
     const today = new Date();
     const isEffective =
       !article.effective_date || new Date(article.effective_date) <= today;
     const isNotExpired =
       !article.expiration_date || new Date(article.expiration_date) > today;
 
-    const getStatusClassName = () => {
-      if (isEffective && isNotExpired) {
-        return "breaking-news-active-status";
-      } else if (!isEffective && isNotExpired) {
-        return "breaking-news-scheduled-status";
-      } else {
-        return "breaking-news-expired-status";
-      }
-    };
+    if (isEffective && isNotExpired) {
+      return "Active";
+    }
+    if (!isEffective && isNotExpired) {
+      return "Scheduled";
+    }
+    return "Expired";
+  };
+
+  const StatusBadge = ({
+    article,
+  }: {
+    article: NewsArticle;
+  }): JSX.Element | null => {
+    const status = getArticleStatus(article);
+    let statusClassName: string;
+    switch (status) {
+      case "Active":
+        statusClassName = "breaking-news-active-status";
+        break;
+      case "Scheduled":
+        statusClassName = "breaking-news-scheduled-status";
+        break;
+      case "Expired":
+        statusClassName = "breaking-news-expired-status";
+        break;
+      default:
+        throw new Error(`Unknown status: {status}`);
+    }
 
     return (
-      <div className={`breaking-news-status-badge ${getStatusClassName()}`}>
-        {isEffective && isNotExpired
-          ? "Active"
-          : isNotExpired
-          ? "Scheduled"
-          : "Expired"}
+      <div className={`breaking-news-status-badge ${statusClassName}`}>
+        {status}
       </div>
     );
   };
@@ -131,7 +155,9 @@ export const EditBreakingNewsPage = () => {
       <div className="form-header">
         <h2>{`Breaking News Article #${index + 1}`}</h2>
       </div>
-      <div>{articleStatus(article)}</div>
+      <div>
+        <StatusBadge article={article} />
+      </div>
       <label>
         Headline
         <input
