@@ -5,25 +5,40 @@ import { NewsArticle } from "models";
 import * as dataService from "../utils/DataService";
 import "./EditBreakingNewsPage.scss";
 
+const statusOrder = ["Scheduled", "Active", "Expired"] as const;
+
+// Extract the literal types of the elements from the array above
+type ArticleStatus = (typeof statusOrder)[number];
+
 export const EditBreakingNewsPage = () => {
   const [breakingNewsArticles, setBreakingNewsArticles] = useState<
     Array<NewsArticle>
   >([]);
   useEffect(() => {
-    dataService.get("/api/news_articles").then(({ news_articles }) => {
-      setBreakingNewsArticles(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        news_articles.map((article: NewsArticle) => ({
-          ...article,
-          effective_date: article.effective_date
-            ? formatDate(article.effective_date)
-            : "",
-          expiration_date: article.expiration_date
-            ? formatDate(article.expiration_date)
-            : "",
-        }))
-      );
-    });
+    dataService
+      .get("/api/news_articles")
+      .then(({ news_articles }: { news_articles: NewsArticle[] }) => {
+        const sortedArticles = news_articles.map<NewsArticle>(
+          (article: NewsArticle) => ({
+            ...article,
+            effective_date: article.effective_date
+              ? formatDate(article.effective_date)
+              : "",
+            expiration_date: article.expiration_date
+              ? formatDate(article.expiration_date)
+              : "",
+          })
+        );
+
+        sortedArticles.sort((a, b) => {
+          const statusA = getArticleStatus(a);
+          const statusB = getArticleStatus(b);
+
+          return statusOrder.indexOf(statusA) - statusOrder.indexOf(statusB);
+        });
+
+        setBreakingNewsArticles(sortedArticles);
+      });
   }, []);
 
   // eslint-disable-next-line arrow-body-style
@@ -46,29 +61,76 @@ export const EditBreakingNewsPage = () => {
     ]);
   };
 
-  const onSave = (articleId: string) => {
-    const article = breakingNewsArticles.find(
-      ({ id }: any) => id === articleId
+  const getArticleStatus = (article: NewsArticle): ArticleStatus => {
+    const today = new Date();
+    const isEffective =
+      !article.effective_date || new Date(article.effective_date) <= today;
+    const isNotExpired =
+      !article.expiration_date || new Date(article.expiration_date) > today;
+
+    if (isEffective && isNotExpired) {
+      return "Active";
+    }
+    if (!isEffective && isNotExpired) {
+      return "Scheduled";
+    }
+    return "Expired";
+  };
+
+  const StatusBadge = ({
+    article,
+  }: {
+    article: NewsArticle;
+  }): JSX.Element | null => {
+    const status = getArticleStatus(article);
+    let statusClassName: string;
+    switch (status) {
+      case "Active":
+        statusClassName = "breaking-news-active-status";
+        break;
+      case "Scheduled":
+        statusClassName = "breaking-news-scheduled-status";
+        break;
+      case "Expired":
+        statusClassName = "breaking-news-expired-status";
+        break;
+      default:
+        throw new Error(`Unknown status: {status}`);
+    }
+
+    return (
+      <div className={`breaking-news-status-badge ${statusClassName}`}>
+        {status}
+      </div>
     );
+  };
+
+  const onSave = (index: number) => {
+    const articleFromState = breakingNewsArticles[index];
+    const articleId = articleFromState.id;
     const route = `/api/news_articles/${articleId ?? ""}`;
 
     if (articleId) {
-      dataService.put(route, article);
+      dataService.put(route, articleFromState);
+      alert(`Article "${articleFromState.headline}" has been updated!`);
     } else {
-      dataService.post(route, article);
+      dataService.post(route, articleFromState);
+      alert(`Article "${articleFromState.headline}" has been created!`);
     }
   };
 
   const onDelete = (articleId: string, index: number) => {
-    const updatedBreakingNewsArticles = [...breakingNewsArticles];
-    updatedBreakingNewsArticles.splice(index, 1);
+    if (window.confirm("Are you sure you want to delete this article?")) {
+      const updatedBreakingNewsArticles = [...breakingNewsArticles];
+      updatedBreakingNewsArticles.splice(index, 1);
 
-    if (articleId) {
-      dataService.APIDelete(`/api/news_articles/${articleId}`);
-      // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
+      if (articleId) {
+        dataService.APIDelete(`/api/news_articles/${articleId}`);
+        // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
+      }
+
+      setBreakingNewsArticles(updatedBreakingNewsArticles);
     }
-
-    setBreakingNewsArticles(updatedBreakingNewsArticles);
   };
 
   const onFieldChange = (articleId: string, { target }: any) => {
@@ -92,14 +154,9 @@ export const EditBreakingNewsPage = () => {
     <form className="form" key={article.id}>
       <div className="form-header">
         <h2>{`Breaking News Article #${index + 1}`}</h2>
-        <button type="button" onClick={() => onSave(article.id)}>
-          <RiSave3Line />
-          Save
-        </button>
-        <button type="button" onClick={() => onDelete(article.id, index)}>
-          <RiDeleteBin5Line />
-          Delete
-        </button>
+      </div>
+      <div>
+        <StatusBadge article={article} />
       </div>
       <label>
         Headline
@@ -165,6 +222,16 @@ export const EditBreakingNewsPage = () => {
           onChange={(e) => onFieldChange(article.id, e)}
         />
       </label>
+      <div className="breaking-news-form-buttons">
+        <button type="button" onClick={() => onSave(index)}>
+          <RiSave3Line />
+          Save
+        </button>
+        <button type="button" onClick={() => onDelete(article.id, index)}>
+          <RiDeleteBin5Line />
+          Delete
+        </button>
+      </div>
     </form>
   );
 
