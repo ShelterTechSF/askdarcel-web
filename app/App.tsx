@@ -26,6 +26,8 @@ import {
   UserWay,
 } from "./components/ui";
 
+import { Router } from "./Router";
+
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
 
