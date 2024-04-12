@@ -10,13 +10,7 @@ import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
 
-import {
-  GeoCoordinates,
-  getLocation,
-  whiteLabel,
-  AppProvider,
-  Router,
-} from "./utils";
+import { GeoCoordinates, getLocation, whiteLabel, AppProvider } from "./utils";
 import {
   Banner,
   HamburgerMenu,
