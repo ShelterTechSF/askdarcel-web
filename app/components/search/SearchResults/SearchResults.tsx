@@ -21,10 +21,12 @@ import styles from "./SearchResults.module.scss";
 const SearchResults = ({
   searchResults,
   expandList,
+  setAroundLatLng,
   categoryId,
 }: {
   searchResults: SearchResultsProps;
   expandList: boolean;
+  setAroundLatLng: (latLng: string) => void;
   categoryId?: string;
 }) => {
   const [centerCoords] = useState(null);
@@ -81,7 +83,9 @@ const SearchResults = ({
         hits={hits}
         page={0}
         hitsPerPage={hits.length}
+        mapObject={googleMapObject}
         setMapObject={setMapObject}
+        setAroundLatLng={setAroundLatLng}
       />
     </div>
   );

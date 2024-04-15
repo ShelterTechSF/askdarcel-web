@@ -146,6 +146,10 @@ const InnerSearchResults = ({
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
 }) => {
+  const [aroundLatLng, setAroundLatLng] = useState(
+    userLocation ? `${userLocation.lat}, ${userLocation.lng}` : null
+  );
+
   if (userLocation === null) {
     return <Loader />;
   }
@@ -201,7 +205,7 @@ const InnerSearchResults = ({
         createURL={(state: any) => `search?${qs.stringify(state)}`}
       >
         <Configure
-          aroundLatLng={`${userLocation.lat}, ${userLocation.lng}`}
+          aroundLatLng={aroundLatLng}
           aroundRadius={searchRadius}
           aroundPrecision={1600}
         />
@@ -213,7 +217,10 @@ const InnerSearchResults = ({
           />
 
           <div className={styles.results}>
-            <SearchResults expandList={expandList} />
+            <SearchResults
+              expandList={expandList}
+              setAroundLatLng={setAroundLatLng}
+            />
           </div>
         </div>
         <div className={styles.hiddenSearchBox}>

@@ -139,6 +139,7 @@ const InnerServiceDiscoveryResults = ({
   setExpandList: (_expandList: boolean) => void;
   userLatLng: string;
 }) => {
+  const [aroundLatLng, setAroundLatLng] = useState(userLatLng);
   const subcategoryNames = subcategories.map((c) => c.name);
   const {
     name: categoryName,
@@ -173,7 +174,7 @@ const InnerServiceDiscoveryResults = ({
         ) : (
           <Configure
             filters={`categories:'${algoliaCategoryName}'`}
-            aroundLatLng={userLatLng}
+            aroundLatLng={aroundLatLng}
             aroundRadius={searchRadius}
             aroundPrecision={1600}
           />
@@ -193,7 +194,11 @@ const InnerServiceDiscoveryResults = ({
           />
 
           <div className={styles.results}>
-            <SearchResults expandList={expandList} categoryId={categoryId} />
+            <SearchResults
+              expandList={expandList}
+              categoryId={categoryId}
+              setAroundLatLng={setAroundLatLng}
+            />
           </div>
         </div>
       </InstantSearch>

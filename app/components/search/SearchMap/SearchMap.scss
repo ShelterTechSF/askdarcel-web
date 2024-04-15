@@ -42,3 +42,25 @@
 .map-wrapper {
   height: 100%;
 }
+
+.searchAreaButton {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #fff;
+  img {
+    width: 17px;
+    height: auto;
+  }
+  @media screen and (max-width: $break-tablet-s) {
+    gap: 7px;
+    img {
+      width: 15px;
+    }
+  }
+}
