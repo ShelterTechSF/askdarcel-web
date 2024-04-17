@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./Button.module.scss";
 
 type ButtonType = "button" | "submit" | "reset";
-type StyleType = "transparent";
+type StyleType = "transparent" | "text";
 
 export const Button = ({
   children,
@@ -25,6 +25,8 @@ export const Button = ({
   let buttonClass;
   if (styleType === "transparent") {
     buttonClass = styles.buttonTransparent;
+  } else if (styleType === "text") {
+    buttonClass = styles.textButton;
   } else {
     buttonClass = styles.button;
   }

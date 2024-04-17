@@ -14,6 +14,7 @@ import { Texting } from "components/Texting";
 import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
 import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
 import { TextListing } from "components/Texting/Texting";
+import { Button } from "components/ui/inline/Button/Button";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
 import styles from "./SearchResults.module.scss";
@@ -29,10 +30,37 @@ const SearchResults = ({
   setAroundLatLng: (latLng: string) => void;
   categoryId?: string;
 }) => {
+  const category = CATEGORIES.find((c) => c.id === categoryId);
+  const sortBy24HourAvailability = Boolean(category?.sortBy24HourAvailability);
+  const hits = transformHits(
+    searchResults ? (searchResults.hits as unknown as SearchHit[]) : [],
+    sortBy24HourAvailability
+  );
+
   const [centerCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
     null
   );
+  interface ExpandedStatesObject {
+    [key: string]: boolean;
+  }
+
+  // This object holds the expanded/collapsed state for each individual result
+  const [expandedStates, setExpandedStates] = useState<ExpandedStatesObject>(
+    {}
+  );
+  const [allExpanded, setAllExpanded] = useState(true);
+  const [allCollapsed, setAllCollapsed] = useState(false);
+
+  useEffect(() => {
+    if (hits.length && hits.length !== Object.keys(expandedStates).length) {
+      const initialStates: ExpandedStatesObject = {};
+      hits.forEach((hit) => {
+        initialStates[hit.id] = true;
+      });
+      setExpandedStates(initialStates);
+    }
+  }, [hits, expandedStates]);
 
   useEffect(() => {
     if (centerCoords && googleMapObject) {
@@ -45,17 +73,57 @@ const SearchResults = ({
     };
   }, [googleMapObject, centerCoords]);
 
-  if (!searchResults) return null;
+  const toggleExpandAllResults = (expand: boolean) => {
+    const newExpandedStates: ExpandedStatesObject = {};
+    Object.keys(expandedStates).forEach((key) => {
+      newExpandedStates[key] = expand;
+    });
 
-  const category = CATEGORIES.find((c) => c.id === categoryId);
-  const sortBy24HourAvailability = Boolean(category?.sortBy24HourAvailability);
-  const hits = transformHits(
-    searchResults.hits as unknown as SearchHit[],
-    sortBy24HourAvailability
-  );
+    setAllExpanded(expand);
+    setAllCollapsed(!expand);
+    setExpandedStates(newExpandedStates);
+  };
+
+  const toggleExpandResult = (id: number) => {
+    const newState = !expandedStates[id];
+    const updatedExpandedStates = {
+      ...expandedStates,
+      [id]: newState,
+    };
+    setExpandedStates(updatedExpandedStates);
+
+    // Check if all are expanded or collapsed after individual result update
+    const allStates = Object.values(updatedExpandedStates);
+    setAllExpanded(allStates.every((state) => state === true));
+    setAllCollapsed(allStates.every((state) => state === false));
+  };
+
+  if (!searchResults) return null;
 
   return (
     <div className={styles.searchResultsAndMapContainer}>
+      <div
+        className={`${styles.toggleExpandSearchResultsContainer} ${
+          expandList ? styles.expandList : ""
+        }`}
+      >
+        <Button
+          styleType="text"
+          addClass={styles.toggleExpandAllButton}
+          disabled={allExpanded}
+          onClick={() => toggleExpandAllResults(true)}
+        >
+          Expand All
+        </Button>
+        <Button
+          styleType="text"
+          addClass={styles.toggleExpandAllButton}
+          disabled={allCollapsed}
+          onClick={() => toggleExpandAllResults(false)}
+        >
+          Collapse All
+        </Button>
+      </div>
       <div
         className={`${styles.searchResultsContainer} ${
           expandList ? styles.expandList : ""
@@ -74,6 +142,8 @@ const SearchResults = ({
             hit={hit}
             index={index}
             categoryId={categoryId}
+            expanded={expandedStates[hit.id]}
+            onToggle={() => toggleExpandResult(hit.id)}
             key={hit.id}
           />
         ))}
@@ -86,6 +156,7 @@ const SearchResults = ({
         mapObject={googleMapObject}
         setMapObject={setMapObject}
         setAroundLatLng={setAroundLatLng}
+        expandList={expandList}
       />
     </div>
   );
@@ -95,14 +166,19 @@ const SearchResult = ({
   hit,
   index,
   categoryId,
+  expanded,
+  onToggle,
 }: {
   hit: SearchHit;
   index: number;
   categoryId: string | undefined;
+  expanded: boolean;
+  onToggle: () => void;
 }) => {
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
+
   type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
   const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
     const handoutRoute =
@@ -226,6 +302,7 @@ const SearchResult = ({
 
   return (
     <div className={styles.searchResult}>
+      {/* Modals */}
       <Texting
         closeModal={toggleTextingModal}
         listing={listing}
@@ -281,78 +358,114 @@ const SearchResult = ({
           ]}
         />
       )}
-      <div className={styles.searchText}>
-        <div className={styles.title}>
-          <Link
-            to={{ pathname: `/${basePath}/${hit.id}` }}
-            className="notranslate"
-          >{`${index + 1}. ${hit.name}`}</Link>
-        </div>
-        {hit.type === "service" && (
-          <div className={styles.serviceOf}>
+      {/* End modals */}
+
+      <div className={styles.searchResultTitleContainer}>
+        <div>
+          <div className={styles.title}>
             <Link
-              to={`/organizations/${hit.resource_id}`}
+              to={{ pathname: `/${basePath}/${hit.id}` }}
               className="notranslate"
-            >
-              {hit.service_of}
-            </Link>
+            >{`${index + 1}. ${hit.name}`}</Link>
           </div>
-        )}
-        <div className={`notranslate ${styles.address}`}>
-          {renderAddressMetadata(hit)}
-        </div>
-        <ReactMarkdown
-          className={`rendered-markdown ${styles.description}`}
-          source={hit.long_description ?? undefined}
-          linkTarget="_blank"
-        />
-      </div>
-      <div className={styles.sideLinks}>
-        <div
-          className={
-            showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
-          }
-        >
-          {hit.type === "service" &&
-            !!hit.instructions?.length &&
-            clinicianActionsLink}
-          {handoutsLink}
-        </div>
-        <div
-          className={showDischargeSidelinks ? styles.deemphasizeSideLinks : ""}
-        >
-          {phoneNumber && (
-            <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
-              <img
-                src={icon("phone-blue")}
-                alt="phone"
-                className={styles.sideLinkIcon}
-              />
-              <a
-                href={`tel:${phoneNumber}`}
-                className={styles.sideLinkText}
-              >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
-            </div>
-          )}
-          <div />
-          {url && (
-            <div className={styles.sideLink}>
-              <img
-                src={icon("popout-blue")}
-                alt="website"
-                className={styles.sideLinkIcon}
-              />
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={url}
-                className={styles.sideLinkText}
+          {hit.type === "service" && (
+            <div className={styles.serviceOf}>
+              <Link
+                to={`/organizations/${hit.resource_id}`}
+                className="notranslate"
               >
-                Go to website
-              </a>
+                {hit.service_of}
+              </Link>
             </div>
           )}
-          {texting}
+        </div>
+        <div className={styles.collapseResultButtonContainer}>
+          <button
+            type="button"
+            onClick={onToggle}
+            className={styles.collapseResultButton}
+          >
+            <img
+              className={`${styles.collapseResultIcon} ${
+                expanded ? "" : styles.collapsed
+              }`}
+              src={icon("thick-chevron")}
+              alt="Expand Results Toggle"
+            />
+          </button>
+        </div>
+      </div>
+      <div className={styles.searchResultContent}>
+        <div className={styles.searchText}>
+          {expanded && (
+            <>
+              <div className={`notranslate ${styles.address}`}>
+                {renderAddressMetadata(hit)}
+              </div>
+              <ReactMarkdown
+                className={`rendered-markdown ${styles.description}`}
+                source={hit.long_description ?? undefined}
+                linkTarget="_blank"
+              />
+            </>
+          )}
+        </div>
+
+        <div className={styles.sideLinks}>
+          {expanded && (
+            <>
+              <div
+                className={
+                  showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
+                }
+              >
+                {hit.type === "service" &&
+                  !!hit.instructions?.length &&
+                  clinicianActionsLink}
+                {handoutsLink}
+              </div>
+              <div
+                className={
+                  showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
+                }
+              >
+                {phoneNumber && (
+                  <div
+                    className={`${styles.sideLink} ${styles.showInPrintView}`}
+                  >
+                    <img
+                      src={icon("phone-blue")}
+                      alt="phone"
+                      className={styles.sideLinkIcon}
+                    />
+                    <a
+                      href={`tel:${phoneNumber}`}
+                      className={styles.sideLinkText}
+                    >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
+                  </div>
+                )}
+                <div />
+                {url && (
+                  <div className={styles.sideLink}>
+                    <img
+                      src={icon("popout-blue")}
+                      alt="website"
+                      className={styles.sideLinkIcon}
+                    />
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={url}
+                      className={styles.sideLinkText}
+                    >
+                      Go to website
+                    </a>
+                  </div>
+                )}
+                {texting}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

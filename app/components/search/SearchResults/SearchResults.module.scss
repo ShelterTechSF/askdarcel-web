@@ -3,7 +3,9 @@
 .searchResultsAndMapContainer {
   display: grid;
   grid-template-columns: 6fr 4fr;
-  grid-template-areas: "results map";
+  grid-template-areas:
+    "toggle toggle"
+    "results map";
   grid-column-gap: 15px;
 
   @media screen and (max-width: $break-tablet-s) {
@@ -11,18 +13,38 @@
     grid-template-rows: auto auto;
     grid-template-areas:
       "map"
+      "toggle"
       "results";
+  }
+}
+
+.toggleExpandSearchResultsContainer {
+  position: relative;
+  grid-area: toggle;
+  @media screen and (max-width: $break-tablet-s) {
+    top: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+    background: #fff;
+    transition: top 200ms ease-in-out;
+    &.expandList {
+      top: calc(-50vh + 20px);
+      z-index: 1;
+    }
   }
 }
 
 .searchResultsContainer {
   grid-area: results;
+  display: grid;
+  gap: 20px;
+  @media screen and (min-width: $min-tablet-p) {
+    margin: 0 24px;
+  }
   @media screen and (max-width: $break-tablet-s) {
-    top: 0;
     position: relative;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+    top: 0;
     background: #fff;
     transition: top 200ms ease-in-out;
     &.expandList {
@@ -50,20 +72,36 @@
   }
 }
 
-.searchResult {
-  display: grid;
-  grid-template-columns: 7fr 3fr;
-  gap: 25px;
-  justify-items: stretch;
-  padding: 21px 0 24px 24px;
-  border-left: 1px solid $color-grey3;
-  border-bottom: 1px solid $color-grey3;
+.collapseResultButtonContainer {
+  justify-self: flex-end;
+}
 
-  @media screen and (max-width: $break-desktop) {
-    gap: 32px;
-    grid-template-columns: none;
-    justify-items: start;
+.collapseResultButton {
+  // Button overrides
+  background-color: rgba(0, 0, 0, 0);
+  &:focus,
+  &:hover {
+    background-color: transparent;
+    box-shadow: none;
   }
+}
+
+.collapseResultIcon {
+  transition: transform 200ms ease-in-out;
+  &.collapsed {
+    transform: rotate(-0.25turn);
+  }
+}
+
+.toggleExpandAllButton {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.searchResult {
+  padding: 21px 0 24px 24px;
+  border: 2px solid $color-grey4;
+  border-radius: 8px;
 
   @media screen and (max-width: $break-tablet-l) {
     padding-left: 30px;
@@ -85,12 +123,30 @@
   }
 }
 
+.searchResultTitleContainer {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+}
+
 .title {
   font-weight: bold;
   font-size: 20px;
 
   @media screen and (max-width: 600px) {
     font-size: 18px;
+  }
+}
+
+.searchResultContent {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 25px;
+  justify-items: stretch;
+
+  @media screen and (max-width: $break-desktop) {
+    gap: 32px;
+    grid-template-columns: none;
+    justify-items: start;
   }
 }
 
@@ -105,7 +161,7 @@
 
 .description {
   font-size: 18px;
-  padding-top: 32px;
+  padding-top: 16px;
   a {
     word-break: break-word;
   }
@@ -117,7 +173,7 @@
 .serviceOf {
   font-size: 18px;
   font-style: italic;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 
   @media screen and (max-width: 600px) {
     font-size: 16px;
@@ -129,6 +185,7 @@
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
+  padding-top: 10px;
 
   @media screen and (max-width: 600px) {
     font-size: 16px;

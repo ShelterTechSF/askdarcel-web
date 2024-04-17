@@ -23,6 +23,7 @@ export const SearchMap = ({
   mapObject,
   setMapObject,
   setAroundLatLng,
+  expandList,
 }: {
   hits: SearchHit[];
   hitsPerPage: number;
@@ -30,6 +31,7 @@ export const SearchMap = ({
   mapObject: google.maps.Map | null;
   setMapObject: (map: any) => void;
   setAroundLatLng: (latLng: string) => void;
+  expandList: boolean;
 }) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
@@ -45,21 +47,23 @@ export const SearchMap = ({
   return (
     <div className="results-map">
       <div className="map-wrapper">
-        <Button
-          addClass="searchAreaButton"
-          styleType="transparent"
-          onClick={() => {
-            const center = mapObject?.getCenter() || null;
-            if (center) {
-              setAroundLatLng(`${center.lat()}, ${center.lng()}`);
-            }
-          }}
-        >
-          <>
-            <img src={icon("search")} alt="search" />
-            <span>Search this area</span>
-          </>
-        </Button>
+        {!expandList && (
+          <Button
+            addClass="searchAreaButton"
+            styleType="transparent"
+            onClick={() => {
+              const center = mapObject?.getCenter() || null;
+              if (center) {
+                setAroundLatLng(`${center.lat()}, ${center.lng()}`);
+              }
+            }}
+          >
+            <>
+              <img src={icon("search")} alt="search" />
+              <span>Search this area</span>
+            </>
+          </Button>
+        )}
         <GoogleMap
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
