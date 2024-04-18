@@ -195,7 +195,7 @@ const InnerServiceDiscoveryResults = ({
 
           <div className={styles.results}>
             <SearchResults
-              expandList={expandList}
+              overlayMapWithSearchResults={expandList}
               categoryId={categoryId}
               setAroundLatLng={setAroundLatLng}
             />

@@ -102,14 +102,14 @@ export const SearchResultsPage = () => {
     setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
   }, [translatedQuery, nonQuerySearchParams]);
 
-  if (translatedQuery === null || searchState === null) {
-    return null;
+  if (translatedQuery === null || searchState === null || userLocation === null) {
+    return <Loader />;
   }
 
   return (
     <InnerSearchResults
       history={history}
-      userLocation={userLocation}
+      userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
       lastPush={lastPush}
       setLastPush={setLastPush}
       expandList={expandList}
@@ -125,7 +125,7 @@ export const SearchResultsPage = () => {
 /** Stateless inner component that just handles presentation. */
 const InnerSearchResults = ({
   history,
-  userLocation,
+  userLatLng,
   lastPush,
   setLastPush,
   expandList,
@@ -136,7 +136,7 @@ const InnerSearchResults = ({
   untranslatedQuery,
 }: {
   history: any;
-  userLocation: GeoCoordinates | null;
+  userLatLng: string;
   lastPush: number;
   setLastPush: (time: number) => void;
   expandList: boolean;
@@ -146,13 +146,7 @@ const InnerSearchResults = ({
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
 }) => {
-  const [aroundLatLng, setAroundLatLng] = useState(
-    userLocation ? `${userLocation.lat}, ${userLocation.lng}` : null
-  );
-
-  if (userLocation === null) {
-    return <Loader />;
-  }
+  const [aroundLatLng, setAroundLatLng] = useState(userLatLng);
 
   return (
     <div className={styles.container}>
@@ -218,7 +212,7 @@ const InnerSearchResults = ({
 
           <div className={styles.results}>
             <SearchResults
-              expandList={expandList}
+              overlayMapWithSearchResults={expandList}
               setAroundLatLng={setAroundLatLng}
             />
           </div>

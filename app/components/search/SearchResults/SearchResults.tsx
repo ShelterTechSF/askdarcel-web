@@ -21,12 +21,12 @@ import styles from "./SearchResults.module.scss";
 
 const SearchResults = ({
   searchResults,
-  expandList,
+  overlayMapWithSearchResults,
   setAroundLatLng,
   categoryId,
 }: {
   searchResults: SearchResultsProps;
-  expandList: boolean;
+  overlayMapWithSearchResults: boolean;
   setAroundLatLng: (latLng: string) => void;
   categoryId?: string;
 }) => {
@@ -49,8 +49,9 @@ const SearchResults = ({
   const [expandedStates, setExpandedStates] = useState<ExpandedStatesObject>(
     {}
   );
-  const [allExpanded, setAllExpanded] = useState(true);
-  const [allCollapsed, setAllCollapsed] = useState(false);
+  const [disableExpandAllButton, setDisableExpandAllButton] = useState(true);
+  const [disableCollapseAllButton, setDisableCollapseAllButton] =
+    useState(false);
 
   useEffect(() => {
     if (hits.length && hits.length !== Object.keys(expandedStates).length) {
@@ -79,8 +80,8 @@ const SearchResults = ({
       newExpandedStates[key] = expand;
     });
 
-    setAllExpanded(expand);
-    setAllCollapsed(!expand);
+    setDisableExpandAllButton(expand);
+    setDisableCollapseAllButton(!expand);
     setExpandedStates(newExpandedStates);
   };
 
@@ -92,10 +93,9 @@ const SearchResults = ({
     };
     setExpandedStates(updatedExpandedStates);
 
-    // Check if all are expanded or collapsed after individual result update
     const allStates = Object.values(updatedExpandedStates);
-    setAllExpanded(allStates.every((state) => state === true));
-    setAllCollapsed(allStates.every((state) => state === false));
+    setDisableExpandAllButton(allStates.every((state) => state === true));
+    setDisableCollapseAllButton(allStates.every((state) => state === false));
   };
 
   if (!searchResults) return null;
@@ -104,13 +104,13 @@ const SearchResults = ({
     <div className={styles.searchResultsAndMapContainer}>
       <div
         className={`${styles.toggleExpandSearchResultsContainer} ${
-          expandList ? styles.expandList : ""
+          overlayMapWithSearchResults ? styles.overlayMapWithSearchResults : ""
         }`}
       >
         <Button
           styleType="text"
           addClass={styles.toggleExpandAllButton}
-          disabled={allExpanded}
+          disabled={disableExpandAllButton}
           onClick={() => toggleExpandAllResults(true)}
         >
           Expand All
@@ -118,7 +118,7 @@ const SearchResults = ({
         <Button
           styleType="text"
           addClass={styles.toggleExpandAllButton}
-          disabled={allCollapsed}
+          disabled={disableCollapseAllButton}
           onClick={() => toggleExpandAllResults(false)}
         >
           Collapse All
@@ -126,7 +126,7 @@ const SearchResults = ({
       </div>
       <div
         className={`${styles.searchResultsContainer} ${
-          expandList ? styles.expandList : ""
+          overlayMapWithSearchResults ? styles.overlayMapWithSearchResults : ""
         }`}
       >
         <div
@@ -156,7 +156,7 @@ const SearchResults = ({
         mapObject={googleMapObject}
         setMapObject={setMapObject}
         setAroundLatLng={setAroundLatLng}
-        expandList={expandList}
+        overlayMapWithSearchResults={overlayMapWithSearchResults}
       />
     </div>
   );
@@ -379,14 +379,14 @@ const SearchResult = ({
             </div>
           )}
         </div>
-        <div className={styles.collapseResultButtonContainer}>
+        <div className={styles.expandResultButtonContainer}>
           <button
             type="button"
             onClick={onToggle}
-            className={styles.collapseResultButton}
+            className={styles.expandResultButton}
           >
             <img
-              className={`${styles.collapseResultIcon} ${
+              className={`${styles.expandResultIcon} ${
                 expanded ? "" : styles.collapsed
               }`}
               src={icon("thick-chevron")}

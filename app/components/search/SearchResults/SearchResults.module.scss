@@ -28,7 +28,7 @@
     box-shadow: 0 0 20px rgb(0 0 0 / 55%);
     background: #fff;
     transition: top 200ms ease-in-out;
-    &.expandList {
+    &.overlayMapWithSearchResults {
       top: calc(-50vh + 20px);
       z-index: 1;
     }
@@ -47,7 +47,7 @@
     top: 0;
     background: #fff;
     transition: top 200ms ease-in-out;
-    &.expandList {
+    &.overlayMapWithSearchResults {
       top: calc(-50vh + 20px);
       z-index: 1;
     }
@@ -72,11 +72,11 @@
   }
 }
 
-.collapseResultButtonContainer {
+.expandResultButtonContainer {
   justify-self: flex-end;
 }
 
-.collapseResultButton {
+.expandResultButton {
   // Button overrides
   background-color: rgba(0, 0, 0, 0);
   &:focus,
@@ -86,7 +86,7 @@
   }
 }
 
-.collapseResultIcon {
+.expandResultIcon {
   transition: transform 200ms ease-in-out;
   &.collapsed {
     transform: rotate(-0.25turn);
@@ -214,13 +214,6 @@
 .sideLinkText {
   padding-left: 8px;
   overflow: auto;
-}
-
-.expandListSlider {
-  display: none;
-  @media screen and (max-width: $break-tablet-s) {
-    display: block;
-  }
 }
 
 @media print {
