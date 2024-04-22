@@ -29,7 +29,7 @@ export const SearchMap = ({
   page: number;
   mapObject: google.maps.Map | null;
   setMapObject: (map: any) => void;
-  setAroundLatLng: (latLng: string) => void;
+  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
 }) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
@@ -51,7 +51,7 @@ export const SearchMap = ({
           onClick={() => {
             const center = mapObject?.getCenter() || null;
             if (center) {
-              setAroundLatLng(`${center.lat()}, ${center.lng()}`);
+              setAroundLatLng({lat: center.lat(), lng: center.lng()});
             }
           }}
         >

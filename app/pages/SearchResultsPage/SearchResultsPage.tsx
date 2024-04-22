@@ -102,8 +102,8 @@ export const SearchResultsPage = () => {
     setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
   }, [translatedQuery, nonQuerySearchParams]);
 
-  if (translatedQuery === null || searchState === null) {
-    return null;
+  if (translatedQuery === null || searchState === null || userLocation === null) {
+    return <Loader />;
   }
 
   return (
@@ -136,7 +136,7 @@ const InnerSearchResults = ({
   untranslatedQuery,
 }: {
   history: any;
-  userLocation: GeoCoordinates | null;
+  userLocation: GeoCoordinates;
   lastPush: number;
   setLastPush: (time: number) => void;
   expandList: boolean;
@@ -146,13 +146,7 @@ const InnerSearchResults = ({
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
 }) => {
-  const [aroundLatLng, setAroundLatLng] = useState(
-    userLocation ? `${userLocation.lat}, ${userLocation.lng}` : null
-  );
-
-  if (userLocation === null) {
-    return <Loader />;
-  }
+  const [location, setLocation] = useState({ lat: userLocation.lat, lng: userLocation.lng });
 
   return (
     <div className={styles.container}>
@@ -205,7 +199,7 @@ const InnerSearchResults = ({
         createURL={(state: any) => `search?${qs.stringify(state)}`}
       >
         <Configure
-          aroundLatLng={aroundLatLng}
+          aroundLatLng={`${location.lat}, ${location.lng}`}
           aroundRadius={searchRadius}
           aroundPrecision={1600}
         />
@@ -219,7 +213,7 @@ const InnerSearchResults = ({
           <div className={styles.results}>
             <SearchResults
               expandList={expandList}
-              setAroundLatLng={setAroundLatLng}
+              setAroundLatLng={setLocation}
             />
           </div>
         </div>

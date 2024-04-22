@@ -105,7 +105,7 @@ export const ServiceDiscoveryResults = ({
         setSearchRadius={setSearchRadius}
         expandList={expandList}
         setExpandList={setExpandList}
-        userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
+        userLatLng={{lat: userLocation.lat, lng: userLocation.lng}}
       />
     );
   }
@@ -137,9 +137,9 @@ const InnerServiceDiscoveryResults = ({
   setSearchRadius: (radius: string) => void;
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
-  userLatLng: string;
+  userLatLng: {lat: number; lng: number};
 }) => {
-  const [aroundLatLng, setAroundLatLng] = useState(userLatLng);
+  const [location, setLocation] = useState(userLatLng);
   const subcategoryNames = subcategories.map((c) => c.name);
   const {
     name: categoryName,
@@ -174,7 +174,7 @@ const InnerServiceDiscoveryResults = ({
         ) : (
           <Configure
             filters={`categories:'${algoliaCategoryName}'`}
-            aroundLatLng={aroundLatLng}
+            aroundLatLng={`${location.lat}, ${location.lng}`}
             aroundRadius={searchRadius}
             aroundPrecision={1600}
           />
@@ -197,7 +197,7 @@ const InnerServiceDiscoveryResults = ({
             <SearchResults
               expandList={expandList}
               categoryId={categoryId}
-              setAroundLatLng={setAroundLatLng}
+              setAroundLatLng={setLocation}
             />
           </div>
         </div>
