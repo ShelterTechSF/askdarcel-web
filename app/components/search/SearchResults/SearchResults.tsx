@@ -27,7 +27,7 @@ const SearchResults = ({
 }: {
   searchResults: SearchResultsProps;
   overlayMapWithSearchResults: boolean;
-  setAroundLatLng: (latLng: string) => void;
+  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   categoryId?: string;
 }) => {
   const category = CATEGORIES.find((c) => c.id === categoryId);

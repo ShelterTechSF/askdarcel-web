@@ -102,14 +102,18 @@ export const SearchResultsPage = () => {
     setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
   }, [translatedQuery, nonQuerySearchParams]);
 
-  if (translatedQuery === null || searchState === null || userLocation === null) {
+  if (
+    translatedQuery === null ||
+    searchState === null ||
+    userLocation === null
+  ) {
     return <Loader />;
   }
 
   return (
     <InnerSearchResults
       history={history}
-      userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
+      userLocation={{ lat: userLocation.lat, lng: userLocation.lng }}
       lastPush={lastPush}
       setLastPush={setLastPush}
       expandList={expandList}
@@ -125,7 +129,7 @@ export const SearchResultsPage = () => {
 /** Stateless inner component that just handles presentation. */
 const InnerSearchResults = ({
   history,
-  userLatLng,
+  userLocation,
   lastPush,
   setLastPush,
   expandList,
@@ -136,7 +140,7 @@ const InnerSearchResults = ({
   untranslatedQuery,
 }: {
   history: any;
-  userLatLng: string;
+  userLocation: GeoCoordinates;
   lastPush: number;
   setLastPush: (time: number) => void;
   expandList: boolean;
@@ -146,7 +150,10 @@ const InnerSearchResults = ({
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
 }) => {
-  const [aroundLatLng, setAroundLatLng] = useState(userLatLng);
+  const [location, setLocation] = useState({
+    lat: userLocation.lat,
+    lng: userLocation.lng,
+  });
 
   return (
     <div className={styles.container}>
@@ -199,7 +206,7 @@ const InnerSearchResults = ({
         createURL={(state: any) => `search?${qs.stringify(state)}`}
       >
         <Configure
-          aroundLatLng={aroundLatLng}
+          aroundLatLng={`${location.lat}, ${location.lng}`}
           aroundRadius={searchRadius}
           aroundPrecision={1600}
         />
@@ -213,7 +220,7 @@ const InnerSearchResults = ({
           <div className={styles.results}>
             <SearchResults
               overlayMapWithSearchResults={expandList}
-              setAroundLatLng={setAroundLatLng}
+              setAroundLatLng={setLocation}
             />
           </div>
         </div>

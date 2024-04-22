@@ -30,7 +30,7 @@ export const SearchMap = ({
   page: number;
   mapObject: google.maps.Map | null;
   setMapObject: (map: any) => void;
-  setAroundLatLng: (latLng: string) => void;
+  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   overlayMapWithSearchResults: boolean;
 }) => {
   const { userLocation } = useAppContext();
@@ -47,8 +47,8 @@ export const SearchMap = ({
   return (
     <div className="results-map">
       <div className="map-wrapper">
-        {/* If map is being overlaid, hide the search area button. It is barely visible above the
-          search results component, but it is neither clickable nor relevant in this mode
+        {/* If map is being overlaid, hide the search area button. It is is neither clickable
+            nor relevant in this mode.
         */}
         {!overlayMapWithSearchResults && (
           <Button
@@ -57,7 +57,7 @@ export const SearchMap = ({
             onClick={() => {
               const center = mapObject?.getCenter() || null;
               if (center?.lat() && center?.lng()) {
-                setAroundLatLng(`${center.lat()}, ${center.lng()}`);
+                setAroundLatLng({ lat: center.lat(), lng: center.lng() });
               }
             }}
           >
