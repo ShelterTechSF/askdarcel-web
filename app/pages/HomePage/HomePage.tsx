@@ -32,7 +32,7 @@ const covidResources = [
   },
   {
     name: "Rental Assistance and Eviction Prevention",
-    icon: "housing-1",
+    icon: "housing-heart",
     categorySlug: "rental-assistance-resources",
   },
   {
