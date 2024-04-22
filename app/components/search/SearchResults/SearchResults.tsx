@@ -26,7 +26,7 @@ const SearchResults = ({
 }: {
   searchResults: SearchResultsProps;
   expandList: boolean;
-  setAroundLatLng: (latLng: {lat: number; lng: number}) => void;
+  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   categoryId?: string;
 }) => {
   const [centerCoords] = useState(null);

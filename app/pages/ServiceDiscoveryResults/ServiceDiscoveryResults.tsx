@@ -105,7 +105,7 @@ export const ServiceDiscoveryResults = ({
         setSearchRadius={setSearchRadius}
         expandList={expandList}
         setExpandList={setExpandList}
-        userLatLng={{lat: userLocation.lat, lng: userLocation.lng}}
+        userLatLng={{ lat: userLocation.lat, lng: userLocation.lng }}
       />
     );
   }
@@ -137,7 +137,7 @@ const InnerServiceDiscoveryResults = ({
   setSearchRadius: (radius: string) => void;
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
-  userLatLng: {lat: number; lng: number};
+  userLatLng: { lat: number; lng: number };
 }) => {
   const [location, setLocation] = useState(userLatLng);
   const subcategoryNames = subcategories.map((c) => c.name);

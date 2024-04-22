@@ -102,7 +102,11 @@ export const SearchResultsPage = () => {
     setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
   }, [translatedQuery, nonQuerySearchParams]);
 
-  if (translatedQuery === null || searchState === null || userLocation === null) {
+  if (
+    translatedQuery === null ||
+    searchState === null ||
+    userLocation === null
+  ) {
     return <Loader />;
   }
 
@@ -146,7 +150,10 @@ const InnerSearchResults = ({
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
 }) => {
-  const [location, setLocation] = useState({ lat: userLocation.lat, lng: userLocation.lng });
+  const [location, setLocation] = useState({
+    lat: userLocation.lat,
+    lng: userLocation.lng,
+  });
 
   return (
     <div className={styles.container}>

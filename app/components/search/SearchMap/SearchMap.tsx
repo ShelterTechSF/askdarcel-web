@@ -51,7 +51,7 @@ export const SearchMap = ({
           onClick={() => {
             const center = mapObject?.getCenter() || null;
             if (center) {
-              setAroundLatLng({lat: center.lat(), lng: center.lng()});
+              setAroundLatLng({ lat: center.lat(), lng: center.lng() });
             }
           }}
         >
