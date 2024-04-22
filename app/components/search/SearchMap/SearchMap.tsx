@@ -5,12 +5,14 @@ import "react-tippy/dist/tippy.css";
 import SearchEntry from "components/search/SearchMap/SearchEntry";
 import { useAppContext } from "utils";
 import { Loader } from "components/ui";
+import { Button } from "components/ui/inline/Button/Button";
 import {
   createMapOptions,
   UserLocationMarker,
   CustomMarker,
 } from "components/ui/MapElements";
 import "./SearchMap.scss";
+import { icon } from "assets";
 import { SearchHit } from "../../../models";
 import config from "../../../config";
 
@@ -18,12 +20,16 @@ export const SearchMap = ({
   hits,
   hitsPerPage,
   page,
+  mapObject,
   setMapObject,
+  setAroundLatLng,
 }: {
   hits: SearchHit[];
   hitsPerPage: number;
   page: number;
+  mapObject: google.maps.Map | null;
   setMapObject: (map: any) => void;
+  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
 }) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
@@ -33,11 +39,27 @@ export const SearchMap = ({
       </div>
     );
   }
+
   const { lat, lng } = userLocation;
 
   return (
     <div className="results-map">
       <div className="map-wrapper">
+        <Button
+          addClass="searchAreaButton"
+          styleType="transparent"
+          onClick={() => {
+            const center = mapObject?.getCenter() || null;
+            if (center) {
+              setAroundLatLng({ lat: center.lat(), lng: center.lng() });
+            }
+          }}
+        >
+          <>
+            <img src={icon("search")} alt="search" />
+            <span>Search this area</span>
+          </>
+        </Button>
         <GoogleMap
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
@@ -45,7 +67,7 @@ export const SearchMap = ({
           center={{ lat, lng }}
           defaultZoom={14}
           onGoogleApiLoaded={({ map }) => {
-            // SetMapObject shares the Google Map object across parent/sibliing components
+            // SetMapObject shares the Google Map object across parent/sibling components
             // so that they can adjustments to markers, coordinates, layout, etc.,
             setMapObject(map);
           }}

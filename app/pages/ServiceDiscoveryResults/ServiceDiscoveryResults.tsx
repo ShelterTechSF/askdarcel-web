@@ -105,7 +105,7 @@ export const ServiceDiscoveryResults = ({
         setSearchRadius={setSearchRadius}
         expandList={expandList}
         setExpandList={setExpandList}
-        userLatLng={`${userLocation.lat}, ${userLocation.lng}`}
+        userLatLng={{ lat: userLocation.lat, lng: userLocation.lng }}
       />
     );
   }
@@ -137,8 +137,9 @@ const InnerServiceDiscoveryResults = ({
   setSearchRadius: (radius: string) => void;
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
-  userLatLng: string;
+  userLatLng: { lat: number; lng: number };
 }) => {
+  const [location, setLocation] = useState(userLatLng);
   const subcategoryNames = subcategories.map((c) => c.name);
   const {
     name: categoryName,
@@ -173,7 +174,7 @@ const InnerServiceDiscoveryResults = ({
         ) : (
           <Configure
             filters={`categories:'${algoliaCategoryName}'`}
-            aroundLatLng={userLatLng}
+            aroundLatLng={`${location.lat}, ${location.lng}`}
             aroundRadius={searchRadius}
             aroundPrecision={1600}
           />
@@ -193,7 +194,11 @@ const InnerServiceDiscoveryResults = ({
           />
 
           <div className={styles.results}>
-            <SearchResults expandList={expandList} categoryId={categoryId} />
+            <SearchResults
+              expandList={expandList}
+              categoryId={categoryId}
+              setAroundLatLng={setLocation}
+            />
           </div>
         </div>
       </InstantSearch>
