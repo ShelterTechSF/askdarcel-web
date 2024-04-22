@@ -153,7 +153,7 @@ const SFFamilies: WhiteLabelSite = {
   showPrintResultsBtn: false,
   showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
-  siteUrl: "https://our415.sfserviceguide.org/",
+  siteUrl: "https://our415.sfserviceguide.org",
   title: "Our 415",
   userWay: true,
   weGlot: {

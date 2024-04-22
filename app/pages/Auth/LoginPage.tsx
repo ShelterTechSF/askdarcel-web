@@ -31,7 +31,7 @@ export const LoginPage = () => {
       </p>
       <form className={styles.authForm} onSubmit={logIn}>
         <input
-          type="text"
+          type="email"
           name="email"
           placeholder="Email address"
           value={email}

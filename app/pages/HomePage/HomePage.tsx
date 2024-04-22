@@ -4,12 +4,11 @@ import qs from "qs";
 
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
-import * as AuthService from "utils/AuthService";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
-import { whiteLabel, useAppContext } from "../../utils";
+import { whiteLabel } from "../../utils";
 
 const { showBreakingNews } = whiteLabel;
 
@@ -69,7 +68,6 @@ const covidResources = [
 ];
 
 export const HomePage = () => {
-  const { authClient, setAuthState } = useAppContext();
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
@@ -84,21 +82,6 @@ export const HomePage = () => {
   useEffect(() => {
     getResourceCount().then((count: number) => setResourceCount(count));
   }, []);
-
-  useEffect(() => {
-    // TODO: This effect should be moved to the case worker UI homepage when that page is created
-    const { hash } = window.location;
-    if (!hash || !hash.includes("access_token")) return;
-
-    AuthService.initializeUserSession(
-      window.location.hash,
-      authClient,
-      setAuthState
-    );
-
-    // Remove the url query params set by Auth0
-    history.replace(window.location.pathname + window.location.search);
-  }, [history, setAuthState, authClient]);
 
   return (
     <>

@@ -1,12 +1,14 @@
 import type { PopupMessageProp } from "components/ui";
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { whiteLabel, useAppContext } from "utils";
+import { ProtectedRoute } from "components/utils";
 
-import { whiteLabel } from "utils";
-
+import { AuthInterstitial } from "pages/AuthInterstitial";
 import { HomePage } from "pages/HomePage";
 import { AboutPage } from "pages/AboutPage";
 import { ListingDebugPage } from "pages/debug/ListingDemoPage";
+import { NavigatorDashboard } from "pages/NavigatorDashboard/NavigatorDashboard";
 import { OrganizationListingPage } from "pages/OrganizationListingPage";
 import { PrivacyPolicyPage } from "pages/legal/PrivacyPolicy";
 import {
@@ -43,11 +45,20 @@ export const Router = ({
 }: {
   setPopUpMessage: (msg: PopupMessageProp) => void;
 }) => {
+  const { authState } = useAppContext();
+
   return (
     <Switch>
       <Route exact path="/" component={homePage} />
       <Route exact path="/about" component={AboutPage} />
+      <Route exact path="/auth" component={AuthInterstitial} />
       <Route exact path="/demo/listing" component={ListingDebugPage} />
+      <ProtectedRoute
+        exact
+        isAuthenticated={!!authState}
+        path="/navigator-dashboard"
+        component={NavigatorDashboard}
+      />
       {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
                 step will be interpreted as an ID and will thus break the OrganizationEditPage */}
       <Route
@@ -106,6 +117,7 @@ export const Router = ({
         path="/find-services/:selectedResourceSlug"
         component={UcsfDiscoveryForm}
       />
+
       {/* Legacy redirects */}
       <Redirect path="/resource/new" to="/organizations/new" />
       <Route

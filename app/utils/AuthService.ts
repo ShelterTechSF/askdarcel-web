@@ -1,15 +1,12 @@
 import type { WebAuth, Auth0Result } from "auth0-js";
 import * as Sentry from "@sentry/browser";
 import { post } from "utils/DataService";
-import type { AuthState, UserSignUpData } from "utils";
-import { setUserSignUpData } from "utils";
-import config from "../config";
+import { AuthState, UserSignUpData, setUserSignUpData } from "utils";
 
 /**
   This file provides a set of methods that serve as an interface between our application
   and the Auth0 servers where the user's auth state and data is stored.
 */
-
 export const calculateSessionExpiration = (secondsUntilExpiration: number) => {
   const currentTime = new Date();
   const expirationTime = new Date(
@@ -24,30 +21,35 @@ export const initializeUserSession = (
   authClient: WebAuth,
   setAuthState: (a: AuthState) => void
 ) => {
-  authClient.parseHash({ hash }, (err, authResult) => {
-    if (err) {
-      // TODO: Inform user of the error?
-      Sentry.captureException(err);
-    }
+  const promise = new Promise((resolve, reject) => {
+    authClient.parseHash({ hash }, (err, authResult) => {
+      if (err) {
+        Sentry.captureException(err);
+        reject(err);
+      }
 
-    if (authResult?.accessToken) {
-      const { accessToken, expiresIn, idTokenPayload } = authResult;
-      const authObject = {
-        user: {
-          email: idTokenPayload.email,
-          id: idTokenPayload.sub,
-        },
-        accessTokenObject: {
-          token: accessToken,
-          expiresAt: expiresIn
-            ? calculateSessionExpiration(expiresIn)
-            : new Date(1970, 1, 1),
-        },
-      };
+      if (authResult?.accessToken) {
+        const { accessToken, expiresIn, idTokenPayload } = authResult;
+        const authObject = {
+          user: {
+            email: idTokenPayload.email,
+            id: idTokenPayload.sub,
+          },
+          accessTokenObject: {
+            token: accessToken,
+            expiresAt: expiresIn
+              ? calculateSessionExpiration(expiresIn)
+              : new Date(1970, 1, 1),
+          },
+        };
 
-      setAuthState(authObject);
-    }
+        setAuthState(authObject);
+        resolve(true);
+      }
+    });
   });
+
+  return promise;
 };
 
 // Invokes the passwordlessLogin method and following that stores the new user data in sessionStorage
@@ -117,9 +119,7 @@ export const logout = (
   setAuthState: (state: AuthState) => void
 ) => {
   setAuthState(null);
-
   authClient.logout({
-    returnTo: config.AUTH0_REDIRECT_URI,
     clientID: clientId,
   });
 };
