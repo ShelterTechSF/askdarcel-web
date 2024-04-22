@@ -411,9 +411,9 @@ const SearchResult = ({
           )}
         </div>
 
-        <div className={styles.sideLinks}>
-          {expanded && (
-            <>
+        {expanded && (
+          <div className={styles.sideLinks}>
+            <div>
               <div
                 className={
                   showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
@@ -464,9 +464,10 @@ const SearchResult = ({
                 )}
                 {texting}
               </div>
-            </>
-          )}
-        </div>
+            </div>
+            <Button addClass={styles.bookmarkButton} styleType="transparent">Add Bookmark</Button>
+          </div>
+        )}
       </div>
     </div>
   );
