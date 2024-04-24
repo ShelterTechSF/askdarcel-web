@@ -83,8 +83,10 @@ const SearchResults = ({
   }, [googleMapObject, centerCoords]);
 
   const allStates = Object.values(expandedStates);
-  const disableExpandAllButton = allStates.every((state) => state === true);
-  const disableCollapseAllButton = allStates.every((state) => state === false);
+  const disableExpandAllButton =
+    !allStates.length || allStates.every((state) => state === true);
+  const disableCollapseAllButton =
+    !allStates.length || allStates.every((state) => state === false);
 
   const toggleExpandAllResults = (expand: boolean) => {
     const newExpandedStates: ExpandedStatesObject = {};
