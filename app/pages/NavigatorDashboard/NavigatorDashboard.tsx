@@ -9,7 +9,7 @@ import styles from "./NavigatorDashboard.module.scss";
 
 const AdvancedSearch = () => {
   const history = useHistory();
-  let searchValue = '';
+  let searchValue = "";
   const submitSearch = () => {
     if (searchValue) {
       const query = qs.stringify({ query: searchValue });
@@ -27,20 +27,26 @@ const AdvancedSearch = () => {
         &ldquo;employment support,&ldquo; to discover relevant programs and
         services.
       </p>
-      <form className={styles.searchBoxForm} onSubmit={(evt) => {
+      <form
+        className={styles.searchBoxForm}
+        onSubmit={(evt) => {
           evt.preventDefault();
           submitSearch();
-        }
-      }>
+        }}
+      >
         <div className={styles.searchInputContainer}>
           <input
             type="text"
             placeholder="Emergency Shelter"
             className={styles.searchInput}
-            onChange={(evt) => {searchValue = evt.target.value}}
+            onChange={(evt) => {
+              searchValue = evt.target.value;
+            }}
           />
         </div>
-        <Button buttonType="submit" addClass={styles.searchButton}>Search</Button>
+        <Button buttonType="submit" addClass={styles.searchButton}>
+          Search
+        </Button>
         <button type="button" className={styles.searchFilterButton}>
           <img src={icon("filter-gray")} alt="Add filters to search" />
         </button>
