@@ -113,7 +113,7 @@ export const SearchResultsPage = () => {
   return (
     <InnerSearchResults
       history={history}
-      userLocation={userLocation}
+      userLocation={{ lat: userLocation.lat, lng: userLocation.lng }}
       lastPush={lastPush}
       setLastPush={setLastPush}
       expandList={expandList}
@@ -219,7 +219,7 @@ const InnerSearchResults = ({
 
           <div className={styles.results}>
             <SearchResults
-              expandList={expandList}
+              overlayMapWithSearchResults={expandList}
               setAroundLatLng={setLocation}
             />
           </div>
