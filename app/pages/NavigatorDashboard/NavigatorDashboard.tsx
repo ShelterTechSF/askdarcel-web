@@ -1,20 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import qs from "qs";
 import { useHistory } from "react-router-dom";
 
 import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
+import { coreCategories } from "pages/HomePage";
+import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
 import styles from "./NavigatorDashboard.module.scss";
 
+interface SelectedCategories {
+  [key: string]: boolean;
+}
+const initialSelectedCategories: SelectedCategories = {};
+coreCategories.forEach((category) => {
+  initialSelectedCategories[category.algoliaCategoryName] = false;
+});
+
 const AdvancedSearch = () => {
+  const [advancedMode, setAdvancedMode] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState(
+    initialSelectedCategories
+  );
   const history = useHistory();
+
   let searchValue = "";
   const submitSearch = () => {
+    if (!advancedMode && !searchValue) return;
+
+    const searchState: { [key: string]: unknown } = {
+      refinementList: {
+        categories: coreCategories.flatMap((c) => {
+          if (selectedCategories[c.algoliaCategoryName]) {
+            return c.algoliaCategoryName;
+          }
+          return [];
+        }),
+      },
+    };
+
     if (searchValue) {
-      const query = qs.stringify({ query: searchValue });
-      history.push(`/search?${query}`);
+      searchState.query = searchValue;
     }
+
+    const search = qs.stringify(searchState, { encodeValuesOnly: true });
+    history.push(`/search?${search}`);
   };
 
   return (
@@ -43,14 +73,77 @@ const AdvancedSearch = () => {
               searchValue = evt.target.value;
             }}
           />
+          <Button
+            buttonType="submit"
+            disabled={advancedMode}
+            addClass={styles.searchButton}
+          >
+            Search
+          </Button>
+          <button
+            type="button"
+            className={`${styles.searchFilterButton} ${
+              advancedMode ? styles.advancedMode : ""
+            }`}
+            onClick={() => setAdvancedMode(!advancedMode)}
+          >
+            <img
+              src={icon(advancedMode ? "filter-white" : "filter-gray")}
+              alt="Add filters to search"
+            />
+          </button>
         </div>
-        <Button buttonType="submit" addClass={styles.searchButton}>
-          Search
-        </Button>
-        <button type="button" className={styles.searchFilterButton}>
-          <img src={icon("filter-gray")} alt="Add filters to search" />
-        </button>
+        {advancedMode && (
+          <>
+            <CategoryFilters
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+            />
+            <div className={styles.submitButtonRow}>
+              <Button buttonType="submit" addClass={styles.submitButton}>
+                Submit
+              </Button>
+            </div>
+          </>
+        )}
       </form>
+    </div>
+  );
+};
+
+const CategoryFilters = ({
+  selectedCategories,
+  setSelectedCategories,
+}: {
+  selectedCategories: SelectedCategories;
+  setSelectedCategories: (updatedCategories: SelectedCategories) => void;
+}) => {
+  const handleCategoryClick = (categoryName: string) => {
+    const newValue = !selectedCategories[categoryName];
+    const updatedCategories = { ...selectedCategories };
+
+    setSelectedCategories({
+      ...updatedCategories,
+      [categoryName]: newValue,
+    });
+  };
+
+  return (
+    <div className={styles.serviceFilters}>
+      <p className={styles.serviceTypeHeader}>Service Type</p>
+      <ul className={styles.serviceCheckboxList}>
+        {coreCategories.map((c) => (
+          <li key={c.algoliaCategoryName} className={styles.checkboxItem}>
+            <Checkbox
+              name={c.name}
+              id={c.name}
+              checked={selectedCategories[c.algoliaCategoryName]}
+              onChange={() => handleCategoryClick(c.algoliaCategoryName)}
+              addLabel
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

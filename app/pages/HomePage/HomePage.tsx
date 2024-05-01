@@ -12,55 +12,75 @@ import { whiteLabel } from "../../utils";
 
 const { showBreakingNews } = whiteLabel;
 
-const covidResources = [
-  { name: "Food", icon: "food", categorySlug: "food-resources" },
+export const coreCategories = [
   {
+    algoliaCategoryName: "Covid-food",
+    name: "Food",
+    icon: "food",
+    categorySlug: "food-resources",
+  },
+  {
+    algoliaCategoryName: "Covid-health",
     name: "Health and COVID-19",
     icon: "hospital",
     categorySlug: "medical-services-resources",
   },
   {
+    algoliaCategoryName: "Covid-hygiene",
     name: "Showers, Hygiene and other Services",
     icon: "shower",
     categorySlug: "hygiene-resources",
   },
-  { name: "Shelters", icon: "bed", categorySlug: "shelter-resources" },
   {
+    algoliaCategoryName: "Covid-shelter",
+    name: "Shelters",
+    icon: "bed",
+    categorySlug: "shelter-resources",
+  },
+  {
+    algoliaCategoryName: "Covid-longtermhousing",
     name: "Long-term Housing",
     icon: "longterm-housing",
     categorySlug: "longterm-housing-resources",
   },
   {
+    algoliaCategoryName: "Covid-housing",
     name: "Rental Assistance and Eviction Prevention",
     icon: "housing-heart",
     categorySlug: "rental-assistance-resources",
   },
   {
+    algoliaCategoryName: "Covid-finance",
     name: "Financial Assistance",
     icon: "wallet",
     categorySlug: "financial-resources",
   },
   {
+    algoliaCategoryName: "Covid-jobs",
     name: "Jobs",
     icon: "employment",
     categorySlug: "job-assistance-resources",
   },
   {
+    algoliaCategoryName: "Covid-internet",
     name: "Internet, Devices & Technology Training",
     icon: "devices",
     categorySlug: "internet-access-resources",
   },
   {
+    algoliaCategoryName: "Covid-lgbtqa",
     name: "LGBTQ+ Resources",
     icon: "community",
     categorySlug: "lgbtq-resources",
   },
   {
+    algoliaCategoryName: "Covid-domesticviolence",
     name: "Resources for Domestic Violence Survivors",
     icon: "warning",
     categorySlug: "domestic-violence-resources",
   },
   {
+    algoliaCategoryName: "Covid-substanceuse",
     name: "Substance Use Resources",
     icon: "substance-use",
     categorySlug: "substance-use-resources",
@@ -87,7 +107,7 @@ export const HomePage = () => {
     <>
       {showBreakingNews && <NewsArticles />}
       <HomePageSection title="Find essential services in San Francisco">
-        <ResourceList resources={covidResources} />
+        <ResourceList resources={coreCategories} />
       </HomePageSection>
       <HomePageSection
         title="Browse Directory"

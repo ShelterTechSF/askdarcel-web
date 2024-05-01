@@ -9,6 +9,7 @@ type CheckboxProps = {
   checked?: boolean;
   addClass?: string;
   id?: string;
+  addLabel?: boolean;
 };
 
 export const Checkbox = ({
@@ -18,14 +19,22 @@ export const Checkbox = ({
   checked,
   addClass,
   id,
+  addLabel,
 }: CheckboxProps) => (
-  <input
-    name={name}
-    onChange={onChange}
-    value={value}
-    checked={checked}
-    className={`${styles.inputDefaults} ${addClass || ""}`}
-    id={id}
-    type="checkbox"
-  />
+  <>
+    <input
+      name={name}
+      onChange={onChange}
+      value={value}
+      checked={checked}
+      className={`${styles.inputDefaults} ${addClass || ""}`}
+      id={id}
+      type="checkbox"
+    />
+    {addLabel && (
+      <label className={styles.label} htmlFor={id}>
+        {name}
+      </label>
+    )}
+  </>
 );
