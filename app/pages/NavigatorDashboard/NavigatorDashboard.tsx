@@ -5,13 +5,11 @@ import { useHistory } from "react-router-dom";
 import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { coreCategories } from "pages/HomePage";
-import { Checkbox } from "components/ui/inline/Checkbox/Checkbox";
 
 import styles from "./NavigatorDashboard.module.scss";
+import { CategoryFilters } from "./CategoryFilters";
+import type { SelectedCategories } from "./CategoryFilters";
 
-interface SelectedCategories {
-  [key: string]: boolean;
-}
 const initialSelectedCategories: SelectedCategories = {};
 coreCategories.forEach((category) => {
   initialSelectedCategories[category.algoliaCategoryName] = false;
@@ -75,8 +73,12 @@ const AdvancedSearch = () => {
           />
           <Button
             buttonType="submit"
-            disabled={advancedMode}
-            addClass={styles.searchButton}
+            // Rather using the disabled attr when advanced search mode is active, we pseudo-disable
+            // the button by adding styling. This is because using the disabled attr breaks using the
+            // "enter" button to submit the form when focused on the search input
+            addClass={`${styles.searchButton} ${
+              advancedMode ? styles.disabled : ""
+            }`}
           >
             Search
           </Button>
@@ -107,43 +109,6 @@ const AdvancedSearch = () => {
           </>
         )}
       </form>
-    </div>
-  );
-};
-
-const CategoryFilters = ({
-  selectedCategories,
-  setSelectedCategories,
-}: {
-  selectedCategories: SelectedCategories;
-  setSelectedCategories: (updatedCategories: SelectedCategories) => void;
-}) => {
-  const handleCategoryClick = (categoryName: string) => {
-    const newValue = !selectedCategories[categoryName];
-    const updatedCategories = { ...selectedCategories };
-
-    setSelectedCategories({
-      ...updatedCategories,
-      [categoryName]: newValue,
-    });
-  };
-
-  return (
-    <div className={styles.serviceFilters}>
-      <p className={styles.serviceTypeHeader}>Service Type</p>
-      <ul className={styles.serviceCheckboxList}>
-        {coreCategories.map((c) => (
-          <li key={c.algoliaCategoryName} className={styles.checkboxItem}>
-            <Checkbox
-              name={c.name}
-              id={c.name}
-              checked={selectedCategories[c.algoliaCategoryName]}
-              onChange={() => handleCategoryClick(c.algoliaCategoryName)}
-              addLabel
-            />
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
