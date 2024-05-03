@@ -19,7 +19,7 @@ export const EligibilityFilters = ({
   optionsGroupArray: SelectOptions[];
   selectedEligibilities: SelectOptions[];
   setSelectedEligibilities: (eligibilities: SelectOptions[]) => void;
-  parentEligibilities: {id: number; name: string}[];
+  parentEligibilities: { id: number; name: string }[];
 }) => {
   return (
     <div className={styles.eligibilityFilters}>
