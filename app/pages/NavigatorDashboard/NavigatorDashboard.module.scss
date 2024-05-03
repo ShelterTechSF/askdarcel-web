@@ -15,9 +15,7 @@
     width: 100%;
     padding: 15px;
     box-shadow: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
+    border: none;
   }
 }
 
@@ -35,12 +33,6 @@
   border-radius: 8px;
   padding: 14px 26px;
   @media screen and (max-width: $break-tablet-p) {
-    grid-template-areas:
-      "input filter"
-      "button button";
-    grid-template-columns: repeat(1, 1fr);
-    row-gap: 7px;
-    column-gap: 4px;
     padding: 14px 15px;
   }
 }
@@ -50,6 +42,14 @@
   grid-template-areas: "input button filter";
   grid-template-columns: 66fr 18fr 50px;
   gap: 35px;
+  @media screen and (max-width: $break-tablet-p) {
+    grid-template-areas:
+      "input filter"
+      "button button";
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 7px;
+    column-gap: 4px;
+  }
 }
 
 .searchInput {
@@ -102,6 +102,11 @@
 .submitButtonRow {
   display: grid;
   justify-items: end;
+  margin-top: 14px;
+  @media screen and (max-width: $break-tablet-s) {
+    display: block;
+    margin-top: 20px;
+  }
 }
 
 .submitButton {
@@ -109,6 +114,10 @@
   margin-bottom: 12px;
   @media screen and (max-width: $break-tablet-p) {
     width: 125px;
+  }
+  @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    max-width: none;
   }
 }
 

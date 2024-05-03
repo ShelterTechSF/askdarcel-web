@@ -1,26 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import qs from "qs";
 import { useHistory } from "react-router-dom";
 
 import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { coreCategories } from "pages/HomePage";
+import { get } from "utils/DataService";
 
 import styles from "./NavigatorDashboard.module.scss";
 import { CategoryFilters } from "./CategoryFilters";
 import type { SelectedCategories } from "./CategoryFilters";
+import { EligibilityFilters } from "./EligibilityFilters";
+import type { SelectOptions } from "./EligibilityFilters";
 
 const initialSelectedCategories: SelectedCategories = {};
 coreCategories.forEach((category) => {
   initialSelectedCategories[category.algoliaCategoryName] = false;
 });
 
+// TODO: Once we have created the parent eligibilities with children in our production DB,
+// these static values will need to be updated
+const PARENT_ELIGIBILITIES = [
+  { id: 1003, name: "Gender" },
+  { id: 1, name: "Age" },
+  { id: 1082, name: "Family Status" },
+];
+
+// Array containing arrays representing the selected child eligibilites of each parent eligibililty
+const initialSelectedEligibilities = PARENT_ELIGIBILITIES.map(() => []);
+
 const AdvancedSearch = () => {
   const [advancedMode, setAdvancedMode] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(
     initialSelectedCategories
   );
+  const [eligibilities, setEligibilities] = useState<SelectOptions[]>([]);
+  const [selectedEligibilities, setSelectedEligibilities] = useState<SelectOptions[]>(
+    initialSelectedEligibilities
+  );
   const history = useHistory();
+
+  useEffect(() => {
+    // This makes a request to our API for all the eligibilities belonging to parent eligibility
+    // constants, which are defined above. It then maps the eligibilities to a list of select menu options
+
+    // The eligibilities only need to be fetched one time as they will not change.
+    if (eligibilities.length) return;
+
+    const fetchedEligibilities: SelectOptions[] = [];
+    for (let i = 0; i < PARENT_ELIGIBILITIES.length; i += 1) {
+      get(`/api/eligibilities/subeligibilities?id=${PARENT_ELIGIBILITIES[i].id}`).then(
+        (response) => {
+          const selectOptions: SelectOptions = response.eligibilities.map(
+            (eligibility: { name: string; id: number }) => {
+              return {
+                label: eligibility.name,
+                value: eligibility.id,
+              }
+            }
+          );
+          fetchedEligibilities.push(selectOptions);
+          const allEligibilitiesFetched = (i + 1) === PARENT_ELIGIBILITIES.length;
+          if (allEligibilitiesFetched) {
+            setEligibilities(fetchedEligibilities);
+          }
+        }
+      );
+    };
+  }, [eligibilities]);
 
   let searchValue = "";
   const submitSearch = () => {
@@ -34,6 +81,9 @@ const AdvancedSearch = () => {
           }
           return [];
         }),
+        eligibilities: selectedEligibilities.flat().map((e) => {
+          return e.label
+        })
       },
     };
 
@@ -100,6 +150,12 @@ const AdvancedSearch = () => {
             <CategoryFilters
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
+            />
+            <EligibilityFilters
+              optionsGroupArray={eligibilities}
+              selectedEligibilities={selectedEligibilities}
+              setSelectedEligibilities={setSelectedEligibilities}
+              parentEligibilities={PARENT_ELIGIBILITIES}
             />
             <div className={styles.submitButtonRow}>
               <Button buttonType="submit" addClass={styles.submitButton}>

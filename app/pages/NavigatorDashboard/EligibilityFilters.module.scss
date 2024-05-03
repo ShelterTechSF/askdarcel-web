@@ -1,0 +1,17 @@
+@import "~styles/utils/_helpers.scss";
+
+.eligibilityFilters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+  row-gap: 14px;
+  @media screen and (max-width: $break-tablet-s) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.eligibilitySelectLabel {
+  color: $color-grey5;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
