@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
@@ -37,31 +37,39 @@ const SearchResults = ({
     sortBy24HourAvailability
   );
 
+  interface ExpandedStatesObject {
+    [key: string]: boolean;
+  }
+  const initialExpandedHitsStates = useCallback((_hits: SearchHit[]) => {
+    const initialStates: ExpandedStatesObject = {};
+    _hits.forEach((hit) => {
+      initialStates[hit.id] = true;
+    });
+    return initialStates;
+  }, []);
+
   const [centerCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
     null
   );
-  interface ExpandedStatesObject {
-    [key: string]: boolean;
-  }
 
   // This object holds the expanded/collapsed state for each individual result
   const [expandedStates, setExpandedStates] = useState<ExpandedStatesObject>(
     {}
   );
-  const [disableExpandAllButton, setDisableExpandAllButton] = useState(true);
-  const [disableCollapseAllButton, setDisableCollapseAllButton] =
-    useState(false);
 
   useEffect(() => {
-    if (hits.length && hits.length !== Object.keys(expandedStates).length) {
-      const initialStates: ExpandedStatesObject = {};
-      hits.forEach((hit) => {
-        initialStates[hit.id] = true;
-      });
-      setExpandedStates(initialStates);
+    const hitIdSet = new Set(hits.map((hit) => hit.id));
+    const expandedStatesSet = new Set(
+      Object.keys(expandedStates).map((key) => parseInt(key, 10))
+    );
+    const setsAreEqual =
+      hitIdSet.size === expandedStatesSet.size &&
+      [...hitIdSet].every((val) => expandedStatesSet.has(val));
+    if (!setsAreEqual) {
+      setExpandedStates(initialExpandedHitsStates(hits));
     }
-  }, [hits, expandedStates]);
+  }, [hits, expandedStates, initialExpandedHitsStates]);
 
   useEffect(() => {
     if (centerCoords && googleMapObject) {
@@ -74,14 +82,18 @@ const SearchResults = ({
     };
   }, [googleMapObject, centerCoords]);
 
+  const allStates = Object.values(expandedStates);
+  const disableExpandAllButton =
+    !allStates.length || allStates.every((state) => state === true);
+  const disableCollapseAllButton =
+    !allStates.length || allStates.every((state) => state === false);
+
   const toggleExpandAllResults = (expand: boolean) => {
     const newExpandedStates: ExpandedStatesObject = {};
     Object.keys(expandedStates).forEach((key) => {
       newExpandedStates[key] = expand;
     });
 
-    setDisableExpandAllButton(expand);
-    setDisableCollapseAllButton(!expand);
     setExpandedStates(newExpandedStates);
   };
 
@@ -92,10 +104,6 @@ const SearchResults = ({
       [id]: newState,
     };
     setExpandedStates(updatedExpandedStates);
-
-    const allStates = Object.values(updatedExpandedStates);
-    setDisableExpandAllButton(allStates.every((state) => state === true));
-    setDisableCollapseAllButton(allStates.every((state) => state === false));
   };
 
   if (!searchResults) return null;
@@ -464,8 +472,10 @@ const SearchResult = ({
                 )}
                 {texting}
               </div>
+              <Button addClass={styles.bookmarkButton} styleType="transparent">
+                Add Bookmark
+              </Button>
             </div>
-            <Button addClass={styles.bookmarkButton} styleType="transparent">Add Bookmark</Button>
           </div>
         )}
       </div>

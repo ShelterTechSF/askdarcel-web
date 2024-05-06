@@ -19,9 +19,9 @@
 }
 
 .toggleExpandSearchResultsContainer {
-  position: relative;
   grid-area: toggle;
   @media screen and (max-width: $break-tablet-s) {
+    position: relative;
     top: 0;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
