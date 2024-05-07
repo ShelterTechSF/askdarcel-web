@@ -9,7 +9,7 @@ type CheckboxProps = {
   checked?: boolean;
   addClass?: string;
   id?: string;
-  addLabel?: boolean;
+  label?: string;
 };
 
 export const Checkbox = ({
@@ -19,7 +19,7 @@ export const Checkbox = ({
   checked,
   addClass,
   id,
-  addLabel,
+  label,
 }: CheckboxProps) => (
   <>
     <input
@@ -31,9 +31,9 @@ export const Checkbox = ({
       id={id}
       type="checkbox"
     />
-    {addLabel && (
+    {label && (
       <label className={styles.label} htmlFor={id}>
-        {name}
+        {label}
       </label>
     )}
   </>
