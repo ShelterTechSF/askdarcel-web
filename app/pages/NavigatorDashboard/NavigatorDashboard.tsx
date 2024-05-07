@@ -21,7 +21,7 @@ coreCategories.forEach((category) => {
 
 // TODO: Once we have created the parent eligibilities with children in our production DB,
 // this array will need to contain objects with their name and ID.
-const PARENT_ELIGIBILITIES: { name: string; id: number }[] = [{id: 1, name: "f"}];
+const PARENT_ELIGIBILITIES: { name: string; id: number }[] = [];
 
 // Array containing arrays representing the selected child eligibilites of each parent eligibililty.
 const initialSelectedEligibilities = PARENT_ELIGIBILITIES.map(() => []);
