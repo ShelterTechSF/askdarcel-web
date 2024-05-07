@@ -1,11 +1,89 @@
 @import "~styles/utils/_helpers.scss";
 
+// Advanced Search Box Styles
+
 .advancedSearchContainer {
   width: 85%;
   max-width: 1250px;
   margin: 90px auto;
+  padding: 42px 60px;
+  border: 1px solid #000;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  @media screen and (max-width: $min-tablet-p) {
+    width: 100%;
+    padding: 15px;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
 }
 
-.greeting {
+.header {
   font-size: 26px;
+  font-weight: 700;
 }
+
+.blurb {
+  margin: 10px 0 20px;
+}
+
+.searchBoxForm {
+  background: #f5f5f5;
+  border-radius: 8px;
+  display: grid;
+  grid-template-areas: "input button filter";
+  grid-template-columns: 66fr 18fr 50px;
+  gap: 35px;
+  padding: 14px 26px;
+  @media screen and (max-width: $break-tablet-p) {
+    grid-template-areas:
+      "input filter"
+      "button button";
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 7px;
+    column-gap: 4px;
+    padding: 14px 15px;
+  }
+}
+
+.searchInput {
+  grid-area: input;
+  border-radius: 8px;
+  background: url("../../assets/img/ic-search-blue.svg") center left 15px
+    no-repeat;
+  padding-left: 45px;
+  height: 50px;
+  background-color: #fff;
+  border: solid 1px transparent;
+  &:focus,
+  &:hover {
+    box-shadow: none;
+    border-color: $color-brand;
+  }
+}
+
+.searchButton {
+  height: 50px;
+  max-width: 200px;
+  grid-area: button;
+  @media screen and (max-width: $break-tablet-p) {
+    max-width: none;
+  }
+}
+
+.searchFilterButton {
+  grid-area: filter;
+  border-radius: 8px;
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  &:active {
+    box-shadow: none;
+  }
+}
+
+// End Advanced Search Box Styles
