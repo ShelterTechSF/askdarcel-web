@@ -58,3 +58,11 @@
     box-shadow: initial;
   }
 }
+
+.label {
+  cursor: pointer;
+  padding-left: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  color: $color-grey8;
+}

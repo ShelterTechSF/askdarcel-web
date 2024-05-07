@@ -1,0 +1,31 @@
+@import "~styles/utils/_helpers.scss";
+
+.categoryFilters {
+  margin: 30px 0 55px;
+}
+
+.categoryTypeHeader {
+  color: $color-grey5;
+  font-weight: 600;
+  margin-bottom: 23px;
+}
+
+.categoryCheckboxList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 15px;
+  column-gap: 30px;
+
+  @media screen and (max-width: $break-tablet-l) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.checkboxItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
