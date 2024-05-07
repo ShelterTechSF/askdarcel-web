@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import qs from "qs";
+import * as Sentry from "@sentry/browser";
 import { useHistory } from "react-router-dom";
 
 import { icon } from "assets";
@@ -26,7 +27,7 @@ const PARENT_ELIGIBILITIES: { name: string; id: number }[] = [];
 const initialSelectedEligibilities = PARENT_ELIGIBILITIES.map(() => []);
 
 const AdvancedSearch = () => {
-  const [advancedMode, setAdvancedMode] = useState(false);
+  const [expandedOptions, setExpandedOptions] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState(
     initialSelectedCategories
   );
@@ -34,6 +35,8 @@ const AdvancedSearch = () => {
   const [selectedEligibilities, setSelectedEligibilities] = useState<
     SelectOptions[]
   >(initialSelectedEligibilities);
+  const [searchValue, setSearchValue] = useState("");
+
   const history = useHistory();
 
   useEffect(() => {
@@ -43,31 +46,30 @@ const AdvancedSearch = () => {
     // The eligibilities only need to be fetched one time as they will not change.
     if (eligibilities.length) return;
 
-    const fetchedEligibilities: SelectOptions[] = [];
-    for (let i = 0; i < PARENT_ELIGIBILITIES.length; i += 1) {
-      get(
-        `/api/eligibilities/subeligibilities?id=${PARENT_ELIGIBILITIES[i].id}`
-      ).then((response) => {
-        const selectOptions: SelectOptions = response.eligibilities.map(
-          (eligibility: { name: string; id: number }) => {
-            return {
-              label: eligibility.name,
-              value: eligibility.id,
-            };
-          }
-        );
-        fetchedEligibilities.push(selectOptions);
-        const allEligibilitiesFetched = i + 1 === PARENT_ELIGIBILITIES.length;
-        if (allEligibilitiesFetched) {
-          setEligibilities(fetchedEligibilities);
-        }
+    const allPromises = PARENT_ELIGIBILITIES.map((eligibility) => {
+      return get(
+        `/api/eligibilities/subeligibilities?id=${eligibility.id}`
+      ).then((response) =>
+        response.eligibilities.map(
+          (childEligibility: { name: string; id: number }) => ({
+            label: childEligibility.name,
+            value: childEligibility.id,
+          })
+        )
+      );
+    });
+
+    Promise.all(allPromises)
+      .then((values) => {
+        setEligibilities(values);
+      })
+      .catch((err) => {
+        Sentry.captureException(err);
       });
-    }
   }, [eligibilities]);
 
-  let searchValue = "";
   const submitSearch = () => {
-    if (!advancedMode && !searchValue) return;
+    if (!expandedOptions && !searchValue) return;
 
     const searchState: { [key: string]: unknown } = {
       refinementList: {
@@ -113,9 +115,7 @@ const AdvancedSearch = () => {
             type="text"
             placeholder="Emergency Shelter"
             className={styles.searchInput}
-            onChange={(evt) => {
-              searchValue = evt.target.value;
-            }}
+            onChange={(evt) => setSearchValue(evt.target.value)}
           />
           <Button
             buttonType="submit"
@@ -123,7 +123,7 @@ const AdvancedSearch = () => {
             // the button by adding styling. This is because using the disabled attr breaks using the
             // "enter" button to submit the form when focused on the search input
             addClass={`${styles.searchButton} ${
-              advancedMode ? styles.disabled : ""
+              expandedOptions ? styles.disabled : ""
             }`}
           >
             Search
@@ -131,17 +131,17 @@ const AdvancedSearch = () => {
           <button
             type="button"
             className={`${styles.searchFilterButton} ${
-              advancedMode ? styles.advancedMode : ""
+              expandedOptions ? styles.expandedOptions : ""
             }`}
-            onClick={() => setAdvancedMode(!advancedMode)}
+            onClick={() => setExpandedOptions(!expandedOptions)}
           >
             <img
-              src={icon(advancedMode ? "filter-white" : "filter-gray")}
+              src={icon(expandedOptions ? "filter-white" : "filter-gray")}
               alt="Add filters to search"
             />
           </button>
         </div>
-        {advancedMode && (
+        {expandedOptions && (
           <>
             <CategoryFilters
               selectedCategories={selectedCategories}

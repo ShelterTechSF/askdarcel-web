@@ -35,7 +35,7 @@ export const CategoryFilters = ({
               id={c.name}
               checked={selectedCategories[c.algoliaCategoryName]}
               onChange={() => handleCategoryClick(c.algoliaCategoryName)}
-              addLabel
+              label={c.name}
             />
           </li>
         ))}
