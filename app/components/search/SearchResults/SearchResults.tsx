@@ -5,7 +5,7 @@ import {
   connectStateResults,
   SearchResults as SearchResultsProps,
 } from "react-instantsearch/connectors";
-import { whiteLabel } from "utils";
+import { useAppContext, whiteLabel } from "utils";
 import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
@@ -184,6 +184,7 @@ const SearchResult = ({
   expanded: boolean;
   onToggle: () => void;
 }) => {
+  const { authState } = useAppContext();
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
@@ -477,16 +478,24 @@ const SearchResult = ({
                 {texting}
               </div>
             </div>
-            <Button
-              onClick={() => {
-                setBookmarkModalIsOpen(true);
-              }}
-              addClass={styles.bookmarkButton}
-              styleType={`${bookmarkAdded ? "default" : "transparent"}`}
-            >
-              {`${bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}`}
-            </Button>
-            <BookmarkModal isOpen={bookmarkModalIsOpen} setIsOpen={setBookmarkModalIsOpen} hit={hit} />
+            {authState && (
+              <>
+                <Button
+                  onClick={() => {
+                    setBookmarkModalIsOpen(true);
+                  }}
+                  addClass={styles.bookmarkButton}
+                  styleType={`${bookmarkAdded ? "default" : "transparent"}`}
+                >
+                  {`${bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}`}
+                </Button>
+                <BookmarkModal
+                  isOpen={bookmarkModalIsOpen}
+                  setIsOpen={setBookmarkModalIsOpen}
+                  hit={hit}
+                />
+              </>
+            )}
           </div>
         )}
       </div>

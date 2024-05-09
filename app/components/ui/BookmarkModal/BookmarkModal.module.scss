@@ -36,8 +36,9 @@
   border-radius: 8px;
   background-color: #fff;
   display: grid;
-  grid-template-areas: "icon name"
-                       "icon url";
+  grid-template-areas:
+    "icon name"
+    "icon url";
   grid-template-columns: 60px auto;
   column-gap: 20px;
   padding: 15px;
@@ -82,13 +83,14 @@
   border: none;
   padding: 3px 3px 10px;
   font-size: 16px;
-  &:hover, &:focus {
-    box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);
+  &:hover,
+  &:focus {
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.25);
   }
 }
 
 .bookmarkUrl {
-  border-top: solid 1px #F5F5F5;
+  border-top: solid 1px #f5f5f5;
   grid-area: url;
   height: 35px;
   padding-top: 10px;
@@ -133,7 +135,7 @@
   gap: 18px;
   padding: 5px 8px;
   .folderIcon {
-    color: #D1D1D1;
+    color: #d1d1d1;
   }
   &:hover {
     background-color: #edf5fed9;
@@ -142,7 +144,7 @@
 
 .addFolderItem {
   padding: 0 10px;
-  border-top: solid 1px #F5F5F5;
+  border-top: solid 1px #f5f5f5;
   cursor: default;
   gap: 5px;
   &:hover {
@@ -186,4 +188,3 @@
 .addBookmarkBtn {
   width: 200px;
 }
-

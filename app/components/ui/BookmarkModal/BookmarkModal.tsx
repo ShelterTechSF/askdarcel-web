@@ -65,7 +65,9 @@ export const BookmarkModal = ({
     });
   }, []);
 
-  const handleContainerBlur = (event: React.FocusEvent<HTMLDivElement, Element>) => {
+  const handleContainerBlur = (
+    event: React.FocusEvent<HTMLDivElement, Element>
+  ) => {
     // relatedTarget is the element that is gaining focus
     const newFocus = event.relatedTarget;
     const folderElement = foldersContainerRef.current as unknown as Element;
@@ -105,7 +107,9 @@ export const BookmarkModal = ({
       addModalClass={styles.bookmarkModal}
       closeModal={closeModal}
     >
-      <h2 className={styles.title}>{`${newBookmark ? "Add Bookmark" : "Edit Bookmark"}`}</h2>
+      <h2 className={styles.title}>{`${
+        newBookmark ? "Add Bookmark" : "Edit Bookmark"
+      }`}</h2>
       <div className={styles.modalContent}>
         <div>
           <div className={styles.bookmarkDescription}>
