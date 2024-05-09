@@ -14,6 +14,7 @@ import { Texting } from "components/Texting";
 import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
 import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
 import { TextListing } from "components/Texting/Texting";
+import { BookmarkModal } from "components/ui/BookmarkModal/BookmarkModal";
 import { Button } from "components/ui/inline/Button/Button";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
@@ -186,6 +187,7 @@ const SearchResult = ({
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
+  const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(true);
 
   type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
   const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
@@ -215,6 +217,7 @@ const SearchResult = ({
   }
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
+  const bookmarkAdded = true;
 
   const texting = (
     <div
@@ -236,6 +239,7 @@ const SearchResult = ({
   const toggleClinicianActionsModal = () => {
     setClinicianActionsIsOpen(!clinicianActionsIsOpen);
   };
+
   const toggleHandoutModal = () => {
     setHandoutModalIsOpen(!handoutModalIsOpen);
   };
@@ -472,10 +476,17 @@ const SearchResult = ({
                 )}
                 {texting}
               </div>
-              <Button addClass={styles.bookmarkButton} styleType="transparent">
-                Add Bookmark
-              </Button>
             </div>
+            <Button
+              onClick={() => {
+                setBookmarkModalIsOpen(true);
+              }}
+              addClass={styles.bookmarkButton}
+              styleType={`${bookmarkAdded ? "default" : "transparent"}`}
+            >
+              {`${bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}`}
+            </Button>
+            <BookmarkModal isOpen={bookmarkModalIsOpen} setIsOpen={setBookmarkModalIsOpen} hit={hit} />
           </div>
         )}
       </div>
