@@ -218,7 +218,9 @@ const SearchResult = ({
   }
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
-  const bookmarkAdded = true;
+  // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
+  // returned by the API or just read off of the `hit` directly; it is set here for dev purposes
+  const bookmarkAdded = false;
 
   const texting = (
     <div
