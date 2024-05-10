@@ -47,21 +47,6 @@
   }
 }
 
-.textButton {
-  color: $color-brand;
-  background-color: transparent;
-  &:focus,
-  &:hover {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.6;
-  }
-}
-
 .medium {
   width: 120px;
 }

@@ -56,7 +56,7 @@ const SearchResults = ({
 
   // This object holds the expanded/collapsed state for each individual result
   const [expandedStates, setExpandedStates] = useState<ExpandedStatesObject>(
-    {}
+    initialExpandedHitsStates(hits)
   );
 
   useEffect(() => {
@@ -188,7 +188,7 @@ const SearchResult = ({
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
-  const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(true);
+  const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(false);
 
   type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
   const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
@@ -426,58 +426,55 @@ const SearchResult = ({
 
         {expanded && (
           <div className={styles.sideLinks}>
-            <div>
-              <div
-                className={
-                  showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
-                }
-              >
-                {hit.type === "service" &&
-                  !!hit.instructions?.length &&
-                  clinicianActionsLink}
-                {handoutsLink}
-              </div>
-              <div
-                className={
-                  showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
-                }
-              >
-                {phoneNumber && (
-                  <div
-                    className={`${styles.sideLink} ${styles.showInPrintView}`}
-                  >
-                    <img
-                      src={icon("phone-blue")}
-                      alt="phone"
-                      className={styles.sideLinkIcon}
-                    />
-                    <a
-                      href={`tel:${phoneNumber}`}
-                      className={styles.sideLinkText}
-                    >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
-                  </div>
-                )}
-                <div />
-                {url && (
-                  <div className={styles.sideLink}>
-                    <img
-                      src={icon("popout-blue")}
-                      alt="website"
-                      className={styles.sideLinkIcon}
-                    />
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={url}
-                      className={styles.sideLinkText}
-                    >
-                      Go to website
-                    </a>
-                  </div>
-                )}
-                {texting}
-              </div>
+            <div
+              className={
+                showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
+              }
+            >
+              {hit.type === "service" &&
+                !!hit.instructions?.length &&
+                clinicianActionsLink}
+              {handoutsLink}
             </div>
+            <div
+              className={
+                showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
+              }
+            >
+              {phoneNumber && (
+                <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
+                  <img
+                    src={icon("phone-blue")}
+                    alt="phone"
+                    className={styles.sideLinkIcon}
+                  />
+                  <a
+                    href={`tel:${phoneNumber}`}
+                    className={styles.sideLinkText}
+                  >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
+                </div>
+              )}
+              <div />
+              {url && (
+                <div className={styles.sideLink}>
+                  <img
+                    src={icon("popout-blue")}
+                    alt="website"
+                    className={styles.sideLinkIcon}
+                  />
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={url}
+                    className={styles.sideLinkText}
+                  >
+                    Go to website
+                  </a>
+                </div>
+              )}
+              {texting}
+            </div>
+
             {authState && (
               <>
                 <Button

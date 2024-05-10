@@ -27,10 +27,9 @@ export const BookmarkModal = ({
   // TODO: If bookmark already exists, use bookmark name; otherwise,
   // default to service/resource name. This should be updated with the correct
   // bookmark name prop when the API is operational
-  // const initialName = hit.bookmarkName ?? hit.name;
   const initialName = hit.name;
   // TODO: Once the service/resource can have an associated bookmark model, we can check
-  // if the bookmark already exists and update various props on the modal accordingly
+  // if the bookmark already exists and update various UI on the modal accordingly
   const newBookmark = false;
 
   const [folderOptions, setFolderOptions] = useState<Folder[]>([]);
@@ -59,32 +58,26 @@ export const BookmarkModal = ({
     });
 
     mockResponse.then((value) => {
-      // TODO: Update TS types when the API is working
       const response = value as Folder[];
       setFolderOptions(response);
     });
   }, []);
 
-  const handleContainerBlur = (
+  const handleDropwodnBlur = (
     event: React.FocusEvent<HTMLDivElement, Element>
   ) => {
-    // relatedTarget is the element that is gaining focus
+    // Closes the dropdown unless the newly focused element is a child of the dropdown
     const newFocus = event.relatedTarget;
     const folderElement = foldersContainerRef.current as unknown as Element;
-    // Check if the new focus is outside the container
     if (newFocus && !folderElement.contains(newFocus)) {
       setExpandFolders(false);
     }
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   const createBookmark = () => {
     // TODO: when bookmarks/folder API is done, fix this up
     if (!selectedFolder || !bookmarkName) return;
-    const isNewFolder = selectedFolder.id > -1;
+    const isNewFolder = selectedFolder.id === -1;
     if (isNewFolder) {
       // Create new folder then create new bookmark
     } else {
@@ -105,7 +98,7 @@ export const BookmarkModal = ({
     <Modal
       isOpen={isOpen}
       addModalClass={styles.bookmarkModal}
-      closeModal={closeModal}
+      closeModal={() => setIsOpen(false)}
     >
       <h2 className={styles.title}>{`${
         newBookmark ? "Add Bookmark" : "Edit Bookmark"
@@ -140,7 +133,7 @@ export const BookmarkModal = ({
           <div
             className={styles.selectFolderContainer}
             onBlur={(evt) => {
-              handleContainerBlur(evt);
+              handleDropwodnBlur(evt);
             }}
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
