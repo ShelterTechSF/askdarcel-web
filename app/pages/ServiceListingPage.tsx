@@ -33,7 +33,6 @@ const { title: whiteLabelTitle, footerOptions: whiteLabelFooterOpts } =
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
-  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
     [service]
@@ -65,9 +64,6 @@ export const ServiceListingPage = () => {
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
-      case "feedback":
-        setFeedbackModalOpen(true);
-        break;
       case "print":
         window.print();
         break;

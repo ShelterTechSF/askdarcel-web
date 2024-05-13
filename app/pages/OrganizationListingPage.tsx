@@ -32,7 +32,6 @@ import {
 export const OrganizationListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [org, setOrg] = useState<Organization | null>(null);
-  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const { search } = useLocation();
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
   const { visitDeactivated } = searchState;
@@ -59,9 +58,6 @@ export const OrganizationListingPage = () => {
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
-      case "feedback":
-        setFeedbackModalOpen(true);
-        break;
       case "print":
         window.print();
         break;
