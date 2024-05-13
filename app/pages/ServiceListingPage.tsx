@@ -180,13 +180,6 @@ export const ServiceListingPage = () => {
                 <h2>Similar Services Near You</h2>
               </section>
             */}
-
-            <FeedbackModal
-              isOpen={feedbackModalOpen}
-              setIsOpen={setFeedbackModalOpen}
-              service={service}
-              organization={resource}
-            />
           </div>
           <div className="listing--aside">
             <ActionSidebar

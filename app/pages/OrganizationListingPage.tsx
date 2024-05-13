@@ -166,12 +166,6 @@ export const OrganizationListingPage = () => {
                 />
               </OrganizationSubheaderSection>
             )}
-
-            <FeedbackModal
-              isOpen={feedbackModalOpen}
-              setIsOpen={setFeedbackModalOpen}
-              organization={org}
-            />
           </div>
 
           <div className="org--aside">
