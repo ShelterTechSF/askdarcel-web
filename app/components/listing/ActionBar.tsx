@@ -20,7 +20,7 @@ const ActionButton = ({
   const content = (
     <>
       <img
-        className="action-sidebar--icon"
+        className=""
         src={iconPath(`${icon}-${iconColor}`)}
         alt={icon}
       />

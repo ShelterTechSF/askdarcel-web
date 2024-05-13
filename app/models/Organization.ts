@@ -98,10 +98,6 @@ export const getOrganizationActions = (
       name: "Print",
       icon: "print",
     },
-    {
-      name: "Share Feedback",
-      icon: "feedback",
-    },
   ];
 
   if (phoneNumber) {
