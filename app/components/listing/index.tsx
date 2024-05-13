@@ -1,5 +1,4 @@
 export * from "./ActionBar";
-export * from "./FeedbackModal";
 export * from "./ListingTitleLink";
 export * from "./MapOfLocations";
 export * from "./MOHCDBadge";
