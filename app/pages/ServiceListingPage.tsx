@@ -6,7 +6,6 @@ import qs from "qs";
 import {
   ActionBarMobile,
   ActionSidebar,
-  FeedbackModal,
   ListingTitleLink,
   MapOfLocations,
   MOHCDBadge,
@@ -31,7 +30,7 @@ const { title: whiteLabelTitle, footerOptions: whiteLabelFooterOpts } =
   whiteLabel;
 
 // Page at /services/123
-export const ServiceListingPage = () => {
+export const tingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);

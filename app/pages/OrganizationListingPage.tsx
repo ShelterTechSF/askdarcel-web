@@ -7,7 +7,6 @@ import {
   ActionBarMobile,
   ActionSidebar,
   AddressInfoRenderer,
-  FeedbackModal,
   EmailRenderer,
   MapOfLocations,
   MOHCDBadge,
