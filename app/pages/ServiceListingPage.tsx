@@ -30,7 +30,7 @@ const { title: whiteLabelTitle, footerOptions: whiteLabelFooterOpts } =
   whiteLabel;
 
 // Page at /services/123
-export const tingPage = () => {
+export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
