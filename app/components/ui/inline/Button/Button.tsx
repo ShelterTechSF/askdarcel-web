@@ -3,14 +3,14 @@ import React from "react";
 import styles from "./Button.module.scss";
 
 type ButtonType = "button" | "submit" | "reset";
-type StyleType = "transparent" | "text";
+type StyleType = "transparent" | "text" | "default";
 
 export const Button = ({
   children,
   onClick,
   buttonType = "button",
   addClass,
-  styleType,
+  styleType = "default",
   tabIndex,
   disabled,
 }: {
@@ -27,7 +27,7 @@ export const Button = ({
     buttonClass = styles.buttonTransparent;
   } else if (styleType === "text") {
     buttonClass = styles.textButton;
-  } else {
+  } else if (styleType === "default") {
     buttonClass = styles.button;
   }
 

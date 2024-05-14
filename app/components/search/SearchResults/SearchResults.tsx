@@ -5,7 +5,7 @@ import {
   connectStateResults,
   SearchResults as SearchResultsProps,
 } from "react-instantsearch/connectors";
-import { whiteLabel } from "utils";
+import { useAppContext, whiteLabel } from "utils";
 import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
@@ -14,6 +14,7 @@ import { Texting } from "components/Texting";
 import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
 import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
 import { TextListing } from "components/Texting/Texting";
+import { BookmarkModal } from "components/ui/BookmarkModal/BookmarkModal";
 import { Button } from "components/ui/inline/Button/Button";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
@@ -183,9 +184,11 @@ const SearchResult = ({
   expanded: boolean;
   onToggle: () => void;
 }) => {
+  const { authState } = useAppContext();
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
+  const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(false);
 
   type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
   const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
@@ -215,6 +218,10 @@ const SearchResult = ({
   }
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
+  // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
+  // returned by the API. Fetching the model from the API will need to be done in such a way that it does not
+  // block the rendering of the search results and yet does not cause the button to flash in a distracting manner
+  const bookmarkAdded = false;
 
   const texting = (
     <div
@@ -236,6 +243,7 @@ const SearchResult = ({
   const toggleClinicianActionsModal = () => {
     setClinicianActionsIsOpen(!clinicianActionsIsOpen);
   };
+
   const toggleHandoutModal = () => {
     setHandoutModalIsOpen(!handoutModalIsOpen);
   };
@@ -419,62 +427,77 @@ const SearchResult = ({
           )}
         </div>
 
-        <div className={styles.sideLinks}>
-          {expanded && (
-            <>
-              <div
-                className={
-                  showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
-                }
-              >
-                {hit.type === "service" &&
-                  !!hit.instructions?.length &&
-                  clinicianActionsLink}
-                {handoutsLink}
-              </div>
-              <div
-                className={
-                  showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
-                }
-              >
-                {phoneNumber && (
-                  <div
-                    className={`${styles.sideLink} ${styles.showInPrintView}`}
+        {expanded && (
+          <div className={styles.sideLinks}>
+            <div
+              className={
+                showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
+              }
+            >
+              {hit.type === "service" &&
+                !!hit.instructions?.length &&
+                clinicianActionsLink}
+              {handoutsLink}
+            </div>
+            <div
+              className={
+                showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
+              }
+            >
+              {phoneNumber && (
+                <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
+                  <img
+                    src={icon("phone-blue")}
+                    alt="phone"
+                    className={styles.sideLinkIcon}
+                  />
+                  <a
+                    href={`tel:${phoneNumber}`}
+                    className={styles.sideLinkText}
+                  >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
+                </div>
+              )}
+              <div />
+              {url && (
+                <div className={styles.sideLink}>
+                  <img
+                    src={icon("popout-blue")}
+                    alt="website"
+                    className={styles.sideLinkIcon}
+                  />
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={url}
+                    className={styles.sideLinkText}
                   >
-                    <img
-                      src={icon("phone-blue")}
-                      alt="phone"
-                      className={styles.sideLinkIcon}
-                    />
-                    <a
-                      href={`tel:${phoneNumber}`}
-                      className={styles.sideLinkText}
-                    >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
-                  </div>
-                )}
-                <div />
-                {url && (
-                  <div className={styles.sideLink}>
-                    <img
-                      src={icon("popout-blue")}
-                      alt="website"
-                      className={styles.sideLinkIcon}
-                    />
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={url}
-                      className={styles.sideLinkText}
-                    >
-                      Go to website
-                    </a>
-                  </div>
-                )}
-                {texting}
-              </div>
-            </>
-          )}
-        </div>
+                    Go to website
+                  </a>
+                </div>
+              )}
+              {texting}
+            </div>
+
+            {authState && (
+              <>
+                <Button
+                  onClick={() => {
+                    setBookmarkModalIsOpen(true);
+                  }}
+                  addClass={styles.bookmarkButton}
+                  styleType={bookmarkAdded ? "default" : "transparent"}
+                >
+                  {bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}
+                </Button>
+                <BookmarkModal
+                  isOpen={bookmarkModalIsOpen}
+                  setIsOpen={setBookmarkModalIsOpen}
+                  hit={hit}
+                />
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
