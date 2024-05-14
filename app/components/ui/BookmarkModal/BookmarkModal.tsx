@@ -20,7 +20,7 @@ export const BookmarkModal = ({
 }) => {
   // TODO update any types as needed when API work is done
   interface Folder {
-    id: number;
+    id?: number;
     name: string;
   }
 
@@ -63,7 +63,7 @@ export const BookmarkModal = ({
     });
   }, []);
 
-  const handleDropwodnBlur = (
+  const handleDropdownBlur = (
     event: React.FocusEvent<HTMLDivElement, Element>
   ) => {
     // Closes the dropdown unless the newly focused element is a child of the dropdown
@@ -77,7 +77,7 @@ export const BookmarkModal = ({
   const createBookmark = () => {
     // TODO: when bookmarks/folder API is done, fix this up
     if (!selectedFolder || !bookmarkName) return;
-    const isNewFolder = selectedFolder.id === -1;
+    const isNewFolder = !selectedFolder.id;
     if (isNewFolder) {
       // Create new folder then create new bookmark
     } else {
@@ -85,7 +85,7 @@ export const BookmarkModal = ({
     }
   };
 
-  const createNewFolder = (name: string) => {
+  const setNewFolderName = (name: string) => {
     setNewFolder(name);
     if (name.length) {
       setSelectedFolder({ id: -1, name });
@@ -129,11 +129,11 @@ export const BookmarkModal = ({
               hit.type === "service" ? `services` : `organizations`
             }/${hit.id}`}</p>
           </div>
-          <p className={styles.label}>LOCATION</p>
+          <p className={styles.label}>Location</p>
           <div
             className={styles.selectFolderContainer}
             onBlur={(evt) => {
-              handleDropwodnBlur(evt);
+              handleDropdownBlur(evt);
             }}
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
@@ -174,19 +174,19 @@ export const BookmarkModal = ({
                 >
                   <label
                     className={styles.addFolderLabel}
-                    htmlFor="createNewFolder"
+                    htmlFor="setNewFolderName"
                   >
                     +
                   </label>
                   <input
-                    id="createNewFolder"
+                    id="setNewFolderName"
                     className={styles.addFolderInput}
                     type="text"
                     placeholder="Create new folder"
                     value={newFolder}
-                    onChange={(evt) => createNewFolder(evt.target.value)}
+                    onChange={(evt) => setNewFolderName(evt.target.value)}
                     onFocus={(evt) => {
-                      createNewFolder(evt.target.value);
+                      setNewFolderName(evt.target.value);
                     }}
                     onKeyDown={(evt) => {
                       if (evt.key === "Enter") {

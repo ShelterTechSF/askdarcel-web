@@ -219,7 +219,8 @@ const SearchResult = ({
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
   // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
-  // returned by the API or just read off of the `hit` directly; it is set here for dev purposes
+  // returned by the API. Fetching the model from the API will need to be done in such a way that it does not
+  // block the rendering of the search results and yet does not cause the button to flash in a distracting manner
   const bookmarkAdded = false;
 
   const texting = (
@@ -484,9 +485,9 @@ const SearchResult = ({
                     setBookmarkModalIsOpen(true);
                   }}
                   addClass={styles.bookmarkButton}
-                  styleType={`${bookmarkAdded ? "default" : "transparent"}`}
+                  styleType={bookmarkAdded ? "default" : "transparent"}
                 >
-                  {`${bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}`}
+                  {bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}
                 </Button>
                 <BookmarkModal
                   isOpen={bookmarkModalIsOpen}
