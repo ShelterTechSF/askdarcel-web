@@ -6,7 +6,6 @@ import qs from "qs";
 import {
   ActionBarMobile,
   ActionSidebar,
-  FeedbackModal,
   ListingTitleLink,
   MapOfLocations,
   MOHCDBadge,
@@ -34,7 +33,6 @@ const { title: whiteLabelTitle, footerOptions: whiteLabelFooterOpts } =
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
-  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
     [service]
@@ -59,16 +57,13 @@ export const ServiceListingPage = () => {
   const locations = getServiceLocations(service, resource, recurringSchedule);
   const allActions = getOrganizationActions(resource);
   const sidebarActions = allActions.filter((a) =>
-    ["print", "directions", "feedback"].includes(a.icon)
+    ["print", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
-    ["phone", "directions", "feedback"].includes(a.icon)
+    ["phone", "directions"].includes(a.icon)
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
-      case "feedback":
-        setFeedbackModalOpen(true);
-        break;
       case "print":
         window.print();
         break;
@@ -181,13 +176,6 @@ export const ServiceListingPage = () => {
                 <h2>Similar Services Near You</h2>
               </section>
             */}
-
-            <FeedbackModal
-              isOpen={feedbackModalOpen}
-              setIsOpen={setFeedbackModalOpen}
-              service={service}
-              organization={resource}
-            />
           </div>
           <div className="listing--aside">
             <ActionSidebar

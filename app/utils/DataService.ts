@@ -1,7 +1,5 @@
 import * as _ from "lodash";
 
-import type { VoteType } from "../components/listing/feedback/constants";
-
 function setAuthHeaders(resp: Response): void {
   const { headers } = resp;
   if (headers.get("access-token") && headers.get("client")) {
@@ -115,19 +113,6 @@ export function APIDelete(
     setAuthHeaders(resp);
   });
 }
-
-interface FeedbackBody {
-  rating: VoteType;
-  tags: string[];
-  review: string;
-}
-
-export const addFeedback = (
-  source: "resources" | "services",
-  sourceId: number,
-  body: FeedbackBody
-): Promise<Response> =>
-  post(`/api/${source}/${sourceId}/feedbacks`, body).then((res) => res.json());
 
 export const getResourceCount = (): Promise<number> =>
   get("/api/resources/count");

@@ -7,7 +7,6 @@ import {
   ActionBarMobile,
   ActionSidebar,
   AddressInfoRenderer,
-  FeedbackModal,
   EmailRenderer,
   MapOfLocations,
   MOHCDBadge,
@@ -33,7 +32,6 @@ import {
 export const OrganizationListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [org, setOrg] = useState<Organization | null>(null);
-  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const { search } = useLocation();
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
   const { visitDeactivated } = searchState;
@@ -53,16 +51,13 @@ export const OrganizationListingPage = () => {
   const orgLocations = getOrganizationLocations(org);
   const allActions = getOrganizationActions(org);
   const sidebarActions = allActions.filter((a) =>
-    ["print", "directions", "feedback"].includes(a.icon)
+    ["print", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
-    ["phone", "directions", "feedback"].includes(a.icon)
+    ["phone", "directions"].includes(a.icon)
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
-      case "feedback":
-        setFeedbackModalOpen(true);
-        break;
       case "print":
         window.print();
         break;
@@ -167,12 +162,6 @@ export const OrganizationListingPage = () => {
                 />
               </OrganizationSubheaderSection>
             )}
-
-            <FeedbackModal
-              isOpen={feedbackModalOpen}
-              setIsOpen={setFeedbackModalOpen}
-              organization={org}
-            />
           </div>
 
           <div className="org--aside">
