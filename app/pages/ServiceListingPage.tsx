@@ -57,10 +57,10 @@ export const ServiceListingPage = () => {
   const locations = getServiceLocations(service, resource, recurringSchedule);
   const allActions = getOrganizationActions(resource);
   const sidebarActions = allActions.filter((a) =>
-    ["print", "directions", "feedback"].includes(a.icon)
+    ["print", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
-    ["phone", "directions", "feedback"].includes(a.icon)
+    ["phone", "directions"].includes(a.icon)
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {

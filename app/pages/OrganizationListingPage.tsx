@@ -51,10 +51,10 @@ export const OrganizationListingPage = () => {
   const orgLocations = getOrganizationLocations(org);
   const allActions = getOrganizationActions(org);
   const sidebarActions = allActions.filter((a) =>
-    ["print", "directions", "feedback"].includes(a.icon)
+    ["print", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
-    ["phone", "directions", "feedback"].includes(a.icon)
+    ["phone", "directions"].includes(a.icon)
   );
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
