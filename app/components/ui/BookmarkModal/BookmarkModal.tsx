@@ -33,6 +33,7 @@ export const BookmarkModal = ({
   const newBookmark = false;
 
   const [folderOptions, setFolderOptions] = useState<Folder[]>([]);
+  // TODO: This should probably be an index representing the selected element in the folderOptions array
   const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
   const [newFolder, setNewFolder] = useState("");
   const [expandFolders, setExpandFolders] = useState(false);
@@ -88,7 +89,7 @@ export const BookmarkModal = ({
   const setNewFolderName = (name: string) => {
     setNewFolder(name);
     if (name.length) {
-      setSelectedFolder({ id: -1, name });
+      setSelectedFolder({ name });
     } else {
       setSelectedFolder(null);
     }
@@ -106,7 +107,7 @@ export const BookmarkModal = ({
       <div className={styles.modalContent}>
         <div>
           <div className={styles.bookmarkDescription}>
-            <i className={`material-icons ${styles.bookmarkIcon}`}>folder</i>
+            <i className={`material-icons ${styles.bookmarkIcon}`}>star</i>
             <div className={styles.bookmarkNameContainer}>
               <input
                 value={bookmarkName}
@@ -186,7 +187,9 @@ export const BookmarkModal = ({
                     value={newFolder}
                     onChange={(evt) => setNewFolderName(evt.target.value)}
                     onFocus={(evt) => {
-                      setNewFolderName(evt.target.value);
+                      if (evt.target.value) {
+                        setNewFolderName(evt.target.value);
+                      }
                     }}
                     onKeyDown={(evt) => {
                       if (evt.key === "Enter") {
