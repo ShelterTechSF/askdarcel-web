@@ -8,6 +8,8 @@
 
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import * as Sentry from "@sentry/browser";
+
 import * as AuthService from "utils/AuthService";
 import { useAppContext } from "utils";
 import { Loader } from "components/ui";
@@ -18,11 +20,18 @@ export const AuthInterstitial = () => {
 
   useEffect(() => {
     const { hash } = window.location;
-    // In some cases the effect can run twice, the second time happening after the user authState
-    // has been successfully created. If `initializeUserSession` is run after a session already exists
-    // it causes an unhandled rejection, which breaks the login flow. Thus, we check if the authState
-    // already exists and if so, prevent the initUserSession method from being called again.
-    if (authState || !hash || !hash.includes("access_token")) {
+    // Check if the authState already exists and if so, redirect the user to the nav dashboard. We also
+    // want to prevent the initUserSession method from being called twice as that can break the auth flow
+    // and/or lead to other weird consequences
+    if (authState) {
+      history.push("navigator-dashboard");
+      return;
+    }
+
+    if (!hash || !hash.includes("access_token")) {
+      // If auth state does NOT exist BUT there is no hash or the hash has no access token, something went off somehow.
+      // Just default to redirecting the user to the log-in page until we can craft a more sophisticated way to handle this
+      history.push("log-in");
       return;
     }
 
@@ -30,9 +39,17 @@ export const AuthInterstitial = () => {
       window.location.hash,
       authClient,
       setAuthState
-    ).then(() => {
-      history.push("navigator-dashboard");
-    });
+    )
+      .then(() => {
+        history.push("navigator-dashboard");
+      })
+      .catch((err) => {
+        // Something went awry. Log the error and redirect the user back to the log-in page until we can better handle this case.
+        // Better luck next time (for now)!
+        // TODO: handle this case
+        Sentry.captureException(err);
+        history.push("log-in");
+      });
   }, [authClient, authState, history, setAuthState]);
 
   return (
