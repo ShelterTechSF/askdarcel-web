@@ -2,7 +2,7 @@ import type { PopupMessageProp } from "components/ui";
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { whiteLabel, useAppContext } from "utils";
-import { ProtectedRoute } from "components/utils";
+import { ProtectedRoute, PublicRoute } from "components/utils";
 
 import { AuthInterstitial } from "pages/AuthInterstitial";
 import { HomePage } from "pages/HomePage";
@@ -53,12 +53,6 @@ export const Router = ({
       <Route exact path="/about" component={AboutPage} />
       <Route exact path="/auth" component={AuthInterstitial} />
       <Route exact path="/demo/listing" component={ListingDebugPage} />
-      <ProtectedRoute
-        exact
-        isAuthenticated={!!authState}
-        path="/navigator-dashboard"
-        component={NavigatorDashboard}
-      />
       {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
                 step will be interpreted as an ID and will thus break the OrganizationEditPage */}
       <Route
@@ -107,9 +101,30 @@ export const Router = ({
         path="/breaking-news/edit"
         component={EditBreakingNewsPage}
       />
-      <Route exact path="/log-in" component={LoginPage} />
-      <Route exact path="/sign-up" component={SignUpPage} />
-      <Route exact path="/log-out" component={LogoutPage} />
+      <ProtectedRoute
+        exact
+        isAuthenticated={!!authState}
+        path="/navigator-dashboard"
+        component={NavigatorDashboard}
+      />
+      <PublicRoute
+        exact
+        isAuthenticated={!!authState}
+        path="/log-in"
+        component={LoginPage}
+      />
+      <PublicRoute
+        exact
+        isAuthenticated={!!authState}
+        path="/sign-up"
+        component={SignUpPage}
+      />
+      <ProtectedRoute
+        exact
+        isAuthenticated={!!authState}
+        path="/log-out"
+        component={NavigatorDashboard}
+      />
 
       {/* UCSF white label paths */}
       <Route
