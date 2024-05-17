@@ -22,7 +22,7 @@ export const AuthInterstitial = () => {
     // has been successfully created. If `initializeUserSession` is run after a session already exists
     // it causes an unhandled rejection, which breaks the login flow. Thus, we check if the authState
     // already exists and if so, prevent the initUserSession method from being called again.
-    if ((authState && !hash) || !hash.includes("access_token")) {
+    if (authState || !hash || !hash.includes("access_token")) {
       return;
     }
 
