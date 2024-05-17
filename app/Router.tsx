@@ -123,7 +123,7 @@ export const Router = ({
         exact
         isAuthenticated={!!authState}
         path="/log-out"
-        component={NavigatorDashboard}
+        component={LogoutPage}
       />
 
       {/* UCSF white label paths */}
