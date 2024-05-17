@@ -268,7 +268,9 @@ const BookmarkFolderCard = ({
   const dateString = useMemo(() => {
     const updatedAtDate = new Date(updatedAt);
     const now = new Date();
-    const timeDifference = Math.floor((now.getTime() - updatedAtDate.getTime()) / 60000);
+    const timeDifference = Math.floor(
+      (now.getTime() - updatedAtDate.getTime()) / 60000
+    );
 
     if (timeDifference < 60) {
       const pluralize = timeDifference === 1 ? "" : "s";
