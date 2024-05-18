@@ -95,7 +95,7 @@ const AdvancedSearch = () => {
 
   return (
     <div className={styles.advancedSearchContainer}>
-      <h1 className={styles.header}>Hi, Navigator :)</h1>
+      <h1 className={styles.header}>Hi, Navigator :) TEST TEST</h1>
       <p className={styles.blurb}>
         Please use the search bar to find resources for the individuals
         you&apos;re assisting. You can enter keywords such as
