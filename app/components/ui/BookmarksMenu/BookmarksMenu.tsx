@@ -6,34 +6,34 @@ import styles from "./BookmarksMenu.module.scss";
 
 // TODO: These will be passed in to this component and fetched from the API
 // when the API is ready
-const bookmarkFolderData = [
-  {
-    id: 1,
-    name: "Food Kitchen List",
-    updatedAt: new Date().toISOString(),
-    bookmarks: [
-      { id: 1, name: "TL Food Kitchen", url: "search?query=food" },
-      { id: 2, name: "Mission Food Kitchen", url: "search?query=food" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Dave's Service List",
-    updatedAt: "2024-05-16T19:28:48.561Z",
-    bookmarks: [
-      { id: 11, name: "Dave's Favorite", url: "search?query=shelter" },
-      { id: 12, name: "Dave's TL Service", url: "search?query=food" },
-    ],
-  },
-  {
-    id: 3,
-    name: "24 Hour Shelters",
-    updatedAt: "2024-05-15T21:42:48.561Z",
-    bookmarks: [
-      { id: 111, name: "24hr SOMA shelter", url: "search?query=shelter" },
-      { id: 112, name: "24hr shelter", url: "search?query=food" },
-    ],
-  },
+const bookmarkFolderData: any[] = [
+  // {
+  //   id: 1,
+  //   name: "Food Kitchen List",
+  //   updatedAt: new Date().toISOString(),
+  //   bookmarks: [
+  //     { id: 1, name: "TL Food Kitchen", url: "search?query=food" },
+  //     { id: 2, name: "Mission Food Kitchen", url: "search?query=food" },
+  //   ],
+  // },
+  // {
+  //   id: 2,
+  //   name: "Dave's Service List",
+  //   updatedAt: "2024-05-16T19:28:48.561Z",
+  //   bookmarks: [
+  //     { id: 11, name: "Dave's Favorite", url: "search?query=shelter" },
+  //     { id: 12, name: "Dave's TL Service", url: "search?query=food" },
+  //   ],
+  // },
+  // {
+  //   id: 3,
+  //   name: "24 Hour Shelters",
+  //   updatedAt: "2024-05-15T21:42:48.561Z",
+  //   bookmarks: [
+  //     { id: 111, name: "24hr SOMA shelter", url: "search?query=shelter" },
+  //     { id: 112, name: "24hr shelter", url: "search?query=food" },
+  //   ],
+  // },
 ];
 
 const menuStyles = {
@@ -126,10 +126,7 @@ const BookmarksInnerMenu = ({
             setActiveFolder={setActiveFolder}
           />
         ) : (
-          <BookmarksList
-            bookmarks={bookmarkFolders[activeFolder].bookmarks}
-            // setActiveFolder={setActiveFolder}
-          />
+          <BookmarksList bookmarks={bookmarkFolders[activeFolder].bookmarks} />
         )}
       </ul>
     </div>
