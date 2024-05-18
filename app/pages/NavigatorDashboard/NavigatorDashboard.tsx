@@ -7,7 +7,7 @@ import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { coreCategories } from "pages/HomePage";
 import { get } from "utils/DataService";
-import {useAppContext} from "utils/useAppContext";
+import { useAppContext } from "utils/useAppContext";
 
 import styles from "./NavigatorDashboard.module.scss";
 import { CategoryFilters } from "./CategoryFilters/CategoryFilters";

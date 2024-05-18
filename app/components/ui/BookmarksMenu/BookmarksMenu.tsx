@@ -78,9 +78,13 @@ export const BookmarksMenu = ({
   </Menu>
 );
 
-const BookmarksInnerMenu = ({toggleMenu}: {toggleMenu: (open: boolean) => void}) => {
+const BookmarksInnerMenu = ({
+  toggleMenu,
+}: {
+  toggleMenu: (open: boolean) => void;
+}) => {
   const [activeFolder, setActiveFolder] = useState<number | null>(null);
-  const [bookmarkFolders,] = useState(bookmarkFolderData);
+  const [bookmarkFolders] = useState(bookmarkFolderData);
   const showFolders = () => {
     if (activeFolder !== null) {
       setActiveFolder(null);
@@ -100,7 +104,12 @@ const BookmarksInnerMenu = ({toggleMenu}: {toggleMenu: (open: boolean) => void})
         </button>
       </div>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-      <p className={`${styles.activeFolderHeader} ${activeFolder !== null ? styles.folderSelected : ""}`} onClick={showFolders}>
+      <p
+        className={`${styles.activeFolderHeader} ${
+          activeFolder !== null ? styles.folderSelected : ""
+        }`}
+        onClick={showFolders}
+      >
         {activeFolder === null ? (
           ""
         ) : (
@@ -125,7 +134,7 @@ const BookmarksInnerMenu = ({toggleMenu}: {toggleMenu: (open: boolean) => void})
       </ul>
     </div>
   );
-}
+};
 
 // TODO fix TS defs once we have data from API
 const FolderItem = ({ folder }: { folder: any }) => (
