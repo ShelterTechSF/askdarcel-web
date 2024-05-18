@@ -81,7 +81,7 @@ function determineWhiteLabelSite(): WhiteLabelSiteKey {
   )
     return "SFServiceGuide";
   // N.B. The qaone environment can be used to test various whitelabels as needed
-  if (subdomain === "qaone") return "Ucsf";
+  if (subdomain === "qaone") return "SFServiceGuide";
 
   return "defaultWhiteLabel";
 }
