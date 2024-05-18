@@ -7,6 +7,7 @@ import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
 import { coreCategories } from "pages/HomePage";
 import { get } from "utils/DataService";
+import {useAppContext} from "utils/useAppContext";
 
 import styles from "./NavigatorDashboard.module.scss";
 import { CategoryFilters } from "./CategoryFilters/CategoryFilters";
@@ -28,53 +29,8 @@ const PARENT_ELIGIBILITIES: { name: string; id: number }[] = [];
 const initialSelectedEligibilities = PARENT_ELIGIBILITIES.map(() => []);
 
 // TODO: Once the API is developed, replace this mock data with actual requested data from the API
-const bookmarkFolders: any[] = [];
 const savedSearches: any[] = [];
-// const bookmarkFolders = [
-//   {
-//     id: 1,
-//     name: "Food Kitchen List",
-//     updatedAt: new Date().toISOString(),
-//   },
-//   {
-//     id: 2,
-//     name: "Dave's Service List",
-//     updatedAt: "2024-05-16T19:28:48.561Z",
-//   },
-//   {
-//     id: 3,
-//     name: "24 Hour Shelters",
-//     updatedAt: "2024-05-15T21:42:48.561Z",
-//   },
-//   {
-//     id: 4,
-//     name: "Job Training Resources for Veterans",
-//     updatedAt: "2024-05-12T21:42:48.561Z",
-//   },
-// ];
-
-// const savedSearches = [
-//   {
-//     id: 1,
-//     description: "Food Kitchen Search",
-//     url: "query=food&refinementList%5Beligibilities%5D%5B0%5D=All%20Disabilities&refinementList%5Beligibilities%5D%5B1%5D=Developmental%20Disability&refinementList%5Beligibilities%5D%5B2%5D=Physical%20Disability&refinementList%5Beligibilities%5D%5B3%5D=Learning%20Disability&refinementList%5Beligibilities%5D%5B4%5D=Intellectual%20Disability&refinementList%5Beligibilities%5D%5B5%5D=Visual%20Impairment&refinementList%5Beligibilities%5D%5B6%5D=Limited%20Mobility&refinementList%5Beligibilities%5D%5B7%5D=Deaf%20or%20Hard%20of%20Hearing&page=1&configure%5BaroundLatLng%5D=37.7758%2C%20-122.4392&configure%5BaroundRadius%5D=all&configure%5BaroundPrecision%5D=1600",
-//   },
-//   {
-//     id: 2,
-//     description: "Another Food Kitchen Search",
-//     url: "query=food&refinementList%5Beligibilities%5D%5B0%5D=All%20Disabilities&refinementList%5Beligibilities%5D%5B1%5D=Developmental%20Disability&refinementList%5Beligibilities%5D%5B2%5D=Physical%20Disability&refinementList%5Beligibilities%5D%5B3%5D=Learning%20Disability&refinementList%5Beligibilities%5D%5B4%5D=Intellectual%20Disability&refinementList%5Beligibilities%5D%5B5%5D=Visual%20Impairment&refinementList%5Beligibilities%5D%5B6%5D=Limited%20Mobility&refinementList%5Beligibilities%5D%5B7%5D=Deaf%20or%20Hard%20of%20Hearing&page=1&configure%5BaroundLatLng%5D=37.7758%2C%20-122.4392&configure%5BaroundRadius%5D=all&configure%5BaroundPrecision%5D=1600",
-//   },
-//   {
-//     id: 3,
-//     description: "Search for shelters",
-//     url: "query=shelters&refinementList%5Beligibilities%5D%5B0%5D=All%20Disabilities&refinementList%5Beligibilities%5D%5B1%5D=Developmental%20Disability&refinementList%5Beligibilities%5D%5B2%5D=Physical%20Disability&refinementList%5Beligibilities%5D%5B3%5D=Learning%20Disability&refinementList%5Beligibilities%5D%5B4%5D=Intellectual%20Disability&refinementList%5Beligibilities%5D%5B5%5D=Visual%20Impairment&refinementList%5Beligibilities%5D%5B6%5D=Limited%20Mobility&refinementList%5Beligibilities%5D%5B7%5D=Deaf%20or%20Hard%20of%20Hearing&page=1&configure%5BaroundLatLng%5D=37.7758%2C%20-122.4392&configure%5BaroundRadius%5D=all&configure%5BaroundPrecision%5D=1600",
-//   },
-//   {
-//     id: 4,
-//     description: "Job Resources Search",
-//     url: "query=jobs&refinementList%5Beligibilities%5D%5B0%5D=All%20Disabilities&refinementList%5Beligibilities%5D%5B1%5D=Developmental%20Disability&refinementList%5Beligibilities%5D%5B2%5D=Physical%20Disability&refinementList%5Beligibilities%5D%5B3%5D=Learning%20Disability&refinementList%5Beligibilities%5D%5B4%5D=Intellectual%20Disability&refinementList%5Beligibilities%5D%5B5%5D=Visual%20Impairment&refinementList%5Beligibilities%5D%5B6%5D=Limited%20Mobility&refinementList%5Beligibilities%5D%5B7%5D=Deaf%20or%20Hard%20of%20Hearing&page=1&configure%5BaroundLatLng%5D=37.7758%2C%20-122.4392&configure%5BaroundRadius%5D=all&configure%5BaroundPrecision%5D=1600",
-//   },
-// ];
+const bookmarkFolders: any[] = [];
 
 const AdvancedSearch = () => {
   const [expandedOptions, setExpandedOptions] = useState(false);
@@ -86,8 +42,8 @@ const AdvancedSearch = () => {
     SelectOptions[]
   >(initialSelectedEligibilities);
   const [searchValue, setSearchValue] = useState("");
-
   const history = useHistory();
+  const { setBookmarksMenuOpen } = useAppContext();
 
   useEffect(() => {
     // This makes a request to our API for all the eligibilities belonging to parent eligibility
@@ -219,7 +175,8 @@ const AdvancedSearch = () => {
           <p className={styles.label}>Bookmarks</p>
           <ul className={styles.cardList}>
             {bookmarkFolders.map((folder) => (
-              <li key={folder.id}>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+              <li key={folder.id} onClick={() => setBookmarksMenuOpen(true)}>
                 <BookmarkFolderCard folder={folder} />
               </li>
             ))}

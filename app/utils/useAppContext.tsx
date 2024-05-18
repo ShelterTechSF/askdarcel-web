@@ -30,6 +30,7 @@ export type AuthState = {
 } | null;
 
 interface Context {
+  setBookmarksMenuOpen: (open: boolean) => void;
   userLocation: GeoCoordinates | null;
   authState: AuthState;
   setAuthState: (state: AuthState) => void;
@@ -45,6 +46,7 @@ const authClient = new auth0.WebAuth({
 });
 
 export const AppContext = createContext<Context>({
+  setBookmarksMenuOpen: () => {},
   userLocation: null,
   authState: null,
   setAuthState: () => {},
@@ -56,9 +58,11 @@ export const useAppContext = () => useContext(AppContext);
 export const AppProvider = ({
   children,
   userLocation,
+  setBookmarksMenuOpen,
 }: {
   children: React.ReactNode;
   userLocation: GeoCoordinates | null;
+  setBookmarksMenuOpen: (open: boolean) => void;
 }) => {
   const authObject = SessionCacher.getAuthObject();
   const [authState, setAuthState] = useState<AuthState>(authObject);
@@ -69,12 +73,13 @@ export const AppProvider = ({
   // be recreated at each render and thus force all of its child components to re-render as well.
   const contextValue = useMemo(() => {
     return {
+      setBookmarksMenuOpen,
       userLocation,
       authState,
       setAuthState,
       authClient,
     };
-  }, [authState, userLocation]);
+  }, [authState, userLocation, setBookmarksMenuOpen]);
 
   useEffect(() => {
     // This effect runs after any changes to the AppContext's authState and syncs the changes

@@ -1,0 +1,122 @@
+.container {
+  padding: 3px;
+}
+
+.header {
+  padding: 7px 15px 7px 25px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #D9D9D9;
+}
+
+.closeButton {
+  background: transparent;
+  width: auto;
+  height: auto;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 26px;
+  color: #000;
+}
+
+.activeFolderHeader {
+  height: 40px;
+  padding: 8px 15px 5px 25px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 25px;
+  &.folderSelected {
+    cursor: pointer;
+  }
+}
+
+.list {
+  display: grid;
+  gap: 15px;
+}
+
+.bookmarkItem,
+.folderItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 15px;
+  padding: 0 15px 0 25px;
+  cursor: pointer;
+}
+
+.itemIconBox {
+  background-color: #F8F9FA;
+  width: 75px;
+  height: 75px;
+  padding: 5px;
+  display: grid;
+  .folderIcon {
+    color: #5F6367;
+    font-size: 30px;
+  }
+}
+
+.bookmarkIconBox {
+  .bookmarkIcon {
+    font-size: 45px;
+    line-height: 0;
+    align-self: center;
+    text-align: center;
+    color: #5F6367;
+  }
+}
+
+.folderName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+}
+
+.folderCount {
+  align-self: end;
+  text-align: right;
+  font-size: 15px;
+}
+
+// /* Bookmarks */
+
+// position: absolute;
+// width: 148px;
+// height: 35px;
+// left: 35px;
+// top: 15px;
+
+// font-family: 'Open Sans';
+// font-style: normal;
+// font-weight: 700;
+// font-size: 26px;
+// line-height: 35px;
+
+// color: #000000;
+
+/* Service List */
+
+// width: 133px;
+// height: 20px;
+
+// font-family: 'Open Sans';
+// font-style: normal;
+// font-weight: 600;
+// font-size: 15px;
+// font-weight: 600;
+// line-height: 20px;
+// display: flex;
+// align-items: center;
+
+// color: #000000;
+
+
+// /* Inside auto layout */
+// flex: none;
+// order: 1;
+// flex-grow: 0;
+// z-index: 1;

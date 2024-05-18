@@ -1,4 +1,5 @@
 export * from "./Banner";
+export * from "./BookmarksMenu/BookmarksMenu";
 export { NewsArticles } from "./NewsArticles/NewsArticles";
 export * from "./Datatable";
 export * from "./Footer";
