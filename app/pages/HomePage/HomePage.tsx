@@ -106,7 +106,7 @@ export const HomePage = () => {
   return (
     <>
       {showBreakingNews && <NewsArticles />}
-      <HomePageSection title="Find essential services in San Francisco">
+      <HomePageSection title="Find essential services in San Francisco TESTEST TEST">
         <ResourceList resources={coreCategories} />
       </HomePageSection>
       <HomePageSection
