@@ -10,7 +10,6 @@ interface Config {
   AUTH0_CLIENT_ID: string;
   AUTH0_DOMAIN: string;
   AUTH0_REDIRECT_URI: string;
-  // GOOGLE_ANALYTICS_ID: string;
   GOOGLE_ANALYTICS_GA4_ID: string;
   GOOGLE_API_KEY: string;
   INTERCOM_APP_ID: string;
@@ -32,9 +31,6 @@ const config: Config = {
   AUTH0_CLIENT_ID: CONFIG.AUTH0_CLIENT_ID,
   AUTH0_DOMAIN: CONFIG.AUTH0_DOMAIN,
   AUTH0_REDIRECT_URI: CONFIG.AUTH0_REDIRECT_URI,
-  // When GA sunsets Universal Analytics wit GA4 in July 2023, this prop can be removed
-  // GOOGLE_ANALYTICS_ID:
-  //   process.env.NODE_ENV === "production" ? "UA-116318550-1" : "UA-116318550-2",
   GOOGLE_ANALYTICS_GA4_ID: process.env.NODE_ENV === "production" ? "" : "",
   GOOGLE_API_KEY: CONFIG.GOOGLE_API_KEY,
   INTERCOM_APP_ID: "",
