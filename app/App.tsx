@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 // Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
 // package and all references to it:
 // https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
-import ReactGA from "react-ga";
 import ReactGA_4 from "react-ga4";
 
 import Intercom from "react-intercom";
@@ -47,8 +46,10 @@ export const App = () => {
       setUserLocation(loc);
     });
 
-    ReactGA.initialize(config.GOOGLE_ANALYTICS_ID);
-    ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
+    if (config.GOOGLE_ANALYTICS_GA4_ID) {
+      ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
+    }
+
     return history.listen((loc) => {
       setTimeout(() => {
         /* We call setTimeout here to give our views time to update the document title before
@@ -59,9 +60,6 @@ export const App = () => {
           hitType: "pageview",
           page,
         });
-
-        ReactGA.set({ page });
-        ReactGA.pageview(page);
       }, 500);
     });
   }, [history]);

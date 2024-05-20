@@ -5,7 +5,6 @@ import qs from "qs";
 // Todo: Once GA sunsets the UA analytics tracking come July 2023, we can remove the "react-ga"
 // package and all references to it:
 // https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
-import ReactGA from "react-ga";
 import ReactGA_4 from "react-ga4";
 
 import type { Category } from "models/Meta";
@@ -108,12 +107,7 @@ const Page = () => {
       const eligibilitiesRefinements =
         searchState.refinementList.eligibilities.join("; ") || "NONE";
       const search = qs.stringify(searchState, { encodeValuesOnly: true });
-
-      ReactGA.event({
-        category: "UCSF Resource Inquiry",
-        action: "Refined UCSF Resource Inquiry",
-        label: `${slug} Inquiry | Category Refinements: ${categoriesRefinements} | Eligibility Refinements: ${eligibilitiesRefinements}`,
-      });
+      
       ReactGA_4.event({
         category: "UCSF Resource Inquiry",
         action: "Refined UCSF Resource Inquiry",
