@@ -1,4 +1,4 @@
-const { readFileSync } = require("fs");
+const { readFileSync, existsSync } = require("fs");
 const yaml = require("js-yaml");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,10 +7,18 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
-const CONFIG_YAML = process.env.CONFIG_YAML || "config.yml";
+let userConfig = {};
+
+if (existsSync("config.yml") || process.env.CONFIG_YAML) {
+  const CONFIG_YAML = process.env.CONFIG_YAML || "config.yml";
+  userConfig = yaml.safeLoad(readFileSync(CONFIG_YAML, "utf8"));
+} else {
+  console.warn(
+    "No configuration file detected, defaulting to environment variables."
+  );
+}
 
 // Take the user config from the file, and override keys with environment variables if they exist
-const userConfig = yaml.safeLoad(readFileSync(CONFIG_YAML, "utf8"));
 const environmentConfig = [
   "GOOGLE_API_KEY",
   "ALGOLIA_INDEX_PREFIX",
