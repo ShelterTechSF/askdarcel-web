@@ -9,6 +9,7 @@
   "browser": "app/init.jsx",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "@sanity/client": "^6.18.2",
     "@sentry/browser": "^4.0.6",
     "algoliasearch": "^4.10.5",
     "auth0-js": "^9.22.1",
