@@ -25,6 +25,7 @@ import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
 
 import styles from "./App.module.scss";
+import { client } from "./sanity";
 
 const { intercom, showBanner, showSearch, siteUrl, title, userWay } =
   whiteLabel;
@@ -40,6 +41,15 @@ export const App = () => {
     type: "success",
   });
   const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const data = await client.fetch(`*[_type == 'event']`);
+      console.log(data);
+    };
+
+    fetchEvents();
+  }, [client]);
 
   useEffect(() => {
     getLocation().then((loc) => {
