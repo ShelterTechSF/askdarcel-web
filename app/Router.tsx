@@ -7,6 +7,7 @@ import { ProtectedRoute, PublicRoute } from "components/utils";
 import { AuthInterstitial } from "pages/AuthInterstitial";
 import { HomePage } from "pages/HomePage";
 import { AboutPage } from "pages/AboutPage";
+import { AboutPage as AboutPage2 } from "pages/AboutPage2";
 import { ListingDebugPage } from "pages/debug/ListingDemoPage";
 import { NavigatorDashboard } from "pages/NavigatorDashboard/NavigatorDashboard";
 import { OrganizationListingPage } from "pages/OrganizationListingPage";
@@ -140,6 +141,7 @@ export const Router = ({
         path="/resource/edit"
         component={RedirectToOrganizationsEdit}
       />
+      <Route exact path="/about2" component={AboutPage2} />
       <Route exact path="/resource" component={RedirectToOrganizations} />
       <Redirect to="/" />
     </Switch>
