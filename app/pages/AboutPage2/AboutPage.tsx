@@ -1,21 +1,39 @@
-// import whiteLabel from "../../utils/whitelabel";
-// import { LinkSf } from "./AboutPageMarkup/LinkSf";
-// import { SfServiceGuide } from "./AboutPageMarkup/SfServiceGuide";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { client } from "../../sanity";
+import { Masthead } from "../../components/ui/Masthead/Masthead";
+import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
+import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
 
-// Disable max line length rule, since this file is mostly just text-heavy HTML content.
-/* eslint-disable max-len */
 export const AboutPage = () => {
+  const [pageData, setPageData] = useState({ pageInitialized: false });
+
   useEffect(() => {
-    const fetchEvents = async () => {
-      const data = await client.fetch(`*[_type == 'event']`);
-      console.log(data);
-      debugger;
+    const fetchPageData = async () => {
+      const fetchedPageData = await client.fetch(
+        `*[_type == 'contentPage' && name == 'About']{mastHead, twoColumnContentSections[]->}`
+      );
+
+      setPageData({
+        ...fetchedPageData[0],
+        pageInitialized: true,
+      });
     };
 
-    fetchEvents();
+    fetchPageData();
   }, []);
 
-  return <>sup</>;
+  if (!pageData.pageInitialized) {
+    return <>"loading...";</>;
+  }
+
+  return (
+    <>
+      <Masthead title={pageData.mastHead} />
+      {pageData?.twoColumnContentSections?.map((section: any) => {
+        console.log(section);
+        return <TwoColumnContentSection title={section.name} />;
+      })}
+      <EmailSignup />
+    </>
+  );
 };

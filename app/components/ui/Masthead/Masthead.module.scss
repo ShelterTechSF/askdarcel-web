@@ -1,0 +1,73 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.mastheadContainer {
+  width: 100%;
+  background: var(--surface-surface-4, #cd4a23);
+  padding: var(--section-padding-desktop-vertical, 6rem)
+    var(--section-padding-desktop-margins, 8rem);
+  align-items: center;
+  gap: var(--general-spacing-xxl, 3rem);
+  align-self: stretch;
+}
+
+.mastheadHeader {
+  color: var(--text-text-tertiary, #fff);
+  /* desktop h1 */
+  font-size: var(--desktop-h1, 3rem);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 3.75rem */
+}
+
+// .bannerContainer {
+//   display: grid;
+//   align-items: center;
+//   width: 100%;
+//   min-height: 98px;
+//   padding: calc-em(16px) calc-em(28px);
+//   color: black;
+//   background-color: $color-yellow;
+//   font-size: calc-em(22px);
+//   strong {
+//     font-weight: bold;
+//   }
+//   @media screen and (max-width: $break-tablet-s) {
+//     font-size: calc-em(16px);
+//     padding: calc-em(10px);
+//   }
+// }
+
+// .bannerContent {
+//   width: 90%;
+//   max-width: 1160px;
+//   margin: auto;
+//   display: grid;
+//   grid-template-columns: 24px 1fr;
+//   gap: 30px;
+//   @media screen and (max-width: $break-tablet-s) {
+//     width: 96%;
+//     gap: 12px;
+//   }
+// }
+
+// .alertIcon {
+//   width: 24px;
+//   height: 24px;
+//   margin-top: 2px;
+//   @media screen and (max-width: $break-tablet-s) {
+//     margin-top: 0;
+//   }
+// }
+
+// .bannerLink {
+//   text-decoration: underline;
+//   &:hover,
+//   &:active,
+//   &:focus {
+//     text-decoration: underline;
+//   }
+// }
+
+// .linkInfo {
+//   white-space: nowrap;
+// }
