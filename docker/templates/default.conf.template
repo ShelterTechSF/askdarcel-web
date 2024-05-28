@@ -1,6 +1,7 @@
 server {
     server_name ${NGINX_SERVER_NAME};
-    listen ${NGINX_PORT};
+    listen ${PORT};
+    error_log  /app/askdarcel/error.log;
 
     root /app/askdarcel;
 
@@ -8,6 +9,7 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
+        proxy_ssl_server_name on;
 
         # See https://forum.nginx.org/read.php?2,215830,215832#msg-215832
         # nginx only resolves DNS for statically-configured domain names
@@ -27,6 +29,7 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
+        proxy_ssl_server_name on;
 
         # See https://forum.nginx.org/read.php?2,215830,215832#msg-215832
         # nginx only resolves DNS for statically-configured domain names
@@ -34,7 +37,7 @@ server {
         # change, we must configure nginx to resolve DNS dynamically.
         # To do this, we configure a DNS resolver here and use a variable
         # rather than a literal URL when configuring the proxy below.
-        resolver 127.0.0.11;
+        resolver 8.8.8.8;
         resolver_timeout 5s;
 
         set $api_url ${NGINX_API_URL};
