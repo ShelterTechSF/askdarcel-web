@@ -20,6 +20,7 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
       - run: npm i
+      - run: npm run test
       - run: npm run build
         env:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
