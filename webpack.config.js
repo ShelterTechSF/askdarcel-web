@@ -29,6 +29,10 @@ const environmentConfig = [
   "SFFAMILIES_DOMAIN",
   "TESTCAFE_RUNNING",
   "LINKSF_DOMAIN",
+  "AUTH0_AUDIENCE",
+  "AUTH0_CLIENT_ID",
+  "AUTH0_DOMAIN",
+  "AUTH0_REDIRECT_URI",
 ];
 
 const config = environmentConfig.reduce((acc, key) => {

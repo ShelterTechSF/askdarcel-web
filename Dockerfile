@@ -1,14 +1,12 @@
 FROM nginx:stable
 
-RUN apt-get update && apt-get -y install ruby && gem install tiller
+WORKDIR /app/askdarcel
 
-COPY build /app/askdarcel
-COPY version.json /app/askdarcel/_version.json
-COPY tools/replace-environment-config.sh /app/askdarcel
+# Copy build files
+COPY ./build /app/askdarcel
 
 RUN rm /etc/nginx/conf.d/*
 
-ADD docker/tiller /etc/tiller
+COPY ./docker/templates/default.conf.template /etc/nginx/templates/default.conf.template
 
-CMD ["tiller", "-v"]
-ENTRYPOINT ["/app/askdarcel/replace-environment-config.sh", "/app/askdarcel/bundle.js"]
+CMD ["nginx", "-g", "daemon off;"]
