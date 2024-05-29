@@ -1,11 +1,11 @@
-name: Deploy to heroku staging.
+name: Build and deploy to heroku staging.
 
 on:
   push:
     branches: [development]
 
 jobs:
-  build:
+  build_and_deploy_app:
     runs-on: ubuntu-latest
     environment: "dev"
     steps:
