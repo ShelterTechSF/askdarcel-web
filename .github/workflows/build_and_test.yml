@@ -1,13 +1,28 @@
-name: Build and deploy to heroku production.
+name: Build, lint and run unit tests.
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    branches: [main, development]
 
 jobs:
-  build_and_deploy_app:
+  lint:
     runs-on: ubuntu-latest
-    environment: "prod"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+      - run: npm i
+      - run: npm run prettier
+      - run: npm run lint
+  build_and_test_app:
+    runs-on: ubuntu-latest
+    environment: "dev"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -31,13 +46,3 @@ jobs:
           ALGOLIA_INDEX_PREFIX: ${{ secrets.ALGOLIA_INDEX_PREFIX }}
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
           ALGOLIA_READ_ONLY_API_KEY: ${{ secrets.ALGOLIA_READ_ONLY_API_KEY }}
-      - name: Build, Push and Release a Docker container to Heroku.
-        uses: gonuit/heroku-docker-deploy@v1.3.3
-        with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_directory: ./
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
