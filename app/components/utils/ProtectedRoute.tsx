@@ -19,6 +19,7 @@ export const ProtectedRoute = ({
   isAuthenticated,
   ...rest
 }: ProtectedRouteProps) => {
+  console.log("Attempted navigation to protected route. Is authenticated value: ", isAuthenticated)
   return (
     <Route
       {...rest}
