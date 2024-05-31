@@ -21,18 +21,22 @@ export const AuthInterstitial = () => {
   useEffect(() => {
     const { hash } = window.location;
     console.log("Auth interstitial effect running. Hash:");
-    console.log(hash)
+    console.log(hash);
     // Check if the authState already exists and if so, redirect the user to the nav dashboard. We also
     // want to prevent the initUserSession method from being called twice as that can break the auth flow
     // and/or lead to other weird consequences
     if (authState) {
-      console.log("Auth state already exists. Redirecting to the nav dashboard")
+      console.log(
+        "Auth state already exists. Redirecting to the nav dashboard"
+      );
       history.push("navigator-dashboard");
       return;
     }
 
     if (!hash || !hash.includes("access_token")) {
-      console.log("No hash or hash does not include access token. Redirecting to login page");
+      console.log(
+        "No hash or hash does not include access token. Redirecting to login page"
+      );
       // If auth state does NOT exist BUT there is no hash or the hash has no access token, something went off somehow.
       // Just default to redirecting the user to the log-in page until we can craft a more sophisticated way to handle this
       history.push("log-in");
@@ -49,7 +53,9 @@ export const AuthInterstitial = () => {
         history.push("navigator-dashboard");
       })
       .catch((err) => {
-        console.log("Issue with init'ing session. Catching error and redirecting to login page!");
+        console.log(
+          "Issue with init'ing session. Catching error and redirecting to login page!"
+        );
         // Something went awry. Log the error and redirect the user back to the log-in page until we can better handle this case.
         // Better luck next time (for now)!
         // TODO: handle this case
