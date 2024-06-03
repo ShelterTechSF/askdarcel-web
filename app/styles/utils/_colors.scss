@@ -1,35 +1,177 @@
 ////////////////////////////////////////////////////////////////////////////////////////
-// COLORS
+// COLOR TOKENS
 
-$color-brand: #276ce5;
-$color-brand-dark: #0856ad;
+$black: #000000;
+$white: #ffffff;
+
+// Gray
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Red
+$red-50: #fef2f2;
+$red-100: #fee2e2;
+$red-200: #fecaca;
+$red-300: #fca5a5;
+$red-400: #f87171;
+$red-500: #ef4444;
+$red-600: #dc2626;
+$red-700: #b91c1c;
+$red-800: #991b1b;
+$red-900: #7f1d1d;
+
+// Orange
+$orange-50: #fff7ed;
+$orange-100: #ffedd5;
+$orange-200: #fed7aa;
+$orange-300: #fdba74;
+$orange-400: #fb923c;
+$orange-500: #f97316;
+$orange-600: #ea580c;
+$orange-700: #c2410c;
+$orange-800: #9a3412;
+$orange-900: #7c2d12;
+
+// Yellow
+$yellow-50: #fefce8;
+$yellow-100: #fef9c3;
+$yellow-200: #fef08a;
+$yellow-300: #fde047;
+$yellow-400: #facc15;
+$yellow-500: #eab308;
+$yellow-600: #ca8a04;
+$yellow-700: #a16207;
+$yellow-800: #854d0e;
+$yellow-900: #713f12;
+
+// Green
+$green-50: #f0fdf4;
+$green-100: #dcfce7;
+$green-200: #bbf7d0;
+$green-300: #86efac;
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-700: #15803d;
+$green-800: #166534;
+$green-900: #14532d;
+
+// Teal
+$teal-50: #f0fdfa;
+$teal-100: #ccfbf1;
+$teal-200: #99f6e4;
+$teal-300: #5eead4;
+$teal-400: #2dd4bf;
+$teal-500: #14b8a6;
+$teal-600: #0d9488;
+$teal-700: #0f766e;
+$teal-800: #115e59;
+$teal-900: #134e4a;
+
+// Blue
+$blue-50: #eff6ff;
+$blue-100: #dbeafe;
+$blue-200: #bfdbfe;
+$blue-300: #93c5fd;
+$blue-400: #60a5fa;
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+$blue-700: #1a56db;
+$blue-800: #1e40af;
+$blue-900: #1e3a8a;
+
+// Indigo
+$indigo-50: #eef2ff;
+$indigo-100: #e0e7ff;
+$indigo-200: #c7d2fe;
+$indigo-300: #a5b4fc;
+$indigo-400: #818cf8;
+$indigo-500: #6366f1;
+$indigo-600: #4f46e5;
+$indigo-700: #4338ca;
+$indigo-800: #3730a3;
+$indigo-900: #312e81;
+
+// Purple
+$purple-50: #f5f3ff;
+$purple-100: #ede9fe;
+$purple-200: #ddd6fe;
+$purple-300: #c4b5fd;
+$purple-400: #a78bfa;
+$purple-500: #8b5cf6;
+$purple-600: #7c3aed;
+$purple-700: #6d28d9;
+$purple-800: #5b21b6;
+$purple-900: #4c1d95;
+
+// Pink
+$pink-50: #fdf2f8;
+$pink-100: #fce7f3;
+$pink-200: #fbcfe8;
+$pink-300: #f9a8d4;
+$pink-400: #f472b6;
+$pink-500: #ec4899;
+$pink-600: #db2777;
+$pink-700: #be185d;
+$pink-800: #9d174d;
+$pink-900: #831843;
+
+////////////////////////////////////////////////////////////////////////////////////////
+// THEME COLORS
+
+$color-brand: #f15a29;
+$color-brand-dark: #cd4a23;
+$color-secondary: #fbb040;
+$color-secondary-dark: #704f1d;
+$color-tertiary: #111928;
+$color-tertiary-light: #f9fafb;
 $color-brand-light: #b3d4fc;
 $color-brand-verylight: #f1f5fa;
 
-$color-green: #01c270;
-$color-green-yellow: #aeca0d;
-$color-yellow: #ffbc00;
-$color-orange: #f3ae00;
-$color-red: #e34646;
+$color-green: $green-500;
+$color-green-yellow: $yellow-300;
+$color-yellow: $yellow-400;
+$color-orange: $orange-400;
+$color-red: $red-400;
 
-$color-status-red: #c4243a;
-$color-status-green: #5bba81;
-$color-status-amber: #ffb646;
+$color-status-red: $red-600;
+$color-status-green: $green-400;
+$color-status-amber: $red-800;
 
-$color-white: #fff;
-$color-grey1: #f9f9f9;
-$color-grey2: #f3f5f7;
-$color-grey3: #f4f4f4;
-$color-grey4: #cecece;
-$color-grey5: #888;
-$color-grey6: #666;
-$color-grey7: #484848;
-$color-grey8: #30383a;
-$color-grey9: #242c2e;
+$color-white: $white;
+
+$color-grey1: $gray-100;
+$color-grey2: $gray-200;
+$color-grey3: $gray-300;
+$color-grey4: $gray-400;
+$color-grey5: $gray-500;
+$color-grey6: $gray-600;
+$color-grey7: $gray-700;
+$color-grey8: $gray-800;
+$color-grey9: $gray-900;
 
 $color-title: $color-grey9;
 $color-textfade: $color-grey6;
 $color-btn-primary: $color-brand;
+
+$surface-primary: $color-white;
+$surface-secondary: $color-tertiary-light;
+$surface-tertiary: $color-tertiary;
+$surface-4: $color-brand-dark;
+$surface-footer: $color-tertiary;
+
+$text-primary: $color-tertiary;
+$text-secondary: $gray-600;
+$text-tertiary: $color-white;
+$text-link: $blue-700;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // SFFAMILIES COLORS
