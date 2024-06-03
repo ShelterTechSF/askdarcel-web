@@ -1,23 +1,26 @@
 import React from "react";
 import styles from "./TwoColumnContentSection.module.scss";
-// import { PortableText } from "@portabletext/react";
 
-/*
- video or image has a different order
- how to pass in the content block?
- */
+const BlockContent = require("@sanity/block-content-to-react");
 
-export const TwoColumnContentSection = ({ title }: any) => {
+const serializers = {
+  types: {
+    code: (props) => (
+      <pre data-language={props?.node?.language}>
+        <code>{props.node?.code}</code>
+      </pre>
+    ),
+  },
+};
+
+export const TwoColumnContentSection = ({ contentBlock }: any) => {
   return (
     <section className={styles.twoColumnContentSectionContainer}>
-      <h3>{title}</h3>
-      {/* <PortableText */}
-      {/*   value={ */}
-      {/*     [ */}
-      {/*       /\* array of portable text blocks *\/ */}
-      {/*     ] */}
-      {/*   } */}
-      {/* /> */}
+      <BlockContent
+        blocks={contentBlock}
+        serializers={serializers}
+        className="2-col-content-section"
+      />
     </section>
   );
 };

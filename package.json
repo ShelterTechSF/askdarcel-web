@@ -9,7 +9,7 @@
   "browser": "app/init.jsx",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "@portabletext/react": "^3.1.0",
+    "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^6.18.2",
     "@sentry/browser": "^4.0.6",
     "algoliasearch": "^4.10.5",
