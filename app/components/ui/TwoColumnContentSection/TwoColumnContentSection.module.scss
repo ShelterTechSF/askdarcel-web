@@ -1,6 +1,30 @@
 @import "../../../styles/utils/_helpers.scss";
 
+.twoColumnContentSectionContainer {
+  display: flex;
+}
+
 .twoColumnContentSectionContainer h2 {
   font-size: 3rem;
   color: black;
+}
+
+.left,
+.right {
+  width: 50%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.twoColContentSection {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: left;
+  padding: var(--36, 9rem) var(--container-desktop-gap, 3rem) var(--36, 9rem)
+    var(--section-padding-desktop-margins, 8rem);
+  gap: var(--8, 2rem);
 }

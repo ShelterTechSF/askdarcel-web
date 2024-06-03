@@ -30,13 +30,7 @@ export const AboutPage = () => {
     <>
       <Masthead title={pageData.mastHead} />
       {pageData?.twoColumnContentSections?.map((section: any) => {
-        console.log(section.contentBlock);
-        return (
-          <TwoColumnContentSection
-            title={section.name}
-            contentBlock={section.contentBlock}
-          />
-        );
+        return <TwoColumnContentSection {...section} />;
       })}
       <EmailSignup />
     </>
