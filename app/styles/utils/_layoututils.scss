@@ -1,6 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // LAYOUT
 
+@import "_spacing";
+
 $font-size: 16px;
 $break-tablet-s: 767px;
 $min-tablet-p: 768px;
@@ -10,10 +12,10 @@ $min-desktop: 1141px;
 $break-desktop: 1439px;
 $break-desktop-l: 1600px;
 $break-desktop-xl: 2000px;
-$padding-default: 6px;
-$padding-large: 16px;
-$padding-xlarge: 26px;
-$padding-xxlarge: 36px;
+$padding-default: $general-spacing-xs;
+$padding-large: $general-spacing-md;
+$padding-xlarge: $general-spacing-lg;
+$padding-xxlarge: $general-spacing-xl;
 $max-container-width: 1280px;
 
 $header-height: 100px;
