@@ -107,12 +107,12 @@ body {
 
 h1 {
   @extend %font-size-x-large;
-  font-weight: 400;
+  font-weight: 700;
   hyphens: auto;
 }
 h2 {
   @extend %font-size-large;
-  font-weight: 400;
+  font-weight: 700;
   color: $color-grey5;
 }
 h3 {
@@ -121,12 +121,12 @@ h3 {
 }
 h4 {
   @extend %font-size-medium;
-  font-weight: 700;
+  font-weight: 600;
   color: $color-grey5;
 }
 h5 {
   @extend %font-size-default;
-  font-weight: 700;
+  font-weight: 600;
 }
 p {
   @extend %font-size-default;
