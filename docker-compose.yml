@@ -4,6 +4,7 @@ services:
     command: npm -- run dev --host 0.0.0.0 --disable-host-check
     environment:
       API_URL: http://api:3000
+      API_GO_URL: http://sheltertech-go:3001
       ALGOLIA_INDEX_PREFIX:
       ALGOLIA_APPLICATION_ID:
       ALGOLIA_READ_ONLY_API_KEY:
