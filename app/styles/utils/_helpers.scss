@@ -102,30 +102,35 @@ body {
   font-family: $font-family-base;
   font-weight: 400;
   word-wrap: break-word;
-  color: $color-grey8;
+  color: $text-primary;
 }
 
 h1 {
   @extend %font-size-x-large;
+  font-family: Montserrat;
   font-weight: 700;
   hyphens: auto;
 }
 h2 {
   @extend %font-size-large;
+  font-family: Montserrat;
   font-weight: 700;
-  color: $color-grey5;
+  color: $text-primary;
 }
 h3 {
   @extend %font-size-medium;
+  font-family: Montserrat;
   font-weight: 700;
 }
 h4 {
   @extend %font-size-medium;
+  font-family: Montserrat;
   font-weight: 600;
-  color: $color-grey5;
+  color: $text-primary;
 }
 h5 {
   @extend %font-size-default;
+  font-family: Montserrat;
   font-weight: 600;
 }
 p {
@@ -199,7 +204,7 @@ p.message {
   h1 {
     @extend %font-size-medium;
     font-weight: 700;
-    color: $color-grey5;
+    color: $text-primary;
   }
 
   h2 {
@@ -214,7 +219,7 @@ p.message {
   h6 {
     @extend %font-size-small;
     font-weight: 400;
-    color: $color-grey5;
+    color: $text-primary;
   }
 }
 
