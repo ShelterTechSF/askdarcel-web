@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Partners.scss";
+import Our415Logo from "assets/img/Our415_logo-hori.svg";
+import AcuteCareLogo from "assets/img/ucsf-acute-care-innovation-center-logo.png";
 import STLogo from "./assets/STLogo.png";
 import JDCLogo from "./assets/JDCLogo.png";
 import MOHCDLogo from "./assets/MOHCDLogo.png";
 import BenetechLogo from "./assets/BenetechLogo.png";
-import Our415Logo from "../../../../assets/img/Our415_logo-hori.svg";
 import BridgeLogo from "./assets/BridgeLogo.png";
-import AcuteCareLogo from "../../../../assets/img/ucsf-acute-care-innovation-center-logo.png";
 
 export const Partners = () => (
   <div className="partners">
