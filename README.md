@@ -150,7 +150,7 @@ This will spin up a web server at http://localhost:1337/ and print out a URL to 
 
 There are two protected branches - development and main. Main is the default branch which will be the latest, stable codebase. Development will be where updates get deployed to a staging instance where QA can be performed. Any PR's created against these branches run a series of checks - like building the app, running unit tests, and linting the files.
 
-There are two live instances - a [staging instance](https://our415-staging-a91cdc6d7b2b.herokuapp.com/) and a [production instance](https://our415-abb7eecb7449.herokuapp.com/). Merges onto the development branch deploys the development branch to the staging isntance. Merges onto the main branch deploys the main branch to the production instance. See the [github workflows](https://github.com/Exygy/askdarcel-web/tree/main/.github/workflows) for the details. Environment variables that are used in the build are set in github environments.
+There are two live instances - a [staging instance](https://our415-staging-a91cdc6d7b2b.herokuapp.com/) and a [production instance](https://our415-abb7eecb7449.herokuapp.com/). Merges onto the development branch deploys the development branch to the staging isntance. Merges onto the main branch deploys the main branch to the production instance. See the [github workflows](https://github.com/Exygy/askdarcel-web/tree/main/.github/workflows) for the details. Environment variables used in the builds and deployments are set in github environments.
 
 ## Pull Requests
 
