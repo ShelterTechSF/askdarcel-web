@@ -156,7 +156,7 @@ There are two live instances - a [staging instance](https://our415-staging-a91cd
 
 Pull requests are opened to the development branch. When opening a pull request please fill out the as much of the pull request template you can, which includes tagging the issue your PR is related to, a description of your PR, indicating the type of change, including details for the reviewer about how to test your PR, and a testing checklist. Additionally, officially link the notion ticket to the PR using GitHub's linking UI.
 
-When your PR is ready for review, add the needs review(s) label to help surface it to our internal team. You can assign people as reviewers to surface the work further. If you put up a PR that is not yet ready for eyes, add the wip label.
+When your PR is ready for review, add the needs review(s) label to help surface it to the other devs. You can assign people as reviewers to surface the work further. If you put up a PR that is not yet ready for eyes, add the wip label.
 
 Once the PR has been approved, you either (1) squash and merge the commits if your changes are just in one package, or (2) rebase and merge your commits if your commits are cleanly separated across multiple packages to allow the versions to propagate appropriately.
 
