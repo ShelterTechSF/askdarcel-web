@@ -1,11 +1,14 @@
 import { createClient, type ClientConfig } from "@sanity/client";
+import appConfig from "./config";
 
-const config: ClientConfig = {
-  projectId: "zbvnb6n9",
-  dataset: "development",
+const todaysDate = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+const sanityConfig: ClientConfig = {
+  projectId: appConfig.SANITY_PROJECT_ID,
+  dataset: appConfig.SANITY_PROJECT_DATASET,
   useCdn: true, // set to `false` to bypass the edge cache
-  apiVersion: "2023-05-03", // use current date (YYYY-MM-DD) to target the latest API version
+  apiVersion: todaysDate, // use current date (YYYY-MM-DD) to target the latest API version
 };
-const client = createClient(config);
+const client = createClient(sanityConfig);
 
 export { client };
