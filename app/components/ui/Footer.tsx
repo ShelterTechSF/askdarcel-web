@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import whiteLabel from "../../utils/whitelabel";
 import Our415Logo from "../../assets/img/our415-white.png";
 import SFSeal from "../../assets/img/sf-seal-white.png";
 import DCYFLogo from "../../assets/img/dcyf-white.png";
+import { client } from "../../sanity";
+
 import "./Footer.scss";
 
 export const Footer = () => {
   const { title, footerOptions } = whiteLabel;
+  const [footerData, setFooterData] = useState(null);
+
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      const query = `*[_type == "footer"][0]{
+        address,
+        email,
+        phoneNumber,
+        column1,
+        column2,
+        column3
+      }`;
+      const result = await client.fetch(query);
+      setFooterData(result);
+    };
+
+    fetchFooterData();
+  }, []);
+
+  if (!footerData) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(footerData);
 
   return (
     <footer className="site-footer" role="contentinfo">
