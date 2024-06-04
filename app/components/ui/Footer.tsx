@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import whiteLabel from "../../utils/whitelabel";
+import Our415Logo from "../../assets/img/our415-white.png";
 import SFSeal from "../../assets/img/sf-seal-white.png";
 import DCYFLogo from "../../assets/img/dcyf-white.png";
 import "./Footer.scss";
@@ -12,93 +13,105 @@ export const Footer = () => {
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer__content">
         <div className="site-footer__top">
-          {footerOptions.showTitle && (
+          {/* {footerOptions.showTitle && (
             <section className="service-guide">
               <div className="service-guide__icon" />
               <h1 className="service-guide__text">
                 <Link to="/">{title}</Link>
               </h1>
             </section>
-          )}
+          )} */}
+          <div className="site-footer__left">
+            <div className="site-footer__logo">
+              <img
+                src={Our415Logo}
+                alt="SF Department of Children Youth and their Families"
+              />
+            </div>
+            <address>
+              <div className="site-footer__address">
+                1390 Market St, Suite 900,
+                <br />
+                San Francisco, CA 94102, USA
+              </div>
+              <div className="site-footer__contact">
+                <a href="tel:+16286527100">628-652-7100</a>
+                <br />
+                <a href="mailto:info@dcyf.org">info@dcyf.org</a>
+              </div>
+            </address>
+          </div>
+
           {footerOptions.showLinks && (
-            <section className="site-footer__links">
-              <ul>
-                <h1>About Us</h1>
-                <li>
-                  <Link to="/about">About SFSG</Link>
-                </li>
-                <li>
-                  <a
-                    href="https://help.sfserviceguide.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    FAQ
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.sheltertech.org/volunteer"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Volunteer
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.sheltertech.org/donate"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Donate
-                  </a>
-                </li>
-              </ul>
-              <ul>
-                <h1>Follow Us</h1>
-                <li>
-                  <a href="mailto:info@sheltertech.org">Email</a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.facebook.com/ShelterTechOrg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Facebook
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://twitter.com/sheltertechorg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.instagram.com/shelter_tech"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Instagram
-                  </a>
-                </li>
-              </ul>
-              <ul>
-                <h1>Legal</h1>
-                <li>
-                  <Link to="/terms-of-service">Terms of Service</Link>
-                </li>
-                <li>
-                  <Link to="/privacy-policy">Privacy Policy</Link>
-                </li>
-                {/* <li><a href="#">API Policy</a></li> */}
-              </ul>
-            </section>
+            <div className="site-footer__links">
+              <figure>
+                <figcaption>About</figcaption>
+                <ul>
+                  <li>
+                    <Link to="/about">About Us</Link>
+                  </li>
+                  <li>
+                    <a
+                      href="https://help.sfserviceguide.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      FAQs
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                      Submit a resource
+                    </a>
+                  </li>
+                </ul>
+              </figure>
+
+              <figure>
+                <figcaption>Follow Us</figcaption>
+                <ul>
+                  <li>
+                    <a
+                      href="https://www.facebook.com/ShelterTechOrg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Facebook
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.instagram.com/shelter_tech"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Instagram
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://twitter.com/sheltertechorg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      X
+                    </a>
+                  </li>
+                </ul>
+              </figure>
+
+              <figure>
+                <figcaption>Legal</figcaption>
+                <ul>
+                  <li>
+                    <Link to="/terms-of-service">Terms of Service</Link>
+                  </li>
+                  <li>
+                    <Link to="/privacy-policy">Privacy Policy</Link>
+                  </li>
+                </ul>
+              </figure>
+            </div>
           )}
           <div className="site-footer__logos">
             <div className="site-footer__sfseal">
