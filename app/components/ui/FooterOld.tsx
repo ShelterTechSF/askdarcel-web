@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import whiteLabel from "../../utils/whitelabel";
-import SFSeal from "../../assets/img/sf-seal-white.png";
-import DCYFLogo from "../../assets/img/dcyf-white.png";
-import "./Footer.scss";
+import SFSeal from "../../assets/img/sf-seal.png";
+import "./FooterOld.scss";
 
 export const Footer = () => {
   const { title, footerOptions } = whiteLabel;
@@ -56,7 +55,7 @@ export const Footer = () => {
                 </li>
               </ul>
               <ul>
-                <h1>Follow Us</h1>
+                <h1>Connect</h1>
                 <li>
                   <a href="mailto:info@sheltertech.org">Email</a>
                 </li>
@@ -100,17 +99,15 @@ export const Footer = () => {
               </ul>
             </section>
           )}
-          <div className="site-footer__logos">
-            <div className="site-footer__sfseal">
-              <img src={SFSeal} alt="City of San Francisco Seal" />
-            </div>
-            <div className="site-footer__dcyf-center">
-              <img
-                src={DCYFLogo}
-                alt="SF Department of Children Youth and their Families"
-              />
-            </div>
+        </div>
+        {footerOptions.showSFSeal && (
+          <div className="site-footer__sfseal-center">
+            <img src={SFSeal} alt="City of San Francisco Seal" />
           </div>
+        )}
+        <div className="site-footer__disclosure">
+          Created and maintained by ©{new Date().getFullYear()} ShelterTech, a
+          501(c)(3) nonprofit | Made with love in San Francisco
         </div>
       </div>
     </footer>
