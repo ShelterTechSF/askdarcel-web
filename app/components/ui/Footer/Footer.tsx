@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import whiteLabel from "../../utils/whitelabel";
-import Our415Logo from "../../assets/img/our415-white.png";
-import SFSeal from "../../assets/img/sf-seal-white.png";
-import DCYFLogo from "../../assets/img/dcyf-white.png";
-import { client } from "../../sanity";
+import { FooterColumn } from "./FooterColumn";
+import whiteLabel from "utils/whitelabel";
+// import Our415Logo from "assets/img/our415-white.png";
+import Our415Logo from "assets/img/our415-white.png";
+import SFSeal from "assets/img/sf-seal-white.png";
+import DCYFLogo from "assets/img/dcyf-white.png";
+import { client } from "../../../sanity";
 
 import "./Footer.scss";
 
-interface FooterLink {
+export interface FooterLinkType {
   href: string;
   label: string;
 }
-interface FooterColumn {
+
+export interface FooterColumnType {
   title: string;
-  links: FooterLink[];
+  links: FooterLinkType[];
 }
-interface FooterData {
+
+export interface FooterData {
   address: string;
   email: string;
   phoneNumber: string;
-  column1: FooterColumn;
-  column2: FooterColumn;
-  column3: FooterColumn;
+  column1: FooterColumnType;
+  column2: FooterColumnType;
+  column3: FooterColumnType;
 }
 
 export const Footer = () => {
@@ -112,43 +115,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};
-
-interface FooterColumnProps {
-  column: FooterColumn;
-}
-
-export const FooterColumn = ({ column }: FooterColumnProps) => {
-  return (
-    <figure>
-      <figcaption>{column.title}</figcaption>
-      <ul>
-        {column.links.map((link, index) => (
-          <li key={index}>
-            <FooterLink link={link} />
-          </li>
-        ))}
-      </ul>
-    </figure>
-  );
-};
-
-interface FooterLinkProps {
-  link: FooterLink;
-}
-
-export const FooterLink = ({ link }: FooterLinkProps) => {
-  const isInternalLink = (url: string): boolean => {
-    return url.startsWith("/") || url.startsWith(window.location.origin);
-  };
-
-  if (isInternalLink(link.href)) {
-    return <Link to={link.href}>{link.label}</Link>;
-  } else {
-    return (
-      <a href={link.href} target="_blank" rel="noopener noreferrer">
-        {link.label}
-      </a>
-    );
-  }
 };
