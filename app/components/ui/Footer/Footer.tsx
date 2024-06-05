@@ -95,7 +95,7 @@ export const Footer = () => {
             <div className="site-footer__sfseal">
               <img src={SFSeal} alt="City of San Francisco Seal" />
             </div>
-            <div className="site-footer__dcyf-center">
+            <div className="site-footer__dcyf">
               <img
                 src={DCYFLogo}
                 alt="SF Department of Children Youth and their Families"
