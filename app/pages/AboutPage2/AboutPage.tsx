@@ -6,11 +6,10 @@ import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSec
 
 export const AboutPage = () => {
   const [pageData, setPageData] = useState({ pageInitialized: false });
-
   useEffect(() => {
     const fetchPageData = async () => {
       const fetchedPageData = await client.fetch(
-        `*[_type == 'contentPage' && name == 'About']{mastHead, twoColumnContentSections[]->}`
+        `*[_type == 'contentPageType' && name == 'About']{mastHead, twoColumnContentSections[]->}`
       );
 
       setPageData({
