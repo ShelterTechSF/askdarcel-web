@@ -26,7 +26,7 @@ interface FooterData {
 }
 
 export const Footer = () => {
-  const { title, footerOptions } = whiteLabel;
+  const { footerOptions } = whiteLabel;
   const [footerData, setFooterData] = useState<FooterData | null>(null);
 
   useEffect(() => {
@@ -50,8 +50,6 @@ export const Footer = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(footerData);
-
   const htmlWithBreaks = (htmlString: string) => {
     return htmlString.replace(/\n/g, "<br>");
   };
@@ -66,14 +64,6 @@ export const Footer = () => {
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer__content">
         <div className="site-footer__top">
-          {/* {footerOptions.showTitle && (
-            <section className="service-guide">
-              <div className="service-guide__icon" />
-              <h1 className="service-guide__text">
-                <Link to="/">{title}</Link>
-              </h1>
-            </section>
-          )} */}
           <div className="site-footer__left">
             <div className="site-footer__logo">
               <img
@@ -102,73 +92,9 @@ export const Footer = () => {
 
           {footerOptions.showLinks && (
             <div className="site-footer__links">
-              <figure>
-                <figcaption>About</figcaption>
-                <ul>
-                  <li>
-                    <Link to="/about">About Us</Link>
-                  </li>
-                  <li>
-                    <a
-                      href="https://help.sfserviceguide.org"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      FAQs
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      Submit a resource
-                    </a>
-                  </li>
-                </ul>
-              </figure>
-
-              <figure>
-                <figcaption>Follow Us</figcaption>
-                <ul>
-                  <li>
-                    <a
-                      href="https://www.facebook.com/ShelterTechOrg"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Facebook
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.instagram.com/shelter_tech"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Instagram
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://twitter.com/sheltertechorg"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      X
-                    </a>
-                  </li>
-                </ul>
-              </figure>
-
-              <figure>
-                <figcaption>Legal</figcaption>
-                <ul>
-                  <li>
-                    <Link to="/terms-of-service">Terms of Service</Link>
-                  </li>
-                  <li>
-                    <Link to="/privacy-policy">Privacy Policy</Link>
-                  </li>
-                </ul>
-              </figure>
+              <FooterColumn column={footerData.column1} />
+              <FooterColumn column={footerData.column2} />
+              <FooterColumn column={footerData.column3} />
             </div>
           )}
           <div className="site-footer__logos">
@@ -186,4 +112,43 @@ export const Footer = () => {
       </div>
     </footer>
   );
+};
+
+interface FooterColumnProps {
+  column: FooterColumn;
+}
+
+export const FooterColumn = ({ column }: FooterColumnProps) => {
+  return (
+    <figure>
+      <figcaption>{column.title}</figcaption>
+      <ul>
+        {column.links.map((link, index) => (
+          <li key={index}>
+            <FooterLink link={link} />
+          </li>
+        ))}
+      </ul>
+    </figure>
+  );
+};
+
+interface FooterLinkProps {
+  link: FooterLink;
+}
+
+export const FooterLink = ({ link }: FooterLinkProps) => {
+  const isInternalLink = (url: string): boolean => {
+    return url.startsWith("/") || url.startsWith(window.location.origin);
+  };
+
+  if (isInternalLink(link.href)) {
+    return <Link to={link.href}>{link.label}</Link>;
+  } else {
+    return (
+      <a href={link.href} target="_blank" rel="noopener noreferrer">
+        {link.label}
+      </a>
+    );
+  }
 };
