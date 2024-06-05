@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FooterColumn } from "./FooterColumn";
 import whiteLabel from "utils/whitelabel";
-// import Our415Logo from "assets/img/our415-white.png";
+import { callableUSPhoneNumber } from "utils/numbers";
+import { htmlWithBreaks } from "utils/sanity";
 import Our415Logo from "assets/img/our415-white.png";
 import SFSeal from "assets/img/sf-seal-white.png";
 import DCYFLogo from "assets/img/dcyf-white.png";
@@ -52,16 +53,6 @@ export const Footer = () => {
   if (!footerData) {
     return <div>Loading...</div>;
   }
-
-  const htmlWithBreaks = (htmlString: string) => {
-    return htmlString.replace(/\n/g, "<br>");
-  };
-
-  const callableUSPhoneNumber = (phoneNumber: string) => {
-    const numbersOnly = phoneNumber.replace(/\D/g, "");
-    const formattedNumber = `+1${numbersOnly}`;
-    return formattedNumber;
-  };
 
   return (
     <footer className="site-footer" role="contentinfo">
