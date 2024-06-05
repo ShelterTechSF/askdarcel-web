@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FooterColumn } from "./FooterColumn";
 import whiteLabel from "utils/whitelabel";
 import { callableUSPhoneNumber } from "utils/numbers";
 import { htmlWithBreaks } from "utils/sanity";
 import Our415Logo from "assets/img/our415-white.png";
 import SFSeal from "assets/img/sf-seal-white.png";
 import DCYFLogo from "assets/img/dcyf-white.png";
+import { FooterColumn } from "./FooterColumn";
 import { client } from "../../../sanity";
 
 import "./Footer.scss";
@@ -43,7 +43,7 @@ export const Footer = () => {
         column2,
         column3
       }`;
-      const result = await client.fetch(query);
+      const result: FooterData = await client.fetch(query);
       setFooterData(result);
     };
 

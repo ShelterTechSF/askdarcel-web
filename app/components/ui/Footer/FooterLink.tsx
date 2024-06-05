@@ -1,6 +1,6 @@
 import React from "react";
-import { FooterLinkType } from "./Footer";
 import { Link } from "react-router-dom";
+import { FooterLinkType } from "./Footer";
 
 interface FooterLinkProps {
   link: FooterLinkType;
@@ -13,11 +13,11 @@ export const FooterLink = ({ link }: FooterLinkProps) => {
 
   if (isInternalLink(link.href)) {
     return <Link to={link.href}>{link.label}</Link>;
-  } else {
-    return (
-      <a href={link.href} target="_blank" rel="noopener noreferrer">
-        {link.label}
-      </a>
-    );
   }
+
+  return (
+    <a href={link.href} target="_blank" rel="noopener noreferrer">
+      {link.label}
+    </a>
+  );
 };

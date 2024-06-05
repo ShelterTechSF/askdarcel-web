@@ -11,8 +11,8 @@ export const FooterColumn = ({ column }: FooterColumnProps) => {
     <figure>
       <figcaption>{column.title}</figcaption>
       <ul>
-        {column.links.map((link, index) => (
-          <li key={index}>
+        {column.links.map((link) => (
+          <li key={link.label}>
             <FooterLink link={link} />
           </li>
         ))}
