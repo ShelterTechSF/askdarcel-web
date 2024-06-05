@@ -8,9 +8,26 @@ import { client } from "../../sanity";
 
 import "./Footer.scss";
 
+interface FooterLink {
+  href: string;
+  label: string;
+}
+interface FooterColumn {
+  title: string;
+  links: FooterLink[];
+}
+interface FooterData {
+  address: string;
+  email: string;
+  phoneNumber: string;
+  column1: FooterColumn;
+  column2: FooterColumn;
+  column3: FooterColumn;
+}
+
 export const Footer = () => {
   const { title, footerOptions } = whiteLabel;
-  const [footerData, setFooterData] = useState(null);
+  const [footerData, setFooterData] = useState<FooterData | null>(null);
 
   useEffect(() => {
     const fetchFooterData = async () => {
@@ -35,6 +52,16 @@ export const Footer = () => {
 
   console.log(footerData);
 
+  const htmlWithBreaks = (htmlString: string) => {
+    return htmlString.replace(/\n/g, "<br>");
+  };
+
+  const callableUSPhoneNumber = (phoneNumber: string) => {
+    const numbersOnly = phoneNumber.replace(/\D/g, "");
+    const formattedNumber = `+1${numbersOnly}`;
+    return formattedNumber;
+  };
+
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer__content">
@@ -55,15 +82,20 @@ export const Footer = () => {
               />
             </div>
             <address>
-              <div className="site-footer__address">
-                1390 Market St, Suite 900,
-                <br />
-                San Francisco, CA 94102, USA
-              </div>
+              <div
+                className="site-footer__address"
+                dangerouslySetInnerHTML={{
+                  __html: htmlWithBreaks(footerData.address),
+                }}
+              />
               <div className="site-footer__contact">
-                <a href="tel:+16286527100">628-652-7100</a>
+                <a
+                  href={`tel:${callableUSPhoneNumber(footerData.phoneNumber)}`}
+                >
+                  {footerData.phoneNumber}
+                </a>
                 <br />
-                <a href="mailto:info@dcyf.org">info@dcyf.org</a>
+                <a href={`mailto:${footerData.email}`}>{footerData.email}</a>
               </div>
             </address>
           </div>
