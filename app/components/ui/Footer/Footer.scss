@@ -41,13 +41,13 @@
   flex: 1 1 50%;
   display: flex;
   gap: 80px;
-  margin-right: 80px;
+  margin: 0 80px 0 32px;
   justify-content: flex-end;
 
   @media screen and (max-width: $break-tablet-s) {
     flex-direction: column;
     gap: 3rem;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem;
     font-size: 14px;
   }
 

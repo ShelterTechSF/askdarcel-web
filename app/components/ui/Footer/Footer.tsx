@@ -58,7 +58,7 @@ export const Footer = () => {
     <footer className="site-footer" role="contentinfo">
       <div className="site-footer__content">
         <div className="site-footer__top">
-          <div className="site-footer__left">
+          <div className="site-footer__contact">
             <div className="site-footer__logo">
               <img
                 src={Our415Logo}
