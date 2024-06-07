@@ -54,7 +54,7 @@ table {
 
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 $font-family-base: "Inter", "Montserrat", "Open Sans", "Helvetica Neue", "Arial",
@@ -66,14 +66,14 @@ $font-family-base: "Inter", "Montserrat", "Open Sans", "Helvetica Neue", "Arial"
 %font-size-x-large {
   font-size: 3rem;
   line-height: 125%;
-  @include r_max($break-tablet-s) {
+  @include r_max($break-tablet-p) {
     font-size: 1.75rem;
   }
 }
 %font-size-large {
   font-size: 2rem;
   line-height: 125%;
-  @include r_max($break-tablet-s) {
+  @include r_max($break-tablet-p) {
     font-size: 1.375rem;
   }
 }

@@ -2,17 +2,15 @@
 
 .mastheadContainer {
   background: $surface-4;
-  padding: var(--section-padding-desktop-vertical, 6rem)
-    var(--section-padding-desktop-margins, 8rem);
+  padding: $spacing-24 $spacing-32;
 }
 
 .mastheadHeader {
   color: $text-tertiary;
 }
 
-@media screen and (max-width: $break-tablet-s) {
+@media screen and (max-width: $break-tablet-p) {
   .mastheadContainer {
-    padding: var(--section-padding-mobile-vertical, 2rem)
-      var(--section-padding-mobile-margins, 1rem);
+    padding: $general-spacing-xl $general-spacing-md;
   }
 }

@@ -10,8 +10,7 @@
 .contentContainer_left {
   grid-column: 2;
   grid-row: 1;
-  // padding: var(--36, 9rem) var(--container-desktop-gap, 3rem) var(--36, 9rem)
-  //   var(--section-padding-desktop-margins, 8rem);
+  align-self: center;
 }
 
 .imageContainer_left {
@@ -19,11 +18,30 @@
   grid-row: 1;
 }
 
+.contentBlock p {
+  margin-bottom: $general-spacing-md;
+  color: $text-secondary;
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: Montserrat;
+}
+
+.contentContainer_right .contentBlock {
+  width: 75%;
+  margin-left: 18%;
+  margin-right: 7%;
+}
+
+.contentContainer_left .contentBlock {
+  width: 75%;
+  margin-left: 7%;
+  margin-right: 18%;
+}
+
 .contentContainer_right {
   grid-column: 1;
   grid-row: 1;
-  // padding: var(--36, 9rem) var(--container-desktop-gap, 3rem) var(--36, 9rem)
-  //   var(--section-padding-desktop-margins, 8rem);
+  align-self: center;
 }
 
 .imageContainer_right {
@@ -35,10 +53,63 @@
   width: 100%;
 }
 
+.contentLinkButton {
+  margin-left: 7%;
+  margin-right: 18%;
+  display: inline-block;
+  margin-top: $general-spacing-md;
+  margin-bottom: $general-spacing-md;
+}
+
+@media screen and (max-width: $break-tablet-p) {
+  .contentBlock h2 {
+    font-size: 1.375rem;
+  }
+
+  .contentBlock p {
+    font-size: 1rem;
+  }
+}
+
 @media screen and (max-width: $break-tablet-s) {
+  .contentContainer_right .contentBlock {
+    width: 100%;
+    margin: 0px 0px;
+    padding: $general-spacing-md $general-spacing-xl;
+  }
+
+  .contentContainer_left .contentBlock {
+    width: 100%;
+    margin: 0px 0px;
+    padding: $general-spacing-md $general-spacing-xl;
+  }
+
   .twoColumnContentSectionContainer {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
+  }
+
+  .contentContainer_right {
+    grid-row: 1;
+  }
+
+  .imageContainer_right {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .contentLinkButton {
+    margin: 0px 0px;
+    padding: $general-spacing-md $general-spacing-xl;
+  }
+
+  .contentContainer_left {
+    grid-row: 1;
+  }
+
+  .imageContainer_left {
+    grid-row: 2;
+    grid-column: 1;
   }
 }
