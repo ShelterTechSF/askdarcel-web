@@ -7,6 +7,30 @@ import { client } from "../../../sanity";
 
 const builder = imageUrlBuilder(client);
 
+const BlockRenderer = (props: { node: any; children: any }) => {
+  const { node, children } = props;
+  const { style = "normal" } = node;
+  if (style === "h1") {
+    return <h1 className="heading-1"> {children} </h1>;
+  }
+  if (style === "h2") {
+    return <h2 className="heading-2"> {children} </h2>;
+  }
+  if (style === "h3") {
+    return <h3 className="heading-3"> {children} </h3>;
+  }
+  if (style === "h4") {
+    return <h4 className="heading-4"> {children} </h4>;
+  }
+  if (style === "normal") {
+    return <p className="subheading-medium"> {children} </p>;
+  }
+  // Don't want to ts-ignore anything, but hopefully usage of block-content-to-react is temporary and we'll
+  // use a non deprecated version of the tool that has better ts support soon.
+  // @ts-ignore
+  return BlockContent.defaultSerializers.types.block(props);
+};
+
 export const TwoColumnContentSection = ({
   image,
   imageAlt,
@@ -44,7 +68,11 @@ export const TwoColumnContentSection = ({
             : styles.contentContainer_right
         }
       >
-        <BlockContent className={styles.contentBlock} blocks={contentBlock} />
+        <BlockContent
+          className={styles.contentBlock}
+          blocks={contentBlock}
+          serializers={{ types: { block: BlockRenderer } }}
+        />
         <a className={styles.contentLinkButton} href={contentLinkButtonUrl}>
           {contentLinkButtonText}
         </a>
