@@ -1,0 +1,92 @@
+@import "~styles/utils/_helpers.scss";
+
+.hero {
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding: 144px 0;
+
+  @media screen and (max-width: $break-tablet-s) {
+    flex-direction: column;
+    text-align: center;
+
+    .content {
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+.contentCard {
+  width: 50%;
+  margin-left: 16px;
+  color: white;
+
+  @media screen and (max-width: $break-tablet-s) {
+    background-color: #cd4a23;
+    width: 100%;
+    min-width: 100%;
+    margin: 0;
+  }
+}
+
+.content {
+  background-color: #cd4a23;
+  border-radius: var(--rounded-md, 6px);
+  max-width: 596px;
+  float: right;
+  padding: 32px;
+  margin-right: 0;
+  z-index: 1;
+
+  @media screen and (max-width: $break-tablet-s) {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-bottom: 16px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  gap: 10px;
+
+  .button {
+    background-color: white;
+    color: #cd4a23;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+
+    &:first-child {
+      color: #ffffff;
+      background-color: #000000;
+    }
+  }
+}
+
+.desktop {
+  @media screen and (max-width: $break-tablet-s) {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @media screen and (max-width: $break-tablet-s) {
+    display: flex;
+    min-width: 100%;
+  }
+}

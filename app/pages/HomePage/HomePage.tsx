@@ -10,6 +10,10 @@ import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
 
+import bgImage from "../../assets/img/HomePage/tempHero.png";
+
+import Hero from "components/ui/Hero/Hero";
+
 const { showBreakingNews } = whiteLabel;
 
 export const coreCategories = [
@@ -103,12 +107,34 @@ export const HomePage = () => {
     getResourceCount().then((count: number) => setResourceCount(count));
   }, []);
 
+  const heroButtons = [
+    {
+      label: "Services",
+      href: "/services",
+    },
+    {
+      label: "Opportunities",
+      href: "/opportunities",
+    },
+    {
+      label: "Events",
+      href: "/events",
+    },
+  ];
+
   return (
     <>
       {showBreakingNews && <NewsArticles />}
+      <Hero
+        backgroundImage={bgImage}
+        title="Lorem ipsum dolor sit amet consectetur"
+        description="Lorem ipsum dolor sit amet consectetur. Gravida pellentesque risus felis elit nisi maecenas."
+        buttons={heroButtons}
+      />
       <HomePageSection title="Find essential services in San Francisco">
         <ResourceList resources={coreCategories} />
       </HomePageSection>
+
       <HomePageSection
         title="Browse Directory"
         description="Search the directory for a specific social service provider or browse by category."

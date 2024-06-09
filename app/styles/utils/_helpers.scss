@@ -115,7 +115,6 @@ h2 {
   @extend %font-size-large;
   font-family: Montserrat;
   font-weight: 700;
-  color: $text-primary;
 }
 h3 {
   @extend %font-size-medium;
@@ -126,7 +125,6 @@ h4 {
   @extend %font-size-medium;
   font-family: Montserrat;
   font-weight: 600;
-  color: $text-primary;
 }
 h5 {
   @extend %font-size-default;
