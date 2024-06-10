@@ -1,0 +1,72 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.oppEventSection {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  overflow: hidden;
+  width: 100%;
+  padding: 96px 128px;
+
+  &.event {
+    background: #cd4a23;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding: 32px 16px;
+  }
+
+  .oppEvent__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      margin-bottom: 12px;
+    }
+
+    &.event {
+      h2, p{
+        color: white;
+      }
+    }
+
+    @media screen and (max-width: $break-tablet-p) {
+      gap: 12px;
+      flex-direction: column;
+      align-items: stretch;
+
+      h2 {
+        font-size: var(--mobile-h2, 26px);
+      }
+    }
+  }
+
+  .cardsContainer {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    height: 100%;
+
+    &.event {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      
+      @media screen and (max-width: $break-tablet-p) {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    @media screen and (max-width: 1336px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: $break-tablet-p) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
