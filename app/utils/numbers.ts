@@ -8,3 +8,15 @@
 export function round(value: number, decimals: number) {
   return Number(`${Math.round(Number(`${value}e${decimals}`))}e-${decimals}`);
 }
+
+/**
+ * Strip phone numbers of non-numeric characters for callable tel: numbers and add +1 for US calling
+ *
+ * E.g.
+ * '555-555-5555' -> +15555555555
+ */
+export function callableUSPhoneNumber(phoneNumber: string) {
+  const numbersOnly = phoneNumber.replace(/\D/g, "");
+  const formattedNumber = `+1${numbersOnly}`;
+  return formattedNumber;
+}
