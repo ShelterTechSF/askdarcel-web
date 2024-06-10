@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { client } from "../../sanity";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
@@ -34,8 +34,11 @@ export const AboutPage = () => {
         `*[_type == 'contentPageType' && name == 'About']{mastHead, twoColumnContentSections[]->}`
       );
 
+      const { mastHead, twoColumnContentSections } = fetchedPageData[0];
+
       setPageData({
-        ...fetchedPageData[0],
+        mastHead,
+        twoColumnContentSections,
         pageInitialized: true,
       });
     };
@@ -44,7 +47,7 @@ export const AboutPage = () => {
   }, []);
 
   if (!pageData.pageInitialized) {
-    return <>"loading...";</>;
+    return <>loading...</>;
   }
 
   return (

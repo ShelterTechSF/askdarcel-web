@@ -1,6 +1,6 @@
 import React from "react";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import BlockContent from "@sanity/block-content-to-react";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import imageUrlBuilder from "@sanity/image-url";
 import styles from "./TwoColumnContentSection.module.scss";
 import { client } from "../../../sanity";

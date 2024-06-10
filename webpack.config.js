@@ -13,6 +13,7 @@ if (existsSync("config.yml") || process.env.CONFIG_YAML) {
   const CONFIG_YAML = process.env.CONFIG_YAML || "config.yml";
   userConfig = yaml.safeLoad(readFileSync(CONFIG_YAML, "utf8"));
 } else {
+  // eslint-disable-next-line
   console.warn(
     "No configuration file detected, defaulting to environment variables."
   );
