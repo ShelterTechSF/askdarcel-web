@@ -34,7 +34,7 @@
 
 .content {
   background-color: #cd4a23;
-  border-radius: var(--rounded-md, 6px); // TODO: create radius vars
+  border-radius: $rounded-xl;
   max-width: 596px;
   float: right;
   padding: $general-spacing-xl;
@@ -75,14 +75,18 @@
     color: #cd4a23; // TODO: Create color vars
     padding: $spacing-2_5 $spacing-5;
     text-decoration: none;
-    border-radius: var(
-      --buttons-border-radius,
-      9999px
-    ); // TODO: Create border radius vars
+    border-radius: $rounded-full;
     font-weight: bold;
     @media screen and (max-width: $break-tablet-s) {
       width: 100%;
       text-align: center;
+    }
+
+    &:after {
+      content: "\f061";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-left: 8px;
     }
 
     &:first-child {
