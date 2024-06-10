@@ -26,7 +26,8 @@
     }
 
     &.event {
-      h2, p{
+      h2,
+      p {
         color: white;
       }
     }
@@ -52,7 +53,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      
+
       @media screen and (max-width: $break-tablet-p) {
         display: flex;
         flex-direction: column;
