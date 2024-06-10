@@ -1,0 +1,93 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.card {
+  display: flex;
+  background: #ffffff;
+  border: 2px solid var(--tailwind-gray-100, #f3f4f6);
+  border-radius: var(--rounded-md, 6px);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  &.opportunity {
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: $break-tablet-l) {
+    flex-direction: column;
+  }
+
+  .cardImage {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+
+    &.event {
+      max-width: 40%;
+
+      @media screen and (max-width: $break-tablet-l) {
+        max-width: none;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px;
+    height: 100%;
+    width: 100%;
+
+    @media screen and (max-width: $break-tablet-p) {
+      padding: 16px;
+    }
+
+    .contentTitle {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 125%;
+      margin-bottom: 16px;
+    }
+
+    .contentTitle a {
+      color: var(--text-text-primary, #111928);
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+
+    .contentTime {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+
+      p {
+        color: var(--text-text-secondary, #4b5563);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 125%;
+      }
+    }
+
+    .contentSubtext {
+      color: #1a56db;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 150%;
+    }
+  }
+}
