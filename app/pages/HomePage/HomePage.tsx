@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
@@ -9,10 +10,22 @@ import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
-
-import bgImage from "../../assets/img/HomePage/tempHero.png";
-
 import Hero from "components/ui/Hero/Hero";
+import bgImage from "../../assets/img/HomePage/tempHero.png";
+import { client } from "../../sanity";
+
+export interface Button {
+  href: string;
+  label: string;
+}
+
+export interface HeroData {
+  name: string;
+  title: string;
+  description: string;
+  backgroundImage: SanityImageSource;
+  buttons: Button[];
+}
 
 const { showBreakingNews } = whiteLabel;
 
@@ -95,6 +108,7 @@ export const HomePage = () => {
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
 
   const submitSearch = () => {
     if (searchValue) {
@@ -105,6 +119,19 @@ export const HomePage = () => {
 
   useEffect(() => {
     getResourceCount().then((count: number) => setResourceCount(count));
+    const fetchHeroData = async () => {
+      const query = `*[_type == "hero" && name == "Home Hero"][0]{
+        name,
+        title,
+        description,
+        backgroundImage,
+        buttons
+      }`;
+      const result: HeroData = await client.fetch(query);
+      setHeroData(result);
+    };
+
+    fetchHeroData();
   }, []);
 
   const heroButtons = [
@@ -121,6 +148,8 @@ export const HomePage = () => {
       href: "/events",
     },
   ];
+
+  console.log(heroData);
 
   return (
     <>
