@@ -4,13 +4,14 @@
   display: flex;
   align-items: center;
   background-size: cover;
-  background-position: center;
+  background-position: top;
   position: relative;
   padding: $spacing-36 $spacing-0;
 
   @media screen and (max-width: $break-tablet-s) {
     flex-direction: column;
     text-align: center;
+    padding: 56.8% $spacing-0 $spacing-0; // Aspect-ratio of image
 
     .content {
       max-width: 100%;
@@ -43,6 +44,7 @@
 
   @media screen and (max-width: $break-tablet-s) {
     max-width: 100%;
+    padding: $general-spacing-md;
     margin: $spacing-0;
   }
 
