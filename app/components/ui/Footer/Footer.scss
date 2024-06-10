@@ -4,11 +4,10 @@
   display: flex;
   align-items: center;
   width: 100%;
-  flex: 1 0 30vh;
   color: #d1d5d8;
   min-height: 100px;
   background-color: #111928;
-  padding: 96px 16px;
+  padding: $spacing-24 $general-spacing-md;
   font-size: 1rem;
   a {
     color: #d1d5d8;
@@ -17,20 +16,20 @@
   a:focus {
     outline: 2px solid white;
     border-radius: 5px;
-    padding: 2px;
+    padding: $spacing-0_5;
   }
 
   @media screen and (max-width: $break-tablet-s) {
-    padding: 32px 16px;
+    padding: $general-spacing-xl $general-spacing-md;
   }
 }
 
 .site-footer__logo {
-  margin-bottom: 2rem;
+  margin-bottom: $general-spacing-xl;
 }
 
 .site-footer__address {
-  margin-bottom: 1rem;
+  margin-bottom: $general-spacing-md;
   font-weight: 600;
   font-family: Montserrat;
 }
@@ -39,21 +38,21 @@
   font-size: 14px;
 
   @media screen and (max-width: $break-tablet-s) {
-    margin-bottom: 2rem;
+    margin-bottom: $general-spacing-xl;
   }
 }
 
 .site-footer__links {
   flex: 1 1 50%;
   display: flex;
-  gap: 80px;
-  margin: 0 80px 0 32px;
+  gap: $spacing-20;
+  margin: 0 $spacing-20 0 $general-spacing-xl;
   justify-content: flex-end;
 
   @media screen and (max-width: $break-tablet-s) {
     flex-direction: column;
-    gap: 3rem;
-    margin: 0 0 2rem;
+    gap: $general-spacing-xxl;
+    margin: 0 0 $general-spacing-md;
     font-size: 14px;
   }
 
@@ -61,7 +60,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: $general-spacing-md;
   }
 
   figcaption {
@@ -70,7 +69,7 @@
   }
 
   li {
-    padding-bottom: 1rem;
+    padding-bottom: $general-spacing-md;
   }
 }
 
@@ -97,41 +96,10 @@
   height: 100px;
 }
 
-.service-guide {
-  flex: 2 2 0;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  font-weight: 900;
-}
-
-.service-guide__icon {
-  background-image: url(../../../assets/img/sfsg-logo.svg);
-  background-repeat: no-repeat;
-  margin-right: 5px;
-  height: 20px;
-  width: 20px;
-}
-
-.service-guide__text a {
-  color: #0025e4;
-  text-transform: uppercase;
-}
-
 .site-footer__top {
   display: flex;
 
   @media screen and (max-width: $break-tablet-s) {
     display: block;
-  }
-}
-
-.site-footer__disclosure {
-  text-align: center;
-  padding-top: 80px;
-  @media screen and (max-width: $break-tablet-s) {
-    display: block;
-    text-align: center;
-    padding: 25px;
   }
 }

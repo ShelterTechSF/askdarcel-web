@@ -35,7 +35,8 @@ export const Footer = () => {
 
   useEffect(() => {
     const fetchFooterData = async () => {
-      const query = `*[_type == "footer"][0]{
+      const query = `*[_type == "footer" && name == "Main Footer"][0]{
+        name,
         address,
         email,
         phoneNumber,
