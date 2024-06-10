@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "../inline/Button/Button";
 import styles from "./Hero.module.scss";
 import classNames from "classnames";
 

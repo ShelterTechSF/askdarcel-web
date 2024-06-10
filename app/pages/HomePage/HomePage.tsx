@@ -18,8 +18,8 @@ import { client } from "../../sanity";
 // Not currently working
 // const builder = imageUrlBuilder(client);
 
-export interface Button {
-  href: string;
+export interface ButtonType {
+  slug: string;
   label: string;
 }
 
@@ -28,7 +28,7 @@ export interface HeroData {
   title: string;
   description: string;
   backgroundImage: SanityImageSource;
-  buttons: Button[];
+  buttons: ButtonType[];
 }
 
 const { showBreakingNews } = whiteLabel;
