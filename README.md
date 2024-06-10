@@ -150,13 +150,13 @@ This will spin up a web server at http://localhost:1337/ and print out a URL to 
 
 There are two protected branches - development and main. Main is the default branch which will be the latest, stable codebase. Development will be where updates get deployed to a staging instance where QA can be performed. Any PR's created against these branches run a series of checks - like building the app, running unit tests, and linting the files.
 
-There are two live instances - a [staging instance](https://our415-staging-a91cdc6d7b2b.herokuapp.com/) and a [production instance](https://our415-abb7eecb7449.herokuapp.com/). Merges onto the development branch deploys the development branch to the staging isntance. Merges onto the main branch deploys the main branch to the production instance. See the [github workflows](https://github.com/Exygy/askdarcel-web/tree/main/.github/workflows) for the details. Environment variables that are used in the build are set in github environments.
+There are two live instances - a [staging instance](https://our415-staging-a91cdc6d7b2b.herokuapp.com/) and a [production instance](https://our415-abb7eecb7449.herokuapp.com/). Merges onto the development branch deploys the development branch to the staging isntance. Merges onto the main branch deploys the main branch to the production instance. See the [github workflows](https://github.com/Exygy/askdarcel-web/tree/main/.github/workflows) for the details. Environment variables used in the deployments are set in github environments - 'prod' supplies the production instance and 'dev' supplies the staging instance..
 
 ## Pull Requests
 
 Pull requests are opened to the development branch. When opening a pull request please fill out the as much of the pull request template you can, which includes tagging the issue your PR is related to, a description of your PR, indicating the type of change, including details for the reviewer about how to test your PR, and a testing checklist. Additionally, officially link the notion ticket to the PR using GitHub's linking UI.
 
-When your PR is ready for review, add the needs review(s) label to help surface it to our internal team. You can assign people as reviewers to surface the work further. If you put up a PR that is not yet ready for eyes, add the wip label.
+When your PR is ready for review, add the needs review(s) label to help surface it to the other devs. You can assign people as reviewers to surface the work further. If you put up a PR that is not yet ready for eyes, add the wip label.
 
 Once the PR has been approved, you either (1) squash and merge the commits if your changes are just in one package, or (2) rebase and merge your commits if your commits are cleanly separated across multiple packages to allow the versions to propagate appropriately.
 
