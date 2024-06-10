@@ -12,7 +12,11 @@ import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
 import Hero from "components/ui/Hero/Hero";
 import bgImage from "../../assets/img/HomePage/tempHero.png";
+// import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanity";
+
+// Not currently working
+// const builder = imageUrlBuilder(client);
 
 export interface Button {
   href: string;
@@ -134,31 +138,19 @@ export const HomePage = () => {
     fetchHeroData();
   }, []);
 
-  const heroButtons = [
-    {
-      label: "Services",
-      href: "/services",
-    },
-    {
-      label: "Opportunities",
-      href: "/opportunities",
-    },
-    {
-      label: "Events",
-      href: "/events",
-    },
-  ];
-
-  console.log(heroData);
+  if (!heroData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
       {showBreakingNews && <NewsArticles />}
       <Hero
         backgroundImage={bgImage}
-        title="Lorem ipsum dolor sit amet consectetur"
-        description="Lorem ipsum dolor sit amet consectetur. Gravida pellentesque risus felis elit nisi maecenas."
-        buttons={heroButtons}
+        // backgroundImage={builder.image(heroData.backgroundImage).url()}
+        title={heroData.title}
+        description={heroData.description}
+        buttons={heroData.buttons}
       />
       <HomePageSection title="Find essential services in San Francisco">
         <ResourceList resources={coreCategories} />

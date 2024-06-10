@@ -3,9 +3,9 @@ import { Button } from "../inline/Button/Button";
 import styles from "./Hero.module.scss";
 import classNames from "classnames";
 
-interface Button {
+interface ButtonType {
   label: string;
-  href: string;
+  slug: string;
 }
 
 const Hero = ({
@@ -17,7 +17,7 @@ const Hero = ({
   backgroundImage: string;
   title: string;
   description: string;
-  buttons: Button[];
+  buttons: ButtonType[];
 }) => {
   return (
     <>
@@ -47,7 +47,7 @@ const HeroCard = ({
 }: {
   title: string;
   description: string;
-  buttons: Button[];
+  buttons: ButtonType[];
   desktop?: boolean;
 }) => {
   const cardStyles = classNames(
@@ -62,7 +62,7 @@ const HeroCard = ({
         <p className={styles.description}>{description}</p>
         <div className={styles.buttons}>
           {buttons.map((button, index) => (
-            <a key={index} href={button.href} className={styles.button}>
+            <a key={index} href={button.slug} className={styles.button}>
               {button.label}
             </a>
           ))}
