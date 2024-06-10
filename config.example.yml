@@ -25,3 +25,7 @@ AUTH0_AUDIENCE: "http://localhost:8080/api"
 AUTH0_CLIENT_ID: "UcnuRrX6S0SeDEhW9PRe01wEhcvIRuwc"
 AUTH0_DOMAIN: "dev-nykixf8szsm220fi.us.auth0.com"
 AUTH0_REDIRECT_URI: "http://localhost:8080/auth"
+
+# Get Project ID in Sanity Studio
+SANITY_PROJECT_ID:
+SANITY_PROJECT_DATASET: "development"
