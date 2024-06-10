@@ -4,37 +4,22 @@ import formatEventTime from "utils/formatEventTime";
 interface OppEventDateProps {
   startDate?: Date;
   endDate?: Date;
-  sectionType: "event" | "opportunity";
 }
 
 export const OppEventDate = (props: OppEventDateProps) => {
-  const { startDate, endDate, sectionType } = props;
+  const { startDate, endDate } = props;
   const start = formatEventTime(startDate);
   const end = formatEventTime(endDate);
+  const isSingleDayEvent = start.date === end.date;
   const hasEndTime = start.time !== end.time;
 
-  if (sectionType === "opportunity") {
+  if (isSingleDayEvent) {
     return (
-      <>
-        <p>{start.date}</p>
-        <span>-</span>
-        <p>{end.date}</p>
-      </>
+      <p>
+        {`${start.date} · ${start.time} ${hasEndTime ? `- ${end.time} ` : ""}`}
+      </p>
     );
   }
 
-  return (
-    <>
-      <p>{start.date}</p>
-      <span>·</span>
-      <p>{start.time}</p>
-
-      {hasEndTime && (
-        <>
-          <span>-</span>
-          <p>{end.time}</p>
-        </>
-      )}
-    </>
-  );
+  return <p>{`${start.date} - ${end.date}`}</p>;
 };

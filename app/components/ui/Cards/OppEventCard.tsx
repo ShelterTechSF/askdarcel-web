@@ -28,11 +28,7 @@ export const OppEventCard = (props: OppEventCardProps) => {
             <a href={slug}>{title}</a>
           </h4>
           <div className={styles.contentTime}>
-            <OppEventDate
-              sectionType={sectionType}
-              startDate={startDate}
-              endDate={endDate}
-            />
+            <OppEventDate startDate={startDate} endDate={endDate} />
           </div>
         </div>
 
