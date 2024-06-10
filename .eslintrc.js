@@ -41,6 +41,7 @@ module.exports = {
     "no-underscore-dangle": "off",
     "react-hooks/exhaustive-deps": "error", // Default is 'warn'; we upgrade to 'error' because otherwise warnings are just noise
     "react/forbid-prop-types": "off",
+    "react/no-danger": "off",
     "react/prefer-stateless-function": "off",
     "react/prop-types": "off",
     "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
