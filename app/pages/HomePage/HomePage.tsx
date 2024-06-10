@@ -12,11 +12,11 @@ import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
 import Hero from "components/ui/Hero/Hero";
 import bgImage from "../../assets/img/HomePage/tempHero.png";
-// import imageUrlBuilder from "@sanity/image-url";
+import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanity";
 
 // Not currently working
-// const builder = imageUrlBuilder(client);
+const builder = imageUrlBuilder(client);
 
 export interface ButtonType {
   slug: string;
@@ -146,8 +146,8 @@ export const HomePage = () => {
     <>
       {showBreakingNews && <NewsArticles />}
       <Hero
-        backgroundImage={bgImage}
-        // backgroundImage={builder.image(heroData.backgroundImage).url()}
+        // backgroundImage={bgImage}
+        backgroundImage={builder.image(heroData.backgroundImage).url()}
         title={heroData.title}
         description={heroData.description}
         buttons={heroData.buttons}
