@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./Hero.module.scss";
 import classNames from "classnames";
+import styles from "./Hero.module.scss";
 
 interface ButtonType {
   label: string;
@@ -60,8 +60,8 @@ const HeroCard = ({
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
         <div className={styles.buttons}>
-          {buttons.map((button, index) => (
-            <a key={index} href={button.slug} className={styles.button}>
+          {buttons.map((button) => (
+            <a key={button.label} href={button.slug} className={styles.button}>
               {button.label}
             </a>
           ))}

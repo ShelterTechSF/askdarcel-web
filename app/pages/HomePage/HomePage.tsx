@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
-
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
+import imageUrlBuilder from "@sanity/image-url";
+import Hero from "components/ui/Hero/Hero";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
-import Hero from "components/ui/Hero/Hero";
-import bgImage from "../../assets/img/HomePage/tempHero.png";
-import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanity";
 
 // Not currently working
