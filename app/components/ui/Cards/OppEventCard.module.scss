@@ -36,18 +36,18 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: $spacing-4;
-    padding: $spacing-6;
+    gap: $general-spacing-md;
+    padding: $general-spacing-lg;
     height: 100%;
     width: 100%;
 
     @media screen and (max-width: $break-tablet-p) {
-      padding: $spacing-4;
+      padding: $general-spacing-md;
     }
 
     .contentTitle {
       line-height: 125%;
-      margin-bottom: $spacing-4;
+      margin-bottom: $general-spacing-md;
     }
 
     .contentTitle a {

@@ -3,7 +3,7 @@
 .oppEventSection {
   display: flex;
   flex-direction: column;
-  gap: $spacing-8;
+  gap: $general-spacing-xl;
   overflow: hidden;
   width: 100%;
   padding: $spacing-24 $spacing-32;
@@ -13,7 +13,7 @@
   }
 
   @media screen and (max-width: $break-tablet-s) {
-    padding: $spacing-8 $spacing-4;
+    padding: $general-spacing-xl $general-spacing-md;
   }
 
   .oppEvent__header {
@@ -22,7 +22,7 @@
     justify-content: space-between;
 
     h2 {
-      margin-bottom: $spacing-3;
+      margin-bottom: $general-spacing-s;
     }
 
     &.event {
@@ -33,7 +33,7 @@
     }
 
     @media screen and (max-width: $break-tablet-p) {
-      gap: $spacing-3;
+      gap: $general-spacing-s;
       flex-direction: column;
       align-items: stretch;
     }
@@ -41,7 +41,7 @@
 
   .cardsContainer {
     display: flex;
-    gap: $spacing-6;
+    gap: $general-spacing-lg;
     width: 100%;
     height: 100%;
 
