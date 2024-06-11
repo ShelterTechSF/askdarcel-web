@@ -56,7 +56,7 @@ export const OppEventCardSection = (props: OppEventCardSectionProps) => {
         opportunity: "name, slug, start_date, end_date, image",
       };
       const query = `*[_type == "${sectionType}"] | order(_createdAt desc)[0...4] { ${fields[sectionType]} }`;
-    
+
       setIsLoading(true);
       const result: EventData[] = await client.fetch(query);
       setIsLoading(false);
