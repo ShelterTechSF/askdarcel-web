@@ -34,4 +34,4 @@ SANITY_USE_CDN: false
 SANITY_PERSPECTIVE: "published"
 # Need a token for things like previewing drafts
 SANITY_WITH_CREDENTIALS: false
-SANITY_API_TOKEN:""
+SANITY_API_TOKEN: "<SANITY_API_KEY>"
