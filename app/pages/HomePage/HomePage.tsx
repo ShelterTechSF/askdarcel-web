@@ -141,6 +141,7 @@ export const HomePage = () => {
     return <div>Loading...</div>;
   }
 
+  // DELETE AFTER APPROVAL
   const buttonClick = () => window.alert("Hey!");
 
   return (
@@ -250,6 +251,38 @@ export const HomePage = () => {
             variant="secondary"
             size="xl"
           >
+            Button Text
+          </Button>
+        </div>
+        <p>linkBlue variant external links (see arrow variants):</p>
+        <div className="temp-section">
+          <Button
+            href="https://www.google.com"
+            arrowVariant="before"
+            variant="linkBlue"
+            size="xs"
+          >
+            Button Text
+          </Button>
+          <Button
+            href="https://www.google.com"
+            arrowVariant="after"
+            variant="linkBlue"
+          >
+            Button Text
+          </Button>
+        </div>
+        <p>linkWhite variant external links (see arrow variants):</p>
+        <div className="temp-section-dark">
+          <Button
+            href="/about"
+            arrowVariant="before"
+            variant="linkWhite"
+            size="xs"
+          >
+            Button Text
+          </Button>
+          <Button href="/about" arrowVariant="after" variant="linkWhite">
             Button Text
           </Button>
         </div>
