@@ -12,6 +12,7 @@ import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
 import { client } from "../../sanity";
+import { Button } from "components/ui/inline/Button/Button";
 
 // Not currently working
 const builder = imageUrlBuilder(client);
@@ -140,6 +141,8 @@ export const HomePage = () => {
     return <div>Loading...</div>;
   }
 
+  const buttonClick = () => window.alert("Hey!");
+
   return (
     <>
       {showBreakingNews && <NewsArticles />}
@@ -167,6 +170,91 @@ export const HomePage = () => {
           value={searchValue}
         />
       </HomePageSection>
+
+      <HomePageSection
+        title="Temp button section"
+        description="Delete after approval"
+      >
+        <p>Primary onClick all sizes:</p>
+        <div className="temp-section">
+          <Button onClick={buttonClick} size="xs">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} size="sm">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick}>Button Text</Button>
+          <Button onClick={buttonClick} size="lg">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} size="xl">
+            Button Text
+          </Button>
+        </div>
+        <p>Secondary onClick all sizes:</p>
+        <div className="temp-section">
+          <Button onClick={buttonClick} variant="secondary" size="xs">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary" size="sm">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary" size="lg">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary" size="xl">
+            Button Text
+          </Button>
+        </div>
+        <p>Primary internal link all sizes:</p>
+        <div className="temp-section">
+          <Button href="/about" size="xs">
+            Button Text
+          </Button>
+          <Button href="/about" size="sm">
+            Button Text
+          </Button>
+          <Button href="/about">Button Text</Button>
+          <Button href="/about" size="lg">
+            Button Text
+          </Button>
+          <Button href="/about" size="xl">
+            Button Text
+          </Button>
+        </div>
+        <p>Secondary external link all sizes (see arrow variants):</p>
+        <div className="temp-section">
+          <Button href="https://www.google.com" variant="secondary" size="xs">
+            Button Text
+          </Button>
+          <Button href="https://www.google.com" variant="secondary" size="sm">
+            Button Text
+          </Button>
+          <Button href="https://www.google.com" variant="secondary">
+            Button Text
+          </Button>
+          <Button
+            href="https://www.google.com"
+            arrowVariant="before"
+            variant="secondary"
+            size="lg"
+          >
+            Button Text
+          </Button>
+          <Button
+            href="https://www.google.com"
+            arrowVariant="after"
+            variant="secondary"
+            size="xl"
+          >
+            Button Text
+          </Button>
+        </div>
+      </HomePageSection>
+
       <Partners />
       <Footer />
     </>
