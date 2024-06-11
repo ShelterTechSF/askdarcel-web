@@ -16,7 +16,8 @@
 @import "components/map";
 
 // DELETE AFTER APPROVAL
-.temp-section {
+.temp-section,
+.temp-section-dark {
   margin-top: 12px;
   margin-bottom: 24px;
   display: flex;
@@ -26,4 +27,9 @@
   .button {
     flex-shrink: 0;
   }
+}
+
+.temp-section-dark {
+  background: black;
+  padding: 24px;
 }

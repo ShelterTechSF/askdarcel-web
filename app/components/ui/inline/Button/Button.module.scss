@@ -88,18 +88,30 @@
   }
 
   &--linkBlue {
+    padding: $spacing-0;
+    border-radius: $rounded-none;
+    color: $link-blue-default;
+
     &:hover {
+      border-bottom: 1px solid $link-blue-hover;
+      color: $link-blue-hover;
     }
 
     &:active {
+      border-bottom: 1px solid $link-blue-active;
+      color: $link-blue-active;
     }
   }
 
   &--linkWhite {
-    &:hover {
-    }
+    padding: $spacing-0;
+    border-radius: $rounded-none;
+    color: $white;
 
+    &:hover,
     &:active {
+      border-bottom: 1px solid $white;
+      color: $white;
     }
   }
 
