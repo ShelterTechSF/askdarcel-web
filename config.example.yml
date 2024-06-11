@@ -29,3 +29,9 @@ AUTH0_REDIRECT_URI: "http://localhost:8080/auth"
 # Get Project ID in Sanity Studio
 SANITY_PROJECT_ID:
 SANITY_PROJECT_DATASET: "development"
+# Disable cdn to omit caching
+SANITY_USE_CDN: false
+SANITY_PERSPECTIVE: "published"
+# Need a token for things like previewing drafts
+SANITY_WITH_CREDENTIALS: false
+SANITY_API_TOKEN: "<SANITY_API_KEY>"
