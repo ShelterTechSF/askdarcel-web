@@ -1,24 +1,6 @@
 @import "app/styles/utils/_helpers.scss";
 
-.button {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  min-width: 120px;
-  height: 56px;
-  padding: 0 18px;
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  @media screen and (max-width: $break-tablet-s) {
-    padding: 8px 14px;
-  }
-}
-
-.buttonTransparent {
+.button__transparent {
   border-radius: 3px;
   color: $color-brand;
   background-color: transparent;
@@ -32,7 +14,7 @@
   }
 }
 
-.textButton {
+.button__text {
   color: $color-brand;
   background-color: transparent;
   &:focus,
@@ -53,4 +35,131 @@
 
 .large {
   width: 218px;
+}
+
+.button {
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 14px;
+  height: fit-content;
+
+  &:disabled {
+    color: white;
+    background: var(--primary-button-disabled-background, #e5e7eb);
+  }
+
+  &:focus {
+    border: 3px solid var(--primary-button-focus-outline, #fbb040);
+  }
+
+  &--xs {
+    font-size: 12px;
+    padding: var(--2, 8px) var(--3, 12px);
+  }
+
+  &--sm {
+    padding: var(--2, 8px) var(--3, 12px);
+  }
+
+  &--base {
+    padding: var(--25, 10px) var(--5, 20px);
+  }
+
+  &--lg {
+    font-size: 16px;
+    padding: var(--25, 10px) var(--5, 20px);
+  }
+
+  &--xl {
+    font-size: 16px;
+    padding: var(--35, 14px) var(--6, 24px);
+  }
+
+  &--primary {
+    background: var(--primary-button-default-background, #111928);
+    color: white;
+
+    &:hover {
+      background: var(--primary-button-hover-background, #1f2a37);
+    }
+
+    &:active {
+      background: var(--primary-button-active-background, #374151);
+    }
+
+    &:hover {
+      background: var(--primary-button-hover-background, #1f2a37);
+    }
+  }
+
+  &--secondary {
+    border-radius: var(--buttons-border-radius, 9999px);
+    color: var(--secondary-button-default-label, #cd4a23);
+    border: 2px solid var(--secondary-button-outline, #cd4a23);
+    background: var(--secondary-button-default-background, #fff);
+
+    &:hover {
+      background: var(--secondary-button-hover-background, #bb4620);
+      color: var(--secondary-button-hover-label, #fff);
+    }
+
+    &:active {
+      background: var(--secondary-button-active-background, #98391a);
+      color: var(--secondary-button-hover-label, #fff);
+    }
+  }
+
+  &--link {
+    &:hover {
+      text-decoration: none;
+    }
+
+    &-primary,
+    &-secondary {
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  &--link-primary {
+    &:hover {
+      text-decoration: none;
+      color: default !important;
+    }
+  }
+
+  &--linkBlue {
+    &:hover {
+    }
+
+    &:active {
+    }
+  }
+
+  &--linkWhite {
+    &:hover {
+    }
+
+    &:active {
+    }
+  }
+
+  &--arrow-before {
+    &:before {
+      content: "\f060";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-right: 8px;
+    }
+  }
+
+  &--arrow-after {
+    &:after {
+      content: "\f061";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-left: 8px;
+    }
+  }
 }

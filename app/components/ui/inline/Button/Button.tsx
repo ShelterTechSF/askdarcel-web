@@ -1,9 +1,12 @@
 import React from "react";
 
 import styles from "./Button.module.scss";
+import classNames from "classnames";
 
 type ButtonType = "button" | "submit" | "reset";
 type StyleType = "transparent" | "text" | "default";
+type SizeType = "xs" | "sm" | "base" | "lg" | "xl";
+type VariantType = "primary" | "secondary" | "linkBlue" | "linkWhite";
 
 export const Button = ({
   children,
@@ -11,24 +14,50 @@ export const Button = ({
   buttonType = "button",
   addClass,
   styleType = "default",
+  size = "base",
+  variant = "primary",
+  arrowVariant,
   tabIndex,
   disabled,
+  href,
 }: {
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   readonly buttonType?: ButtonType;
   addClass?: string;
-  styleType?: StyleType;
+  styleType?: StyleType; // old
+  size?: SizeType;
+  variant?: VariantType;
   tabIndex?: number;
   disabled?: boolean;
+  arrowVariant?: "before" | "after";
+  href?: string;
 }) => {
-  let buttonClass;
-  if (styleType === "transparent") {
-    buttonClass = styles.buttonTransparent;
-  } else if (styleType === "text") {
-    buttonClass = styles.textButton;
-  } else if (styleType === "default") {
-    buttonClass = styles.button;
+  const buttonClass = classNames(
+    styles.button,
+    styles[`button--${styleType}`],
+    styles[`button--${size}`],
+    styles[`button--${variant}`],
+    styles[`button--arrow-${arrowVariant}`],
+
+    {
+      [`${styles["button--link"]} ${styles[`button--link-${variant}`]}`]: href,
+    }
+  );
+
+  // Links that follow same visual guidelines as buttons
+  if (href) {
+    const isExternalLink = href.startsWith("/");
+    return (
+      <a
+        href={href}
+        className={buttonClass}
+        target={isExternalLink ? "_blank" : "self"}
+        rel={isExternalLink ? "noopener noreferrer" : undefined}
+      >
+        {children}
+      </a>
+    );
   }
 
   return (
