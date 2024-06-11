@@ -31,6 +31,12 @@ jobs:
           ALGOLIA_INDEX_PREFIX: ${{ secrets.ALGOLIA_INDEX_PREFIX }}
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
           ALGOLIA_READ_ONLY_API_KEY: ${{ secrets.ALGOLIA_READ_ONLY_API_KEY }}
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_PROJECT_DATASET: ${{ secrets.SANITY_PROJECT_DATASET }}
+          SANITY_USE_CDN: ${{ secrets.SANITY_USE_CDN }}
+          SANITY_PERSPECTIVE: ${{ secrets.SANITY_PERSPECTIVE }}
+          SANITY_WITH_CREDENTIALS: ${{ secrets.SANITY_WITH_CREDENTIALS }}
+          SANITY_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
       - name: Build, Push and Release a Docker container to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
