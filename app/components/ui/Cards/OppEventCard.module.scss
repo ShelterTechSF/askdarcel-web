@@ -2,9 +2,9 @@
 
 .card {
   display: flex;
-  background: #ffffff;
-  border: 2px solid var(--tailwind-gray-100, #f3f4f6);
-  border-radius: var(--rounded-md, 6px);
+  background: $white;
+  border: 2px solid $color-grey1;
+  border-radius: $rounded-md;
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -36,24 +36,22 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 16px;
-    padding: 24px;
+    gap: $spacing-4;
+    padding: $spacing-6;
     height: 100%;
     width: 100%;
 
     @media screen and (max-width: $break-tablet-p) {
-      padding: 16px;
+      padding: $spacing-4;
     }
 
     .contentTitle {
-      font-size: 20px;
-      font-weight: 600;
       line-height: 125%;
-      margin-bottom: 16px;
+      margin-bottom: $spacing-4;
     }
 
     .contentTitle a {
-      color: var(--text-text-primary, #111928);
+      color: $text-primary;
 
       &:hover {
         text-decoration: none;
@@ -72,19 +70,18 @@
     .contentTime {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
+      gap: $spacing-1;
       align-items: center;
 
       p {
-        color: var(--text-text-secondary, #4b5563);
-        font-size: 16px;
+        color: $color-textfade;
         font-weight: 600;
         line-height: 125%;
       }
     }
 
     .contentSubtext {
-      color: #1a56db;
+      color: $text-link;
       font-size: 18px;
       font-weight: 600;
       line-height: 150%;

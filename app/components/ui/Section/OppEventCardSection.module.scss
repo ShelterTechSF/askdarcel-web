@@ -3,17 +3,17 @@
 .oppEventSection {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: $spacing-8;
   overflow: hidden;
   width: 100%;
-  padding: 96px 128px;
+  padding: $spacing-24 $spacing-32;
 
   &.event {
-    background: #cd4a23;
+    background: $color-brand-dark;
   }
 
   @media screen and (max-width: $break-tablet-s) {
-    padding: 32px 16px;
+    padding: $spacing-8 $spacing-4;
   }
 
   .oppEvent__header {
@@ -22,30 +22,26 @@
     justify-content: space-between;
 
     h2 {
-      margin-bottom: 12px;
+      margin-bottom: $spacing-3;
     }
 
     &.event {
       h2,
       p {
-        color: white;
+        color: $white;
       }
     }
 
     @media screen and (max-width: $break-tablet-p) {
-      gap: 12px;
+      gap: $spacing-3;
       flex-direction: column;
       align-items: stretch;
-
-      h2 {
-        font-size: var(--mobile-h2, 26px);
-      }
     }
   }
 
   .cardsContainer {
     display: flex;
-    gap: 24px;
+    gap: $spacing-6;
     width: 100%;
     height: 100%;
 
