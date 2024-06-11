@@ -1,111 +1,69 @@
 @import "app/styles/utils/_helpers.scss";
 
-.button__transparent {
-  border-radius: 3px;
-  color: $color-brand;
-  background-color: transparent;
-  min-width: 120px;
-  height: 42px;
-  padding: 0 18px;
-  border: 1px solid $color-brand;
-
-  @media screen and (max-width: $break-tablet-s) {
-    padding: 8px 14px;
-  }
-}
-
-.button__text {
-  color: $color-brand;
-  background-color: transparent;
-  &:focus,
-  &:hover {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.6;
-  }
-}
-
-.medium {
-  width: 120px;
-}
-
-.large {
-  width: 218px;
-}
-
 .button {
-  border-radius: 9999px;
+  border-radius: $rounded-full;
   font-weight: 700;
   font-size: 14px;
   height: fit-content;
 
   &:disabled {
-    color: white;
-    background: var(--primary-button-disabled-background, #e5e7eb);
+    color: $white;
+    background: $primary-button-disabled-background;
   }
 
   &:focus {
-    border: 3px solid var(--primary-button-focus-outline, #fbb040);
+    border: 3px solid $primary-button-focus-outline;
   }
 
   &--xs {
     font-size: 12px;
-    padding: var(--2, 8px) var(--3, 12px);
+    padding: $general-spacing-xs $general-spacing-s;
   }
 
   &--sm {
-    padding: var(--2, 8px) var(--3, 12px);
+    padding: $general-spacing-xs $general-spacing-s;
   }
 
   &--base {
-    padding: var(--25, 10px) var(--5, 20px);
+    padding: $spacing-2_5 $spacing-5;
   }
 
   &--lg {
     font-size: 16px;
-    padding: var(--25, 10px) var(--5, 20px);
+    padding: $spacing-2_5 $spacing-5;
   }
 
   &--xl {
     font-size: 16px;
-    padding: var(--35, 14px) var(--6, 24px);
+    padding: $spacing-3_5 $general-spacing-lg;
   }
 
   &--primary {
-    background: var(--primary-button-default-background, #111928);
-    color: white;
+    background: $primary-button-default-background;
+    color: $white;
 
     &:hover {
-      background: var(--primary-button-hover-background, #1f2a37);
+      background: $primary-button-hover-background;
     }
 
     &:active {
-      background: var(--primary-button-active-background, #374151);
-    }
-
-    &:hover {
-      background: var(--primary-button-hover-background, #1f2a37);
+      background: $primary-button-active-background;
     }
   }
 
   &--secondary {
-    border-radius: var(--buttons-border-radius, 9999px);
-    color: var(--secondary-button-default-label, #cd4a23);
-    border: 2px solid var(--secondary-button-outline, #cd4a23);
-    background: var(--secondary-button-default-background, #fff);
+    color: $secondary-button-default-label;
+    border: 2px solid $secondary-button-outline;
+    background: $white;
 
     &:hover {
-      background: var(--secondary-button-hover-background, #bb4620);
-      color: var(--secondary-button-hover-label, #fff);
+      background: $secondary-button-hover-background;
+      color: $white;
     }
 
     &:active {
-      background: var(--secondary-button-active-background, #98391a);
-      color: var(--secondary-button-hover-label, #fff);
+      background: $secondary-button-active-background;
+      color: $white;
     }
   }
 
@@ -117,7 +75,7 @@
     &-primary,
     &-secondary {
       &:hover {
-        color: white;
+        color: $white;
       }
     }
   }
@@ -147,7 +105,7 @@
 
   &--arrow-before {
     &:before {
-      content: "\f060";
+      content: "\f060"; // left arrow
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       margin-right: 8px;
@@ -156,10 +114,19 @@
 
   &--arrow-after {
     &:after {
-      content: "\f061";
+      content: "\f061"; // right arrow
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       margin-left: 8px;
     }
+  }
+}
+
+.mobileFullWidth {
+  @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

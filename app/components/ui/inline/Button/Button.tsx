@@ -20,6 +20,7 @@ export const Button = ({
   tabIndex,
   disabled,
   href,
+  mobileFullWidth = true,
 }: {
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -32,6 +33,7 @@ export const Button = ({
   disabled?: boolean;
   arrowVariant?: "before" | "after";
   href?: string;
+  mobileFullWidth?: boolean;
 }) => {
   const buttonClass = classNames(
     styles.button,
@@ -41,6 +43,7 @@ export const Button = ({
     styles[`button--arrow-${arrowVariant}`],
 
     {
+      [styles["mobileFullWidth"]]: mobileFullWidth,
       [`${styles["button--link"]} ${styles[`button--link-${variant}`]}`]: href,
     }
   );
