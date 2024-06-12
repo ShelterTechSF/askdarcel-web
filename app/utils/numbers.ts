@@ -20,3 +20,23 @@ export function callableUSPhoneNumber(phoneNumber: string) {
   const formattedNumber = `+1${numbersOnly}`;
   return formattedNumber;
 }
+
+/**
+ * Formats a phone number string into the format XXX-XXX-XXXX.
+ *
+ * E.g.
+ * "1234567890" -> "123-456-7890"
+ */
+export const formatPhoneNumber = (number: string) => {
+  if (!number) {
+    return "";
+  }
+
+  const cleaned = number.toString().replace(/\D/g, "");
+  const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return [match[2], "-", match[3], "-", match[4]].join("");
+  }
+
+  return number;
+};

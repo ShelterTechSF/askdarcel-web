@@ -7,11 +7,14 @@ import {
 } from "react-instantsearch/connectors";
 import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
-import { formatPhoneNumber, renderAddressMetadata } from "utils";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
+// import { Texting } from "components/Texting";
 
+// import { TextListing } from "components/Texting/Texting";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import styles from "./SearchResults.module.scss";
+
+// NOTE: We will re-implement the texting feature so leaving this in the project until then
 
 const SearchResults = ({
   searchResults,
@@ -65,7 +68,12 @@ const SearchResults = ({
           search term.
         </div>
         {hits.map((hit, index) => (
-          <SearchResult hit={hit} index={index} key={hit.id} />
+          <SearchResult
+            hit={hit}
+            index={index}
+            // categoryId={categoryId} // Keep for category ticket
+            key={hit.id}
+          />
         ))}
         <ResultsPagination noResults={!hits || !hits.length} />
       </div>
@@ -82,13 +90,97 @@ const SearchResults = ({
   );
 };
 
-const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
+const SearchResult = ({
+  hit,
+  index,
+}: {
+  hit: SearchHit;
+  index: number;
+  // categoryId: string | undefined;
+}) => {
+  // Keep for Phase 2:
+  // const [textingIsOpen, setTextingIsOpen] = useState(false);
+
+  // let listing: TextListing;
+  // if (hit.type === "service") {
+  //   listing = {
+  //     listingName: hit.name,
+  //     type: hit.type,
+  //     serviceId: hit.id,
+  //   };
+  // } else {
+  //   listing = {
+  //     listingName: hit.name,
+  //     type: hit.type,
+  //     resourceId: hit.id,
+  //   };
+  // }
+
+  // const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
+  // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
+  // returned by the API. Fetching the model from the API will need to be done in such a way that it does not
+  // block the rendering of the search results and yet does not cause the button to flash in a distracting manner
+
+  // const texting = (
+  //   <div
+  //     className={styles.sideLink}
+  //     data-field="text-me"
+  //     role="button"
+  //     tabIndex={0}
+  //     onClick={toggleTextingModal}
+  //   >
+  //     <img
+  //       src={icon("text-message")}
+  //       alt="chat-bubble"
+  //       className={styles.sideLinkIcon}
+  //     />
+  //     <div className={styles.sideLinkText}>Text me the info</div>
+  //   </div>
+  // );
+
+  // Move to utils?:
+  const renderAddressMetadata = (hit_: SearchHit) => {
+    if (!hit_.addresses || hit_.addresses.length === 0) {
+      return <span>No address found</span>;
+    }
+    if (hit_.addresses.length > 1) {
+      return <span>Multiple locations</span>;
+    }
+    if (hit_.addresses[0].address_1) {
+      return <span>{hit_.addresses[0].address_1}</span>;
+    }
+    return <span>No address found</span>;
+  };
+
   const phoneNumber = hit?.phones?.[0]?.number;
+  const formatPhoneNumber = (number: string) => {
+    // Takes 9 or 10 digit raw phone number input and outputs xxx-xxx-xxxx
+    // If the input doesn't match regex, function returns number's original value
+    if (!number) {
+      return "";
+    }
+
+    const cleaned = number.toString().replace(/\D/g, "");
+    const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return [match[2], "-", match[3], "-", match[4]].join("");
+    }
+
+    return number;
+  };
+
   const url = hit.type === "service" ? hit.url : hit.website;
+
   const basePath = hit.type === "service" ? `services` : `organizations`;
 
   return (
     <div className={styles.searchResult}>
+      {/* Keep for Phase 2: */}
+      {/* <Texting
+        closeModal={toggleTextingModal}
+        listing={listing}
+        isShowing={textingIsOpen}
+      /> */}
       <div className={styles.searchResultContentContainer}>
         <div>
           <h2 className={styles.title}>
@@ -129,6 +221,7 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
           <a
             href={`tel:${phoneNumber}`}
             className={`${styles.icon} ${styles["icon-phone"]}`}
+            aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
           >
             <span className="sr-only">
               Call {formatPhoneNumber(phoneNumber)}
@@ -145,6 +238,8 @@ const SearchResult = ({ hit, index }: { hit: SearchHit; index: number }) => {
             <span className="sr-only">Go to website</span>
           </a>
         )}
+        {/* Keep for phase 2: */}
+        {/* {texting} */}
       </div>
     </div>
   );
