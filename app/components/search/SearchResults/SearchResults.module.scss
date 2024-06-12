@@ -27,6 +27,9 @@
     margin: $spacing-0 $general-spacing-lg;
   }
   @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    padding: -$general-spacing-xl $general-spacing-md;
+    gap: $spacing-0;
     position: relative;
     top: 0;
     background: #fff;
@@ -64,17 +67,11 @@
   justify-content: space-between;
   gap: $general-spacing-md;
 
-  @media screen and (max-width: $break-tablet-l) {
-    padding-left: 30px;
-  }
-
-  @media screen and (max-width: 600px) {
-    padding: 18px 20px;
-  }
-
-  &_address {
-    border-bottom: 1px solid $color-grey3;
-    padding: 24px 0;
+  @media screen and (max-width: $break-tablet-s) {
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid $border-gray;
+    flex-direction: column;
   }
 }
 
@@ -83,7 +80,7 @@
   font-size: 20px;
   font-family: "Montserrat";
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $break-tablet-s) {
     font-size: 18px;
   }
 }
@@ -91,10 +88,6 @@
 .serviceOf {
   font-size: 14px;
   line-height: 125%;
-
-  @media screen and (max-width: 600px) {
-    margin-bottom: 16px;
-  }
 }
 
 .titleLink,
@@ -130,13 +123,13 @@
     margin-right: 8px;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $break-tablet-s) {
     font-size: 16px;
   }
 }
 
 .description {
-  font-size: 18px;
+  font-size: 16px;
   padding-top: $general-spacing-xs;
   color: $text-secondary;
   line-height: 150%;
@@ -144,20 +137,20 @@
   a {
     word-break: break-word;
   }
-  @media screen and (max-width: 600px) {
-    font-size: 16px;
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 14px;
   }
 }
 
 .sideLinks {
-  display: grid;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
-  padding-top: 10px;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $break-tablet-s) {
     font-size: 16px;
+    display: flex;
+    gap: $general-spacing-md;
   }
 }
 
@@ -173,6 +166,12 @@
   align-items: center;
   font-size: 16px;
 
+  @media screen and (max-width: $break-tablet-s) {
+    height: 28px;
+    width: 28px;
+    font-size: 12px;
+  }
+
   &:hover {
     text-decoration: none;
     color: $white;
@@ -185,6 +184,9 @@
     content: "\f095"; /* Font Awesome Unicode for the phone icon */
     font-family: "Font Awesome 5 Free"; /* Font Awesome family */
     font-weight: 900; /* Required for solid icons */
+  }
+  @media screen and (max-width: $break-tablet-s) {
+    margin-bottom: $spacing-0;
   }
 }
 

@@ -215,31 +215,29 @@ const SearchResult = ({
         </div>
       </div>
       <div className={styles.sideLinks}>
-        <div>
-          {phoneNumber && (
-            <a
-              href={`tel:${phoneNumber}`}
-              className={`${styles.icon} ${styles["icon-phone"]}`}
-              aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
-            >
-              <span className="sr-only">
-                Call {formatPhoneNumber(phoneNumber)}
-              </span>
-            </a>
-          )}
-          {url && (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={url}
-              className={`${styles.icon} ${styles["icon-popout"]}`}
-            >
-              <span className="sr-only">Go to website</span>
-            </a>
-          )}
-          {/* Keep for phase 2: */}
-          {/* {texting} */}
-        </div>
+        {phoneNumber && (
+          <a
+            href={`tel:${phoneNumber}`}
+            className={`${styles.icon} ${styles["icon-phone"]}`}
+            aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
+          >
+            <span className="sr-only">
+              Call {formatPhoneNumber(phoneNumber)}
+            </span>
+          </a>
+        )}
+        {url && (
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={url}
+            className={`${styles.icon} ${styles["icon-popout"]}`}
+          >
+            <span className="sr-only">Go to website</span>
+          </a>
+        )}
+        {/* Keep for phase 2: */}
+        {/* {texting} */}
       </div>
     </div>
   );
