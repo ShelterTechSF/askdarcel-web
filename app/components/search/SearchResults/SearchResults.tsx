@@ -98,15 +98,6 @@ const SearchResults = ({
     setExpandedStates(newExpandedStates);
   };
 
-  const toggleExpandResult = (id: number) => {
-    const newState = !expandedStates[id];
-    const updatedExpandedStates = {
-      ...expandedStates,
-      [id]: newState,
-    };
-    setExpandedStates(updatedExpandedStates);
-  };
-
   if (!searchResults) return null;
 
   return (
@@ -151,8 +142,6 @@ const SearchResults = ({
             hit={hit}
             index={index}
             categoryId={categoryId}
-            expanded={expandedStates[hit.id]}
-            onToggle={() => toggleExpandResult(hit.id)}
             key={hit.id}
           />
         ))}
@@ -175,14 +164,10 @@ const SearchResult = ({
   hit,
   index,
   categoryId,
-  expanded,
-  onToggle,
 }: {
   hit: SearchHit;
   index: number;
   categoryId: string | undefined;
-  expanded: boolean;
-  onToggle: () => void;
 }) => {
   const { authState } = useAppContext();
   const [textingIsOpen, setTextingIsOpen] = useState(false);
@@ -395,109 +380,90 @@ const SearchResult = ({
             </div>
           )}
         </div>
-        <div className={styles.expandResultButtonContainer}>
-          <button
-            type="button"
-            onClick={onToggle}
-            className={styles.expandResultButton}
-          >
-            <img
-              className={`${styles.expandResultIcon} ${
-                expanded ? "" : styles.collapsed
-              }`}
-              src={icon("thick-chevron")}
-              alt="Expand Results Toggle"
-            />
-          </button>
-        </div>
       </div>
       <div className={styles.searchResultContent}>
         <div className={styles.searchText}>
-          {expanded && (
-            <>
-              <div className={`notranslate ${styles.address}`}>
-                {renderAddressMetadata(hit)}
+          <>
+            <div className={`notranslate ${styles.address}`}>
+              {renderAddressMetadata(hit)}
+            </div>
+            <ReactMarkdown
+              className={`rendered-markdown ${styles.description}`}
+              source={hit.long_description ?? undefined}
+              linkTarget="_blank"
+            />
+          </>
+        </div>
+
+        <div className={styles.sideLinks}>
+          <div
+            className={
+              showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
+            }
+          >
+            {hit.type === "service" &&
+              !!hit.instructions?.length &&
+              clinicianActionsLink}
+            {handoutsLink}
+          </div>
+          <div
+            className={
+              showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
+            }
+          >
+            {phoneNumber && (
+              <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
+                <img
+                  src={icon("phone-blue")}
+                  alt="phone"
+                  className={styles.sideLinkIcon}
+                />
+                <a
+                  href={`tel:${phoneNumber}`}
+                  className={styles.sideLinkText}
+                >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
               </div>
-              <ReactMarkdown
-                className={`rendered-markdown ${styles.description}`}
-                source={hit.long_description ?? undefined}
-                linkTarget="_blank"
+            )}
+            <div />
+            {url && (
+              <div className={styles.sideLink}>
+                <img
+                  src={icon("popout-blue")}
+                  alt="website"
+                  className={styles.sideLinkIcon}
+                />
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={url}
+                  className={styles.sideLinkText}
+                >
+                  Go to website
+                </a>
+              </div>
+            )}
+            {texting}
+          </div>
+
+          {authState && (
+            <>
+              <Button
+                onClick={() => {
+                  setBookmarkModalIsOpen(true);
+                }}
+                addClass={styles.bookmarkButton}
+                styleType={bookmarkAdded ? "default" : "transparent"}
+              >
+                {bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}
+              </Button>
+              <BookmarkModal
+                isOpen={bookmarkModalIsOpen}
+                setIsOpen={setBookmarkModalIsOpen}
+                hit={hit}
               />
             </>
           )}
         </div>
-
-        {expanded && (
-          <div className={styles.sideLinks}>
-            <div
-              className={
-                showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
-              }
-            >
-              {hit.type === "service" &&
-                !!hit.instructions?.length &&
-                clinicianActionsLink}
-              {handoutsLink}
-            </div>
-            <div
-              className={
-                showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
-              }
-            >
-              {phoneNumber && (
-                <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
-                  <img
-                    src={icon("phone-blue")}
-                    alt="phone"
-                    className={styles.sideLinkIcon}
-                  />
-                  <a
-                    href={`tel:${phoneNumber}`}
-                    className={styles.sideLinkText}
-                  >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
-                </div>
-              )}
-              <div />
-              {url && (
-                <div className={styles.sideLink}>
-                  <img
-                    src={icon("popout-blue")}
-                    alt="website"
-                    className={styles.sideLinkIcon}
-                  />
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={url}
-                    className={styles.sideLinkText}
-                  >
-                    Go to website
-                  </a>
-                </div>
-              )}
-              {texting}
-            </div>
-
-            {authState && (
-              <>
-                <Button
-                  onClick={() => {
-                    setBookmarkModalIsOpen(true);
-                  }}
-                  addClass={styles.bookmarkButton}
-                  styleType={bookmarkAdded ? "default" : "transparent"}
-                >
-                  {bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}
-                </Button>
-                <BookmarkModal
-                  isOpen={bookmarkModalIsOpen}
-                  setIsOpen={setBookmarkModalIsOpen}
-                  hit={hit}
-                />
-              </>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
