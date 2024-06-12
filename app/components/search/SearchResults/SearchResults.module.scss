@@ -6,7 +6,6 @@
   grid-template-areas:
     "toggle toggle"
     "results map";
-  grid-column-gap: 15px;
 
   @media screen and (max-width: $break-tablet-s) {
     grid-template-columns: auto;
@@ -21,9 +20,9 @@
 .searchResultsContainer {
   grid-area: results;
   display: grid;
-  gap: 20px;
+  gap: $general-spacing-md;
   @media screen and (min-width: $min-tablet-p) {
-    margin: 0 24px;
+    margin: $spacing-0 $general-spacing-lg;
   }
   @media screen and (max-width: $break-tablet-s) {
     position: relative;
@@ -55,36 +54,10 @@
   }
 }
 
-.expandResultButtonContainer {
-  justify-self: flex-end;
-}
-
-.expandResultButton {
-  // Button overrides
-  background-color: rgba(0, 0, 0, 0);
-  &:focus,
-  &:hover {
-    background-color: transparent;
-    box-shadow: none;
-  }
-}
-
-.expandResultIcon {
-  transition: transform 200ms ease-in-out;
-  &.collapsed {
-    transform: rotate(-0.25turn);
-  }
-}
-
-.toggleExpandAllButton {
-  font-size: 18px;
-  font-weight: 700;
-}
-
 .searchResult {
-  padding: 21px 0 24px 24px;
-  border: 2px solid $color-grey4;
-  border-radius: 8px;
+  padding: $general-spacing-md;
+  border: 1px solid $border-gray;
+  border-radius: $rounded-md;
 
   @media screen and (max-width: $break-tablet-l) {
     padding-left: 30px;
@@ -92,12 +65,6 @@
 
   @media screen and (max-width: 600px) {
     padding: 18px 20px;
-  }
-
-  h3 {
-    font-weight: 700;
-    font-size: 18px;
-    padding-bottom: 24px;
   }
 
   &_address {
@@ -112,11 +79,31 @@
 }
 
 .title {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 20px;
+  font-family: "Montserrat";
 
   @media screen and (max-width: 600px) {
     font-size: 18px;
+  }
+}
+
+.serviceOf {
+  font-size: 14px;
+  margin-bottom: 5px;
+  line-height: 125%;
+
+  @media screen and (max-width: 600px) {
+    margin-bottom: 16px;
+  }
+}
+
+.titleLink,
+.serviceOfLink {
+  color: $text-link;
+
+  &:hover {
+    color: $text-link-hover;
   }
 }
 
@@ -134,8 +121,16 @@
 }
 
 .address {
-  font-size: 18px;
+  font-size: 14px;
   margin-top: 12px;
+  color: $text-secondary;
+
+  &::before {
+    content: "\f3c5"; // Location pin icon
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 8px;
+  }
 
   @media screen and (max-width: 600px) {
     font-size: 16px;
@@ -145,22 +140,14 @@
 .description {
   font-size: 18px;
   padding-top: 16px;
+  color: $text-secondary;
+  line-height: 150%;
+
   a {
     word-break: break-word;
   }
   @media screen and (max-width: 600px) {
     font-size: 16px;
-  }
-}
-
-.serviceOf {
-  font-size: 18px;
-  font-style: italic;
-  margin-bottom: 5px;
-
-  @media screen and (max-width: 600px) {
-    font-size: 16px;
-    margin-bottom: 16px;
   }
 }
 
