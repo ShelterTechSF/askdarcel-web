@@ -6,13 +6,13 @@ import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
+import { Button } from "components/ui/inline/Button/Button";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
 import { client } from "../../sanity";
-import { Button } from "components/ui/inline/Button/Button";
 
 // Not currently working
 const builder = imageUrlBuilder(client);

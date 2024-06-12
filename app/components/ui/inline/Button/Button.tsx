@@ -1,7 +1,6 @@
 import React from "react";
-
-import styles from "./Button.module.scss";
 import classNames from "classnames";
+import styles from "./Button.module.scss";
 
 type ButtonType = "button" | "submit" | "reset";
 type StyleType = "transparent" | "text" | "default";
@@ -43,21 +42,18 @@ export const Button = ({
     styles[`button--arrow-${arrowVariant}`],
 
     {
-      [styles["mobileFullWidth"]]: mobileFullWidth,
+      [styles["mobile-full-width"]]: mobileFullWidth,
       [`${styles["button--link"]} ${styles[`button--link-${variant}`]}`]: href,
     }
   );
 
   // Links that follow same visual guidelines as buttons
   if (href) {
-    const isExternalLink = href.startsWith("/");
+    const isExternalLink = !href.startsWith("/");
+
+    const linkProps = isExternalLink && { target: "_blank", rel: "noreferrer" };
     return (
-      <a
-        href={href}
-        className={buttonClass}
-        target={isExternalLink ? "_blank" : "self"}
-        rel={isExternalLink ? "noopener noreferrer" : undefined}
-      >
+      <a href={href} className={buttonClass} {...linkProps}>
         {children}
       </a>
     );
