@@ -69,7 +69,7 @@ const SearchResults = ({
           <SearchResult
             hit={hit}
             index={index}
-            categoryId={categoryId}
+            // categoryId={categoryId} // Keep for category ticket
             key={hit.id}
           />
         ))}
@@ -94,7 +94,7 @@ const SearchResult = ({
 }: {
   hit: SearchHit;
   index: number;
-  categoryId: string | undefined;
+  // categoryId: string | undefined;
 }) => {
   // Keep for Phase 2:
   // const [textingIsOpen, setTextingIsOpen] = useState(false);
@@ -203,16 +203,14 @@ const SearchResult = ({
         </div>
         <div className={styles.searchResultContent}>
           <div className={styles.searchText}>
-            <>
-              <div className={`notranslate ${styles.address}`}>
-                {renderAddressMetadata(hit)}
-              </div>
-              <ReactMarkdown
-                className={`rendered-markdown ${styles.description}`}
-                source={hit.long_description ?? undefined}
-                linkTarget="_blank"
-              />
-            </>
+            <div className={`notranslate ${styles.address}`}>
+              {renderAddressMetadata(hit)}
+            </div>
+            <ReactMarkdown
+              className={`rendered-markdown ${styles.description}`}
+              source={hit.long_description ?? undefined}
+              linkTarget="_blank"
+            />
           </div>
         </div>
       </div>
@@ -223,7 +221,11 @@ const SearchResult = ({
               href={`tel:${phoneNumber}`}
               className={`${styles.icon} ${styles["icon-phone"]}`}
               aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
-            />
+            >
+              <span className="sr-only">
+                Call {formatPhoneNumber(phoneNumber)}
+              </span>
+            </a>
           )}
           {url && (
             <a
@@ -231,8 +233,9 @@ const SearchResult = ({
               rel="noopener noreferrer"
               href={url}
               className={`${styles.icon} ${styles["icon-popout"]}`}
-              aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
-            />
+            >
+              <span className="sr-only">Go to website</span>
+            </a>
           )}
           {/* Keep for phase 2: */}
           {/* {texting} */}
