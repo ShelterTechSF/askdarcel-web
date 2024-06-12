@@ -1,21 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
   connectStateResults,
   SearchResults as SearchResultsProps,
 } from "react-instantsearch/connectors";
-import { useAppContext, whiteLabel } from "utils";
+import { whiteLabel } from "utils";
 import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { Texting } from "components/Texting";
 
-import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
-import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
+// import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
+// import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
 import { TextListing } from "components/Texting/Texting";
-import { BookmarkModal } from "components/ui/BookmarkModal/BookmarkModal";
-import { Button } from "components/ui/inline/Button/Button";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
 import styles from "./SearchResults.module.scss";
@@ -38,39 +36,10 @@ const SearchResults = ({
     sortBy24HourAvailability
   );
 
-  interface ExpandedStatesObject {
-    [key: string]: boolean;
-  }
-  const initialExpandedHitsStates = useCallback((_hits: SearchHit[]) => {
-    const initialStates: ExpandedStatesObject = {};
-    _hits.forEach((hit) => {
-      initialStates[hit.id] = true;
-    });
-    return initialStates;
-  }, []);
-
   const [centerCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
     null
   );
-
-  // This object holds the expanded/collapsed state for each individual result
-  const [expandedStates, setExpandedStates] = useState<ExpandedStatesObject>(
-    initialExpandedHitsStates(hits)
-  );
-
-  useEffect(() => {
-    const hitIdSet = new Set(hits.map((hit) => hit.id));
-    const expandedStatesSet = new Set(
-      Object.keys(expandedStates).map((key) => parseInt(key, 10))
-    );
-    const setsAreEqual =
-      hitIdSet.size === expandedStatesSet.size &&
-      [...hitIdSet].every((val) => expandedStatesSet.has(val));
-    if (!setsAreEqual) {
-      setExpandedStates(initialExpandedHitsStates(hits));
-    }
-  }, [hits, expandedStates, initialExpandedHitsStates]);
 
   useEffect(() => {
     if (centerCoords && googleMapObject) {
@@ -83,47 +52,10 @@ const SearchResults = ({
     };
   }, [googleMapObject, centerCoords]);
 
-  const allStates = Object.values(expandedStates);
-  const disableExpandAllButton =
-    !allStates.length || allStates.every((state) => state === true);
-  const disableCollapseAllButton =
-    !allStates.length || allStates.every((state) => state === false);
-
-  const toggleExpandAllResults = (expand: boolean) => {
-    const newExpandedStates: ExpandedStatesObject = {};
-    Object.keys(expandedStates).forEach((key) => {
-      newExpandedStates[key] = expand;
-    });
-
-    setExpandedStates(newExpandedStates);
-  };
-
   if (!searchResults) return null;
 
   return (
     <div className={styles.searchResultsAndMapContainer}>
-      <div
-        className={`${styles.toggleExpandSearchResultsContainer} ${
-          overlayMapWithSearchResults ? styles.overlayMapWithSearchResults : ""
-        }`}
-      >
-        <Button
-          styleType="text"
-          addClass={styles.toggleExpandAllButton}
-          disabled={disableExpandAllButton}
-          onClick={() => toggleExpandAllResults(true)}
-        >
-          Expand All
-        </Button>
-        <Button
-          styleType="text"
-          addClass={styles.toggleExpandAllButton}
-          disabled={disableCollapseAllButton}
-          onClick={() => toggleExpandAllResults(false)}
-        >
-          Collapse All
-        </Button>
-      </div>
       <div
         className={`${styles.searchResultsContainer} ${
           overlayMapWithSearchResults ? styles.overlayMapWithSearchResults : ""
@@ -169,23 +101,21 @@ const SearchResult = ({
   index: number;
   categoryId: string | undefined;
 }) => {
-  const { authState } = useAppContext();
   const [textingIsOpen, setTextingIsOpen] = useState(false);
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
-  const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(false);
 
-  type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
-  const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
-    const handoutRoute =
-      categoryId === "2000006"
-        ? "intimate-partner-violence-handout"
-        : "service-handout";
+  // type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
+  // const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
+  //   const handoutRoute =
+  //     categoryId === "2000006"
+  //       ? "intimate-partner-violence-handout"
+  //       : "service-handout";
 
-    return `/${handoutRoute}/${hitId}${
-      language ? `?handoutLanguage=${language}` : ""
-    }`;
-  };
+  //   return `/${handoutRoute}/${hitId}${
+  //     language ? `?handoutLanguage=${language}` : ""
+  //   }`;
+  // };
 
   let listing: TextListing;
   if (hit.type === "service") {
@@ -309,7 +239,7 @@ const SearchResult = ({
         listing={listing}
         isShowing={textingIsOpen}
       />
-      {hit.type === "service" && (
+      {/* {hit.type === "service" && (
         <ClinicianActions
           isOpen={clinicianActionsIsOpen}
           setIsOpen={toggleClinicianActionsModal}
@@ -358,7 +288,7 @@ const SearchResult = ({
             },
           ]}
         />
-      )}
+      )} */}
       {/* End modals */}
 
       <div className={styles.searchResultTitleContainer}>
@@ -444,25 +374,6 @@ const SearchResult = ({
             )}
             {texting}
           </div>
-
-          {authState && (
-            <>
-              <Button
-                onClick={() => {
-                  setBookmarkModalIsOpen(true);
-                }}
-                addClass={styles.bookmarkButton}
-                styleType={bookmarkAdded ? "default" : "transparent"}
-              >
-                {bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}
-              </Button>
-              <BookmarkModal
-                isOpen={bookmarkModalIsOpen}
-                setIsOpen={setBookmarkModalIsOpen}
-                hit={hit}
-              />
-            </>
-          )}
         </div>
       </div>
     </div>
