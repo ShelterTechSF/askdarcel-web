@@ -24,8 +24,8 @@ export const Button = ({
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   readonly buttonType?: ButtonType;
-  addClass?: string;
-  styleType?: StyleType; // old
+  addClass?: string; // phase out as we replace old buttons with new
+  styleType?: StyleType; // phase out as we replace old buttons with new
   size?: SizeType;
   variant?: VariantType;
   tabIndex?: number;
