@@ -21,6 +21,8 @@
   grid-area: results;
   display: grid;
   gap: $general-spacing-md;
+  width: 670px;
+
   @media screen and (min-width: $min-tablet-p) {
     margin: $spacing-0 $general-spacing-lg;
   }
