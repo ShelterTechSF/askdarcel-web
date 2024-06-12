@@ -12,7 +12,6 @@ import ResultsPagination from "components/search/Pagination/ResultsPagination";
 
 // import { TextListing } from "components/Texting/Texting";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
-import { icon } from "../../../assets";
 import styles from "./SearchResults.module.scss";
 
 const SearchResults = ({
@@ -180,7 +179,7 @@ const SearchResult = ({
         listing={listing}
         isShowing={textingIsOpen}
       /> */}
-      <div className={styles.searchResultTitleContainer}>
+      <div className={styles.searchResultContentContainer}>
         <div>
           <h2 className={styles.title}>
             {index + 1}.{" "}
@@ -202,56 +201,41 @@ const SearchResult = ({
             </div>
           )}
         </div>
-      </div>
-      <div className={styles.searchResultContent}>
-        <div className={styles.searchText}>
-          <>
-            <div className={`notranslate ${styles.address}`}>
-              {renderAddressMetadata(hit)}
-            </div>
-            <ReactMarkdown
-              className={`rendered-markdown ${styles.description}`}
-              source={hit.long_description ?? undefined}
-              linkTarget="_blank"
-            />
-          </>
-        </div>
-
-        <div className={styles.sideLinks}>
-          <div>
-            {phoneNumber && (
-              <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
-                <img
-                  src={icon("phone-blue")}
-                  alt="phone"
-                  className={styles.sideLinkIcon}
-                />
-                <a
-                  href={`tel:${phoneNumber}`}
-                  className={styles.sideLinkText}
-                >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
+        <div className={styles.searchResultContent}>
+          <div className={styles.searchText}>
+            <>
+              <div className={`notranslate ${styles.address}`}>
+                {renderAddressMetadata(hit)}
               </div>
-            )}
-            {url && (
-              <div className={styles.sideLink}>
-                <img
-                  src={icon("popout-blue")}
-                  alt="website"
-                  className={styles.sideLinkIcon}
-                />
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={url}
-                  className={styles.sideLinkText}
-                >
-                  Go to website
-                </a>
-              </div>
-            )}
-            {/* Keep for phase 2: */}
-            {/* {texting} */}
+              <ReactMarkdown
+                className={`rendered-markdown ${styles.description}`}
+                source={hit.long_description ?? undefined}
+                linkTarget="_blank"
+              />
+            </>
           </div>
+        </div>
+      </div>
+      <div className={styles.sideLinks}>
+        <div>
+          {phoneNumber && (
+            <a
+              href={`tel:${phoneNumber}`}
+              className={`${styles.icon} ${styles["icon-phone"]}`}
+              aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
+            />
+          )}
+          {url && (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={url}
+              className={`${styles.icon} ${styles["icon-popout"]}`}
+              aria-label={`Call ${formatPhoneNumber(phoneNumber)}`}
+            />
+          )}
+          {/* Keep for phase 2: */}
+          {/* {texting} */}
         </div>
       </div>
     </div>

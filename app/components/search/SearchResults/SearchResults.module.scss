@@ -60,6 +60,9 @@
   padding: $general-spacing-md;
   border: 1px solid $border-gray;
   border-radius: $rounded-md;
+  display: flex;
+  justify-content: space-between;
+  gap: $general-spacing-md;
 
   @media screen and (max-width: $break-tablet-l) {
     padding-left: 30px;
@@ -75,11 +78,6 @@
   }
 }
 
-.searchResultTitleContainer {
-  display: grid;
-  grid-template-columns: 9fr 1fr;
-}
-
 .title {
   font-weight: 600;
   font-size: 20px;
@@ -92,7 +90,6 @@
 
 .serviceOf {
   font-size: 14px;
-  margin-bottom: 5px;
   line-height: 125%;
 
   @media screen and (max-width: 600px) {
@@ -110,8 +107,7 @@
 }
 
 .searchResultContent {
-  display: grid;
-  grid-template-columns: 7fr 3fr;
+  display: flex;
   gap: 25px;
   justify-items: stretch;
 
@@ -124,7 +120,7 @@
 
 .address {
   font-size: 14px;
-  margin-top: 12px;
+  margin-top: $general-spacing-s;
   color: $text-secondary;
 
   &::before {
@@ -141,7 +137,7 @@
 
 .description {
   font-size: 18px;
-  padding-top: 16px;
+  padding-top: $general-spacing-xs;
   color: $text-secondary;
   line-height: 150%;
 
@@ -165,11 +161,39 @@
   }
 }
 
-.sideLink {
+// Placeholder until button PR is merged
+.icon {
+  height: 36px;
+  width: 36px;
+  background: var(--primary-button-default-background, #111928);
+  border-radius: $rounded-full;
+  color: $white;
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    text-decoration: none;
+    color: $white;
+  }
+}
+
+.icon-phone {
+  margin-bottom: $general-spacing-md;
+  &::before {
+    content: "\f095"; /* Font Awesome Unicode for the phone icon */
+    font-family: "Font Awesome 5 Free"; /* Font Awesome family */
+    font-weight: 900; /* Required for solid icons */
+  }
+}
+
+.icon-popout {
+  &::before {
+    content: "\f35d"; /* Font Awesome Unicode for the phone icon */
+    font-family: "Font Awesome 5 Free"; /* Font Awesome family */
+    font-weight: 900; /* Required for solid icons */
+  }
 }
 
 .deemphasizeSideLinks {
@@ -178,15 +202,6 @@
 
 .hideDischargeSidelinks {
   display: none;
-}
-
-.sideLinkIcon {
-  width: 24px;
-}
-
-.sideLinkText {
-  padding-left: 8px;
-  overflow: auto;
 }
 
 .bookmarkButton {
