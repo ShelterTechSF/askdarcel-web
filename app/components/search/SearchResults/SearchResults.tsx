@@ -5,15 +5,12 @@ import {
   connectStateResults,
   SearchResults as SearchResultsProps,
 } from "react-instantsearch/connectors";
-import { whiteLabel } from "utils";
 import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
-import { Texting } from "components/Texting";
+// import { Texting } from "components/Texting";
 
-// import { ClinicianActions } from "components/ucsf/ClinicianActions/ClinicianActions";
-// import { ClientHandouts } from "components/ui/ClientHandoutsModal/ClientHandouts";
-import { TextListing } from "components/Texting/Texting";
+// import { TextListing } from "components/Texting/Texting";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import { icon } from "../../../assets";
 import styles from "./SearchResults.module.scss";
@@ -95,106 +92,52 @@ const SearchResults = ({
 const SearchResult = ({
   hit,
   index,
-  categoryId,
 }: {
   hit: SearchHit;
   index: number;
   categoryId: string | undefined;
 }) => {
-  const [textingIsOpen, setTextingIsOpen] = useState(false);
-  const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
-  const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
+  // Keep for Phase 2:
+  // const [textingIsOpen, setTextingIsOpen] = useState(false);
 
-  // type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
-  // const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
-  //   const handoutRoute =
-  //     categoryId === "2000006"
-  //       ? "intimate-partner-violence-handout"
-  //       : "service-handout";
+  // let listing: TextListing;
+  // if (hit.type === "service") {
+  //   listing = {
+  //     listingName: hit.name,
+  //     type: hit.type,
+  //     serviceId: hit.id,
+  //   };
+  // } else {
+  //   listing = {
+  //     listingName: hit.name,
+  //     type: hit.type,
+  //     resourceId: hit.id,
+  //   };
+  // }
 
-  //   return `/${handoutRoute}/${hitId}${
-  //     language ? `?handoutLanguage=${language}` : ""
-  //   }`;
-  // };
-
-  let listing: TextListing;
-  if (hit.type === "service") {
-    listing = {
-      listingName: hit.name,
-      type: hit.type,
-      serviceId: hit.id,
-    };
-  } else {
-    listing = {
-      listingName: hit.name,
-      type: hit.type,
-      resourceId: hit.id,
-    };
-  }
-
-  const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
+  // const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
   // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
   // returned by the API. Fetching the model from the API will need to be done in such a way that it does not
   // block the rendering of the search results and yet does not cause the button to flash in a distracting manner
-  const bookmarkAdded = false;
 
-  const texting = (
-    <div
-      className={styles.sideLink}
-      data-field="text-me"
-      role="button"
-      tabIndex={0}
-      onClick={toggleTextingModal}
-    >
-      <img
-        src={icon("text-message")}
-        alt="chat-bubble"
-        className={styles.sideLinkIcon}
-      />
-      <div className={styles.sideLinkText}>Text me the info</div>
-    </div>
-  );
+  // const texting = (
+  //   <div
+  //     className={styles.sideLink}
+  //     data-field="text-me"
+  //     role="button"
+  //     tabIndex={0}
+  //     onClick={toggleTextingModal}
+  //   >
+  //     <img
+  //       src={icon("text-message")}
+  //       alt="chat-bubble"
+  //       className={styles.sideLinkIcon}
+  //     />
+  //     <div className={styles.sideLinkText}>Text me the info</div>
+  //   </div>
+  // );
 
-  const toggleClinicianActionsModal = () => {
-    setClinicianActionsIsOpen(!clinicianActionsIsOpen);
-  };
-
-  const toggleHandoutModal = () => {
-    setHandoutModalIsOpen(!handoutModalIsOpen);
-  };
-
-  const clinicianActionsLink = (
-    <div
-      className={styles.sideLink}
-      role="button"
-      tabIndex={0}
-      onClick={toggleClinicianActionsModal}
-    >
-      <img
-        src={icon("clinician-action")}
-        alt="clinician action"
-        className={styles.sideLinkIcon}
-      />
-      <div className={styles.sideLinkText}>Clinician actions</div>
-    </div>
-  );
-
-  const handoutsLink = (
-    <div
-      className={styles.sideLink}
-      role="button"
-      tabIndex={0}
-      onClick={toggleHandoutModal}
-    >
-      <img
-        src={icon("print-blue")}
-        alt="printout icon"
-        className={styles.sideLinkIcon}
-      />
-      <div className={styles.sideLinkText}>Print</div>
-    </div>
-  );
-
+  // Move to utils?:
   const renderAddressMetadata = (hit_: SearchHit) => {
     if (!hit_.addresses || hit_.addresses.length === 0) {
       return <span>No address found</span>;
@@ -226,84 +169,33 @@ const SearchResult = ({
   };
 
   const url = hit.type === "service" ? hit.url : hit.website;
-  const showDischargeSidelinks =
-    whiteLabel.showClinicianAction && whiteLabel.showHandoutsIcon;
 
   const basePath = hit.type === "service" ? `services` : `organizations`;
 
   return (
     <div className={styles.searchResult}>
-      {/* Modals */}
-      <Texting
+      {/* Keep for Phase 2: */}
+      {/* <Texting
         closeModal={toggleTextingModal}
         listing={listing}
         isShowing={textingIsOpen}
-      />
-      {/* {hit.type === "service" && (
-        <ClinicianActions
-          isOpen={clinicianActionsIsOpen}
-          setIsOpen={toggleClinicianActionsModal}
-          actions={hit.instructions?.[0] ?? ""}
-        />
-      )}
-      {hit.type === "service" && (
-        <ClientHandouts
-          isOpen={handoutModalIsOpen}
-          setIsOpen={toggleHandoutModal}
-          handoutCollection={[
-            {
-              key: -1,
-              description: "English",
-              url: handoutUrl(hit.id, null),
-            },
-            {
-              key: -2,
-              description: "Spanish",
-              url: handoutUrl(hit.id, "es"),
-            },
-            {
-              key: -3,
-              description: "Tagalog",
-              url: handoutUrl(hit.id, "tl"),
-            },
-            {
-              key: -4,
-              description: "Chinese (Traditional)",
-              url: handoutUrl(hit.id, "zh-TW"),
-            },
-            {
-              key: -5,
-              description: "Vietnamese",
-              url: handoutUrl(hit.id, "vi"),
-            },
-            {
-              key: -6,
-              description: "Russian",
-              url: handoutUrl(hit.id, "ru"),
-            },
-            {
-              key: -7,
-              description: "Arabic",
-              url: handoutUrl(hit.id, "ar"),
-            },
-          ]}
-        />
-      )} */}
-      {/* End modals */}
-
+      /> */}
       <div className={styles.searchResultTitleContainer}>
         <div>
-          <div className={styles.title}>
+          <h2 className={styles.title}>
+            {index + 1}.{" "}
             <Link
               to={{ pathname: `/${basePath}/${hit.id}` }}
-              className="notranslate"
-            >{`${index + 1}. ${hit.name}`}</Link>
-          </div>
+              className={`notranslate ${styles.titleLink}`}
+            >
+              {hit.name}
+            </Link>
+          </h2>
           {hit.type === "service" && (
             <div className={styles.serviceOf}>
               <Link
                 to={`/organizations/${hit.resource_id}`}
-                className="notranslate"
+                className={`notranslate ${styles.serviceOfLink}`}
               >
                 {hit.service_of}
               </Link>
@@ -326,21 +218,7 @@ const SearchResult = ({
         </div>
 
         <div className={styles.sideLinks}>
-          <div
-            className={
-              showDischargeSidelinks ? "" : styles.hideDischargeSidelinks
-            }
-          >
-            {hit.type === "service" &&
-              !!hit.instructions?.length &&
-              clinicianActionsLink}
-            {handoutsLink}
-          </div>
-          <div
-            className={
-              showDischargeSidelinks ? styles.deemphasizeSideLinks : ""
-            }
-          >
+          <div>
             {phoneNumber && (
               <div className={`${styles.sideLink} ${styles.showInPrintView}`}>
                 <img
@@ -354,7 +232,6 @@ const SearchResult = ({
                 >{`Call ${formatPhoneNumber(phoneNumber)}`}</a>
               </div>
             )}
-            <div />
             {url && (
               <div className={styles.sideLink}>
                 <img
@@ -372,7 +249,8 @@ const SearchResult = ({
                 </a>
               </div>
             )}
-            {texting}
+            {/* Keep for phase 2: */}
+            {/* {texting} */}
           </div>
         </div>
       </div>
