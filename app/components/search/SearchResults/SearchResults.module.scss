@@ -18,23 +18,6 @@
   }
 }
 
-.toggleExpandSearchResultsContainer {
-  grid-area: toggle;
-  @media screen and (max-width: $break-tablet-s) {
-    position: relative;
-    top: 0;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
-    background: #fff;
-    transition: top 200ms ease-in-out;
-    &.overlayMapWithSearchResults {
-      top: calc(-50vh + 20px);
-      z-index: 1;
-    }
-  }
-}
-
 .searchResultsContainer {
   grid-area: results;
   display: grid;
