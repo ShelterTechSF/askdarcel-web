@@ -198,27 +198,6 @@
   }
 }
 
-.deemphasizeSideLinks {
-  font-weight: 400;
-}
-
-.hideDischargeSidelinks {
-  display: none;
-}
-
-.bookmarkButton {
-  align-self: end;
-  justify-self: left;
-  white-space: nowrap;
-  @media screen and (min-width: $break-desktop) and (max-width: $break-desktop-l) {
-    // Positioning for small sliver of screensizes where the button can overflow
-    // its grid boundaries. This allows the button to overflow yet without abutting
-    // against content in the grid column next to it
-    position: relative;
-    right: 2px;
-  }
-}
-
 @media print {
   // This below styles are for printing out the results on our service/search results page.
 
