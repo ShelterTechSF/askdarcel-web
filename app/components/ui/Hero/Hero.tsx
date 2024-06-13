@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./Hero.module.scss";
+import { Button } from "../inline/Button/Button";
 
 interface ButtonType {
   label: string;
@@ -60,10 +61,15 @@ const HeroCard = ({
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
         <div className={styles.buttons}>
-          {buttons.map((button) => (
-            <a key={button.label} href={button.slug} className={styles.button}>
+          {buttons.map((button, i) => (
+            <Button
+              key={button.label}
+              variant={i === 0 ? "primary" : "secondary"}
+              arrowVariant="after"
+              href={button.slug}
+            >
               {button.label}
-            </a>
+            </Button>
           ))}
         </div>
       </div>

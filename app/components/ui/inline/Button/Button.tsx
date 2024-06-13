@@ -1,9 +1,11 @@
 import React from "react";
-
+import classNames from "classnames";
 import styles from "./Button.module.scss";
 
 type ButtonType = "button" | "submit" | "reset";
 type StyleType = "transparent" | "text" | "default";
+type SizeType = "xs" | "sm" | "base" | "lg" | "xl";
+type VariantType = "primary" | "secondary" | "linkBlue" | "linkWhite";
 
 export const Button = ({
   children,
@@ -11,24 +13,50 @@ export const Button = ({
   buttonType = "button",
   addClass,
   styleType = "default",
+  size = "base",
+  variant = "primary",
+  arrowVariant,
   tabIndex,
   disabled,
+  href,
+  mobileFullWidth = true,
 }: {
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   readonly buttonType?: ButtonType;
-  addClass?: string;
-  styleType?: StyleType;
+  addClass?: string; // phase out as we replace old buttons with new
+  styleType?: StyleType; // phase out as we replace old buttons with new
+  size?: SizeType;
+  variant?: VariantType;
   tabIndex?: number;
   disabled?: boolean;
+  arrowVariant?: "before" | "after";
+  href?: string;
+  mobileFullWidth?: boolean;
 }) => {
-  let buttonClass;
-  if (styleType === "transparent") {
-    buttonClass = styles.buttonTransparent;
-  } else if (styleType === "text") {
-    buttonClass = styles.textButton;
-  } else if (styleType === "default") {
-    buttonClass = styles.button;
+  const buttonClass = classNames(
+    styles.button,
+    styles[`button--${styleType}`],
+    styles[`button--${size}`],
+    styles[`button--${variant}`],
+    styles[`button--arrow-${arrowVariant}`],
+
+    {
+      [styles["mobile-full-width"]]: mobileFullWidth,
+      [`${styles["button--link"]} ${styles[`button--link-${variant}`]}`]: href,
+    }
+  );
+
+  // Links that follow same visual guidelines as buttons
+  if (href) {
+    const isExternalLink = !href.startsWith("/");
+
+    const linkProps = isExternalLink && { target: "_blank", rel: "noreferrer" };
+    return (
+      <a href={href} className={buttonClass} {...linkProps}>
+        {children}
+      </a>
+    );
   }
 
   return (

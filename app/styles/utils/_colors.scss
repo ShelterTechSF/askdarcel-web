@@ -174,6 +174,21 @@ $text-tertiary: $color-white;
 $text-link: $blue-700;
 $text-link-hover: #1e429f;
 
+$primary-button-disabled-background: $gray-200;
+$primary-button-focus-outline: $color-secondary;
+$primary-button-default-background: $color-tertiary;
+$primary-button-hover-background: #1f2a37;
+$primary-button-active-background: $gray-700;
+
+$secondary-button-default-label: $color-brand-dark;
+$secondary-button-outline: $color-brand-dark;
+$secondary-button-hover-background: #bb4620;
+$secondary-button-active-background: #98391a;
+
+$link-blue-default: $blue-700;
+$link-blue-hover: #1e429f;
+$link-blue-active: #233876;
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // SFFAMILIES COLORS
 $color-sffamilies-nav: #ededed;

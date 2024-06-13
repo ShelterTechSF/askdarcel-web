@@ -65,32 +65,6 @@
   flex-wrap: wrap;
   margin-top: $general-spacing-xl;
   gap: $general-spacing-s;
-
-  //   TODO: Remove this placeholder styling after button styling PR
-  .button {
-    background-color: white;
-    color: #cd4a23; // TODO: Create color vars
-    padding: $spacing-2_5 $spacing-5;
-    text-decoration: none;
-    border-radius: $rounded-full;
-    font-weight: bold;
-    @media screen and (max-width: $break-tablet-s) {
-      width: 100%;
-      text-align: center;
-    }
-
-    &:after {
-      content: "\f061";
-      font-family: "Font Awesome 5 Free";
-      font-weight: 900;
-      margin-left: 8px;
-    }
-
-    &:first-child {
-      color: white;
-      background-color: black;
-    }
-  }
 }
 
 .desktop {
