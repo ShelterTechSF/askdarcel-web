@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import qs from "qs";
-
+import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
+import imageUrlBuilder from "@sanity/image-url";
+import Hero from "components/ui/Hero/Hero";
+import { Button } from "components/ui/inline/Button/Button";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
 import { whiteLabel } from "../../utils";
+import { client } from "../../sanity";
+
+// Not currently working
+const builder = imageUrlBuilder(client);
+
+export interface ButtonType {
+  slug: string;
+  label: string;
+}
+
+export interface HeroData {
+  name: string;
+  title: string;
+  description: string;
+  backgroundImage: SanityImageSource;
+  buttons: ButtonType[];
+}
 
 const { showBreakingNews } = whiteLabel;
 
@@ -91,6 +111,7 @@ export const HomePage = () => {
   const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
 
   const submitSearch = () => {
     if (searchValue) {
@@ -101,14 +122,42 @@ export const HomePage = () => {
 
   useEffect(() => {
     getResourceCount().then((count: number) => setResourceCount(count));
+    const fetchHeroData = async () => {
+      const query = `*[_type == "hero" && name == "Home Hero"][0]{
+        name,
+        title,
+        description,
+        backgroundImage,
+        buttons
+      }`;
+      const result: HeroData = await client.fetch(query);
+      setHeroData(result);
+    };
+
+    fetchHeroData();
   }, []);
+
+  if (!heroData) {
+    return <div>Loading...</div>;
+  }
+
+  // DELETE AFTER APPROVAL
+  const buttonClick = () => window.alert("Hey!");
 
   return (
     <>
       {showBreakingNews && <NewsArticles />}
+      <Hero
+        // backgroundImage={bgImage}
+        backgroundImage={builder.image(heroData.backgroundImage).url()}
+        title={heroData.title}
+        description={heroData.description}
+        buttons={heroData.buttons}
+      />
       <HomePageSection title="Find essential services in San Francisco">
         <ResourceList resources={coreCategories} />
       </HomePageSection>
+
       <HomePageSection
         title="Browse Directory"
         description="Search the directory for a specific social service provider or browse by category."
@@ -122,6 +171,7 @@ export const HomePage = () => {
           value={searchValue}
         />
       </HomePageSection>
+
       <Partners />
       <Footer />
     </>

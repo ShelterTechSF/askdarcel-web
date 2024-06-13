@@ -121,7 +121,6 @@ h2 {
   @extend %font-size-large;
   font-family: Montserrat;
   font-weight: 700;
-  color: $text-primary;
 }
 h3 {
   @extend %font-size-medium;
@@ -132,7 +131,6 @@ h4 {
   @extend %font-size-medium;
   font-family: Montserrat;
   font-weight: 600;
-  color: $text-primary;
 }
 h5 {
   @extend %font-size-default;
@@ -188,6 +186,11 @@ p.message {
   color: $color-textfade;
   padding: $padding-large;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////
+// FONT AWESOME ICONS
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // MATERIAL ICONS

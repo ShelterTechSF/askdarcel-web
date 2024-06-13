@@ -34,6 +34,12 @@ const environmentConfig = [
   "AUTH0_CLIENT_ID",
   "AUTH0_DOMAIN",
   "AUTH0_REDIRECT_URI",
+  "SANITY_PROJECT_ID",
+  "SANITY_PROJECT_DATASET",
+  "SANITY_USE_CDN",
+  "SANITY_PERSPECTIVE",
+  "SANITY_WITH_CREDENTIALS",
+  "SANITY_API_TOKEN",
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
