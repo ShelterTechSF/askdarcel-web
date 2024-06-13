@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import qs from "qs";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { getResourceCount } from "utils/DataService";
 import { Footer } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
-import { Partners } from "./components/Partners/Partners";
-import { SearchBar } from "./components/SearchBar/SearchBar";
-import { HomePageSection } from "./components/Section/Section";
-import ResourceList from "./components/ResourceList/ResourceList";
+import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
 import { client } from "../../sanity";
 
 const builder = imageUrlBuilder(client);
@@ -27,6 +22,50 @@ export interface HeroData {
   buttons: ButtonType[];
 }
 
+export const HomePage = () => {
+  const [resourceCount, setResourceCount] = useState<number | undefined>();
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
+
+  useEffect(() => {
+    getResourceCount().then((count: number) => setResourceCount(count));
+    const fetchHeroData = async () => {
+      const query = `*[_type == "hero" && name == "Home Hero"][0]{
+        name,
+        title,
+        description,
+        backgroundImage,
+        buttons
+      }`;
+      const result: HeroData = await client.fetch(query);
+      setHeroData(result);
+    };
+
+    fetchHeroData();
+  }, []);
+
+  if (!heroData) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+      <Hero
+        backgroundImage={builder.image(heroData.backgroundImage).url()}
+        title={heroData.title}
+        description={heroData.description}
+        buttons={heroData.buttons}
+      />
+      {/* Category Card */}
+      <OppEventCardSection sectionType="opportunity" />
+      <OppEventCardSection sectionType="event" />
+      {/* Two Column Layout */}
+      <Footer />
+    </>
+  );
+};
+
+// Remove when new categories is created
+// other components are dependent on this list
 export const coreCategories = [
   {
     algoliaCategoryName: "Covid-food",
@@ -101,69 +140,3 @@ export const coreCategories = [
     categorySlug: "substance-use-resources",
   },
 ];
-
-export const HomePage = () => {
-  const [resourceCount, setResourceCount] = useState<number | undefined>();
-  const [searchValue, setSearchValue] = useState("");
-  const history = useHistory();
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
-
-  const submitSearch = () => {
-    if (searchValue) {
-      const query = qs.stringify({ query: searchValue });
-      history.push(`/search?${query}`);
-    }
-  };
-
-  useEffect(() => {
-    getResourceCount().then((count: number) => setResourceCount(count));
-    const fetchHeroData = async () => {
-      const query = `*[_type == "hero" && name == "Home Hero"][0]{
-        name,
-        title,
-        description,
-        backgroundImage,
-        buttons
-      }`;
-      const result: HeroData = await client.fetch(query);
-      setHeroData(result);
-    };
-
-    fetchHeroData();
-  }, []);
-
-  if (!heroData) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <>
-      <Hero
-        backgroundImage={builder.image(heroData.backgroundImage).url()}
-        title={heroData.title}
-        description={heroData.description}
-        buttons={heroData.buttons}
-      />
-      <HomePageSection title="Find essential services in San Francisco">
-        <ResourceList resources={coreCategories} />
-      </HomePageSection>
-
-      <HomePageSection
-        title="Browse Directory"
-        description="Search the directory for a specific social service provider or browse by category."
-      >
-        <SearchBar
-          placeholder={`Search ${
-            resourceCount || ""
-          } resources in San Francisco`}
-          onSubmit={submitSearch}
-          onChange={(newSearchValue: string) => setSearchValue(newSearchValue)}
-          value={searchValue}
-        />
-      </HomePageSection>
-
-      <Partners />
-      <Footer />
-    </>
-  );
-};
