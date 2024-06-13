@@ -120,7 +120,7 @@
     content: "\f3c5"; // Location pin icon
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    margin-right: 8px;
+    margin-right: $general-spacing-xs;
   }
 
   @media screen and (max-width: $break-tablet-s) {
