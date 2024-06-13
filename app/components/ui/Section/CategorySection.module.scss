@@ -1,0 +1,36 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.categorySection {
+  background-color: $color-secondary;
+  padding: $spacing-24 $spacing-32;
+
+  h2 {
+    margin-bottom: $general-spacing-s;
+  }
+
+  @media screen and (max-width: $break-tablet-p) {
+    padding: $general-spacing-xl $general-spacing-md;
+  }
+
+  .categoryCards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin-top: $general-spacing-xl;
+    align-items: center;
+    gap: $general-spacing-lg;
+
+    @media screen and (max-width: 1300px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media screen and (max-width: 1105px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: $break-tablet-p) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
