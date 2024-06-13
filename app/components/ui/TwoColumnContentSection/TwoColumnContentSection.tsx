@@ -1,13 +1,18 @@
 import React from "react";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
-import BlockContent from "@sanity/block-content-to-react";
+import BlockContent, {
+  BlockContentProps,
+} from "@sanity/block-content-to-react";
 import imageUrlBuilder from "@sanity/image-url";
 import styles from "./TwoColumnContentSection.module.scss";
 import { client } from "../../../sanity";
 
 const builder = imageUrlBuilder(client);
 
-const BlockRenderer = (props: { node: any; children: any }) => {
+const BlockRenderer = (props: {
+  node: { style: string };
+  children: React.ReactNode;
+}) => {
   const { node, children } = props;
   const { style = "normal" } = node;
   if (style === "h1") {
@@ -42,7 +47,7 @@ export const TwoColumnContentSection = ({
   mediaAlignment: string;
   image: SanityImageSource;
   imageAlt: string | undefined;
-  contentBlock: any;
+  contentBlock: BlockContentProps;
   contentLinkButtonText: string;
   contentLinkButtonUrl: string;
 }) => {
@@ -73,9 +78,11 @@ export const TwoColumnContentSection = ({
           blocks={contentBlock}
           serializers={{ types: { block: BlockRenderer } }}
         />
-        <a className={styles.contentLinkButton} href={contentLinkButtonUrl}>
-          {contentLinkButtonText}
-        </a>
+        {contentLinkButtonText && (
+          <a className={styles.contentLinkButton} href={contentLinkButtonUrl}>
+            {contentLinkButtonText}
+          </a>
+        )}
       </div>
     </section>
   );

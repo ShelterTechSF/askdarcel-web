@@ -67,17 +67,12 @@
   }
 }
 
-@media screen and (max-width: $break-tablet-s) {
-  .contentContainer_right .contentBlock {
-    width: 100%;
-    margin: 0px 0px;
-    padding: $general-spacing-md $general-spacing-xl;
-  }
-
+@media screen and (max-width: $min-desktop) {
+  .contentContainer_right .contentBlock,
   .contentContainer_left .contentBlock {
     width: 100%;
     margin: 0px 0px;
-    padding: $general-spacing-md $general-spacing-xl;
+    padding: $general-spacing-md;
   }
 
   .twoColumnContentSectionContainer {
