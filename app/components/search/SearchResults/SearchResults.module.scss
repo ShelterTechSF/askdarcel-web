@@ -154,11 +154,10 @@
   }
 }
 
-// Placeholder until button PR is merged
 .icon {
   height: 36px;
   width: 36px;
-  background: var(--primary-button-default-background, #111928);
+  background: $primary-button-default-background;
   border-radius: $rounded-full;
   color: $white;
   display: flex;
@@ -175,6 +174,7 @@
   &:hover {
     text-decoration: none;
     color: $white;
+    background: $primary-button-hover-background;
   }
 }
 
