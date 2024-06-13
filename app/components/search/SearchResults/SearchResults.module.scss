@@ -181,9 +181,10 @@
 .icon-phone {
   margin-bottom: $general-spacing-md;
   &::before {
-    content: "\f095"; /* Font Awesome Unicode for the phone icon */
-    font-family: "Font Awesome 5 Free"; /* Font Awesome family */
-    font-weight: 900; /* Required for solid icons */
+    content: "\f095"; // phone icon
+    transform: scaleX(-1);
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
   }
   @media screen and (max-width: $break-tablet-s) {
     margin-bottom: $spacing-0;
@@ -192,9 +193,9 @@
 
 .icon-popout {
   &::before {
-    content: "\f35d"; /* Font Awesome Unicode for the phone icon */
-    font-family: "Font Awesome 5 Free"; /* Font Awesome family */
-    font-weight: 900; /* Required for solid icons */
+    content: "\f35d"; // popout icon
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
   }
 }
 
