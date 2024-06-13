@@ -274,14 +274,6 @@ button {
   outline: 0;
 }
 
-a,
-button {
-  &:active,
-  &:focus {
-    outline: 3px solid #fbb040;
-  }
-}
-
 /*
   * Print styles
   * Inlined to avoid the additional HTTP request:
