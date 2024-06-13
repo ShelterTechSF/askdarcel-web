@@ -32,10 +32,11 @@ textarea {
   resize: vertical !important;
 }
 
+// This button is affecting all buttons globally
 button {
   @extend %font-size-default;
   border: 0;
-  height: calc-em(44px);
+  // height: calc-em(44px);
   padding: calc-em(6px) calc-em(20px);
   color: $color-white;
   background: $color-green;

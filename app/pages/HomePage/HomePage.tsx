@@ -6,6 +6,7 @@ import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
+import { Button } from "components/ui/inline/Button/Button";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
@@ -140,6 +141,9 @@ export const HomePage = () => {
     return <div>Loading...</div>;
   }
 
+  // DELETE AFTER APPROVAL
+  const buttonClick = () => window.alert("Hey!");
+
   return (
     <>
       {showBreakingNews && <NewsArticles />}
@@ -167,6 +171,123 @@ export const HomePage = () => {
           value={searchValue}
         />
       </HomePageSection>
+
+      <HomePageSection
+        title="Temp button section"
+        description="Delete after approval"
+      >
+        <p>Primary onClick all sizes:</p>
+        <div className="temp-section">
+          <Button onClick={buttonClick} size="xs">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} size="sm">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick}>Button Text</Button>
+          <Button onClick={buttonClick} size="lg">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} size="xl">
+            Button Text
+          </Button>
+        </div>
+        <p>Secondary onClick all sizes:</p>
+        <div className="temp-section">
+          <Button onClick={buttonClick} variant="secondary" size="xs">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary" size="sm">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary" size="lg">
+            Button Text
+          </Button>
+          <Button onClick={buttonClick} variant="secondary" size="xl">
+            Button Text
+          </Button>
+        </div>
+        <p>Primary internal link all sizes:</p>
+        <div className="temp-section">
+          <Button href="/about" size="xs">
+            Button Text
+          </Button>
+          <Button href="/about" size="sm">
+            Button Text
+          </Button>
+          <Button href="/about">Button Text</Button>
+          <Button href="/about" size="lg">
+            Button Text
+          </Button>
+          <Button href="/about" size="xl">
+            Button Text
+          </Button>
+        </div>
+        <p>Secondary external link all sizes (see arrow variants):</p>
+        <div className="temp-section">
+          <Button href="https://www.google.com" variant="secondary" size="xs">
+            Button Text
+          </Button>
+          <Button href="https://www.google.com" variant="secondary" size="sm">
+            Button Text
+          </Button>
+          <Button href="https://www.google.com" variant="secondary">
+            Button Text
+          </Button>
+          <Button
+            href="https://www.google.com"
+            arrowVariant="before"
+            variant="secondary"
+            size="lg"
+          >
+            Button Text
+          </Button>
+          <Button
+            href="https://www.google.com"
+            arrowVariant="after"
+            variant="secondary"
+            size="xl"
+          >
+            Button Text
+          </Button>
+        </div>
+        <p>linkBlue variant external links (see arrow variants):</p>
+        <div className="temp-section">
+          <Button
+            href="https://www.google.com"
+            arrowVariant="before"
+            variant="linkBlue"
+            size="xs"
+          >
+            Button Text
+          </Button>
+          <Button
+            href="https://www.google.com"
+            arrowVariant="after"
+            variant="linkBlue"
+          >
+            Button Text
+          </Button>
+        </div>
+        <p>linkWhite variant external links (see arrow variants):</p>
+        <div className="temp-section-dark">
+          <Button
+            href="/about"
+            arrowVariant="before"
+            variant="linkWhite"
+            size="xs"
+          >
+            Button Text
+          </Button>
+          <Button href="/about" arrowVariant="after" variant="linkWhite">
+            Button Text
+          </Button>
+        </div>
+      </HomePageSection>
+
       <Partners />
       <Footer />
     </>
