@@ -28,8 +28,6 @@ export interface HeroData {
   buttons: ButtonType[];
 }
 
-const { showBreakingNews } = whiteLabel;
-
 export const coreCategories = [
   {
     algoliaCategoryName: "Covid-food",
