@@ -12,7 +12,7 @@
   }
 
   &:focus {
-    border: 3px solid $primary-button-focus-outline;
+    border-radius: $rounded-full;
   }
 
   &--xs {
