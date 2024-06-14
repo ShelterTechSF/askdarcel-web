@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import qs from "qs";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { getResourceCount } from "utils/DataService";
-import { Footer, NewsArticles } from "components/ui";
+import { Footer } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
 import { Partners } from "./components/Partners/Partners";
@@ -141,7 +141,6 @@ export const HomePage = () => {
 
   return (
     <>
-      {showBreakingNews && <NewsArticles />}
       <Hero
         backgroundImage={builder.image(heroData.backgroundImage).url()}
         title={heroData.title}
