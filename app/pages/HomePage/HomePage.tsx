@@ -10,7 +10,6 @@ import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
-import { whiteLabel } from "../../utils";
 import { client } from "../../sanity";
 
 const builder = imageUrlBuilder(client);
