@@ -139,3 +139,14 @@ pre {
     }
   }
 }
+
+a,
+button,
+input,
+select {
+  &:active,
+  &:focus {
+    outline: 3px solid #fbb040;
+    border-radius: $rounded-md;
+  }
+}
