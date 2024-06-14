@@ -11,11 +11,11 @@ export const CategoryCard = (props: CategoryCardProps) => {
     label === "See all services" ? "" : encodeURIComponent(label);
 
   return (
-    <div className={styles.categoryCard}>
-      <span className={`fas ${icon}`} />
+    <a href={`/service-finder${searchQuery}`} className={styles.categoryCard}>
+      <span className={`fas ${icon} ${styles.icon}`} />
       <p className={styles.categoryTitle}>
-        <a href={`/service-finder${searchQuery}`}>{label}</a>
+        {label}
       </p>
-    </div>
+    </a>
   );
 };
