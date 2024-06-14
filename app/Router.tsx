@@ -6,7 +6,7 @@ import { ProtectedRoute, PublicRoute } from "components/utils";
 
 import { AuthInterstitial } from "pages/AuthInterstitial";
 import { HomePage } from "pages/HomePage";
-import { AboutPage } from "pages/AboutPage";
+import { AboutPage } from "pages/AboutPageOur415";
 import { ListingDebugPage } from "pages/debug/ListingDemoPage";
 import { NavigatorDashboard } from "pages/NavigatorDashboard/NavigatorDashboard";
 import { OrganizationListingPage } from "pages/OrganizationListingPage";
