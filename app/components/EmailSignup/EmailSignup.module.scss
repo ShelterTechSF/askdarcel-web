@@ -1,0 +1,10 @@
+@import "../../styles/utils/_helpers.scss";
+
+.emailSignupContainer {
+  display: flex;
+  width: 100%;
+  padding: $spacing-16 $spacing-32;
+  flex-direction: column;
+  align-items: center;
+  background: $color-secondary;
+}
