@@ -13,9 +13,7 @@ export const CategoryCard = (props: CategoryCardProps) => {
   return (
     <a href={`/service-finder${searchQuery}`} className={styles.categoryCard}>
       <span className={`fas ${icon} ${styles.icon}`} />
-      <p className={styles.categoryTitle}>
-        {label}
-      </p>
+      <p className={styles.categoryTitle}>{label}</p>
     </a>
   );
 };
