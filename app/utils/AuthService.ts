@@ -22,8 +22,17 @@ export const initializeUserSession = (
   setAuthState: (a: AuthState) => void
 ) => {
   const promise = new Promise((resolve, reject) => {
-    authClient.parseHash({ hash }, (err, authResult) => {
+    // eslint-disable-next-line no-console
+    console.log("executing init session function");
+    // eslint-disable-next-line no-console
+    console.log("cookies exist? ", document.cookie);
+    const stateToken = sessionStorage.getItem("authStateToken") ?? "";
+    authClient.parseHash({ hash, state: stateToken }, (err, authResult) => {
+      sessionStorage.removeItem("authStateToken");
+
       if (err) {
+        // eslint-disable-next-line no-console
+        console.log("error initializing session: ", err);
         Sentry.captureException(err);
         reject(err);
       }
@@ -98,11 +107,14 @@ export const passwordlessLogin = (
   email: string,
   verificationCode: string
 ) => {
+  const stateToken = createStateToken();
+  sessionStorage.setItem("authStateToken", stateToken);
   authClient.passwordlessLogin(
     {
       connection: "email",
       email,
       verificationCode,
+      state: stateToken,
     },
     (err) => {
       if (err) {
@@ -152,4 +164,25 @@ export const saveUser = (
     { ...userSignUpData, user_external_id: userExternalId },
     { Authorization: `Bearer ${authToken}` }
   );
+};
+
+// Borrowed from Auth0's randomString function in random.js in the auth0-js package
+const createStateToken = () => {
+  const bytes = new Uint8Array(32);
+  const result = [];
+  const charset =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~";
+
+  const cryptoObj = window.crypto;
+  if (!cryptoObj) {
+    return "";
+  }
+
+  const random = cryptoObj.getRandomValues(bytes);
+
+  for (let a = 0; a < random.length; a += 1) {
+    result.push(charset[random[a] % charset.length]);
+  }
+
+  return result.join("");
 };
