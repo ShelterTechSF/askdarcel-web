@@ -1,3 +1,5 @@
+import React from "react";
+import { SearchHit } from "models";
 import { round } from "./numbers";
 import config from "../config";
 
@@ -101,3 +103,20 @@ export const getLocation = () =>
   getLocationBrowser()
     .catch(() => getLocationGoogle())
     .catch(() => useDefaultSanFranciscoLocation());
+
+/**
+ * Renders address metadata based on the `addresses` array in the `hit_` object.
+ *
+ */
+export const renderAddressMetadata = (hit_: SearchHit): JSX.Element => {
+  if (!hit_.addresses || hit_.addresses.length === 0) {
+    return <span>No address found</span>;
+  }
+  if (hit_.addresses.length > 1) {
+    return <span>Multiple locations</span>;
+  }
+  if (hit_.addresses[0].address_1) {
+    return <span>{hit_.addresses[0].address_1}</span>;
+  }
+  return <span>No address found</span>;
+};

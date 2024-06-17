@@ -4,13 +4,19 @@
   position: relative;
   z-index: 2;
   padding: 24px;
-  background-color: $color-grey2;
+  background-color: $gray-50;
 
   :global(.ais-Pagination-link) {
     display: inline-block;
     width: 35px;
     margin: 0 3px;
     text-align: center;
+    color: $black;
+    padding: $general-spacing-md $spacing-0;
+
+    &:hover {
+      color: $black;
+    }
   }
 
   :global(.ais-Pagination-item--selected) {
@@ -20,15 +26,8 @@
 
   :global(.ais-Pagination-item--nextPage),
   :global(.ais-Pagination-item--previousPage) {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-    padding: 13px 8px;
     margin: 0 3px;
     font-size: 0.87rem;
-    &:hover,
-    &:active {
-      border: 1px solid #276ce5;
-    }
   }
 
   :global(.ais-Pagination-item--disabled) {
