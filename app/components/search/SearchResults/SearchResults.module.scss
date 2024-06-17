@@ -6,7 +6,6 @@
   grid-template-areas:
     "toggle toggle"
     "results map";
-  grid-column-gap: 15px;
 
   @media screen and (max-width: $break-tablet-s) {
     grid-template-columns: auto;
@@ -18,31 +17,19 @@
   }
 }
 
-.toggleExpandSearchResultsContainer {
-  grid-area: toggle;
-  @media screen and (max-width: $break-tablet-s) {
-    position: relative;
-    top: 0;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    box-shadow: 0 0 20px rgb(0 0 0 / 55%);
-    background: #fff;
-    transition: top 200ms ease-in-out;
-    &.overlayMapWithSearchResults {
-      top: calc(-50vh + 20px);
-      z-index: 1;
-    }
-  }
-}
-
 .searchResultsContainer {
   grid-area: results;
   display: grid;
-  gap: 20px;
+  gap: $general-spacing-md;
+  width: 670px;
+
   @media screen and (min-width: $min-tablet-p) {
-    margin: 0 24px;
+    margin: $spacing-0 $general-spacing-lg;
   }
   @media screen and (max-width: $break-tablet-s) {
+    width: 100%;
+    padding: -$general-spacing-xl $general-spacing-md;
+    gap: $spacing-0;
     position: relative;
     top: 0;
     background: #fff;
@@ -72,74 +59,48 @@
   }
 }
 
-.expandResultButtonContainer {
-  justify-self: flex-end;
-}
-
-.expandResultButton {
-  // Button overrides
-  background-color: rgba(0, 0, 0, 0);
-  &:focus,
-  &:hover {
-    background-color: transparent;
-    box-shadow: none;
-  }
-}
-
-.expandResultIcon {
-  transition: transform 200ms ease-in-out;
-  &.collapsed {
-    transform: rotate(-0.25turn);
-  }
-}
-
-.toggleExpandAllButton {
-  font-size: 18px;
-  font-weight: 700;
-}
-
 .searchResult {
-  padding: 21px 0 24px 24px;
-  border: 2px solid $color-grey4;
-  border-radius: 8px;
+  padding: $general-spacing-md;
+  border: 1px solid $border-gray;
+  border-radius: $rounded-md;
+  display: flex;
+  justify-content: space-between;
+  gap: $general-spacing-md;
 
-  @media screen and (max-width: $break-tablet-l) {
-    padding-left: 30px;
+  @media screen and (max-width: $break-tablet-s) {
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid $border-gray;
+    flex-direction: column;
   }
-
-  @media screen and (max-width: 600px) {
-    padding: 18px 20px;
-  }
-
-  h3 {
-    font-weight: 700;
-    font-size: 18px;
-    padding-bottom: 24px;
-  }
-
-  &_address {
-    border-bottom: 1px solid $color-grey3;
-    padding: 24px 0;
-  }
-}
-
-.searchResultTitleContainer {
-  display: grid;
-  grid-template-columns: 9fr 1fr;
 }
 
 .title {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 20px;
+  font-family: "Montserrat";
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $break-tablet-s) {
     font-size: 18px;
+  }
+}
+
+.serviceOf {
+  font-size: 14px;
+  line-height: 125%;
+}
+
+.titleLink,
+.serviceOfLink {
+  color: $text-link;
+
+  &:hover {
+    color: $text-link-hover;
   }
 }
 
 .searchResultContent {
-  display: grid;
-  grid-template-columns: 7fr 3fr;
+  display: flex;
   gap: 25px;
   justify-items: stretch;
 
@@ -151,82 +112,90 @@
 }
 
 .address {
-  font-size: 18px;
-  margin-top: 12px;
+  font-size: 14px;
+  margin-top: $general-spacing-s;
+  color: $text-secondary;
 
-  @media screen and (max-width: 600px) {
+  &::before {
+    content: "\f3c5"; // Location pin icon
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: $general-spacing-xs;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
     font-size: 16px;
   }
 }
 
 .description {
-  font-size: 18px;
-  padding-top: 16px;
+  font-size: 16px;
+  padding-top: $general-spacing-xs;
+  color: $text-secondary;
+  line-height: 150%;
+
   a {
     word-break: break-word;
   }
-  @media screen and (max-width: 600px) {
-    font-size: 16px;
-  }
-}
-
-.serviceOf {
-  font-size: 18px;
-  font-style: italic;
-  margin-bottom: 5px;
-
-  @media screen and (max-width: 600px) {
-    font-size: 16px;
-    margin-bottom: 16px;
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 14px;
   }
 }
 
 .sideLinks {
-  display: grid;
   font-weight: bold;
   font-size: 18px;
   color: $color-brand;
-  padding-top: 10px;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $break-tablet-s) {
     font-size: 16px;
+    display: flex;
+    gap: $general-spacing-md;
   }
 }
 
-.sideLink {
+.icon {
+  height: 36px;
+  width: 36px;
+  background: $primary-button-default-background;
+  border-radius: $rounded-full;
+  color: $white;
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  cursor: pointer;
+  font-size: 16px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    height: 28px;
+    width: 28px;
+    font-size: 12px;
+  }
+
+  &:hover {
+    text-decoration: none;
+    color: $white;
+    background: $primary-button-hover-background;
+  }
 }
 
-.deemphasizeSideLinks {
-  font-weight: 400;
+.icon-phone {
+  margin-bottom: $general-spacing-md;
+  &::before {
+    content: "\f095"; // phone icon
+    transform: scaleX(-1);
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+  }
+  @media screen and (max-width: $break-tablet-s) {
+    margin-bottom: $spacing-0;
+  }
 }
 
-.hideDischargeSidelinks {
-  display: none;
-}
-
-.sideLinkIcon {
-  width: 24px;
-}
-
-.sideLinkText {
-  padding-left: 8px;
-  overflow: auto;
-}
-
-.bookmarkButton {
-  align-self: end;
-  justify-self: left;
-  white-space: nowrap;
-  @media screen and (min-width: $break-desktop) and (max-width: $break-desktop-l) {
-    // Positioning for small sliver of screensizes where the button can overflow
-    // its grid boundaries. This allows the button to overflow yet without abutting
-    // against content in the grid column next to it
-    position: relative;
-    right: 2px;
+.icon-popout {
+  &::before {
+    content: "\f35d"; // popout icon
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
   }
 }
 

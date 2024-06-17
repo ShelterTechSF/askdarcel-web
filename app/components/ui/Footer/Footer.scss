@@ -1,0 +1,105 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #d1d5d8;
+  min-height: 100px;
+  background-color: #111928;
+  padding: $spacing-24 $general-spacing-md;
+  font-size: 1rem;
+  a {
+    color: #d1d5d8;
+  }
+
+  a:focus {
+    outline: 2px solid white;
+    border-radius: 5px;
+    padding: $spacing-0_5;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding: $general-spacing-xl $general-spacing-md;
+  }
+}
+
+.site-footer__logo {
+  margin-bottom: $general-spacing-xl;
+}
+
+.site-footer__address {
+  margin-bottom: $general-spacing-md;
+  font-weight: 600;
+  font-family: Montserrat;
+}
+
+.site-footer__contact {
+  font-size: 14px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    margin-bottom: $general-spacing-xl;
+  }
+}
+
+.site-footer__links {
+  flex: 1 1 50%;
+  display: flex;
+  gap: $spacing-20;
+  margin: 0 $spacing-20 0 $general-spacing-xl;
+  justify-content: flex-end;
+
+  @media screen and (max-width: $break-tablet-s) {
+    flex-direction: column;
+    gap: $general-spacing-xxl;
+    margin: 0 0 $general-spacing-md;
+    font-size: 14px;
+  }
+
+  figure {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $general-spacing-md;
+  }
+
+  figcaption {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  li {
+    padding-bottom: $general-spacing-md;
+  }
+}
+
+.site-footer__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: $width-navigation;
+  margin: 0 auto;
+  @media screen and (max-width: $break-tablet-s) {
+    width: auto;
+    margin: 0;
+  }
+}
+
+.site-footer__logos {
+  display: flex;
+  gap: 1rem;
+}
+
+.site-footer__sfseal img,
+.site-footer__dcyf img {
+  height: 100px;
+}
+
+.site-footer__top {
+  display: flex;
+
+  @media screen and (max-width: $break-tablet-s) {
+    display: block;
+  }
+}

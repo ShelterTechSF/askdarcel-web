@@ -1,56 +1,144 @@
 @import "app/styles/utils/_helpers.scss";
 
 .button {
-  border-radius: 8px;
-  color: $color-white;
-  background-color: $color-brand;
-  min-width: 120px;
-  height: 56px;
-  padding: 0 18px;
+  border-radius: $rounded-full;
+  font-weight: 700;
+  font-size: 14px;
+  height: fit-content;
 
   &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+    color: $white;
+    background: $primary-button-disabled-background;
   }
 
+  &:focus {
+    border-radius: $rounded-full;
+  }
+
+  &--xs {
+    font-size: 12px;
+    padding: $general-spacing-xs $general-spacing-s;
+  }
+
+  &--sm {
+    padding: $general-spacing-xs $general-spacing-s;
+  }
+
+  &--base {
+    padding: $spacing-2_5 $spacing-5;
+  }
+
+  &--lg {
+    font-size: 16px;
+    padding: $spacing-2_5 $spacing-5;
+  }
+
+  &--xl {
+    font-size: 16px;
+    padding: $spacing-3_5 $general-spacing-lg;
+  }
+
+  &--primary {
+    background: $primary-button-default-background;
+    color: $white;
+
+    &:hover {
+      background: $primary-button-hover-background;
+    }
+
+    &:active {
+      background: $primary-button-active-background;
+    }
+  }
+
+  &--secondary {
+    color: $secondary-button-default-label;
+    border: 2px solid $secondary-button-outline;
+    background: $white;
+
+    &:hover {
+      background: $secondary-button-hover-background;
+      color: $white;
+    }
+
+    &:active {
+      background: $secondary-button-active-background;
+      color: $white;
+    }
+  }
+
+  &--link {
+    &:hover {
+      text-decoration: none;
+    }
+
+    &-primary,
+    &-secondary {
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  &--link-primary {
+    &:hover {
+      text-decoration: none;
+      color: default !important;
+    }
+  }
+
+  &--linkBlue {
+    padding: $spacing-0;
+    border-radius: $rounded-none;
+    color: $link-blue-default;
+
+    &:hover {
+      border-bottom: 1px solid $link-blue-hover;
+      color: $link-blue-hover;
+    }
+
+    &:active {
+      border-bottom: 1px solid $link-blue-active;
+      color: $link-blue-active;
+    }
+  }
+
+  &--linkWhite {
+    padding: $spacing-0;
+    border-radius: $rounded-none;
+    color: $white;
+
+    &:hover,
+    &:active {
+      border-bottom: 1px solid $white;
+      color: $white;
+    }
+  }
+
+  &--arrow-before {
+    &:before {
+      content: "\f060"; // left arrow
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-right: 8px;
+    }
+  }
+
+  &--arrow-after {
+    &:after {
+      content: "\f061"; // right arrow
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-left: 8px;
+    }
+  }
+}
+
+.mobile-full-width {
   @media screen and (max-width: $break-tablet-s) {
-    padding: 8px 14px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-}
-
-.buttonTransparent {
-  border-radius: 3px;
-  color: $color-brand;
-  background-color: transparent;
-  min-width: 120px;
-  height: 42px;
-  padding: 0 18px;
-  border: 1px solid $color-brand;
-
-  @media screen and (max-width: $break-tablet-s) {
-    padding: 8px 14px;
-  }
-}
-
-.textButton {
-  color: $color-brand;
-  background-color: transparent;
-  &:focus,
-  &:hover {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.6;
-  }
-}
-
-.medium {
-  width: 120px;
-}
-
-.large {
-  width: 218px;
 }

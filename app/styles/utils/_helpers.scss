@@ -4,6 +4,8 @@
 @import "_mixins";
 @import "_colors";
 @import "_layoututils";
+@import "_spacing";
+@import "_borders";
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // TABLE VIEW
@@ -52,41 +54,48 @@ table {
 
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
-$font-family-base: "Open Sans", "Helvetica Neue", "Arial", sans-serif;
+$font-family-base: "Inter", "Montserrat", "Open Sans", "Helvetica Neue", "Arial",
+  sans-serif;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // FONT SIZES
 
 %font-size-x-large {
-  font-size: calc-em(30px);
-  line-height: calc-em(36px);
-  @include r_max($break-tablet-s) {
-    font-size: calc-em(28px);
-    line-height: calc-em(38px);
+  min-height: 3rem;
+  font-size: 3rem;
+  line-height: 125%;
+  @include r_max($break-tablet-p) {
+    font-size: 1.75rem;
   }
 }
 %font-size-large {
-  font-size: calc-em(24px);
-  line-height: calc-em(30px);
-  @include r_max($break-tablet-s) {
-    font-size: calc-em(22px);
-    line-height: calc-em(27px);
+  min-height: 2rem;
+  font-size: 2rem;
+  line-height: 125%;
+  @include r_max($break-tablet-p) {
+    font-size: 1.375rem;
   }
 }
 %font-size-medium {
-  font-size: calc-em(19px);
-  line-height: calc-em(23px);
+  min-height: 1.625rem;
+  font-size: 1.625rem;
+  line-height: 125%;
 }
 
 %font-size-default {
-  font-size: calc-em(17px);
+  min-height: $font-size;
+  font-size: $font-size;
 }
 %font-size-small {
-  font-size: calc-em(15px);
+  min-height: 0.875rem;
+  font-size: 0.875rem;
 }
 %font-size-tiny {
-  font-size: calc-em(13px);
+  min-height: 0.875rem;
+  font-size: 0.875rem;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -99,31 +108,34 @@ body {
   font-family: $font-family-base;
   font-weight: 400;
   word-wrap: break-word;
-  color: $color-grey8;
+  color: $text-primary;
 }
 
 h1 {
   @extend %font-size-x-large;
-  font-weight: 400;
+  font-family: Montserrat;
+  font-weight: 700;
   hyphens: auto;
 }
 h2 {
   @extend %font-size-large;
-  font-weight: 400;
-  color: $color-grey5;
+  font-family: Montserrat;
+  font-weight: 700;
 }
 h3 {
   @extend %font-size-medium;
+  font-family: Montserrat;
   font-weight: 700;
 }
 h4 {
   @extend %font-size-medium;
-  font-weight: 700;
-  color: $color-grey5;
+  font-family: Montserrat;
+  font-weight: 600;
 }
 h5 {
   @extend %font-size-default;
-  font-weight: 700;
+  font-family: Montserrat;
+  font-weight: 600;
 }
 p {
   @extend %font-size-default;
@@ -176,6 +188,11 @@ p.message {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
+// FONT AWESOME ICONS
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+
+////////////////////////////////////////////////////////////////////////////////////////
 // MATERIAL ICONS
 
 .material-icons {
@@ -196,7 +213,7 @@ p.message {
   h1 {
     @extend %font-size-medium;
     font-weight: 700;
-    color: $color-grey5;
+    color: $text-primary;
   }
 
   h2 {
@@ -211,7 +228,7 @@ p.message {
   h6 {
     @extend %font-size-small;
     font-weight: 400;
-    color: $color-grey5;
+    color: $text-primary;
   }
 }
 
@@ -222,4 +239,97 @@ p.message {
   @media screen and (max-width: 800px) {
     display: none !important;
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Typography Classes
+
+.heading-1 {
+  color: $text-primary;
+  font-family: Montserrat;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 3.75rem */
+}
+
+.heading-2 {
+  color: $text-primary;
+  font-family: Montserrat;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 3.75rem */
+}
+
+.heading-3 {
+  color: $text-primary;
+  font-family: Montserrat;
+  font-size: 1.625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 3.75rem */
+}
+
+.heading-4 {
+  color: $text-primary;
+  font-family: Montserrat;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 125%; /* 3.75rem */
+}
+
+.subheading-medium {
+  color: $text-primary;
+  font-family: Montserrat;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%; /* 1.40625rem */
+}
+
+.subheading-semibold {
+  color: $text-primary;
+  font-family: Montserrat;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%; /* 1.40625rem */
+}
+
+.text-body {
+  color: $text-primary;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 1.5rem */
+}
+
+.text-body {
+  color: $text-primary;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 1.5rem */
+}
+
+.label-regular {
+  color: $text-primary;
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%; /* 1.09375rem */
+}
+
+.label-semibold {
+  color: $text-primary;
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%; /* 1.09375rem */
 }

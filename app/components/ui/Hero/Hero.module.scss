@@ -1,0 +1,82 @@
+@import "~styles/utils/_helpers.scss";
+
+.hero {
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: top;
+  position: relative;
+  padding: $spacing-36 $spacing-0;
+
+  @media screen and (max-width: $break-tablet-s) {
+    flex-direction: column;
+    text-align: center;
+    padding: 56.8% $spacing-0 $spacing-0; // Aspect-ratio of image
+  }
+}
+
+.contentCard {
+  width: 50%;
+  margin-left: $general-spacing-md;
+  color: white;
+
+  @media screen and (max-width: $break-tablet-s) {
+    background-color: #cd4a23;
+    width: 100%;
+    min-width: 100%;
+    margin: $spacing-0;
+  }
+}
+
+.content {
+  background-color: #cd4a23;
+  border-radius: $rounded-xl;
+  max-width: 568px;
+  float: right;
+  padding: $general-spacing-xl;
+  margin-right: $general-spacing-lg;
+  z-index: 1;
+
+  @media screen and (max-width: $break-tablet-s) {
+    max-width: 100%;
+    padding: $general-spacing-md;
+    margin: $spacing-0;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-bottom: $general-spacing-md;
+
+    @media screen and (max-width: $break-tablet-s) {
+      font-size: 2rem;
+    }
+  }
+
+  .description {
+    font-size: var(--desktop-sub, 18px); // TODO: Create font size vars
+    @media screen and (max-width: $break-tablet-s) {
+      font-size: var(--mobile-sub, 16px);
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: $general-spacing-xl;
+  gap: $general-spacing-s;
+}
+
+.desktop {
+  @media screen and (max-width: $break-tablet-s) {
+    display: none;
+  }
+}
+
+.mobile {
+  display: none;
+  @media screen and (max-width: $break-tablet-s) {
+    display: flex;
+    min-width: 100%;
+  }
+}
