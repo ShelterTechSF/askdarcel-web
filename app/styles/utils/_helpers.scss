@@ -54,7 +54,7 @@ table {
 
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 $font-family-base: "Inter", "Montserrat", "Open Sans", "Helvetica Neue", "Arial",
@@ -64,31 +64,37 @@ $font-family-base: "Inter", "Montserrat", "Open Sans", "Helvetica Neue", "Arial"
 // FONT SIZES
 
 %font-size-x-large {
+  min-height: 3rem;
   font-size: 3rem;
   line-height: 125%;
-  @include r_max($break-tablet-s) {
+  @include r_max($break-tablet-p) {
     font-size: 1.75rem;
   }
 }
 %font-size-large {
+  min-height: 2rem;
   font-size: 2rem;
   line-height: 125%;
-  @include r_max($break-tablet-s) {
+  @include r_max($break-tablet-p) {
     font-size: 1.375rem;
   }
 }
 %font-size-medium {
+  min-height: 1.625rem;
   font-size: 1.625rem;
   line-height: 125%;
 }
 
 %font-size-default {
+  min-height: $font-size;
   font-size: $font-size;
 }
 %font-size-small {
+  min-height: 0.875rem;
   font-size: 0.875rem;
 }
 %font-size-tiny {
+  min-height: 0.875rem;
   font-size: 0.875rem;
 }
 
@@ -279,7 +285,7 @@ p.message {
   font-family: Montserrat;
   font-size: 1.125rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 125%; /* 1.40625rem */
 }
 
@@ -288,7 +294,7 @@ p.message {
   font-family: Montserrat;
   font-size: 1.125rem;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 125%; /* 1.40625rem */
 }
 

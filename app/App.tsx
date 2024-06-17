@@ -88,13 +88,15 @@ export const App = () => {
         {intercom && config.INTERCOM_APP_ID && (
           <Intercom appID={config.INTERCOM_APP_ID} />
         )}
-        <HamburgerMenu
-          isOpen={hamburgerOpen}
-          outerContainerId={outerContainerId}
-          onStateChange={(s) => setHamburgerOpen(s.isOpen)}
-          pageWrapId={pageWrapId}
-          toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
-        />
+        <span className={styles.hamburgerContainer}>
+          <HamburgerMenu
+            isOpen={hamburgerOpen}
+            outerContainerId={outerContainerId}
+            onStateChange={(s) => setHamburgerOpen(s.isOpen)}
+            pageWrapId={pageWrapId}
+            toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
+          />
+        </span>
         <div id={pageWrapId}>
           <Navigation
             showSearch={showSearch}
