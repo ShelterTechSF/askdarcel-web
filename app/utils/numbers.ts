@@ -27,7 +27,9 @@ export function callableUSPhoneNumber(phoneNumber: string) {
  * E.g.
  * "1234567890" -> "123-456-7890"
  */
-export const formatPhoneNumber = (number: string | null | undefined): string => {
+export const formatPhoneNumber = (
+  number: string | null | undefined
+): string => {
   if (!number) {
     return "";
   }
