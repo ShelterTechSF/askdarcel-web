@@ -3,17 +3,15 @@ import { useHistory } from "react-router-dom";
 import qs from "qs";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { getResourceCount } from "utils/DataService";
-import { Footer, NewsArticles } from "components/ui";
+import { Footer } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
 import { Partners } from "./components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
-import { whiteLabel } from "../../utils";
 import { client } from "../../sanity";
 
-// Not currently working
 const builder = imageUrlBuilder(client);
 
 export interface ButtonType {
@@ -28,8 +26,6 @@ export interface HeroData {
   backgroundImage: SanityImageSource;
   buttons: ButtonType[];
 }
-
-const { showBreakingNews } = whiteLabel;
 
 export const coreCategories = [
   {
@@ -142,9 +138,7 @@ export const HomePage = () => {
 
   return (
     <>
-      {showBreakingNews && <NewsArticles />}
       <Hero
-        // backgroundImage={bgImage}
         backgroundImage={builder.image(heroData.backgroundImage).url()}
         title={heroData.title}
         description={heroData.description}
