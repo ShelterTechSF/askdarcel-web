@@ -61,7 +61,11 @@ const AdvancedSearch = () => {
 
     Promise.all(allPromises)
       .then((values) => {
-        setEligibilities(values);
+        // If PARENT_ELIGIBILITIES hasn't been filled out, then allPromises will
+        // be empty. If this is the case, then calling setEligibilities with an
+        // empty array will cause this component to rerender infinitely, since
+        // the exit condition only checks for non-empty eligibilites.
+        if (values.length !== 0) setEligibilities(values);
       })
       .catch((err) => {
         Sentry.captureException(err);

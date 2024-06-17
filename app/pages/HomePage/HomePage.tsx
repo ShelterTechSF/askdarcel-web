@@ -4,7 +4,7 @@ import qs from "qs";
 
 import { getResourceCount } from "utils/DataService";
 import { Footer, NewsArticles } from "components/ui";
-import { Partners } from "./components/Partners/Partners";
+import { Partners } from "components/Partners/Partners";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { HomePageSection } from "./components/Section/Section";
 import ResourceList from "./components/ResourceList/ResourceList";
@@ -122,6 +122,7 @@ export const HomePage = () => {
           value={searchValue}
         />
       </HomePageSection>
+      <div style={{ marginTop: "70px" }} />
       <Partners />
       <Footer />
     </>

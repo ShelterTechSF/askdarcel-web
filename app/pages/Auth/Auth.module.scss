@@ -1,10 +1,35 @@
 @import "~styles/utils/_helpers.scss";
 
-.authPage {
-  display: grid;
-  grid-column: 2 / span 10;
-  gap: 10px;
-  margin: 20px;
+.primaryBleed {
+  // Align background image to "top" because the login and signup pages share
+  // the same background, and if you align to anything else, like "center", then
+  // it causes the image to suddenly "jump" when flipping between the pages.
+  // Image originally came from
+  // https://www.pexels.com/photo/a-man-in-white-shirt-giving-a-drink-to-an-elderly-man-6646989/
+  // in case we want the higher-quality original.
+  background: url("./auth-background.jpg") top/cover no-repeat,
+    rgba(255, 255, 255, 50%);
+  background-blend-mode: lighten;
+  padding: 88px 93px 52px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding: 60px 20px 52px;
+  }
+}
+
+.primaryContent {
+  max-width: 1200px;
+  background: white;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 28px 62px 41px;
+  font-size: 15px;
+  color: #404040;
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding: 20px 24px 24px;
+  }
 }
 
 .verificationDigits {
@@ -13,16 +38,50 @@
 }
 
 .title {
-  font-size: 24px;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: black;
+
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+}
+
+.logInLinkContainer {
+  margin-bottom: 22px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    margin-bottom: 12px;
+  }
+}
+
+.logInLink {
+  font-size: 22px;
+  text-decoration: underline;
+
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 16px;
+  }
+}
+
+.normalParagraph {
+  margin-bottom: 14px;
 }
 
 .authForm {
-  width: 66%;
+  max-width: 534px;
   display: grid;
   gap: 8px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    max-width: 100%;
+  }
 }
 
 .authFormButton {
   max-width: 300px;
   margin-top: 8px;
+  border-radius: 3px;
 }
