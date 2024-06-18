@@ -2,7 +2,10 @@ import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { Footer } from "components/ui";
 import Hero from "components/ui/Hero/Hero";
-import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
+import {
+  OppEventCardData,
+  OppEventCardSection,
+} from "components/ui/Section/OppEventCardSection";
 import React, { useEffect, useState } from "react";
 import { client } from "../../sanity";
 import { HomePageContentColumn } from "./HomePageContentColumn";
@@ -22,16 +25,6 @@ export interface HeroData {
   buttons: ButtonType[];
 }
 
-interface OppEventCardData {
-  header: string;
-  subheader?: string;
-  backgroundColor?: string;
-  link?: {
-    label: string;
-    href: string;
-  };
-}
-
 interface HomePageData {
   heroSection: HeroData;
   categoriesSection: {
@@ -49,9 +42,9 @@ export const HomePage = () => {
     const fetchHomePageData = async () => {
       const query = `*[_type == "homePage" && name == "Home Page"][0]{
         'heroSection': *[_type == "hero" && name == "Home Hero"][0],
-        categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->{...}},
-        opportunitySection {...,'opportunityCards': opportunityCards[]->{...}},
-        eventSection {...,'eventCards': eventCards[]-> {...}},
+        categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->},
+        opportunitySection {...,'opportunityCards': opportunityCards[]->},
+        eventSection {...,'eventCards': eventCards[]->},
       }`;
 
       const result: HomePageData = await client.fetch(query);
@@ -66,8 +59,7 @@ export const HomePage = () => {
     return <div>Loading...</div>;
   }
 
-  const { categoriesSection, opportunitySection, eventSection, heroSection } =
-    homePageData;
+  const { opportunitySection, eventSection, heroSection } = homePageData;
 
   return (
     <>

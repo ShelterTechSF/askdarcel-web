@@ -36,6 +36,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: flex-start;
     gap: $general-spacing-md;
     padding: $general-spacing-lg;
     height: 100%;
@@ -43,6 +44,10 @@
 
     @media screen and (max-width: $break-tablet-p) {
       padding: $general-spacing-md;
+
+      button {
+        justify-content: flex-start;
+      }
     }
 
     .contentTitle {

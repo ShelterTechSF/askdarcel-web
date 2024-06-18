@@ -1,22 +1,17 @@
 import imageUrlBuilder from "@sanity/image-url";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { client } from "../../../sanity";
-import { OppEventCard } from "../Cards/OppEventCard";
 import { Button } from "../inline/Button/Button";
 import styles from "./OppEventCardSection.module.scss";
+import { OppEventCard } from "../Cards/OppEventCard";
 
 export interface EventData {
   slug: {
     current: string;
     _type: string;
   };
-  image: {
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-    _type: string;
-  };
+  image: SanityImageSource;
 
   /* Event Types*/
   title?: string;
@@ -32,63 +27,51 @@ export interface EventData {
   end_date?: Date;
 }
 
-export interface OppEventCardSectionProps {
-  sectionType: "opportunity" | "event";
+export interface OppEventCardData {
+  header: string;
+  subheader?: string;
+  backgroundColor: string;
+  link?: {
+    label: string;
+    href: string;
+  };
+  opportunityCards?: EventData[];
+  eventCards?: EventData[];
 }
-/* 
-TODO: Future PRs
-  - Pull in Sanity data for header, description, button text
-  - Update Button to use global button component
-    - Update header button and view more button
-    - include link to opportunity/event page
-*/
+
+interface OppEventCardSectionProps {
+  sectionType: "event" | "opportunity";
+  sectionData: OppEventCardData;
+}
 
 export const OppEventCardSection = (props: OppEventCardSectionProps) => {
-  const { sectionType } = props;
-  const [eventData, setEventData] = useState<EventData[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { sectionType, sectionData } = props;
+  const { header, subheader, backgroundColor, link } = sectionData;
   const builder = imageUrlBuilder(client);
 
-  useEffect(() => {
-    const fetchEventData = async () => {
-      const fields = {
-        event: "title, slug, date, image",
-        opportunity: "name, slug, start_date, end_date, image",
-      };
-      const query = `*[_type == "${sectionType}"] | order(_createdAt desc)[0...4] { ${fields[sectionType]} }`;
-
-      setIsLoading(true);
-      const result: EventData[] = await client.fetch(query);
-      setIsLoading(false);
-
-      setEventData(result);
-    };
-
-    fetchEventData();
-  }, [sectionType]);
-
-  if (isLoading) {
+  if (!sectionData) {
     return <div>Loading...</div>;
   }
 
-  if (!eventData) {
-    return null;
-  }
+  const cardData = sectionData.opportunityCards || sectionData.eventCards;
 
   return (
-    <div className={`${styles.oppEventSection} ${styles[sectionType]}`}>
-      <div className={`${styles.oppEvent__header} ${styles[sectionType]}`}>
+    <div className={`${styles.oppEventSection} ${styles[backgroundColor]}`}>
+      <div className={`${styles.oppEvent__header}`}>
         <div>
-          <h2>
-            {sectionType === "event" ? "Upcoming events" : "Open Opportunties"}
-          </h2>
-          <p>Description text explaining this section goes here.</p>
+          <h2>{header}</h2>
+          {subheader && <p>{subheader}</p>}
         </div>
-        <Button>See all opportunities/events</Button>
+
+        {link && (
+          <Button href={link.href} arrowVariant="after">
+            {link.label}
+          </Button>
+        )}
       </div>
 
       <div className={`${styles.cardsContainer} ${styles[sectionType]}`}>
-        {eventData.map((event): JSX.Element => {
+        {cardData?.map((event): JSX.Element => {
           const { title, name, slug, date, start_date, end_date, image } =
             event;
           const cardImage = builder.image(image).url();

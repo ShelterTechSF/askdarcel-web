@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "components/ui/inline/Button/Button";
 import styles from "./OppEventCard.module.scss";
 import { OppEventDate } from "./OppEventDate";
 
@@ -32,7 +33,9 @@ export const OppEventCard = (props: OppEventCardProps) => {
           </div>
         </div>
 
-        <p className={styles.contentSubtext}>View more</p>
+        <Button arrowVariant="after" variant="linkBlue" size="lg">
+          View more
+        </Button>
       </div>
     </div>
   );
