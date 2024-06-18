@@ -17,12 +17,12 @@ export const HomePageContentColumn = () => {
   });
 
   useEffect(() => {
-    const fetchPageData = async () => {
-      const fetchedPageData = await client.fetch(
+    const fetchContentData = async () => {
+      const fetchedContentData = await client.fetch(
         `*[_type == 'contentPageType' && name == 'Home']{twoColumnContentSections[]->}`
       );
 
-      const { twoColumnContentSections } = fetchedPageData[0];
+      const { twoColumnContentSections } = fetchedContentData[0];
 
       setContentData({
         twoColumnContentSections,
@@ -30,7 +30,7 @@ export const HomePageContentColumn = () => {
       });
     };
 
-    fetchPageData();
+    fetchContentData();
   }, []);
 
   if (!contentData.contentInitialized) {

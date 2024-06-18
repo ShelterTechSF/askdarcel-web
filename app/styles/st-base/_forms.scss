@@ -33,25 +33,25 @@ textarea {
 }
 
 // This button is affecting all buttons globally
-button {
-  @extend %font-size-default;
-  border: 0;
-  // height: calc-em(44px);
-  padding: calc-em(6px) calc-em(20px);
-  color: $color-white;
-  background: $color-green;
-  display: inline-block;
-  font-weight: 600;
-  &:active,
-  &:hover,
-  &:focus {
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-  }
+// button {
+//   @extend %font-size-default;
+//   border: 0;
+//   // height: calc-em(44px);
+//   padding: calc-em(6px) calc-em(20px);
+//   color: $color-white;
+//   background: $color-green;
+//   display: inline-block;
+//   font-weight: 600;
+//   &:active,
+//   &:hover,
+//   &:focus {
+//     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+//   }
 
-  &.danger {
-    background: $color-red;
-  }
-}
+//   &.danger {
+//     background: $color-red;
+//   }
+// }
 
 button.filter-chip {
   border-radius: 3px;
