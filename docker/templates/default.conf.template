@@ -17,7 +17,7 @@ server {
         # change, we must configure nginx to resolve DNS dynamically.
         # To do this, we configure a DNS resolver here and use a variable
         # rather than a literal URL when configuring the proxy below.
-        resolver 127.0.0.11;
+        resolver 8.8.8.8;
         resolver_timeout 5s;
 
         set $api_url ${NGINX_API_GO_URL};
