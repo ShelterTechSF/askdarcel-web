@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
-import { getResourceCount } from "utils/DataService";
 import { Footer } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
@@ -24,11 +23,9 @@ export interface HeroData {
 }
 
 export const HomePage = () => {
-  const [resourceCount, setResourceCount] = useState<number | undefined>();
   const [heroData, setHeroData] = useState<HeroData | null>(null);
 
   useEffect(() => {
-    getResourceCount().then((count: number) => setResourceCount(count));
     const fetchHeroData = async () => {
       const query = `*[_type == "hero" && name == "Home Hero"][0]{
         name,
