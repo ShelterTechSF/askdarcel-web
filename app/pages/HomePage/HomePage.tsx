@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { Footer } from "components/ui";
-import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
 import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
+import React, { useEffect, useState } from "react";
 import { client } from "../../sanity";
 import { HomePageContentColumn } from "./HomePageContentColumn";
 
@@ -22,40 +22,67 @@ export interface HeroData {
   buttons: ButtonType[];
 }
 
+interface OppEventCardData {
+  header: string;
+  subheader?: string;
+  backgroundColor?: string;
+  link?: {
+    label: string;
+    href: string;
+  };
+}
+
+interface HomePageData {
+  heroSection: HeroData;
+  categoriesSection: {
+    header: string;
+    subheader: string;
+  };
+  opportunitySection: OppEventCardData;
+  eventSection: OppEventCardData;
+}
+
 export const HomePage = () => {
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
+  const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
 
   useEffect(() => {
-    const fetchHeroData = async () => {
-      const query = `*[_type == "hero" && name == "Home Hero"][0]{
-        name,
-        title,
-        description,
-        backgroundImage,
-        buttons
+    const fetchHomePageData = async () => {
+      const query = `*[_type == "homePage" && name == "Home Page"][0]{
+        'heroSection': *[_type == "hero" && name == "Home Hero"][0],
+        categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->{...}},
+        opportunitySection {...,'opportunityCards': opportunityCards[]->{...}},
+        eventSection {...,'eventCards': eventCards[]-> {...}},
       }`;
-      const result: HeroData = await client.fetch(query);
-      setHeroData(result);
+
+      const result: HomePageData = await client.fetch(query);
+
+      setHomePageData(result);
     };
 
-    fetchHeroData();
+    fetchHomePageData();
   }, []);
 
-  if (!heroData) {
+  if (!homePageData) {
     return <div>Loading...</div>;
   }
+
+  const { categoriesSection, opportunitySection, eventSection, heroSection } =
+    homePageData;
 
   return (
     <>
       <Hero
-        backgroundImage={builder.image(heroData.backgroundImage).url()}
-        title={heroData.title}
-        description={heroData.description}
-        buttons={heroData.buttons}
+        backgroundImage={builder.image(heroSection.backgroundImage).url()}
+        title={heroSection.title}
+        description={heroSection.description}
+        buttons={heroSection.buttons}
       />
-      {/* Category Card */}
-      <OppEventCardSection sectionType="opportunity" />
-      <OppEventCardSection sectionType="event" />
+      {/* <CategoryCardSection sectionData={categoriesSection} /> */}
+      <OppEventCardSection
+        sectionType="opportunity"
+        sectionData={opportunitySection}
+      />
+      <OppEventCardSection sectionType="event" sectionData={eventSection} />
       <HomePageContentColumn />
       {/* Newsletter Component */}
       <Footer />
