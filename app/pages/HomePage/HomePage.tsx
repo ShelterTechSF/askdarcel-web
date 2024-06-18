@@ -6,6 +6,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
 import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
 import { client } from "../../sanity";
+import { HomePageContentColumn } from "./HomePageContentColumn";
 
 const builder = imageUrlBuilder(client);
 
@@ -58,7 +59,8 @@ export const HomePage = () => {
       {/* Category Card */}
       <OppEventCardSection sectionType="opportunity" />
       <OppEventCardSection sectionType="event" />
-      {/* Two Column Layout */}
+      <HomePageContentColumn />
+      {/* Newsletter Component */}
       <Footer />
     </>
   );
