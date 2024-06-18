@@ -36,6 +36,15 @@ const BlockRenderer = (props: {
   return BlockContent.defaultSerializers.types.block(props);
 };
 
+export interface TwoColumnContent {
+  mediaAlignment: string;
+  image: SanityImageSource;
+  imageAlt: string | undefined;
+  contentBlock: BlockContentProps;
+  contentLinkButtonText: string;
+  contentLinkButtonUrl: string;
+}
+
 export const TwoColumnContentSection = ({
   image,
   imageAlt,
@@ -43,14 +52,7 @@ export const TwoColumnContentSection = ({
   mediaAlignment,
   contentLinkButtonText,
   contentLinkButtonUrl,
-}: {
-  mediaAlignment: string;
-  image: SanityImageSource;
-  imageAlt: string | undefined;
-  contentBlock: BlockContentProps;
-  contentLinkButtonText: string;
-  contentLinkButtonUrl: string;
-}) => {
+}: TwoColumnContent) => {
   return (
     <section className={styles.twoColumnContentSectionContainer}>
       <div
