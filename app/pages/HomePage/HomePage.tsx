@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { client } from "../../sanity";
 import { HomePageContentColumn } from "./HomePageContentColumn";
+import { HomePageSection } from "./components/Section";
 
 const builder = imageUrlBuilder(client);
 
@@ -40,6 +41,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     const fetchHomePageData = async () => {
+      /* Create and pull in 2 Column content data after schema is made*/
       const query = `*[_type == "homePage" && name == "Home Page"][0]{
         'heroSection': *[_type == "hero" && name == "Home Hero"][0],
         categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->},
@@ -69,7 +71,7 @@ export const HomePage = () => {
         description={heroSection.description}
         buttons={heroSection.buttons}
       />
-      {/* <CategoryCardSection sectionData={categoriesSection} /> */}
+      {/* <CategorySection /> */}
       <OppEventCardSection
         sectionType="opportunity"
         sectionData={opportunitySection}
