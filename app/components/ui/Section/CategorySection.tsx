@@ -49,11 +49,6 @@ is built
 export const CategorySection = () => {
   return (
     <div className={styles.categorySection}>
-      <div>
-        <h2>Browse services</h2>
-        <p>Description text explaining this section goes here.</p>
-      </div>
-
       <div className={styles.categoryCards}>
         {categories.map((category) => {
           return (
