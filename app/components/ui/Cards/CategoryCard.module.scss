@@ -24,6 +24,11 @@
     color: $color-brand-dark;
     text-decoration: none;
   }
+  
+  &:active,
+  &:focus {
+    outline: 3px solid $secondary-button-active-background;
+  }
 
   .categoryTitle {
     font-family: Montserrat;
