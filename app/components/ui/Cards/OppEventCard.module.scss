@@ -10,6 +10,10 @@
   position: relative;
   cursor: pointer;
 
+  &:focus-within {
+    outline: 3px solid $color-secondary
+  }
+  
   &.opportunity {
     flex-direction: column;
   }
@@ -53,6 +57,11 @@
     .contentTitle {
       line-height: 125%;
       margin-bottom: $general-spacing-md;
+
+      &:active,
+      :focus {
+        outline: none;
+      }
     }
 
     .contentTitle a {
