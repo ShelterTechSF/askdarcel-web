@@ -1,75 +1,29 @@
 @import "../../../styles/utils/_helpers.scss";
 
-.oppEventSection {
+.cardsContainer {
   display: flex;
-  flex-direction: column;
-  gap: $general-spacing-xl;
-  overflow: hidden;
+  gap: $general-spacing-lg;
   width: 100%;
-  padding: $spacing-24 $spacing-32;
+  height: 100%;
 
-  &.secondary {
-    background-color: $color-secondary;
-
-    h2,
-    p {
-      color: $white;
-    }
-  }
-  &.tertiary {
-    background-color: $color-brand-dark;
-    h2,
-    p {
-      color: $white;
-    }
-  }
-
-  @media screen and (max-width: $break-tablet-s) {
-    padding: $general-spacing-xl $general-spacing-md;
-  }
-
-  .oppEvent__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $general-spacing-lg;
-
-    h2 {
-      margin-bottom: $general-spacing-s;
-    }
-
-    @media screen and (max-width: $break-tablet-p) {
-      gap: $general-spacing-s;
-      flex-direction: column;
-      align-items: stretch;
-    }
-  }
-
-  .cardsContainer {
-    display: flex;
-    gap: $general-spacing-lg;
-    width: 100%;
-    height: 100%;
-
-    &.event {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-
-      @media screen and (max-width: $break-tablet-p) {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-
-    @media screen and (max-width: 1336px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
+  &.event {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
 
     @media screen and (max-width: $break-tablet-p) {
       display: flex;
       flex-direction: column;
     }
+  }
+
+  @media screen and (max-width: 1336px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: $break-tablet-p) {
+    display: flex;
+    flex-direction: column;
   }
 }

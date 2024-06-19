@@ -5,6 +5,7 @@ import { client } from "../../../sanity";
 import { Button } from "../inline/Button/Button";
 import styles from "./OppEventCardSection.module.scss";
 import { OppEventCard } from "../Cards/OppEventCard";
+import { HomePageSection } from "pages/HomePage/components/Section";
 
 export interface EventData {
   slug: {
@@ -56,20 +57,12 @@ export const OppEventCardSection = (props: OppEventCardSectionProps) => {
   const cardData = sectionData.opportunityCards || sectionData.eventCards;
 
   return (
-    <div className={`${styles.oppEventSection} ${styles[backgroundColor]}`}>
-      <div className={`${styles.oppEvent__header}`}>
-        <div>
-          <h2>{header}</h2>
-          {subheader && <p>{subheader}</p>}
-        </div>
-
-        {link && (
-          <Button href={link.href} arrowVariant="after">
-            {link.label}
-          </Button>
-        )}
-      </div>
-
+    <HomePageSection
+      title={header}
+      description={subheader}
+      backgroundColor={backgroundColor}
+      link={link}
+    >
       <div className={`${styles.cardsContainer} ${styles[sectionType]}`}>
         {cardData?.map((event): JSX.Element => {
           const { title, name, slug, date, start_date, end_date, image } =
@@ -89,6 +82,6 @@ export const OppEventCardSection = (props: OppEventCardSectionProps) => {
           );
         })}
       </div>
-    </div>
+    </HomePageSection>
   );
 };
