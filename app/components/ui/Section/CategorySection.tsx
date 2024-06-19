@@ -39,15 +39,16 @@ const categories = [
 
 /*
 TODO: future PR
-
-- Pull in title and description data from sanity once
-home page schema is built out
-- Update correct search query urls once service page
-is built
+- Pull in title and description data 
+- Remove hardcoded category data
+- add in background color field in sanity schema
 */
 
 export const CategorySection = () => {
+  // const {sectionData} = props;
+  // const {header, subheader, backgroundColor} = sectionData
   return (
+    // <HomePageSection title={header} description={subheader} backgroundColor={backgroundColor}>
     <div className={styles.categorySection}>
       <div className={styles.categoryCards}>
         {categories.map((category) => {
@@ -61,5 +62,6 @@ export const CategorySection = () => {
         })}
       </div>
     </div>
+    // </HomePageSection>
   );
 };
