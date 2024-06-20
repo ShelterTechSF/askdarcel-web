@@ -21,7 +21,7 @@ server {
         resolver_timeout 5s;
 
         set $api_url ${NGINX_API_GO_URL};
-        proxy_pass $api_url/api/$1$is_args$args;
+        proxy_pass $api_url/api/v2/$1$is_args$args;
         proxy_redirect off;
     }
 
