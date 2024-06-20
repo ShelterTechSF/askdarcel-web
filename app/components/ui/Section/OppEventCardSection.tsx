@@ -1,11 +1,11 @@
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { HomePageSection } from "pages/HomePage/components/Section";
+import { Slug } from "pages/HomePage/components/Section/Section";
 import React from "react";
 import { client } from "../../../sanity";
 import { OppEventCard } from "../Cards/OppEventCard";
 import styles from "./OppEventCardSection.module.scss";
-import { Slug } from "pages/HomePage/components/Section/Section";
 
 export interface EventData {
   slug: Slug;

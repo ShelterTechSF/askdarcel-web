@@ -11,13 +11,11 @@ interface CategoryCardProps {
 }
 
 export const CategoryCard = (props: CategoryCardProps) => {
-  const { label, icon } = props;
-  const searchQuery =
-    label === "See all services" ? "" : encodeURIComponent(label);
-
+  const { label, icon, slug } = props;
   const iconName = `${icon.provider} ${icon.name}`;
+
   return (
-    <a href={`/service-finder${searchQuery}`} className={styles.categoryCard}>
+    <a href={`/service-finder${slug}`} className={styles.categoryCard}>
       <span className={`${iconName} ${styles.icon}`} />
       <p className={styles.categoryTitle}>{label}</p>
     </a>

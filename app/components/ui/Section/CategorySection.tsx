@@ -1,7 +1,7 @@
+import { HomePageSection } from "pages/HomePage/components/Section";
 import React from "react";
 import { CategoryCard } from "../Cards/CategoryCard";
 import styles from "./CategorySection.module.scss";
-import { HomePageSection } from "pages/HomePage/components/Section";
 
 interface Category {
   icon: {
@@ -65,7 +65,7 @@ export const CategorySection = (props: CategorySectionProps) => {
           <CategoryCard
             key="See all services"
             label="See all services"
-            slug={"/"}
+            slug=""
             icon={navigationIcon}
           />
         </div>
