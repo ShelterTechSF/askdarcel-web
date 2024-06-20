@@ -53,7 +53,6 @@ export const CategorySection = (props: CategorySectionProps) => {
       <div className={styles.categorySection}>
         <div className={styles.categoryCards}>
           {categories.map((category) => {
-            console.log(category);
             return (
               <CategoryCard
                 key={category.label}
