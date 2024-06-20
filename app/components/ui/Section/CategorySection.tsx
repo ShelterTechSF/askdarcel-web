@@ -39,10 +39,6 @@ export const CategorySection = (props: CategorySectionProps) => {
   const { header, subheader, backgroundColor, featuredCategoriesSection } =
     sectionData;
   const categories = featuredCategoriesSection[0].category;
-  const navigationIcon = {
-    name: "fa-arrow-right",
-    provider: "fas",
-  };
 
   return (
     <HomePageSection
@@ -66,7 +62,7 @@ export const CategorySection = (props: CategorySectionProps) => {
             key="See all services"
             label="See all services"
             slug=""
-            icon={navigationIcon}
+            icon={{ provider: "fas", name: "fa-arrow-right" }}
           />
         </div>
       </div>
