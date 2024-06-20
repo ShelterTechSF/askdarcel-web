@@ -2,6 +2,11 @@ import { Button } from "components/ui/inline/Button/Button";
 import React from "react";
 import styles from "./Section.module.scss";
 
+export interface Slug {
+  current: string;
+  _type: string;
+}
+
 export const HomePageSection = ({
   title,
   description,
@@ -15,7 +20,7 @@ export const HomePageSection = ({
   children?: React.ReactNode;
   link?: {
     label: string;
-    href: string;
+    slug: Slug;
   };
 }) => (
   <section className={`${styles.section} ${styles[backgroundColor]}`}>
@@ -27,7 +32,7 @@ export const HomePageSection = ({
         </div>
 
         {link && (
-          <Button href={link.href} arrowVariant="after" size="lg">
+          <Button href={link.slug.current} arrowVariant="after" size="lg">
             {link.label}
           </Button>
         )}

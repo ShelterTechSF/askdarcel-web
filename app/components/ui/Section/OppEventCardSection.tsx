@@ -5,12 +5,10 @@ import React from "react";
 import { client } from "../../../sanity";
 import { OppEventCard } from "../Cards/OppEventCard";
 import styles from "./OppEventCardSection.module.scss";
+import { Slug } from "pages/HomePage/components/Section/Section";
 
 export interface EventData {
-  slug: {
-    current: string;
-    _type: string;
-  };
+  slug: Slug;
   image: SanityImageSource;
 
   /* Event Types*/
@@ -31,9 +29,9 @@ export interface OppEventCardData {
   header: string;
   subheader?: string;
   backgroundColor: string;
-  link?: {
+  link: {
     label: string;
-    href: string;
+    slug: Slug;
   };
   opportunityCards?: EventData[];
   eventCards?: EventData[];
