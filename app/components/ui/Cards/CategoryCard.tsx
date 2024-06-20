@@ -3,16 +3,22 @@ import styles from "./CategoryCard.module.scss";
 
 interface CategoryCardProps {
   label: string;
-  icon: string;
+  slug: string;
+  icon: {
+    name: string;
+    provider: string;
+  };
 }
+
 export const CategoryCard = (props: CategoryCardProps) => {
   const { label, icon } = props;
   const searchQuery =
     label === "See all services" ? "" : encodeURIComponent(label);
 
+  const iconName = `${icon.provider} ${icon.name}`;
   return (
     <a href={`/service-finder${searchQuery}`} className={styles.categoryCard}>
-      <span className={`fas ${icon} ${styles.icon}`} />
+      <span className={`${iconName} ${styles.icon}`} />
       <p className={styles.categoryTitle}>{label}</p>
     </a>
   );

@@ -9,6 +9,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { client } from "../../sanity";
 import { HomePageContentColumn } from "./HomePageContentColumn";
+import {
+  CategorySection,
+  FeaturedCategoriesData,
+} from "components/ui/Section/CategorySection";
 
 const builder = imageUrlBuilder(client);
 
@@ -27,10 +31,7 @@ export interface HeroData {
 
 interface HomePageData {
   heroSection: HeroData;
-  categoriesSection: {
-    header: string;
-    subheader: string;
-  };
+  categoriesSection: FeaturedCategoriesData;
   opportunitySection: OppEventCardData;
   eventSection: OppEventCardData;
 }
@@ -62,7 +63,9 @@ export const HomePage = () => {
     return <div>Loading...</div>;
   }
 
-  const { opportunitySection, eventSection, heroSection } = homePageData;
+  const { categoriesSection, opportunitySection, eventSection, heroSection } =
+    homePageData;
+
 
   return (
     <>
@@ -72,7 +75,7 @@ export const HomePage = () => {
         description={heroSection.description}
         buttons={heroSection.buttons}
       />
-      {/* <CategorySection /> */}
+      <CategorySection sectionData={categoriesSection} />
       <OppEventCardSection
         sectionType="opportunity"
         sectionData={opportunitySection}

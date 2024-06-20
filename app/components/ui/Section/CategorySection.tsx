@@ -1,67 +1,76 @@
 import React from "react";
 import { CategoryCard } from "../Cards/CategoryCard";
 import styles from "./CategorySection.module.scss";
+import { HomePageSection } from "pages/HomePage/components/Section";
 
-const categories = [
-  {
-    label: "Arts, Culture, & Identity",
-    icon: "fa-palette",
-  },
-  {
-    label: "Childcare",
-    icon: "fa-baby",
-  },
-  {
-    label: "Education",
-    icon: "fa-school",
-  },
-  {
-    label: "Family Support",
-    icon: "fa-people-roof",
-  },
-  {
-    label: "Health & Wellness",
-    icon: "fa-heart-pulse",
-  },
-  {
-    label: "Sports & Recreation",
-    icon: "fa-running",
-  },
-  {
-    label: "Youth Workforce & Life Skills",
-    icon: "fa-briefcase",
-  },
-  {
-    label: "See all services",
-    icon: "fa-arrow-right",
-  },
-];
+interface Category {
+  icon: {
+    name: string;
+    provider: string;
+  };
+  label: string;
+  slug: string;
+  name: string;
+}
 
-/*
-TODO: future PR
-- Pull in title and description data 
-- Remove hardcoded category data
-- add in background color field in sanity schema
-*/
+interface FeaturedCategoriesSection {
+  category: Category[];
+  name: string;
+}
 
-export const CategorySection = () => {
-  // const {sectionData} = props;
-  // const {header, subheader, backgroundColor} = sectionData
+export interface FeaturedCategoriesData {
+  header: string;
+  subheader: string;
+  backgroundColor: string;
+  featuredCategoriesSection: FeaturedCategoriesSection[];
+}
+
+interface CategorySectionProps {
+  sectionData: FeaturedCategoriesData;
+}
+
+export const CategorySection = (props: CategorySectionProps) => {
+  const { sectionData } = props;
+
+  if (!sectionData) {
+    return <div>Loading...</div>;
+  }
+
+  const { header, subheader, backgroundColor, featuredCategoriesSection } =
+    sectionData;
+  const categories = featuredCategoriesSection[0].category;
+  const navigationIcon = {
+    name: "fa-arrow-right",
+    provider: "fas",
+  };
+
   return (
-    // <HomePageSection title={header} description={subheader} backgroundColor={backgroundColor}>
-    <div className={styles.categorySection}>
-      <div className={styles.categoryCards}>
-        {categories.map((category) => {
-          return (
-            <CategoryCard
-              key={category.label}
-              label={category.label}
-              icon={category.icon}
-            />
-          );
-        })}
+    <HomePageSection
+      title={header}
+      description={subheader}
+      backgroundColor={backgroundColor}
+    >
+      <div className={styles.categorySection}>
+        <div className={styles.categoryCards}>
+          {categories.map((category) => {
+            console.log(category);
+            return (
+              <CategoryCard
+                key={category.label}
+                label={category.label}
+                slug={category.slug}
+                icon={category.icon}
+              />
+            );
+          })}
+          <CategoryCard
+            key="See all services"
+            label="See all services"
+            slug={"/"}
+            icon={navigationIcon}
+          />
+        </div>
       </div>
-    </div>
-    // </HomePageSection>
+    </HomePageSection>
   );
 };
