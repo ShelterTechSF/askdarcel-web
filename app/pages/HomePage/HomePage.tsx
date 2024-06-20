@@ -3,16 +3,19 @@ import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { Footer } from "components/ui";
 import Hero from "components/ui/Hero/Hero";
 import {
-  OppEventCardData,
-  OppEventCardSection,
-} from "components/ui/Section/OppEventCardSection";
-import React, { useEffect, useState } from "react";
-import { client } from "../../sanity";
-import { HomePageContentColumn } from "./HomePageContentColumn";
-import {
   CategorySection,
   FeaturedCategoriesData,
 } from "components/ui/Section/CategorySection";
+import {
+  OppEventCardData,
+  OppEventCardSection,
+} from "components/ui/Section/OppEventCardSection";
+import {
+  TwoColumnContent,
+  TwoColumnContentSection,
+} from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
+import React, { useEffect, useState } from "react";
+import { client } from "../../sanity";
 
 const builder = imageUrlBuilder(client);
 
@@ -34,6 +37,7 @@ interface HomePageData {
   categoriesSection: FeaturedCategoriesData;
   opportunitySection: OppEventCardData;
   eventSection: OppEventCardData;
+  twoColumnContentSections: TwoColumnContent[];
 }
 
 export const HomePage = () => {
@@ -49,6 +53,9 @@ export const HomePage = () => {
         categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->},
         opportunitySection {...,'opportunityCards': opportunityCards[]->},
         eventSection {...,'eventCards': eventCards[]->},
+        'twoColumnContentSections': *[_type == 'contentPageType' && name == 'Home']{
+      twoColumnContentSections[0]->
+    }
       }`;
 
       const result: HomePageData = await client.fetch(query);
@@ -63,9 +70,13 @@ export const HomePage = () => {
     return <div>Loading...</div>;
   }
 
-  const { categoriesSection, opportunitySection, eventSection, heroSection } =
-    homePageData;
-
+  const {
+    categoriesSection,
+    opportunitySection,
+    eventSection,
+    heroSection,
+    twoColumnContentSections,
+  } = homePageData;
 
   return (
     <>
@@ -81,7 +92,10 @@ export const HomePage = () => {
         sectionData={opportunitySection}
       />
       <OppEventCardSection sectionType="event" sectionData={eventSection} />
-      <HomePageContentColumn />
+      {/* Fix Sanity schema for two column */}
+      <TwoColumnContentSection
+        {...twoColumnContentSections[0].twoColumnContentSections}
+      />
       {/* Newsletter Component */}
       <Footer />
     </>
