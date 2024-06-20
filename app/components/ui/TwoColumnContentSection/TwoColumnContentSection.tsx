@@ -38,8 +38,6 @@ const BlockRenderer = (props: {
 };
 
 export interface TwoColumnContent {
-  // Fix in sanity schema
-  twoColumnContentSections: TwoColumnContent;
   mediaAlignment: string;
   image: SanityImageSource;
   imageAlt: string | undefined;

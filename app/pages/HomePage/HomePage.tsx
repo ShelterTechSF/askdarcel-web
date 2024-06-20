@@ -37,7 +37,10 @@ interface HomePageData {
   categoriesSection: FeaturedCategoriesData;
   opportunitySection: OppEventCardData;
   eventSection: OppEventCardData;
-  twoColumnContentSections: TwoColumnContent[];
+  /* Fix naming in Sanity schema */
+  twoColumnContentSections: {
+    twoColumnContentSections: TwoColumnContent;
+  }[];
 }
 
 export const HomePage = () => {
@@ -45,9 +48,6 @@ export const HomePage = () => {
 
   useEffect(() => {
     const fetchHomePageData = async () => {
-      /* 
-        Create and pull in 2 Column content data after schema is made
-      */
       const query = `*[_type == "homePage" && name == "Home Page"][0]{
         'heroSection': *[_type == "hero" && name == "Home Hero"][0],
         categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->},
@@ -78,6 +78,10 @@ export const HomePage = () => {
     twoColumnContentSections,
   } = homePageData;
 
+  /* Fix naming in Sanity schema */
+  const twoColumnContentData =
+    twoColumnContentSections[0].twoColumnContentSections;
+
   return (
     <>
       <Hero
@@ -92,10 +96,7 @@ export const HomePage = () => {
         sectionData={opportunitySection}
       />
       <OppEventCardSection sectionType="event" sectionData={eventSection} />
-      {/* Fix Sanity schema for two column */}
-      <TwoColumnContentSection
-        {...twoColumnContentSections[0].twoColumnContentSections}
-      />
+      <TwoColumnContentSection {...twoColumnContentData} />
       {/* Newsletter Component */}
       <Footer />
     </>
