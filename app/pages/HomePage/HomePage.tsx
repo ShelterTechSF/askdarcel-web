@@ -1,5 +1,6 @@
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
+import * as Sentry from "@sentry/browser";
 import { Footer } from "components/ui";
 import Hero from "components/ui/Hero/Hero";
 import {
@@ -64,7 +65,7 @@ export const HomePage = () => {
         const result: HomePageData = await client.fetch(query);
         setHomePageData(result);
       } catch (error) {
-        console.error("Failed to fetch home page data");
+        Sentry.captureException(error);
       }
     };
 

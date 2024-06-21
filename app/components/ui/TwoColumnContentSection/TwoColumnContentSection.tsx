@@ -54,7 +54,14 @@ export const TwoColumnContentSection = ({
   mediaAlignment,
   contentLinkButtonText,
   contentLinkButtonUrl,
-}: TwoColumnContent) => {
+}: {
+  mediaAlignment: string;
+  image: SanityImageSource;
+  imageAlt: string | undefined;
+  contentBlock: any;
+  contentLinkButtonText: string;
+  contentLinkButtonUrl: string;
+}) => {
   return (
     <section className={styles.twoColumnContentSectionContainer}>
       <div
