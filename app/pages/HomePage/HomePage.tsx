@@ -57,12 +57,15 @@ export const HomePage = () => {
         eventSection {...,'eventCards': eventCards[]->},
         'twoColumnContentSections': *[_type == 'contentPageType' && name == 'Home']{
       twoColumnContentSections[0]->
-    }
-      }`;
+      }
+    }`;
 
-      const result: HomePageData = await client.fetch(query);
-
-      setHomePageData(result);
+      try {
+        const result: HomePageData = await client.fetch(query);
+        setHomePageData(result);
+      } catch (error) {
+        console.error("Failed to fetch home page data");
+      }
     };
 
     fetchHomePageData();
