@@ -47,7 +47,7 @@ export const AboutPage = () => {
       <Masthead title={pageData.mastHead} />
       {pageData?.twoColumnContentSections?.map(
         (section: JSX.IntrinsicAttributes & TwoColumnContent) => {
-          return <TwoColumnContentSection key={section.key} {...section} />;
+          return <TwoColumnContentSection key={section._id} {...section} />;
         }
       )}
       <EmailSignup />

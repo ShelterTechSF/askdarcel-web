@@ -44,6 +44,7 @@ export interface TwoColumnContent {
   contentBlock: BlockContentProps;
   contentLinkButtonText: string;
   contentLinkButtonUrl: string;
+  _id: string;
 }
 
 export const TwoColumnContentSection = ({

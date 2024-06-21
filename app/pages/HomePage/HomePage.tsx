@@ -37,7 +37,9 @@ interface HomePageData {
   categoriesSection: FeaturedCategoriesData;
   opportunitySection: OppEventCardData;
   eventSection: OppEventCardData;
-  /* Fix naming in Sanity schema */
+  /* TODO: update field in Sanity schema
+  to avoid nested values of the same name
+  */
   twoColumnContentSections: {
     twoColumnContentSections: TwoColumnContent;
   }[];
@@ -66,7 +68,7 @@ export const HomePage = () => {
     fetchHomePageData();
   }, []);
 
-  if (!homePageData) {
+  if (homePageData === null) {
     return <div>Loading...</div>;
   }
 
@@ -78,7 +80,6 @@ export const HomePage = () => {
     twoColumnContentSections,
   } = homePageData;
 
-  /* Fix naming in Sanity schema */
   const twoColumnContentData =
     twoColumnContentSections[0].twoColumnContentSections;
 
@@ -103,8 +104,9 @@ export const HomePage = () => {
   );
 };
 
-// Remove when new categories is created
-// other components are dependent on this list
+/* TODO: Remove when new categories are created
+ other components are dependent on this list */
+
 export const coreCategories = [
   {
     algoliaCategoryName: "Covid-food",

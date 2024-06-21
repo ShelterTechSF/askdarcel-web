@@ -38,7 +38,7 @@ export const CategorySection = (props: CategorySectionProps) => {
 
   const { header, subheader, backgroundColor, featuredCategoriesSection } =
     sectionData;
-  const categories = featuredCategoriesSection[0].category;
+  const featuredCategories = featuredCategoriesSection[0].category;
 
   return (
     <HomePageSection
@@ -48,7 +48,7 @@ export const CategorySection = (props: CategorySectionProps) => {
     >
       <div className={styles.categorySection}>
         <div className={styles.categoryCards}>
-          {categories.map((category) => {
+          {featuredCategories.map((category) => {
             return (
               <CategoryCard
                 key={category.label}
