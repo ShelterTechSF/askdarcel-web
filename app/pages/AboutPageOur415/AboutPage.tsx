@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import { client } from "../../sanity";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
-import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
-
-interface TwoColumnContentSection {
-  mediaAlignment: string;
-  image: SanityImageSource;
-  imageAlt: string | undefined;
-  contentBlock: any;
-  contentLinkButtonText: string;
-  contentLinkButtonUrl: string;
-  _id: string;
-}
+import {
+  TwoColumnContent,
+  TwoColumnContentSection,
+} from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
 
 interface PageState {
   pageInitialized: boolean;
   mastHead: string;
-  twoColumnContentSections: TwoColumnContentSection[];
+  twoColumnContentSections: TwoColumnContent[];
 }
 
 export const AboutPage = () => {
@@ -54,7 +46,7 @@ export const AboutPage = () => {
     <>
       <Masthead title={pageData.mastHead} />
       {pageData?.twoColumnContentSections?.map(
-        (section: JSX.IntrinsicAttributes & TwoColumnContentSection) => {
+        (section: JSX.IntrinsicAttributes & TwoColumnContent) => {
           return <TwoColumnContentSection key={section._id} {...section} />;
         }
       )}

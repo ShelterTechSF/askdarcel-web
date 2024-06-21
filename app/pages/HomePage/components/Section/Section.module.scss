@@ -1,11 +1,54 @@
 @import "app/styles/utils/_helpers.scss";
 
 .section {
-  color: #202020;
-  margin-top: 100px;
-  position: relative;
-  @media screen and (max-width: 600px) {
-    margin-top: 50px;
+  padding: $spacing-24 $spacing-32;
+
+  @media screen and (max-width: $break-tablet-p) {
+    padding: $general-spacing-xl $general-spacing-md;
+  }
+
+  &.secondary {
+    background-color: $color-secondary;
+    .description {
+      color: $text-primary;
+    }
+  }
+
+  &.tertiary {
+    background-color: $color-brand-dark;
+    .title,
+    .description {
+      color: $white;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $general-spacing-lg;
+  gap: $general-spacing-xl;
+
+  @media screen and (max-width: $break-tablet-s) {
+    gap: $general-spacing-s;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .title {
+    margin-bottom: $general-spacing-s;
+    @media screen and (max-width: $break-tablet-p) {
+      font-size: 1.625rem;
+    }
+  }
+
+  .description {
+    font-size: 18px;
+    color: $text-secondary;
+    @media screen and (max-width: $break-tablet-p) {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -13,25 +56,4 @@
   margin-left: auto;
   margin-right: auto;
   max-width: $width-content;
-  width: 90%;
-}
-
-.title {
-  font-weight: 600;
-  font-size: 42px;
-  @media screen and (max-width: 767px) {
-    font-size: 36px;
-  }
-  @media screen and (max-width: 600px) {
-    font-size: 24px;
-  }
-}
-
-.description {
-  font-size: 18px;
-  margin-top: 5px;
-  @media screen and (max-width: 600px) {
-    font-size: 14px;
-    margin-top: 10px;
-  }
 }

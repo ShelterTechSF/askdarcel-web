@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import qs from "qs";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
-import { getResourceCount } from "utils/DataService";
-import { Footer } from "components/ui";
 import imageUrlBuilder from "@sanity/image-url";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
+import * as Sentry from "@sentry/browser";
+import { Footer } from "components/ui";
 import Hero from "components/ui/Hero/Hero";
-import { Partners } from "./components/Partners/Partners";
-import { SearchBar } from "./components/SearchBar/SearchBar";
-import { HomePageSection } from "./components/Section/Section";
-import ResourceList from "./components/ResourceList/ResourceList";
+import {
+  CategorySection,
+  FeaturedCategoriesData,
+} from "components/ui/Section/CategorySection";
+import {
+  OppEventCardData,
+  OppEventCardSection,
+} from "components/ui/Section/OppEventCardSection";
+import {
+  TwoColumnContent,
+  TwoColumnContentSection,
+} from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
+import React, { useEffect, useState } from "react";
 import { client } from "../../sanity";
 
 const builder = imageUrlBuilder(client);
@@ -26,6 +32,84 @@ export interface HeroData {
   backgroundImage: SanityImageSource;
   buttons: ButtonType[];
 }
+
+interface HomePageData {
+  heroSection: HeroData;
+  categoriesSection: FeaturedCategoriesData;
+  opportunitySection: OppEventCardData;
+  eventSection: OppEventCardData;
+  /* TODO: update field in Sanity schema
+  to avoid nested values of the same name
+  */
+  twoColumnContentSections: {
+    twoColumnContentSections: TwoColumnContent;
+  }[];
+}
+
+export const HomePage = () => {
+  const [homePageData, setHomePageData] = useState<HomePageData | null>(null);
+
+  useEffect(() => {
+    const fetchHomePageData = async () => {
+      const query = `*[_type == "homePage" && name == "Home Page"][0]{
+        'heroSection': *[_type == "hero" && name == "Home Hero"][0],
+        categoriesSection {...,'featuredCategoriesSection': featuredCategoriesSection[]->},
+        opportunitySection {...,'opportunityCards': opportunityCards[]->},
+        eventSection {...,'eventCards': eventCards[]->},
+        'twoColumnContentSections': *[_type == 'contentPageType' && name == 'Home']{
+      twoColumnContentSections[0]->
+      }
+    }`;
+
+      try {
+        const result: HomePageData = await client.fetch(query);
+        setHomePageData(result);
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+    };
+
+    fetchHomePageData();
+  }, []);
+
+  if (homePageData === null) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    categoriesSection,
+    opportunitySection,
+    eventSection,
+    heroSection,
+    twoColumnContentSections,
+  } = homePageData;
+
+  const twoColumnContentData =
+    twoColumnContentSections[0].twoColumnContentSections;
+
+  return (
+    <>
+      <Hero
+        backgroundImage={builder.image(heroSection.backgroundImage).url()}
+        title={heroSection.title}
+        description={heroSection.description}
+        buttons={heroSection.buttons}
+      />
+      <CategorySection sectionData={categoriesSection} />
+      <OppEventCardSection
+        sectionType="opportunity"
+        sectionData={opportunitySection}
+      />
+      <OppEventCardSection sectionType="event" sectionData={eventSection} />
+      <TwoColumnContentSection {...twoColumnContentData} />
+      {/* Newsletter Component */}
+      <Footer />
+    </>
+  );
+};
+
+/* TODO: Remove when new categories are created
+ other components are dependent on this list */
 
 export const coreCategories = [
   {
@@ -101,69 +185,3 @@ export const coreCategories = [
     categorySlug: "substance-use-resources",
   },
 ];
-
-export const HomePage = () => {
-  const [resourceCount, setResourceCount] = useState<number | undefined>();
-  const [searchValue, setSearchValue] = useState("");
-  const history = useHistory();
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
-
-  const submitSearch = () => {
-    if (searchValue) {
-      const query = qs.stringify({ query: searchValue });
-      history.push(`/search?${query}`);
-    }
-  };
-
-  useEffect(() => {
-    getResourceCount().then((count: number) => setResourceCount(count));
-    const fetchHeroData = async () => {
-      const query = `*[_type == "hero" && name == "Home Hero"][0]{
-        name,
-        title,
-        description,
-        backgroundImage,
-        buttons
-      }`;
-      const result: HeroData = await client.fetch(query);
-      setHeroData(result);
-    };
-
-    fetchHeroData();
-  }, []);
-
-  if (!heroData) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <>
-      <Hero
-        backgroundImage={builder.image(heroData.backgroundImage).url()}
-        title={heroData.title}
-        description={heroData.description}
-        buttons={heroData.buttons}
-      />
-      <HomePageSection title="Find essential services in San Francisco">
-        <ResourceList resources={coreCategories} />
-      </HomePageSection>
-
-      <HomePageSection
-        title="Browse Directory"
-        description="Search the directory for a specific social service provider or browse by category."
-      >
-        <SearchBar
-          placeholder={`Search ${
-            resourceCount || ""
-          } resources in San Francisco`}
-          onSubmit={submitSearch}
-          onChange={(newSearchValue: string) => setSearchValue(newSearchValue)}
-          value={searchValue}
-        />
-      </HomePageSection>
-
-      <Partners />
-      <Footer />
-    </>
-  );
-};

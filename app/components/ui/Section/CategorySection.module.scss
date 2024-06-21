@@ -2,14 +2,9 @@
 
 .categorySection {
   background-color: $color-secondary;
-  padding: $spacing-24 $spacing-32;
 
   h2 {
     margin-bottom: $general-spacing-s;
-  }
-
-  @media screen and (max-width: $break-tablet-p) {
-    padding: $general-spacing-xl $general-spacing-md;
   }
 
   .categoryCards {

@@ -53,7 +53,7 @@
   margin-left: 7%;
   margin-right: 18%;
   display: inline-block;
-  margin-top: $general-spacing-md;
+  margin-top: $general-spacing-xl;
   margin-bottom: $general-spacing-md;
 }
 
@@ -77,11 +77,11 @@
 
   .twoColumnContentSectionContainer {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: none;
   }
 
   .contentContainer_right {
+    padding: $general-spacing-md;
     grid-row: 1;
   }
 
@@ -91,16 +91,17 @@
   }
 
   .contentLinkButton {
+    width: 100%;
     margin: 0px 0px;
-    padding: $general-spacing-md $general-spacing-xl;
   }
 
   .contentContainer_left {
+    padding: $general-spacing-md;
     grid-row: 1;
   }
 
   .imageContainer_left {
     grid-row: 2;
-    grid-column: 1;
+    grid-column: none;
   }
 }

@@ -6,6 +6,7 @@ import BlockContent, {
 import imageUrlBuilder from "@sanity/image-url";
 import styles from "./TwoColumnContentSection.module.scss";
 import { client } from "../../../sanity";
+import { Button } from "../inline/Button/Button";
 
 const builder = imageUrlBuilder(client);
 
@@ -36,6 +37,16 @@ const BlockRenderer = (props: {
   return BlockContent.defaultSerializers.types.block(props);
 };
 
+export interface TwoColumnContent {
+  mediaAlignment: string;
+  image: SanityImageSource;
+  imageAlt: string | undefined;
+  contentBlock: BlockContentProps;
+  contentLinkButtonText: string;
+  contentLinkButtonUrl: string;
+  _id: string;
+}
+
 export const TwoColumnContentSection = ({
   image,
   imageAlt,
@@ -47,7 +58,7 @@ export const TwoColumnContentSection = ({
   mediaAlignment: string;
   image: SanityImageSource;
   imageAlt: string | undefined;
-  contentBlock: BlockContentProps;
+  contentBlock: any;
   contentLinkButtonText: string;
   contentLinkButtonUrl: string;
 }) => {
@@ -79,9 +90,11 @@ export const TwoColumnContentSection = ({
           serializers={{ types: { block: BlockRenderer } }}
         />
         {contentLinkButtonText && (
-          <a className={styles.contentLinkButton} href={contentLinkButtonUrl}>
-            {contentLinkButtonText}
-          </a>
+          <div className={styles.contentLinkButton}>
+            <Button href={contentLinkButtonUrl} arrowVariant="after">
+              {contentLinkButtonText}
+            </Button>
+          </div>
         )}
       </div>
     </section>
