@@ -11,6 +11,8 @@ import {
 } from "../ui/MapElements";
 import { useAppContext } from "../../utils";
 
+// TODO: Accordion needs big refactor/rebuild which is out of scope of this ticket. Will create new ticket.
+
 export const MapOfLocations = ({
   locationRenderer,
   locations,
@@ -25,7 +27,7 @@ export const MapOfLocations = ({
   const { lat, lng } = userLocation;
 
   return (
-    <div>
+    <>
       <div className="map">
         <GoogleMap
           bootstrapURLKeys={{
@@ -52,28 +54,22 @@ export const MapOfLocations = ({
             <AccordionItem
               key={loc.address.id}
               headerRenderer={
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="iconcell">{i + 1}.</td>
-                        <td>
-                          <strong className="notranslate">
-                            {loc.address.address_1}
-                          </strong>
-                        </td>
-                        <td className="iconcell">
-                          <div className="selector">
-                            <i className="material-icons">
-                              keyboard_arrow_down
-                            </i>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  {/* TODO Transportation options */}
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="headerCell">
+                        <strong className="notranslate">
+                          <h3>{`${i + 1}. ${loc.address.address_1}`}</h3>
+                        </strong>
+                      </td>
+                      <td className="iconCell">
+                        <div className="selector">
+                          <i className="material-icons">keyboard_arrow_down</i>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               }
             >
               {locationRenderer(loc)}
@@ -81,17 +77,6 @@ export const MapOfLocations = ({
           ))}
         </Accordion>
       )}
-      {/* <table>
-        <tbody>
-          { locations.map((loc, i) => (
-            <tr key={loc.name}>
-              <th>{ i }.</th>
-              <td>{ loc.address.address_1 }</td>
-              <td></td>
-            </tr>
-          )) }
-        </tbody>
-      </table> */}
-    </div>
+    </>
   );
 };

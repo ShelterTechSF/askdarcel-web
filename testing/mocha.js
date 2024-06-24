@@ -3,6 +3,7 @@ process.env.NODE_ENV = "test";
 
 require("@babel/register");
 require("@babel/polyfill");
+require("ignore-styles").default([".scss", ".css"]);
 
 console.clear();
 

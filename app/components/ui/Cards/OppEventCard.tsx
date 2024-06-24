@@ -16,7 +16,7 @@ export const OppEventCard = (props: OppEventCardProps) => {
   const { title, slug, startDate, endDate, image, sectionType } = props;
 
   return (
-    <div className={`${styles.card} ${styles[sectionType]}`}>
+    <div className={`${styles.oppEventCard} ${styles[sectionType]}`}>
       <img
         alt={title}
         src={image}

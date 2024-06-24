@@ -8,6 +8,7 @@ import {
 import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import { formatPhoneNumber, renderAddressMetadata } from "utils";
+import { removeAsterisksAndHashes } from "utils/strings";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 // import { Texting } from "components/Texting";
 // import { TextListing } from "components/Texting/Texting";
@@ -179,7 +180,11 @@ const SearchResult = ({
             </div>
             <ReactMarkdown
               className={`rendered-markdown ${styles.description}`}
-              source={hit.long_description ?? undefined}
+              source={
+                hit.long_description
+                  ? removeAsterisksAndHashes(hit.long_description)
+                  : undefined
+              }
               linkTarget="_blank"
             />
           </div>

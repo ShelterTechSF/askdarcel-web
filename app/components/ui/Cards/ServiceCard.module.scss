@@ -1,0 +1,24 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.serviceCard {
+  border: 1px solid $border-lightgray;
+  padding: $general-spacing-md;
+  width: 100%;
+  color: $text-secondary !important;
+  border-radius: $rounded-md;
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: $general-spacing-s;
+
+  &:hover {
+    text-decoration: none;
+    background: $card-hover;
+  }
+
+  h3,
+  h4 {
+    font-family: Montserrat;
+    font-size: 18px;
+    margin-bottom: $general-spacing-xs;
+  }
+}

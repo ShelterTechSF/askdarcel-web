@@ -29,6 +29,6 @@ export const AccordionItem = ({
 }) => (
   <div>
     <header>{headerRenderer}</header>
-    <section>{children}</section>
+    <div className="accordion-item">{children}</div>
   </div>
 );

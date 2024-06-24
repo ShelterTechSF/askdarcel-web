@@ -55,5 +55,8 @@ $general-spacing-lg: $spacing-6; // 1.5rem 24px
 $general-spacing-xl: $spacing-8; // 2rem 32px
 $general-spacing-xxl: $spacing-12; //3rem 48px
 
+$section-padding-desktop-vertical: $spacing-24;
+$section-padding-mobile-vertical: $general-spacing-xl;
+
 $width-content: 1184px; // for all inner content
 $width-navigation: 1312px; // for header and footer

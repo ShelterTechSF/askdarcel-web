@@ -5,6 +5,8 @@
   font-weight: 700;
   font-size: 14px;
   height: fit-content;
+  width: fit-content;
+  white-space: nowrap;
 
   &:disabled {
     color: $white;
@@ -40,7 +42,7 @@
 
   &--primary {
     background: $primary-button-default-background;
-    color: $white;
+    color: $white !important;
 
     &:hover {
       background: $primary-button-hover-background;
@@ -52,13 +54,13 @@
   }
 
   &--secondary {
-    color: $secondary-button-default-label;
+    color: $secondary-button-default-label !important;
     border: 2px solid $secondary-button-outline;
     background: $white;
 
     &:hover {
       background: $secondary-button-hover-background;
-      color: $white;
+      color: $white !important;
     }
 
     &:active {
@@ -132,6 +134,14 @@
       margin-left: 8px;
     }
   }
+}
+
+.icon-before {
+  margin-right: 0.5rem;
+}
+
+.icon-after {
+  margin-left: 0.5rem;
 }
 
 .mobile-full-width {

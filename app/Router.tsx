@@ -17,7 +17,7 @@ import {
 } from "pages/LegacyRedirects";
 import { ResourceGuides, ResourceGuide } from "pages/ResourceGuides";
 import { SearchResultsPage } from "pages/SearchResultsPage/SearchResultsPage";
-import { ServiceListingPage } from "pages/ServiceListingPage";
+import { ServiceListingPage } from "pages/ServiceListingPage/ServiceListingPage";
 import { ServicePdfPage } from "pages/Pdf/ServicePdfPage";
 import { IntimatePartnerViolencePdfPage } from "pages/Pdf/IntimatePartnerViolencePdfPage";
 import { TermsOfServicePage } from "pages/legal/TermsOfService";

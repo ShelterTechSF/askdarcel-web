@@ -6,7 +6,6 @@ import qs from "qs";
 import {
   ActionBarMobile,
   ActionSidebar,
-  ListingTitleLink,
   MapOfLocations,
   MOHCDBadge,
   ServiceAttribution,
@@ -15,7 +14,8 @@ import {
   TableOfOpeningTimes,
 } from "components/listing";
 import { Datatable, Footer, Loader } from "components/ui";
-import whiteLabel from "../utils/whitelabel";
+import { removeAsterisksAndHashes } from "utils/strings";
+import whiteLabel from "../../utils/whitelabel";
 import {
   fetchService,
   generateServiceDetails,
@@ -24,7 +24,8 @@ import {
   Organization,
   OrganizationAction,
   Service,
-} from "../models";
+} from "../../models";
+import styles from "./ServiceListingPage.module.scss";
 
 const { title: whiteLabelTitle, footerOptions: whiteLabelFooterOpts } =
   whiteLabel;
@@ -54,10 +55,13 @@ export const ServiceListingPage = () => {
   }
 
   const { resource, recurringSchedule } = service;
+  const formattedLongDescription = removeAsterisksAndHashes(
+    service.long_description
+  );
   const locations = getServiceLocations(service, resource, recurringSchedule);
   const allActions = getOrganizationActions(resource);
   const sidebarActions = allActions.filter((a) =>
-    ["print", "directions"].includes(a.icon)
+    ["print", "phone", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
     ["phone", "directions"].includes(a.icon)
@@ -73,38 +77,41 @@ export const ServiceListingPage = () => {
   };
 
   return (
-    <div className="listing-container">
+    <div className={styles[`listing-container`]}>
       <Helmet>
         <title>{`${service.name} | ${whiteLabelTitle}`}</title>
-        <meta name="description" content={service.long_description} />
+        <meta name="description" content={formattedLongDescription} />
       </Helmet>
-      <article className="listing" id="service">
-        <div className="listing--main weglot-dynamic">
-          <div className="listing--main--left">
+      <article className={styles.listing} id="service">
+        <div
+          className={`${styles["listing--main"]} ${styles["weglot-dynamic"]}`}
+        >
+          <div className={styles["listing--main--left"]}>
             <header>
-              <div className="org--main--header--title-container">
+              <div className={styles["org--main--header--title-container"]}>
                 <h1 data-cy="service-page-title">{service.name}</h1>
                 <MOHCDBadge resource={resource} />
               </div>
-              {/* {service.alsoNamed ? <p>Also Known As</p> : null} */}
               <ServiceProgramDetails
                 service={service}
                 organization={resource}
               />
             </header>
 
-            <ActionBarMobile
-              actions={mobileActions}
-              onClickAction={onClickAction}
-            />
+            <span className="no-print">
+              <ActionBarMobile
+                actions={mobileActions}
+                onClickAction={onClickAction}
+              />
+            </span>
 
             <ServiceListingSection
-              title="About This Service"
+              title="About"
               data-cy="service-about-section"
             >
               <ReactMarkdown
                 className="rendered-markdown"
-                source={service.long_description}
+                source={formattedLongDescription}
                 linkTarget="_blank"
               />
               <ServiceAttribution
@@ -115,16 +122,16 @@ export const ServiceListingPage = () => {
 
             {details.length > 0 && (
               <ServiceListingSection
-                title="Service Details"
+                title="Details"
                 data-cy="service-details-section"
               >
                 <Datatable
-                  rowRenderer={(d) => (
-                    <tr key={d.title}>
-                      <th>{d.title}</th>
+                  rowRenderer={(detail) => (
+                    <tr key={detail.title}>
+                      <th>{detail.title}</th>
                       <td>
                         <ReactMarkdown className="rendered-markdown">
-                          {d.value}
+                          {detail.value}
                         </ReactMarkdown>
                       </td>
                     </tr>
@@ -135,7 +142,7 @@ export const ServiceListingPage = () => {
             )}
 
             <ServiceListingSection
-              title="Contact Info"
+              title="Contact"
               data-cy="service-contact-section"
             >
               <TableOfContactInfo service={service} />
@@ -143,24 +150,25 @@ export const ServiceListingPage = () => {
 
             {locations.length > 0 && (
               <ServiceListingSection
-                title="Location and Hours"
+                title="Location and hours"
                 data-cy="service-loc-hours-section"
               >
-                <MapOfLocations
-                  locations={locations}
-                  locationRenderer={(location: any) => (
-                    <TableOfOpeningTimes
-                      recurringSchedule={location.recurringSchedule}
-                    />
-                  )}
-                />
-                {/* TODO Transport Options */}
+                <div className={styles["service-loc-hours-section"]}>
+                  <MapOfLocations
+                    locations={locations}
+                    locationRenderer={(location: any) => (
+                      <TableOfOpeningTimes
+                        recurringSchedule={location.recurringSchedule}
+                      />
+                    )}
+                  />
+                </div>
               </ServiceListingSection>
             )}
 
-            {resource.services.length > 0 && (
+            {resource.services.length > 1 && (
               <ServiceListingSection
-                title="Other Services at this Location"
+                title="Other services at this organization"
                 data-cy="service-other-section"
               >
                 {resource.services
@@ -170,19 +178,13 @@ export const ServiceListingPage = () => {
                   ))}
               </ServiceListingSection>
             )}
-
-            {/* TODO Need an API to get similar services, maybe same category for now? */}
-            {/* <section>
-                <h2>Similar Services Near You</h2>
-              </section>
-            */}
           </div>
-          <div className="listing--aside">
+          <aside className={`${styles["listing--aside"]} no-print`}>
             <ActionSidebar
               actions={sidebarActions}
               onClickAction={onClickAction}
             />
-          </div>
+          </aside>
         </div>
       </article>
       {whiteLabelFooterOpts.showOnListingPages && <Footer />}
@@ -211,16 +213,15 @@ type ServiceProgramDetailsProps = {
   organization: Organization;
 };
 
-// TODO Implement rendering/popover when programs exist
 // Details if the service is part of a larger program, and the organization that provides it
 export const ServiceProgramDetails = ({
   service,
   organization,
 }: ServiceProgramDetailsProps) => (
-  <span className="service--program--details">
+  <span className={styles["service--program--details"]}>
     A service
     {service.program ? ` in the ${service.program.name} program` : null}
     {" offered by "}
-    <ListingTitleLink type="org" listing={organization} />
+    <a href={`/organizations/${organization.id}`}>{organization.name}</a>
   </span>
 );

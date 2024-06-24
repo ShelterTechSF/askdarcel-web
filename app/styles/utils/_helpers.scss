@@ -21,7 +21,11 @@ table {
       padding: 10px;
       text-align: left;
 
-      &.iconcell {
+      &.headerCell h3 {
+        font-size: 18px;
+      }
+
+      &.iconCell {
         max-width: $padding-xxlarge;
         $padding: 10px $padding-default;
       }

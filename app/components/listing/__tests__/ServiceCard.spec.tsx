@@ -2,7 +2,7 @@ import React from "react";
 import { expect } from "chai";
 import { shallow } from "enzyme";
 
-import { ServiceCard } from "../ServiceCard";
+import { ServiceCard } from "../../ui/Cards/ServiceCard";
 import { Service } from "../../../models";
 
 describe("<ServiceCard />", () => {

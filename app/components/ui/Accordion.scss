@@ -7,18 +7,19 @@ ul.accordion {
     width: 100%;
 
     header {
-      padding: $padding-default;
       cursor: pointer;
 
       &:hover {
-        background: $color-grey1;
+        background: $gray-50;
       }
 
       table {
         tbody {
           tr {
+            padding: $general-spacing-md;
+
             td {
-              padding: $padding-default $padding-large;
+              padding: $general-spacing-md;
               vertical-align: middle;
             }
           }
@@ -42,7 +43,7 @@ ul.accordion {
     }
 
     &.open {
-      background: $color-grey1;
+      background: $gray-50;
 
       header {
         .selector {
@@ -56,4 +57,8 @@ ul.accordion {
       }
     }
   }
+}
+
+.accordion-item {
+  padding-bottom: $general-spacing-md;
 }

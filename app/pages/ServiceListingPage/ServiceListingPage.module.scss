@@ -1,91 +1,133 @@
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORGANIZATION PAGE STYLES
+@import "../../styles/utils/_helpers.scss";
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// SERVICE PAGE STYLES
 .listing-container {
   background: $color-grey1;
-  padding: 0;
+  padding: $section-padding-desktop-vertical $general-spacing-md;
+  background: $color-white;
+
+  @include r_max($break-tablet-s) {
+    padding: $section-padding-mobile-vertical $general-spacing-md;
+  }
 }
 
 .listing {
-  background: $color-white;
+  color: $text-secondary;
 
   h1,
   h2,
-  h3 {
-    font-weight: bold;
-    padding: $padding-default;
+  h3,
+  h4 {
+    color: $text-primary;
   }
 
   h1 {
-    font-size: 26px;
+    font-size: 3rem;
     text-transform: capitalize;
     margin-bottom: $padding-default;
-  }
-
-  h2 {
-    color: $color-textfade;
-    font-size: 22px; // TODO Centralize these sizes across all pages
-    padding-bottom: $padding-xlarge;
-  }
-
-  p {
-    color: $color-textfade;
-    padding: $padding-default;
-  }
-
-  header {
-    p {
-      font-size: 13px;
+    @include r_max($break-tablet-s) {
+      font-size: 2rem;
     }
   }
 
+  h2 {
+    font-size: 2rem;
+    padding-bottom: $general-spacing-lg;
+    @include r_max($break-tablet-s) {
+      font-size: 26px;
+    }
+  }
+
+  .service--program--details {
+    font-family: "Montserrat";
+    font-size: 18px;
+    @include r_max($break-tablet-s) {
+      font-size: 16px;
+    }
+  }
+
+  p {
+    padding-left: $spacing-0;
+    line-height: 150%;
+  }
+
+  a {
+    color: $link-blue-default;
+
+    &:hover {
+      color: $link-blue-hover;
+    }
+  }
+
+  p,
+  a,
+  table {
+    @include r_max($break-tablet-s) {
+      font-size: 14px;
+      line-height: 125%;
+    }
+  }
+
+  // TODO: Make reusable InfoTable and Section components rather than general edits
   section {
     border-bottom: 1px solid #eee;
-    padding: $padding-xlarge 0;
+    padding: $general-spacing-xl 0;
+    @include r_max($break-tablet-s) {
+      padding: $general-spacing-lg 0;
+    }
 
     p {
       white-space: pre-line;
     }
-  }
 
-  @include r_max($break-tablet-s) {
-    h2 {
-      padding-bottom: $padding-default;
-      font-size: calc-em(16px);
+    th,
+    td {
+      padding: $general-spacing-s 0;
+
+      p {
+        padding: $spacing-0;
+      }
     }
-    header {
-      padding: 0 0 calc-em(20px) 0;
+
+    th {
+      font-family: "Montserrat";
+      font-size: 18px;
+      width: 150px;
+      padding-right: $general-spacing-lg;
+      @include r_max($break-tablet-s) {
+        width: 100px;
+        font-size: 16px;
+      }
     }
-    section {
-      padding: calc-em(20px) 0;
+
+    .service-loc-hours-section {
+      border: 1px solid $border-lightgray;
+      border-radius: $rounded-md;
+
+      th {
+        font-family: "Inter" !important;
+        font-size: 16px !important;
+      }
+    }
+
+    tr:hover {
+      background-color: inherit;
     }
   }
-}
-
-.service--program--details {
-  padding: $padding-default;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// MAP STYLES
-
-.map {
-  @include r_max($break-tablet-s) {
-    margin-top: calc-em(10px);
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG MAIN INFO
+// SERVICE MAIN INFO
 
 .listing--main {
   width: 100%;
-  max-width: calc-em(1000px);
-  padding: calc-em(20px);
-  margin: calc-em(34px) auto 0;
+  margin: auto;
   display: flex;
+  justify-content: center;
+
   &--left {
-    width: calc-em(660px);
+    width: calc-em(672px);
     padding-right: $padding-large;
     position: relative;
     display: flex;
@@ -101,56 +143,58 @@
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG HEADER
+.listing--aside {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 1rem;
+  width: fit-content;
 
-.certified {
-  float: right;
-  height: 36px;
-  margin-right: $padding-default;
-
-  &:after {
-    clear: both;
+  @include r_max($break-tablet-s) {
+    display: none;
   }
 }
 
-.listing--main--header {
-  &--title {
-    @extend %font-size-x-large;
-    color: #333333;
-    font-weight: 600;
+.rendered-markdown {
+  strong {
+    font-weight: bold;
   }
-  &--rating {
-    margin-top: calc-em(10px);
+
+  em {
+    font-style: italic;
   }
-  &--hours {
-    margin-top: calc-em(10px);
-    color: #888888;
-  }
-  &--phone {
-    margin-top: calc-em(5px);
-    color: #888888;
-  }
-  &--description {
-    margin-top: calc-em(20px);
-    border-top: 1px solid #dddddd;
-    padding-top: calc-em(20px);
-    header {
-      @extend %font-size-large;
-      font-weight: 600;
-      color: #888888;
+
+  ul {
+    padding: 16px 26px;
+
+    li {
+      list-style-type: disc;
     }
-    p {
-      white-space: pre-line;
-      padding-right: 6px;
-      margin-top: calc-em(10px);
+  }
+
+  ol {
+    padding: 16px 26px;
+
+    li {
+      list-style-type: decimal;
     }
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// MAP STYLES
+
+.map {
+  @include r_max($break-tablet-s) {
+    margin-top: calc-em(10px);
   }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG SERVICES
 
+// NOT APPLICABLE TO SERVICE LISTING PAGE, REMOVE AFTER CREATING ORG PAGE SCSS
 .service--section {
   margin-top: calc-em(20px);
   &--header {
@@ -234,13 +278,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG INFO
 
+// SAME AS ABOVE
 .info--section {
   margin-top: calc-em(50px);
   .info {
     margin-top: calc-em(30px);
     display: flex;
     width: calc-em(600px);
-    flew-wrap: wrap;
+    flex-wrap: wrap;
     &--column {
       width: 50%;
       @include r_max($break-tablet-s) {
@@ -270,43 +315,4 @@
 .relativeTime {
   padding: $padding-default;
   font-weight: bold;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-// ORG ASIDE
-
-.listing--aside {
-  max-height: 100vh;
-  padding: 0 0 0 1.875rem;
-  width: 100%;
-  max-width: 15rem;
-  @include r_max($break-tablet-s) {
-    display: none;
-  }
-}
-
-.rendered-markdown {
-  strong {
-    font-weight: bold;
-  }
-
-  em {
-    font-style: italic;
-  }
-
-  ul {
-    padding: 16px 26px;
-
-    li {
-      list-style-type: disc;
-    }
-  }
-
-  ol {
-    padding: 16px 26px;
-
-    li {
-      list-style-type: decimal;
-    }
-  }
 }

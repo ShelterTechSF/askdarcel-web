@@ -150,3 +150,10 @@ select {
     border-radius: $rounded-md;
   }
 }
+
+// Hide from print view
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
