@@ -30,6 +30,8 @@ import { ServiceDiscoveryResults } from "pages/ServiceDiscoveryResults";
 import { LoginPage } from "pages/Auth/LoginPage";
 import { SignUpPage } from "pages/Auth/SignUpPage";
 import { LogoutPage } from "pages/Auth/LogoutPage";
+import { SecondaryNavigationLayout } from "components/layouts/SecondaryNavigationLayout";
+import { BackNavigation } from "components/layouts/BackNavigation";
 
 const { homePageComponent } = whiteLabel;
 
@@ -65,7 +67,13 @@ export const Router = ({
       <Route
         exact
         path="/organizations/:id"
-        component={OrganizationListingPage}
+        component={() => (
+          <SecondaryNavigationLayout
+            navigationChildren={<BackNavigation defaultReturnTo="/search" />}
+          >
+            <OrganizationListingPage />
+          </SecondaryNavigationLayout>
+        )}
       />
       <Route
         exact
