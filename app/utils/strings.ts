@@ -6,5 +6,5 @@
  */
 export function removeAsterisksAndHashes(input: string): string {
   // Remove all asterisks and hash symbols
-  return input.replace(/[#]/g, "");
+  return input.replace(/[*#]/g, "");
 }

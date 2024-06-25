@@ -174,7 +174,15 @@ export const ServiceListingPage = () => {
                 {resource.services
                   .filter((srv) => srv.id !== service.id)
                   .map((srv) => (
-                    <ServiceCard service={srv} key={srv.id} />
+                    <ServiceCard
+                      service={{
+                        ...srv,
+                        long_description: removeAsterisksAndHashes(
+                          srv.long_description
+                        ),
+                      }}
+                      key={srv.id}
+                    />
                   ))}
               </ServiceListingSection>
             )}

@@ -150,10 +150,10 @@ small {
 }
 
 a {
-  color: $color-brand;
+  color: $text-link;
   cursor: pointer;
   &:hover {
-    color: $color-brand-dark;
+    color: $text-link-hover;
     text-decoration: underline;
   }
   @include transition(all 0.2s);

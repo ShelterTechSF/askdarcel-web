@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
+import { removeAsterisksAndHashes } from "utils/strings";
 import { Notes } from "./Notes";
 import { Service, RecurringSchedule } from "../../models";
 
@@ -27,7 +28,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
       </h2>
       <ReactMarkdown
         className="rendered-markdown service--description"
-        source={service.long_description}
+        source={removeAsterisksAndHashes(service.long_description)}
       />
       <div
         className="service--details-toggle"

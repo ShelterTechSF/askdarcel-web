@@ -202,6 +202,7 @@ const SearchResult = ({
             <div className={`notranslate ${styles.address}`}>
               {renderAddressMetadata(hit)}
             </div>
+            {/* Once we can update all dependencies, we can add remarkBreaks as remarkPlugin here */}
             <ReactMarkdown
               className={`rendered-markdown ${styles.description}`}
               source={
