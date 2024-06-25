@@ -14,6 +14,7 @@ import ResultsPagination from "components/search/Pagination/ResultsPagination";
 // import { TextListing } from "components/Texting/Texting";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import styles from "./SearchResults.module.scss";
+import ClearSearchButton from "../Refinements/ClearSearchButton";
 
 // NOTE: We will re-implement the texting feature so leaving these comments in the project until then
 
@@ -22,11 +23,13 @@ const SearchResults = ({
   overlayMapWithSearchResults,
   setAroundLatLng,
   categoryId,
+  searchQuery,
 }: {
   searchResults: SearchResultsProps;
   overlayMapWithSearchResults: boolean;
   setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   categoryId?: string;
+  searchQuery?: string | null;
 }) => {
   const category = CATEGORIES.find((c) => c.id === categoryId);
   const sortBy24HourAvailability = Boolean(category?.sortBy24HourAvailability);
@@ -53,6 +56,9 @@ const SearchResults = ({
 
   if (!searchResults) return null;
 
+  const currentPage = searchResults.page ?? 0;
+  const hitsPerPage = searchResults.hitsPerPage ?? 20;
+
   return (
     <div className={styles.searchResultsAndMapContainer}>
       <div
@@ -60,23 +66,41 @@ const SearchResults = ({
           overlayMapWithSearchResults ? styles.overlayMapWithSearchResults : ""
         }`}
       >
-        <div
-          className={`${styles.noResultsMessage} ${
-            hits && hits.length ? styles.hidden : ""
-          }`}
-        >
-          No results found in your area. Try a different location, category, or
-          search term.
-        </div>
-        {hits.map((hit, index) => (
-          <SearchResult
-            hit={hit}
-            index={index}
-            // categoryId={categoryId} // Keep for category ticket
-            key={hit.id}
-          />
-        ))}
-        <ResultsPagination noResults={!hits || !hits.length} />
+        {!hits.length ? (
+          <div
+            className={`${styles.noResultsMessage} ${
+              hits && hits.length ? styles.hidden : ""
+            }`}
+          >
+            <div className={styles.noResultsText}>
+              No results {searchQuery && `for ${` "${searchQuery}" `}`} found in
+              your area.
+              <br /> Try a different location, filter, or search term.
+            </div>
+
+            {searchQuery && <ClearSearchButton />}
+          </div>
+        ) : (
+          <>
+            {searchQuery && (
+              <div className={styles.searchResultsHeader}>
+                <h2>{`${searchResults.nbHits} search results ${
+                  searchQuery && ` for ${searchQuery}`
+                }`}</h2>
+                <ClearSearchButton />
+              </div>
+            )}
+            {hits.map((hit, index) => (
+              <SearchResult
+                hit={hit}
+                index={currentPage * hitsPerPage + index + 1}
+                // categoryId={categoryId} // Keep for category ticket
+                key={`${hit.id} - ${hit.name}`}
+              />
+            ))}
+            <ResultsPagination noResults={!hits || !hits.length} />
+          </>
+        )}
       </div>
       <SearchMap
         hits={hits}
@@ -154,7 +178,7 @@ const SearchResult = ({
       <div className={styles.searchResultContentContainer}>
         <div>
           <h2 className={styles.title}>
-            {index + 1}.{" "}
+            {index}.{" "}
             <Link
               to={{ pathname: `/${basePath}/${hit.id}` }}
               className={`notranslate ${styles.titleLink}`}

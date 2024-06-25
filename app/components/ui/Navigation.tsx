@@ -153,13 +153,18 @@ const SiteSearch = ({
   setQuery: (q: string) => void;
 }) => {
   const history = useHistory();
+
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
+    const searchState = qs.parse(window.location.search.slice(1));
+
     if (query) {
-      const searchState = qs.parse(window.location.search.slice(1));
       searchState.query = query;
-      history.push(`/search?${qs.stringify(searchState)}`);
+    } else {
+      delete searchState.query;
     }
+
+    history.push(`/search?${qs.stringify(searchState)}`);
     return false;
   };
 
@@ -186,3 +191,5 @@ const SiteSearch = ({
     </form>
   );
 };
+
+export default SiteSearch;

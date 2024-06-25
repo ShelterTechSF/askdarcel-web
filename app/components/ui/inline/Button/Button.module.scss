@@ -91,6 +91,8 @@
 
   &--linkBlue {
     padding: $spacing-0;
+    border-bottom: 1px solid transparent;
+
     border-radius: $rounded-none;
     color: $link-blue-default;
 
@@ -107,6 +109,7 @@
 
   &--linkWhite {
     padding: $spacing-0;
+    border-bottom: 1px solid transparent;
     border-radius: $rounded-none;
     color: $white;
 

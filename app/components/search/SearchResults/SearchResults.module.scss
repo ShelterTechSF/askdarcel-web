@@ -47,6 +47,10 @@
   &.hidden {
     display: none;
   }
+
+  .noResultsText {
+    margin-bottom: $general-spacing-md;
+  }
 }
 
 :global(.results-map) {
@@ -56,6 +60,32 @@
 .searchResultsTopShadow {
   @media screen and (max-width: $break-tablet-s) {
     box-shadow: 0 0 20px rgb(0 0 0 / 55%);
+  }
+}
+
+.searchResultsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    padding: $general-spacing-md;
+    gap: $general-spacing-xs;
+
+    h2 {
+      font-size: 18px;
+    }
+
+    a {
+      margin: auto;
+    }
   }
 }
 

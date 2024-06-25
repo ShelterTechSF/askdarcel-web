@@ -54,12 +54,14 @@ export const SearchMap = ({
           <Button
             addClass="searchAreaButton"
             styleType="transparent"
+            variant="primary"
             onClick={() => {
               const center = mapObject?.getCenter() || null;
               if (center?.lat() && center?.lng()) {
                 setAroundLatLng({ lat: center.lat(), lng: center.lng() });
               }
             }}
+            mobileFullWidth={false}
           >
             <>
               <img src={icon("search")} alt="search" />
