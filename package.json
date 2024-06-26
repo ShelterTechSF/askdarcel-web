@@ -41,6 +41,7 @@
     "react-router-dom": "^5.1.2",
     "react-select": "^1.0.0-rc.5",
     "react-tippy": "^1.2.2",
+    "swr": "^2.2.5",
     "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {

@@ -40,6 +40,8 @@ const environmentConfig = [
   "SANITY_PERSPECTIVE",
   "SANITY_WITH_CREDENTIALS",
   "SANITY_API_TOKEN",
+  "STRAPI_API_TOKEN",
+  "STRAPI_API_URL",
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
