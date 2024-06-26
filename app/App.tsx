@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { GeoCoordinates, getLocation, whiteLabel, AppProvider } from "./utils";
 import {
   Banner,
+  BookmarksMenu,
   HamburgerMenu,
   Navigation,
   PopUpMessage,
@@ -35,6 +36,7 @@ const pageWrapId = "page-wrap";
 export const App = () => {
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [bookmarksMenuOpen, setbookmarksMenuOpen] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({
     message: "",
     visible: false,
@@ -68,7 +70,10 @@ export const App = () => {
 
   return (
     <div id={outerContainerId} className={styles.outerContainer}>
-      <AppProvider userLocation={userLocation}>
+      <AppProvider
+        userLocation={userLocation}
+        setBookmarksMenuOpen={setbookmarksMenuOpen}
+      >
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
@@ -96,6 +101,13 @@ export const App = () => {
           onStateChange={(s) => setHamburgerOpen(s.isOpen)}
           pageWrapId={pageWrapId}
           toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
+        />
+        <BookmarksMenu
+          isOpen={bookmarksMenuOpen}
+          outerContainerId={outerContainerId}
+          onStateChange={(s) => setbookmarksMenuOpen(s.isOpen)}
+          pageWrapId={pageWrapId}
+          toggleBookmarksMenu={() => setbookmarksMenuOpen(!bookmarksMenuOpen)}
         />
         <div id={pageWrapId}>
           <Navigation
