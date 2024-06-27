@@ -49,7 +49,11 @@ export const Router = ({
 
   return (
     <Switch>
-      <Route exact path="/" component={homePage} />
+      <Route
+        exact
+        path="/"
+        component={authState ? NavigatorDashboard : homePage}
+      />
       <Route exact path="/about" component={AboutPage} />
       <Route exact path="/auth" component={AuthInterstitial} />
       <Route exact path="/demo/listing" component={ListingDebugPage} />
@@ -100,12 +104,6 @@ export const Router = ({
         exact
         path="/breaking-news/edit"
         component={EditBreakingNewsPage}
-      />
-      <ProtectedRoute
-        exact
-        isAuthenticated={!!authState}
-        path="/navigator-dashboard"
-        component={NavigatorDashboard}
       />
       <PublicRoute
         exact
