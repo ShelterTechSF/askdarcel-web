@@ -26,8 +26,7 @@ import MetaImage from "./assets/img/sfsg-preview.png";
 
 import styles from "./App.module.scss";
 
-const { intercom, showBanner, showSearch, siteUrl, title, userWay } =
-  whiteLabel;
+const { intercom, showBanner, siteUrl, title, userWay } = whiteLabel;
 const outerContainerId = "outer-container";
 const pageWrapId = "page-wrap";
 
@@ -99,7 +98,6 @@ export const App = () => {
         </span>
         <div id={pageWrapId}>
           <Navigation
-            showSearch={showSearch}
             toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
           />
           {showBanner && <Banner />}
