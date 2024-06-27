@@ -19,8 +19,13 @@ export interface UserSignUpData {
 }
 
 export type AuthState = {
+  /** Fields that come from the identity provider (Auth0). */
   user: {
-    id: string;
+    /** The Auth0 user ID, as opposed the ID in our own API.
+     *
+     * This is contained in the Auth0 JWT as the `sub` (subject) field.
+     */
+    externalId: string;
     email: string;
   };
   accessTokenObject: {
@@ -94,7 +99,7 @@ export const AppProvider = ({
       SessionCacher.clearUserSignUpData();
       AuthService.saveUser(
         newUserData,
-        authState.user.id,
+        authState.user.externalId,
         authState.accessTokenObject.token
       );
     }

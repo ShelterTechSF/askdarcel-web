@@ -43,7 +43,7 @@ export const initializeUserSession = (
         const authObject = {
           user: {
             email: idTokenPayload.email,
-            id: idTokenPayload.sub,
+            externalId: idTokenPayload.sub,
           },
           accessTokenObject: {
             token: accessToken,
