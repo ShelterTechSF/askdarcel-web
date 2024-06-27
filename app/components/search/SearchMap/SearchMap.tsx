@@ -55,6 +55,8 @@ export const SearchMap = ({
             addClass="searchAreaButton"
             styleType="transparent"
             variant="primary"
+            iconName="fas fa-search"
+            iconVariant="before"
             onClick={() => {
               const center = mapObject?.getCenter() || null;
               if (center?.lat() && center?.lng()) {
@@ -63,10 +65,7 @@ export const SearchMap = ({
             }}
             mobileFullWidth={false}
           >
-            <>
-              <img src={icon("search")} alt="search" />
-              <span>Search this area</span>
-            </>
+            <span>Search this area</span>
           </Button>
         )}
         <GoogleMap
