@@ -1,7 +1,7 @@
 import imageUrlBuilder from "@sanity/image-url";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
 import * as Sentry from "@sentry/browser";
-import { Footer } from "components/ui";
+import { Footer, Loader } from "components/ui";
 import Hero from "components/ui/Hero/Hero";
 import {
   CategorySection,
@@ -73,7 +73,7 @@ export const HomePage = () => {
   }, []);
 
   if (homePageData === null) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const {

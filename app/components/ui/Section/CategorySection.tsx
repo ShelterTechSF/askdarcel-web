@@ -2,6 +2,7 @@ import { HomePageSection } from "pages/HomePage/components/Section";
 import React from "react";
 import { CategoryCard } from "../Cards/CategoryCard";
 import styles from "./CategorySection.module.scss";
+import { Loader } from "../Loader";
 
 interface Category {
   icon: {
@@ -33,7 +34,7 @@ export const CategorySection = (props: CategorySectionProps) => {
   const { sectionData } = props;
 
   if (!sectionData) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const { header, subheader, backgroundColor, featuredCategoriesSection } =

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Loader } from "components/ui";
 import { client } from "../../sanity";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
@@ -39,7 +40,7 @@ export const AboutPage = () => {
   }, []);
 
   if (!pageData.pageInitialized) {
-    return <>loading...</>;
+    return <Loader />;
   }
 
   return (
