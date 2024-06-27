@@ -29,7 +29,7 @@ export const AuthInterstitial = () => {
       console.log(
         "Auth state already exists. Redirecting to the nav dashboard"
       );
-      history.push("navigator-dashboard");
+      history.push("/");
       return;
     }
 
@@ -50,7 +50,7 @@ export const AuthInterstitial = () => {
     )
       .then(() => {
         console.log("Session initialized. Redirecting to the nav dashboard!");
-        history.push("navigator-dashboard");
+        history.push("/");
       })
       .catch((err) => {
         console.log(

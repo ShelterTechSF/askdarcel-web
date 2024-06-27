@@ -18,7 +18,7 @@ interface PublicRouteProps extends RouteProps {
 export const PublicRoute = ({
   component: Component,
   isAuthenticated,
-  redirectTo = "/navigator-dashboard",
+  redirectTo = "/",
   ...rest
 }: PublicRouteProps) => {
   return (
