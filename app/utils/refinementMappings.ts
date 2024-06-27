@@ -1,22 +1,26 @@
 export const eligibilitiesMapping = {
   Disability: [
-    "All Disabilities",
     "Developmental Disability",
-    "Physical Disability",
+    "Disabled",
     "Learning Disability",
     "Intellectual Disability",
     "Visual Impairment",
     "Limited Mobility",
     "Deaf or Hard of Hearing",
   ],
-  Families: ["Families", "Families with Babies"],
-  Homeless: ["Homeless"],
+  "Families with children below 18 years old": [
+    "Families with children below 18 years old",
+  ],
+  "Experiencing Homelessness": ["Experiencing Homelessness"],
   Immigrants: ["Immigrants", "Undocumented"],
-  "LGBTQ+": ["LGBTQ+", "LGBTQ", "Transgender and Gender Non-Conforming"], // Todo: "LGBTQ" can be removed from array once LGBTQ eligibility has been switched to LGBTQ+ in DB across all environments
+  "LGBTQ+": ["LGBTQ+", "Transgender and Gender Non-Conforming"],
   "Mental Health/Substance Use": ["Mental Illness", "Substance Dependency"],
   "Re-Entry": ["Re-Entry", "In Jail"],
-  "Seniors (55+ years old)": ["Seniors (55+ years old)"],
-  "Transition Aged Youth": ["Transition Aged Youth", "Teens (13-19 years old)"],
+  "I am a Senior": ["I am a Senior"],
+  "Transitional Aged Youth (TAY)": [
+    "Transitional Aged Youth (TAY)",
+    "Teens (13-18 years old)",
+  ],
   "Trauma Survivors": [
     "Trauma Survivors",
     "Abuse or Neglect Survivors",
@@ -31,6 +35,6 @@ export const categoriesMapping = {
   Employment: ["Employment"],
   "Eviction Prevention": ["Eviction Prevention"],
   "Health & Medical": ["Health & Medical"],
-  Housing: ["Housing"],
+  "Housing & Rental Assistance": ["Housing & Rental Assistance"],
   Legal: ["Legal"],
 };
