@@ -17,6 +17,12 @@ can easily track changes to them. The email templates support variables using
 the Liquid templating language. Documentation on available variables is located
 at https://auth0.com/docs/customize/email/email-templates#common-variables
 
+## Warning
+
+Although email has supported HTML and CSS for decades, email clients have
+terrible support for modern HTML/CSS features, and so you need to write HTML and
+CSS like it's 1999. Yes, this means you should be using tables for layout. Yes,
+this means you should not use SVGs at all.
 
 ## Passwordless Login Email
 
