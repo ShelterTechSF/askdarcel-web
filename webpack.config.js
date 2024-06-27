@@ -124,9 +124,33 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
+        exclude: [/sf-service-email\.png$/],
         type: "asset/resource",
         generator: {
           filename: "[name]-[contenthash][ext]",
+        },
+        use: [
+          {
+            loader: "image-webpack-loader",
+            options: {
+              gifsicle: {
+                interlaced: false,
+              },
+              optipng: {
+                optimizationLevel: 7,
+              },
+              disable: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /sf-service-email\.png$/,
+        type: "asset/resource",
+        generator: {
+          // Do not include content hash so that this has a stable URL
+          // accessible from email templates.
+          filename: "[name][ext]",
         },
         use: [
           {

@@ -11,6 +11,8 @@ import { App } from "./App";
 
 require("instantsearch.css/themes/reset.css");
 require("./styles/main.scss");
+// Force this to be included so that we can reference it from emails.
+require("./assets/img/sf-service-email.png");
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
