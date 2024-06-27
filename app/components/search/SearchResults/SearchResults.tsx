@@ -189,6 +189,7 @@ const SearchResult = ({
   const [clinicianActionsIsOpen, setClinicianActionsIsOpen] = useState(false);
   const [handoutModalIsOpen, setHandoutModalIsOpen] = useState(false);
   const [bookmarkModalIsOpen, setBookmarkModalIsOpen] = useState(false);
+  const [bookmarkAdded, setBookmarkAdded] = useState(false);
 
   type HandoutLanguage = "es" | "tl" | "zh-TW" | "vi" | "ru" | "ar";
   const handoutUrl = (hitId: number, language: HandoutLanguage | null) => {
@@ -218,10 +219,6 @@ const SearchResult = ({
   }
 
   const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
-  // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
-  // returned by the API. Fetching the model from the API will need to be done in such a way that it does not
-  // block the rendering of the search results and yet does not cause the button to flash in a distracting manner
-  const bookmarkAdded = false;
 
   const texting = (
     <div
@@ -486,12 +483,14 @@ const SearchResult = ({
                   }}
                   addClass={styles.bookmarkButton}
                   styleType={bookmarkAdded ? "default" : "transparent"}
+                  disabled={bookmarkAdded}
                 >
                   {bookmarkAdded ? "Bookmark Added" : "Add Bookmark"}
                 </Button>
                 <BookmarkModal
                   isOpen={bookmarkModalIsOpen}
                   setIsOpen={setBookmarkModalIsOpen}
+                  setBookmarkAdded={setBookmarkAdded}
                   hit={hit}
                 />
               </>

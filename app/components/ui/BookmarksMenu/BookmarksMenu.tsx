@@ -1,40 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { slide as Menu, State } from "react-burger-menu";
 import { Link } from "react-router-dom";
 import { icon } from "assets";
+import { getCurrentUser } from "models/User";
+import { getBookmarksForUser, getFoldersForUser } from "models/Bookmark";
+import type { Bookmark } from "models/Bookmark";
+import { useAppContext } from "utils";
+import { fetchOrganization, fetchService } from "models";
 import styles from "./BookmarksMenu.module.scss";
 
-// TODO: These will be passed in to this component and fetched from the API
-// when the API is ready
-const bookmarkFolderData: any[] = [
-  // {
-  //   id: 1,
-  //   name: "Food Kitchen List",
-  //   updatedAt: new Date().toISOString(),
-  //   bookmarks: [
-  //     { id: 1, name: "TL Food Kitchen", url: "search?query=food" },
-  //     { id: 2, name: "Mission Food Kitchen", url: "search?query=food" },
-  //   ],
-  // },
-  // {
-  //   id: 2,
-  //   name: "Dave's Service List",
-  //   updatedAt: "2024-05-16T19:28:48.561Z",
-  //   bookmarks: [
-  //     { id: 11, name: "Dave's Favorite", url: "search?query=shelter" },
-  //     { id: 12, name: "Dave's TL Service", url: "search?query=food" },
-  //   ],
-  // },
-  // {
-  //   id: 3,
-  //   name: "24 Hour Shelters",
-  //   updatedAt: "2024-05-15T21:42:48.561Z",
-  //   bookmarks: [
-  //     { id: 111, name: "24hr SOMA shelter", url: "search?query=shelter" },
-  //     { id: 112, name: "24hr shelter", url: "search?query=food" },
-  //   ],
-  // },
-];
+// These are the file-local shapes of these data structures. The API returns
+// non-nested variants, so it's this file's job to attach bookmarks to folders
+// hierarchically.
+
+interface Folder {
+  id: number;
+  name: string;
+  updatedAt?: string;
+  bookmarks: Bookmark[];
+}
 
 const menuStyles = {
   bmBurgerButton: {
@@ -84,7 +68,37 @@ const BookmarksInnerMenu = ({
   toggleMenu: (open: boolean) => void;
 }) => {
   const [activeFolder, setActiveFolder] = useState<number | null>(null);
-  const [bookmarkFolders] = useState(bookmarkFolderData);
+  const [bookmarkFolders, setBookmarkFolders] = useState<Folder[]>([]);
+  const { authState } = useAppContext();
+
+  useEffect(() => {
+    if (!authState) return;
+    const authToken = authState.accessTokenObject.token;
+    getCurrentUser(authToken).then((user) =>
+      Promise.all([
+        getFoldersForUser(user.id, authToken),
+        getBookmarksForUser(user.id, authToken),
+      ]).then(([folders, bookmarks]) => {
+        const bookmarksByFolderId = new Map<number, Bookmark[]>();
+        bookmarks.bookmarks.forEach((bookmark) => {
+          const folderId = bookmark.folder_id;
+          if (folderId === null)
+            throw new Error("Cannot handle bookmark without folder");
+          if (!bookmarksByFolderId.has(folderId)) {
+            bookmarksByFolderId.set(folderId, []);
+          }
+          bookmarksByFolderId.get(folderId)!.push(bookmark);
+        });
+
+        const transformedFolders = folders.folders.map((f) => ({
+          ...f,
+          bookmarks: bookmarksByFolderId.get(f.id) ?? [],
+        }));
+        setBookmarkFolders(transformedFolders);
+      })
+    );
+  }, [authState]);
+
   const showFolders = () => {
     if (activeFolder !== null) {
       setActiveFolder(null);
@@ -126,15 +140,17 @@ const BookmarksInnerMenu = ({
             setActiveFolder={setActiveFolder}
           />
         ) : (
-          <BookmarksList bookmarks={bookmarkFolders[activeFolder].bookmarks} />
+          <BookmarksList
+            bookmarks={bookmarkFolders[activeFolder].bookmarks}
+            toggleMenu={toggleMenu}
+          />
         )}
       </ul>
     </div>
   );
 };
 
-// TODO fix TS defs once we have data from API
-const FolderItem = ({ folder }: { folder: any }) => (
+const FolderItem = ({ folder }: { folder: Folder }) => (
   <>
     <div className={styles.itemIconBox}>
       <i className={`material-icons ${styles.folderIcon}`}>folder</i>
@@ -144,12 +160,11 @@ const FolderItem = ({ folder }: { folder: any }) => (
   </>
 );
 
-// TODO fix TS defs once we have data from API
 const FoldersList = ({
   folderList,
   setActiveFolder,
 }: {
-  folderList: any[];
+  folderList: Folder[];
   setActiveFolder: (index: number) => void;
 }) => (
   <>
@@ -166,25 +181,64 @@ const FoldersList = ({
   </>
 );
 
-const BookmarkItem = ({ bookmark }: { bookmark: any }) => (
+const BookmarkItem = ({ name }: { name: string }) => (
   <>
     <div className={`${styles.itemIconBox} ${styles.bookmarkIconBox}`}>
       <i className={`material-icons ${styles.bookmarkIcon}`}>star</i>
     </div>
-    <p className={styles.folderName}>{bookmark.name}</p>
+    <p className={styles.folderName}>{name}</p>
   </>
 );
 
-// TODO fix TS defs once we have data from API
-const BookmarksList = ({ bookmarks }: { bookmarks: any[] }) => (
-  <>
-    {bookmarks.map((bookmark) => (
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-      <li key={bookmark.id}>
-        <Link className={styles.bookmarkItem} to={bookmark.url}>
-          <BookmarkItem bookmark={bookmark} />
-        </Link>
-      </li>
-    ))}
-  </>
-);
+const BookmarksList = ({
+  bookmarks,
+  toggleMenu,
+}: {
+  bookmarks: Bookmark[];
+  toggleMenu: (open: boolean) => void;
+}) => {
+  const [bookmarkNames, setBookmarkNames] = useState<string[]>([]);
+
+  // We don't have an easy way of getting the name of a bookmark, so instead we
+  // dynamically fetch the bookmarked resource or service to grab its name.
+  useEffect(() => {
+    Promise.all(
+      bookmarks.map((bookmark) => {
+        if (bookmark.resource_id) {
+          return fetchOrganization(`${bookmark.resource_id}`).then(
+            (org) => org.name
+          );
+        }
+        return fetchService(`${bookmark.service_id}`).then(
+          (service) => service.name
+        );
+      })
+    ).then((names) => setBookmarkNames(names));
+  }, [bookmarks]);
+
+  if (bookmarkNames.length === 0 && bookmarks.length !== 0) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <>
+      {bookmarks.map((bookmark, i) => {
+        const url =
+          bookmark.resource_id === null
+            ? `/services/${bookmark.service_id}`
+            : `/organizations/${bookmark.resource_id}`;
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+        return (
+          <li key={bookmark.id}>
+            <Link
+              className={styles.bookmarkItem}
+              to={url}
+              onClick={() => toggleMenu(false)}
+            >
+              <BookmarkItem name={bookmarkNames[i]} />
+            </Link>
+          </li>
+        );
+      })}
+    </>
+  );
+};
