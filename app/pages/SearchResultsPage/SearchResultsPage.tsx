@@ -13,6 +13,8 @@ import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
 import Sidebar from "components/search/Sidebar/Sidebar";
 import { Header } from "components/search/Header/Header";
+import { createSavedSearch } from "models/SavedSearch";
+import { getCurrentUser } from "models/User";
 import config from "../../config";
 import styles from "./SearchResultsPage.module.scss";
 
@@ -39,7 +41,7 @@ export const SearchResultsPage = () => {
   const [cookies] = useCookies(["googtrans"]);
   const history = useHistory();
   const { search } = useLocation();
-  const { userLocation } = useAppContext();
+  const { authState, userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
   const [expandList, setExpandList] = useState(false);
 
@@ -47,6 +49,7 @@ export const SearchResultsPage = () => {
   const [searchRadius, setSearchRadius] = useState(
     searchState?.configure?.aroundRadius ?? "all"
   );
+  const [searchSaved, setSearchSaved] = useState(false);
 
   // In cases where we translate a query into English, we use this value
   // to represent the user's original, untranslated input. The untranslatedQuery
@@ -98,6 +101,50 @@ export const SearchResultsPage = () => {
     }
   }, [untranslatedQuery, cookies.googtrans]);
 
+  let saveSearch = null;
+  if (authState) {
+    const authToken = authState.accessTokenObject.token;
+    saveSearch = () => {
+      if (!searchState) throw new Error("searchState not expected to be empty");
+
+      // Parse aroundLatLng into separate lat/lng floats.
+      let lat: number | null = null;
+      let lng: number | null = null;
+      const aroundLatLng: string | undefined =
+        searchState.configure?.aroundLatLng;
+      if (aroundLatLng) {
+        const components = aroundLatLng.split(",");
+        if (components.length !== 2)
+          throw new Error(`Unexpected aroundLatLng format: ${aroundLatLng}`);
+        lat = parseFloat(components[0]);
+        lng = parseFloat(components[1]);
+        if (Number.isNaN(lat))
+          throw new Error(`lat parsed to a NaN: ${components[0]}`);
+        if (Number.isNaN(lng))
+          throw new Error(`lng parsed to a NaN: ${components[1]}`);
+      }
+
+      return getCurrentUser(authToken)
+        .then((user) => {
+          return createSavedSearch(
+            {
+              user_id: user.id,
+              name: searchState.query || "",
+              search: {
+                eligibilities: searchState.refinementList.eligibilities ?? [],
+                categories: searchState.refinementList.categories ?? [],
+                lat,
+                lng,
+                query: searchState.query ?? "",
+              },
+            },
+            authToken
+          );
+        })
+        .then(() => setSearchSaved(true));
+    };
+  }
+
   useEffect(() => {
     setSearchState({ ...nonQuerySearchParams, query: translatedQuery });
   }, [translatedQuery, nonQuerySearchParams]);
@@ -122,6 +169,8 @@ export const SearchResultsPage = () => {
       searchRadius={searchRadius}
       setSearchRadius={setSearchRadius}
       untranslatedQuery={untranslatedQuery}
+      searchSaved={searchSaved}
+      saveSearch={saveSearch}
     />
   );
 };
@@ -138,6 +187,8 @@ const InnerSearchResults = ({
   searchRadius,
   setSearchRadius,
   untranslatedQuery,
+  searchSaved,
+  saveSearch,
 }: {
   history: any;
   userLocation: GeoCoordinates;
@@ -149,6 +200,8 @@ const InnerSearchResults = ({
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
+  searchSaved?: boolean;
+  saveSearch?: (() => void) | null;
 }) => {
   const [location, setLocation] = useState({
     lat: userLocation.lat,
@@ -173,6 +226,8 @@ const InnerSearchResults = ({
         resultsTitle={untranslatedQuery ?? ""}
         expandList={expandList}
         setExpandList={setExpandList}
+        searchSaved={searchSaved}
+        saveSearch={saveSearch}
       />
 
       <InstantSearch

@@ -14,11 +14,15 @@ export const Header = ({
   translateResultsTitle = true,
   expandList,
   setExpandList,
+  searchSaved,
+  saveSearch,
 }: {
   resultsTitle: string;
   translateResultsTitle?: boolean;
   expandList: boolean;
   setExpandList: (_expandList: boolean) => void;
+  searchSaved?: boolean;
+  saveSearch?: (() => void) | null;
 }) => {
   const [qrCodeModalOpen, setQrCodeModalOpen] = useState(false);
 
@@ -31,58 +35,69 @@ export const Header = ({
       >
         {resultsTitle}
       </h1>
-      <Button
-        onClick={() => {
-          setQrCodeModalOpen(true);
-        }}
-        addClass={`${styles.qrCodeBtn} ${
-          showHeaderQrCode ? styles.showBtn : ""
-        }`}
-        styleType="transparent"
-      >
-        <>
-          <img src={assetIcon("qr-code")} alt="QR code icon" />
-          <span className={styles.btnText}>Resource List QR Code</span>
-        </>
-      </Button>
-      <Button
-        onClick={() => {
-          window.print();
-        }}
-        addClass={`${styles.printAllBtn} ${
-          showPrintResultsBtn ? styles.showBtn : ""
-        }`}
-        styleType="transparent"
-      >
-        <>
-          <img src={assetIcon("print-blue")} alt="Printer icon" />
-          <span className={styles.btnText}>Print all results</span>
-        </>
-      </Button>
-      <QrCodeModal isOpen={qrCodeModalOpen} setIsOpen={setQrCodeModalOpen} />
-      <div className={styles.mapListToggleContainer}>
-        <button
-          type="button"
-          className={styles.mapListToggleBtn}
-          onClick={() => setExpandList(true)}
+      <div className={styles.headerActions}>
+        <Button
+          onClick={() => {
+            setQrCodeModalOpen(true);
+          }}
+          addClass={`${styles.qrCodeBtn} ${
+            showHeaderQrCode ? styles.showBtn : ""
+          }`}
+          styleType="transparent"
         >
-          <span
-            className={`${styles.listIcon} ${
-              expandList ? styles.activeView : ""
-            }`}
-          />
-        </button>
-        <button
-          type="button"
-          className={styles.mapListToggleBtn}
-          onClick={() => setExpandList(false)}
+          <>
+            <img src={assetIcon("qr-code")} alt="QR code icon" />
+            <span className={styles.btnText}>Resource List QR Code</span>
+          </>
+        </Button>
+        {saveSearch ? (
+          <Button
+            onClick={saveSearch}
+            styleType="transparent"
+            disabled={searchSaved}
+          >
+            {searchSaved ? "Results Saved!" : "Save Results"}
+          </Button>
+        ) : null}
+        <Button
+          onClick={() => {
+            window.print();
+          }}
+          addClass={`${styles.printAllBtn} ${
+            showPrintResultsBtn ? styles.showBtn : ""
+          }`}
+          styleType="transparent"
         >
-          <span
-            className={`${styles.mapIcon} ${
-              !expandList ? styles.activeView : ""
-            }`}
-          />
-        </button>
+          <>
+            <img src={assetIcon("print-blue")} alt="Printer icon" />
+            <span className={styles.btnText}>Print all results</span>
+          </>
+        </Button>
+        <QrCodeModal isOpen={qrCodeModalOpen} setIsOpen={setQrCodeModalOpen} />
+        <div className={styles.mapListToggleContainer}>
+          <button
+            type="button"
+            className={styles.mapListToggleBtn}
+            onClick={() => setExpandList(true)}
+          >
+            <span
+              className={`${styles.listIcon} ${
+                expandList ? styles.activeView : ""
+              }`}
+            />
+          </button>
+          <button
+            type="button"
+            className={styles.mapListToggleBtn}
+            onClick={() => setExpandList(false)}
+          >
+            <span
+              className={`${styles.mapIcon} ${
+                !expandList ? styles.activeView : ""
+              }`}
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

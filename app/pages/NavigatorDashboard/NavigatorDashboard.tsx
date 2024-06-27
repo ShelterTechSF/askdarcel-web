@@ -11,6 +11,7 @@ import { useAppContext } from "utils/useAppContext";
 
 import { Folder, getFoldersForUser } from "models/Bookmark";
 import { getCurrentUser } from "models/User";
+import { SavedSearch, getSavedSearchesForUser } from "models/SavedSearch";
 import styles from "./NavigatorDashboard.module.scss";
 import { CategoryFilters } from "./CategoryFilters/CategoryFilters";
 import type { SelectedCategories } from "./CategoryFilters/CategoryFilters";
@@ -29,9 +30,6 @@ const PARENT_ELIGIBILITIES: { name: string; id: number }[] = [];
 
 // Array containing arrays representing the selected child eligibilites of each parent eligibililty.
 const initialSelectedEligibilities = PARENT_ELIGIBILITIES.map(() => []);
-
-// TODO: Once the API is developed, replace this mock data with actual requested data from the API
-const savedSearches: any[] = [];
 
 const AdvancedSearch = () => {
   const [expandedOptions, setExpandedOptions] = useState(false);
@@ -178,13 +176,21 @@ const AdvancedSearch = () => {
 const BookmarksAndSavedSearches = () => {
   const { setBookmarksMenuOpen, authState } = useAppContext();
   const [bookmarkFolders, setBookmarkFolders] = useState<Folder[]>([]);
+  const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([]);
 
   useEffect(() => {
     if (!authState) return;
     const authToken = authState.accessTokenObject.token;
-    getCurrentUser(authToken)
-      .then((user) => getFoldersForUser(user.id, authToken))
-      .then((resp) => setBookmarkFolders(resp.folders));
+    getCurrentUser(authToken).then((user) => {
+      const folderPromise = getFoldersForUser(user.id, authToken).then((resp) =>
+        setBookmarkFolders(resp.folders)
+      );
+      const savedSearchPromise = getSavedSearchesForUser(
+        user.id,
+        authToken
+      ).then((resp) => setSavedSearches(resp.saved_searches));
+      return Promise.all([folderPromise, savedSearchPromise]);
+    });
   }, [authState]);
 
   return (
@@ -215,15 +221,29 @@ const BookmarksAndSavedSearches = () => {
   );
 };
 
-const SavedSearchCard = ({
-  savedSearch,
-}: {
-  savedSearch: { id: number; description: string; url: string };
-}) => {
+const SavedSearchCard = ({ savedSearch }: { savedSearch: SavedSearch }) => {
+  let aroundLatLng = null;
+  if (savedSearch.search.lat !== null && savedSearch.search.lng !== null) {
+    aroundLatLng = `${savedSearch.search.lat}, ${savedSearch.search.lng}`;
+  }
+
+  // Mimic the search state object that Algolia InstantSearch would create
+  const searchState = {
+    refinementList: {
+      eligibilities: savedSearch.search.eligibilities,
+      categories: savedSearch.search.categories,
+    },
+    configure: {
+      aroundLatLng,
+    },
+    query: savedSearch.search.query,
+  };
+  const params = qs.stringify(searchState);
+
   return (
-    <Link className={styles.cardItem} to={`/search?${savedSearch.url}`}>
+    <Link className={styles.cardItem} to={`/search?${params}`}>
       <img src={SearchIcon} alt="Saved Search Icon" />
-      <p>Results for &quot;{savedSearch.description}&quot;</p>
+      <p>Results for &quot;{savedSearch.name}&quot;</p>
       <button type="button" className={styles.savedSearchEditButton}>
         <span className={`material-icons ${styles.savedSearchEditIcon}`}>
           minimize

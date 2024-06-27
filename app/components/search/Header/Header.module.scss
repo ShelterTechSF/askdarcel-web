@@ -1,7 +1,8 @@
 @import "~styles/utils/_helpers.scss";
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   padding: 15px 35px;
   border-bottom: 1px solid $color-grey3;
   justify-content: space-between;
@@ -12,6 +13,11 @@
   @media screen and (max-width: $break-tablet-s) {
     padding: 14px 14px 5px;
   }
+}
+
+.headerActions {
+  display: flex;
+  gap: 36px;
 }
 
 .title {
