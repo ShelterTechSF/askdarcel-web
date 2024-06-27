@@ -10,7 +10,7 @@
   max-width: 1440px;
   margin: auto;
 
-  @media screen and (max-width: $break-tablet-l) {
+  @media screen and (max-width: $break-desktop-s) {
     flex-direction: column;
   }
 }
