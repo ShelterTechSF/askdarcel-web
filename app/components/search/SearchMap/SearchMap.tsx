@@ -12,7 +12,6 @@ import {
   CustomMarker,
 } from "components/ui/MapElements";
 import "./SearchMap.scss";
-import { icon } from "assets";
 import { SearchHit } from "../../../models";
 import config from "../../../config";
 

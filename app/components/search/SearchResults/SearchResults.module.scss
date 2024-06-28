@@ -26,7 +26,7 @@
 
   @media screen and (max-width: $break-tablet-p) {
     width: 100%;
-    padding-top: $general-spacing-lg;
+    padding-top: $general-spacing-md;
     margin: 0;
     gap: $spacing-0;
     position: relative;
@@ -79,6 +79,8 @@
     margin: auto;
     padding: $general-spacing-md;
     gap: $general-spacing-xs;
+    width: 100%;
+    border-bottom: 1px solid $border-gray;
 
     h2 {
       font-size: 18px;
