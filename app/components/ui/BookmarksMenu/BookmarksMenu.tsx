@@ -58,14 +58,16 @@ export const BookmarksMenu = ({
     itemListElement="div"
     width={450}
   >
-    <BookmarksInnerMenu toggleMenu={toggleBookmarksMenu} />
+    <BookmarksInnerMenu toggleMenu={toggleBookmarksMenu} isOpen={isOpen} />
   </Menu>
 );
 
 const BookmarksInnerMenu = ({
   toggleMenu,
+  isOpen,
 }: {
   toggleMenu: (open: boolean) => void;
+  isOpen: boolean;
 }) => {
   const [activeFolder, setActiveFolder] = useState<number | null>(null);
   const [bookmarkFolders, setBookmarkFolders] = useState<Folder[]>([]);
@@ -73,6 +75,7 @@ const BookmarksInnerMenu = ({
 
   useEffect(() => {
     if (!authState) return;
+    if (!isOpen) return;
     const authToken = authState.accessTokenObject.token;
     getCurrentUser(authToken).then((user) =>
       Promise.all([
@@ -97,7 +100,11 @@ const BookmarksInnerMenu = ({
         setBookmarkFolders(transformedFolders);
       })
     );
-  }, [authState]);
+    // We capture isOpen because we want to refresh this menu every time this
+    // modal is reopened. Otherwise, if you add a bookmark, navigate to the
+    // dashboard, and then open this BookmarkMenu, it will not reflect the newly
+    // added bookmarks.
+  }, [authState, isOpen]);
 
   const showFolders = () => {
     if (activeFolder !== null) {
