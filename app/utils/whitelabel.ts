@@ -43,6 +43,7 @@ interface WhiteLabelSite {
   };
   homePageComponent: homepageComponentEnums;
   intercom: boolean;
+  loginEnabled: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
   refinementListLimit: number;
@@ -105,6 +106,7 @@ services and re-entry programs.`,
   },
   homePageComponent: "HomePage",
   intercom: false,
+  loginEnabled: false,
   logoLinkDestination: "/",
   navLogoStyle: styles.siteNav,
   refinementListLimit: 10,
@@ -169,6 +171,7 @@ const SFServiceGuide: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   intercom: true,
+  loginEnabled: true,
   siteUrl: "https://sfserviceguide.org",
   showBreakingNews: true,
   title: "SF Service Guide",
@@ -195,6 +198,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   },
   ...whiteLabelDefaults,
   intercom: true,
+  loginEnabled: true,
   siteUrl: "https://askdarcel.org",
   showBreakingNews: true,
   title: "SF Service Guide",

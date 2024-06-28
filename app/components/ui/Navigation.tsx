@@ -5,6 +5,7 @@ import qs from "qs";
 import { useAppContext, whiteLabel } from "utils";
 import Translate from "./Translate";
 import styles from "./Navigation.module.scss";
+import navProfileIcon from "./nav-profile-icon.svg";
 
 const {
   appImages: { logoSmall },
@@ -14,6 +15,7 @@ const {
   showReportCrisis,
   siteNavStyle,
   title,
+  loginEnabled,
 } = whiteLabel;
 
 export const Navigation = ({
@@ -94,15 +96,6 @@ const SiteLinks = () => {
 
   return (
     <ul className={styles.navRight}>
-      {/* Todo: This will eventually be replaced by a user icon with a dropdown menu of account related options.
-          The designs are still forthcoming. For now, it serves as a basic log-out functionality for the purposes
-          of development and testing.
-      */}
-      {authState && (
-        <li>
-          <Link to="/log-out">Log Out</Link>
-        </li>
-      )}
       <li>
         <Link to="/about">About</Link>
       </li>
@@ -124,6 +117,19 @@ const SiteLinks = () => {
           Contact Us
         </a>
       </li>
+      {/* Todo: This will eventually be replaced by a user icon with a dropdown menu of account related options.
+          The designs are still forthcoming. For now, it serves as a basic log-out functionality for the purposes
+          of development and testing.
+      */}
+      {loginEnabled && (
+        <li>
+          {authState ? (
+            <ProfileMenu />
+          ) : (
+            <Link to="/log-in">Navigator Log In</Link>
+          )}
+        </li>
+      )}
       {showReportCrisis && (
         <li>
           <a
@@ -140,6 +146,30 @@ const SiteLinks = () => {
       )}
       <Translate />
     </ul>
+  );
+};
+
+const ProfileMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className={styles.profileMenuContainer}>
+      <button
+        className={styles.profileMenuButton}
+        onClick={() => setIsOpen(!isOpen)}
+        type="button"
+      >
+        <img
+          className={styles.profileMenuButtonImage}
+          src={navProfileIcon}
+          alt="Profile menu"
+        />
+      </button>
+      <div className={`${styles.profileMenu} ${isOpen ? styles.isOpen : ""}`}>
+        <Link className={styles.profileMenuItemLink} to="/log-out">
+          Log Out
+        </Link>
+      </div>
+    </div>
   );
 };
 
