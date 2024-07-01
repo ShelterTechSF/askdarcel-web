@@ -176,7 +176,6 @@ const InnerSearchResults = ({
         />
       </Helmet>
       <Header
-        translateResultsTitle={false}
         resultsTitle={untranslatedQuery ?? ""}
         expandList={expandList}
         setExpandList={setExpandList}
