@@ -1,18 +1,18 @@
 @import "~styles/utils/_helpers.scss";
 
 .header {
-  display: flex;
-  padding: 15px 35px;
+  width: 100vw;
   border-bottom: 1px solid $color-grey3;
+  margin-bottom: $general-spacing-lg;
+}
+
+.headerInner {
+  display: flex;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: $general-spacing-md;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $general-spacing-lg;
-  @media screen and (max-width: $break-tablet-l) {
-    padding: 15px 30px;
-  }
-  @media screen and (max-width: $break-tablet-s) {
-    padding: 14px 14px 5px;
-  }
 }
 
 .title {

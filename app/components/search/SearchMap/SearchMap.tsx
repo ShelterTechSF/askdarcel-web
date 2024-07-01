@@ -55,6 +55,7 @@ export const SearchMap = ({
             variant="primary"
             iconName="fas fa-search"
             iconVariant="before"
+            mobileFullWidth={false}
             onClick={() => {
               const center = mapObject?.getCenter() || null;
               if (center?.lat() && center?.lng()) {

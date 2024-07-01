@@ -1,0 +1,44 @@
+@import "~styles/utils/_helpers.scss";
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: Montserrat;
+}
+
+.arrowDown i,
+.arrowUp i {
+  margin-left: 5px;
+}
+
+.dropdownMenu {
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-radius: $rounded-md;
+  top: 50px;
+  min-width: 160px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdownMenu li {
+  font-family: Montserrat;
+  font-weight: 500;
+  padding: $general-spacing-s $general-spacing-md;
+  cursor: pointer;
+}
+
+.dropdownMenu li:hover,
+.dropdownMenu li:focus {
+  background-color: $gray-100;
+}
