@@ -94,7 +94,7 @@ module.exports = {
         "og:image:width": "1200",
         "og:image:height": "630",
       },
-      favicon: "app/assets/img/our-4150-favicon.png",
+      favicon: "app/assets/img/our-415-favicon.png",
     }),
     new ExtendedDefinePlugin({
       CONFIG: config,
