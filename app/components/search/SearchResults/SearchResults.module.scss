@@ -105,6 +105,15 @@
     border: none;
     border-bottom: 1px solid $border-gray;
     flex-direction: column;
+    width: 100vw;
+  }
+}
+
+.searchResultContentContainer {
+  width: 100%;
+  max-width: 584px;
+  @media screen and (max-width: $break-tablet-s) {
+    max-width: 100vw;
   }
 }
 
@@ -115,6 +124,15 @@
 
   @media screen and (max-width: $break-tablet-s) {
     font-size: 18px;
+  }
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: $break-tablet-s) {
+    display: block;
   }
 }
 
@@ -132,16 +150,32 @@
   }
 }
 
-.searchResultContent {
+.searchResultSubcatContainer {
   display: flex;
-  gap: 25px;
-  justify-items: stretch;
+  align-items: flex-start;
+  gap: $general-spacing-xxs;
 
-  @media screen and (max-width: $break-desktop) {
-    gap: 32px;
-    grid-template-columns: none;
-    justify-items: start;
+  @media screen and (max-width: $break-tablet-s) {
+    margin-top: $general-spacing-s;
   }
+}
+
+.searchResultSubcat,
+.searchResultSubcatTooltip {
+  border-radius: $rounded-full;
+  background: $gray-100;
+  display: flex;
+  padding: $general-spacing-xxs $general-spacing-xs;
+  align-items: center;
+  gap: $general-spacing-xxs;
+  line-break: none;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.searchResultSubcatTooltip {
+  cursor: pointer;
 }
 
 .address {
