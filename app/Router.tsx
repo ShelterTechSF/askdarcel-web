@@ -69,7 +69,7 @@ export const Router = ({
         path="/organizations/:id"
         component={() => (
           <SecondaryNavigationLayout
-            navigationChildren={<BackNavigation content="Back" />}
+            navigationChildren={<BackNavigation>Back</BackNavigation>}
           >
             <OrganizationListingPage />
           </SecondaryNavigationLayout>
@@ -92,10 +92,9 @@ export const Router = ({
         component={() => (
           <SecondaryNavigationLayout
             navigationChildren={
-              <BackNavigation
-                defaultReturnTo="/search"
-                content="Back to Services"
-              />
+              <BackNavigation defaultReturnTo="/search">
+                Back to Services
+              </BackNavigation>
             }
           >
             <ServiceListingPage />

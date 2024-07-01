@@ -6,10 +6,10 @@ import { useHistory } from "react-router-dom";
 // Renders a smart back link that handles pages visited directly or from referring page
 export const BackNavigation = ({
   defaultReturnTo,
-  content,
+  children,
 }: {
   defaultReturnTo?: string;
-  content: string;
+  children: string;
 }) => {
   const history = useHistory();
 
@@ -22,7 +22,7 @@ export const BackNavigation = ({
 
   return (
     <Button onClick={backDestination} variant="linkWhite" arrowVariant="before">
-      {content}
+      {children}
     </Button>
   );
 };
