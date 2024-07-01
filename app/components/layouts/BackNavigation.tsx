@@ -6,8 +6,10 @@ import { useHistory } from "react-router-dom";
 // Renders a smart back link that handles pages visited directly or from referring page
 export const BackNavigation = ({
   defaultReturnTo,
+  content,
 }: {
-  defaultReturnTo: string;
+  defaultReturnTo?: string;
+  content: string;
 }) => {
   const history = useHistory();
 
@@ -15,13 +17,13 @@ export const BackNavigation = ({
   // another history library that defines this behavior. Read more:
   // https://github.com/remix-run/history/blob/main/docs/api-reference.md#reference
   const backDestination =
-    history.action === "POP"
+    defaultReturnTo
       ? () => history.push(defaultReturnTo)
       : () => history.goBack();
 
   return (
     <Button onClick={backDestination} variant="linkWhite" arrowVariant="before">
-      Back to Service Listings
+      {content}
     </Button>
   );
 };
