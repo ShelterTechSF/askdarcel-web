@@ -1,7 +1,6 @@
 import BackgroundImage from "../assets/img/bg.png";
 import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
 import Our415Logo from "../assets/img/Our415_logo-hori.svg";
-import SFServiceLogo from "../assets/img/sf-service.svg";
 import UcsfServiceLogo from "../assets/img/ic-dcnav.png";
 import SFSeal from "../assets/img/sf-seal.png";
 import LinkSFLogo from "../assets/img/link-sf.png";
@@ -164,8 +163,8 @@ const SFFamilies: WhiteLabelSite = {
 const SFServiceGuide: WhiteLabelSite = {
   appImages: {
     ...appImageDefaults,
-    logoLarge: SFServiceLogo,
-    logoSmall: SFServiceLogo,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
   intercom: true,
@@ -190,8 +189,8 @@ const LinkSF: WhiteLabelSite = {
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
     ...appImageDefaults,
-    logoLarge: SFServiceLogo,
-    logoSmall: SFServiceLogo,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
   intercom: true,

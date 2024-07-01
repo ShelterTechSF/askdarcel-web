@@ -2,7 +2,7 @@
 
 .container {
   background: $surface-4;
-  padding: $spacing-6 $spacing-8;
+  padding: $spacing-6 $spacing-16;
   color: $text-tertiary;
 
   @media screen and (max-width: $break-tablet-s) {
