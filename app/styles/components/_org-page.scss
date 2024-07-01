@@ -99,6 +99,11 @@
     color: #888888;
   }
   &--description {
+    h2 {
+      font-size: 32px !important;
+      font-weight: 700;
+      color: #333 !important;
+    }
     header {
       @extend %font-size-large;
       font-weight: 600;
