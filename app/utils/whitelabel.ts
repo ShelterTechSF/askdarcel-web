@@ -164,8 +164,8 @@ const SFFamilies: WhiteLabelSite = {
 const SFServiceGuide: WhiteLabelSite = {
   appImages: {
     ...appImageDefaults,
-    logoLarge: SFServiceLogo,
-    logoSmall: SFServiceLogo,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
   intercom: true,
@@ -190,8 +190,8 @@ const LinkSF: WhiteLabelSite = {
 const defaultWhiteLabel: WhiteLabelSite = {
   appImages: {
     ...appImageDefaults,
-    logoLarge: SFServiceLogo,
-    logoSmall: SFServiceLogo,
+    logoLarge: Our415Logo,
+    logoSmall: Our415Logo,
   },
   ...whiteLabelDefaults,
   intercom: true,
