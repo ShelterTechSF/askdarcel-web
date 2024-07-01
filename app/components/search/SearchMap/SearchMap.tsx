@@ -52,7 +52,6 @@ export const SearchMap = ({
         {!overlayMapWithSearchResults && (
           <Button
             addClass="searchAreaButton"
-            styleType="transparent"
             variant="primary"
             iconName="fas fa-search"
             iconVariant="before"
@@ -62,9 +61,8 @@ export const SearchMap = ({
                 setAroundLatLng({ lat: center.lat(), lng: center.lng() });
               }
             }}
-            mobileFullWidth={false}
           >
-            <span>Search this area</span>
+            Search this area
           </Button>
         )}
         <GoogleMap
