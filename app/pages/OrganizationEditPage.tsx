@@ -1829,7 +1829,6 @@ class OrganizationEditPage extends React.Component<Props, State> {
               onChange={this.handleResourceFieldChange}
             />
           </li>
-
           <li key="long_description" className="edit--section--list--item">
             <label htmlFor="edit-description-input">Description</label>
             <textarea

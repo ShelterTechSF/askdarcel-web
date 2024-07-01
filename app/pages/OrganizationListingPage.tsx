@@ -10,9 +10,9 @@ import {
   EmailRenderer,
   MapOfLocations,
   MOHCDBadge,
-  Notes,
+  // Notes,
   PhoneNumberRenderer,
-  RelativeOpeningTime,
+  // RelativeOpeningTime,
   ResourceCategories,
   ServiceList,
   TableOfOpeningTimes,
@@ -85,16 +85,16 @@ export const OrganizationListingPage = () => {
                 </h1>
                 <MOHCDBadge resource={org} />
               </div>
-              <div className="org--main--header--hours">
+              {/* <div className="org--main--header--hours">
                 <RelativeOpeningTime
                   recurringSchedule={org.recurringSchedule}
                 />
-              </div>
-              {org.phones.length > 0 && (
+              </div> */}
+              {/* {org.phones.length > 0 && (
                 <div className="org--main--header--phone">
                   <PhoneNumberRenderer phones={org.phones} />
                 </div>
-              )}
+              )} */}
             </header>
 
             <ActionBarMobile
@@ -103,7 +103,7 @@ export const OrganizationListingPage = () => {
             />
 
             <OrganizationListingSection
-              title="About This Organization"
+              title="About"
               className="org--main--header--description"
               data-cy="org-about-section"
             >
@@ -125,10 +125,10 @@ export const OrganizationListingPage = () => {
               <ServiceList services={org.services} />
             </OrganizationSubheaderSection>
 
-            <Notes notes={org.notes} id="notes" />
+            {/* <Notes notes={org.notes} id="notes" /> */}
 
             <OrganizationSubheaderSection
-              title="Info"
+              title="Contact"
               className="info--section"
               data-cy="org-info-section"
             >
@@ -201,7 +201,7 @@ export const OrganizationSubheaderSection = ({
 }: OrganizationListingSectionProps) => (
   <section {...props}>
     <header className="service--section--header">
-      <h4>{title}</h4>
+      <h2>{title}</h2>
     </header>
     {children}
   </section>
