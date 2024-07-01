@@ -1,5 +1,6 @@
 import { Button } from "components/ui/inline/Button/Button";
 import React from "react";
+import { BackgroundColorVariant } from "models";
 import styles from "./Section.module.scss";
 
 export interface Slug {
@@ -16,7 +17,7 @@ export const HomePageSection = ({
 }: {
   title?: string;
   description?: string;
-  backgroundColor: string;
+  backgroundColor: BackgroundColorVariant;
   children?: React.ReactNode;
   link?: {
     label: string;
