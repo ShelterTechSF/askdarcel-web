@@ -12,7 +12,6 @@ import {
   CustomMarker,
 } from "components/ui/MapElements";
 import "./SearchMap.scss";
-import { icon } from "assets";
 import { SearchHit } from "../../../models";
 import config from "../../../config";
 
@@ -53,20 +52,17 @@ export const SearchMap = ({
         {!overlayMapWithSearchResults && (
           <Button
             addClass="searchAreaButton"
-            styleType="transparent"
             variant="primary"
+            iconName="fas fa-search"
+            iconVariant="before"
             onClick={() => {
               const center = mapObject?.getCenter() || null;
               if (center?.lat() && center?.lng()) {
                 setAroundLatLng({ lat: center.lat(), lng: center.lng() });
               }
             }}
-            mobileFullWidth={false}
           >
-            <>
-              <img src={icon("search")} alt="search" />
-              <span>Search this area</span>
-            </>
+            Search this area
           </Button>
         )}
         <GoogleMap

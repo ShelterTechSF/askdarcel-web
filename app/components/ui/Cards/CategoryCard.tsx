@@ -3,7 +3,7 @@ import styles from "./CategoryCard.module.scss";
 
 interface CategoryCardProps {
   label: string;
-  slug: string;
+  href: string;
   icon: {
     name: string;
     provider: string;
@@ -11,11 +11,11 @@ interface CategoryCardProps {
 }
 
 export const CategoryCard = (props: CategoryCardProps) => {
-  const { label, icon, slug } = props;
+  const { label, icon, href } = props;
   const iconName = `${icon.provider} ${icon.name}`;
 
   return (
-    <a href={`/service-finder${slug}`} className={styles.categoryCard}>
+    <a href={href} className={styles.categoryCard}>
       <span className={`${iconName} ${styles.icon}`} />
       <p className={styles.categoryTitle}>{label}</p>
     </a>

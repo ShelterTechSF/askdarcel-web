@@ -57,8 +57,10 @@
 .navLogo {
   margin-right: calc-em(25px);
   img {
-    height: calc-em(20px);
-    width: auto;
+    // TODO: Temporary logo styling
+    // Remove after header component is finished
+    height: 50px;
+    width: 120px;
   }
   @include navLogoShared;
 }

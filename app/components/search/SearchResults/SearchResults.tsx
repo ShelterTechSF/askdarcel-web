@@ -12,6 +12,7 @@ import { removeAsterisksAndHashes } from "utils/strings";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 // import { Texting } from "components/Texting";
 // import { TextListing } from "components/Texting/Texting";
+import { Tooltip } from "react-tippy";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
@@ -177,25 +178,50 @@ const SearchResult = ({
       /> */}
       <div className={styles.searchResultContentContainer}>
         <div>
-          <h2 className={styles.title}>
-            {index}.{" "}
-            <Link
-              to={{ pathname: `/${basePath}/${hit.id}` }}
-              className={`notranslate ${styles.titleLink}`}
-            >
-              {hit.name}
-            </Link>
-          </h2>
-          {hit.type === "service" && (
-            <div className={styles.serviceOf}>
-              <Link
-                to={`/organizations/${hit.resource_id}`}
-                className={`notranslate ${styles.serviceOfLink}`}
-              >
-                {hit.service_of}
-              </Link>
+          <div className={styles.titleContainer}>
+            <div>
+              <h2 className={styles.title}>
+                {index}.{" "}
+                <Link
+                  to={{ pathname: `/${basePath}/${hit.id}` }}
+                  className={`notranslate ${styles.titleLink}`}
+                >
+                  {hit.name}
+                </Link>
+              </h2>
+              {hit.type === "service" && (
+                <div className={styles.serviceOf}>
+                  <Link
+                    to={`/organizations/${hit.resource_id}`}
+                    className={`notranslate ${styles.serviceOfLink}`}
+                  >
+                    {hit.service_of}
+                  </Link>
+                </div>
+              )}
             </div>
-          )}
+            <div className={styles.searchResultSubcatContainer}>
+              {hit.categories.length > 0 && (
+                <span className={styles.searchResultSubcat}>
+                  {hit.categories[0]}
+                </span>
+              )}
+              {hit.categories.length > 1 && (
+                <Tooltip
+                  title={hit.categories.slice(1).join(", ")}
+                  position="top"
+                  trigger="mouseenter"
+                  delay={100}
+                  animation="none"
+                  arrow
+                >
+                  <span className={styles.searchResultSubcatTooltip}>
+                    +{hit.categories.length - 1}
+                  </span>
+                </Tooltip>
+              )}
+            </div>
+          </div>
         </div>
         <div className={styles.searchResultContent}>
           <div className={styles.searchText}>

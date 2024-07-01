@@ -7,7 +7,7 @@
     "toggle toggle"
     "results map";
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     grid-template-columns: auto;
     grid-template-rows: auto auto;
     grid-template-areas:
@@ -22,16 +22,17 @@
   display: grid;
   gap: $general-spacing-md;
   width: 670px;
+  margin: $spacing-0 $general-spacing-lg;
 
-  @media screen and (min-width: $min-tablet-p) {
-    margin: $spacing-0 $general-spacing-lg;
-  }
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     width: 100%;
-    padding: -$general-spacing-xl $general-spacing-md;
+    padding-top: $general-spacing-md;
+    margin: 0;
     gap: $spacing-0;
     position: relative;
-    top: 0;
+    border-radius: var(--rounded-2xl, 1rem) var(--rounded-2xl, 1rem) 0rem 0rem;
+    top: -30px;
+    z-index: 2;
     background: #fff;
     transition: top 200ms ease-in-out;
     &.overlayMapWithSearchResults {
@@ -72,12 +73,14 @@
     font-size: 20px;
   }
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     flex-direction: column;
     justify-content: center;
     margin: auto;
     padding: $general-spacing-md;
     gap: $general-spacing-xs;
+    width: 100%;
+    border-bottom: 1px solid $border-gray;
 
     h2 {
       font-size: 18px;
@@ -97,11 +100,20 @@
   justify-content: space-between;
   gap: $general-spacing-md;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     border-radius: 0;
     border: none;
-    border-top: 1px solid $border-gray;
+    border-bottom: 1px solid $border-gray;
     flex-direction: column;
+    width: 100vw;
+  }
+}
+
+.searchResultContentContainer {
+  width: 100%;
+  max-width: 584px;
+  @media screen and (max-width: $break-tablet-s) {
+    max-width: 100vw;
   }
 }
 
@@ -112,6 +124,15 @@
 
   @media screen and (max-width: $break-tablet-s) {
     font-size: 18px;
+  }
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: $break-tablet-s) {
+    display: block;
   }
 }
 
@@ -129,16 +150,32 @@
   }
 }
 
-.searchResultContent {
+.searchResultSubcatContainer {
   display: flex;
-  gap: 25px;
-  justify-items: stretch;
+  align-items: flex-start;
+  gap: $general-spacing-xxs;
 
-  @media screen and (max-width: $break-desktop) {
-    gap: 32px;
-    grid-template-columns: none;
-    justify-items: start;
+  @media screen and (max-width: $break-tablet-s) {
+    margin-top: $general-spacing-s;
   }
+}
+
+.searchResultSubcat,
+.searchResultSubcatTooltip {
+  border-radius: $rounded-full;
+  background: $gray-100;
+  display: flex;
+  padding: $general-spacing-xxs $general-spacing-xs;
+  align-items: center;
+  gap: $general-spacing-xxs;
+  line-break: none;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.searchResultSubcatTooltip {
+  cursor: pointer;
 }
 
 .address {

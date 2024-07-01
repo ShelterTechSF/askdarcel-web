@@ -1,5 +1,4 @@
-@import "../utils/_colors.scss";
-@import "../utils/_layoututils.scss";
+@import "../utils/helpers";
 
 .ReactModal__Body--open {
   position: fixed;
@@ -70,22 +69,7 @@ pre {
 }
 
 .tippy-tooltip {
-  padding: 0;
-
-  &:hover {
-    .arrow-regular {
-      background: #eee;
-    }
-  }
-
-  .card {
-    border: 0;
-    text-align: left;
-  }
-}
-
-.tippy-tooltip {
-  padding: 0;
+  padding: $general-spacing-xs;
 
   &:hover {
     .arrow-regular {
