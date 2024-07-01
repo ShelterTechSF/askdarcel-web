@@ -31,26 +31,26 @@ export const CustomMarker = ({
   lat?: any;
   lng?: any;
 }) => (
-  <svg width="30" height="50" viewBox="0 0 102 60" className="marker">
+  <svg width="36" height="50" viewBox="0 0 110 85" className="marker">
     <g fill="none" fillRule="evenodd">
       <g
-        transform="translate(-60, 0)"
-        stroke="#8962B2"
+        transform="translate(-58, 0)"
+        stroke="#000"
         id="pin"
         viewBox="0 0 100 100"
       >
         <path
-          d="M157.39 34.315c0 18.546-33.825 83.958-33.825 83.958S89.74 52.86 89.74 34.315C89.74 15.768 104.885.73 123.565.73c18.68 0 33.825 15.038 33.825 33.585z"
-          strokeWidth="5.53"
-          fill="#E6D2FC"
+          d="M160.39 34.315c0 18.546-36.825 83.958-36.825 83.958S86.74 52.86 86.74 34.315C86.74 15.768 104.885.73 123.565.73c18.68 0 36.825 15.038 36.825 33.585z"
+          strokeWidth="3"
+          fill="#fff"
         />
       </g>
       <text
-        fontSize="45px"
+        fontSize="28px"
+        fontWeight="bold"
         x="65"
         y="55"
-        fill="#276ce5"
-        fontWeight="bold"
+        fill="#000"
         textAnchor="middle"
       >
         {text}
@@ -58,4 +58,5 @@ export const CustomMarker = ({
     </g>
   </svg>
 );
+
 /* eslint-enable react/no-unused-prop-types */

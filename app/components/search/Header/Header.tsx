@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import whiteLabel from "utils/whitelabel";
-import { Button } from "components/ui/inline/Button/Button";
 import { icon as assetIcon } from "assets";
+import { Button } from "components/ui/inline/Button/Button";
 import { QrCodeModal } from "components/ui/QrCodeModal/QrCodeModal";
+import whiteLabel from "utils/whitelabel";
 
 import styles from "./Header.module.scss";
 
@@ -46,18 +46,18 @@ export const Header = ({
         </>
       </Button>
       <Button
+        iconName="fas fa-print"
+        iconVariant="before"
+        variant="secondary"
+        size="lg"
         onClick={() => {
           window.print();
         }}
         addClass={`${styles.printAllBtn} ${
           showPrintResultsBtn ? styles.showBtn : ""
         }`}
-        styleType="transparent"
       >
-        <>
-          <img src={assetIcon("print-blue")} alt="Printer icon" />
-          <span className={styles.btnText}>Print all results</span>
-        </>
+        Print all results
       </Button>
       <QrCodeModal isOpen={qrCodeModalOpen} setIsOpen={setQrCodeModalOpen} />
       <div className={styles.mapListToggleContainer}>

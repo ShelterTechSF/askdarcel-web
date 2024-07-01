@@ -7,13 +7,17 @@
 .results-map {
   position: sticky;
   width: 100%;
-  height: calc(100vh - $header-height);
+  min-width: 300px;
+  height: 50rem;
   top: $header-height;
-  margin-left: auto;
+
+  @media screen and (max-width: $break-tablet-p) {
+    height: 25rem;
+  }
+
   @media screen and (max-width: $break-tablet-s) {
     position: relative;
     top: 0;
-    height: 50vh;
     min-height: 250px;
   }
 }
@@ -25,10 +29,6 @@
 .marker {
   transform: translateY(-50%);
   position: absolute;
-  height: 55px;
-  width: 30px;
-  top: -27px;
-  left: -15px;
   cursor: pointer;
 }
 
@@ -49,17 +49,4 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  img {
-    width: 17px;
-    height: auto;
-  }
-  @media screen and (max-width: $break-tablet-s) {
-    gap: 7px;
-    img {
-      width: 15px;
-    }
-  }
 }

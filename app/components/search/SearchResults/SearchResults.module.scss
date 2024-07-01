@@ -7,7 +7,7 @@
     "toggle toggle"
     "results map";
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     grid-template-columns: auto;
     grid-template-rows: auto auto;
     grid-template-areas:
@@ -22,16 +22,17 @@
   display: grid;
   gap: $general-spacing-md;
   width: 670px;
+  margin: $spacing-0 $general-spacing-lg;
 
-  @media screen and (min-width: $min-tablet-p) {
-    margin: $spacing-0 $general-spacing-lg;
-  }
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     width: 100%;
-    padding: -$general-spacing-xl $general-spacing-md;
+    padding-top: $general-spacing-md;
+    margin: 0;
     gap: $spacing-0;
     position: relative;
-    top: 0;
+    border-radius: var(--rounded-2xl, 1rem) var(--rounded-2xl, 1rem) 0rem 0rem;
+    top: -30px;
+    z-index: 2;
     background: #fff;
     transition: top 200ms ease-in-out;
     &.overlayMapWithSearchResults {
@@ -72,12 +73,14 @@
     font-size: 20px;
   }
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     flex-direction: column;
     justify-content: center;
     margin: auto;
     padding: $general-spacing-md;
     gap: $general-spacing-xs;
+    width: 100%;
+    border-bottom: 1px solid $border-gray;
 
     h2 {
       font-size: 18px;
@@ -97,10 +100,10 @@
   justify-content: space-between;
   gap: $general-spacing-md;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     border-radius: 0;
     border: none;
-    border-top: 1px solid $border-gray;
+    border-bottom: 1px solid $border-gray;
     flex-direction: column;
   }
 }
