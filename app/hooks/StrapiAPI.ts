@@ -33,11 +33,15 @@ function useStrapiHook<T>(path: string): SWRHookResult<T> {
 }
 
 export function useFooterData() {
-  return useStrapiHook<StrapiApi.FooterResponse>("footer?populate[links][populate]=*");
+  return useStrapiHook<StrapiApi.FooterResponse>(
+    "footer?populate[links][populate]=*"
+  );
 }
 
 export function useNavigationData() {
-  return useStrapiHook<StrapiApi.HeaderResponse>("header?populate[logo]=*&populate[navigation][populate]=*");
+  return useStrapiHook<StrapiApi.HeaderResponse>(
+    "header?populate[logo]=*&populate[navigation][populate]=*"
+  );
 }
 
 export namespace StrapiApi {
@@ -79,7 +83,7 @@ export namespace StrapiApi {
       };
     };
     navigation: NavigationMenuResponse[];
-  };
+  }
 
   export interface ImageFormatResponse {
     ext: string;
