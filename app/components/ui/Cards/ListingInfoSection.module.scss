@@ -1,0 +1,30 @@
+@import "~styles/utils/_helpers.scss";
+
+.listingInfoSection {
+  padding: $general-spacing-xl 0;
+  display: flex;
+  flex-direction: column;
+
+  @include r_max($break-tablet-s) {
+    padding: $general-spacing-lg 0;
+  }
+
+  p {
+    white-space: pre-line;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: $text-primary; // is this the right color?
+    margin-bottom: $general-spacing-lg;
+
+    @include r_max($break-tablet-s) {
+      font-size: 26px;
+    }
+  }
+
+  &.borderBottom {
+    border-bottom: 1px solid $border-lightgray;
+  }
+}

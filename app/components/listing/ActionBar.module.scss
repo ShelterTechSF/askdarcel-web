@@ -5,7 +5,6 @@
   @include r_max($break-tablet-s) {
     display: flex;
     gap: $general-spacing-s;
-    padding: $general-spacing-xl $spacing-0 $general-spacing-xs;
   }
   &--listitem {
     list-style-type: none;

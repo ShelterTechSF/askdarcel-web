@@ -10,6 +10,10 @@
   @include r_max($break-tablet-s) {
     padding: $section-padding-mobile-vertical $general-spacing-md;
   }
+
+  header {
+    margin-bottom: $general-spacing-lg;
+  }
 }
 
 .listing {
@@ -23,19 +27,12 @@
   }
 
   h1 {
+    // font-family: Montserrat;
     font-size: 3rem;
     text-transform: capitalize;
     margin-bottom: $padding-default;
     @include r_max($break-tablet-s) {
       font-size: 2rem;
-    }
-  }
-
-  h2 {
-    font-size: 2rem;
-    padding-bottom: $general-spacing-lg;
-    @include r_max($break-tablet-s) {
-      font-size: 26px;
     }
   }
 
@@ -69,18 +66,8 @@
     }
   }
 
-  // TODO: Make reusable InfoTable and Section components rather than general edits
+  // TODO: Make reusable InfoTable component rather than global edits
   section {
-    border-bottom: 1px solid #eee;
-    padding: $general-spacing-xl 0;
-    @include r_max($break-tablet-s) {
-      padding: $general-spacing-lg 0;
-    }
-
-    p {
-      white-space: pre-line;
-    }
-
     th,
     td {
       padding: $general-spacing-s 0;
@@ -180,139 +167,4 @@
       list-style-type: decimal;
     }
   }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// MAP STYLES
-
-.map {
-  @include r_max($break-tablet-s) {
-    margin-top: calc-em(10px);
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG SERVICES
-
-// NOT APPLICABLE TO SERVICE LISTING PAGE, REMOVE AFTER CREATING ORG PAGE SCSS
-.service--section {
-  margin-top: calc-em(20px);
-  &--header {
-    border-bottom: 1px solid #dddddd;
-    h4 {
-      @extend %font-size-medium;
-      display: inline-block;
-      color: #1c72e6;
-      font-weight: bold;
-      padding-bottom: calc-em(10px);
-      border-bottom: 3px solid #1c72e6;
-    }
-  }
-
-  .service {
-    margin-top: calc-em(30px);
-    padding-top: calc-em(30px);
-    border-top: 1px solid #dddddd;
-    &:first-of-type {
-      border-top: 0;
-      margin-top: 0;
-    }
-    &--meta {
-      display: flex;
-      justify-content: space-between;
-      margin-right: calc-em(60px);
-      p {
-        @extend %font-size-small;
-        color: #888888;
-      }
-    }
-    &--header {
-      @extend %font-size-large;
-      font-weight: 600;
-      color: #333333;
-    }
-    &--description {
-      margin-top: calc-em(15px);
-      p {
-        white-space: pre-line;
-        padding-right: 6px;
-        margin-top: calc-em(10px);
-      }
-    }
-    &--details-toggle {
-      margin-top: calc-em(20px);
-      color: #1c72e6;
-      cursor: pointer;
-      i {
-        transform: translateY(2px);
-      }
-    }
-    &--details {
-      margin-top: calc-em(40px);
-      &--item {
-        display: flex;
-        margin-top: calc-em(20px);
-        &:last-of-type {
-          .service--details--item--info {
-            border-bottom: 0;
-          }
-        }
-        header {
-          width: calc-em(130px);
-          margin-right: calc-em(20px);
-          color: #333333;
-          font-weight: 600;
-          flex-grow: 0;
-          flex-shrink: 0;
-        }
-        &--info {
-          flex-grow: 1;
-          border-bottom: 1px solid #dddddd;
-          padding: 0 calc-em(60px) calc-em(20px) 0;
-        }
-      }
-    }
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG INFO
-
-// SAME AS ABOVE
-.info--section {
-  margin-top: calc-em(50px);
-  .info {
-    margin-top: calc-em(30px);
-    display: flex;
-    width: calc-em(600px);
-    flex-wrap: wrap;
-    &--column {
-      width: 50%;
-      @include r_max($break-tablet-s) {
-        width: 100%;
-      }
-      > span {
-        display: block;
-        margin-top: calc-em(10px);
-        &:first-of-type {
-          margin-top: 0;
-        }
-      }
-    }
-  }
-}
-
-.weekly-hours-list {
-  &--item {
-    display: flex;
-    line-height: 1.5;
-    &--day {
-      width: calc-em(130px);
-    }
-  }
-}
-
-.relativeTime {
-  padding: $padding-default;
-  font-weight: bold;
 }

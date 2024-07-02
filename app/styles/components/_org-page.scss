@@ -6,6 +6,14 @@
 .org-container {
   background: $color-grey1;
   padding: 0;
+
+  // temp until listing page layout is created
+  h1 {
+    @include r_max($break-tablet-s) {
+      font-size: 32px;
+      margin-bottom: $general-spacing-md;
+    }
+  }
 }
 
 .org {
@@ -31,16 +39,6 @@
   }
 
   section {
-    border-bottom: 1px solid #eee;
-    padding: $general-spacing-xl 0;
-    @include r_max($break-tablet-s) {
-      padding: $general-spacing-lg 0;
-    }
-
-    p {
-      white-space: pre-line;
-    }
-
     th,
     td {
       padding: $general-spacing-s 0;
@@ -61,32 +59,12 @@
       }
     }
   }
-
-  @include r_max($break-tablet-s) {
-    margin-top: 0;
-    &--left {
-      width: 100%;
-    }
-    section {
-      margin-top: calc-em(20px);
-    }
-  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // ORG HEADER
 
 .org--main--header {
-  &--title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  &--title {
-    @extend %font-size-x-large;
-    color: #333333;
-    font-weight: 600;
-  }
   &--rating {
     margin-top: calc-em(10px);
   }
@@ -98,28 +76,7 @@
     margin-top: calc-em(5px);
     color: #888888;
   }
-  &--description {
-    h2 {
-      font-size: 32px !important;
-      font-weight: 700;
-      color: #333 !important;
-    }
-    header {
-      @extend %font-size-large;
-      font-weight: 600;
-      color: #888888;
-      padding-top: $spacing-0;
-    }
-    p {
-      white-space: pre-line;
-      padding-right: 6px;
-      margin-top: calc-em(10px);
-    }
-    @include r_max($break-tablet-s) {
-      margin-top: 0;
-      padding-bottom: 0;
-    }
-  }
+
   .badges {
     display: flex;
     float: right;
@@ -128,100 +85,6 @@
     .mohcd-funded {
       width: 55px;
       margin: 10px auto;
-    }
-  }
-  @include r_max($break-tablet-s) {
-    padding: 0 0 calc-em(20px) 0;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG SERVICES
-
-.service--section {
-  h2 {
-    font-size: 32px !important;
-    font-weight: 700;
-    color: #333 !important;
-  }
-  .service {
-    padding: $general-spacing-md 0;
-
-    &--meta {
-      display: flex;
-      justify-content: space-between;
-      margin-right: calc-em(60px);
-      p {
-        @extend %font-size-small;
-        color: #888888;
-      }
-    }
-    &--header {
-      @extend %font-size-large;
-      font-weight: 600;
-      a {
-        color: #333333;
-        font-size: 18px;
-
-        &:hover {
-          color: #333333;
-        }
-      }
-    }
-    // &--description {
-    // }
-    &--details-toggle {
-      margin-top: calc-em(20px);
-      color: #1c72e6;
-      cursor: pointer;
-      i {
-        transform: translateY(2px);
-      }
-    }
-    &--details {
-      margin-top: calc-em(40px);
-      &--item {
-        display: flex;
-        margin-top: calc-em(20px);
-
-        header {
-          width: calc-em(130px);
-          margin-right: calc-em(20px);
-          color: #333333;
-          font-weight: 600;
-          flex-grow: 0;
-          flex-shrink: 0;
-        }
-        &--info {
-          flex-grow: 1;
-          padding: 0 calc-em(60px) calc-em(20px) 0;
-        }
-      }
-    }
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG INFO
-
-.info--section {
-  .info {
-    margin-top: calc-em(30px);
-    display: flex;
-    width: calc-em(600px);
-    flex-wrap: wrap;
-    &--column {
-      width: 50%;
-      @include r_max($break-tablet-s) {
-        width: 100%;
-      }
-      > span {
-        display: block;
-        margin-top: calc-em(10px);
-        &:first-of-type {
-          margin-top: 0;
-        }
-      }
     }
   }
 }
@@ -233,15 +96,6 @@
     &--day {
       width: calc-em(130px);
     }
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// ORG Location
-
-.location--section {
-  .map {
-    margin-top: calc-em(30px);
   }
 }
 
