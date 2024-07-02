@@ -116,10 +116,9 @@ export namespace StrapiApi {
     provider: string;
     createdAt: string;
     updatedAt: string;
-    formats: FormatsResponse
+    formats: FormatsResponse;
     // TODO uknown types
     // provider_metadata: null;
-    // formats: null;
   }
 
   export interface NavigationMenuResponse {

@@ -12,3 +12,18 @@ export namespace StrapiModel {
   export interface NavigationMenu extends StrapiApi.NavigationMenuResponse {
   }
 }
+
+export function extractNavigationMenusFromNavigationResponse(
+  navigationResponse: StrapiModel.Header | null
+): Array<Omit<StrapiModel.NavigationMenu, "__component">> | null {
+  return (
+    navigationResponse &&
+    navigationResponse.navigation.map(({ __component, ...rest }) => rest)
+  );
+}
+
+export function extractLogoFromNavigationResponse(
+  navigationResponse: StrapiModel.Header | null
+): StrapiModel.Logo | null {
+  return navigationResponse && navigationResponse.logo.data.attributes;
+}
