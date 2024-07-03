@@ -48,6 +48,7 @@
   @include r_max($break-tablet-s) {
     display: none;
   }
+
 }
 
 @mixin navLogoShared {
@@ -202,15 +203,72 @@
   }
 }
 
-.menuContainer {
+.navigationMenuContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  // Adds separator
+  border-right: 1px solid black;
+  padding-right: $spacing-5;
+  margin-right: $spacing-5;
+
+  // Override for all children since we haven't had time to reformat the markup with consistent child elements/selectors
+  * {
+    font-size: 18px;
+    font-family: Montserrat;
+    font-weight: 500;
+  }
 }
 
-.dropdown {
-  display: none;
+.navigationMenuList {
+  position: fixed;
+  position: absolute;
+  z-index: 999;
+  top: 70px;
+  background: $white;
+  box-shadow: 0px 4px 6px -1px #0000001A;
+  border-radius: $rounded-md;
+  overflow: hidden;
 }
 
-.showDropdown {
-  display: block;
+.navigationMenuHeader {
+  padding: 0;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-weight: 600;
+
+  &[aria-expanded='true'] {
+    color: $color-brand-dark;
+  }
+
+  &:hover {
+    color: $color-brand-dark;
+  }
+}
+
+
+.navigationMenuListItem {
+  &:hover {
+    background: $gray-50;
+    color: inherit;
+  }
+}
+
+.navigationMenuLink {
+  // flex ensures each menu link fills width of widest item
+  display: flex;
+  text-decoration: none;
+  color: $text-primary;
+  padding: $spacing-3 $spacing-4;
+
+  &:hover {
+    text-decoration: none;
+    color: $text-primary;
+  }
+}
+
+.navigationMenuHeader .chevron {
+  font-size: 12px;
 }
