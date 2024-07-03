@@ -1,0 +1,77 @@
+@import "../../styles/utils/_helpers.scss";
+
+.listing-wrapper {
+  background: $color-grey1;
+  padding: $section-padding-desktop-vertical $general-spacing-md;
+  background: $color-white;
+
+  @include r_max($break-tablet-s) {
+    padding: $section-padding-mobile-vertical $general-spacing-md;
+  }
+
+  header {
+    margin-bottom: $general-spacing-lg;
+  }
+}
+
+.listing {
+  color: $text-secondary;
+
+  p {
+    padding-left: $spacing-0;
+    line-height: 150%;
+  }
+
+  a {
+    color: $link-blue-default;
+
+    &:hover {
+      color: $link-blue-hover;
+    }
+  }
+
+  p,
+  a,
+  table {
+    @include r_max($break-tablet-s) {
+      font-size: 14px;
+      line-height: 125%;
+    }
+  }
+}
+
+.listing--main {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+
+  &--left {
+    width: calc-em(672px);
+    padding-right: $padding-large;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+  }
+  @include r_max($break-tablet-s) {
+    margin-top: 0;
+    &--left {
+      padding-right: 0;
+    }
+  }
+}
+
+.listing--aside {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 1rem;
+  width: fit-content;
+
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
+}

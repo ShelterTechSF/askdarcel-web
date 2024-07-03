@@ -1,170 +1,68 @@
 @import "../../styles/utils/_helpers.scss";
 
-//////////////////////////////////////////////////////////////////////////////////////////
-// SERVICE PAGE STYLES
-.listing-container {
-  background: $color-grey1;
-  padding: $section-padding-desktop-vertical $general-spacing-md;
-  background: $color-white;
-
+.service--program--details {
+  font-family: "Montserrat";
+  font-size: 18px;
   @include r_max($break-tablet-s) {
-    padding: $section-padding-mobile-vertical $general-spacing-md;
-  }
-
-  header {
-    margin-bottom: $general-spacing-lg;
+    font-size: 16px;
   }
 }
 
-.listing {
-  color: $text-secondary;
+p {
+  padding-left: $spacing-0;
+  line-height: 150%;
+}
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: $text-primary;
+a {
+  color: $link-blue-default;
+
+  &:hover {
+    color: $link-blue-hover;
   }
+}
 
-  h1 {
-    // font-family: Montserrat;
-    font-size: 3rem;
-    text-transform: capitalize;
-    margin-bottom: $padding-default;
-    @include r_max($break-tablet-s) {
-      font-size: 2rem;
+p,
+a,
+table {
+  @include r_max($break-tablet-s) {
+    font-size: 14px;
+    line-height: 125%;
+  }
+}
+
+// TODO: Make reusable InfoTable component rather than global edits
+section {
+  th,
+  td {
+    padding: $general-spacing-s 0;
+
+    p {
+      padding: $spacing-0;
     }
   }
 
-  .service--program--details {
+  th {
     font-family: "Montserrat";
     font-size: 18px;
+    width: 150px;
+    padding-right: $general-spacing-lg;
     @include r_max($break-tablet-s) {
+      width: 100px;
       font-size: 16px;
     }
   }
 
-  p {
-    padding-left: $spacing-0;
-    line-height: 150%;
-  }
-
-  a {
-    color: $link-blue-default;
-
-    &:hover {
-      color: $link-blue-hover;
-    }
-  }
-
-  p,
-  a,
-  table {
-    @include r_max($break-tablet-s) {
-      font-size: 14px;
-      line-height: 125%;
-    }
-  }
-
-  // TODO: Make reusable InfoTable component rather than global edits
-  section {
-    th,
-    td {
-      padding: $general-spacing-s 0;
-
-      p {
-        padding: $spacing-0;
-      }
-    }
+  .service-loc-hours-section {
+    border: 1px solid $border-lightgray;
+    border-radius: $rounded-md;
 
     th {
-      font-family: "Montserrat";
-      font-size: 18px;
-      width: 150px;
-      padding-right: $general-spacing-lg;
-      @include r_max($break-tablet-s) {
-        width: 100px;
-        font-size: 16px;
-      }
-    }
-
-    .service-loc-hours-section {
-      border: 1px solid $border-lightgray;
-      border-radius: $rounded-md;
-
-      th {
-        font-family: "Inter" !important;
-        font-size: 16px !important;
-      }
-    }
-
-    tr:hover {
-      background-color: inherit;
-    }
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// SERVICE MAIN INFO
-
-.listing--main {
-  width: 100%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-
-  &--left {
-    width: calc-em(672px);
-    padding-right: $padding-large;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    align-content: stretch;
-  }
-  @include r_max($break-tablet-s) {
-    margin-top: 0;
-    &--left {
-      padding-right: 0;
-    }
-  }
-}
-
-.listing--aside {
-  max-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-self: start;
-  gap: 1rem;
-  width: fit-content;
-
-  @include r_max($break-tablet-s) {
-    display: none;
-  }
-}
-
-.rendered-markdown {
-  strong {
-    font-weight: bold;
-  }
-
-  em {
-    font-style: italic;
-  }
-
-  ul {
-    padding: 16px 26px;
-
-    li {
-      list-style-type: disc;
+      font-family: "Inter" !important;
+      font-size: 16px !important;
     }
   }
 
-  ol {
-    padding: 16px 26px;
-
-    li {
-      list-style-type: decimal;
-    }
+  tr:hover {
+    background-color: inherit;
   }
 }

@@ -1,27 +1,25 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, Redirect, useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import qs from "qs";
 import { ListingInfoSection } from "components/ui/Cards/ListingInfoSection";
 import { removeAsterisksAndHashes } from "utils/strings";
+import ListingPageHeader from "components/listing/PageHeader";
+import ListingPageWrapper from "components/listing/PageWrapper";
 import {
   ActionBarMobile,
-  ActionSidebar,
   AddressInfoRenderer,
   EmailRenderer,
   MapOfLocations,
-  MOHCDBadge,
-  // Notes,
+  NotesList,
   PhoneNumberRenderer,
-  // RelativeOpeningTime,
   ResourceCategories,
   ServiceCard,
   TableOfOpeningTimes,
   WebsiteRenderer,
 } from "../components/listing";
-import { Footer, Loader } from "../components/ui";
-import whitelabel from "../utils/whitelabel";
+import { Loader } from "../components/ui";
+
 import {
   fetchOrganization,
   getOrganizationActions,
@@ -69,98 +67,66 @@ export const OrganizationListingPage = () => {
   };
 
   return (
-    <div className="org-container">
-      <Helmet>
-        <title>{`${org.name} | ${whitelabel.title}`}</title>
-        <meta name="description" content={org.long_description || ""} />
-      </Helmet>
-      <article className="org" id="resource">
-        <div className="org--main weglot-dynamic">
-          <div className="org--main--left">
-            <header className="org--main--header">
-              <div className="org--main--header--title-container">
-                <h1
-                  data-cy="org-page-title"
-                  className="org--main--header--title notranslate"
-                >
-                  {org.name}
-                </h1>
-                <MOHCDBadge resource={org} />
-              </div>
-            </header>
+    <ListingPageWrapper
+      title={org.name}
+      description={org.long_description || ""}
+      sidebarActions={sidebarActions}
+      onClickAction={onClickAction}
+    >
+      <ListingPageHeader title={org.name} dataCy="org-page-title" />
 
-            <ActionBarMobile
-              actions={mobileActions}
-              onClickAction={onClickAction}
+      <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
+
+      <ListingInfoSection title="About" data-cy="org-about-section">
+        <ReactMarkdown
+          className="rendered-markdown"
+          source={
+            org.long_description ||
+            org.short_description ||
+            "No Description available"
+          }
+        />
+      </ListingInfoSection>
+
+      <ListingInfoSection title="Services" data-cy="org-services-section">
+        {org.services.length > 0 &&
+          org.services.map((srv) => (
+            <ServiceCard
+              service={{
+                ...srv,
+                long_description: removeAsterisksAndHashes(
+                  srv.long_description
+                ),
+              }}
+              key={srv.id}
             />
+          ))}
+      </ListingInfoSection>
 
-            <ListingInfoSection title="About" data-cy="org-about-section">
-              <ReactMarkdown
-                className="rendered-markdown"
-                source={
-                  org.long_description ||
-                  org.short_description ||
-                  "No Description available"
-                }
-              />
-            </ListingInfoSection>
+      <ListingInfoSection title="Contact" data-cy="org-info-section">
+        <ResourceCategories categories={org.categories} />
+        {(org.addresses || []).map((address) => (
+          <AddressInfoRenderer address={address} key={address.id} />
+        ))}
+        {org.phones.length > 0 && <PhoneNumberRenderer phones={org.phones} />}
+        {org.website && <WebsiteRenderer website={org.website} />}
+        {org.email && <EmailRenderer email={org.email} />}
+      </ListingInfoSection>
 
-            <ListingInfoSection title="Services" data-cy="org-services-section">
-              {org.services.length > 0 &&
-                org.services.map((srv) => (
-                  <ServiceCard
-                    service={{
-                      ...srv,
-                      long_description: removeAsterisksAndHashes(
-                        srv.long_description
-                      ),
-                    }}
-                    key={srv.id}
-                  />
-                ))}
-            </ListingInfoSection>
-
-            {/* <Notes notes={org.notes} id="notes" /> */}
-
-            <ListingInfoSection title="Contact" data-cy="org-info-section">
-              <ul className="info">
-                <div className="info--column">
-                  <ResourceCategories categories={org.categories} />
-                  {(org.addresses || []).map((address) => (
-                    <AddressInfoRenderer address={address} key={address.id} />
-                  ))}
-                  {org.phones.length > 0 && (
-                    <PhoneNumberRenderer phones={org.phones} />
-                  )}
-                  {org.website && <WebsiteRenderer website={org.website} />}
-                  {org.email && <EmailRenderer email={org.email} />}
-                </div>
-              </ul>
-            </ListingInfoSection>
-
-            {orgLocations?.length > 0 && (
-              <ListingInfoSection title="Location" borderBottom={false}>
-                <MapOfLocations
-                  locations={orgLocations}
-                  locationRenderer={(loc: any) => (
-                    <TableOfOpeningTimes
-                      recurringSchedule={loc.recurringSchedule}
-                    />
-                  )}
-                />
-              </ListingInfoSection>
+      {orgLocations?.length > 0 && (
+        <ListingInfoSection title="Location">
+          <MapOfLocations
+            locations={orgLocations}
+            locationRenderer={(loc: any) => (
+              <TableOfOpeningTimes recurringSchedule={loc.recurringSchedule} />
             )}
-          </div>
+          />
+        </ListingInfoSection>
+      )}
 
-          <aside className="org--aside">
-            <ActionSidebar
-              actions={sidebarActions}
-              onClickAction={onClickAction}
-            />
-          </aside>
-        </div>
-      </article>
-      {whitelabel.footerOptions.showOnListingPages && <Footer />}
-    </div>
+      <ListingInfoSection title="Notes" borderBottom={false}>
+        <NotesList notes={org.notes} />
+      </ListingInfoSection>
+    </ListingPageWrapper>
   );
 };

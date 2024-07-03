@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import { removeAsterisksAndHashes } from "utils/strings";
-import { Notes } from "./Notes";
+import { NotesList } from "./NotesList";
 import { Service, RecurringSchedule } from "../../models";
 
 import ServiceVerified from "../../assets/img/ic-attributed-record.svg";
 import "./ServiceDetails.scss";
+
+// Where is this rendered?
 
 export const ServiceDetails = ({ service }: { service: Service }) => {
   const [infoHidden, setInfoHidden] = useState(true);
@@ -60,7 +62,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
               result={service.required_documents}
             />
             <ServiceEligibility subject="Fees" result={service.fee} />
-            {service.notes.length ? <Notes notes={service.notes} /> : null}
+            {service.notes.length ? <NotesList notes={service.notes} /> : null}
             {service.recurringSchedule.intervals.length > 0 && (
               <WeeklyHours recurringSchedule={service.recurringSchedule} />
             )}

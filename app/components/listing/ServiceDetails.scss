@@ -21,3 +21,13 @@
   font-size: 13px;
   text-decoration: underline;
 }
+
+.weekly-hours-list {
+  &--item {
+    display: flex;
+    line-height: 1.5;
+    &--day {
+      width: calc-em(130px);
+    }
+  }
+}

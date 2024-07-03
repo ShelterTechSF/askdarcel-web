@@ -210,33 +210,6 @@ p.message {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// MARKDOWN COMPONENT OVERRIDES
-
-.org--main--header--description,
-.service--description {
-  h1 {
-    @extend %font-size-medium;
-    font-weight: 700;
-    color: $text-primary;
-  }
-
-  h2 {
-    @extend %font-size-small;
-    font-weight: 700;
-    color: $color-grey5;
-  }
-
-  h3,
-  h4,
-  h5,
-  h6 {
-    @extend %font-size-small;
-    font-weight: 400;
-    color: $text-primary;
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
 // INTERCOM OVERRIDES
 .intercom-launcher-frame {
   z-index: 3 !important;
