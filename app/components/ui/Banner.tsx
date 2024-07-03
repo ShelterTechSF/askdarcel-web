@@ -8,19 +8,18 @@ export const Banner = () => (
       <img src={icon("alert")} alt="attention" className={styles.alertIcon} />
       <div>
         <strong className={styles.title}>
-          SHELTER ACCESS DURING RAINY AND COLD WEATHER:
+          SHELTER ACCESS DURING HEAT RISK WEATHER:
         </strong>
         <p>
           <a
             className={styles.bannerLink}
             target="_blank"
             rel="noreferrer"
-            href="https://hsh.sfgov.org/services/how-to-get-services/accessing-temporary-shelter"
+            href="https://t.e2ma.net/message/evwfxh/mhfrepid"
           >
             Get information
           </a>{" "}
-          on expanded shelter access during cold and wet weather in San
-          Francisco.
+          on expanded shelter access during heat risk weather in San Francisco.
         </p>
         <p>
           <a
