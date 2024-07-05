@@ -14,7 +14,8 @@ export namespace StrapiModel {
       StrapiApi.LogoResponse,
       "width" | "height" | "alternativeText" | "url"
     > {}
-  export interface NavigationMenu extends StrapiApi.NavigationMenuResponse {}
+  export interface NavigationMenu
+    extends Omit<StrapiApi.NavigationMenuResponse, "__component"> {}
 }
 
 export function extractNavigationMenusFromNavigationResponse(

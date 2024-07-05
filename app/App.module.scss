@@ -8,9 +8,3 @@
   z-index: 0;
 }
 
-// Until new nav is introduced, screen reader is reading hamburger links on desktop. This fixes that.
-.hamburgerContainer {
-  @media screen and (min-width: $min-desktop) {
-    display: none;
-  }
-}

@@ -64,13 +64,13 @@ export const HamburgerMenu = ({
   onStateChange,
   outerContainerId,
   pageWrapId,
-  toggleHamburgerMenu,
+  toggleMobileNav,
 }: {
   isOpen: boolean;
   onStateChange: (s: State) => void;
   outerContainerId: string;
   pageWrapId: string;
-  toggleHamburgerMenu: () => void;
+  toggleMobileNav: () => void;
 }) => (
   <Menu
     isOpen={isOpen}
@@ -92,7 +92,7 @@ export const HamburgerMenu = ({
         <MenuItem
           key={to}
           to={to}
-          onClick={toggleHamburgerMenu}
+          onClick={toggleMobileNav}
           exact={exact}
           linkStyles={linkStyles}
           external={external}
