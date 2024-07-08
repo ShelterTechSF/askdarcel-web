@@ -1,31 +1,20 @@
-export interface StrapiResponse<T> {
-  data: {
-    id: number;
-    attributes: T;
-    meta: {
-      [key: string]: string;
-    };
-  } | null;
-}
+import { StrapiApi } from "hooks/StrapiAPI";
 
-export interface Link {
-  id: number;
-  url: string;
-  text: string;
-}
-
-export interface DynamicLink {
-  id: number;
-  // __component is a key used by Strapi
-  // that may not have practical purposes for the frontend
-  __component: string;
-  title: string;
-  link: Link[];
-}
-
-export interface Footer {
-  address: string;
-  email_address: string;
-  phone_number: string;
-  links: DynamicLink[];
+/**
+  Model interfaces are a subtype of Strapi api responses that only include properties needed by consuming components
+*/
+export namespace StrapiModel {
+  export interface StrapiDatum<T> extends StrapiApi.StrapiDatumResponse<T> {}
+  export interface Link extends StrapiApi.LinkResponse {}
+  export interface DynamicLink
+    extends Omit<StrapiApi.DynamicLinkResponse, "__component"> {}
+  export interface Footer extends StrapiApi.FooterResponse {}
+  export interface Homepage extends StrapiApi.HomepageResponse {}
+  export interface ContentBlock
+    extends Omit<StrapiApi.ContentBlockResponse, "id"> {}
+  export interface Event extends StrapiApi.EventResponse {}
+  export interface Opportunity extends StrapiApi.OpportunityResponse {}
+  export interface TwoColumnContentBlock
+    extends StrapiApi.TwoColumnContentBlockResponse {}
+  export interface PageContent extends StrapiApi.ContentPageResponse {}
 }
