@@ -4,6 +4,18 @@
   position: fixed;
 }
 
+// a11y focus states
+a,
+button,
+input,
+select {
+  &:active,
+  &:focus {
+    outline: 3px solid #fbb040;
+    border-radius: $rounded-md;
+  }
+}
+
 pre {
   background: #eee;
   margin: $padding-large;
@@ -13,6 +25,7 @@ pre {
 }
 
 // Card Styles
+// TODO: move these to appropriate modules?
 .card {
   border: 1px solid #ccc;
   width: 100%;
@@ -83,55 +96,29 @@ pre {
   }
 }
 
-.listing {
-  &.text-page {
-    h1,
-    h2,
-    h3 {
-      padding-top: 26px;
-      padding-bottom: 16px;
-    }
+.rendered-markdown {
+  strong {
+    font-weight: bold;
+  }
 
-    ul,
-    ol {
-      margin: 24px 0;
-      padding-left: 36px;
-    }
+  em {
+    font-style: italic;
+  }
 
-    ul {
-      li {
-        list-style-type: disc;
-      }
-    }
+  ul {
+    padding: 16px 26px;
 
-    ol {
-      li {
-        list-style-type: decimal;
-        margin: 6px 0;
-
-        ol {
-          margin-top: 6px;
-          padding-top: 6px;
-          padding-bottom: 6px;
-          padding-left: 16px;
-
-          li {
-            list-style-type: lower-roman;
-          }
-        }
-      }
+    li {
+      list-style-type: disc;
     }
   }
-}
 
-a,
-button,
-input,
-select {
-  &:active,
-  &:focus {
-    outline: 3px solid #fbb040;
-    border-radius: $rounded-md;
+  ol {
+    padding: 16px 26px;
+
+    li {
+      list-style-type: decimal;
+    }
   }
 }
 
