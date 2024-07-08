@@ -8,5 +8,5 @@ export * from "./RelativeOpeningTime";
 export * from "../ui/Cards/ServiceCard";
 export * from "./ServiceDetails";
 export * from "./StreetViewImage";
-export * from "./TableOfContactInfo";
+export * from "./ContactInfoTableRows";
 export * from "./TableOfOpeningTimes";

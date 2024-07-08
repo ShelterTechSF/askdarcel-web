@@ -8,15 +8,22 @@ ul.accordion {
 
     header {
       cursor: pointer;
+      margin-bottom: $spacing-0;
 
       &:hover {
         background: $gray-50;
       }
 
       table {
+        width: 100%;
+
         tbody {
           tr {
             padding: $general-spacing-md;
+
+            &:hover {
+              background: $gray-100;
+            }
 
             td {
               padding: $general-spacing-md;
@@ -24,6 +31,15 @@ ul.accordion {
             }
           }
         }
+      }
+
+      .headerCell h3 {
+        font-size: 18px;
+      }
+
+      .iconCell {
+        max-width: $padding-xxlarge;
+        $padding: 10px $padding-default;
       }
 
       .selector {
@@ -60,5 +76,5 @@ ul.accordion {
 }
 
 .accordion-item {
-  padding-bottom: $general-spacing-md;
+  padding: 0 $general-spacing-md $general-spacing-xs;
 }

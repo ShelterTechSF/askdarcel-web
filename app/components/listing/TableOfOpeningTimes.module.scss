@@ -1,0 +1,24 @@
+@import "../../styles/utils/_helpers.scss";
+
+.openingTimesTable {
+  th,
+  td {
+    padding: $padding-default $padding-large;
+    padding-left: $spacing-0;
+
+    p {
+      padding: $spacing-0;
+    }
+  }
+
+  th {
+    font-weight: bold;
+    color: $text-secondary;
+    font-size: 16px;
+    width: 150px;
+    padding-right: $general-spacing-lg;
+    @include r_max($break-tablet-s) {
+      width: 100px;
+    }
+  }
+}

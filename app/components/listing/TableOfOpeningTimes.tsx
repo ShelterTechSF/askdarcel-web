@@ -1,5 +1,6 @@
 import React from "react";
 import { RecurringSchedule } from "../../models/RecurringSchedule";
+import styles from "./TableOfOpeningTimes.module.scss";
 
 // TODO order with current day first
 // TODO Show relativeOpeningTime for current day
@@ -10,7 +11,7 @@ export const TableOfOpeningTimes = ({
 }: {
   recurringSchedule: RecurringSchedule;
 }) => (
-  <table className="compact">
+  <table className={styles.openingTimesTable}>
     <tbody>
       {(recurringSchedule.hoursKnown &&
         recurringSchedule.intervals.map((interval) => {
