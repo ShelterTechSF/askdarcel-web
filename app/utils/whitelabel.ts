@@ -52,7 +52,6 @@ interface WhiteLabelSite {
   showHeaderQrCode: boolean;
   showMobileNav: boolean;
   showPrintResultsBtn: boolean;
-  showSearch: boolean;
   showReportCrisis: boolean;
   siteNavStyle: string;
   siteUrl: string;
@@ -114,7 +113,6 @@ services and re-entry programs.`,
   showHandoutsIcon: false,
   showHeaderQrCode: false,
   showMobileNav: true,
-  showSearch: true,
   showReportCrisis: false,
   siteNavStyle: styles.siteNav,
   userWay: false,
@@ -150,7 +148,6 @@ const SFFamilies: WhiteLabelSite = {
   navLogoStyle: styles.navLogoSFFamilies,
   showMobileNav: false,
   showPrintResultsBtn: false,
-  showSearch: false,
   siteNavStyle: styles.siteNavSFFamilies,
   siteUrl: "https://our415.sfserviceguide.org",
   title: "Our 415",

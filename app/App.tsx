@@ -9,6 +9,7 @@ import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
 
+import { SiteSearchProvider } from "./hooks/SiteSearch";
 import { GeoCoordinates, getLocation, whiteLabel, AppProvider } from "./utils";
 import {
   Banner,
@@ -26,8 +27,7 @@ import MetaImage from "./assets/img/sfsg-preview.png";
 
 import styles from "./App.module.scss";
 
-const { intercom, showBanner, showSearch, siteUrl, title, userWay } =
-  whiteLabel;
+const { intercom, showBanner, siteUrl, title, userWay } = whiteLabel;
 const outerContainerId = "outer-container";
 const pageWrapId = "page-wrap";
 
@@ -67,47 +67,48 @@ export const App = () => {
   return (
     <div id={outerContainerId} className={styles.outerContainer}>
       <AppProvider userLocation={userLocation}>
-        <Helmet>
-          <title>{title}</title>
-          <meta property="og:url" content={siteUrl} />
-          <meta property="og:title" content={title} />
+        <SiteSearchProvider>
+          <Helmet>
+            <title>{title}</title>
+            <meta property="og:url" content={siteUrl} />
+            <meta property="og:title" content={title} />
 
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@sheltertechorg" />
-          <meta
-            property="og:description"
-            content="Get guided help finding food, housing, health resources and more in San Francisco"
-          />
-          <meta property="og:image" content={MetaImage} />
-          <meta property="og:type" content="website" />
-          <meta property="og:image:type" content="image/png" />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-        </Helmet>
-        {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
-        {intercom && config.INTERCOM_APP_ID && (
-          <Intercom appID={config.INTERCOM_APP_ID} />
-        )}
-        <span className={styles.hamburgerContainer}>
-          <HamburgerMenu
-            isOpen={hamburgerOpen}
-            outerContainerId={outerContainerId}
-            onStateChange={(s) => setHamburgerOpen(s.isOpen)}
-            pageWrapId={pageWrapId}
-            toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
-          />
-        </span>
-        <div id={pageWrapId}>
-          <Navigation
-            showSearch={showSearch}
-            toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
-          />
-          {showBanner && <Banner />}
-          <div className="container">
-            <Router setPopUpMessage={setPopUpMessage} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@sheltertechorg" />
+            <meta
+              property="og:description"
+              content="Get guided help finding food, housing, health resources and more in San Francisco"
+            />
+            <meta property="og:image" content={MetaImage} />
+            <meta property="og:type" content="website" />
+            <meta property="og:image:type" content="image/png" />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+          </Helmet>
+          {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
+          {intercom && config.INTERCOM_APP_ID && (
+            <Intercom appID={config.INTERCOM_APP_ID} />
+          )}
+          <span className={styles.hamburgerContainer}>
+            <HamburgerMenu
+              isOpen={hamburgerOpen}
+              outerContainerId={outerContainerId}
+              onStateChange={(s) => setHamburgerOpen(s.isOpen)}
+              pageWrapId={pageWrapId}
+              toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
+            />
+          </span>
+          <div id={pageWrapId}>
+            <Navigation
+              toggleHamburgerMenu={() => setHamburgerOpen(!hamburgerOpen)}
+            />
+            {showBanner && <Banner />}
+            <div className="container">
+              <Router setPopUpMessage={setPopUpMessage} />
+            </div>
+            {popUpMessage && <PopUpMessage popUpMessage={popUpMessage} />}
           </div>
-          {popUpMessage && <PopUpMessage popUpMessage={popUpMessage} />}
-        </div>
+        </SiteSearchProvider>
       </AppProvider>
     </div>
   );

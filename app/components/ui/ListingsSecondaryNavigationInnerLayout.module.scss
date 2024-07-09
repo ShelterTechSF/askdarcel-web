@@ -1,0 +1,9 @@
+@import "../../styles/utils/_helpers.scss";
+
+.SearchButton {
+  color: white;
+  background: black;
+  padding: $spacing-2;
+  font-weight: 900;
+  border-radius: $rounded-full;
+}
