@@ -160,24 +160,6 @@
   }
 }
 
-.searchResultSubcat,
-.searchResultSubcatTooltip {
-  border-radius: $rounded-full;
-  background: $gray-100;
-  display: flex;
-  padding: $general-spacing-xxs $general-spacing-xs;
-  align-items: center;
-  gap: $general-spacing-xxs;
-  line-break: none;
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.searchResultSubcatTooltip {
-  cursor: pointer;
-}
-
 .address {
   font-size: 16px;
   margin-top: $general-spacing-s;

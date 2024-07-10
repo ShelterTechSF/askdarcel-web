@@ -13,6 +13,7 @@ import ResultsPagination from "components/search/Pagination/ResultsPagination";
 // import { Texting } from "components/Texting";
 // import { TextListing } from "components/Texting/Texting";
 import { Tooltip } from "react-tippy";
+import { LabelTag } from "components/ui/LabelTag";
 import { SearchHit, transformHits } from "../../../models/SearchHits";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
@@ -168,6 +169,8 @@ const SearchResult = ({
   const url = hit.type === "service" ? hit.url : hit.website;
   const basePath = hit.type === "service" ? `services` : `organizations`;
 
+  // TODO: since hit -> categories just come in as one array of category names, we need to compare them against a hardcoded list of top-level categories and display the ones that are NOT top-level in the subcategory LabelTags. Awaiting that PR.
+
   return (
     <div className={styles.searchResult}>
       {/* Keep for Phase 2: */}
@@ -202,9 +205,7 @@ const SearchResult = ({
             </div>
             <div className={styles.searchResultSubcatContainer}>
               {hit.categories.length > 0 && (
-                <span className={styles.searchResultSubcat}>
-                  {hit.categories[0]}
-                </span>
+                <LabelTag label={hit.categories[0].toString()} />
               )}
               {hit.categories.length > 1 && (
                 <Tooltip
@@ -215,9 +216,10 @@ const SearchResult = ({
                   animation="none"
                   arrow
                 >
-                  <span className={styles.searchResultSubcatTooltip}>
-                    +{hit.categories.length - 1}
-                  </span>
+                  <LabelTag
+                    label={`+${hit.categories.length - 1}`}
+                    withTooltip
+                  />
                 </Tooltip>
               )}
             </div>

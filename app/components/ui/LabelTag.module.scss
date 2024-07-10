@@ -1,0 +1,25 @@
+@import "../../styles/utils/_helpers.scss";
+
+.labelTag {
+  border-radius: $rounded-full;
+  background: $gray-100;
+  color: $text-primary;
+  display: flex;
+  padding: $general-spacing-xxs $general-spacing-xs;
+  align-items: center;
+  gap: $general-spacing-xxs;
+  line-break: none;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  width: fit-content;
+
+  @include r_max($break-tablet-s) {
+    white-space: wrap;
+    text-align: center;
+  }
+}
+
+.withTooltip {
+  cursor: pointer;
+}

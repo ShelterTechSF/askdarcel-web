@@ -14,7 +14,7 @@ import {
   Banner,
   HamburgerMenu,
   Navigation,
-  PopUpMessage,
+  PopUpMessage, // TODO: Get rid of Popup message and props
   PopupMessageProp,
   UserWay,
 } from "./components/ui";

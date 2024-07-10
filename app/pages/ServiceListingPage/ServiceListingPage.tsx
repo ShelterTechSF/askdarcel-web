@@ -15,6 +15,7 @@ import { removeAsterisksAndHashes } from "utils/strings";
 import { ListingInfoSection } from "components/ui/Cards/ListingInfoSection";
 import ListingPageHeader from "components/listing/PageHeader";
 import ListingPageWrapper from "components/listing/PageWrapper";
+import LabelTagRows from "components/listing/LabelTagRows";
 import {
   fetchService,
   generateServiceDetails,
@@ -146,7 +147,6 @@ export const ServiceListingPage = () => {
       {resource.services.length > 1 && (
         <ListingInfoSection
           title="Other services at this organization"
-          borderBottom={false}
           data-cy="service-other-section"
         >
           {resource.services
@@ -162,6 +162,17 @@ export const ServiceListingPage = () => {
                 key={srv.id}
               />
             ))}
+        </ListingInfoSection>
+      )}
+      {(service.categories.length > 0 || service.eligibilities.length > 0) && (
+        <ListingInfoSection
+          title="Tags"
+          borderBottom={false}
+          data-cy="service-tags-section"
+        >
+          <ListingInfoTable>
+            <LabelTagRows service={service} />
+          </ListingInfoTable>
         </ListingInfoSection>
       )}
     </ListingPageWrapper>
