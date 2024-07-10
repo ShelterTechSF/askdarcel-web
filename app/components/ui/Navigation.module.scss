@@ -1,19 +1,16 @@
 @import "../../styles/utils/_helpers.scss";
+@import "../../styles/utils/_colors.scss";
 
-@mixin siteNavShared {
+.siteNav {
+  background: $color-white;
   position: sticky;
   top: 0;
   z-index: $z-index-site-nav;
 }
 
-.siteNav {
-  background: $color-white;
-  @include siteNavShared;
-}
-
+// TODO: Remove with other white labeled sites
 .siteNavSFFamilies {
   background: $color-sffamilies-nav;
-  @include siteNavShared;
 }
 
 @mixin navRow {
@@ -40,242 +37,38 @@
 .navRight {
   display: flex;
   align-items: center;
-  li {
-    &:not(:last-child) {
-      padding-right: calc-em(20px);
-    }
-  }
   @include r_max($break-tablet-s) {
     display: none;
   }
-
 }
 
-@mixin navLogoShared {
-  vertical-align: top;
-}
+.navLogo img {
+  height: 50px;
 
-.navLogo {
-  margin-right: calc-em(25px);
-  img {
-    // TODO: Temporary logo styling
-    // Remove after header component is finished
-    height: 50px;
-    width: 120px;
-  }
-  @include navLogoShared;
-}
-
-.navLogoUcsf,
-.navLogoSFFamilies {
-  margin-right: calc-em(45px);
-  img {
-    height: calc-em(36px);
-    width: auto;
-  }
-  @include navLogoShared;
-}
-
-.navSearch {
-  display: inline-block;
-
-  .searchField {
-    $font-size: calc-em(15px);
-    background-repeat: no-repeat;
-    background-image: url(../../assets/img/ic-search.png);
-    background-size: 18px 18px;
-    background-position: calc-em(15px) center;
-    font-size: $font-size;
-    padding-left: calc-em(45px);
-    width: calc-em(400px);
-    height: calc-em(40px);
-    border: 0;
-    background-color: $color-grey1;
-
-    &::placeholder {
-      font-size: $font-size;
-      font-style: normal;
-    }
+  @include r_max($break-tablet-s) {
+    height: 25px;
   }
 }
 
-.navSearchFull {
-  @include r_max($break-tablet-p) {
-    display: none !important; // !important is needed to override .form-row
-  }
-}
-
-.mobileNavigation {
-  align-items: center;
-  display: flex;
+.activatePushPanelButton {
+  font-size: 18px !important;
+  font-family: Montserrat;
+  font-weight: 500;
 
   @include r_min($break-tablet-p) {
     display: none !important; // !important is needed to override .form-row
   }
 }
 
-@mixin flat-button {
-  padding: 0;
-
-  &:active,
-  &:hover,
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-.searchButton {
-  @include flat-button;
-
-  background: url(../../assets/img/ic-search-blue.svg) no-repeat;
-  display: inline-block;
-  height: 24px;
-  width: 24px;
-  margin-right: 18px;
-  margin-left: 18px;
-}
-
-.hamburgerButton {
-  @include flat-button;
-
-  background: url(../../assets/img/ic-hamburger-menu.svg) no-repeat;
-  display: inline-block;
-  height: 24px;
-  width: 24px;
-
-  @include r_min($break-tablet-s) {
-    display: none !important;
-  }
-}
-
-.secondaryRowWrapper {
-  @include navRow;
-
-  max-height: 60px;
-  overflow-y: hidden;
-  transition: max-height 0.2s;
-
-  &.hide {
-    max-height: 0;
-  }
-}
-
-.secondaryRow {
-  padding: 5px;
-}
-
-.secondarySearchField {
-  $font-size: 18px;
-
-  border: 3px transparent;
-  background: url(../../assets/img/ic-search.png) 15px center/18px 18px
-      no-repeat,
-    #f9f9f9;
-  color: #888888;
-  font-size: $font-size;
-  line-height: calc(26 / 18);
-  padding: 9px 22px 9px 43px;
-
-  &::placeholder {
-    font-size: $font-size;
-    font-style: normal;
-  }
-}
-
-.buttonLink {
-  appearance: button;
-  text-decoration: none;
-  color: white;
-  background-color: $color-brand;
-  border-radius: 3px;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 19px 30px;
-  min-width: 200px;
-  display: block;
-  &:focus,
-  &:hover {
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  &:active {
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
-  }
-}
-
-.navigationMenuContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  // Adds separator
-  border-right: 1px solid black;
-  padding-right: $spacing-5;
-  margin-right: $spacing-5;
-
-  // Override for all children since we haven't had time to reformat the markup with consistent child elements/selectors
-  * {
-    font-size: 18px;
-    font-family: Montserrat;
-    font-weight: 500;
-  }
-}
-
-.navigationMenuList {
-  position: fixed;
-  position: absolute;
-  z-index: 999;
-  top: 70px;
-  background: $white;
-  box-shadow: 0px 4px 6px -1px #0000001A;
-  border-radius: $rounded-md;
-  overflow: hidden;
-}
-
-.navigationMenuHeader {
-  padding: 0;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  font-weight: 600;
-
-  &[aria-expanded='true'] {
-    color: $color-brand-dark;
-  }
-
-  &:hover {
-    color: $color-brand-dark;
-  }
-}
-
-
-.navigationMenuListItem {
-  &:hover {
-    background: $gray-50;
-    color: inherit;
-  }
-}
-
-.navigationMenuLink {
-  // flex ensures each menu link fills width of widest item
-  display: flex;
-  text-decoration: none;
-  color: $text-primary;
-  padding: $spacing-3 $spacing-4;
-
-  &:hover {
-    text-decoration: none;
-    color: $text-primary;
-  }
-}
-
-.navigationMenuHeader .chevron {
-  font-size: 12px;
-}
-
 // Until new nav is introduced, screen reader is reading hamburger links on desktop. This fixes that.
 .hamburgerContainer {
   @media screen and (min-width: $min-desktop) {
     display: none;
+  }
+}
+
+.navigationMenuTranslate {
+  @include r_max($break-tablet-s) {
+    padding: $spacing-3 $spacing-4;
   }
 }

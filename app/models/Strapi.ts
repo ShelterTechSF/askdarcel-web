@@ -20,7 +20,7 @@ export namespace StrapiModel {
 
 export function extractNavigationMenusFromNavigationResponse(
   navigationResponse: StrapiModel.Header | null
-): Array<Omit<StrapiModel.NavigationMenu, "__component">> | null {
+): ExtractedNavigationMenusFromNavigationResponse | null {
   return (
     navigationResponse &&
     navigationResponse.navigation.map(({ __component, ...rest }) => rest)
@@ -32,3 +32,7 @@ export function extractLogoFromNavigationResponse(
 ): StrapiModel.Logo | null {
   return navigationResponse && navigationResponse.logo.data.attributes;
 }
+
+export type ExtractedNavigationMenusFromNavigationResponse = Array<
+  StrapiModel.NavigationMenu | StrapiModel.Link
+>;

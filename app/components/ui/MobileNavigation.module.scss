@@ -1,0 +1,81 @@
+@import "../../styles/utils/_helpers.scss";
+@import "../../styles/utils/_colors.scss";
+
+.mobileNavigationMenuContainer {
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+  border-bottom: 1px solid $color-grey3;
+
+  * {
+    font-size: 18px;
+    font-family: Montserrat;
+    font-weight: 500;
+  }
+
+}
+
+.mobileNavigationMenuListItem {
+  list-style: none;
+  border-bottom: 1px solid $color-grey3;
+  font-weight: 500;
+
+  a {
+    padding: $spacing-3 $spacing-4;
+  }
+
+  &:hover {
+    background: $gray-50;
+    color: inherit;
+  }
+}
+
+.mobileNavigationMenuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: $spacing-3 $spacing-4;
+
+  &:last-child {
+    border: none;
+  }
+}
+
+.mobileNavigationMenuLink {
+  // flex ensures each menu link fills width of widest item
+  display: flex;
+  text-decoration: none;
+  color: $text-primary;
+
+  &:hover {
+    text-decoration: none;
+    color: $text-primary;
+  }
+}
+
+.mobileNavigationMenuList {
+  position: absolute;
+  z-index: 999;
+  overflow: hidden;
+  top: 0;
+  border-radius: 0;
+  transition: transform 0.5s ease;
+  width: 100%;
+  transform: translateX(100%);
+  background: $white;
+}
+
+.mobileNavigationMenuListOpen {
+  transform: translateX(0);
+
+  // Fills out entire sidebar
+  width: 100%;
+  height: 100%;
+}
+
+.mobileTopLevelNavigationMenuItem {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+}

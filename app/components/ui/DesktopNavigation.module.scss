@@ -1,0 +1,99 @@
+@import "../../styles/utils/_helpers.scss";
+@import "../../styles/utils/_colors.scss";
+
+.navigationMenuLink,
+.navigationMenuHeader {
+  padding: $spacing-2 $spacing-3;
+}
+
+.navigationMenuContainer {
+  // Important to override react-burger-menu lib styles
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+
+  > * {
+    font-size: 18px;
+    font-family: Montserrat;
+  }
+}
+
+.navigationMenuList {
+  position: absolute;
+  z-index: 999;
+  top: 65px;
+  background: $white;
+  box-shadow: 0px 4px 6px -1px #0000001A;
+  border-radius: $rounded-md;
+  overflow: hidden;
+  font-weight: 400;
+}
+
+.navigationMenuHeader {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-weight: 600;
+
+  &[aria-expanded='true'] {
+    color: $color-brand-dark;
+  }
+
+  &:hover {
+    color: $color-brand-dark;
+  }
+}
+
+.navigationMenuListItem,
+.navigationMenuHeader {
+  a {
+    padding: $spacing-2 $spacing-4;
+  }
+
+  a:hover {
+    background: $gray-50;
+    color: inherit;
+  }
+}
+
+.navigationMenuLink {
+  text-decoration: none;
+  color: $text-primary;
+
+  &:hover {
+    text-decoration: none;
+    color: $color-brand-dark;
+  }
+}
+
+.navigationMenuList .navigationMenuLink {
+  // flex ensures each menu link fills width of widest item
+  display: flex;
+  text-decoration: none;
+  color: $text-primary;
+
+  &:hover {
+    text-decoration: none;
+    color: $text-primary;
+  }
+}
+
+.navigationMenuHeader .chevron {
+  font-size: 12px;
+}
+
+.desktopNavigationContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  // Adds separator
+  border-right: 1px solid black;
+  padding-right: $spacing-2;
+  margin-right: $spacing-6;
+
+
+  > * {
+    font-weight: 600;
+  }
+}
