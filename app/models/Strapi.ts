@@ -31,8 +31,7 @@ export function extractNavigationMenusFromNavigationResponse(
   navigationResponse: StrapiApi.HeaderResponse | null
 ): ExtractedNavigationMenusFromNavigationResponse | null {
   return (
-    (navigationResponse &&
-      navigationResponse.navigation.map(({ __component, ...rest }) => rest)) ||
+    navigationResponse?.navigation.map(({ __component, ...rest }) => rest) ||
     null
   );
 }
@@ -40,9 +39,7 @@ export function extractNavigationMenusFromNavigationResponse(
 export function extractLogoFromNavigationResponse(
   navigationResponse: StrapiApi.HeaderResponse | null
 ): StrapiModel.Logo | null {
-  return (
-    (navigationResponse && navigationResponse.logo.data.attributes) || null
-  );
+  return navigationResponse?.logo.data.attributes || null;
 }
 
 export type ExtractedNavigationMenusFromNavigationResponse = Array<
