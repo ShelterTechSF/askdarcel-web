@@ -4,7 +4,7 @@
 .mobileNavigationMenuContainer {
   display: flex;
   flex-direction: row;
-  align-items:flex-start;
+  align-items: flex-start;
   border-bottom: 1px solid $color-grey3;
 
   * {
@@ -12,7 +12,6 @@
     font-family: Montserrat;
     font-weight: 500;
   }
-
 }
 
 .mobileNavigationMenuListItem {

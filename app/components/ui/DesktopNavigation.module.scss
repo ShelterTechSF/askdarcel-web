@@ -23,7 +23,7 @@
   z-index: 999;
   top: 65px;
   background: $white;
-  box-shadow: 0px 4px 6px -1px #0000001A;
+  box-shadow: 0px 4px 6px -1px #0000001a;
   border-radius: $rounded-md;
   overflow: hidden;
   font-weight: 400;
@@ -35,7 +35,7 @@
   align-items: center;
   font-weight: 600;
 
-  &[aria-expanded='true'] {
+  &[aria-expanded="true"] {
     color: $color-brand-dark;
   }
 
@@ -91,7 +91,6 @@
   border-right: 1px solid black;
   padding-right: $spacing-2;
   margin-right: $spacing-6;
-
 
   > * {
     font-weight: 600;
