@@ -4,17 +4,17 @@ import styles from "components/ui/Navigation.module.scss";
 import mobileNavigationStyles from "components/ui/MobileNavigation.module.scss";
 import desktopNavigationStyles from "components/ui/DesktopNavigation.module.scss";
 import { push as SidebarPushPanel } from "react-burger-menu";
+import { GoogleTranslate } from "components/ui/GoogleTranslate";
 import {
   StrapiModel,
   extractLogoFromNavigationResponse,
   extractNavigationMenusFromNavigationResponse,
   ExtractedNavigationMenusFromNavigationResponse,
 } from "../../models/Strapi";
-import { PopUpMessage, PopupMessageProp } from "../../components/ui";
+import { PopUpMessage, PopupMessageProp } from "./PopUpMessage";
 import { Router } from "../../Router";
 import { useNavigationData } from "../../hooks/StrapiAPI";
 import { OUTER_CONTAINER_ID } from "../../App";
-import { GoogleTranslate } from "components/ui/GoogleTranslate";
 
 const PAGE_WRAP_ID = "page-wrap";
 const BURGER_STYLES = {
@@ -34,7 +34,7 @@ const BURGER_STYLES = {
   },
 };
 
-const Navigation = () => {
+export const Navigation = () => {
   const { data: navigationResponse, error, isLoading } = useNavigationData();
   const [mobileNavigationSidebarIsOpen, setMobileNavigationSidebarIsOpen] =
     useState(false);
@@ -47,6 +47,7 @@ const Navigation = () => {
     visible: false,
     type: "success",
   });
+
   const logoData = extractLogoFromNavigationResponse(navigationResponse);
   const menuData =
     extractNavigationMenusFromNavigationResponse(navigationResponse);
@@ -98,15 +99,15 @@ const Navigation = () => {
         pageWrapId={PAGE_WRAP_ID}
         right
         styles={BURGER_STYLES}
-        width={"275px"}
+        width="275px"
       >
         <div>
-          {menuData.map((menuDataItem, idx) => (
+          {menuData.map((menuDataItem) => (
             <MobileNavigationMenuDataItemRenderer
               menuItem={menuDataItem}
               whichActiveMobileSubMenu={whichActiveMobileSubMenu}
               setActiveMobileSubMenu={setActiveMobileSubMenu}
-              key={menuDataItem.id + idx}
+              key={menuDataItem.id}
             />
           ))}
           {mobileNavigationSidebarIsOpen && (
@@ -129,14 +130,14 @@ const Navigation = () => {
               <div
                 className={desktopNavigationStyles.desktopNavigationContainer}
               >
-                {menuData.map((menuDataItem, idx) => (
+                {menuData.map((menuDataItem) => (
                   <DesktoptopLevelNavigationMenuItemRenderer
                     menuItem={menuDataItem}
                     whichActiveDesktopSubMenu={whichActiveDesktopSubMenu}
                     togglesetActiveDesktopSubMenu={
                       togglesetActiveDesktopSubMenu
                     }
-                    key={menuDataItem.id + idx}
+                    key={menuDataItem.id}
                   />
                 ))}
               </div>
@@ -181,63 +182,60 @@ const DesktoptopLevelNavigationMenuItemRenderer = ({
   if (menuItemHasLinks(menuItem)) {
     const uniqueKey = menuItem.title;
     return (
-      <>
-        <div
-          className={desktopNavigationStyles.navigationMenuContainer}
-          key={uniqueKey}
+      <div
+        className={desktopNavigationStyles.navigationMenuContainer}
+        key={uniqueKey}
+      >
+        <button
+          type="button"
+          aria-haspopup="menu"
+          aria-expanded={
+            whichActiveDesktopSubMenu === uniqueKey ? "true" : "false"
+          }
+          onClick={() => togglesetActiveDesktopSubMenu(uniqueKey)}
+          className={desktopNavigationStyles.navigationMenuHeader}
         >
-          <button
-            type="button"
-            aria-haspopup="menu"
-            aria-expanded={
-              whichActiveDesktopSubMenu === uniqueKey ? "true" : "false"
-            }
-            onClick={() => togglesetActiveDesktopSubMenu(uniqueKey)}
-            className={desktopNavigationStyles.navigationMenuHeader}
-          >
-            {menuItem.title}
-            <span
-              className={`fas fa-chevron-down ${desktopNavigationStyles.chevron}`}
-            />
-          </button>
+          {menuItem.title}
+          <span
+            className={`fas fa-chevron-down ${desktopNavigationStyles.chevron}`}
+          />
+        </button>
 
-          <ul
-            style={{
-              display:
-                whichActiveDesktopSubMenu === uniqueKey ? "block" : "none",
-            }}
-            className={`${desktopNavigationStyles.navigationMenuList}`}
-          >
-            {menuItem.link.map((linkItem: StrapiModel.Link) => (
-              <li
-                key={linkItem.id}
-                className={desktopNavigationStyles.navigationMenuListItem}
-              >
-                <Link
-                  to={linkItem.url}
-                  className={desktopNavigationStyles.navigationMenuLink}
-                >
-                  {linkItem.text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </>
-    );
-  } else {
-    const uniqueKey = menuItem.url;
-    return (
-      <li key={uniqueKey}>
-        <Link
-          to={menuItem.url}
-          className={desktopNavigationStyles.navigationMenuLink}
+        <ul
+          style={{
+            display: whichActiveDesktopSubMenu === uniqueKey ? "block" : "none",
+          }}
+          className={`${desktopNavigationStyles.navigationMenuList}`}
         >
-          {menuItem.text}
-        </Link>
-      </li>
+          {menuItem.link.map((linkItem: StrapiModel.Link) => (
+            <li
+              key={linkItem.id}
+              className={desktopNavigationStyles.navigationMenuListItem}
+            >
+              <Link
+                to={linkItem.url}
+                className={desktopNavigationStyles.navigationMenuLink}
+              >
+                {linkItem.text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
+
+  const uniqueKey = menuItem.url;
+  return (
+    <li key={uniqueKey}>
+      <Link
+        to={menuItem.url}
+        className={desktopNavigationStyles.navigationMenuLink}
+      >
+        {menuItem.text}
+      </Link>
+    </li>
+  );
 };
 
 const MobileNavigationMenuDataItemRenderer = ({
@@ -293,22 +291,22 @@ const MobileNavigationMenuDataItemRenderer = ({
         </ul>
       </div>
     );
-  } else {
-    const uniqueKey = menuItem.url;
-    return (
-      <li
-        key={uniqueKey}
-        className={mobileNavigationStyles.mobileNavigationMenuListItem}
-      >
-        <Link
-          to={menuItem.url}
-          className={mobileNavigationStyles.mobileNavigationMenuLink}
-        >
-          {menuItem.text}
-        </Link>
-      </li>
-    );
   }
+
+  const uniqueKey = menuItem.url;
+  return (
+    <li
+      key={uniqueKey}
+      className={mobileNavigationStyles.mobileNavigationMenuListItem}
+    >
+      <Link
+        to={menuItem.url}
+        className={mobileNavigationStyles.mobileNavigationMenuLink}
+      >
+        {menuItem.text}
+      </Link>
+    </li>
+  );
 };
 
 export default Navigation;

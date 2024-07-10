@@ -10,6 +10,7 @@ import {
   UserLocationMarker,
 } from "../ui/MapElements";
 import { useAppContext } from "../../utils";
+import styles from "./MapOfLocations.module.scss";
 
 // TODO: Accordion needs big refactor/rebuild which is out of scope of this ticket. Will create new ticket.
 
@@ -27,7 +28,7 @@ export const MapOfLocations = ({
   const { lat, lng } = userLocation;
 
   return (
-    <>
+    <div className={styles.locationsMap}>
       <div className="map">
         <GoogleMap
           bootstrapURLKeys={{
@@ -77,6 +78,6 @@ export const MapOfLocations = ({
           ))}
         </Accordion>
       )}
-    </>
+    </div>
   );
 };

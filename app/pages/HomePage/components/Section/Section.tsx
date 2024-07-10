@@ -1,6 +1,7 @@
 import { Button } from "components/ui/inline/Button/Button";
 import React from "react";
 import { BackgroundColorVariant } from "models";
+import { StrapiModel } from "models/Strapi";
 import styles from "./Section.module.scss";
 
 export interface Slug {
@@ -19,10 +20,7 @@ export const HomePageSection = ({
   description?: string;
   backgroundColor: BackgroundColorVariant;
   children?: React.ReactNode;
-  link?: {
-    label: string;
-    slug: Slug;
-  };
+  link?: StrapiModel.Link;
 }) => (
   <section className={`${styles.section} ${styles[backgroundColor]}`}>
     <div className={styles.content}>
@@ -33,8 +31,8 @@ export const HomePageSection = ({
         </div>
 
         {link && (
-          <Button href={link.slug.current} arrowVariant="after" size="lg">
-            {link.label}
+          <Button href={link.url} arrowVariant="after" size="lg">
+            {link.text}
           </Button>
         )}
       </div>

@@ -1,57 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Loader } from "components/ui";
-import { client } from "../../sanity";
+import { StrapiModel } from "models/Strapi";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
-import {
-  TwoColumnContent,
-  TwoColumnContentSection,
-} from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
-
-interface PageState {
-  pageInitialized: boolean;
-  mastHead: string;
-  twoColumnContentSections: TwoColumnContent[];
-}
+import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
+import { usePageContent } from "../../hooks/StrapiAPI";
 
 export const AboutPage = () => {
-  const [pageData, setPageData] = useState<PageState>({
-    pageInitialized: false,
-    mastHead: "",
-    twoColumnContentSections: [],
-  });
+  const { data, isLoading } = usePageContent("About");
 
-  useEffect(() => {
-    const fetchPageData = async () => {
-      const fetchedPageData = await client.fetch(
-        `*[_type == 'contentPageType' && name == 'About']{mastHead, twoColumnContentSections[]->}`
-      );
+  const res = data as Array<StrapiModel.StrapiDatum<StrapiModel.PageContent>>;
 
-      const { mastHead, twoColumnContentSections } = fetchedPageData[0];
+  const pageData = res?.length ? res[0].attributes : null;
 
-      setPageData({
-        mastHead,
-        twoColumnContentSections,
-        pageInitialized: true,
-      });
-    };
-
-    fetchPageData();
-  }, []);
-
-  if (!pageData.pageInitialized) {
+  if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <>
-      <Masthead title={pageData.mastHead} />
-      {pageData?.twoColumnContentSections?.map(
-        (section: JSX.IntrinsicAttributes & TwoColumnContent) => {
-          return <TwoColumnContentSection key={section._id} {...section} />;
-        }
-      )}
-      <EmailSignup />
-    </>
+    pageData && (
+      <>
+        <Masthead title={pageData.masthead} />
+        {pageData.two_column_content_blocks?.data?.map((content) => (
+          <TwoColumnContentSection key={content.id} {...content.attributes} />
+        ))}
+        <EmailSignup />
+      </>
+    )
   );
 };

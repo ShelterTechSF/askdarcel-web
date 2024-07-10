@@ -326,7 +326,7 @@ export const ServicePdfPage = () => {
 
           {details.length > 0 && (
             <ServiceListingSection className="detailsSection">
-              <Datatable
+              <ListingInfoTable
                 rowRenderer={(d) => (
                   <>
                     <tr key={d.title}>
@@ -548,15 +548,15 @@ const TableOfOpeningTimes = ({
   </table>
 );
 
-interface DatatableProps<T = any> {
+interface ListingInfoTableProps<T = any> {
   rows: T[];
   rowRenderer: (row: T) => JSX.Element;
 }
 
-const Datatable = <T extends unknown>({
+const ListingInfoTable = <T extends unknown>({
   rows,
   rowRenderer,
-}: DatatableProps<T>) => (
+}: ListingInfoTableProps<T>) => (
   // NB This component was copied from our compoonents directory to be used
   // in this file so that future developers would not need to worry about this file
   // when updating our code

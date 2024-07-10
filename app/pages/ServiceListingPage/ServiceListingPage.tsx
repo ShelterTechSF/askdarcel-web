@@ -7,14 +7,15 @@ import {
   MapOfLocations,
   ServiceAttribution,
   ServiceCard,
-  TableOfContactInfo,
   TableOfOpeningTimes,
+  ContactInfoTableRows,
 } from "components/listing";
-import { Datatable, Loader } from "components/ui";
+import { ListingInfoTable, Loader } from "components/ui";
 import { removeAsterisksAndHashes } from "utils/strings";
 import { ListingInfoSection } from "components/ui/Cards/ListingInfoSection";
 import ListingPageHeader from "components/listing/PageHeader";
 import ListingPageWrapper from "components/listing/PageWrapper";
+import LabelTagRows from "components/listing/LabelTagRows";
 import {
   fetchService,
   generateServiceDetails,
@@ -104,7 +105,7 @@ export const ServiceListingPage = () => {
 
       {details.length > 0 && (
         <ListingInfoSection title="Details" data-cy="service-details-section">
-          <Datatable
+          <ListingInfoTable
             rowRenderer={(detail) => (
               <tr key={detail.title}>
                 <th>{detail.title}</th>
@@ -121,7 +122,10 @@ export const ServiceListingPage = () => {
       )}
 
       <ListingInfoSection title="Contact" data-cy="service-contact-section">
-        <TableOfContactInfo service={service} />
+        <ListingInfoTable
+          rows={[service]}
+          rowRenderer={(srv) => <ContactInfoTableRows service={srv} />}
+        />
       </ListingInfoSection>
 
       {locations.length > 0 && (
@@ -129,23 +133,20 @@ export const ServiceListingPage = () => {
           title="Location and hours"
           data-cy="service-loc-hours-section"
         >
-          <div className={styles["service-loc-hours-section"]}>
-            <MapOfLocations
-              locations={locations}
-              locationRenderer={(location: any) => (
-                <TableOfOpeningTimes
-                  recurringSchedule={location.recurringSchedule}
-                />
-              )}
-            />
-          </div>
+          <MapOfLocations
+            locations={locations}
+            locationRenderer={(location: any) => (
+              <TableOfOpeningTimes
+                recurringSchedule={location.recurringSchedule}
+              />
+            )}
+          />
         </ListingInfoSection>
       )}
 
       {resource.services.length > 1 && (
         <ListingInfoSection
           title="Other services at this organization"
-          borderBottom={false}
           data-cy="service-other-section"
         >
           {resource.services
@@ -161,6 +162,17 @@ export const ServiceListingPage = () => {
                 key={srv.id}
               />
             ))}
+        </ListingInfoSection>
+      )}
+      {(service.categories.length > 0 || service.eligibilities.length > 0) && (
+        <ListingInfoSection
+          title="Tags"
+          borderBottom={false}
+          data-cy="service-tags-section"
+        >
+          <ListingInfoTable>
+            <LabelTagRows service={service} />
+          </ListingInfoTable>
         </ListingInfoSection>
       )}
     </ListingPageWrapper>

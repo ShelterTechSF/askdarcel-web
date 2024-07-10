@@ -6,9 +6,9 @@ import ReactGA_4 from "react-ga4";
 import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
-import Navigation from "components/ui/Navigation";
 import { GeoCoordinates, getLocation, whiteLabel, AppProvider } from "./utils";
-import { UserWay } from "./components/ui";
+import { Navigation, UserWay } from "./components/ui";
+
 import config from "./config";
 import MetaImage from "./assets/img/sfsg-preview.png";
 import styles from "./App.module.scss";

@@ -1,0 +1,10 @@
+@import "../../styles/utils/helpers";
+
+.labelTags {
+  display: flex;
+  gap: $general-spacing-s;
+  flex-wrap: wrap;
+  @include r_max($break-tablet-s) {
+    gap: $general-spacing-xs;
+  }
+}

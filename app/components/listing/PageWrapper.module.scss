@@ -47,15 +47,20 @@
   justify-content: center;
 
   &--left {
-    width: calc-em(672px);
     padding-right: $padding-large;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     align-content: stretch;
+
+    @include r_min($break-tablet-s) {
+      width: calc-em(672px);
+    }
   }
+
   @include r_max($break-tablet-s) {
+    display: block;
     margin-top: 0;
     &--left {
       padding-right: 0;
