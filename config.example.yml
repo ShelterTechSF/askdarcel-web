@@ -28,3 +28,8 @@ AUTH0_REDIRECT_URI: "http://localhost:8080/auth"
 
 STRAPI_API_TOKEN: ""
 STRAPI_API_URL: ""
+
+API_URL: "https://staging.sfserviceguide.org"
+API_PROXY_SECURE: true
+API_PROXY_CHANGE_ORIGIN: true
+API_PROXY_REWRITE: false
