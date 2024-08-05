@@ -59,6 +59,7 @@ interface WhiteLabelSite {
   siteNavStyle: string;
   siteUrl: string;
   title: string;
+  useBoostedCategories: boolean;
   userWay: boolean;
   weGlot?: {
     apiKey: string;
@@ -120,6 +121,7 @@ services and re-entry programs.`,
   showSearch: true,
   showReportCrisis: false,
   siteNavStyle: styles.siteNav,
+  useBoostedCategories: false,
   userWay: false,
 } as const;
 
@@ -177,6 +179,7 @@ const SFServiceGuide: WhiteLabelSite = {
   showBreakingNews: true,
   title: "SF Service Guide",
   showReportCrisis: true,
+  useBoostedCategories: true,
 } as const;
 
 const LinkSF: WhiteLabelSite = {
@@ -205,6 +208,7 @@ const defaultWhiteLabel: WhiteLabelSite = {
   showBreakingNews: true,
   title: "SF Service Guide",
   showReportCrisis: true,
+  useBoostedCategories: true,
 } as const;
 
 const Ucsf: WhiteLabelSite = {
