@@ -168,7 +168,6 @@ const InnerServiceDiscoveryResults = ({
       // Our Algolia plan only allows for up to one optional filter, so just
       // drop all but the first.
       .slice(0, 1);
-    console.log(configureProps);
   }
 
   return (
