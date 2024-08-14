@@ -1,20 +1,31 @@
-import whiteLabel from "../../utils/whitelabel";
-
-import { LinkSf } from "./AboutPageMarkup/LinkSf";
-import { SfServiceGuide } from "./AboutPageMarkup/SfServiceGuide";
-
-// Disable max line length rule, since this file is mostly just text-heavy HTML content.
-/* eslint-disable max-len */
+import React from "react";
+import { Loader } from "components/ui";
+import { StrapiModel } from "models/Strapi";
+import { Masthead } from "../../components/ui/Masthead/Masthead";
+import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
+import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
+import { usePageContent } from "../../hooks/StrapiAPI";
 
 export const AboutPage = () => {
-  const { title } = whiteLabel;
+  const { data, isLoading } = usePageContent("About");
 
-  // Display different about page content depending on whether
-  // web domain is a whitelabel or not
-  // Todo: The different About page JSX components can be more DRY
-  if (title === "Link SF") {
-    return LinkSf();
+  const res = data as Array<StrapiModel.StrapiDatum<StrapiModel.PageContent>>;
+
+  const pageData = res?.length ? res[0].attributes : null;
+
+  if (isLoading) {
+    return <Loader />;
   }
 
-  return SfServiceGuide();
+  return (
+    pageData && (
+      <>
+        <Masthead title={pageData.masthead} />
+        {pageData.two_column_content_blocks?.data?.map((content) => (
+          <TwoColumnContentSection key={content.id} {...content.attributes} />
+        ))}
+        <EmailSignup />
+      </>
+    )
+  );
 };

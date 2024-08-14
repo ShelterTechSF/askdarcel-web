@@ -2,7 +2,9 @@
  * Data structures used for consistently representing time throughout the app.
  */
 
-import { invert, minBy, sortBy } from "lodash";
+import { invert } from "utils/arrays";
+import sortBy from "lodash.sortby";
+import minBy from "lodash.minby";
 
 // WARNING: This must match Moment.js's day of week to integer mapping.
 export const DAY_TO_INT = Object.freeze({
@@ -15,7 +17,9 @@ export const DAY_TO_INT = Object.freeze({
   Saturday: 6,
 });
 
-const INT_TO_DAY = Object.freeze(invert(DAY_TO_INT));
+const INT_TO_DAY: Readonly<{ [key: number]: string }> = Object.freeze(
+  invert(DAY_TO_INT)
+);
 
 export const DAYS_IN_WEEK = 7;
 export const HOURS_IN_DAY = 24;

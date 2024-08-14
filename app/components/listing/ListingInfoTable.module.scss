@@ -1,0 +1,29 @@
+@import "../../styles/utils/_helpers.scss";
+
+.listingInfoTable {
+  width: 100%;
+
+  tr {
+    transition: all 0.2s ease-in-out;
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      font-family: "Montserrat";
+      font-size: 18px;
+      font-weight: bold;
+      color: $text-primary;
+      width: 150px;
+      padding-right: $general-spacing-lg;
+      padding-left: $spacing-0;
+      @include r_max($break-tablet-s) {
+        width: 100px;
+        font-size: 16px;
+      }
+    }
+  }
+}

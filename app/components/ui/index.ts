@@ -1,10 +1,8 @@
 export * from "./Banner";
-export { NewsArticles } from "./NewsArticles/NewsArticles";
-export * from "./Datatable";
+export * from "../listing/ListingInfoTable";
 export * from "./Footer/Footer";
-export * from "./HamburgerMenu";
+export * from "./Navigation/HamburgerMenu";
 export * from "./Loader";
 export * from "./MapElements";
-export * from "./Navigation";
-export * from "./PopUpMessage";
+export * from "./Navigation/Navigation";
 export * from "./UserWay";

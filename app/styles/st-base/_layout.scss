@@ -1,8 +1,19 @@
-@import "../utils/_colors.scss";
-@import "../utils/_layoututils.scss";
+@import "../utils/helpers";
 
 .ReactModal__Body--open {
   position: fixed;
+}
+
+// a11y focus states
+a,
+button,
+input,
+select {
+  &:active,
+  &:focus {
+    outline: 3px solid $black;
+    border-radius: $rounded-md;
+  }
 }
 
 pre {
@@ -14,6 +25,7 @@ pre {
 }
 
 // Card Styles
+// TODO: move these to appropriate modules?
 .card {
   border: 1px solid #ccc;
   width: 100%;
@@ -70,7 +82,7 @@ pre {
 }
 
 .tippy-tooltip {
-  padding: 0;
+  padding: $general-spacing-xs;
 
   &:hover {
     .arrow-regular {
@@ -84,69 +96,55 @@ pre {
   }
 }
 
-.tippy-tooltip {
+.rendered-markdown {
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  ul {
+    padding: 16px 26px;
+
+    li {
+      list-style-type: disc;
+    }
+  }
+
+  ol {
+    padding: 16px 26px;
+
+    li {
+      list-style-type: decimal;
+    }
+  }
+}
+
+// Hide from print view
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+// Screen reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-
-  &:hover {
-    .arrow-regular {
-      background: #eee;
-    }
-  }
-
-  .card {
-    border: 0;
-    text-align: left;
-  }
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-.listing {
-  &.text-page {
-    h1,
-    h2,
-    h3 {
-      padding-top: 26px;
-      padding-bottom: 16px;
-    }
-
-    ul,
-    ol {
-      margin: 24px 0;
-      padding-left: 36px;
-    }
-
-    ul {
-      li {
-        list-style-type: disc;
-      }
-    }
-
-    ol {
-      li {
-        list-style-type: decimal;
-        margin: 6px 0;
-
-        ol {
-          margin-top: 6px;
-          padding-top: 6px;
-          padding-bottom: 6px;
-          padding-left: 16px;
-
-          li {
-            list-style-type: lower-roman;
-          }
-        }
-      }
-    }
-  }
-}
-
-a,
-button,
-input,
-select {
-  &:active,
-  &:focus {
-    outline: 3px solid #fbb040;
-    border-radius: $rounded-md;
-  }
+.no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }

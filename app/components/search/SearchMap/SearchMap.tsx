@@ -12,26 +12,21 @@ import {
   CustomMarker,
 } from "components/ui/MapElements";
 import "./SearchMap.scss";
-import { icon } from "assets";
-import { SearchHit } from "../../../models";
+import { TransformedSearchHit } from "../../../models";
 import config from "../../../config";
 
 export const SearchMap = ({
   hits,
-  hitsPerPage,
-  page,
   mapObject,
   setMapObject,
   setAroundLatLng,
-  overlayMapWithSearchResults,
+  mobileMapIsCollapsed,
 }: {
-  hits: SearchHit[];
-  hitsPerPage: number;
-  page: number;
+  hits: TransformedSearchHit[];
   mapObject: google.maps.Map | null;
   setMapObject: (map: any) => void;
   setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
-  overlayMapWithSearchResults: boolean;
+  mobileMapIsCollapsed: boolean;
 }) => {
   const { userLocation } = useAppContext();
   if (userLocation === null) {
@@ -42,29 +37,32 @@ export const SearchMap = ({
     );
   }
 
+  function handleSearchThisAreaClick() {
+    const center = mapObject?.getCenter() || null;
+    if (center?.lat() && center?.lng()) {
+      setAroundLatLng({ lat: center.lat(), lng: center.lng() });
+    }
+  }
+
   const { lat, lng } = userLocation;
 
   return (
     <div className="results-map">
+      <h2 className="sr-only">Map of search results</h2>
       <div className="map-wrapper">
         {/* If map is being overlaid, hide the search area button. It is is neither clickable
             nor relevant in this mode.
         */}
-        {!overlayMapWithSearchResults && (
+        {!mobileMapIsCollapsed && (
           <Button
             addClass="searchAreaButton"
-            styleType="transparent"
-            onClick={() => {
-              const center = mapObject?.getCenter() || null;
-              if (center?.lat() && center?.lng()) {
-                setAroundLatLng({ lat: center.lat(), lng: center.lng() });
-              }
-            }}
+            variant="primary"
+            iconName="fas fa-search"
+            iconVariant="before"
+            mobileFullWidth={false}
+            onClick={() => handleSearchThisAreaClick()}
           >
-            <>
-              <img src={icon("search")} alt="search" />
-              <span>Search this area</span>
-            </>
+            Search this area
           </Button>
         )}
         <GoogleMap
@@ -81,24 +79,15 @@ export const SearchMap = ({
           options={createMapOptions}
         >
           <UserLocationMarker lat={lat} lng={lng} key={1} />
-          {hits.reduce((markers, hit, index) => {
+          {hits.reduce((markers, hit) => {
             // Add a marker for each address of each hit
-            hit.addresses?.forEach((addr: any, i: number) => {
-              // Append letter to index number if there are multiple addresses per service
-              let tag = `${page * hitsPerPage + index + 1}`;
-              if (i > 0) {
-                const alphabeticalIndex = (i + 9).toString(36).toUpperCase();
-                tag += alphabeticalIndex;
-              }
-
+            hit.locations.forEach((location) => {
               markers.push(
-                <SearchHitMarker
-                  key={`${hit.id}.${addr.latitude}.${addr.longitude}.${
-                    addr.address_1
-                  }.${addr.address_2 || ""}`}
-                  lat={addr.latitude}
-                  lng={addr.longitude}
-                  tag={tag}
+                <GoogleSearchHitMarkerWorkaround
+                  key={location.id}
+                  lat={location.lat}
+                  lng={location.long}
+                  tag={location.label}
                   hit={hit}
                 />
               );
@@ -113,19 +102,20 @@ export const SearchMap = ({
 
 // The GoogleMap component expects children to be passed lat/long,
 // even though we don't use them here.
+//
 /* eslint-disable react/no-unused-prop-types */
-const SearchHitMarker = ({
+const GoogleSearchHitMarkerWorkaround = ({
   hit,
   tag,
 }: {
   lat: any;
   lng: any;
-  hit: SearchHit;
+  hit: TransformedSearchHit;
   tag: string;
 }) => (
   <Tooltip
     arrow
-    html={<SearchEntry hitNumber={tag} hit={hit} />}
+    html={<SearchEntry hit={hit} />}
     interactive
     position="bottom"
     theme="light"

@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, Redirect, useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import qs from "qs";
+import { ListingInfoSection } from "components/ui/Cards/ListingInfoSection";
+import { removeAsterisksAndHashes } from "utils/strings";
+import ListingPageHeader from "components/listing/PageHeader";
+import ListingPageWrapper from "components/listing/ListingPageWrapper";
 import {
   ActionBarMobile,
-  ActionSidebar,
   AddressInfoRenderer,
   EmailRenderer,
   MapOfLocations,
-  MOHCDBadge,
-  Notes,
+  NotesList,
   PhoneNumberRenderer,
-  RelativeOpeningTime,
   ResourceCategories,
-  ServiceList,
-  TableOfOpeningTimes,
+  ServiceCard,
   WebsiteRenderer,
 } from "../components/listing";
-import { Footer, Loader } from "../components/ui";
-import whitelabel from "../utils/whitelabel";
+import { Loader } from "../components/ui";
+
 import {
   fetchOrganization,
   getOrganizationActions,
@@ -36,6 +35,8 @@ export const OrganizationListingPage = () => {
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
   const { visitDeactivated } = searchState;
 
+  useEffect(() => window.scrollTo(0, 0), []);
+
   useEffect(() => {
     fetchOrganization(id).then((o) => setOrg(o));
     // TODO Handle Errors
@@ -51,7 +52,7 @@ export const OrganizationListingPage = () => {
   const orgLocations = getOrganizationLocations(org);
   const allActions = getOrganizationActions(org);
   const sidebarActions = allActions.filter((a) =>
-    ["print", "directions"].includes(a.icon)
+    ["print", "phone", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
     ["phone", "directions"].includes(a.icon)
@@ -67,142 +68,66 @@ export const OrganizationListingPage = () => {
   };
 
   return (
-    <div className="org-container">
-      <Helmet>
-        <title>{`${org.name} | ${whitelabel.title}`}</title>
-        <meta name="description" content={org.long_description || ""} />
-      </Helmet>
-      <article className="org" id="resource">
-        <div className="org--main weglot-dynamic">
-          <div className="org--main--left">
-            <header className="org--main--header">
-              <div className="org--main--header--title-container">
-                <h1
-                  data-cy="org-page-title"
-                  className="org--main--header--title notranslate"
-                >
-                  {org.name}
-                </h1>
-                <MOHCDBadge resource={org} />
-              </div>
-              <div className="org--main--header--hours">
-                <RelativeOpeningTime
-                  recurringSchedule={org.recurringSchedule}
-                />
-              </div>
-              {org.phones.length > 0 && (
-                <div className="org--main--header--phone">
-                  <PhoneNumberRenderer phones={org.phones} />
-                </div>
-              )}
-            </header>
+    <ListingPageWrapper
+      title={org.name}
+      description={org.long_description || ""}
+      sidebarActions={sidebarActions}
+      onClickAction={onClickAction}
+    >
+      <ListingPageHeader title={org.name} dataCy="org-page-title" />
 
-            <ActionBarMobile
-              actions={mobileActions}
-              onClickAction={onClickAction}
+      <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
+
+      <ListingInfoSection title="About" data-cy="org-about-section">
+        <ReactMarkdown
+          className="rendered-markdown"
+          source={
+            org.long_description ||
+            org.short_description ||
+            "No Description available"
+          }
+        />
+      </ListingInfoSection>
+
+      <ListingInfoSection title="Services" data-cy="org-services-section">
+        {org.services.length > 0 &&
+          org.services.map((srv) => (
+            <ServiceCard
+              service={{
+                ...srv,
+                long_description: srv.long_description
+                  ? removeAsterisksAndHashes(srv.long_description)
+                  : null,
+              }}
+              key={srv.id}
             />
+          ))}
+      </ListingInfoSection>
 
-            <OrganizationListingSection
-              title="About This Organization"
-              className="org--main--header--description"
-              data-cy="org-about-section"
-            >
-              <ReactMarkdown
-                className="rendered-markdown"
-                source={
-                  org.long_description ||
-                  org.short_description ||
-                  "No Description available"
-                }
-              />
-            </OrganizationListingSection>
+      <ListingInfoSection title="Contact" data-cy="org-info-section">
+        <ResourceCategories categories={org.categories} />
+        {(org.addresses || []).map((address) => (
+          <AddressInfoRenderer address={address} key={address.id} />
+        ))}
+        {org.phones.length > 0 && <PhoneNumberRenderer phones={org.phones} />}
+        {org.website && <WebsiteRenderer website={org.website} />}
+        {org.email && <EmailRenderer email={org.email} />}
+      </ListingInfoSection>
 
-            <OrganizationSubheaderSection
-              title="Services"
-              className="service--section"
-              data-cy="org-services-section"
-            >
-              <ServiceList services={org.services} />
-            </OrganizationSubheaderSection>
+      {orgLocations?.length > 0 && (
+        <ListingInfoSection
+          title="Location"
+          borderBottom={org.notes.length > 0}
+        >
+          <MapOfLocations locations={orgLocations} />
+        </ListingInfoSection>
+      )}
 
-            <Notes notes={org.notes} id="notes" />
-
-            <OrganizationSubheaderSection
-              title="Info"
-              className="info--section"
-              data-cy="org-info-section"
-            >
-              <ul className="info">
-                <div className="info--column">
-                  <ResourceCategories categories={org.categories} />
-                  {(org.addresses || []).map((address) => (
-                    <AddressInfoRenderer address={address} key={address.id} />
-                  ))}
-                  {org.phones.length > 0 && (
-                    <PhoneNumberRenderer phones={org.phones} />
-                  )}
-                  {org.website && <WebsiteRenderer website={org.website} />}
-                  {org.email && <EmailRenderer email={org.email} />}
-                </div>
-              </ul>
-            </OrganizationSubheaderSection>
-
-            {orgLocations?.length > 0 && (
-              <OrganizationSubheaderSection
-                title="Location"
-                className="location--section"
-              >
-                <MapOfLocations
-                  locations={orgLocations}
-                  locationRenderer={(loc: any) => (
-                    <TableOfOpeningTimes
-                      recurringSchedule={loc.recurringSchedule}
-                    />
-                  )}
-                />
-              </OrganizationSubheaderSection>
-            )}
-          </div>
-
-          <div className="org--aside">
-            <ActionSidebar
-              actions={sidebarActions}
-              onClickAction={onClickAction}
-            />
-          </div>
-        </div>
-      </article>
-      {whitelabel.footerOptions.showOnListingPages && <Footer />}
-    </div>
+      {org.notes.length > 0 && (
+        <ListingInfoSection title="Notes" borderBottom={false}>
+          <NotesList notes={org.notes} />
+        </ListingInfoSection>
+      )}
+    </ListingPageWrapper>
   );
 };
-
-type OrganizationListingSectionProps = {
-  title: string;
-} & React.HTMLProps<HTMLDivElement>;
-
-// A title with the content of a section
-export const OrganizationListingSection = ({
-  children,
-  title,
-  ...props
-}: OrganizationListingSectionProps) => (
-  <section {...props}>
-    <h2>{title}</h2>
-    {children}
-  </section>
-);
-
-// A subtitle with the content of a section
-export const OrganizationSubheaderSection = ({
-  children,
-  title,
-  ...props
-}: OrganizationListingSectionProps) => (
-  <section {...props}>
-    <header className="service--section--header">
-      <h4>{title}</h4>
-    </header>
-    {children}
-  </section>
-);

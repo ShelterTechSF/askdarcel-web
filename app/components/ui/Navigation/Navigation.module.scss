@@ -1,0 +1,74 @@
+@import "../../../styles/utils/_helpers.scss";
+@import "../../../styles/utils/_colors.scss";
+
+.siteNav {
+  background: $color-white;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-site-nav;
+  border-bottom: 1px solid $color-grey3;
+}
+
+// TODO: Remove with other white labeled sites
+.siteNavSFFamilies {
+  background: $color-sffamilies-nav;
+}
+
+.primaryRow {
+  @extend %flex-row;
+  height: $header-height;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: $width-navigation;
+  padding: 0 $general-spacing-md;
+  @include r_max($break-tablet-s) {
+    height: $header-mobile-height;
+  }
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  @include r_max($break-tablet-s) {
+    display: none;
+  }
+}
+
+.navLogo img {
+  height: 50px;
+
+  @include r_max($break-tablet-s) {
+    height: 25px;
+  }
+}
+
+.activatePushPanelButton {
+  font-size: 18px !important;
+  font-family: Montserrat;
+  font-weight: 500;
+
+  @include r_min($break-tablet-s) {
+    display: none !important; // !important is needed to override .form-row
+  }
+}
+
+// Until new nav is introduced, screen reader is reading hamburger links on desktop. This fixes that.
+.hamburgerContainer {
+  @media screen and (min-width: $break-tablet-s) {
+    display: none;
+  }
+}
+
+.navigationMenuTranslate {
+  width: 154px;
+
+  @include r_max($break-tablet-s) {
+    width: auto;
+    padding: $spacing-3 $spacing-4;
+  }
+}

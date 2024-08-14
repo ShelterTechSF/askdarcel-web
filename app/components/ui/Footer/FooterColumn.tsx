@@ -1,18 +1,18 @@
 import React from "react";
-import { FooterColumnType } from "./Footer";
+import { StrapiModel } from "models/Strapi";
 import { FooterLink } from "./FooterLink";
 
-interface FooterColumnProps {
-  column: FooterColumnType;
-}
-
-export const FooterColumn = ({ column }: FooterColumnProps) => {
+export const FooterColumn = ({
+  column,
+}: {
+  column: StrapiModel.DynamicLink;
+}) => {
   return (
     <figure>
       <figcaption>{column.title}</figcaption>
       <ul>
-        {column.links.map((link) => (
-          <li key={link.label}>
+        {column.link.map((link) => (
+          <li key={link.text}>
             <FooterLink link={link} />
           </li>
         ))}

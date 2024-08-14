@@ -1,20 +1,41 @@
+import { Button } from "components/ui/inline/Button/Button";
 import React from "react";
-
+import { BackgroundColorVariant } from "models";
+import { StrapiModel } from "models/Strapi";
 import styles from "./Section.module.scss";
+
+export interface Slug {
+  current: string;
+  _type: string;
+}
 
 export const HomePageSection = ({
   title,
   description,
+  backgroundColor,
+  link,
   children,
 }: {
-  title: string;
+  title?: string;
   description?: string;
+  backgroundColor: BackgroundColorVariant;
   children?: React.ReactNode;
+  link?: StrapiModel.Link;
 }) => (
-  <section className={styles.section}>
+  <section className={`${styles.section} ${styles[backgroundColor]}`}>
     <div className={styles.content}>
-      <h1 className={styles.title}>{title}</h1>
-      <div className={styles.description}>{description}</div>
+      <div className={styles.header}>
+        <div>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.description}>{description}</p>
+        </div>
+
+        {link && (
+          <Button href={link.url} arrowVariant="after" size="lg">
+            {link.text}
+          </Button>
+        )}
+      </div>
       {children}
     </div>
   </section>

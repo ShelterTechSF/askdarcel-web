@@ -16,6 +16,8 @@ export const Button = ({
   size = "base",
   variant = "primary",
   arrowVariant,
+  iconVariant = "before",
+  iconName,
   tabIndex,
   disabled,
   href,
@@ -31,6 +33,8 @@ export const Button = ({
   tabIndex?: number;
   disabled?: boolean;
   arrowVariant?: "before" | "after";
+  iconVariant?: "before" | "after";
+  iconName?: string; // use font awesome icon name without 'fa-'
   href?: string;
   mobileFullWidth?: boolean;
 }) => {
@@ -40,11 +44,23 @@ export const Button = ({
     styles[`button--${size}`],
     styles[`button--${variant}`],
     styles[`button--arrow-${arrowVariant}`],
-
     {
       [styles["mobile-full-width"]]: mobileFullWidth,
       [`${styles["button--link"]} ${styles[`button--link-${variant}`]}`]: href,
     }
+  );
+
+  const iconClass = classNames(
+    `fas fa-${iconName}`,
+    styles[`icon-${iconVariant}`]
+  );
+
+  const content = (
+    <>
+      {iconName && iconVariant === "before" && <span className={iconClass} />}
+      {children}
+      {iconName && iconVariant === "after" && <span className={iconClass} />}
+    </>
   );
 
   // Links that follow same visual guidelines as buttons
@@ -54,7 +70,7 @@ export const Button = ({
     const linkProps = isExternalLink && { target: "_blank", rel: "noreferrer" };
     return (
       <a href={href} className={buttonClass} {...linkProps}>
-        {children}
+        {content}
       </a>
     );
   }
@@ -70,7 +86,7 @@ export const Button = ({
       className={`${buttonClass} ${addClass || ""}`}
       disabled={disabled}
     >
-      {children}
+      {content}
     </button>
   );
 };

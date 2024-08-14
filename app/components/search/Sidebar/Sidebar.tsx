@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 
 import type { Category } from "models/Meta";
 
@@ -10,9 +10,8 @@ import ClearAllFilters from "components/search/Refinements/ClearAllFilters";
 import OpenNowFilter from "components/search/Refinements/OpenNowFilter";
 import RefinementListFilter from "components/search/Refinements/RefinementListFilter";
 import FacetRefinementList from "components/search/Refinements/FacetRefinementList";
-import { eligibilityMap as ucsfEligibilityMap } from "components/ucsf/RefinementLists/ucsfEligibilitiesMap";
-
-import filtersIcon from "assets/img/filters-icon.png";
+import { Button } from "components/ui/inline/Button/Button";
+import MobileMapToggleButtons from "./MobileMapToggleButtons";
 import styles from "./Sidebar.module.scss";
 
 const Sidebar = ({
@@ -20,19 +19,21 @@ const Sidebar = ({
   searchRadius,
   isSearchResultsPage,
   eligibilities = [],
-  categorySlug = "",
   subcategories = [],
   subcategoryNames = [],
   sortAlgoliaSubcategoryRefinements = false,
+  isMapCollapsed,
+  setIsMapCollapsed,
 }: {
   setSearchRadius: (radius: string) => void;
   searchRadius: string;
   isSearchResultsPage: boolean;
   eligibilities?: object[];
-  categorySlug?: string;
   subcategories?: Category[];
   subcategoryNames?: string[];
   sortAlgoliaSubcategoryRefinements?: boolean;
+  isMapCollapsed: boolean;
+  setIsMapCollapsed: (_isMapCollapsed: boolean) => void;
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   let categoryRefinementJsx: React.ReactElement | null = null;
@@ -63,25 +64,6 @@ const Sidebar = ({
     setSearchRadius(evt.target.value);
   };
 
-  const eligibilityNames = useMemo(() => {
-    // This var holds a set of eligibility names pertaining to a given whitelabeled category. This
-    // set can be used to filter the collection of eligibilities returned by Algolia in cases where
-    // we only want to display a specific list of eligibilities for said whitelabeled category.
-
-    // This only accepts UCSF specific slugs because UCSF is currently the only whitelabel that
-    // has a defined and limited set of eligibility filters. In the future, we can create a
-    // universal map of slugs to eligibility sets across all whitelabels.
-    const resourceEligibilityGroups = ucsfEligibilityMap[categorySlug];
-    if (!resourceEligibilityGroups) {
-      return [];
-    }
-
-    const flatEligibilities = resourceEligibilityGroups.flatMap(
-      (group) => group.eligibilities
-    );
-    return flatEligibilities.map((eligibility) => eligibility.name);
-  }, [categorySlug]);
-
   // Currently, the Search Results Page uses generic categories/eligibilities while the
   // Service Results Page uses COVID-specific categories. This logic determines which
   // of these to use as based on the isSearchResultsPage value
@@ -106,32 +88,10 @@ const Sidebar = ({
       eligibilityRefinementJsx = (
         <RefinementListFilter
           attribute="eligibilities"
-          /*
-            The eligibilityNames array represents a static list of eligibilites that are displayed
-            in the ServiceDiscovery form of the parent tile category. (Currently, only the UCSF
-            whitelabel uses this mechanism.)
-
-            If the eligibilityNames array is > 0, we use it to filter out Algolia's returned set
-            of eligibilities. For such cases, we want Algolia to return a large number of
-            eligiblities to ensure that the returned eligibilities include those on the static list.
-            If eligibilityNames is < 1, we just pass Algolia's default limit, 10, and accept those
-            10 without filtering them.
-
-            N.B.: Eligibilities, and refinements in general, are returned by Algolia in order of
-            `[count:desc`, name:asc`]. In other words, the 10 default eligibilities are the most
-            tagged eligibilities of the returned services, with `name:asc` acting as a tiebreaker.
-          */
-          limit={eligibilityNames.length > 0 ? 100 : 10}
-          transformItems={(items: { label: string }[]) => {
-            let itemsList = items;
-            if (eligibilityNames.length > 0) {
-              itemsList = items.filter(({ label }) =>
-                eligibilityNames.includes(label)
-              );
-            }
-
-            return itemsList.sort(orderByLabel);
-          }}
+          limit={100}
+          transformItems={(items: { label: string }[]) =>
+            items.sort(orderByLabel)
+          }
         />
       );
     }
@@ -165,19 +125,21 @@ const Sidebar = ({
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.filtersIconContainer}>
-        <button
-          className={styles.filterBtn}
+      <div className={styles.filtersButtonContainer} aria-hidden>
+        <Button
+          variant="linkBlue"
           onClick={() => setfilterMenuVisible(!filterMenuVisible)}
-          type="button"
+          iconName="sliders"
+          iconVariant="before"
+          mobileFullWidth={false}
+          size="lg"
         >
-          <img
-            src={filtersIcon}
-            alt="search filters"
-            className={styles.filtersIcon}
-          />
-          <span>Filters</span>
-        </button>
+          Filters
+        </Button>
+        <MobileMapToggleButtons
+          isMapCollapsed={isMapCollapsed}
+          setIsMapCollapsed={setIsMapCollapsed}
+        />
       </div>
       <div
         className={`${styles.filtersContainer} ${
@@ -185,18 +147,19 @@ const Sidebar = ({
         }`}
       >
         <div className={styles.filterResourcesHeaderMobile}>
-          <span className={styles.filterResourcesTitle}>Filters</span>
-          <button
-            className={`${styles.filterBtn} ${styles.filterResourcesBtn}`}
-            onClick={() => setfilterMenuVisible(!filterMenuVisible)}
-            type="button"
-          >
-            Close
-          </button>
+          <h2 className={styles.filterResourcesTitle}>Filters</h2>
+          <span className={styles.filterResourcesCloseButton}>
+            <Button
+              variant="linkBlue"
+              mobileFullWidth={false}
+              onClick={() => setfilterMenuVisible(!filterMenuVisible)}
+              size="lg"
+            >
+              Close
+            </Button>
+          </span>
         </div>
-        <span className={styles.filterResourcesTitleDesktop}>
-          Filter Resources
-        </span>
+        <h2 className={styles.filterResourcesTitleDesktop}>Filter Resources</h2>
         <ClearAllFilters setSearchRadius={setSearchRadius} />
         <div className={styles.filterGroup}>
           <div className={styles.filterTitle}>Availability</div>
@@ -208,21 +171,22 @@ const Sidebar = ({
             eligibilityRefinementJsx ? "" : styles.hideFilterGroup
           } `}
         >
-          <div className={styles.filterTitle}>Eligibilities</div>
+          <h2 className={styles.filterTitle}>Eligibilities</h2>
           {eligibilityRefinementJsx}
         </div>
-
-        <div
-          className={`${styles.filterGroup} ${
-            categoryRefinementJsx ? "" : styles.hideFilterGroup
-          }`}
-        >
-          <div className={styles.filterTitle}>Categories</div>
-          {categoryRefinementJsx}
-        </div>
+        {!isSearchResultsPage && (
+          <div
+            className={`${styles.filterGroup} ${
+              categoryRefinementJsx ? "" : styles.hideFilterGroup
+            }`}
+          >
+            <h2 className={styles.filterTitle}>Subcategories</h2>
+            {categoryRefinementJsx}
+          </div>
+        )}
 
         <div className={styles.filterGroup}>
-          <div className={styles.filterTitle}>Distance</div>
+          <h2 className={styles.filterTitle}>Distance</h2>
           <label className={styles.checkBox}>
             Within 4 blocks
             <input

@@ -1,56 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import whiteLabel from "utils/whitelabel";
+import websiteConfig from "utils/websiteConfig";
 import { RelativeOpeningTime } from "components/listing/RelativeOpeningTime";
-import type { SearchHit } from "models/SearchHits";
+import type { TransformedSearchHit } from "models/SearchHits";
 import "./SearchEntry.scss";
 
 const {
   appImages: { mohcdSeal },
-} = whiteLabel;
+} = websiteConfig;
 
-type Props = {
-  hitNumber: string;
-  hit: SearchHit;
-};
+interface Props {
+  hit: TransformedSearchHit;
+}
 
 export default class SearchEntry extends Component<Props> {
-  renderAddressMetadata() {
-    const { hit } = this.props;
-    const { addresses: rawAddresses } = hit;
-    const addresses = rawAddresses || [];
-
-    if (addresses.length === 0) {
-      return <span>No address found</span>;
-    }
-    if (addresses.length > 1) {
-      return <span>Multiple locations</span>;
-    }
-    if (addresses[0].address_1) {
-      return <span>{addresses[0].address_1}</span>;
-    }
-    return <span>No address found</span>;
-  }
-
   render() {
-    const { hit, hitNumber } = this.props;
-    const description = hit.long_description || "No description, yet...";
+    const { hit } = this.props;
     const { recurringSchedule, type } = hit;
 
-    // handle resources and services slightly differently.
-    let basePath = "organizations";
-    let entryId = hit.resource_id;
-    if (type === "service") {
-      basePath = "services";
-      entryId = hit.service_id;
-    }
     return (
-      <Link to={{ pathname: `/${basePath}/${entryId}` }}>
+      <Link to={{ pathname: hit.path }}>
         <li className={`results-table-entry ${type}-entry`}>
           <div className="entry-details">
             <div className="entry-header">
-              <h4 className="entry-headline">{`${hitNumber}. ${hit.name}`}</h4>
+              <h4 className="entry-headline">{hit.headline}</h4>
               {hit.is_mohcd_funded && (
                 <div className="mohcd-funded">
                   <img src={mohcdSeal} alt="MOHCD seal" />
@@ -66,7 +40,7 @@ export default class SearchEntry extends Component<Props> {
               </p>
             )}
             <p className="entry-meta">
-              {this.renderAddressMetadata()}
+              {hit.addressDisplay}
               {recurringSchedule && (
                 <span className="entry-schedule">
                   <RelativeOpeningTime recurringSchedule={recurringSchedule} />
@@ -76,7 +50,7 @@ export default class SearchEntry extends Component<Props> {
             <div className="entry-body">
               <ReactMarkdown
                 className="rendered-markdown search-entry-body"
-                source={description}
+                source={hit.longDescription}
               />
             </div>
           </div>

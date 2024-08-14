@@ -1,0 +1,56 @@
+@import "~styles/utils/_helpers.scss";
+
+.accordion {
+  max-width: 544px;
+  margin: $general-spacing-lg auto $spacing-0;
+
+  @include r_max($break-desktop-s) {
+    margin: $general-spacing-lg $spacing-0 $spacing-0;
+  }
+
+  @include r_max($break-tablet-s) {
+    max-width: 100%;
+  }
+
+  .accordionItem {
+    border-radius: var(--rounded-md, 6px);
+    border: 1px solid var(--tailwind-gray-200, #e5e7eb);
+    background: var(--surface-surface-primary, #fff);
+    margin-bottom: $general-spacing-md;
+  }
+
+  .accordionButton {
+    width: 100%;
+    padding: $general-spacing-md;
+
+    &:focus,
+    &:active {
+      margin: 3px 0; // to make focus outline visible
+    }
+
+    &:hover {
+      background-color: $gray-100;
+    }
+  }
+
+  .accordionTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Montserrat;
+    color: $text-primary;
+    font-weight: 600;
+    width: 100%;
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .accordionContent {
+    padding: $general-spacing-md;
+    padding-top: $general-spacing-xs;
+  }
+
+  .activeItem {
+    background: $gray-50;
+  }
+}

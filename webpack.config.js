@@ -21,6 +21,10 @@ if (existsSync("config.yml") || process.env.CONFIG_YAML) {
 
 // Take the user config from the file, and override keys with environment variables if they exist
 const environmentConfig = [
+  "API_URL",
+  "API_PROXY_SECURE",
+  "API_PROXY_CHANGE_ORIGIN",
+  "API_PROXY_REWRITE",
   "GOOGLE_API_KEY",
   "ALGOLIA_INDEX_PREFIX",
   "ALGOLIA_APPLICATION_ID",
@@ -34,12 +38,8 @@ const environmentConfig = [
   "AUTH0_CLIENT_ID",
   "AUTH0_DOMAIN",
   "AUTH0_REDIRECT_URI",
-  "SANITY_PROJECT_ID",
-  "SANITY_PROJECT_DATASET",
-  "SANITY_USE_CDN",
-  "SANITY_PERSPECTIVE",
-  "SANITY_WITH_CREDENTIALS",
-  "SANITY_API_TOKEN",
+  "STRAPI_API_TOKEN",
+  "STRAPI_API_URL",
 ];
 
 const config = environmentConfig.reduce((acc, key) => {
@@ -75,16 +75,15 @@ module.exports = {
     },
   },
   plugins: [
+    // TODO: Replace og fields:
     new HtmlWebpackPlugin({
-      title: "SF Service Guide",
+      title: "Our415",
       template: "app/index.html",
       meta: {
-        "og:url": "https://sfserviceguide.org",
-        "og:title": "SF Service Guide | San Francisco",
-        "twitter:card": "summary_large_image",
-        "twitter:site": "@sheltertechorg",
+        "og:url": "https://sfserviceguide.org", // TODO: Change This
+        "og:title": "Our415 | San Francisco",
         "og:description":
-          "Get guided help finding food, housing, rental assistance, hygiene, health resources, essential services, and more in San Francisco. See the latest updates during the COVID-19 Coronavirus pandemic.",
+          "Our 415 is your source for everything San Francisco has for young people and families.",
         "og:type": "website",
         // Note: The image is specified in the HTML itself because it needs to
         // reference an image file.
@@ -92,7 +91,7 @@ module.exports = {
         "og:image:width": "1200",
         "og:image:height": "630",
       },
-      favicon: "app/favicon.ico",
+      favicon: "app/assets/img/our-415-favicon.png",
     }),
     new ExtendedDefinePlugin({
       CONFIG: config,
@@ -176,15 +175,23 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       "/api-docs": {
-        target: process.env.API_URL || "http://localhost:3000",
+        target: config.API_UR || "http://localhost:3000",
+        secure: config.API_PROXY_SECURE || false,
+        changeOrigin: config.API_PROXY_CHANGE_ORIGIN || false,
       },
       "/api/v2/": {
-        target: process.env.API_GO_URL || "http://localhost:3001",
-        pathRewrite: { "^/api/v2/": "/api/" },
+        target: config.API_URL || "http://localhost:3001",
+        pathRewrite: config.API_PROXY_REWRITE
+          ? { "^/api/v2/": "/api/" }
+          : undefined,
+        secure: config.API_PROXY_SECURE || false,
+        changeOrigin: config.API_PROXY_CHANGE_ORIGIN || false,
       },
       "/api/": {
-        target: process.env.API_URL || "http://localhost:3000",
-        pathRewrite: { "^/api/": "" },
+        target: config.API_URL || "http://localhost:3000",
+        pathRewrite: config.API_PROXY_REWRITE ? { "^/api/": "" } : undefined,
+        secure: config.API_PROXY_SECURE || false,
+        changeOrigin: config.API_PROXY_CHANGE_ORIGIN || false,
       },
     },
   },

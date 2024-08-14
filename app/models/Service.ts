@@ -35,7 +35,7 @@ export interface Service {
   instructions: Instruction[];
   internal_note: string | null;
   interpretation_services: string | null;
-  long_description: string;
+  long_description: string | null;
   notes: Note[];
   program: Program | null;
   recurringSchedule: RecurringSchedule;
@@ -47,8 +47,8 @@ export interface Service {
   status: "pending" | "approved" | "rejected" | "inactive";
   updated_at: string;
   url: string | null;
-  verified_at: any;
-  wait_time: any;
+  verified_at: Date | null;
+  wait_time: Date | null;
 }
 
 export interface ServiceParams

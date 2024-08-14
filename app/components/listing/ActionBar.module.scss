@@ -1,0 +1,18 @@
+@import "../../styles/utils/helpers";
+
+.action-bar-mobile {
+  display: none;
+  @include r_max($break-tablet-s) {
+    display: flex;
+    gap: $general-spacing-s;
+  }
+  &--listitem {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+
+    .action-sidebar--icon {
+      margin-right: $general-spacing-xs;
+    }
+  }
+}

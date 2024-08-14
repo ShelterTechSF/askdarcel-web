@@ -7,10 +7,10 @@
 .flexContainer {
   display: flex;
   width: 100%;
-  max-width: 1440px;
+  max-width: $width-navigation;
   margin: auto;
 
-  @media screen and (max-width: $break-tablet-l) {
+  @media screen and (max-width: $break-desktop-s) {
     flex-direction: column;
   }
 }

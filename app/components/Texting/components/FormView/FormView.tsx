@@ -75,7 +75,7 @@ export const FormView = ({
             className={styles.checkBox}
             onChange={onChange}
           />
-          I agree to receive text messages from SF Service Guide.
+          I agree to receive text messages from Our415.
         </label>
       </div>
       <Buttons disabled={!agreed} closeModal={closeModal} onSubmit={onSubmit} />

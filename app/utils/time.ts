@@ -59,7 +59,7 @@ export function getCurrentDayTime() {
   const finalTime = mmt
     .startOf("day")
     .add(timeRoundedDown, "minutes")
-    .format("HH:mm");
+    .format("H:mm");
 
   let dayText = "";
 

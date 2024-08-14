@@ -1,39 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-import {
-  connectStateResults,
-  SearchResults as SearchResultsProps,
-} from "react-instantsearch/connectors";
-import { CATEGORIES } from "pages/ServiceDiscoveryForm/constants";
+import { connectStateResults } from "react-instantsearch/connectors";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
-import { formatPhoneNumber, renderAddressMetadata } from "utils";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
-// import { Texting } from "components/Texting";
-// import { TextListing } from "components/Texting/Texting";
-import { SearchHit, transformHits } from "../../../models/SearchHits";
+import { SearchResult } from "components/search/SearchResults/SearchResult";
+import {
+  SearchMapHitData,
+  SearchResultsResponse,
+  TransformedSearchHit,
+  transformSearchResults,
+} from "../../../models/SearchHits";
 import styles from "./SearchResults.module.scss";
-
-// NOTE: We will re-implement the texting feature so leaving these comments in the project until then
+import ClearSearchButton from "../Refinements/ClearSearchButton";
 
 const SearchResults = ({
   searchResults,
-  overlayMapWithSearchResults,
+  mobileMapIsCollapsed,
   setAroundLatLng,
-  categoryId,
+  searchQuery,
 }: {
-  searchResults: SearchResultsProps;
-  overlayMapWithSearchResults: boolean;
+  searchResults: SearchResultsResponse;
+  mobileMapIsCollapsed: boolean;
   setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
-  categoryId?: string;
+  searchQuery?: string | null;
 }) => {
-  const category = CATEGORIES.find((c) => c.id === categoryId);
-  const sortBy24HourAvailability = Boolean(category?.sortBy24HourAvailability);
-  const hits = transformHits(
-    searchResults ? (searchResults.hits as unknown as SearchHit[]) : [],
-    sortBy24HourAvailability
-  );
-
   const [centerCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
     null
@@ -52,163 +41,56 @@ const SearchResults = ({
 
   if (!searchResults) return null;
 
+  const searchMapHitData: SearchMapHitData =
+    transformSearchResults(searchResults);
+  const hasNoResults = searchMapHitData.nbHits === 0;
+
+  const NoResultsDisplay = () => (
+    <div className={`${styles.noResultsMessage}`}>
+      <div className={styles.noResultsText}>
+        No results {searchQuery && `for ${` "${searchQuery}" `}`} found in your
+        area.
+        <br /> Try a different location, filter, or search term.
+      </div>
+
+      {searchQuery && <ClearSearchButton />}
+    </div>
+  );
+
   return (
     <div className={styles.searchResultsAndMapContainer}>
       <div
         className={`${styles.searchResultsContainer} ${
-          overlayMapWithSearchResults ? styles.overlayMapWithSearchResults : ""
+          mobileMapIsCollapsed ? styles.mobileMapIsCollapsed : ""
         }`}
       >
-        <div
-          className={`${styles.noResultsMessage} ${
-            hits && hits.length ? styles.hidden : ""
-          }`}
-        >
-          No results found in your area. Try a different location, category, or
-          search term.
-        </div>
-        {hits.map((hit, index) => (
-          <SearchResult
-            hit={hit}
-            index={index}
-            // categoryId={categoryId} // Keep for category ticket
-            key={hit.id}
-          />
-        ))}
-        <ResultsPagination noResults={!hits || !hits.length} />
+        <h2 className="sr-only">Search results</h2>
+        {hasNoResults ? (
+          <NoResultsDisplay />
+        ) : (
+          <>
+            {searchQuery && (
+              <div className={styles.searchResultsHeader}>
+                <h2>{`${searchResults.nbHits} search results ${
+                  searchQuery && ` for ${searchQuery}`
+                }`}</h2>
+                <ClearSearchButton />
+              </div>
+            )}
+            {searchMapHitData.hits.map((hit: TransformedSearchHit) => (
+              <SearchResult hit={hit} key={`${hit.id} - ${hit.name}`} />
+            ))}
+            <ResultsPagination noResults={hasNoResults} />
+          </>
+        )}
       </div>
       <SearchMap
-        hits={hits}
-        page={0}
-        hitsPerPage={hits.length}
+        hits={searchMapHitData.hits}
         mapObject={googleMapObject}
         setMapObject={setMapObject}
         setAroundLatLng={setAroundLatLng}
-        overlayMapWithSearchResults={overlayMapWithSearchResults}
+        mobileMapIsCollapsed={mobileMapIsCollapsed}
       />
-    </div>
-  );
-};
-
-const SearchResult = ({
-  hit,
-  index,
-}: {
-  hit: SearchHit;
-  index: number;
-  // categoryId: string | undefined;
-}) => {
-  // Keep for Phase 2:
-  // const [textingIsOpen, setTextingIsOpen] = useState(false);
-
-  // let listing: TextListing;
-  // if (hit.type === "service") {
-  //   listing = {
-  //     listingName: hit.name,
-  //     type: hit.type,
-  //     serviceId: hit.id,
-  //   };
-  // } else {
-  //   listing = {
-  //     listingName: hit.name,
-  //     type: hit.type,
-  //     resourceId: hit.id,
-  //   };
-  // }
-
-  // const toggleTextingModal = () => setTextingIsOpen(!textingIsOpen);
-  // TODO: this bookmarkAdded boolean should be set in accordance with the value of the bookmark model
-  // returned by the API. Fetching the model from the API will need to be done in such a way that it does not
-  // block the rendering of the search results and yet does not cause the button to flash in a distracting manner
-
-  // const texting = (
-  //   <div
-  //     className={styles.sideLink}
-  //     data-field="text-me"
-  //     role="button"
-  //     tabIndex={0}
-  //     onClick={toggleTextingModal}
-  //   >
-  //     <img
-  //       src={icon("text-message")}
-  //       alt="chat-bubble"
-  //       className={styles.sideLinkIcon}
-  //     />
-  //     <div className={styles.sideLinkText}>Text me the info</div>
-  //   </div>
-  // );
-
-  const phoneNumber = hit?.phones?.[0]?.number;
-  const url = hit.type === "service" ? hit.url : hit.website;
-  const basePath = hit.type === "service" ? `services` : `organizations`;
-
-  return (
-    <div className={styles.searchResult}>
-      {/* Keep for Phase 2: */}
-      {/* <Texting
-        closeModal={toggleTextingModal}
-        listing={listing}
-        isShowing={textingIsOpen}
-      /> */}
-      <div className={styles.searchResultContentContainer}>
-        <div>
-          <h2 className={styles.title}>
-            {index + 1}.{" "}
-            <Link
-              to={{ pathname: `/${basePath}/${hit.id}` }}
-              className={`notranslate ${styles.titleLink}`}
-            >
-              {hit.name}
-            </Link>
-          </h2>
-          {hit.type === "service" && (
-            <div className={styles.serviceOf}>
-              <Link
-                to={`/organizations/${hit.resource_id}`}
-                className={`notranslate ${styles.serviceOfLink}`}
-              >
-                {hit.service_of}
-              </Link>
-            </div>
-          )}
-        </div>
-        <div className={styles.searchResultContent}>
-          <div className={styles.searchText}>
-            <div className={`notranslate ${styles.address}`}>
-              {renderAddressMetadata(hit)}
-            </div>
-            <ReactMarkdown
-              className={`rendered-markdown ${styles.description}`}
-              source={hit.long_description ?? undefined}
-              linkTarget="_blank"
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.sideLinks}>
-        {phoneNumber && (
-          <a
-            href={`tel:${phoneNumber}`}
-            className={`${styles.icon} ${styles["icon-phone"]}`}
-          >
-            <span className="sr-only">
-              Call {formatPhoneNumber(phoneNumber)}
-            </span>
-          </a>
-        )}
-        {url && (
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={url}
-            className={`${styles.icon} ${styles["icon-popout"]}`}
-          >
-            <span className="sr-only">Go to website</span>
-          </a>
-        )}
-        {/* Keep for phase 2: */}
-        {/* {texting} */}
-      </div>
     </div>
   );
 };

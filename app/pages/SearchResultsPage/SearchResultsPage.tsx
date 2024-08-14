@@ -6,7 +6,7 @@ import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, Configure, SearchBox } from "react-instantsearch/dom";
 import qs, { ParsedQs } from "qs";
 
-import { GeoCoordinates, useAppContext, whiteLabel } from "utils";
+import { GeoCoordinates, useAppContext, websiteConfig } from "utils";
 import { post } from "utils/DataService";
 
 import { Loader } from "components/ui";
@@ -41,7 +41,7 @@ export const SearchResultsPage = () => {
   const { search } = useLocation();
   const { userLocation } = useAppContext();
   const [lastPush, setLastPush] = useState(Date.now());
-  const [expandList, setExpandList] = useState(false);
+  const [isMapCollapsed, setIsMapCollapsed] = useState(false);
 
   const [searchState, setSearchState] = useState<SearchState | null>(null);
   const [searchRadius, setSearchRadius] = useState(
@@ -116,8 +116,8 @@ export const SearchResultsPage = () => {
       userLocation={{ lat: userLocation.lat, lng: userLocation.lng }}
       lastPush={lastPush}
       setLastPush={setLastPush}
-      expandList={expandList}
-      setExpandList={setExpandList}
+      isMapCollapsed={isMapCollapsed}
+      setIsMapCollapsed={setIsMapCollapsed}
       searchState={searchState}
       searchRadius={searchRadius}
       setSearchRadius={setSearchRadius}
@@ -132,8 +132,8 @@ const InnerSearchResults = ({
   userLocation,
   lastPush,
   setLastPush,
-  expandList,
-  setExpandList,
+  isMapCollapsed,
+  setIsMapCollapsed,
   searchState,
   searchRadius,
   setSearchRadius,
@@ -143,14 +143,14 @@ const InnerSearchResults = ({
   userLocation: GeoCoordinates;
   lastPush: number;
   setLastPush: (time: number) => void;
-  expandList: boolean;
-  setExpandList: (listExpanded: boolean) => void;
+  isMapCollapsed: boolean;
+  setIsMapCollapsed: (listExpanded: boolean) => void;
   searchState: SearchState;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
   untranslatedQuery: string | undefined | null;
 }) => {
-  const [location, setLocation] = useState({
+  const [aroundLatLang, setAroundLatLng] = useState({
     lat: userLocation.lat,
     lng: userLocation.lng,
   });
@@ -159,7 +159,7 @@ const InnerSearchResults = ({
     <div className={styles.container}>
       <Helmet>
         <title>{`${searchState.query ?? "Services"} in San Francisco | ${
-          whiteLabel.title
+          websiteConfig.title
         }`}</title>
         <meta
           name="description"
@@ -168,12 +168,8 @@ const InnerSearchResults = ({
           } in San Francisco`}
         />
       </Helmet>
-      <Header
-        translateResultsTitle={false}
-        resultsTitle={untranslatedQuery ?? ""}
-        expandList={expandList}
-        setExpandList={setExpandList}
-      />
+
+      <Header resultsTitle="All categories" />
 
       <InstantSearch
         searchClient={searchClient}
@@ -206,7 +202,7 @@ const InnerSearchResults = ({
         createURL={(state: any) => `search?${qs.stringify(state)}`}
       >
         <Configure
-          aroundLatLng={`${location.lat}, ${location.lng}`}
+          aroundLatLng={`${aroundLatLang.lat}, ${aroundLatLang.lng}`}
           aroundRadius={searchRadius}
           aroundPrecision={1600}
         />
@@ -215,12 +211,15 @@ const InnerSearchResults = ({
             setSearchRadius={setSearchRadius}
             searchRadius={searchRadius}
             isSearchResultsPage
+            isMapCollapsed={isMapCollapsed}
+            setIsMapCollapsed={setIsMapCollapsed}
           />
 
           <div className={styles.results}>
             <SearchResults
-              overlayMapWithSearchResults={expandList}
-              setAroundLatLng={setLocation}
+              mobileMapIsCollapsed={isMapCollapsed}
+              setAroundLatLng={setAroundLatLng}
+              searchQuery={untranslatedQuery}
             />
           </div>
         </div>

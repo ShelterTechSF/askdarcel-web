@@ -1,0 +1,36 @@
+@import "~styles/utils/_helpers.scss";
+
+.searchHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-6;
+
+  @include r_max($break-tablet-s) {
+    display: block;
+    gap: $spacing-3;
+  }
+
+  .searchHeaderContainerLeft {
+    display: flex;
+    align-items: center;
+    gap: $spacing-6;
+
+    h1 {
+      font-size: 26px;
+      min-height: 100%;
+      line-height: 100%;
+    }
+
+    @include r_max($break-tablet-s) {
+      display: block;
+      width: 100%;
+      margin-bottom: $spacing-2;
+
+      h1 {
+        margin-bottom: $spacing-2;
+        font-size: 20px;
+      }
+    }
+  }
+}

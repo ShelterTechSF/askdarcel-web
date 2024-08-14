@@ -79,16 +79,6 @@ To check the source code for syntax errors and potential issues run:
 $ npm run lint
 ```
 
-To launch unit tests:
-
-```shell
-$ npm test
-```
-
-Test any javascript module by creating a `__tests__/` directory where
-the file is. Append `-test.js` to the filename and
-[Jest](https://facebook.github.io/jest/) will do the rest.
-
 To deploy the app, run:
 
 ```shell

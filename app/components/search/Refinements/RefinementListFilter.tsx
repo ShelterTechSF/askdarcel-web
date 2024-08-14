@@ -13,22 +13,26 @@ type Props = {
   items: Item[];
   refine: (value: string[]) => void;
 };
-const RefinementListFilter = ({ items, refine }: Props) => (
-  <ul>
-    {items.map((item) => (
-      <label key={item.label} className={styles.checkBox}>
-        {item.label}
-        <input
-          className={styles.refinementInput}
-          type="checkbox"
-          checked={item.isRefined}
-          onChange={() => {
-            refine(item.value);
-          }}
-        />
-      </label>
-    ))}
-  </ul>
-);
+const RefinementListFilter = ({ items, refine }: Props) => {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.label}>
+          <label className={styles.checkBox}>
+            {item.label}
+            <input
+              className={styles.refinementInput}
+              type="checkbox"
+              checked={item.isRefined}
+              onChange={() => {
+                refine(item.value);
+              }}
+            />
+          </label>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default connectRefinementList(RefinementListFilter);

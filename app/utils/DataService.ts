@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import assignIn from "lodash.assignin";
 
 function setAuthHeaders(resp: Response): void {
   const { headers } = resp;
@@ -26,7 +26,7 @@ export function post(
     "Content-Type": "application/json",
   };
   if (headers) {
-    queryHeaders = _.assignIn(queryHeaders, headers);
+    queryHeaders = assignIn(queryHeaders, headers);
   }
   return fetch(url, {
     method: "POST",
@@ -50,7 +50,7 @@ export function get(
     "Content-Type": "application/json",
   };
   if (headers) {
-    queryHeaders = _.assignIn(queryHeaders, headers);
+    queryHeaders = assignIn(queryHeaders, headers);
   }
   return fetch(url, {
     method: "GET",
@@ -76,7 +76,7 @@ export function put(
     "Content-Type": "application/json",
   };
   if (headers) {
-    queryHeaders = _.assignIn(queryHeaders, headers);
+    queryHeaders = assignIn(queryHeaders, headers);
   }
   return fetch(url, {
     method: "PUT",
@@ -100,7 +100,7 @@ export function APIDelete(
     "Content-Type": "application/json",
   };
   if (headers) {
-    queryHeaders = _.assignIn(queryHeaders, headers);
+    queryHeaders = assignIn(queryHeaders, headers);
   }
   return fetch(url, {
     method: "DELETE",

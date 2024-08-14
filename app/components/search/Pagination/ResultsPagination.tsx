@@ -1,12 +1,12 @@
 import React from "react";
 import { Pagination } from "react-instantsearch/dom";
-import whiteLabel from "utils/whitelabel";
+import websiteConfig from "utils/websiteConfig";
 
 import styles from "./ResultsPagination.module.scss";
 
 const {
   appImages: { algolia },
-} = whiteLabel;
+} = websiteConfig;
 
 const ResultsPagination = ({ noResults }: { noResults: boolean }) => (
   <div>

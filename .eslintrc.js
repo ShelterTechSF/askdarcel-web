@@ -1,13 +1,8 @@
 const path = require("path");
 
 module.exports = {
-  extends: [
-    "airbnb",
-    "plugin:testcafe/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier",
-  ],
-  plugins: ["react", "jsx-a11y", "import", "testcafe", "@typescript-eslint"],
+  extends: ["airbnb", "plugin:react-hooks/recommended", "prettier"],
+  plugins: ["react", "jsx-a11y", "import", "@typescript-eslint"],
   env: {
     browser: true,
   },
@@ -70,7 +65,10 @@ module.exports = {
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
-        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          { ignoreRestSiblings: true },
+        ],
         "@typescript-eslint/no-unused-expressions": "error",
         "@typescript-eslint/require-await": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
@@ -105,48 +103,6 @@ module.exports = {
         "react/jsx-props-no-spreading": "off",
         "max-classes-per-file": "off",
         "default-param-last": "off",
-      },
-    },
-    // Mocha Tests
-    {
-      files: ["**/*.spec.[jt]s*", "testing/mocha.js"],
-      env: { mocha: true },
-      rules: {
-        "import/no-extraneous-dependencies": [
-          "error",
-          { devDependencies: true },
-        ],
-        // This file is an entrypoints, so it does not require exports.
-        "import/no-unused-modules": "off",
-        // Chai assertions may appear like unused expressions
-        "no-unused-expressions": "off",
-        "@typescript-eslint/no-unused-expressions": "off",
-      },
-    },
-    // TestCafe
-    {
-      files: ["testcafe/**"],
-      rules: {
-        "import/no-extraneous-dependencies": [
-          "error",
-          { devDependencies: true },
-        ],
-        // TestCafe uses tagged template literals for DSL reasons, so they are
-        // expressions that actually have a stateful effect. This is
-        // specifically used in the `fixture` syntax.
-        "no-unused-expressions": ["error", { allowTaggedTemplates: true }],
-        // The TestCafe test files are entrypoints, so they do not require
-        // exports.
-        "import/no-unused-modules": "off",
-      },
-    },
-    // Cypress
-    {
-      files: ["cypress/**"],
-      rules: {
-        "newline-per-chained-call": "off",
-        "lines-between-class-members": "off",
-        indent: "off",
       },
     },
     // Node.js scripts

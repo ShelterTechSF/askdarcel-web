@@ -11,5 +11,15 @@ config.yml
 .DS_Store
 yarn.lock
 
-cypress/videos/**
-cypress/screenshots/**
+.vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix

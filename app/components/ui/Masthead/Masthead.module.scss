@@ -2,7 +2,12 @@
 
 .mastheadContainer {
   background: $surface-4;
-  padding: $spacing-24 $spacing-32;
+  padding: $spacing-24 $general-spacing-md;
+}
+
+.innerContainer {
+  max-width: $width-content;
+  margin: auto;
 }
 
 .mastheadHeader {

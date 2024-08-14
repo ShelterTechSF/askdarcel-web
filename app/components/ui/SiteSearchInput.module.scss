@@ -1,0 +1,27 @@
+@import "../../styles/utils/_helpers.scss";
+
+.navSearch {
+  position: relative;
+
+  .searchField {
+    $font-size: calc-em(15px);
+    font-size: $font-size;
+    padding-left: calc-em(45px);
+    width: calc-em(400px);
+    height: calc-em(40px);
+    border: 2px solid $color-tertiary;
+    background-color: $color-grey1;
+    border-radius: $rounded-full;
+
+    &::placeholder {
+      font-size: $font-size;
+      font-style: normal;
+    }
+  }
+
+  .searchIcon {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+  }
+}

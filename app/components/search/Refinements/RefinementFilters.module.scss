@@ -2,7 +2,7 @@
 
 .clearAll {
   font-size: 16px;
-  color: $color-brand;
+  color: $color-btn-primary;
   cursor: pointer;
   margin-top: 32px;
   @media screen and (min-width: $min-desktop) {
@@ -15,11 +15,15 @@
   flex-direction: row-reverse;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 13px;
+  margin-top: $general-spacing-s;
   color: $color-grey5;
   cursor: pointer;
   &.disabled {
     color: $color-grey4;
+  }
+
+  @media screen and (max-width: $break-tablet-s) {
+    font-size: 14px;
   }
 }
 

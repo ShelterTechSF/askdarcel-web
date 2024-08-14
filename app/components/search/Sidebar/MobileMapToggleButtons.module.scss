@@ -1,0 +1,45 @@
+@import "~styles/utils/_helpers.scss";
+
+.mapListToggleContainer {
+  display: flex;
+  border-radius: $rounded-lg;
+  border: 2px solid $secondary-button-outline;
+
+  @media screen and (min-width: $min-tablet-p) {
+    display: none;
+  }
+
+  .mapListToggleBtn {
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    &:focus,
+    &:active,
+    &:hover {
+      box-shadow: none;
+    }
+
+    &:focus {
+      border-radius: 0;
+      margin: 3px;
+      width: 26px;
+      height: 26px;
+    }
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+      color: $secondary-button-default-label;
+
+      &.activeView {
+        background: $secondary-button-default-label;
+        color: white;
+      }
+    }
+  }
+}

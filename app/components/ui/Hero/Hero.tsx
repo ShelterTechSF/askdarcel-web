@@ -1,12 +1,8 @@
 import React from "react";
 import classNames from "classnames";
+import { StrapiModel } from "models/Strapi";
 import styles from "./Hero.module.scss";
 import { Button } from "../inline/Button/Button";
-
-interface ButtonType {
-  label: string;
-  slug: string;
-}
 
 const Hero = ({
   backgroundImage,
@@ -17,7 +13,7 @@ const Hero = ({
   backgroundImage: string;
   title: string;
   description: string;
-  buttons: ButtonType[];
+  buttons: StrapiModel.Link[];
 }) => {
   return (
     <>
@@ -47,7 +43,7 @@ const HeroCard = ({
 }: {
   title: string;
   description: string;
-  buttons: ButtonType[];
+  buttons: StrapiModel.Link[];
   desktop?: boolean;
 }) => {
   const cardStyles = classNames(
@@ -63,12 +59,12 @@ const HeroCard = ({
         <div className={styles.buttons}>
           {buttons.map((button, i) => (
             <Button
-              key={button.label}
+              key={button.text}
               variant={i === 0 ? "primary" : "secondary"}
               arrowVariant="after"
-              href={button.slug}
+              href={button.url}
             >
-              {button.label}
+              {button.text}
             </Button>
           ))}
         </div>

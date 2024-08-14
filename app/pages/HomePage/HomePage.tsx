@@ -1,168 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import qs from "qs";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types.d";
-import { getResourceCount } from "utils/DataService";
-import { Footer } from "components/ui";
-import imageUrlBuilder from "@sanity/image-url";
 import Hero from "components/ui/Hero/Hero";
-import { Partners } from "./components/Partners/Partners";
-import { SearchBar } from "./components/SearchBar/SearchBar";
-import { HomePageSection } from "./components/Section/Section";
-import ResourceList from "./components/ResourceList/ResourceList";
-import { client } from "../../sanity";
-
-const builder = imageUrlBuilder(client);
-
-export interface ButtonType {
-  slug: string;
-  label: string;
-}
-
-export interface HeroData {
-  name: string;
-  title: string;
-  description: string;
-  backgroundImage: SanityImageSource;
-  buttons: ButtonType[];
-}
-
-export const coreCategories = [
-  {
-    algoliaCategoryName: "Covid-food",
-    name: "Food",
-    icon: "food",
-    categorySlug: "food-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-health",
-    name: "Health and COVID-19",
-    icon: "hospital",
-    categorySlug: "medical-services-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-hygiene",
-    name: "Showers, Hygiene and other Services",
-    icon: "shower",
-    categorySlug: "hygiene-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-shelter",
-    name: "Shelters",
-    icon: "bed",
-    categorySlug: "shelter-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-longtermhousing",
-    name: "Long-term Housing",
-    icon: "longterm-housing",
-    categorySlug: "longterm-housing-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-housing",
-    name: "Rental Assistance and Eviction Prevention",
-    icon: "housing-heart",
-    categorySlug: "rental-assistance-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-finance",
-    name: "Financial Assistance",
-    icon: "wallet",
-    categorySlug: "financial-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-jobs",
-    name: "Jobs",
-    icon: "employment",
-    categorySlug: "job-assistance-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-internet",
-    name: "Internet, Devices & Technology Training",
-    icon: "devices",
-    categorySlug: "internet-access-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-lgbtqa",
-    name: "LGBTQ+ Resources",
-    icon: "community",
-    categorySlug: "lgbtq-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-domesticviolence",
-    name: "Resources for Domestic Violence Survivors",
-    icon: "warning",
-    categorySlug: "domestic-violence-resources",
-  },
-  {
-    algoliaCategoryName: "Covid-substanceuse",
-    name: "Substance Use Resources",
-    icon: "substance-use",
-    categorySlug: "substance-use-resources",
-  },
-];
+import { CategorySection } from "components/ui/Section/CategorySection";
+import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
+import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
+import React from "react";
+import { StrapiModel } from "models/Strapi";
+import { useHomepageData } from "../../hooks/StrapiAPI";
 
 export const HomePage = () => {
-  const [resourceCount, setResourceCount] = useState<number | undefined>();
-  const [searchValue, setSearchValue] = useState("");
-  const history = useHistory();
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
+  const { data, isLoading } = useHomepageData();
 
-  const submitSearch = () => {
-    if (searchValue) {
-      const query = qs.stringify({ query: searchValue });
-      history.push(`/search?${query}`);
-    }
-  };
+  const res = data as StrapiModel.StrapiDatum<StrapiModel.Homepage>;
 
-  useEffect(() => {
-    getResourceCount().then((count: number) => setResourceCount(count));
-    const fetchHeroData = async () => {
-      const query = `*[_type == "hero" && name == "Home Hero"][0]{
-        name,
-        title,
-        description,
-        backgroundImage,
-        buttons
-      }`;
-      const result: HeroData = await client.fetch(query);
-      setHeroData(result);
-    };
+  const homePageData = res?.attributes;
 
-    fetchHeroData();
-  }, []);
-
-  if (!heroData) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return null;
   }
+
+  const {
+    opportunity_section,
+    opportunities,
+    event_section,
+    events,
+    hero,
+    two_column_content_blocks,
+  } = homePageData;
+
+  const twoColumnContentData = two_column_content_blocks.data;
 
   return (
     <>
-      <Hero
-        backgroundImage={builder.image(heroData.backgroundImage).url()}
-        title={heroData.title}
-        description={heroData.description}
-        buttons={heroData.buttons}
-      />
-      <HomePageSection title="Find essential services in San Francisco">
-        <ResourceList resources={coreCategories} />
-      </HomePageSection>
-
-      <HomePageSection
-        title="Browse Directory"
-        description="Search the directory for a specific social service provider or browse by category."
-      >
-        <SearchBar
-          placeholder={`Search ${
-            resourceCount || ""
-          } resources in San Francisco`}
-          onSubmit={submitSearch}
-          onChange={(newSearchValue: string) => setSearchValue(newSearchValue)}
-          value={searchValue}
+      <h1 className="sr-only">Homepage</h1>
+      {hero && (
+        <Hero
+          backgroundImage={hero.background_image.data?.attributes.url ?? ""}
+          title={hero.title}
+          description={hero.description}
+          buttons={hero.buttons}
         />
-      </HomePageSection>
-      <Partners />
-      <Footer />
+      )}
+      <CategorySection />
+      <OppEventCardSection
+        sectionType="opportunity"
+        sectionData={opportunity_section}
+        opportunities={opportunities.data ?? []}
+      />
+      <OppEventCardSection
+        sectionType="event"
+        sectionData={event_section}
+        events={events.data ?? []}
+      />
+      {twoColumnContentData?.map((content) => (
+        <TwoColumnContentSection key={content.id} {...content.attributes} />
+      ))}
+
+      {/* Newsletter Component */}
     </>
   );
 };

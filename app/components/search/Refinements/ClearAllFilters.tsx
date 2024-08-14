@@ -1,7 +1,7 @@
 import React from "react";
 import { connectCurrentRefinements } from "react-instantsearch/connectors";
 import type { Refinement, RefinementValue } from "react-instantsearch-core";
-import styles from "./RefinementFilters.module.scss";
+import { Button } from "components/ui/inline/Button/Button";
 
 type Props = {
   items: Refinement[];
@@ -10,17 +10,18 @@ type Props = {
 };
 
 const ClearAllFilter = ({ items, refine, setSearchRadius }: Props) => (
-  <div
-    role="button"
+  <Button
     tabIndex={0}
-    className={styles.clearAll}
+    variant="linkBlue"
     onClick={() => {
       refine(items);
       setSearchRadius("all");
     }}
+    mobileFullWidth={false}
+    size="lg"
   >
     Clear all
-  </div>
+  </Button>
 );
 
 export default connectCurrentRefinements<Props>(ClearAllFilter);

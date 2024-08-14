@@ -1,0 +1,15 @@
+@import "../../styles/utils/_helpers.scss";
+
+.pageHeader {
+  margin-bottom: $general-spacing-lg;
+
+  h1 {
+    color: $text-primary;
+    font-size: 3rem;
+    text-transform: capitalize;
+    margin-bottom: $padding-default;
+    @include r_max($break-tablet-s) {
+      font-size: 2rem;
+    }
+  }
+}

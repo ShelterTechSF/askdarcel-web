@@ -7,20 +7,22 @@ import { Helmet } from "react-helmet-async";
 import { match as Match, RouteComponentProps } from "react-router-dom";
 
 import * as dataService from "utils/DataService";
-import { useAppContext, whiteLabel } from "utils";
+import { useAppContext, websiteConfig } from "utils";
 
 import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
 import Sidebar from "components/search/Sidebar/Sidebar";
 import { Header } from "components/search/Header/Header";
 import { Category } from "models/Meta";
+import { SecondaryNavigationWrapper } from "components/navigation/SecondaryNavigationWrapper";
+import { SearchHeaderSection } from "components/search/Header/SearchHeaderSection";
 
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
 } from "../../hooks/APIHooks";
 import config from "../../config";
-import { CATEGORIES, ServiceCategory } from "../ServiceDiscoveryForm/constants";
+import { CATEGORIES, ServiceCategory } from "../constants";
 import styles from "./ServiceDiscoveryResults.module.scss";
 
 type MatchParams = { categorySlug: string };
@@ -66,7 +68,7 @@ export const ServiceDiscoveryResults = ({
   const eligibilities = useEligibilitiesForCategory(category.id);
   const subcategories = useSubcategoriesForCategory(category.id);
   const [searchState, setSearchState] = useState(urlToSearchState(location));
-  const [expandList, setExpandList] = useState(false);
+  const [isMapCollapsed, setIsMapCollapsed] = useState(false);
   const [searchRadius, setSearchRadius] = useState(
     searchState?.configure?.aroundRadius || "all"
   );
@@ -86,9 +88,14 @@ export const ServiceDiscoveryResults = ({
       });
   }, [category.id]);
 
+  const escapeApostrophes = (str: string): string => str.replace(/'/g, "\\'");
+  const algoliaCategoryName = parentCategory?.name
+    ? escapeApostrophes(parentCategory.name)
+    : null;
+
   // TS compiler requires explict null type checks
   if (
-    parentCategory !== null &&
+    algoliaCategoryName !== null &&
     eligibilities !== null &&
     subcategories !== null &&
     userLocation !== null
@@ -98,13 +105,13 @@ export const ServiceDiscoveryResults = ({
         eligibilities={eligibilities}
         subcategories={subcategories}
         category={category}
-        algoliaCategoryName={parentCategory.name}
+        algoliaCategoryName={algoliaCategoryName}
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
         searchRadius={searchRadius}
         setSearchRadius={setSearchRadius}
-        expandList={expandList}
-        setExpandList={setExpandList}
+        isMapCollapsed={isMapCollapsed}
+        setIsMapCollapsed={setIsMapCollapsed}
         userLatLng={{ lat: userLocation.lat, lng: userLocation.lng }}
       />
     );
@@ -123,8 +130,8 @@ const InnerServiceDiscoveryResults = ({
   onSearchStateChange,
   searchRadius,
   setSearchRadius,
-  expandList,
-  setExpandList,
+  isMapCollapsed,
+  setIsMapCollapsed,
   userLatLng,
 }: {
   eligibilities: object[];
@@ -135,73 +142,69 @@ const InnerServiceDiscoveryResults = ({
   onSearchStateChange: (nextSearchState: SearchState) => void;
   searchRadius: string;
   setSearchRadius: (radius: string) => void;
-  expandList: boolean;
-  setExpandList: (_expandList: boolean) => void;
+  isMapCollapsed: boolean;
+  setIsMapCollapsed: (_isMapCollapsed: boolean) => void;
   userLatLng: { lat: number; lng: number };
 }) => {
-  const [location, setLocation] = useState(userLatLng);
+  const [aroundLatLang, setAroundLatLng] = useState(userLatLng);
   const subcategoryNames = subcategories.map((c) => c.name);
-  const {
-    name: categoryName,
-    slug: categorySlug,
-    id: categoryId,
-    sortAlgoliaSubcategoryRefinements,
-  } = category;
+  const { name: categoryName, sortAlgoliaSubcategoryRefinements } = category;
 
   return (
-    <div className={styles.container}>
-      <Helmet>
-        <title>{`${categoryName} in San Francisco | ${whiteLabel.title}`}</title>
-        <meta
-          name="description"
-          content={`A list of ${categoryName} in San Francisco`}
-        />
-      </Helmet>
-      <Header
-        resultsTitle={categoryName}
-        expandList={expandList}
-        setExpandList={setExpandList}
-      />
-
-      <InstantSearch
-        searchClient={searchClient}
-        indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
-        searchState={searchState}
-        onSearchStateChange={onSearchStateChange}
-      >
-        {category.disableGeoLocation ? (
-          <Configure filters={`categories:'${algoliaCategoryName}'`} />
-        ) : (
-          <Configure
-            filters={`categories:'${algoliaCategoryName}'`}
-            aroundLatLng={`${location.lat}, ${location.lng}`}
-            aroundRadius={searchRadius}
-            aroundPrecision={1600}
+    <>
+      <SecondaryNavigationWrapper>
+        <SearchHeaderSection descriptionText="Sign up for programs and access resources." />
+      </SecondaryNavigationWrapper>
+      <div className={styles.container}>
+        <Helmet>
+          <title>{`${categoryName} in San Francisco | ${websiteConfig.title}`}</title>
+          <meta
+            name="description"
+            content={`A list of ${categoryName} in San Francisco`}
           />
-        )}
-        <div className={styles.flexContainer}>
-          <Sidebar
-            setSearchRadius={setSearchRadius}
-            searchRadius={searchRadius}
-            isSearchResultsPage={false}
-            eligibilities={eligibilities}
-            categorySlug={categorySlug}
-            subcategories={subcategories}
-            subcategoryNames={subcategoryNames}
-            sortAlgoliaSubcategoryRefinements={
-              sortAlgoliaSubcategoryRefinements
-            }
-          />
+        </Helmet>
+        <Header resultsTitle={categoryName} />
 
-          <div className={styles.results}>
-            <SearchResults
-              overlayMapWithSearchResults={expandList}
-              categoryId={categoryId}
-              setAroundLatLng={setLocation}
+        <InstantSearch
+          searchClient={searchClient}
+          indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
+          searchState={searchState}
+          onSearchStateChange={onSearchStateChange}
+        >
+          {category.disableGeoLocation ? (
+            <Configure filters={`categories:'${algoliaCategoryName}'`} />
+          ) : (
+            <Configure
+              filters={`categories:'${algoliaCategoryName}'`}
+              aroundLatLng={`${aroundLatLang.lat}, ${aroundLatLang.lng}`}
+              aroundRadius={searchRadius}
+              aroundPrecision={1600}
             />
+          )}
+          <div className={styles.flexContainer}>
+            <Sidebar
+              setSearchRadius={setSearchRadius}
+              searchRadius={searchRadius}
+              isSearchResultsPage={false}
+              eligibilities={eligibilities}
+              subcategories={subcategories}
+              subcategoryNames={subcategoryNames}
+              sortAlgoliaSubcategoryRefinements={
+                sortAlgoliaSubcategoryRefinements
+              }
+              isMapCollapsed={isMapCollapsed}
+              setIsMapCollapsed={setIsMapCollapsed}
+            />
+
+            <div className={styles.results}>
+              <SearchResults
+                mobileMapIsCollapsed={isMapCollapsed}
+                setAroundLatLng={setAroundLatLng}
+              />
+            </div>
           </div>
-        </div>
-      </InstantSearch>
-    </div>
+        </InstantSearch>
+      </div>
+    </>
   );
 };

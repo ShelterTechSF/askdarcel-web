@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import _ from "lodash";
+import { uniqBy } from "utils/arrays";
 import { Address, Category, PhoneNumber } from "../../models";
 
 const CategoryRenderer = ({ category }: { category: string }) => (
@@ -11,7 +11,8 @@ export const ResourceCategories = ({
 }: {
   categories: Category[];
 }) => {
-  const uniqueCategories = _.uniqBy(categories, "id");
+  const uniqueCategories = uniqBy<Category>(categories, "id");
+
   return categories?.length ? (
     <span className="categories">
       {uniqueCategories.map((cat) => (

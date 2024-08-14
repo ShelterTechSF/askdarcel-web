@@ -15,23 +15,10 @@ ALGOLIA_INDEX_PREFIX: "<ENTER_YOUR_GITHUB_USERNAME_HERE>"
 ALGOLIA_APPLICATION_ID: "J8TVT53HPZ"
 ALGOLIA_READ_ONLY_API_KEY: "fdf77b152ff7ce0ea4e4221ff3d17d85"
 
-MOHCD_SUBDOMAIN: "testing"
-# uncomment this to simulate sfserviceguide whitelabel UI locally, assuming that
-# you're pointing to localhost:8080
-# MOHCD_DOMAIN: 'localhost:8080'
+STRAPI_API_TOKEN: ""
+STRAPI_API_URL: ""
 
-# Auth0 config values
-AUTH0_AUDIENCE: "http://localhost:8080/api"
-AUTH0_CLIENT_ID: "UcnuRrX6S0SeDEhW9PRe01wEhcvIRuwc"
-AUTH0_DOMAIN: "dev-nykixf8szsm220fi.us.auth0.com"
-AUTH0_REDIRECT_URI: "http://localhost:8080/auth"
-
-# Get Project ID in Sanity Studio
-SANITY_PROJECT_ID:
-SANITY_PROJECT_DATASET: "development"
-# Disable cdn to omit caching
-SANITY_USE_CDN: false
-SANITY_PERSPECTIVE: "published"
-# Need a token for things like previewing drafts
-SANITY_WITH_CREDENTIALS: false
-SANITY_API_TOKEN: "<SANITY_API_KEY>"
+API_URL: "https://staging.sfserviceguide.org"
+API_PROXY_SECURE: true
+API_PROXY_CHANGE_ORIGIN: true
+API_PROXY_REWRITE: false

@@ -1,0 +1,15 @@
+.skipToMain {
+  position: absolute;
+  top: -40px;
+  background-color: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 1000;
+  transition: top 0.3s;
+  text-decoration: none;
+}
+
+.skipToMain:focus {
+  top: 10px;
+  left: 10px;
+}

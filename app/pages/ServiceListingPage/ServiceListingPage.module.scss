@@ -1,0 +1,30 @@
+@import "../../styles/utils/_helpers.scss";
+
+.service--program--details {
+  font-family: "Montserrat";
+  font-size: 18px;
+  @include r_max($break-tablet-s) {
+    font-size: 16px;
+  }
+}
+
+p {
+  padding-left: $spacing-0;
+  line-height: 150%;
+}
+
+a {
+  color: $link-blue-default;
+
+  &:hover {
+    color: $link-blue-hover;
+  }
+}
+
+p,
+a {
+  @include r_max($break-tablet-s) {
+    font-size: 14px;
+    line-height: 125%;
+  }
+}

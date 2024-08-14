@@ -31,11 +31,10 @@
   padding: 20px 25px 50px 30px;
   overflow-y: auto;
 
-  @media screen and (max-width: $break-tablet-l) {
+  @media screen and (max-width: $break-desktop-s) {
     height: auto;
     width: 60%;
     padding: 0;
-    z-index: $z-index-filters-menu;
     align-self: flex-start;
     border-right: 0;
     background-color: #fff;
@@ -49,7 +48,7 @@
 }
 
 .filtersContainer {
-  @media screen and (max-width: $break-tablet-l) {
+  @media screen and (max-width: $break-desktop-s) {
     display: none;
     position: fixed;
     height: 100vh;
@@ -84,7 +83,7 @@
 }
 
 .filterGroup {
-  margin-top: 32px;
+  margin-top: $general-spacing-xl;
 }
 
 .hideFilterGroup {
@@ -92,15 +91,20 @@
 }
 
 .filterTitle {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
+
+  @media screen and (max-width: $break-desktop-s) {
+    font-size: 16px;
+    font-weight: 500;
+  }
 }
 
 .filterResourcesHeaderMobile {
   position: relative;
-  padding-top: 10px;
+  padding-top: $general-spacing-md;
   text-align: center;
-  @media screen and (min-width: $min-desktop) {
+  @media screen and (min-width: $break-desktop-s) {
     display: none;
   }
 }
@@ -112,57 +116,82 @@
 }
 
 .filterResourcesTitleDesktop {
-  @media screen and (max-width: $break-tablet-l) {
+  @media screen and (max-width: $break-desktop-s) {
     display: none;
   }
 }
 
 .filterResourcesBtn {
-  position: absolute;
-  top: 0;
-  right: 0;
+  .closeIcon {
+    height: 25px;
+  }
+
+  .filtersIcon {
+    height: 15px;
+    padding: 0 3px 3px 0;
+  }
+
+  .filterBtn {
+    background: none;
+    border: none;
+    padding: 5px 10px 5px 0;
+    color: $color-brand;
+    font-weight: 400;
+    font-size: 15px;
+
+    &:active,
+    &:focus,
+    &:hover {
+      box-shadow: none;
+    }
+
+    &:hover {
+      color: $color-brand-dark;
+    }
+
+    @media screen and (max-width: $break-tablet-l) {
+      padding: 0;
+    }
+  }
 }
 
-.filtersIconContainer {
+.filtersButtonContainer {
   display: none;
-  @media screen and (max-width: $break-tablet-l) {
-    display: block;
+  margin-bottom: $general-spacing-md;
+
+  @media screen and (max-width: $break-desktop-s) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-left: 30px;
+    padding: 0 $general-spacing-md;
+    margin-bottom: $general-spacing-xs;
+  }
+
+  @media screen and (min-width: $break-tablet-s) {
+    margin-bottom: $general-spacing-lg;
+  }
+}
+
+.filterResourcesCloseButton {
+  position: absolute;
+  top: $general-spacing-md;
+  right: $general-spacing-xs;
+}
+
+.checkBox {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 13px;
+  color: $color-grey5;
+  cursor: pointer;
+  &.disabled {
+    color: $color-grey4;
   }
 
   @media screen and (max-width: $break-tablet-s) {
-    padding-left: 14px;
-  }
-}
-
-.closeIcon {
-  height: 25px;
-}
-
-.filtersIcon {
-  height: 15px;
-  padding: 0 3px 3px 0;
-}
-
-.filterBtn {
-  background: none;
-  border: none;
-  padding: 5px 10px 5px 0;
-  color: $color-brand;
-  font-weight: 400;
-  font-size: 15px;
-
-  &:active,
-  &:focus,
-  &:hover {
-    box-shadow: none;
-  }
-
-  &:hover {
-    color: $color-brand-dark;
-  }
-
-  @media screen and (max-width: $break-tablet-l) {
-    padding: 0;
+    font-size: 14px;
   }
 }

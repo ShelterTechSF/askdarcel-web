@@ -31,7 +31,7 @@
 .content {
   background-color: #cd4a23;
   border-radius: $rounded-xl;
-  max-width: 568px;
+  max-width: 585px;
   float: right;
   padding: $general-spacing-xl;
   margin-right: $general-spacing-lg;
@@ -39,12 +39,13 @@
 
   @media screen and (max-width: $break-tablet-s) {
     max-width: 100%;
-    padding: $general-spacing-md;
+    padding: $general-spacing-xl $general-spacing-md;
     margin: $spacing-0;
   }
 
   .title {
     font-size: 3rem;
+    color: white !important;
     margin-bottom: $general-spacing-md;
 
     @media screen and (max-width: $break-tablet-s) {
