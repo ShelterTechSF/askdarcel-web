@@ -15,6 +15,7 @@ import Sidebar from "components/search/Sidebar/Sidebar";
 import { Header } from "components/search/Header/Header";
 import { Category } from "models/Meta";
 
+import whitelabel from "utils/whitelabel";
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
@@ -26,6 +27,7 @@ import styles from "./ServiceDiscoveryResults.module.scss";
 type MatchParams = { categorySlug: string };
 type RouterLocation = RouteComponentProps["location"];
 type SearchState = {
+  refinementList?: { categories?: string[] };
   configure?: {
     aroundRadius?: string;
   };
@@ -148,6 +150,26 @@ const InnerServiceDiscoveryResults = ({
     sortAlgoliaSubcategoryRefinements,
   } = category;
 
+  const configureProps: Record<string, any> = {
+    filters: `categories:'${algoliaCategoryName}'`,
+  };
+  if (!category.disableGeoLocation) {
+    Object.assign(configureProps, {
+      aroundLatLng: `${location.lat}, ${location.lng}`,
+      aroundRadius: searchRadius,
+      aroundPrecision: 1600,
+    });
+  }
+  if (whitelabel.useBoostedCategories) {
+    const selectedSubcategories = searchState.refinementList?.categories ?? [];
+    configureProps.optionalFilters = subcategoryNames
+      .filter((x) => selectedSubcategories.includes(x))
+      .map((x) => `boosted_category:${x}`)
+      // Our Algolia plan only allows for up to one optional filter, so just
+      // drop all but the first.
+      .slice(0, 1);
+  }
+
   return (
     <div className={styles.container}>
       <Helmet>
@@ -169,16 +191,7 @@ const InnerServiceDiscoveryResults = ({
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
-        {category.disableGeoLocation ? (
-          <Configure filters={`categories:'${algoliaCategoryName}'`} />
-        ) : (
-          <Configure
-            filters={`categories:'${algoliaCategoryName}'`}
-            aroundLatLng={`${location.lat}, ${location.lng}`}
-            aroundRadius={searchRadius}
-            aroundPrecision={1600}
-          />
-        )}
+        <Configure {...configureProps} />
         <div className={styles.flexContainer}>
           <Sidebar
             setSearchRadius={setSearchRadius}
