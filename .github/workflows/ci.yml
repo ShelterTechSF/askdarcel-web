@@ -62,11 +62,11 @@ jobs:
       - run: npm ci
       - run: cp config.example.yml config.yml
       - run: npm run build
-      - run: docker-compose -f docker-compose.test.yml up -d db api api-go frontend
+      - run: docker compose -f docker-compose.test.yml up -d db api api-go frontend
       - run: sleep 60
       - run: yarn cypress run
       - if: always()
-        run: docker-compose -f docker-compose.test.yml logs -t # Output all docker logs from API and frontend to help debugging after the fact
+        run: docker compose -f docker-compose.test.yml logs -t # Output all docker logs from API and frontend to help debugging after the fact
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
