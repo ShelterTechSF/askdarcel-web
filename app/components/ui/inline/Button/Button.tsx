@@ -22,6 +22,7 @@ export const Button = ({
   disabled,
   href,
   mobileFullWidth = true,
+  isVisualOnly = false,
 }: {
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -37,6 +38,7 @@ export const Button = ({
   iconName?: string; // use font awesome icon name without 'fa-'
   href?: string;
   mobileFullWidth?: boolean;
+  isVisualOnly?: boolean; // Maintains button styling as visual cue clickable cards but hidden to screen readers
 }) => {
   const buttonClass = classNames(
     styles.button,
@@ -62,6 +64,14 @@ export const Button = ({
       {iconName && iconVariant === "after" && <span className={iconClass} />}
     </>
   );
+
+  if (isVisualOnly) {
+    return (
+      <p className={buttonClass} aria-hidden>
+        {content}
+      </p>
+    );
+  }
 
   // Links that follow same visual guidelines as buttons
   if (href) {

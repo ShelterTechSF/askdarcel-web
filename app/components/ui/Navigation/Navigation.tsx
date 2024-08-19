@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "components/ui/Navigation/Navigation.module.scss";
-import desktopNavigationStyles from "components/ui/Navigation/DesktopNavigation.module.scss";
 import { GoogleTranslate } from "components/ui/GoogleTranslate";
 import {
   extractLogoFromNavigationResponse,
@@ -65,9 +64,7 @@ export const Navigation = () => {
             </div>
 
             <div className={`${styles.navRight}`}>
-              <div
-                className={desktopNavigationStyles.desktopNavigationContainer}
-              >
+              <div className={styles.desktopNavigationContainer}>
                 {menuData?.map((menuDataItem) => (
                   <DesktopMenuItems
                     menuItem={menuDataItem}

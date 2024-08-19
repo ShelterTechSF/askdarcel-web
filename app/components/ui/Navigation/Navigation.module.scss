@@ -72,3 +72,18 @@
     padding: $spacing-3 $spacing-4;
   }
 }
+
+.desktopNavigationContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  // Adds separator
+  border-right: 1px solid black;
+  padding-right: $spacing-2;
+  margin-right: $spacing-6;
+
+  > * {
+    font-weight: 600;
+  }
+}

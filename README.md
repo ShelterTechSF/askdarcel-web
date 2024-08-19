@@ -126,6 +126,31 @@ There are two protected branches - development and main. Main is the default bra
 
 There are two live instances - a [staging instance](https://our415-staging-a91cdc6d7b2b.herokuapp.com/) and a [production instance](https://our415-abb7eecb7449.herokuapp.com/). Merges onto the development branch deploys the development branch to the staging isntance. Merges onto the main branch deploys the main branch to the production instance. See the [github workflows](https://github.com/Exygy/askdarcel-web/tree/main/.github/workflows) for the details. Environment variables used in the deployments are set in github environments - 'prod' supplies the production instance and 'dev' supplies the staging instance..
 
+## Testing
+
+We use [Jest](https://jestjs.io/) as a test runner and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for component testing. Developers should become familiar with these tools.
+
+Tests files should be co-located next to the source file in the file system and use the name of their source file with the suffix `*.test.tsx`.
+
+```
+app
+└── components
+    ├── MyComponent.tsx
+    └── MyComponent.test.tsx
+```
+
+To run tests:
+
+```sh
+npm run test # Run all tests and exit
+npm run test:watch # Watch files for changes and rerun tests related to changed files
+npm run test:watch:all # Watch files for changes and rerun all tests when something changes
+```
+
+### Acceptance testing
+
+We do not currently support high-level acceptance testing that simulates workflows that cannot be tested through React Testing Library.
+
 ## Pull Requests
 
 Pull requests are opened to the development branch. When opening a pull request please fill out the as much of the pull request template you can, which includes tagging the issue your PR is related to, a description of your PR, indicating the type of change, including details for the reviewer about how to test your PR, and a testing checklist. Additionally, officially link the notion ticket to the PR using GitHub's linking UI.

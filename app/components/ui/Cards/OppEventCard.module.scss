@@ -8,7 +8,10 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  cursor: pointer;
+
+  &:focus-within {
+    outline: 3px solid $black;
+  }
 
   &:focus-within {
     outline: 3px solid $black;
@@ -16,6 +19,10 @@
 
   &.opportunity {
     flex-direction: column;
+  }
+
+  &:hover {
+    background: $surface-secondary;
   }
 
   @media screen and (max-width: $break-tablet-l) {
