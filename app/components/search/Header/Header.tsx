@@ -57,7 +57,7 @@ export const Header = ({
             showPrintResultsBtn ? styles.showBtn : ""
           }`}
         >
-          Print all results
+          Print this page
         </Button>
       </div>
     </div>

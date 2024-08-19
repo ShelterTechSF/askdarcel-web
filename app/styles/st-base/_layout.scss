@@ -122,10 +122,22 @@ pre {
   }
 }
 
-// Hide from print view
 @media print {
+  // Hide from print view
   .no-print {
     display: none !important;
+  }
+
+  // Only show in print view
+  .print-only {
+    display: block;
+  }
+}
+
+@media screen {
+  // Don't show in non-print view
+  .print-only {
+    display: none;
   }
 }
 

@@ -63,7 +63,7 @@ export const Navigation = () => {
               </Link>
             </div>
 
-            <div className={`${styles.navRight}`}>
+            <div className={`${styles.navRight} no-print`}>
               <div className={styles.desktopNavigationContainer}>
                 {menuData?.map((menuDataItem) => (
                   <DesktopMenuItems

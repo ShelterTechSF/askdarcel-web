@@ -53,6 +53,14 @@ export const SearchResult = ({ hit }: { hit: TransformedSearchHit }) => (
           </div>
         </div>
       </div>
+      <div className="print-only">
+        <p>
+          <strong>Call:</strong> {hit.phoneNumber}
+        </p>
+        <p>
+          <strong>Website:</strong> {hit.websiteUrl}
+        </p>
+      </div>
       <div className={styles.searchResultContent}>
         <div className={styles.searchText}>
           <div className={`notranslate ${styles.address}`}>
@@ -71,7 +79,7 @@ export const SearchResult = ({ hit }: { hit: TransformedSearchHit }) => (
         </div>
       </div>
     </div>
-    <div className={styles.sideLinks}>
+    <div className={`${styles.sideLinks} no-print`}>
       {hit.phoneNumber && (
         <a
           href={`tel:${hit.phoneNumber}`}

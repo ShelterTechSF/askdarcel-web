@@ -21,8 +21,14 @@ export const BackButton = ({
       : () => history.goBack();
 
   return (
-    <Button onClick={backDestination} variant="linkWhite" arrowVariant="before">
-      {children}
-    </Button>
+    <span className="no-print">
+      <Button
+        onClick={backDestination}
+        variant="linkWhite"
+        arrowVariant="before"
+      >
+        {children}
+      </Button>
+    </span>
   );
 };

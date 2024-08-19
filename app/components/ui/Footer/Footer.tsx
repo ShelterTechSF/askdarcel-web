@@ -22,7 +22,7 @@ export const Footer = () => {
   }
 
   return (
-    <footer className="site-footer" role="contentinfo">
+    <footer className="site-footer no-print" role="contentinfo">
       <div className="site-footer__content">
         <div className="site-footer__top">
           <div className="site-footer__contact">
