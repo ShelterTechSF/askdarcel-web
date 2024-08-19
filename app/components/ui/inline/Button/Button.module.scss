@@ -7,6 +7,8 @@
   height: fit-content;
   width: fit-content;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 
   &:disabled {
     color: $white;
@@ -137,6 +139,11 @@
       margin-left: 8px;
     }
   }
+}
+
+.icon-after,
+.icon-before {
+  font-size: 24px;
 }
 
 .icon-before {
