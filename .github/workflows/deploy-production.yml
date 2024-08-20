@@ -31,6 +31,8 @@ jobs:
           ALGOLIA_INDEX_PREFIX: ${{ secrets.ALGOLIA_INDEX_PREFIX }}
           ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
           ALGOLIA_READ_ONLY_API_KEY: ${{ secrets.ALGOLIA_READ_ONLY_API_KEY }}
+          STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
+          STRAPI_API_URL: ${{ secrets.STRAPI_API_URL }}
       - name: Build, Push and Release a Docker container to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
