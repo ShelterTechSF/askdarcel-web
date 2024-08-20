@@ -17,6 +17,10 @@
     outline: 3px solid $black;
   }
 
+  &:focus-within {
+    outline: 3px solid $black;
+  }
+
   &.opportunity {
     flex-direction: column;
   }

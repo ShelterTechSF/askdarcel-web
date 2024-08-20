@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { connectStateResults } from "react-instantsearch/connectors";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
@@ -39,6 +39,12 @@ const SearchResults = ({
     };
   }, [googleMapObject, centerCoords]);
 
+  const handleFirstResultFocus = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
+
   if (!searchResults) return null;
 
   const searchMapHitData: SearchMapHitData =
@@ -77,8 +83,12 @@ const SearchResults = ({
                 <ClearSearchButton />
               </div>
             )}
-            {searchMapHitData.hits.map((hit: TransformedSearchHit) => (
-              <SearchResult hit={hit} key={`${hit.id} - ${hit.name}`} />
+            {searchMapHitData.hits.map((hit: TransformedSearchHit, index) => (
+              <SearchResult
+                hit={hit}
+                key={`${hit.id} - ${hit.name}`}
+                ref={index === 0 ? handleFirstResultFocus : null}
+              />
             ))}
             <ResultsPagination noResults={hasNoResults} />
           </>
