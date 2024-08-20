@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/browser";
 import {
   DAY_TO_INT,
   DAYS_IN_WEEK,
@@ -54,7 +53,6 @@ export const parseConcatenatedIntegerTime = (integerTime: any) => {
     const minute: number = parseInt(minuteString, 10);
     return { hour, minute };
   } catch (e) {
-    Sentry.captureException(e);
     return null;
   }
 };
@@ -64,9 +62,6 @@ const parseAPIScheduleDay = (apiScheduleDay: ScheduleDay) => {
   const opensAtTime = parseConcatenatedIntegerTime(apiScheduleDay.opens_at);
   const closesAtTime = parseConcatenatedIntegerTime(apiScheduleDay.closes_at);
   if (opensAtTime === null || closesAtTime === null) {
-    Sentry.captureMessage(
-      `ScheduleDay has null times: ${JSON.stringify(apiScheduleDay)}`
-    );
     return null;
   }
 
