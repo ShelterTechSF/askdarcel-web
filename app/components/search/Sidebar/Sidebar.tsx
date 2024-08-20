@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useRef } from "react";
 import type { Category } from "models/Meta";
-
 import {
   eligibilitiesMapping,
   categoriesMapping,
@@ -11,6 +9,7 @@ import OpenNowFilter from "components/search/Refinements/OpenNowFilter";
 import RefinementListFilter from "components/search/Refinements/RefinementListFilter";
 import FacetRefinementList from "components/search/Refinements/FacetRefinementList";
 import { Button } from "components/ui/inline/Button/Button";
+import useClickOutside from "../../../hooks/MenuHooks";
 import MobileMapToggleButtons from "./MobileMapToggleButtons";
 import styles from "./Sidebar.module.scss";
 
@@ -36,6 +35,14 @@ const Sidebar = ({
   setIsMapCollapsed: (_isMapCollapsed: boolean) => void;
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
+  const filterMenuRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(
+    filterMenuRef,
+    () => setfilterMenuVisible(false),
+    filterMenuVisible
+  );
+
   let categoryRefinementJsx: React.ReactElement | null = null;
   let eligibilityRefinementJsx: React.ReactElement | null = null;
   const orderByLabel = (a: { label: string }, b: { label: string }) =>
@@ -142,6 +149,7 @@ const Sidebar = ({
         />
       </div>
       <div
+        ref={filterMenuRef}
         className={`${styles.filtersContainer} ${
           filterMenuVisible ? styles.showFilters : ""
         }`}

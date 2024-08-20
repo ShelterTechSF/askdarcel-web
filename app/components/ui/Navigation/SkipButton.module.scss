@@ -1,10 +1,13 @@
+@import "../../../styles/utils/_helpers.scss";
+@import "../../../styles/utils/_colors.scss";
+
 .skipToMain {
   position: absolute;
   top: -40px;
   background-color: #000;
   color: #fff;
   padding: 8px 16px;
-  z-index: 1000;
+  z-index: $z-index-top;
   transition: top 0.3s;
   text-decoration: none;
 }

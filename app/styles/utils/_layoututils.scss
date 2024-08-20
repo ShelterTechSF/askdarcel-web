@@ -27,6 +27,7 @@ $z-index-edit-address-modal: 1;
 $z-index-site-nav: 3;
 $z-index-filters-menu: 4;
 $z-index-modal: 5;
+$z-index-top: 9;
 
 %flex-row {
   @include display(flex);

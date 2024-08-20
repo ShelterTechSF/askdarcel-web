@@ -81,7 +81,7 @@
 
 .mobileNavigationMenuList {
   position: absolute;
-  z-index: 999;
+  z-index: $z-index-top;
   overflow: hidden;
   top: 0;
   border-radius: 0;
