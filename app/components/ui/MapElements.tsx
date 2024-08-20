@@ -41,7 +41,7 @@ export const CustomMarker = ({
         />
       </g>
       <text
-        fontSize="10px"
+        fontSize="28px"
         fontWeight="bold"
         x="65"
         y="55"
