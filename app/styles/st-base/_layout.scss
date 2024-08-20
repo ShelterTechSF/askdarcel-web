@@ -122,6 +122,10 @@ pre {
   }
 }
 
+button {
+  color: $color-tertiary;
+}
+
 @media print {
   // Hide from print view
   .no-print {
