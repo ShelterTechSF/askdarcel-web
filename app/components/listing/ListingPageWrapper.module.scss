@@ -27,6 +27,7 @@
   }
 
   p,
+  li,
   a,
   table {
     @include r_max($break-tablet-s) {

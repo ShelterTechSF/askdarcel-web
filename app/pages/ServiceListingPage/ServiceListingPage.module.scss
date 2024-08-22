@@ -5,6 +5,10 @@
   font-size: 18px;
   @include r_max($break-tablet-s) {
     font-size: 16px;
+
+    a {
+      font-size: 16px;
+    }
   }
 }
 

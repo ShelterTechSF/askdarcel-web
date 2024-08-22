@@ -61,6 +61,7 @@ const HeroCard = ({
             <Button
               key={button.text}
               variant={i === 0 ? "primary" : "secondary"}
+              size="lg"
               arrowVariant="after"
               href={button.url}
             >

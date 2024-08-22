@@ -13,10 +13,14 @@
   display: flex;
   max-width: $width-navigation;
   margin: 0 auto;
-  padding: $general-spacing-md;
+  padding: $general-spacing-md $general-spacing-xxs;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid $color-grey3;
+
+  @media screen and (max-width: $break-tablet-s) {
+    padding: $general-spacing-s $general-spacing-xxs;
+  }
 }
 
 .title {

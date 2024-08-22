@@ -5,11 +5,11 @@
   margin: $general-spacing-lg auto $spacing-0;
 
   @include r_max($break-desktop-s) {
-    margin: $general-spacing-lg $spacing-0 $spacing-0;
+    margin: $spacing-0 $spacing-0;
+    max-width: 100%;
   }
 
   @include r_max($break-tablet-s) {
-    max-width: 100%;
   }
 
   .accordionItem {
@@ -35,6 +35,7 @@
 
   .accordionTitle {
     display: flex;
+    gap: $general-spacing-md;
     justify-content: space-between;
     align-items: center;
     font-family: Montserrat;
@@ -43,6 +44,7 @@
     width: 100%;
     margin: 0;
     font-size: 18px;
+    text-align: left;
   }
 
   .accordionContent {

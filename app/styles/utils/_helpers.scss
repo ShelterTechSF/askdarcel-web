@@ -22,7 +22,6 @@ $font-family-base: "Inter", "Montserrat", "Open Sans", "Helvetica Neue", "Arial"
 // FONT SIZES
 
 %font-size-x-large {
-  min-height: 3rem;
   font-size: 3rem;
   line-height: 125%;
   @include r_max($break-tablet-p) {
