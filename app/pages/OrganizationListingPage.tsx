@@ -79,14 +79,11 @@ export const OrganizationListingPage = () => {
       <ActionBarMobile actions={mobileActions} onClickAction={onClickAction} />
 
       <ListingInfoSection title="About" data-cy="org-about-section">
-        <ReactMarkdown
-          className="rendered-markdown"
-          source={
-            org.long_description ||
+        <ReactMarkdown className="rendered-markdown">
+          {org.long_description ||
             org.short_description ||
-            "No Description available"
-          }
-        />
+            "No Description available"}
+        </ReactMarkdown>
       </ListingInfoSection>
 
       <ListingInfoSection title="Services" data-cy="org-services-section">

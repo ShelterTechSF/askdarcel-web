@@ -67,10 +67,9 @@ export const PrivacyPolicyPage = () => (
   <div className="listing-container">
     <article className="text-page listing" id="privacyPolict">
       <div className="listing--main">
-        <ReactMarkdown
-          className="rendered-markdown"
-          source={privacyPolicyContent}
-        />
+        <ReactMarkdown className="rendered-markdown">
+          {privacyPolicyContent}
+        </ReactMarkdown>
       </div>
     </article>
   </div>

@@ -81,13 +81,12 @@ export const SearchResult = forwardRef<HTMLDivElement, SearchResultProps>(
               {/* Once we can update all dependencies, we can add remarkBreaks as remarkPlugin here */}
               <ReactMarkdown
                 className={`rendered-markdown ${styles.description}`}
-                source={
-                  hit.longDescription
-                    ? removeAsterisksAndHashes(hit.longDescription)
-                    : undefined
-                }
                 linkTarget="_blank"
-              />
+              >
+                {hit.longDescription
+                  ? removeAsterisksAndHashes(hit.longDescription)
+                  : ""}
+              </ReactMarkdown>
             </div>
           </div>
         </div>

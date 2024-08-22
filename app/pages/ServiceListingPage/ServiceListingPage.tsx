@@ -95,11 +95,9 @@ export const ServiceListingPage = () => {
       </span>
 
       <ListingInfoSection title="About" data-cy="service-about-section">
-        <ReactMarkdown
-          className="rendered-markdown"
-          source={formattedLongDescription}
-          linkTarget="_blank"
-        />
+        <ReactMarkdown className="rendered-markdown" linkTarget="_blank">
+          {formattedLongDescription || ""}
+        </ReactMarkdown>
         <ServiceAttribution
           attribution={resource.source_attribution}
           status={resource.status}

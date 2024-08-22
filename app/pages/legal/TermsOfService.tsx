@@ -77,10 +77,9 @@ export const TermsOfServicePage = () => (
   <div className="listing-container">
     <article className="text-page listing" id="privacyPolict">
       <div className="listing--main">
-        <ReactMarkdown
-          className="rendered-markdown"
-          source={termsOfServiceContent}
-        />
+        <ReactMarkdown className="rendered-markdown">
+          {termsOfServiceContent}
+        </ReactMarkdown>
       </div>
     </article>
   </div>

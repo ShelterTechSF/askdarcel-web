@@ -7,7 +7,9 @@ export const NotesList = ({ notes }: { notes: Note[] }) => (
     {notes.map((noteObj) => (
       <li key={noteObj.id} className="service">
         <div className="service--description">
-          <ReactMarkdown className="rendered-markdown" source={noteObj.note} />
+          <ReactMarkdown className="rendered-markdown">
+            {noteObj.note}
+          </ReactMarkdown>
         </div>
       </li>
     ))}
