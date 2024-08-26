@@ -1,7 +1,6 @@
 @import "~styles/utils/_helpers.scss";
 
 .header {
-  width: 100vw;
   margin-bottom: $general-spacing-lg;
 
   @media screen and (max-width: $break-tablet-s) {
@@ -11,9 +10,8 @@
 
 .headerInner {
   display: flex;
-  max-width: $width-navigation;
   margin: 0 auto;
-  padding: $general-spacing-md $general-spacing-xxs;
+  padding: $general-spacing-md $general-spacing-lg;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid $color-grey3;

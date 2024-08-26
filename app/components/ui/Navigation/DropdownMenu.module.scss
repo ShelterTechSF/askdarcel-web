@@ -1,11 +1,6 @@
 @import "../../../styles/utils/_helpers.scss";
 @import "../../../styles/utils/_colors.scss";
 
-.navigationMenuLink,
-.navigationMenuHeader {
-  padding: $spacing-2 $spacing-3;
-}
-
 .navigationMenuContainer {
   // Important to override react-burger-menu lib styles
   display: flex !important;
@@ -55,7 +50,7 @@
     color: inherit;
   }
 
-  .navigationMenuLink {
+  .menuLink {
     &:focus {
       border-radius: 0;
       margin: 3px;
@@ -63,7 +58,11 @@
   }
 }
 
-.navigationMenuLink {
+.navigationMenuHeader .chevron {
+  font-size: 12px;
+}
+
+.menuLink {
   font-family: Montserrat;
   font-size: 18px;
   text-decoration: none;
@@ -75,7 +74,7 @@
   }
 }
 
-.navigationSubMenu .navigationMenuLink {
+.navigationSubMenu .menuLink {
   // flex ensures each menu link fills width of widest item
   display: flex;
   text-decoration: none;

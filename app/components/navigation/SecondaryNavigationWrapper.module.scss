@@ -5,9 +5,8 @@
   color: $text-tertiary;
 
   .innerContainer {
-    max-width: $width-navigation;
     margin: 0 auto;
-    padding: $spacing-6 $general-spacing-md;
+    padding: $spacing-6 $general-spacing-lg;
   }
 
   @media screen and (max-width: $break-tablet-s) {

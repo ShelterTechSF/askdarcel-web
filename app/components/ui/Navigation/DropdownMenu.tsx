@@ -43,7 +43,7 @@ const DropdownMenu = ({
       >
         {links.map((linkItem) => (
           <span key={linkItem.id} className={styles.navigationSubMenuItem}>
-            <Link to={linkItem.url} className={styles.navigationMenuLink}>
+            <Link to={linkItem.url} className={styles.menuLink}>
               {linkItem.text}
             </Link>
           </span>

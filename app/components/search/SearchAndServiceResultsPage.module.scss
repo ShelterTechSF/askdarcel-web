@@ -7,7 +7,6 @@
 .flexContainer {
   display: flex;
   width: 100%;
-  max-width: $width-navigation;
   margin: auto;
 
   @media screen and (max-width: $break-desktop-s) {

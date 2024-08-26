@@ -19,8 +19,7 @@
   height: $header-height;
   justify-content: space-between;
   margin: 0 auto;
-  max-width: $width-navigation;
-  padding: 0 $general-spacing-md;
+  padding: 0 $general-spacing-lg;
   @include r_max($break-tablet-s) {
     height: $header-mobile-height;
   }
@@ -80,7 +79,7 @@
 
   // Adds separator
   border-right: 1px solid black;
-  padding-right: $spacing-2;
+  padding-right: $spacing-4;
   margin-right: $spacing-6;
 
   > * {

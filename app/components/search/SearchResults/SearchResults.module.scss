@@ -21,7 +21,6 @@
   grid-area: results;
   display: grid;
   gap: $general-spacing-md;
-  width: 670px;
   margin: $spacing-0 $general-spacing-lg;
 
   @media screen and (max-width: $break-desktop-s) {
@@ -257,11 +256,6 @@
 }
 
 @media print {
-  // This below styles are for printing out the results on our service/search results page.
-
-  // This sets visibility hidden on all elements except for the searchResultsContainer
-  // and its children to avoid printing irrelevant sections of the page.
-  // This follows the example of this answer https://stackoverflow.com/a/2618980
   :global(.searchResultsPage) {
     visibility: hidden;
 
@@ -273,15 +267,10 @@
     button,
     input,
     textarea {
-      // In the Firefox print view, input and anchor elements are not hidden due to the transition
-      // delay on changing the visibility value.
       transition: none !important;
     }
 
     a[href]::after {
-      // Our _reset.scss file displays the whole href of a link in the ::after selector.
-      // This is confusing for our service and resource links which are just routes
-      // to other parts of our site, etc. Thus, overriding that here.
       content: "" !important;
     }
   }
