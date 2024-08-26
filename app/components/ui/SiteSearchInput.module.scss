@@ -1,17 +1,22 @@
 @import "../../styles/utils/_helpers.scss";
 
+$input-height: 40px;
+$border-width: 2px;
+$focus-height: calc(#{$input-height} - (#{$border-width} * 2));
+
 .navSearch {
-  position: relative;
+  display: flex;
+  align-items: center;
 
   .searchField {
-    $font-size: calc-em(15px);
-    font-size: $font-size;
-    padding-left: calc-em(45px);
-    width: calc-em(400px);
-    height: calc-em(40px);
-    border: 2px solid $color-tertiary;
-    background-color: $color-grey1;
-    border-radius: $rounded-full;
+    padding: $general-spacing-s $general-spacing-md;
+    border: $border-width solid $color-tertiary;
+    border-right: none;
+    border-radius: $rounded-full 0 0 $rounded-full;
+    flex: 1;
+    width: 360px;
+    max-width: 100%;
+    height: $input-height;
 
     &::placeholder {
       font-size: $font-size;
@@ -20,8 +25,28 @@
   }
 
   .searchIcon {
-    position: absolute;
-    left: 10px;
-    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $general-spacing-md;
+    padding-left: $general-spacing-s;
+    background-color: $color-tertiary;
+    border: $border-width solid $color-tertiary;
+    color: $white;
+    border-radius: 0 $rounded-full $rounded-full 0;
+    cursor: pointer;
+    height: $input-height;
+  }
+
+  .searchField,
+  .searchIcon {
+    transition: none;
+
+    &:focus {
+      height: $focus-height !important;
+      border: none;
+      outline: $border-width solid $color-secondary;
+      transition: none;
+    }
   }
 }

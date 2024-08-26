@@ -40,11 +40,6 @@ export const SiteSearchInput = () => {
       className={cn([styles.navSearch, "search-container", "form-row"])}
       role="search"
     >
-      <button
-        type="submit"
-        aria-label="Search"
-        className={`${styles.searchIcon} fa-solid fa-magnifying-glass`}
-      />
       <input
         onChange={(e) => setQuery(e.target.value)}
         value={query}
@@ -53,6 +48,11 @@ export const SiteSearchInput = () => {
         placeholder="Search for a service or organization"
         name="srch-term"
         id="srch-term"
+      />
+      <button
+        type="submit"
+        aria-label="Search"
+        className={`${styles.searchIcon} fa-solid fa-magnifying-glass`}
       />
     </form>
   );
