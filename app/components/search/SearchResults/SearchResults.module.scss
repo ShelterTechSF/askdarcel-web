@@ -1,19 +1,10 @@
 @import "~styles/utils/_helpers.scss";
 
 .searchResultsAndMapContainer {
-  display: grid;
-  grid-template-columns: 6fr 4fr;
-  grid-template-areas:
-    "toggle toggle"
-    "results map";
+  display: flex;
 
   @media screen and (max-width: $break-tablet-p) {
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "map"
-      "toggle"
-      "results";
+    flex-direction: column-reverse;
   }
 }
 
@@ -22,6 +13,7 @@
   display: grid;
   gap: $general-spacing-md;
   margin: $spacing-0 $general-spacing-lg;
+  flex: 0 0 40em;
 
   @media screen and (max-width: $break-desktop-s) {
     margin: $spacing-0 $general-spacing-md;
