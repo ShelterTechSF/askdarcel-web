@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import styles from "./Legal.module.scss";
 
 const privacyPolicyContent = `
 # Privacy Policy
@@ -59,12 +60,12 @@ By using this Our415, you signify your acceptance of this policy. If you do not 
 You may remove your personal identifiable information or cancel your account with Our415 at any time. To do this, send an email to the address below with the subject: “Remove my personal information”.
 ### Contacting Us
 If you have questions about this Privacy Policy, the practices of Our415, or any other dealings with Our415, please contact us at :
-ShelterTech
-<info@sheltertech.org>
+Our415
+<info@dcyf.org>
 `;
 
 export const PrivacyPolicyPage = () => (
-  <div className="listing-container">
+  <div className={styles.container}>
     <article className="text-page listing" id="privacyPolict">
       <div className="listing--main">
         <ReactMarkdown className="rendered-markdown">
