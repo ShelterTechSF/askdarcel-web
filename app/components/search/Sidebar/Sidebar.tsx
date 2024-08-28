@@ -9,6 +9,7 @@ import OpenNowFilter from "components/search/Refinements/OpenNowFilter";
 import RefinementListFilter from "components/search/Refinements/RefinementListFilter";
 import FacetRefinementList from "components/search/Refinements/FacetRefinementList";
 import { Button } from "components/ui/inline/Button/Button";
+import { RefinementListProvided } from "react-instantsearch/connectors";
 import useClickOutside from "../../../hooks/MenuHooks";
 import MobileMapToggleButtons from "./MobileMapToggleButtons";
 import styles from "./Sidebar.module.scss";
@@ -96,7 +97,7 @@ const Sidebar = ({
         <RefinementListFilter
           attribute="eligibilities"
           limit={100}
-          transformItems={(items: { label: string }[]) =>
+          transformItems={(items: RefinementListProvided["items"]) =>
             items.sort(orderByLabel)
           }
         />
@@ -106,17 +107,15 @@ const Sidebar = ({
       categoryRefinementJsx = (
         <RefinementListFilter
           attribute="categories"
-          /*
-            Algolia returns all categories that the union of returned services are tagged with.
-            The transformItems method filters out any of these categories that are not children
-            of the parent tile category (these children are members of the subcategoryNames
-            array). Since the number of tagged categories returned by Algolia can be very large,
-            we need to set an artificially high limit to ensure that the returned set contains
-            the desired subcategories; these are the initial subcategories displayed to the user
-            as checkboxes in the ServiceDiscoveryForm view.
-          */
+          // The number of tagged categories returned by Algolia can be very large.
+          // We set an artificially high limit to attempt capturing all the subcategories
+          // so that the returned set contain the desired subcategories; these are the initial subcategories displayed
+          // to the user as checkboxes in the ServiceDiscoveryForm view.
           limit={100}
-          transformItems={(items: { label: string }[]) =>
+          // Algolia returns all categories of the union of returned services.
+          // We filter out any of these categories that are not children of the selected top level
+          // category returned from the api (`/api/categories/subcategories?id=${categoryID}`).
+          transformItems={(items: RefinementListProvided["items"]) =>
             items
               .filter(({ label }) => subcategoryNames.includes(label))
               .sort(

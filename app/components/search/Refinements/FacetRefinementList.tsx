@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 import { connectRefinementList } from "react-instantsearch/connectors";
-import type { Hit } from "react-instantsearch-core";
+import type { RefinementListProvided } from "react-instantsearch-core";
 import styles from "./RefinementFilters.module.scss";
 
-type Item = {
-  count: number;
-  isRefined: boolean;
-  label: string;
-  value: string[];
-};
-
 type Props = {
-  items: Hit<Item>[];
+  items: RefinementListProvided["items"];
   refine: (value: string[]) => void;
   currentRefinement: string[];
   mapping: Record<string, string[]>;
