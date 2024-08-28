@@ -8,7 +8,7 @@ import {
   SearchResultsResponse,
   TransformedSearchHit,
   transformSearchResults,
-} from "../../../models/SearchHits";
+} from "models/SearchHits";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
 

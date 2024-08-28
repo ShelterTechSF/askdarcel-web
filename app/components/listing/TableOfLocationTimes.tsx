@@ -1,5 +1,5 @@
 import React from "react";
-import { RecurringSchedule } from "../../models/RecurringSchedule";
+import { RecurringSchedule } from "models/RecurringSchedule";
 import styles from "./TableOfLocationTimes.module.scss";
 
 // TODO order with current day first

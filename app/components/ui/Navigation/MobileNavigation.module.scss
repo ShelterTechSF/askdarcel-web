@@ -1,8 +1,6 @@
 @import "../../../styles/utils/_helpers.scss";
 @import "../../../styles/utils/_colors.scss";
 
-// Edit naming conventions for clarity
-
 .sidebar {
   @media screen and (min-width: $break-tablet-s) {
     display: none;
@@ -107,4 +105,8 @@
 
 .mobileNavigationMenuTranslate {
   padding: $general-spacing-md;
+  position: absolute;
+  bottom: 0px;
+  // Keeps on top of active submenu
+  z-index: $z-index-top;
 }

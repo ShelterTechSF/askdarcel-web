@@ -5,8 +5,8 @@ import Our415Logo from "assets/img/our415-white.png";
 import SFSeal from "assets/img/sf-seal-white.png";
 import DCYFLogo from "assets/img/dcyf-white.png";
 import { StrapiModel } from "models/Strapi";
+import { useFooterData } from "hooks/StrapiAPI";
 import { FooterColumn } from "./FooterColumn";
-import { useFooterData } from "../../../hooks/StrapiAPI";
 
 import "./Footer.scss";
 

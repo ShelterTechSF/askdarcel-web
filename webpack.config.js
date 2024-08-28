@@ -68,6 +68,8 @@ module.exports = {
       assets: path.resolve(appRoot, "assets"),
       actions: path.resolve(appRoot, "actions"),
       components: path.resolve(appRoot, "components"),
+      models: path.resolve(appRoot, "models"),
+      hooks: path.resolve(appRoot, "hooks"),
       pages: path.resolve(appRoot, "pages"),
       reducers: path.resolve(appRoot, "reducers"),
       styles: path.resolve(appRoot, "styles"),

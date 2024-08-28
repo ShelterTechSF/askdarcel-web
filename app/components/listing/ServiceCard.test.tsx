@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BrowserRouter } from "react-router-dom";
-import { ServiceCard } from "../../ui/Cards/ServiceCard";
+import { ServiceCard } from "../ui/Cards/ServiceCard";
 
 describe("<ServiceCard />", () => {
   const validService = {

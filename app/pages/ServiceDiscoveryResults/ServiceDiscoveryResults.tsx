@@ -20,7 +20,7 @@ import { SearchHeaderSection } from "components/search/Header/SearchHeaderSectio
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
-} from "../../hooks/APIHooks";
+} from "hooks/APIHooks";
 import config from "../../config";
 import { CATEGORIES, ServiceCategory } from "../constants";
 import styles from "./ServiceDiscoveryResults.module.scss";

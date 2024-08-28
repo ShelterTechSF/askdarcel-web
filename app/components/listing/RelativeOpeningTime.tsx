@@ -4,7 +4,7 @@ import {
   Duration,
   RecurringSchedule,
   RecurringTime,
-} from "../../models/RecurringSchedule";
+} from "models/RecurringSchedule";
 
 const STATUS_CLOSED = "status-red";
 const STATUS_OPEN = "status-green";

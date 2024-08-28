@@ -2,7 +2,7 @@ import React, { FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 import cn from "classnames";
 import qs from "qs";
-import { useSiteSearch } from "../../hooks/SiteSearch";
+import { useSiteSearch } from "hooks/SiteSearch";
 import styles from "./SiteSearchInput.module.scss";
 
 /**

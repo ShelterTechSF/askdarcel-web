@@ -73,9 +73,7 @@ const config: Config = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: ["node_modules", "app"],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -129,9 +127,7 @@ const config: Config = {
   // rootDir: undefined,
 
   // A list of paths to directories that Jest should use to search for files in
-  // roots: [
-  //   "<rootDir>"
-  // ],
+  // roots: ["<rootDir>", "/app/components"],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",

@@ -1,10 +1,10 @@
 import React from "react";
 import { Loader } from "components/ui";
 import { StrapiModel } from "models/Strapi";
+import { usePageContent } from "hooks/StrapiAPI";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
 import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
-import { usePageContent } from "../../hooks/StrapiAPI";
 
 export const FaqPage = () => {
   const { data, isLoading } = usePageContent("FAQ");

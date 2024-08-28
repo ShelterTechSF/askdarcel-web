@@ -4,7 +4,7 @@ import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
 import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
 import React from "react";
 import { StrapiModel } from "models/Strapi";
-import { useHomepageData } from "../../hooks/StrapiAPI";
+import { useHomepageData } from "hooks/StrapiAPI";
 
 export const HomePage = () => {
   const { data, isLoading } = useHomepageData();
