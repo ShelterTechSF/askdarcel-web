@@ -2,7 +2,6 @@ export * from "./ActionBar";
 export * from "./MapOfLocations";
 export * from "./MOHCDBadge";
 export * from "./NotesList";
-export * from "./OrganizationCard";
 export * from "./OrganizationDetails";
 export * from "./RelativeOpeningTime";
 export * from "../ui/Cards/ServiceCard";
