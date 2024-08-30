@@ -9,6 +9,7 @@ import { useFooterData } from "hooks/StrapiAPI";
 import { FooterColumn } from "./FooterColumn";
 
 import "./Footer.scss";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   const { data, error, isLoading } = useFooterData();
@@ -26,12 +27,12 @@ export const Footer = () => {
       <div className="site-footer__content">
         <div className="site-footer__top">
           <div className="site-footer__contact">
-            <div className="site-footer__logo">
+            <Link to="/" className="site-footer__logo">
               <img
                 src={Our415Logo}
                 alt="SF Department of Children Youth and their Families"
               />
-            </div>
+            </Link>
             {!error && data && (
               <address>
                 <div
@@ -64,15 +65,18 @@ export const Footer = () => {
               ))}
           </div>
           <div className="site-footer__logos">
-            <div className="site-footer__sfseal">
+            <a href="https://www.sf.gov/" className="site-footer__sfseal">
               <img src={SFSeal} alt="City of San Francisco Seal" />
-            </div>
-            <div className="site-footer__dcyf">
+            </a>
+            <a
+              href="https://www.sf.gov/departments/children-youth-and-their-families"
+              className="site-footer__dcyf"
+            >
               <img
                 src={DCYFLogo}
                 alt="SF Department of Children Youth and their Families"
               />
-            </div>
+            </a>
           </div>
         </div>
       </div>
