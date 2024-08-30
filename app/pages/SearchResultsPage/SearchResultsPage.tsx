@@ -7,7 +7,7 @@ import { InstantSearch, Configure, SearchBox } from "react-instantsearch/dom";
 import qs, { ParsedQs } from "qs";
 
 import { GeoCoordinates, useAppContext, websiteConfig } from "utils";
-import { post } from "utils/DataService";
+import { translate } from "utils/DataService";
 
 import { Loader } from "components/ui";
 import SearchResults from "components/search/SearchResults/SearchResults";
@@ -87,13 +87,8 @@ export const SearchResultsPage = () => {
     if (queryLanguage === "en" || emptyQuery) {
       setTranslatedQuery(untranslatedQuery);
     } else if (untranslatedQuery) {
-      post("/api/translation/translate_text", {
-        text: untranslatedQuery,
-        source_language: queryLanguage,
-      }).then((resp) =>
-        resp.json().then((body) => {
-          setTranslatedQuery(body.result as string);
-        })
+      translate(untranslatedQuery, queryLanguage).then((result) =>
+        setTranslatedQuery(result)
       );
     }
   }, [untranslatedQuery, cookies.googtrans]);

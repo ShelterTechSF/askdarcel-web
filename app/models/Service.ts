@@ -16,7 +16,6 @@ export interface Instruction {
   instruction: string;
 }
 
-// A Service is provided by an Organization
 export interface Service {
   id: number;
   name: string;
@@ -51,12 +50,14 @@ export interface Service {
   wait_time: Date | null;
 }
 
-export interface ServiceParams
-  extends Omit<Partial<Service>, "notes" | "schedule"> {
+export interface ServiceParams extends Omit<any, "notes" | "schedule"> {
   shouldInheritScheduleFromParent: boolean;
   notes?: Partial<Note>[];
   schedule?: ScheduleParams;
 }
+
+const UNKNOWN_ERROR_MESSAGE =
+  "We were unable to process the request. Please contact your site administrator.";
 
 // TODO This should be serviceAtLocation
 export const getServiceLocations = (
@@ -94,19 +95,30 @@ export const generateServiceDetails = (
     .map((row) => ({ title: row[0], value: row[1] }));
 
 // Determine if a service has its own schedule, or should inherit
-export const shouldServiceInheritScheduleFromOrg = (service: Service) =>
+export const shouldServiceInheritScheduleFromOrg = (service: any) =>
   service.schedule && service.schedule.schedule_days.length > 0;
 
-/**
- * Return a Promise with the fetched Service.
- *
- * Also perform a transformation from the raw API representation of schedules
- * into a nicer-to-use data model of RecurringSchedules.
- */
-export const fetchService = (id: string): Promise<Service> =>
-  get(`/api/v2/services/${id}`).then(({ service }: { service: Service }) => {
-    const recurringSchedule = shouldServiceInheritScheduleFromOrg(service)
-      ? parseAPISchedule(service.schedule)
-      : parseAPISchedule(service.resource.schedule);
-    return { ...service, recurringSchedule };
-  });
+export function fetchServiceSuccessHandler({ service }: { service: any }) {
+  if (shouldServiceInheritScheduleFromOrg(service) && service.schedule) {
+    const recurringSchedule = parseAPISchedule(service.schedule as Schedule);
+    return { ...service, recurringSchedule } as Service;
+  }
+
+  if (service.resource?.schedule) {
+    const recurringSchedule = parseAPISchedule(
+      service.resource?.schedule as Schedule
+    );
+    return { ...service, recurringSchedule } as Service;
+  }
+
+  return UNKNOWN_ERROR_MESSAGE;
+}
+
+export function fetchServiceFailureHandler(fetchError: unknown) {
+  return `There was a problem with the api response: ${fetchError}`;
+}
+
+export const fetchService = (id: string): Promise<string | Service> =>
+  get(`/api/v2/services/${id}`)
+    .then(fetchServiceSuccessHandler)
+    .catch(fetchServiceFailureHandler);

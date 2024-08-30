@@ -30,6 +30,7 @@ import styles from "./ServiceListingPage.module.scss";
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
     [service]
@@ -41,9 +42,29 @@ export const ServiceListingPage = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   useEffect(() => {
-    fetchService(id).then((s) => setService(s));
-    // TODO Handle Errors
+    fetchService(id).then((s) => {
+      if (typeof s === "string") {
+        setService(null);
+
+        setError(s);
+      } else {
+        setService(s);
+      }
+    });
   }, [id]);
+
+  if (error) {
+    return (
+      <ListingPageWrapper
+        title="error"
+        description=""
+        sidebarActions={[]}
+        onClickAction={() => "noop"}
+      >
+        {error}
+      </ListingPageWrapper>
+    );
+  }
 
   if (!service) {
     return <Loader />;

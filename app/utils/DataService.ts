@@ -66,53 +66,14 @@ export function get(
   });
 }
 
-export function put(
-  url: RequestInfo | URL,
-  body: any,
-  headers?: HeadersInit
-): Promise<Response> {
-  let queryHeaders = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
-  if (headers) {
-    queryHeaders = assignIn(queryHeaders, headers);
-  }
-  return fetch(url, {
-    method: "PUT",
-    mode: "cors",
-    headers: queryHeaders,
-    body: JSON.stringify(body),
-  }).then((resp) => {
-    if (!resp.ok) {
-      throw resp;
-    }
-    setAuthHeaders(resp);
-    return resp;
-  });
+// Devs should note that Shelter Tech's endpoint is a thin wrapper over the Google Cloud SDK for ruby. If we were
+// to procure the credentials we could call Google's translation service directly.
+export function translate(
+  text: string,
+  sourceLanguage: string
+): Promise<string> {
+  return post("/api/translation/translate_text", {
+    text,
+    source_language: sourceLanguage,
+  }).then((resp) => resp.json().then((body) => body.result));
 }
-
-export function APIDelete(
-  url: RequestInfo | URL,
-  headers?: HeadersInit
-): Promise<void> {
-  let queryHeaders = {
-    "Content-Type": "application/json",
-  };
-  if (headers) {
-    queryHeaders = assignIn(queryHeaders, headers);
-  }
-  return fetch(url, {
-    method: "DELETE",
-    mode: "cors",
-    headers: queryHeaders,
-  }).then((resp) => {
-    if (!resp.ok) {
-      throw resp;
-    }
-    setAuthHeaders(resp);
-  });
-}
-
-export const getResourceCount = (): Promise<number> =>
-  get("/api/resources/count");

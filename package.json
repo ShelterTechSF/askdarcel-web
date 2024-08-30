@@ -9,7 +9,7 @@
     "lint:fix": "eslint --fix --ext=.js,.jsx,.ts,.tsx .",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "test": "jest",
+    "test": "jest --coverage=false",
     "test:watch": "jest --watch",
     "test:watch:all": "jest --watchAll"
   },

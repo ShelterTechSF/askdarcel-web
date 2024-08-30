@@ -55,7 +55,7 @@ export interface Category {
 export interface Eligibility {
   id: number;
   name: string;
-  feature_rank: number;
+  feature_rank: number | null;
 }
 
 export interface Program {
