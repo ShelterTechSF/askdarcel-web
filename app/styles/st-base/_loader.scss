@@ -2,7 +2,10 @@
 // LOADER STYLES
 
 .loader {
-  @extend %flex-center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   text-align: center;
 
   .sk-fading-circle {

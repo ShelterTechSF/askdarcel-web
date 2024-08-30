@@ -15,7 +15,9 @@
 }
 
 .primaryRow {
-  @extend %flex-row;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
   height: $header-height;
   justify-content: space-between;
   margin: 0 auto;

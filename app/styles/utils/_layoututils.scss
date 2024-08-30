@@ -29,33 +29,6 @@ $z-index-filters-menu: 4;
 $z-index-modal: 5;
 $z-index-top: 9;
 
-%flex-row {
-  @include display(flex);
-  @include flex-wrap(nowrap);
-  @include align-items(center);
-}
-
-%flex-row-center {
-  @include display(flex);
-  @include justify-content(center);
-  @include align-items(center);
-}
-
-%flex-column {
-  @include display(flex);
-  @include flex-direction(column);
-  @include flex-wrap(nowrap);
-  @include justify-content(flex-start);
-  @include align-items(stretch);
-}
-
-%flex-center {
-  @include display(flex);
-  @include justify-content(center);
-  @include align-items(center);
-  @include align-content(center);
-}
-
 body {
   min-height: inherit;
   width: 100%;
@@ -64,7 +37,12 @@ body {
 }
 
 #root {
-  @extend %flex-column;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+
   max-width: 100vw;
 }
 
