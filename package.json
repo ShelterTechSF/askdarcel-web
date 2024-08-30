@@ -23,7 +23,7 @@
     "algoliasearch": "^4.10.5",
     "classnames": "^2.2.6",
     "copy-webpack-plugin": "^11.0.0",
-    "google-map-react": "^1.1.4",
+    "google-map-react": "^2.2.1",
     "instantsearch.css": "^7.0.0",
     "lodash.assignin": "^4.2.0",
     "lodash.minby": "^4.6.0",
