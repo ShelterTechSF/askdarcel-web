@@ -6,10 +6,10 @@ import SFSeal from "assets/img/sf-seal-white.png";
 import DCYFLogo from "assets/img/dcyf-white.png";
 import { StrapiModel } from "models/Strapi";
 import { useFooterData } from "hooks/StrapiAPI";
+import { Link } from "react-router-dom";
 import { FooterColumn } from "./FooterColumn";
 
 import "./Footer.scss";
-import { Link } from "react-router-dom";
 
 export const Footer = () => {
   const { data, error, isLoading } = useFooterData();
