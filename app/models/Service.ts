@@ -59,6 +59,11 @@ export interface ServiceParams extends Omit<any, "notes" | "schedule"> {
 const UNKNOWN_ERROR_MESSAGE =
   "We were unable to process the request. Please contact your site administrator.";
 
+export interface FetchServiceError {
+  message: string;
+  error: Error | null;
+}
+
 // TODO This should be serviceAtLocation
 export const getServiceLocations = (
   service: Service,
@@ -111,14 +116,22 @@ export function fetchServiceSuccessHandler({ service }: { service: any }) {
     return { ...service, recurringSchedule } as Service;
   }
 
-  return UNKNOWN_ERROR_MESSAGE;
+  return {
+    message: UNKNOWN_ERROR_MESSAGE,
+    error: null,
+  };
 }
 
-export function fetchServiceFailureHandler(fetchError: unknown) {
-  return `There was a problem with the api response: ${fetchError}`;
+export function fetchServiceFailureHandler(fetchError: Error) {
+  return {
+    message: `There was a problem with the api response.`,
+    error: fetchError,
+  };
 }
 
-export const fetchService = (id: string): Promise<string | Service> =>
+export const fetchService = (
+  id: string
+): Promise<FetchServiceError | Service> =>
   get(`/api/v2/services/${id}`)
     .then(fetchServiceSuccessHandler)
     .catch(fetchServiceFailureHandler);
