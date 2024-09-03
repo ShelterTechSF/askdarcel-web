@@ -17,6 +17,7 @@ import ListingPageWrapper from "components/listing/ListingPageWrapper";
 import LabelTagRows from "components/listing/LabelTagRows";
 import {
   fetchService,
+  FetchServiceError,
   generateServiceDetails,
   getOrganizationActions,
   getServiceLocations,
@@ -30,7 +31,7 @@ import styles from "./ServiceListingPage.module.scss";
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | FetchServiceError>("");
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
     [service]
@@ -43,7 +44,7 @@ export const ServiceListingPage = () => {
 
   useEffect(() => {
     fetchService(id).then((s) => {
-      if (typeof s === "string") {
+      if ("message" in s) {
         setService(null);
 
         setError(s);

@@ -35,7 +35,7 @@ export function post(
     body: JSON.stringify(body),
   }).then((resp) => {
     if (!resp.ok) {
-      throw resp;
+      throw new Error(resp.statusText);
     }
     setAuthHeaders(resp);
     return resp;
@@ -59,7 +59,7 @@ export function get(
     credentials: "include",
   }).then((resp) => {
     if (!resp.ok) {
-      throw resp;
+      throw new Error(resp.statusText);
     }
     setAuthHeaders(resp);
     return resp.json();
@@ -75,5 +75,7 @@ export function translate(
   return post("/api/translation/translate_text", {
     text,
     source_language: sourceLanguage,
-  }).then((resp) => resp.json().then((body) => body.result));
+  })
+    .then((resp) => resp.json().then((body) => body.result))
+    .catch((error) => error);
 }
