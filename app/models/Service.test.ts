@@ -59,7 +59,7 @@ describe("#fetchServiceSuccessHandler", () => {
     expect(actual.recurringSchedule).toBeDefined();
   });
 
-  it("will return a an unkown error message if the Service data is malformed", () => {
+  it("will return a an unknown error message if the Service data is malformed", () => {
     const serviceFixture = {
       id: 992,
     };
@@ -67,9 +67,11 @@ describe("#fetchServiceSuccessHandler", () => {
       service: serviceFixture,
     }) as Service;
 
-    expect(actual).toStrictEqual(
-      "We were unable to process the request. Please contact your site administrator."
-    );
+    expect(actual).toStrictEqual({
+      error: null,
+      message:
+        "We were unable to process the request. Please contact your site administrator.",
+    });
   });
 });
 
@@ -80,8 +82,11 @@ describe("#fetchServiceFailureHandler", () => {
     );
     const actual = fetchServiceFailureHandler(errorFixture);
 
-    expect(actual).toStrictEqual(
-      `There was a problem with the api response: ${errorFixture}`
-    );
+    expect(actual).toStrictEqual({
+      error: new SyntaxError(
+        "JSON.parse: unexpected end of data at line 1 column 1 of the JSON data"
+      ),
+      message: "There was a problem with the api response.",
+    });
   });
 });
