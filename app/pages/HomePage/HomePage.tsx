@@ -24,7 +24,7 @@ export const HomePage = () => {
     events,
     hero,
     two_column_content_blocks,
-  } = homePageData;
+  } = homePageData || {};
 
   const twoColumnContentData = two_column_content_blocks.data;
 

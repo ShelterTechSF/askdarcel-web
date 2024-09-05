@@ -4,7 +4,7 @@
   "description": "Web Version",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "cross-env NODE_ENV=development webpack serve --open --mode=development",
+    "dev": "cross-env NODE_ENV=development webpack serve --mode=development",
     "lint": "eslint --ext=.js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext=.js,.jsx,.ts,.tsx .",
     "prettier": "prettier --check .",
@@ -100,6 +100,7 @@
     "js-yaml": "^3.13.1",
     "nyc": "^15.0.0",
     "prettier": "2.8.2",
+    "process": "^0.11.10",
     "sass": "^1.49.7",
     "sass-loader": "^16.0.1",
     "style-loader": "^4.0.0",

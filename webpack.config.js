@@ -2,10 +2,10 @@ const { readFileSync, existsSync } = require("fs");
 const yaml = require("js-yaml");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtendedDefinePlugin = require("extended-define-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const webpack = require("webpack");
 
 let userConfig = {};
 
@@ -95,15 +95,24 @@ module.exports = {
       },
       favicon: "app/assets/img/our-415-favicon.png",
     }),
-    new ExtendedDefinePlugin({
-      CONFIG: config,
+    new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      CONFIG: JSON.stringify(config),
     }),
     new ForkTsCheckerWebpackPlugin(),
     new CopyPlugin({
       patterns: [{ from: "public", to: path.resolve(__dirname, "public") }],
     }),
     new NodePolyfillPlugin(),
+    // This became necessary to add after upgrading dependencies. It was likely one of the deps in the webpack build
+    // chain which caused the error:
+    // `Uncaught ReferenceError: process is not defined` in AlogliaSearchCore.js
+    // However this error didn't surface until a subsequent PR was merged, which might have forced a rebuild of the
+    // dep tree/module cache.
+    // See: https://stackoverflow.com/questions/41359504/webpack-bundle-js-uncaught-referenceerror-process-is-not-defined
+    new webpack.ProvidePlugin({
+      process: "process/browser.js",
+    }),
   ],
   devtool: "source-map",
   module: {
