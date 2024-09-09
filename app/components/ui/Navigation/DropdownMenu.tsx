@@ -7,13 +7,13 @@ import styles from "./DropdownMenu.module.scss";
 const DropdownMenu = ({
   title,
   links,
-  uniqueKey,
   variant = "navigation",
+  id,
 }: {
   title: string;
   links: { id: number | string; url: string; text: string }[];
-  uniqueKey: string;
   variant?: "navigation" | "category";
+  id: string;
 }) => {
   const { activeSubMenu, handleMenuToggle, menuRef } = useMenuToggle();
 
@@ -23,12 +23,12 @@ const DropdownMenu = ({
   );
 
   return (
-    <div className={containerClass} key={uniqueKey} ref={menuRef}>
+    <div className={containerClass} key={id} ref={menuRef}>
       <button
         type="button"
         aria-haspopup="menu"
-        aria-expanded={activeSubMenu === uniqueKey ? "true" : "false"}
-        onClick={() => handleMenuToggle(uniqueKey)}
+        aria-expanded={activeSubMenu === id ? "true" : "false"}
+        onClick={() => handleMenuToggle(id)}
         className={styles.navigationMenuHeader}
       >
         {title}
@@ -37,17 +37,20 @@ const DropdownMenu = ({
 
       <div
         style={{
-          display: activeSubMenu === uniqueKey ? "block" : "none",
+          display: activeSubMenu === id ? "block" : "none",
         }}
         className={`${styles.navigationSubMenu}`}
       >
-        {links.map((linkItem) => (
-          <span key={linkItem.id} className={styles.navigationSubMenuItem}>
-            <Link to={linkItem.url} className={styles.menuLink}>
-              {linkItem.text}
-            </Link>
-          </span>
-        ))}
+        {links.map((linkItem) => {
+          const uuid = crypto.randomUUID();
+          return (
+            <span key={uuid} className={styles.navigationSubMenuItem}>
+              <Link to={linkItem.url} className={styles.menuLink}>
+                {linkItem.text}
+              </Link>
+            </span>
+          );
+        })}
       </div>
     </div>
   );

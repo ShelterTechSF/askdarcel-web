@@ -129,7 +129,7 @@ export const SearchResultsPage = () => {
         />
       </Helmet>
 
-      <Header resultsTitle="All categories" />
+      <Header />
 
       <InstantSearch searchClient={searchClient} indexName={INDEX_NAME} routing>
         <Configure

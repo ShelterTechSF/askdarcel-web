@@ -110,7 +110,7 @@ export const ServiceDiscoveryResults = ({
             content={`A list of ${categoryName} in San Francisco`}
           />
         </Helmet>
-        <Header resultsTitle={categoryName} />
+        <Header currentCategory={categoryName} />
 
         <InstantSearch
           searchClient={searchClient}

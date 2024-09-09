@@ -34,18 +34,17 @@ export const MobileNavigation = ({
       <div className={mobileNavigationStyles.mobileNavigationContainer}>
         {menuData?.map((menuDataItem) => {
           if (menuItemHasLinks(menuDataItem)) {
-            const uniqueKey = menuDataItem.title;
-
+            const uid = menuDataItem.title;
             return (
               <div
                 className={mobileNavigationStyles.mobileNavigationMenuContainer}
-                key={uniqueKey}
+                key={uid}
               >
                 <button
                   type="button"
                   aria-haspopup="menu"
-                  aria-expanded={activeSubMenu === uniqueKey ? "true" : "false"}
-                  onClick={() => setSubMenu(uniqueKey)}
+                  aria-expanded={activeSubMenu === uid ? "true" : "false"}
+                  onClick={() => setSubMenu(uid)}
                   className={mobileNavigationStyles.mobileNavigationMenuHeader}
                 >
                   {menuDataItem.title}
@@ -57,29 +56,32 @@ export const MobileNavigation = ({
                   className={`${
                     mobileNavigationStyles.mobileNavigationMenuList
                   } ${
-                    activeSubMenu === uniqueKey
+                    activeSubMenu === uid
                       ? mobileNavigationStyles.mobileNavigationMenuListOpen
                       : ""
                   }`}
                 >
-                  {menuDataItem.link.map((linkItem: StrapiModel.Link) => (
-                    <li
-                      key={linkItem.id}
-                      className={
-                        mobileNavigationStyles.mobileNavigationMenuListItem
-                      }
-                    >
-                      <Link
-                        to={linkItem.url}
+                  {menuDataItem.link.map((linkItem: StrapiModel.Link) => {
+                    const uuid = crypto.randomUUID();
+                    return (
+                      <li
+                        key={uuid}
                         className={
-                          mobileNavigationStyles.mobileNavigationMenuLink
+                          mobileNavigationStyles.mobileNavigationMenuListItem
                         }
-                        onClick={closeMobileMenu}
                       >
-                        {linkItem.text}
-                      </Link>
-                    </li>
-                  ))}
+                        <Link
+                          to={linkItem.url}
+                          className={
+                            mobileNavigationStyles.mobileNavigationMenuLink
+                          }
+                          onClick={closeMobileMenu}
+                        >
+                          {linkItem.text}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             );
@@ -87,7 +89,7 @@ export const MobileNavigation = ({
 
           return (
             <li
-              key={menuDataItem.url}
+              key={crypto.randomUUID()}
               className={mobileNavigationStyles.mobileNavigationMenuListItem}
             >
               <Link

@@ -112,23 +112,25 @@ export const Navigation = () => {
               <div className={styles.desktopNavigationContainer}>
                 {menuData?.map((menuDataItem) => {
                   if (menuItemHasLinks(menuDataItem)) {
-                    const uniqueKey = menuDataItem.title;
                     const links = menuDataItem.link.map((linkItem) => ({
                       id: linkItem.id,
                       url: linkItem.url,
                       text: linkItem.text,
                     }));
 
+                    const uniqueKey = crypto.randomUUID();
+
                     return (
                       <DropdownMenu
+                        key={uniqueKey}
+                        id={uniqueKey}
                         title={menuDataItem.title}
                         links={links}
-                        uniqueKey={uniqueKey}
                       />
                     );
                   }
 
-                  const uniqueKey = menuDataItem.url;
+                  const uniqueKey = crypto.randomUUID();
                   return (
                     <Link
                       key={uniqueKey}
