@@ -1,28 +1,31 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { connectStateResults } from "react-instantsearch/connectors";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { SearchResult } from "components/search/SearchResults/SearchResult";
 import {
-  SearchMapHitData,
-  SearchResultsResponse,
+  SearchHit,
   TransformedSearchHit,
   transformSearchResults,
 } from "models/SearchHits";
+import { useInstantSearch } from "react-instantsearch";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import algoliasearchHelper from "algoliasearch-helper";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
 
 const SearchResults = ({
-  searchResults,
   mobileMapIsCollapsed,
   setAroundLatLng,
   searchQuery,
 }: {
-  searchResults: SearchResultsResponse;
   mobileMapIsCollapsed: boolean;
   setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   searchQuery?: string | null;
 }) => {
+  const {
+    results: searchResults,
+  }: { results: algoliasearchHelper.SearchResults<SearchHit> } =
+    useInstantSearch();
   const [centerCoords] = useState(null);
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
     null
@@ -45,10 +48,7 @@ const SearchResults = ({
     }
   }, []);
 
-  if (!searchResults) return null;
-
-  const searchMapHitData: SearchMapHitData =
-    transformSearchResults(searchResults);
+  const searchMapHitData = transformSearchResults(searchResults);
   const hasNoResults = searchMapHitData.nbHits === 0;
 
   const NoResultsDisplay = () => (
@@ -83,13 +83,15 @@ const SearchResults = ({
                 <ClearSearchButton />
               </div>
             )}
-            {searchMapHitData.hits.map((hit: TransformedSearchHit, index) => (
-              <SearchResult
-                hit={hit}
-                key={`${hit.id} - ${hit.name}`}
-                ref={index === 0 ? handleFirstResultFocus : null}
-              />
-            ))}
+            {searchMapHitData.hits.map(
+              (hit: TransformedSearchHit, index: any) => (
+                <SearchResult
+                  hit={hit}
+                  key={`${hit.id} - ${hit.name}`}
+                  ref={index === 0 ? handleFirstResultFocus : null}
+                />
+              )
+            )}
             <ResultsPagination noResults={hasNoResults} />
           </>
         )}
@@ -107,4 +109,4 @@ const SearchResults = ({
 
 // Connects the Algolia searchState and searchResults to this component
 // Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html
-export default connectStateResults(SearchResults);
+export default SearchResults;

@@ -26,6 +26,8 @@ export const areCoordsInSanFrancisco = (coords: GeoCoordinates): boolean => {
   );
 };
 
+export const DEFAULT_AROUND_PRECISION = 1600;
+
 /**
  * Get location via HTML5 Geolocation API.
  */

@@ -1,14 +1,13 @@
-import {
-  Hit,
-  SearchResults as AlogliaSearchResultsType,
-} from "react-instantsearch/connectors";
+import { Hit, SearchHits } from "algoliasearch";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import algoliasearchHelper from "algoliasearch-helper";
 import { Service } from "./Service";
 import { Organization } from "./Organization";
 import { ScheduleDay, parseAlgoliaSchedule } from "./Schedule";
 import { PhoneNumber } from "./Meta";
 import { RecurringSchedule } from "./RecurringSchedule";
 
-interface BaseHit {
+interface BaseHit extends Hit {
   _geoloc: { lat: number; lng: number };
   is_mohcd_funded: boolean;
   resource_id: number;
@@ -33,7 +32,8 @@ export interface OrganizationHit
   schedule: ScheduleDay[];
   recurringSchedule: RecurringSchedule | null;
 }
-export type SearchResultsResponse = AlogliaSearchResultsType<SearchHit>;
+// TODO: type fix
+export type SearchResultsResponse = SearchHits<SearchHit>;
 export type SearchHit = ServiceHit | OrganizationHit;
 type Location = {
   id: string;
@@ -55,10 +55,6 @@ export type TransformedSearchHit = Hit<
     addressDisplay: string;
   }
 >;
-export interface SearchMapHitData
-  extends AlogliaSearchResultsType<TransformedSearchHit> {
-  hits: TransformedSearchHit[];
-}
 
 // TODO: Determine if we need this code
 export const getRecurringScheduleForSeachHit = (
@@ -123,37 +119,41 @@ function getAddressDisplay(hit: SearchHit) {
 // Returns a view model of search result data for use in downstream components
 // Developers are encouraged to manage computed properties here rather than within presentational components
 export function transformSearchResults(
-  searchResults: SearchResultsResponse
-): SearchMapHitData {
+  searchResults: algoliasearchHelper.SearchResults<SearchHit>
+) {
   // Algolia's api response types these properties as optional, although in practice they always appear
   // in results in our searches
-  const currentPage = searchResults.page ?? 0;
-  const hitsPerPage = searchResults.hitsPerPage ?? 20;
+  const currentPage: number = searchResults.page ?? 0;
+  const hitsPerPage: number = searchResults.hitsPerPage ?? 20;
 
-  const transformedHits = searchResults.hits.reduce((acc, hit, index) => {
-    const phoneNumber = hit?.phones?.[0]?.number || null;
-    const websiteUrl = hit.type === "service" ? hit.url : hit.website;
-    const basePath = hit.type === "service" ? `services` : `organizations`;
-    const hitId = hit.type === "service" ? hit.service_id : hit.resource_id;
-    const resultListIndexDisplay = `${currentPage * hitsPerPage + index + 1}`;
+  const transformedHits = searchResults.hits.reduce<TransformedSearchHit[]>(
+    (acc, hit, index: number) => {
+      const phoneNumber = hit?.phones?.[0]?.number || null;
+      const websiteUrl = hit.type === "service" ? hit.url : hit.website;
+      const basePath = hit.type === "service" ? `services` : `organizations`;
+      const hitId = hit.type === "service" ? hit.service_id : hit.resource_id;
+      // @ts-ignore
+      const resultListIndexDisplay = `${currentPage * hitsPerPage + index + 1}`;
 
-    const nextHit: TransformedSearchHit = {
-      ...hit,
-      recurringSchedule: getRecurringScheduleForSeachHit(hit),
-      resultListIndexDisplay,
-      longDescription: hit.long_description || "No description, yet...",
-      path: `/${basePath}/${hitId}`,
-      headline: `${resultListIndexDisplay}. ${hit.name}`,
-      geoLocPath: `http://google.com/maps/dir/?api=1&destination=${hit._geoloc.lat},${hit._geoloc.lng}`,
-      phoneNumber,
-      websiteUrl,
-      locations: getLocations(hit, resultListIndexDisplay),
-      addressDisplay: getAddressDisplay(hit),
-    };
+      const nextHit = {
+        ...hit,
+        recurringSchedule: getRecurringScheduleForSeachHit(hit),
+        resultListIndexDisplay,
+        longDescription: hit.long_description || "No description, yet...",
+        path: `/${basePath}/${hitId}`,
+        headline: `${resultListIndexDisplay}. ${hit.name}`,
+        geoLocPath: `http://google.com/maps/dir/?api=1&destination=${hit._geoloc.lat},${hit._geoloc.lng}`,
+        phoneNumber,
+        websiteUrl,
+        locations: getLocations(hit, resultListIndexDisplay),
+        addressDisplay: getAddressDisplay(hit),
+      };
 
-    acc.push(nextHit);
-    return acc;
-  }, [] as TransformedSearchHit[]);
+      acc.push(nextHit);
+      return acc;
+    },
+    []
+  );
 
   return {
     ...searchResults,

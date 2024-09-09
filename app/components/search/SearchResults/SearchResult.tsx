@@ -48,6 +48,9 @@ export const SearchResult = forwardRef<HTMLDivElement, SearchResultProps>(
                   <LabelTag label={hit.categories[0].toString()} />
                 )}
                 {hit.categories.length > 1 && (
+                  // After pckg update TS started complaining about this, pckg is possibly
+                  // mis-typed
+                  /* @ts-ignore */
                   <Tooltip
                     title={hit.categories.slice(1).join(", ")}
                     position="top"

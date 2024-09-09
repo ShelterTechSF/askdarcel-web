@@ -1,16 +1,13 @@
-import React from "react";
-import { connectRefinementList } from "react-instantsearch/connectors";
+import React, { useEffect, useState } from "react";
+import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
 import { getCurrentDayTime } from "utils/index";
 import styles from "./RefinementFilters.module.scss";
 
-type Props = {
-  currentRefinement: string[];
-  refine: (value: string[]) => void;
-};
+interface Props extends UseRefinementListProps {}
 
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
- * Now checkbos.
+ * Now checkbox.
  *
  * We implement this as a custom widget because we want to show users a
  * different representation of the search parameter than is actually stored
@@ -25,14 +22,23 @@ type Props = {
  * filter should filter for organizations or services which have 'Su-10:00' in
  * the open_times array.
  */
-const OpenNowFilter = ({ currentRefinement, refine }: Props) => {
-  const isActive = currentRefinement.length !== 0;
-  const toggleRefinement = () => {
-    if (isActive) {
-      refine([]);
-    } else {
-      refine([getCurrentDayTime()]);
+const OpenNowFilter = (props: Props) => {
+  const { refine, items } = useRefinementList(props);
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (items.map((item) => item.value).includes(getCurrentDayTime())) {
+      setChecked(true);
     }
+  }, [items]);
+
+  const toggleRefinement = () => {
+    if (checked) {
+      setChecked(false);
+    } else if (items.map((item) => item.value).includes(getCurrentDayTime())) {
+      setChecked(true);
+    }
+    refine(getCurrentDayTime());
   };
 
   return (
@@ -44,11 +50,11 @@ const OpenNowFilter = ({ currentRefinement, refine }: Props) => {
         id="openNow"
         className={styles.refinementInput}
         value="openNow"
-        checked={isActive}
+        checked={checked}
         onChange={toggleRefinement}
       />
     </label>
   );
 };
 
-export default connectRefinementList(OpenNowFilter);
+export default OpenNowFilter;

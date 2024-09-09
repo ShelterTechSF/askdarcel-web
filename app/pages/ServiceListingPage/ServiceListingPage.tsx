@@ -31,7 +31,7 @@ import styles from "./ServiceListingPage.module.scss";
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
-  const [error, setError] = useState<string | FetchServiceError>("");
+  const [error, setError] = useState<FetchServiceError>();
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
     [service]
@@ -62,7 +62,7 @@ export const ServiceListingPage = () => {
         sidebarActions={[]}
         onClickAction={() => "noop"}
       >
-        {error}
+        {error.message}
       </ListingPageWrapper>
     );
   }

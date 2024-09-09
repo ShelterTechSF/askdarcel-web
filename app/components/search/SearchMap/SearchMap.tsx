@@ -81,7 +81,7 @@ export const SearchMap = ({
           <UserLocationMarker lat={lat} lng={lng} key={1} />
           {hits.reduce((markers, hit) => {
             // Add a marker for each address of each hit
-            hit.locations.forEach((location) => {
+            hit.locations.forEach((location: any) => {
               markers.push(
                 <GoogleSearchHitMarkerWorkaround
                   key={location.id}
@@ -113,6 +113,8 @@ const GoogleSearchHitMarkerWorkaround = ({
   hit: TransformedSearchHit;
   tag: string;
 }) => (
+  // TODO: Figure out why TS complaining after pckg update
+  // @ts-ignore
   <Tooltip
     arrow
     html={<SearchEntry hit={hit} />}

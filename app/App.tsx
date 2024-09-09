@@ -6,7 +6,6 @@ import ReactGA_4 from "react-ga4";
 import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
-import { SiteSearchProvider } from "./hooks/SiteSearch";
 import {
   GeoCoordinates,
   getLocation,
@@ -52,30 +51,28 @@ export const App = () => {
   return (
     <div id={OUTER_CONTAINER_ID} className={styles.outerContainer}>
       <AppProvider userLocation={userLocation}>
-        <SiteSearchProvider>
-          <Helmet>
-            <title>{title}</title>
-            <meta property="og:url" content={siteUrl} />
-            <meta property="og:title" content={title} />
+        <Helmet>
+          <title>{title}</title>
+          <meta property="og:url" content={siteUrl} />
+          <meta property="og:title" content={title} />
 
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:site" content="@sheltertechorg" />
-            <meta
-              property="og:description"
-              content="Get guided help finding food, housing, health resources and more in San Francisco"
-            />
-            <meta property="og:image" content={MetaImage} />
-            <meta property="og:type" content="website" />
-            <meta property="og:image:type" content="image/png" />
-            <meta property="og:image:width" content="1200" />
-            <meta property="og:image:height" content="630" />
-          </Helmet>
-          {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
-          {intercom && config.INTERCOM_APP_ID && (
-            <Intercom appID={config.INTERCOM_APP_ID} />
-          )}
-          <Navigation />
-        </SiteSearchProvider>
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@sheltertechorg" />
+          <meta
+            property="og:description"
+            content="Get guided help finding food, housing, health resources and more in San Francisco"
+          />
+          <meta property="og:image" content={MetaImage} />
+          <meta property="og:type" content="website" />
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </Helmet>
+        {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
+        {intercom && config.INTERCOM_APP_ID && (
+          <Intercom appID={config.INTERCOM_APP_ID} />
+        )}
+        <Navigation />
         <Footer />
       </AppProvider>
     </div>

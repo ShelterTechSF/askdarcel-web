@@ -4,9 +4,20 @@ $input-height: 40px;
 $border-width: 2px;
 $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
 
+// TODO: need design consult for being in top bar
 .navSearch {
   display: flex;
   align-items: center;
+  position: absolute;
+  top: 30px;
+  left: 200px;
+  z-index: $z-index-top;
+
+  @include r_max($break-tablet-s) {
+    left: 100px;
+    top: 10px;
+    width: 300px;
+  }
 
   .searchField {
     padding: $general-spacing-s $general-spacing-md;
@@ -14,7 +25,7 @@ $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
     border-right: none;
     border-radius: $rounded-full 0 0 $rounded-full;
     flex: 1;
-    width: 360px;
+    width: 500px;
     max-width: 100%;
     height: $input-height;
 

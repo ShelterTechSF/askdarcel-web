@@ -1,5 +1,5 @@
 import React from "react";
-import { Pagination } from "react-instantsearch/dom";
+import { Pagination } from "react-instantsearch";
 import websiteConfig from "utils/websiteConfig";
 
 import styles from "./ResultsPagination.module.scss";
@@ -21,8 +21,8 @@ const ResultsPagination = ({ noResults }: { noResults: boolean }) => (
           showLast={false}
           showFirst={false}
           translations={{
-            previous: "Prev",
-            next: "Next",
+            previousPageItemText: "Prev",
+            nextPageItemText: "Next",
           }}
         />
       </div>

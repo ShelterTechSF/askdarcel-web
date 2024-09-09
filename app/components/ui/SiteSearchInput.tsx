@@ -1,36 +1,26 @@
-import React, { FormEvent } from "react";
-import { useHistory } from "react-router-dom";
+import React, { FormEvent, useState } from "react";
 import cn from "classnames";
-import qs from "qs";
-import { useSiteSearch } from "hooks/SiteSearch";
+import { useSearchBox } from "react-instantsearch";
 import styles from "./SiteSearchInput.module.scss";
 
 /**
  * Sitewide listing search component
  *
  * - Updates the url querystring on every search
- * - Allows empty searches by removing `query=` query param from querystring
  */
 export const SiteSearchInput = () => {
-  const { query, setQuery } = useSiteSearch();
-  const history = useHistory();
+  const { query, refine } = useSearchBox();
+  const [inputValue, setInputValue] = useState(query);
 
-  // eg: `?page=1` -> `page=1`
-  const removeQueryStringStart = (querystring: string) => querystring.slice(1);
+  function setQuery(newQuery: string) {
+    setInputValue(newQuery);
+  }
 
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
-    const queryString = removeQueryStringStart(window.location.search);
-    const searchState = qs.parse(queryString);
 
-    if (query) {
-      searchState.query = query;
-      searchState.page = "1";
-    } else {
-      delete searchState.query;
-    }
+    refine(inputValue);
 
-    history.push(`/search?${qs.stringify(searchState)}`);
     return false;
   };
 
@@ -42,7 +32,7 @@ export const SiteSearchInput = () => {
     >
       <input
         onChange={(e) => setQuery(e.target.value)}
-        value={query}
+        value={inputValue}
         type="text"
         className={styles.searchField}
         placeholder="Search for a service or organization"
