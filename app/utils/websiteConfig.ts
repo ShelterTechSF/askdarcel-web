@@ -38,8 +38,6 @@ interface WebsiteConfigSite {
   showBanner: boolean;
   showBreakingNews: boolean;
   showClinicianAction: boolean;
-  showHandoutsIcon: boolean;
-  showHeaderQrCode: boolean;
   showMobileNav: boolean;
   showPrintResultsBtn: boolean;
   showReportCrisis: boolean;
@@ -75,8 +73,6 @@ services and re-entry programs.`,
   showBanner: false,
   showBreakingNews: false,
   showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
   showMobileNav: true,
   showReportCrisis: false,
   siteNavStyle: styles.siteNav,

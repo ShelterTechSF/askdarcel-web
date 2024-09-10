@@ -32,7 +32,7 @@ describe("#fetchServiceSuccessHandler", () => {
 
     expect(actual.recurringSchedule).toBeDefined();
   });
-  it("will return a Service that inherits the schedule from its organization", () => {
+  it("will return a Service with its schedule", () => {
     const serviceFixture = {
       resource: {
         schedule: {

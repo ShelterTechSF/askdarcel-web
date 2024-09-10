@@ -66,13 +66,11 @@ export function useNavigationData() {
       }
     );
 
-  const { data, error, isLoading } = <
-    {
-      data: { data: StrapiApi.StrapiDatumResponse<StrapiApi.HeaderResponse> };
-      error: any;
-      isLoading: boolean;
-    }
-  >useSWR(`/api/${path}`, dataFetcher);
+  const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher) as {
+    data: { data: StrapiApi.StrapiDatumResponse<StrapiApi.HeaderResponse> };
+    error: any;
+    isLoading: boolean;
+  };
 
   return {
     data: data?.data ? data?.data.attributes : null,

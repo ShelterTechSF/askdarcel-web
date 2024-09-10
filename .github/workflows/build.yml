@@ -5,21 +5,6 @@ on:
     branches: [main, development]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      - run: npm i
-      - run: npm run prettier
-      - run: npm run lint
   build_and_test_app:
     runs-on: ubuntu-latest
     environment: "dev"
@@ -35,6 +20,8 @@ jobs:
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
       - run: npm i
+      - run: npm run prettier
+      - run: npm run lint
       - run: npm run test
       - run: npm run build
         env:

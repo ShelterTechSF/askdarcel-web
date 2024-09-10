@@ -2,17 +2,11 @@ import BackgroundImage from "../assets/img/bg.png";
 import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
 import Our415Logo from "../assets/img/Our415_logo-hori.svg";
 import SFSeal from "../assets/img/sf-seal.png";
-import LinkSFLogo from "../assets/img/link-sf.png";
-import config from "../config";
 import styles from "../components/ui/Navigation/Navigation.module.scss";
 
 // Include new white label here
-type WhiteLabelSiteKey =
-  | "defaultWhiteLabel"
-  | "SFServiceGuide"
-  | "SFFamilies"
-  | "LinkSF";
-type homepageComponentEnums = "HomePage" | "UcsfHomePage";
+type WhiteLabelSiteKey = "defaultWhiteLabel";
+type homepageComponentEnums = "HomePage";
 
 interface WhiteLabelSite {
   aboutPageText: string;
@@ -46,8 +40,6 @@ interface WhiteLabelSite {
   showBanner: boolean;
   showBreakingNews: boolean;
   showClinicianAction: boolean;
-  showHandoutsIcon: boolean;
-  showHeaderQrCode: boolean;
   showMobileNav: boolean;
   showPrintResultsBtn: boolean;
   showReportCrisis: boolean;
@@ -56,28 +48,6 @@ interface WhiteLabelSite {
   title: string;
   userWay: boolean;
 }
-
-// Include a domain in config.js
-function determineWhiteLabelSite(): WhiteLabelSiteKey {
-  const domain = window.location.host;
-  const subdomain = domain.split(".")[0];
-  const checkWhiteLabelSubdomain = (whiteLabelSubdomain: string) =>
-    subdomain === whiteLabelSubdomain ||
-    subdomain === `${whiteLabelSubdomain}-staging`;
-
-  if (checkWhiteLabelSubdomain(config.SFFAMILIES_DOMAIN)) return "SFFamilies";
-  if (checkWhiteLabelSubdomain(config.LINKSF_DOMAIN)) return "LinkSF";
-  if (
-    subdomain === String(config.MOHCD_DOMAIN) ||
-    domain === `staging.${String(config.MOHCD_DOMAIN)}.org`
-  )
-    return "SFServiceGuide";
-  // N.B. The qaone environment can be used to test various whitelabels as needed
-
-  return "defaultWhiteLabel";
-}
-
-const configKey = determineWhiteLabelSite();
 
 const whiteLabelDefaults = {
   aboutPageText: `Our415 is an online directory of human services in San
@@ -103,8 +73,6 @@ services and re-entry programs.`,
   showBanner: false,
   showBreakingNews: false,
   showClinicianAction: false,
-  showHandoutsIcon: false,
-  showHeaderQrCode: false,
   showMobileNav: true,
   showReportCrisis: false,
   siteNavStyle: styles.siteNav,
@@ -115,62 +83,6 @@ const appImageDefaults = {
   background: BackgroundImage,
   algolia: SearchByAlgoliaImage,
   mohcdSeal: SFSeal,
-} as const;
-
-/*
-  Specify what is viewed in each white label.
-  A '/' (which is a forward-slash) as a value for logoLinkDestination
-  denotes that the link is internal to the application.
-*/
-
-const SFFamilies: WhiteLabelSite = {
-  appImages: {
-    ...appImageDefaults,
-    logoLarge: Our415Logo,
-    logoSmall: Our415Logo,
-  },
-  ...whiteLabelDefaults,
-  enabledTranslations: ["en", "es", "tl", "zh-TW", "vi", "ar", "ru"],
-  footerOptions: {
-    showOnListingPages: true,
-    showTitle: false,
-    showLinks: false,
-    showSFSeal: true,
-  },
-  logoLinkDestination: "https://www.our415.org/",
-  navLogoStyle: styles.navLogoSFFamilies,
-  showMobileNav: false,
-  showPrintResultsBtn: false,
-  siteNavStyle: styles.siteNavSFFamilies,
-  siteUrl: "https://our415.sfserviceguide.org",
-  title: "Our 415",
-  userWay: true,
-} as const;
-
-const SFServiceGuide: WhiteLabelSite = {
-  appImages: {
-    ...appImageDefaults,
-    logoLarge: Our415Logo,
-    logoSmall: Our415Logo,
-  },
-  ...whiteLabelDefaults,
-  intercom: true,
-  siteUrl: "https://sfserviceguide.org",
-  showBreakingNews: true,
-  title: "Our415",
-  showReportCrisis: true,
-} as const;
-
-const LinkSF: WhiteLabelSite = {
-  appImages: {
-    ...appImageDefaults,
-    logoLarge: LinkSFLogo,
-    logoSmall: LinkSFLogo,
-  },
-  ...whiteLabelDefaults,
-  siteUrl: "https://linksf.sfserviceguide.org",
-  showBreakingNews: true,
-  title: "Link SF",
 } as const;
 
 const defaultWhiteLabel: WhiteLabelSite = {
@@ -192,14 +104,11 @@ const defaultWhiteLabel: WhiteLabelSite = {
   Disallow changes at compile time.
 */
 const whiteLabel: Readonly<Record<WhiteLabelSiteKey, WhiteLabelSite>> = {
-  SFFamilies,
-  SFServiceGuide,
-  LinkSF,
   defaultWhiteLabel,
 } as const;
 
 // Disallow changes at run time
 Object.freeze(whiteLabel);
-Object.freeze(whiteLabel[configKey]?.appImages);
+Object.freeze(whiteLabel["defaultWhiteLabel"]?.appImages);
 
-export default whiteLabel[configKey];
+export default whiteLabel["defaultWhiteLabel"];
