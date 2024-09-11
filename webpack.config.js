@@ -6,6 +6,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const webpack = require("webpack");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 let userConfig = {};
 
@@ -60,6 +61,7 @@ module.exports = {
     path: buildDir,
     publicPath: "/dist/",
     filename: "bundle.js",
+    clean: true,
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
@@ -113,6 +115,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser.js",
     }),
+    new CompressionPlugin(),
   ],
   devtool: "source-map",
   module: {

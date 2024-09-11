@@ -10,6 +10,7 @@ app/utils/config.js
 config.yml
 .DS_Store
 yarn.lock
+public/sitemap.xml.gz
 
 .vscode/*
 # !.vscode/settings.json
