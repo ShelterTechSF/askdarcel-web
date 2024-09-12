@@ -3,8 +3,6 @@ import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
 import { getCurrentDayTime } from "utils/index";
 import styles from "./RefinementFilters.module.scss";
 
-interface Props extends UseRefinementListProps {}
-
 /**
  * A custom Algolia InstantSearch RefinementList widget representing the Open
  * Now checkbox.
@@ -22,23 +20,27 @@ interface Props extends UseRefinementListProps {}
  * filter should filter for organizations or services which have 'Su-10:00' in
  * the open_times array.
  */
-const OpenNowFilter = (props: Props) => {
-  const { refine, items } = useRefinementList(props);
-  const [checked, setChecked] = useState(false);
+const OpenNowFilter = () => {
+  const { refine, items } = useRefinementList({ attribute: "open_times" });
+  const [isChecked, toggleChecked] = useState(false);
 
   useEffect(() => {
-    if (items.map((item) => item.value).includes(getCurrentDayTime())) {
-      setChecked(true);
+    const currentDayTime = getCurrentDayTime();
+    if (items.map((item) => item.value).includes(currentDayTime)) {
+      toggleChecked(true);
+    } else {
+      toggleChecked(false);
     }
   }, [items]);
 
   const toggleRefinement = () => {
-    if (checked) {
-      setChecked(false);
-    } else if (items.map((item) => item.value).includes(getCurrentDayTime())) {
-      setChecked(true);
+    const currentDayTime = getCurrentDayTime();
+    if (isChecked) {
+      toggleChecked(false);
+    } else if (items.map((item) => item.value).includes(currentDayTime)) {
+      toggleChecked(true);
     }
-    refine(getCurrentDayTime());
+    refine(currentDayTime);
   };
 
   return (
@@ -50,7 +52,7 @@ const OpenNowFilter = (props: Props) => {
         id="openNow"
         className={styles.refinementInput}
         value="openNow"
-        checked={checked}
+        checked={isChecked}
         onChange={toggleRefinement}
       />
     </label>

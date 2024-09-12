@@ -23,7 +23,6 @@ module.exports = {
     },
   },
   rules: {
-    camelcase: "off",
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "import/no-named-as-default": 0,
     "jsx-a11y/label-has-associated-control": ["error", { assert: "either" }],
