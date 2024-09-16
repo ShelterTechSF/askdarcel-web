@@ -7,6 +7,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const webpack = require("webpack");
 const CompressionPlugin = require("compression-webpack-plugin");
+const zlib = require("zlib");
 
 let userConfig = {};
 
@@ -115,7 +116,27 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser.js",
     }),
-    new CompressionPlugin(),
+    new CompressionPlugin({
+      filename: "[path][base].gz",
+      algorithm: "gzip",
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+      deleteOriginalAssets: false,
+    }),
+    new CompressionPlugin({
+      filename: "[path][base].br",
+      algorithm: "brotliCompress",
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: {
+        params: {
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+        },
+      },
+      threshold: 10240,
+      minRatio: 0.8,
+      deleteOriginalAssets: false,
+    }),
   ],
   devtool: "source-map",
   module: {
