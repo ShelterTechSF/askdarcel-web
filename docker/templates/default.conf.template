@@ -18,35 +18,12 @@ server {
       application/atom+xml
       application/geo+json
       application/javascript
+      application/x-javascript
       application/json
       application/ld+json
       application/manifest+json
       application/rdf+xml
       application/rss+xml
-      application/x-javascript
-      application/xhtml+xml
-      application/xml
-      font/eot
-      font/otf
-      font/ttf
-      image/svg+xml
-      text/css
-      text/javascript
-      text/plain
-      text/xml;
-
-    brotli on;
-    brotli_comp_level 6;
-    brotli_types
-      application/atom+xml
-      application/geo+json
-      application/javascript
-      application/json
-      application/ld+json
-      application/manifest+json
-      application/rdf+xml
-      application/rss+xml
-      application/x-javascript
       application/xhtml+xml
       application/xml
       font/eot
