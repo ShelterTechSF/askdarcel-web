@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useRef } from "react";
 import type { Category } from "models/Meta";
 import {
@@ -55,6 +54,10 @@ const Sidebar = ({
     a: { label: string },
     b: { label: string }
   ) => {
+    if (!subcategoryNames) {
+      // noop
+      return 0;
+    }
     // Our API has the ability to sort subcategories using the "child_priority_rank" on the
     // CategoryRelationship table. In cases where we want to sort our sidebar categories
     // following this order, we can use this sorting function, which sorts the categories
@@ -91,12 +94,17 @@ const Sidebar = ({
       />
     );
   } else {
-    if (eligibilities.length) {
+    if (eligibilities && eligibilities.length) {
       eligibilityRefinementJsx = (
         <BrowseRefinementList attribute="eligibilities" />
       );
     }
-    if (subcategories.length) {
+    if (
+      sortAlgoliaSubcategoryRefinements &&
+      subcategoryNames &&
+      subcategories &&
+      subcategories.length
+    ) {
       categoryRefinementJsx = (
         <BrowseRefinementList
           attribute="categories"

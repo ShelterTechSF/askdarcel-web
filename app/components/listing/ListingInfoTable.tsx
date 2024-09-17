@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import styles from "./ListingInfoTable.module.scss";
 
-interface ListingInfoTableProps<T = any> {
+interface ListingInfoTableProps<T = unknown> {
   rows?: T[];
   rowRenderer?: (row: T) => JSX.Element;
   children?: ReactNode;

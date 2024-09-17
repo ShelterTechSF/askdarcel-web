@@ -4,17 +4,17 @@ import { htmlWithBreaks } from "utils/cms";
 import Our415Logo from "assets/img/our415-white.png";
 import SFSeal from "assets/img/sf-seal-white.png";
 import DCYFLogo from "assets/img/dcyf-white.png";
-import { StrapiModel } from "models/Strapi";
 import { useFooterData } from "hooks/StrapiAPI";
 import { Link } from "react-router-dom";
 import { FooterColumn } from "./FooterColumn";
 
 import "./Footer.scss";
+import { DynamicLink, Footer as FooterType, StrapiDatum } from "models/Strapi";
 
 export const Footer = () => {
   const { data, error, isLoading } = useFooterData();
 
-  const res = data as StrapiModel.StrapiDatum<StrapiModel.Footer>;
+  const res = data as StrapiDatum<FooterType>;
 
   const footerData = res?.attributes;
 
@@ -60,7 +60,7 @@ export const Footer = () => {
 
           <div className="site-footer__links">
             {!error &&
-              footerData?.links.map((item: StrapiModel.DynamicLink) => (
+              footerData?.links.map((item: DynamicLink) => (
                 <FooterColumn key={item.id} column={item} />
               ))}
           </div>

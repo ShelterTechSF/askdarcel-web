@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import { StrapiModel } from "models/Strapi";
 import styles from "./Hero.module.scss";
 import { Button } from "../inline/Button/Button";
+import { Link } from "models/Strapi";
 
 const Hero = ({
   backgroundImage,
@@ -13,7 +13,7 @@ const Hero = ({
   backgroundImage: string;
   title: string;
   description: string;
-  buttons: StrapiModel.Link[];
+  buttons: Link[];
 }) => {
   return (
     <>
@@ -43,7 +43,7 @@ const HeroCard = ({
 }: {
   title: string;
   description: string;
-  buttons: StrapiModel.Link[];
+  buttons: Link[];
   desktop?: boolean;
 }) => {
   const cardStyles = classNames(

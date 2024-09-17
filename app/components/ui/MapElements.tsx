@@ -1,6 +1,7 @@
+import googleMapReact from "google-map-react";
 import React from "react";
 
-export const createMapOptions = (maps: any) => ({
+export const createMapOptions = (maps: googleMapReact.Maps) => ({
   zoomControlOptions: {
     position: maps.ControlPosition.TOP_LEFT,
   },
@@ -10,7 +11,7 @@ export const createMapOptions = (maps: any) => ({
 });
 
 // eslint-disable-next-line react/no-unused-prop-types, no-empty-pattern
-export const UserLocationMarker = ({}: { lat?: any; lng?: any }) => (
+export const UserLocationMarker = ({}: { lat?: number; lng?: number }) => (
   <svg width="20" height="20">
     <circle
       cx="10"
@@ -28,8 +29,8 @@ export const CustomMarker = ({
   text,
 }: {
   text: string;
-  lat?: any;
-  lng?: any;
+  lat?: number;
+  lng?: number;
 }) => (
   <svg width="36" height="50" viewBox="0 0 110 85" className="marker">
     <g fill="none" fillRule="evenodd">

@@ -84,7 +84,7 @@ const SearchResults = ({
               </div>
             )}
             {searchMapHitData.hits.map(
-              (hit: TransformedSearchHit, index: any) => (
+              (hit: TransformedSearchHit, index: number) => (
                 <SearchResult
                   hit={hit}
                   key={`${hit.id} - ${hit.name}`}

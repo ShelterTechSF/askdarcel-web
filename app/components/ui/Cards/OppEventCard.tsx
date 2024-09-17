@@ -1,15 +1,15 @@
 import React from "react";
 import { Button } from "components/ui/inline/Button/Button";
-import { StrapiModel } from "models/Strapi";
 import { FormattedDate } from "components/ui/Cards/FormattedDate";
 import styles from "./OppEventCard.module.scss";
+import { CalendarEvent } from "models/Strapi";
 
 interface OppEventCardProps {
   details: {
     id: string;
     imageUrl: string | null;
     title: string;
-    calendarEvent: StrapiModel.CalendarEvent;
+    calendarEvent: CalendarEvent;
   };
   sectionType: "event" | "opportunity";
 }

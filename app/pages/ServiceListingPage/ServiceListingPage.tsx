@@ -128,7 +128,7 @@ export const ServiceListingPage = () => {
 
       {details.length > 0 && (
         <ListingInfoSection title="Details" data-cy="service-details-section">
-          <ListingInfoTable
+          <ListingInfoTable<{ title: string; value: string }>
             rowRenderer={(detail) => (
               <tr key={detail.title}>
                 <th>{detail.title}</th>

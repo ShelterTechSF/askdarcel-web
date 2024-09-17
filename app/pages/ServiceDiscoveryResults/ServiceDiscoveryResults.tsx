@@ -29,8 +29,6 @@ import styles from "./ServiceDiscoveryResults.module.scss";
 
 type MatchParams = { categorySlug: string };
 type RouterLocation = RouteComponentProps["location"];
-// TODO: type fix
-type SearchState = any;
 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 const searchClient = liteClient(
@@ -38,7 +36,7 @@ const searchClient = liteClient(
   config.ALGOLIA_READ_ONLY_API_KEY
 );
 
-const urlToSearchState = (location: RouterLocation): SearchState =>
+const urlToSearchState = (location: RouterLocation) =>
   qs.parse(location.search.slice(1));
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
@@ -59,9 +57,10 @@ export const ServiceDiscoveryResults = ({
   );
   const eligibilities = useEligibilitiesForCategory(category.id);
   const subcategories = useSubcategoriesForCategory(category.id);
-  const [searchState] = useState(urlToSearchState(location));
+  /* eslint-disable */
+  const [searchState] = useState<any>(urlToSearchState(location));
   const [isMapCollapsed, setIsMapCollapsed] = useState(false);
-  const [searchRadius, setSearchRadius] = useState(
+  const [searchRadius, setSearchRadius] = useState<number | "all">(
     searchState?.configure?.aroundRadius || "all"
   );
   const { userLocation } = useAppContext();

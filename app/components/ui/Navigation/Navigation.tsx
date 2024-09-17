@@ -11,7 +11,7 @@ import {
   ExtractedNavigationMenusFromNavigationResponse,
   extractLogoFromNavigationResponse,
   extractNavigationMenusFromNavigationResponse,
-  StrapiModel,
+  NavigationMenu,
 } from "models/Strapi";
 import { useNavigationData } from "hooks/StrapiAPI";
 import { Router } from "../../../Router";
@@ -52,7 +52,7 @@ export const Navigation = () => {
 
   function menuItemHasLinks(
     menuItem: ExtractedNavigationMenusFromNavigationResponse[number]
-  ): menuItem is StrapiModel.NavigationMenu {
+  ): menuItem is NavigationMenu {
     return "link" in menuItem;
   }
 

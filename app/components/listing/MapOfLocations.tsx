@@ -40,8 +40,8 @@ export const MapOfLocations = ({
           {locations.map(({ address, id }, i) => (
             <CustomMarker
               key={id}
-              lat={address?.latitude || 0}
-              lng={address?.longitude || 0}
+              lat={Number(address?.latitude || 0)}
+              lng={Number(address?.longitude || 0)}
               text={`${i + 1}`}
             />
           ))}

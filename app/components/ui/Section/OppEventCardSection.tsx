@@ -1,15 +1,15 @@
 import { HomePageSection } from "pages/HomePage/components/Section";
 import React from "react";
-import { StrapiModel } from "models/Strapi";
 import { OppEventCard } from "../Cards/OppEventCard";
 import styles from "./OppEventCardSection.module.scss";
 import { Loader } from "../Loader";
+import { ContentBlock, Event, Opportunity } from "models/Strapi";
 
 interface OppEventCardSectionProps {
   sectionType: "event" | "opportunity";
-  sectionData: StrapiModel.ContentBlock;
-  events?: { attributes: StrapiModel.Event }[];
-  opportunities?: { attributes: StrapiModel.Opportunity }[];
+  sectionData: ContentBlock;
+  events?: { attributes: Event }[];
+  opportunities?: { attributes: Opportunity }[];
 }
 
 export const OppEventCardSection = (props: OppEventCardSectionProps) => {

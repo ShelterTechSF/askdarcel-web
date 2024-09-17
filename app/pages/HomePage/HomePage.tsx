@@ -1,15 +1,15 @@
+import React from "react";
 import Hero from "components/ui/Hero/Hero";
 import { CategorySection } from "components/ui/Section/CategorySection";
 import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
 import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
-import React from "react";
-import { StrapiModel } from "models/Strapi";
 import { useHomepageData } from "hooks/StrapiAPI";
+import { Homepage, StrapiDatum } from "models/Strapi";
 
 export const HomePage = () => {
   const { data, isLoading } = useHomepageData();
 
-  const res = data as StrapiModel.StrapiDatum<StrapiModel.Homepage>;
+  const res = data as StrapiDatum<Homepage>;
 
   const homePageData = res?.attributes;
 

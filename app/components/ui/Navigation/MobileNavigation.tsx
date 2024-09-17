@@ -3,7 +3,8 @@ import mobileNavigationStyles from "components/ui/Navigation/MobileNavigation.mo
 import { Link } from "react-router-dom";
 import {
   ExtractedNavigationMenusFromNavigationResponse,
-  StrapiModel,
+  NavigationMenu,
+  Link as LinkModel,
 } from "models/Strapi";
 import { GoogleTranslate } from "../GoogleTranslate";
 
@@ -22,7 +23,7 @@ export const MobileNavigation = ({
 }: MobileNavigationProps) => {
   function menuItemHasLinks(
     menuItem: ExtractedNavigationMenusFromNavigationResponse[number]
-  ): menuItem is StrapiModel.NavigationMenu {
+  ): menuItem is NavigationMenu {
     return "link" in menuItem;
   }
   const closeMobileMenu = () => {
@@ -61,7 +62,7 @@ export const MobileNavigation = ({
                       : ""
                   }`}
                 >
-                  {menuDataItem.link.map((linkItem: StrapiModel.Link) => {
+                  {menuDataItem.link.map((linkItem: LinkModel) => {
                     const uuid = crypto.randomUUID();
                     return (
                       <li

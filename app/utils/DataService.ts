@@ -18,7 +18,7 @@ function setAuthHeaders(resp: Response): void {
 
 export function post(
   url: RequestInfo | URL,
-  body?: any,
+  body?: unknown,
   headers?: HeadersInit
 ): Promise<Response> {
   let queryHeaders = {
@@ -42,10 +42,7 @@ export function post(
   });
 }
 
-export function get(
-  url: RequestInfo | URL,
-  headers?: HeadersInit
-): Promise<any> {
+export function get(url: RequestInfo | URL, headers?: HeadersInit) {
   let queryHeaders = {
     "Content-Type": "application/json",
   };

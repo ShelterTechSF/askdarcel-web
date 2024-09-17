@@ -24,7 +24,7 @@ export const SearchMap = ({
 }: {
   hits: TransformedSearchHit[];
   mapObject: google.maps.Map | null;
-  setMapObject: (map: any) => void;
+  setMapObject: (map: google.maps.Map) => void;
   setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   mobileMapIsCollapsed: boolean;
 }) => {
@@ -81,12 +81,12 @@ export const SearchMap = ({
           <UserLocationMarker lat={lat} lng={lng} key={1} />
           {hits.reduce((markers, hit) => {
             // Add a marker for each address of each hit
-            hit.locations.forEach((location: any) => {
+            hit.locations.forEach((location) => {
               markers.push(
                 <GoogleSearchHitMarkerWorkaround
                   key={location.id}
-                  lat={location.lat}
-                  lng={location.long}
+                  lat={Number(location.lat)}
+                  lng={Number(location.long)}
                   tag={location.label}
                   hit={hit}
                 />
@@ -108,12 +108,13 @@ const GoogleSearchHitMarkerWorkaround = ({
   hit,
   tag,
 }: {
-  lat: any;
-  lng: any;
+  lat: number;
+  lng: number;
   hit: TransformedSearchHit;
   tag: string;
 }) => (
   // TODO: Figure out why TS complaining after pckg update
+  /* eslint-disable @typescript-eslint/ban-ts-comment */
   // @ts-ignore
   <Tooltip
     arrow

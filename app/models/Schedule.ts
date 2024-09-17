@@ -39,7 +39,11 @@ export interface ScheduleParams
  * @returns {object} - An object with an `hour` property and a `minute`
  *  property, both represented as integers.
  */
-export const parseConcatenatedIntegerTime = (integerTime: any) => {
+export const parseConcatenatedIntegerTime = (integerTime: number | null) => {
+  if (integerTime === null) {
+    return null;
+  }
+
   try {
     // This algorithm is super hacky and slow, as it uses strings to separate the
     // hours digits from the minutes digits.

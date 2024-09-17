@@ -3,7 +3,7 @@ import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
 import styles from "./RefinementFilters.module.scss";
 
 interface Props extends UseRefinementListProps {
-  transform: UseRefinementListProps["transformItems"];
+  transform?: UseRefinementListProps["transformItems"];
   attribute: string;
 }
 

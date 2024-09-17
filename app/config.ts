@@ -1,5 +1,5 @@
 declare global {
-  const CONFIG: any;
+  const CONFIG: { [key: string]: string };
 }
 
 interface Config {
@@ -41,9 +41,5 @@ const config: Config = {
   STRAPI_API_TOKEN: CONFIG.STRAPI_API_TOKEN,
   STRAPI_API_URL: CONFIG.STRAPI_API_URL,
 };
-
-if (CONFIG.TESTCAFE_RUNNING) {
-  delete (config as any).INTERCOM_APP_ID;
-}
 
 export default config;

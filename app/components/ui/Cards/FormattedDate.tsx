@@ -1,4 +1,4 @@
-import { StrapiModel } from "models/Strapi";
+import { CalendarEvent } from "models/Strapi";
 import React from "react";
 import formatEventDate from "utils/formatEventDate";
 import formatEventTime from "utils/formatEventTime";
@@ -7,7 +7,7 @@ import formatEventTime from "utils/formatEventTime";
 export const FormattedDate = ({
   calendarEvent,
 }: {
-  calendarEvent: StrapiModel.CalendarEvent;
+  calendarEvent: CalendarEvent;
 }): JSX.Element => {
   const formattedStartDate = formatEventDate(calendarEvent.startdate);
   // If the end date is unset, let's assume it's a single day event and assign the enddate to the startdate

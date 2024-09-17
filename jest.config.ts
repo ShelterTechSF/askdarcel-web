@@ -90,7 +90,7 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     // Ensures style imports don't break tests
-    "\\.(css|scss)$": "<rootDir>/test/jest/__mocks__/styleMock.js",
+    "\\.(css|scss)$": "<rootDir>/test/jest/__mocks__/styleMock.ts",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

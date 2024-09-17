@@ -1,36 +1,45 @@
-import { StrapiApi } from "hooks/StrapiAPI";
-
 /**
   Model interfaces are a subtype of Strapi api responses that only include properties needed by consuming components
 */
-export namespace StrapiModel {
-  export interface StrapiDatum<T> extends StrapiApi.StrapiDatumResponse<T> {}
-  export interface Link extends StrapiApi.LinkResponse {}
-  export interface DynamicLink
-    extends Omit<StrapiApi.DynamicLinkResponse, "__component"> {}
-  export interface Footer extends StrapiApi.FooterResponse {}
-  export interface Homepage extends StrapiApi.HomepageResponse {}
-  export interface ContentBlock
-    extends Omit<StrapiApi.ContentBlockResponse, "id"> {}
-  export interface Event extends StrapiApi.EventResponse {}
-  export interface Opportunity extends StrapiApi.OpportunityResponse {}
-  export interface TwoColumnContentBlock
-    extends StrapiApi.TwoColumnContentBlockResponse {}
-  export interface PageContent extends StrapiApi.ContentPageResponse {}
-  export interface Header extends StrapiApi.HeaderResponse {}
-  export interface Logo
-    extends Pick<
-      StrapiApi.LogoResponse,
-      "width" | "height" | "alternativeText" | "url"
-    > {}
-  export interface NavigationMenu
-    extends Omit<StrapiApi.NavigationMenuResponse, "__component"> {}
-  export interface CalendarEvent extends StrapiApi.CalendarEventResponse {}
-  export interface Image extends StrapiApi.ImageResponse {}
-}
+import {
+  CalendarEventResponse,
+  ContentBlockResponse,
+  ContentPageResponse,
+  DynamicLinkResponse,
+  EventResponse,
+  FooterResponse,
+  HeaderResponse,
+  HomepageResponse,
+  ImageResponse,
+  LinkResponse,
+  LogoResponse,
+  NavigationMenuResponse,
+  OpportunityResponse,
+  StrapiDatumResponse,
+  TwoColumnContentBlockResponse,
+} from "hooks/StrapiAPI";
+
+/* eslint-disable @typescript-eslint/no-empty-interface */
+export interface StrapiDatum<T> extends StrapiDatumResponse<T> {}
+export interface Link extends LinkResponse {}
+export interface DynamicLink extends Omit<DynamicLinkResponse, "__component"> {}
+export interface Footer extends FooterResponse {}
+export interface Homepage extends HomepageResponse {}
+export interface ContentBlock extends Omit<ContentBlockResponse, "id"> {}
+export interface Event extends EventResponse {}
+export interface Opportunity extends OpportunityResponse {}
+export interface TwoColumnContentBlock extends TwoColumnContentBlockResponse {}
+export interface PageContent extends ContentPageResponse {}
+export interface Header extends HeaderResponse {}
+export interface Logo
+  extends Pick<LogoResponse, "width" | "height" | "alternativeText" | "url"> {}
+export interface NavigationMenu
+  extends Omit<NavigationMenuResponse, "__component"> {}
+export interface CalendarEvent extends CalendarEventResponse {}
+export interface Image extends ImageResponse {}
 
 export function extractNavigationMenusFromNavigationResponse(
-  navigationResponse: StrapiApi.HeaderResponse | null
+  navigationResponse: HeaderResponse | null
 ): ExtractedNavigationMenusFromNavigationResponse | null {
   return (
     navigationResponse?.navigation.map(({ __component, ...rest }) => rest) ||
@@ -39,11 +48,11 @@ export function extractNavigationMenusFromNavigationResponse(
 }
 
 export function extractLogoFromNavigationResponse(
-  navigationResponse: StrapiApi.HeaderResponse | null
-): StrapiModel.Logo | null {
+  navigationResponse: HeaderResponse | null
+): Logo | null {
   return navigationResponse?.logo.data.attributes || null;
 }
 
 export type ExtractedNavigationMenusFromNavigationResponse = Array<
-  StrapiModel.NavigationMenu | StrapiModel.Link
+  NavigationMenu | Link
 >;

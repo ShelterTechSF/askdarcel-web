@@ -32,6 +32,7 @@ export const GoogleTranslate = () => {
 
   useEffect(() => {
     function googleTranslateElementInit() {
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       new (window as any).google.translate.TranslateElement(
         GOOGLE_TRANSLATE_CONFIG,
         "google_translate_element"

@@ -9,7 +9,9 @@ describe("<MobileNavigation />", () => {
     render(
       <MobileNavigation
         isOpen
-        setSubMenu={() => {}}
+        setSubMenu={() => {
+          return;
+        }}
         activeSubMenu=""
         menuData={[]}
       />,

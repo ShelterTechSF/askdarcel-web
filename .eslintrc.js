@@ -1,6 +1,8 @@
+/* eslint-disable */
 const path = require("path");
 
 module.exports = {
+  root: true,
   extends: [
     "eslint:recommended",
     "plugin:import/recommended",
@@ -9,8 +11,11 @@ module.exports = {
     "react-app/jest",
     "plugin:jsx-a11y/recommended",
     "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
   ],
   plugins: ["react", "jsx-a11y", "import", "@typescript-eslint"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: { project: ["./tsconfig.json"] },
   env: {
     browser: true,
   },
@@ -22,6 +27,7 @@ module.exports = {
       },
     },
   },
+  ignorePatterns: ["coverage"],
   rules: {
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "import/no-named-as-default": 0,
@@ -33,5 +39,6 @@ module.exports = {
       "error",
       { namedComponents: "arrow-function" },
     ],
+    "@typescript-eslint/ban-ts-comment": "warn",
   },
 };

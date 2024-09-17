@@ -1,15 +1,15 @@
 import React from "react";
 import { Loader } from "components/ui";
-import { StrapiModel } from "models/Strapi";
 import { usePageContent } from "hooks/StrapiAPI";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";
 import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
+import { PageContent, StrapiDatum } from "models/Strapi";
 
 export const FaqPage = () => {
   const { data, isLoading } = usePageContent("FAQ");
 
-  const res = data as Array<StrapiModel.StrapiDatum<StrapiModel.PageContent>>;
+  const res = data as Array<StrapiDatum<PageContent>>;
 
   const pageData = res?.length ? res[0].attributes : null;
 

@@ -50,6 +50,7 @@ export const SearchResult = forwardRef<HTMLDivElement, SearchResultProps>(
                 {hit.categories.length > 1 && (
                   // After pckg update TS started complaining about this, pckg is possibly
                   // mis-typed
+                  /* eslint-disable @typescript-eslint/ban-ts-comment */
                   /* @ts-ignore */
                   <Tooltip
                     title={hit.categories.slice(1).join(", ")}

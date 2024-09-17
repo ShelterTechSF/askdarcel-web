@@ -1,5 +1,6 @@
 // These types of array utilities are exceedingly difficult to notate with types. Developers are either
 // welcome to the challenge or can apply the correct notations in consumers.
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 
 // Return unique elements of an object array based on key

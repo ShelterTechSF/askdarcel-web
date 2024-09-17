@@ -15,6 +15,12 @@
     "*": ["app/index.d.ts"]
   },
   "files": ["declaration.d.ts", "jest.config.ts", "setupTests.ts"],
-  "include": ["app"],
+  "include": [
+    "app",
+    ".eslintrc.js",
+    "prettier.config.js",
+    "webpack.config.js",
+    "test"
+  ],
   "exclude": ["node_modules"]
 }

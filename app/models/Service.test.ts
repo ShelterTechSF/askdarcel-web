@@ -24,7 +24,7 @@ describe("#fetchServiceSuccessHandler", () => {
           },
         ],
       },
-    };
+    } as unknown as Service;
 
     const actual = fetchServiceSuccessHandler({
       service: serviceFixture,
@@ -51,7 +51,8 @@ describe("#fetchServiceSuccessHandler", () => {
           ],
         },
       },
-    };
+    } as unknown as Service;
+
     const actual = fetchServiceSuccessHandler({
       service: serviceFixture,
     }) as Service;
@@ -62,10 +63,10 @@ describe("#fetchServiceSuccessHandler", () => {
   it("will return a an unknown error message if the Service data is malformed", () => {
     const serviceFixture = {
       id: 992,
-    };
+    } as unknown as Service;
     const actual = fetchServiceSuccessHandler({
       service: serviceFixture,
-    }) as Service;
+    });
 
     expect(actual).toStrictEqual({
       error: null,

@@ -81,7 +81,13 @@ export const PhoneNumberRenderer = ({ phones }: { phones: PhoneNumber[] }) => (
   </span>
 );
 
-const ExternalLink = ({ children, to }: { children: any; to: string }) => (
+const ExternalLink = ({
+  children,
+  to,
+}: {
+  children: React.ReactNode;
+  to: string;
+}) => (
   <a href={to} target="_blank" rel="noopener noreferrer">
     {children}
   </a>

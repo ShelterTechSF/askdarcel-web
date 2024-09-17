@@ -26,7 +26,7 @@ export interface Service {
   categories: Category[];
   certified_at: string | null;
   certified: boolean;
-  documents: unknown[];
+  documents: unknown[]; // TODO fix
   eligibilities: Eligibility[];
   email: string | null;
   featured: boolean | null;
@@ -38,7 +38,7 @@ export interface Service {
   notes: Note[];
   program: Program | null;
   recurringSchedule: RecurringSchedule;
-  required_documents: any;
+  required_documents: string | null; // TODO fix
   resource: Organization;
   schedule: Schedule;
   short_description: string;
@@ -50,7 +50,7 @@ export interface Service {
   wait_time: Date | null;
 }
 
-export interface ServiceParams extends Omit<any, "notes" | "schedule"> {
+export interface ServiceParams extends Omit<unknown, "notes" | "schedule"> {
   shouldInheritScheduleFromParent: boolean;
   notes?: Partial<Note>[];
   schedule?: ScheduleParams;
@@ -68,7 +68,7 @@ export interface FetchServiceError {
 export const getServiceLocations = (
   service: Service,
   resource: Organization,
-  recurringSchedule: any
+  recurringSchedule: RecurringSchedule
 ): LocationDetails[] => {
   let addresses: Address[];
   if (service.addresses && service.addresses.length > 0) {
@@ -87,23 +87,21 @@ export const getServiceLocations = (
 };
 
 // Get all the fields from a service we should render
-export const generateServiceDetails = (
-  service: Service
-): { title: string; value: any }[] =>
+export const generateServiceDetails = (service: Service) =>
   [
-    ["How to Apply", service.application_process],
-    ["Required Documents", service.required_documents],
-    ["Fees", service.fee],
+    ["How to Apply", service.application_process || ""],
+    ["Required Documents", service.required_documents || ""],
+    ["Fees", service.fee || ""],
     ["Notes", service.notes.map((d) => d.note).join("\n")],
   ]
     .filter((row) => row[1])
     .map((row) => ({ title: row[0], value: row[1] }));
 
 // Determine if a service has its own schedule, or should inherit
-export const shouldServiceInheritScheduleFromOrg = (service: any) =>
+export const shouldServiceInheritScheduleFromOrg = (service: Service) =>
   service.schedule && service.schedule.schedule_days.length > 0;
 
-export function fetchServiceSuccessHandler({ service }: { service: any }) {
+export function fetchServiceSuccessHandler({ service }: { service: Service }) {
   if (shouldServiceInheritScheduleFromOrg(service) && service.schedule) {
     const recurringSchedule = parseAPISchedule(service.schedule as Schedule);
     return { ...service, recurringSchedule } as Service;

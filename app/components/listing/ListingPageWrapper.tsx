@@ -2,13 +2,14 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { ActionSidebar } from "components/listing";
 import styles from "./ListingPageWrapper.module.scss";
+import { OrganizationAction } from "models";
 
 type ListingPageWrapperProps = {
   title: string;
   description: string;
   children: React.ReactNode;
-  sidebarActions: any[];
-  onClickAction: (action: any) => void;
+  sidebarActions: OrganizationAction[];
+  onClickAction: (action: OrganizationAction) => void;
 };
 
 const ListingPageWrapper = ({

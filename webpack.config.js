@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { readFileSync, existsSync } = require("fs");
 const yaml = require("js-yaml");
 const path = require("path");

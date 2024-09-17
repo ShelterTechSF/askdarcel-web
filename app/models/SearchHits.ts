@@ -132,7 +132,6 @@ export function transformSearchResults(
       const websiteUrl = hit.type === "service" ? hit.url : hit.website;
       const basePath = hit.type === "service" ? `services` : `organizations`;
       const hitId = hit.type === "service" ? hit.service_id : hit.resource_id;
-      // @ts-ignore
       const resultListIndexDisplay = `${currentPage * hitsPerPage + index + 1}`;
 
       const nextHit = {

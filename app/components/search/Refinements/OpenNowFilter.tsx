@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
+import { useRefinementList } from "react-instantsearch";
 import { getCurrentDayTime } from "utils/index";
 import styles from "./RefinementFilters.module.scss";
 

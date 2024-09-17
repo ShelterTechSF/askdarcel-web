@@ -9,7 +9,7 @@ import { App } from "./App";
 require("instantsearch.css/themes/reset.css");
 require("./styles/main.scss");
 
-const container = document.getElementById("root")!;
+const container = document.getElementById("root") as HTMLElement;
 
 const root = createRoot(container);
 root.render(
