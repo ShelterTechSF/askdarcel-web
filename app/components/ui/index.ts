@@ -3,4 +3,3 @@ export * from "./Footer/Footer";
 export * from "./Loader";
 export * from "./MapElements";
 export * from "./Navigation/Navigation";
-export * from "./UserWay";

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 // package and all references to it:
 // https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
 import ReactGA_4 from "react-ga4";
-import Intercom from "react-intercom";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
 import {
@@ -12,13 +11,13 @@ import {
   websiteConfig,
   AppProvider,
 } from "./utils";
-import { Footer, Navigation, UserWay } from "./components/ui";
+import { Footer, Navigation } from "./components/ui";
 
 import config from "./config";
 import MetaImage from "./assets/img/Our415_OG.png";
 import styles from "./App.module.scss";
 
-const { intercom, siteUrl, title, userWay } = websiteConfig;
+const { siteUrl, title } = websiteConfig;
 export const OUTER_CONTAINER_ID = "outer-container";
 
 export const App = () => {
@@ -68,10 +67,6 @@ export const App = () => {
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
         </Helmet>
-        {userWay && <UserWay appID={config.SFFAMILIES_USERWAY_APP_ID} />}
-        {intercom && config.INTERCOM_APP_ID && (
-          <Intercom appID={config.INTERCOM_APP_ID} />
-        )}
         <Navigation />
         <Footer />
       </AppProvider>

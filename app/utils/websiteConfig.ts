@@ -31,7 +31,6 @@ interface WebsiteConfigSite {
     showSFSeal: boolean;
   };
   homePageComponent: homepageComponentEnums;
-  intercom: boolean;
   logoLinkDestination: string;
   navLogoStyle: string;
   refinementListLimit: number;
@@ -65,7 +64,6 @@ services and re-entry programs.`,
     showSFSeal: false,
   },
   homePageComponent: "HomePage",
-  intercom: false,
   logoLinkDestination: "/",
   navLogoStyle: styles.siteNav,
   refinementListLimit: 10,
@@ -92,7 +90,6 @@ const defaultWebsiteConfig: WebsiteConfigSite = {
     logoSmall: Our415Logo,
   },
   ...websiteConfigDefaults,
-  intercom: true,
   siteUrl: "https://askdarcel.org",
   showBreakingNews: true,
   title: "Our415",
