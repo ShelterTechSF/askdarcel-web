@@ -43,7 +43,6 @@ interface WebsiteConfigSite {
   siteNavStyle: string;
   siteUrl: string;
   title: string;
-  userWay: boolean;
 }
 
 const configKey = "defaultWebsiteConfig";
@@ -74,7 +73,6 @@ services and re-entry programs.`,
   showMobileNav: true,
   showReportCrisis: false,
   siteNavStyle: styles.siteNav,
-  userWay: false,
 } as const;
 
 const appImageDefaults = {
