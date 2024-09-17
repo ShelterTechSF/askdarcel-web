@@ -1,15 +1,17 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import cn from "classnames";
-import { useSearchBox } from "react-instantsearch";
+import { useClearRefinements, useSearchBox } from "react-instantsearch";
 import styles from "./SiteSearchInput.module.scss";
 
 /**
- * Sitewide listing search component
+ * Sitewide listing search component that controls the search query input
  *
- * - Updates the url querystring on every search
+ * The custom submit logic determines that applying a new search term will reset all refinements and
+ * return a fresh set of results for the new query.
  */
 export const SiteSearchInput = () => {
   const { query, refine } = useSearchBox();
+  const { refine: clearRefine } = useClearRefinements();
   const [inputValue, setInputValue] = useState(query);
 
   function setQuery(newQuery: string) {
@@ -20,9 +22,17 @@ export const SiteSearchInput = () => {
     e.preventDefault();
 
     refine(inputValue);
+    clearRefine();
 
     return false;
   };
+
+  // Watches changes to the query that can come from other components, like a "Clear Search" button
+  useEffect(() => {
+    if (!query) {
+      setInputValue("");
+    }
+  }, [query]);
 
   return (
     <form

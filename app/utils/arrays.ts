@@ -16,11 +16,12 @@ export function uniqBy<T>(arr: T[], key: keyof T): T[] {
   );
 }
 
-export function invert<T>(object: T) {
+export function invert(object) {
   const result = {};
   Object.keys(object).forEach((key) => {
     const value = object[key];
     result[value] = key;
   });
+
   return result;
 }

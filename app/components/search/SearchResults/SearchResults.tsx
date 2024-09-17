@@ -1,46 +1,36 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
-import ResultsPagination from "components/search/Pagination/ResultsPagination";
 import { SearchResult } from "components/search/SearchResults/SearchResult";
 import {
   SearchHit,
   TransformedSearchHit,
   transformSearchResults,
 } from "models/SearchHits";
-import { useInstantSearch } from "react-instantsearch";
+import { useInstantSearch, useSearchBox } from "react-instantsearch";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import algoliasearchHelper from "algoliasearch-helper";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
+import { Loader } from "components/ui";
+import ResultsPagination from "components/search/Pagination/ResultsPagination";
 
 const SearchResults = ({
   mobileMapIsCollapsed,
-  setAroundLatLng,
-  searchQuery,
 }: {
   mobileMapIsCollapsed: boolean;
-  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
-  searchQuery?: string | null;
 }) => {
   const {
     results: searchResults,
-  }: { results: algoliasearchHelper.SearchResults<SearchHit> } =
-    useInstantSearch();
-  const [centerCoords] = useState(null);
-  const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
-    null
-  );
-
-  useEffect(() => {
-    if (centerCoords && googleMapObject) {
-      googleMapObject.setCenter(centerCoords);
-    }
-    document.body.classList.add("searchResultsPage");
-
-    return () => {
-      document.body.classList.remove("searchResultsPage");
-    };
-  }, [googleMapObject, centerCoords]);
+    status,
+  }: // uiState: { query },
+  {
+    results: algoliasearchHelper.SearchResults<SearchHit>;
+    status: "idle" | "loading" | "stalled" | "error";
+    // uiState: Partial<{
+    //   query: string;
+    // }>;
+  } = useInstantSearch();
+  const { query } = useSearchBox();
 
   const handleFirstResultFocus = useCallback((node: HTMLDivElement | null) => {
     if (node) {
@@ -49,19 +39,36 @@ const SearchResults = ({
   }, []);
 
   const searchMapHitData = transformSearchResults(searchResults);
-  const hasNoResults = searchMapHitData.nbHits === 0;
+
+  const hasNoResults = searchMapHitData.nbHits === 0 && status === "idle" && (
+    <Loader />
+  );
 
   const NoResultsDisplay = () => (
     <div className={`${styles.noResultsMessage}`}>
       <div className={styles.noResultsText}>
-        No results {searchQuery && `for ${` "${searchQuery}" `}`} found in your
-        area.
+        No results {query && `for ${` "${query}" `}`} found in your area.
         <br /> Try a different location, filter, or search term.
       </div>
 
-      {searchQuery && <ClearSearchButton />}
+      {query && <ClearSearchButton />}
     </div>
   );
+
+  const searchResultsHeader = () => {
+    return (
+      <div className={styles.searchResultsHeader}>
+        {query ? (
+          <h2>
+            {searchResults.nbHits} search results for {query}
+          </h2>
+        ) : (
+          <h2>{searchResults.nbHits} search results</h2>
+        )}
+        <ClearSearchButton />
+      </div>
+    );
+  };
 
   return (
     <div className={styles.searchResultsAndMapContainer}>
@@ -75,38 +82,32 @@ const SearchResults = ({
           <NoResultsDisplay />
         ) : (
           <>
-            {searchQuery && (
-              <div className={styles.searchResultsHeader}>
-                <h2>{`${searchResults.nbHits} search results ${
-                  searchQuery && ` for ${searchQuery}`
-                }`}</h2>
-                <ClearSearchButton />
+            {searchResultsHeader()}
+            {searchMapHitData.hits.map((hit: TransformedSearchHit, index) => (
+              <SearchResult
+                hit={hit}
+                key={`${hit.id} - ${hit.name}`}
+                ref={index === 0 ? handleFirstResultFocus : null}
+              />
+            ))}
+            <div
+              className={`${styles.paginationContainer} ${
+                hasNoResults ? styles.hidePagination : ""
+              }`}
+            >
+              <div className={styles.resultsPagination}>
+                <ResultsPagination noResults={hasNoResults} />
               </div>
-            )}
-            {searchMapHitData.hits.map(
-              (hit: TransformedSearchHit, index: number) => (
-                <SearchResult
-                  hit={hit}
-                  key={`${hit.id} - ${hit.name}`}
-                  ref={index === 0 ? handleFirstResultFocus : null}
-                />
-              )
-            )}
-            <ResultsPagination noResults={hasNoResults} />
+            </div>
           </>
         )}
       </div>
       <SearchMap
         hits={searchMapHitData.hits}
-        mapObject={googleMapObject}
-        setMapObject={setMapObject}
-        setAroundLatLng={setAroundLatLng}
         mobileMapIsCollapsed={mobileMapIsCollapsed}
       />
     </div>
   );
 };
 
-// Connects the Algolia searchState and searchResults to this component
-// Learn more here: https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html
 export default SearchResults;

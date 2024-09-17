@@ -2,7 +2,7 @@ import React from "react";
 import { Pagination } from "react-instantsearch";
 import websiteConfig from "utils/websiteConfig";
 
-import styles from "./ResultsPagination.module.scss";
+import styles from "../SearchResults/SearchResults.module.scss";
 
 const {
   appImages: { algolia },

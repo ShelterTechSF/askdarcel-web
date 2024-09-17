@@ -73,7 +73,7 @@ const SearchRefinementList = ({ attribute, mapping }: Props) => {
                 type="checkbox"
                 className={styles.refinementInput}
                 onChange={() => changeRefinement(mappingLabel)}
-                checked={checked[mappingLabel]}
+                checked={checked[mappingLabel] || false}
                 disabled={!mappingHasResults}
               />
             </label>

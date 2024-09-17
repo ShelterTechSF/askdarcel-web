@@ -11,11 +11,11 @@ import {
   websiteConfig,
   AppProvider,
 } from "./utils";
-import { Footer, Navigation } from "./components/ui";
+import { Footer, Navigation, Loader } from "./components/ui";
 
-import config from "./config";
 import MetaImage from "./assets/img/Our415_OG.png";
 import styles from "./App.module.scss";
+import config from "./config";
 
 const { siteUrl, title } = websiteConfig;
 export const OUTER_CONTAINER_ID = "outer-container";
@@ -46,6 +46,10 @@ export const App = () => {
       }, 500);
     });
   }, [history]);
+
+  if (!userLocation) {
+    return <Loader />;
+  }
 
   return (
     <div id={OUTER_CONTAINER_ID} className={styles.outerContainer}>

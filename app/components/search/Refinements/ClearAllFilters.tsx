@@ -2,16 +2,13 @@ import React from "react";
 
 import { Button } from "components/ui/inline/Button/Button";
 import { useClearRefinements } from "react-instantsearch";
-import { AroundRadius } from "algoliasearch";
+import { useAppContextUpdater } from "utils";
 
 /**
  * Filter clearing component that handles both facet clearing and map boundary reset
  */
-const ClearAllFilter = ({
-  setSearchRadius,
-}: {
-  setSearchRadius: (radius: AroundRadius) => void;
-}) => {
+const ClearAllFilter = () => {
+  const { setAroundRadius } = useAppContextUpdater();
   const { refine } = useClearRefinements();
   return (
     <Button
@@ -19,7 +16,7 @@ const ClearAllFilter = ({
       variant="linkBlue"
       onClick={() => {
         refine();
-        setSearchRadius("all");
+        setAroundRadius("all");
       }}
       mobileFullWidth={false}
       size="lg"

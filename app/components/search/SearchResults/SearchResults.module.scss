@@ -13,7 +13,7 @@
   display: grid;
   gap: $general-spacing-md;
   margin: $spacing-0 $general-spacing-lg;
-  flex: 0 0 40em;
+  flex: 0 0 640px;
 
   @media screen and (max-width: $break-desktop-s) {
     margin: $spacing-0 $general-spacing-md;
@@ -247,49 +247,60 @@
   }
 }
 
-@media print {
-  :global(.searchResultsPage) {
-    visibility: hidden;
+.paginationContainer {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  background-color: $gray-50;
 
-    :global(.results-map) {
-      display: none;
-    }
+  :global(.ais-Pagination-link) {
+    display: inline-block;
+    width: 35px;
+    margin: 0 3px;
+    text-align: center;
+    color: $black;
+    padding: $general-spacing-md $spacing-0;
 
-    a,
-    button,
-    input,
-    textarea {
-      transition: none !important;
-    }
-
-    a[href]::after {
-      content: "" !important;
+    &:hover {
+      color: $black;
     }
   }
 
-  .searchResultsContainer {
-    visibility: visible;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 50px auto;
-    width: 6.5in;
-    display: block;
+  :global(.ais-Pagination-item--selected) {
+    font-weight: 900;
+    font-size: 18px;
   }
 
-  .searchResult {
-    display: block;
-    padding: 20px 0;
-    border-left: 0;
+  :global(.ais-Pagination-item--nextPage),
+  :global(.ais-Pagination-item--previousPage) {
+    margin: 0 3px;
+    font-size: 0.87rem;
   }
 
-  .sideLink {
+  :global(.ais-Pagination-item--disabled) {
+    opacity: 0.5;
+    border: 0;
+  }
+
+  &.hidePagination {
     display: none;
-    &.showInPrintView {
-      display: block;
-      padding-top: 20px;
-    }
+  }
+}
+
+.resultsPagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.algoliaImgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 0;
+
+  & > img {
+    height: 16px;
   }
 }

@@ -8,16 +8,6 @@ $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
 .navSearch {
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 30px;
-  left: 200px;
-  z-index: $z-index-top;
-
-  @include r_max($break-tablet-s) {
-    left: 100px;
-    top: 10px;
-    width: 300px;
-  }
 
   .searchField {
     padding: $general-spacing-s $general-spacing-md;

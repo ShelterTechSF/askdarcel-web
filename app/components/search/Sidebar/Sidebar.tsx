@@ -9,15 +9,16 @@ import OpenNowFilter from "components/search/Refinements/OpenNowFilter";
 import BrowseRefinementList from "components/search/Refinements/BrowseRefinementList";
 import SearchRefinementList from "components/search/Refinements/SearchRefinementList";
 import { Button } from "components/ui/inline/Button/Button";
-import { AroundRadius } from "algoliasearch";
-import { DEFAULT_AROUND_PRECISION } from "utils";
+import {
+  DEFAULT_AROUND_PRECISION,
+  useAppContext,
+  useAppContextUpdater,
+} from "utils";
 import useClickOutside from "../../../hooks/MenuHooks";
 import MobileMapToggleButtons from "./MobileMapToggleButtons";
 import styles from "./Sidebar.module.scss";
 
 const Sidebar = ({
-  setSearchRadius,
-  searchRadius,
   isSearchResultsPage,
   eligibilities,
   subcategories,
@@ -26,18 +27,18 @@ const Sidebar = ({
   isMapCollapsed,
   setIsMapCollapsed,
 }: {
-  setSearchRadius: (radius: AroundRadius) => void;
-  searchRadius: AroundRadius;
   isSearchResultsPage: boolean;
   eligibilities?: object[] | null;
   subcategories?: Category[] | null;
-  subcategoryNames?: string[] | null;
+  subcategoryNames?: string[];
   sortAlgoliaSubcategoryRefinements?: boolean;
   isMapCollapsed: boolean;
   setIsMapCollapsed: (_isMapCollapsed: boolean) => void;
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   const filterMenuRef = useRef<HTMLDivElement>(null);
+  const { aroundUserLocationRadius } = useAppContext();
+  const { setAroundRadius } = useAppContextUpdater();
 
   useClickOutside(
     filterMenuRef,
@@ -74,7 +75,7 @@ const Sidebar = ({
   };
 
   const onChangeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchRadius(Number(evt.target.value));
+    setAroundRadius(Number(evt.target.value));
   };
 
   // Currently, the Search Results Page uses generic categories/eligibilities while the
@@ -94,17 +95,12 @@ const Sidebar = ({
       />
     );
   } else {
-    if (eligibilities && eligibilities.length) {
+    if (eligibilities?.length) {
       eligibilityRefinementJsx = (
         <BrowseRefinementList attribute="eligibilities" />
       );
     }
-    if (
-      sortAlgoliaSubcategoryRefinements &&
-      subcategoryNames &&
-      subcategories &&
-      subcategories.length
-    ) {
+    if (subcategories?.length) {
       categoryRefinementJsx = (
         <BrowseRefinementList
           attribute="categories"
@@ -170,7 +166,7 @@ const Sidebar = ({
           </span>
         </div>
         <h2 className={styles.filterResourcesTitleDesktop}>Filter Resources</h2>
-        <ClearAllFilters setSearchRadius={setSearchRadius} />
+        <ClearAllFilters />
         <div className={styles.filterGroup}>
           <div className={styles.filterTitle}>Availability</div>
           <OpenNowFilter />
@@ -204,7 +200,7 @@ const Sidebar = ({
               name="searchRadius"
               onChange={onChangeValue}
               value="400"
-              checked={searchRadius === 400}
+              checked={aroundUserLocationRadius === 400}
               className={styles.refinementInput}
             />
           </label>
@@ -215,7 +211,7 @@ const Sidebar = ({
               name="searchRadius"
               onChange={onChangeValue}
               value={DEFAULT_AROUND_PRECISION}
-              checked={searchRadius === DEFAULT_AROUND_PRECISION}
+              checked={aroundUserLocationRadius === DEFAULT_AROUND_PRECISION}
               className={styles.refinementInput}
             />
           </label>
@@ -226,7 +222,7 @@ const Sidebar = ({
               name="searchRadius"
               onChange={onChangeValue}
               value="4828"
-              checked={searchRadius === 4828}
+              checked={aroundUserLocationRadius === 4828}
               className={styles.refinementInput}
             />
           </label>

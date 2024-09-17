@@ -1,10 +1,9 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import GoogleMap from "google-map-react";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
 import SearchEntry from "components/search/SearchMap/SearchEntry";
-import { useAppContext } from "utils";
-import { Loader } from "components/ui";
+import { useAppContext, useAppContextUpdater } from "utils";
 import { Button } from "components/ui/inline/Button/Button";
 import {
   createMapOptions,
@@ -17,34 +16,40 @@ import config from "../../../config";
 
 export const SearchMap = ({
   hits,
-  mapObject,
-  setMapObject,
-  setAroundLatLng,
   mobileMapIsCollapsed,
 }: {
   hits: TransformedSearchHit[];
-  mapObject: google.maps.Map | null;
-  setMapObject: (map: google.maps.Map) => void;
-  setAroundLatLng: (latLng: { lat: number; lng: number }) => void;
   mobileMapIsCollapsed: boolean;
 }) => {
-  const { userLocation } = useAppContext();
-  if (userLocation === null) {
-    return (
-      <div className="mapLoaderContainer">
-        <Loader />
-      </div>
-    );
-  }
+  const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
+    null
+  );
+  const { userLocation, aroundLatLng } = useAppContext();
+  const { setAroundLatLng } = useAppContextUpdater();
 
   function handleSearchThisAreaClick() {
-    const center = mapObject?.getCenter() || null;
+    const center = googleMapObject?.getCenter();
     if (center?.lat() && center?.lng()) {
-      setAroundLatLng({ lat: center.lat(), lng: center.lng() });
+      setAroundLatLng(`${center.lat()}, ${center.lng()}`);
     }
   }
 
-  const { lat, lng } = userLocation;
+  const aroundLatLngToMapCenter = {
+    lat: Number(aroundLatLng.split(",")[0]),
+    lng: Number(aroundLatLng.split(",")[1]),
+  };
+
+  // Center the map to the user's choice (`aroundLatLng`) with a fallback to our best guess when sniffing their
+  // location on app start (`userLocation`)
+  const googleMapsCenter = () => {
+    if (aroundLatLng) {
+      return aroundLatLngToMapCenter;
+    } else if (userLocation) {
+      return { lat: userLocation?.lat, lng: userLocation?.lng };
+    } else {
+      return undefined;
+    }
+  };
 
   return (
     <div className="results-map">
@@ -69,7 +74,7 @@ export const SearchMap = ({
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
           }}
-          center={{ lat, lng }}
+          center={googleMapsCenter()}
           defaultZoom={14}
           onGoogleApiLoaded={({ map }) => {
             // SetMapObject shares the Google Map object across parent/sibling components
@@ -78,7 +83,11 @@ export const SearchMap = ({
           }}
           options={createMapOptions}
         >
-          <UserLocationMarker lat={lat} lng={lng} key={1} />
+          <UserLocationMarker
+            lat={userLocation?.lat}
+            lng={userLocation?.lng}
+            key={1}
+          />
           {hits.reduce((markers, hit) => {
             // Add a marker for each address of each hit
             hit.locations.forEach((location) => {
