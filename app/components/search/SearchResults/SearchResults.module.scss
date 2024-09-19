@@ -247,53 +247,6 @@
   }
 }
 
-.paginationContainer {
-  position: relative;
-  z-index: 2;
-  padding: 24px;
-  background-color: $gray-50;
-
-  :global(.ais-Pagination-link) {
-    display: inline-block;
-    width: 35px;
-    margin: 0 3px;
-    text-align: center;
-    color: $black;
-    padding: $general-spacing-md $spacing-0;
-
-    &:hover {
-      color: $black;
-    }
-  }
-
-  :global(.ais-Pagination-item--selected) {
-    font-weight: 900;
-    font-size: 18px;
-  }
-
-  :global(.ais-Pagination-item--nextPage),
-  :global(.ais-Pagination-item--previousPage) {
-    margin: 0 3px;
-    font-size: 0.87rem;
-  }
-
-  :global(.ais-Pagination-item--disabled) {
-    opacity: 0.5;
-    border: 0;
-  }
-
-  &.hidePagination {
-    display: none;
-  }
-}
-
-.resultsPagination {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .algoliaImgWrapper {
   display: flex;
   justify-content: center;
@@ -302,5 +255,53 @@
 
   & > img {
     height: 16px;
+  }
+}
+
+// Reformats page to only show search results
+@media print {
+  :global(.searchResultsPage) {
+    visibility: hidden;
+
+    :global(.results-map) {
+      display: none;
+    }
+
+    a,
+    button,
+    input,
+    textarea {
+      transition: none !important;
+    }
+
+    a[href]::after {
+      content: "" !important;
+    }
+  }
+
+  .searchResultsContainer {
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 50px auto;
+    width: 6.5in;
+    display: block;
+  }
+
+  .searchResult {
+    display: block;
+    padding: 20px 0;
+    border-left: 0;
+  }
+
+  .sideLink {
+    display: none;
+    &.showInPrintView {
+      display: block;
+      padding-top: 20px;
+    }
   }
 }
