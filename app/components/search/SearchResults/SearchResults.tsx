@@ -58,13 +58,7 @@ const SearchResults = ({
   const searchResultsHeader = () => {
     return (
       <div className={styles.searchResultsHeader}>
-        {query ? (
-          <h2>
-            {searchResults.nbHits} search results for {query}
-          </h2>
-        ) : (
-          <h2>{searchResults.nbHits} search results</h2>
-        )}
+        <h2>{searchResults.nbHits} results</h2>
         <ClearSearchButton />
       </div>
     );
