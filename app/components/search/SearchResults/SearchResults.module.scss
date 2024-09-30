@@ -30,8 +30,10 @@
     z-index: 2;
     background: #fff;
     transition: top 200ms ease-in-out;
-    &.mobileMapIsCollapsed {
-      top: calc(-50vh + 20px);
+
+    // Sets height from top of the viewport on mobile
+    &.resultsPositionWhenMapCollapsed {
+      top: calc(-50vh + 10px);
       z-index: 1;
     }
   }

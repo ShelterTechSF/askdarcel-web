@@ -137,6 +137,11 @@
       margin-left: 8px;
     }
   }
+
+  &--transparent {
+    background: none;
+    color: $black;
+  }
 }
 
 .icon-before {

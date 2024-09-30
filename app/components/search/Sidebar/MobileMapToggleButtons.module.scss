@@ -5,7 +5,7 @@
   border-radius: $rounded-lg;
   border: 2px solid $secondary-button-outline;
 
-  @media screen and (min-width: $min-tablet-p) {
+  @media screen and (min-width: $break-tablet-s) {
     display: none;
   }
 

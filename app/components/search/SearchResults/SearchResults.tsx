@@ -68,7 +68,7 @@ const SearchResults = ({
     <div className={styles.searchResultsAndMapContainer}>
       <div
         className={`${styles.searchResultsContainer} ${
-          mobileMapIsCollapsed ? styles.mobileMapIsCollapsed : ""
+          mobileMapIsCollapsed ? styles.resultsPositionWhenMapCollapsed : ""
         }`}
       >
         <h2 className="sr-only">Search results</h2>

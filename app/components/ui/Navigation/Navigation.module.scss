@@ -18,26 +18,31 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  height: $header-height;
-  justify-content: space-between;
   margin: 0 auto;
-  padding: 0 $general-spacing-lg;
-  @include r_max($break-tablet-s) {
-    height: $header-mobile-height;
+  padding: $spacing-6;
+  height: $header-height;
+  gap: 32px;
+
+  > :last-child {
+    margin-left: auto;
   }
 }
 
 .navLeft {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  gap: 32px;
+
+  @media screen and (max-width: $break-tablet-s) {
+    gap: 5px;
+    flex-direction: column;
+    width: 345px;
+  }
 }
 
 .navRight {
   display: flex;
   align-items: center;
-  @include r_max($break-tablet-s) {
-    display: none;
-  }
 }
 
 .navLogo img {
@@ -45,23 +50,6 @@
 
   @include r_max($break-tablet-s) {
     height: 25px;
-  }
-}
-
-.activatePushPanelButton {
-  font-size: 18px !important;
-  font-family: Montserrat;
-  font-weight: 500;
-
-  @include r_min($break-tablet-s) {
-    display: none !important; // !important is needed to override .form-row
-  }
-}
-
-// Until new nav is introduced, screen reader is reading hamburger links on desktop. This fixes that.
-.hamburgerContainer {
-  @media screen and (min-width: $break-tablet-s) {
-    display: none;
   }
 }
 
@@ -79,12 +67,53 @@
   flex-direction: row;
   align-items: center;
 
-  // Adds separator
-  border-right: 1px solid black;
-  padding-right: $spacing-4;
-  margin-right: $spacing-6;
+  > :nth-last-child(2) {
+    // Adds separator
+    border-right: 1px solid black;
+    padding-right: $spacing-4;
+    margin-right: $spacing-4;
+  }
+  // margin-right: $spacing-6;
 
   > * {
     font-weight: 600;
+  }
+}
+
+// Less than desktop
+@include r_max($break-desktop-s) {
+  .desktopNavigationContainer {
+    display: none;
+  }
+  .primaryRow {
+    height: $header-mobile-height;
+    flex-wrap: wrap;
+    padding: $spacing-4_5;
+    gap: $spacing-2_5;
+
+    :nth-child(3) {
+      margin-left: auto;
+    }
+  }
+}
+// Less than tablet
+@include r_max($break-tablet-s) {
+  .primaryRow {
+    height: $header-mobile-height;
+    flex-wrap: wrap;
+    padding: $spacing-4_5;
+    gap: $spacing-2_5;
+
+    :nth-child(1) {
+      order: 1;
+    }
+    :nth-child(2) {
+      order: 3;
+      width: 100%;
+    }
+    :nth-child(3) {
+      margin-left: auto;
+      order: 2;
+    }
   }
 }

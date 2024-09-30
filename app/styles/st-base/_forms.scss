@@ -1,15 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////////////
-// FORM ELEMENTS
-
-.form-row {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  > button {
-    flex-grow: 0;
-  }
-}
-
 input,
 textarea {
   @extend %font-size-default;

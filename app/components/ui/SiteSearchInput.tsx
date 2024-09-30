@@ -40,11 +40,7 @@ export const SiteSearchInput = () => {
   }, [query]);
 
   return (
-    <form
-      onSubmit={submitSearch}
-      className={cn([styles.navSearch, "search-container", "form-row"])}
-      role="search"
-    >
+    <form onSubmit={submitSearch} className={styles.navSearch} role="search">
       <input
         onChange={(e) => setQuery(e.target.value)}
         value={inputValue}

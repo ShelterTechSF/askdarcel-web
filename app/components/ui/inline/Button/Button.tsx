@@ -7,6 +7,17 @@ type StyleType = "transparent" | "text" | "default";
 type SizeType = "xs" | "sm" | "base" | "lg" | "xl";
 type VariantType = "primary" | "secondary" | "linkBlue" | "linkWhite";
 
+/**
+ * NOTE: 😅 This component is an impressively complicated piece of code that
+ * supports a combinatorial number of possibilities. It's a challenge to reason
+ * about what particular combination of parameters to use to achieve your
+ * desired presentation. It also appears incomplete as some style types are not
+ * implemented yet. There's got to be a better way to express button variations
+ * than a single component with over a dozen parameter levers. Let's continue
+ * to use this component with caution until we emerge from the MVP stage of
+ * this project and better understand our north star for subsequent rounds of
+ * development.
+ */
 export const Button = ({
   children,
   onClick,

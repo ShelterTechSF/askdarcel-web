@@ -5,7 +5,6 @@
 
 $font-size: 16px;
 $break-tablet-s: 767px;
-$min-tablet-p: 768px;
 $break-tablet-p: 960px;
 $break-tablet-l: 1184px;
 $min-desktop: 1184px;
@@ -20,13 +19,12 @@ $padding-xxlarge: $general-spacing-xl;
 $max-container-width: 1280px;
 
 $header-height: 100px;
-$header-mobile-height: 50px;
+$header-mobile-height: 110px;
 
 // Z-Index values
 $z-index-edit-address-modal: 1;
 $z-index-site-nav: 3;
 $z-index-filters-menu: 4;
-$z-index-modal: 5;
 $z-index-top: 9;
 
 body {

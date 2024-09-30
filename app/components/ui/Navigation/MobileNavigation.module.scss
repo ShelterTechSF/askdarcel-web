@@ -1,10 +1,18 @@
 @import "../../../styles/utils/_helpers.scss";
 @import "../../../styles/utils/_colors.scss";
 
-.sidebar {
-  @media screen and (min-width: $break-tablet-s) {
-    display: none;
-  }
+.mobileNavigationContainer {
+  position: absolute;
+  border-top: 1px solid $gray-300;
+  border-bottom: 1px solid $gray-300;
+  right: $spacing-6;
+  top: $header-height;
+  background: $white;
+  width: 400px;
+}
+
+.menuActivator {
+  display: none;
 }
 
 .mobileNavigationMenuContainer {
@@ -57,6 +65,26 @@
   }
 }
 
+.mobileNavigationMenuBack {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: $spacing-3 $spacing-4;
+  font-size: 16px;
+  border-bottom: 1px solid #d1d5db;
+  background: $color-grey1;
+
+  &:focus {
+    border-radius: 0;
+    margin: 3px;
+  }
+
+  .chevron {
+    font-size: 14px;
+  }
+}
+
 // Should not be the same class for both single level and dropdown item
 .mobileNavigationMenuLink {
   // flex ensures each menu link fills width of widest item
@@ -83,18 +111,20 @@
   overflow: hidden;
   top: 0;
   border-radius: 0;
-  transition: transform 0.5s ease;
   width: 100%;
-  transform: translateX(100%);
   background: $white;
+  visibility: hidden;
+}
+
+.mobileNavigationMenuHeader:has(+ .mobileNavigationMenuListOpen),
+.mobileNavigationMenuListOpen + {
+  visibility: hidden;
+  display: none;
 }
 
 .mobileNavigationMenuListOpen {
-  transform: translateX(0);
-
-  // Fills out entire sidebar
+  visibility: visible;
   width: 100%;
-  height: 100%;
 }
 
 .mobileTopLevelNavigationMenuItem {
@@ -105,8 +135,28 @@
 
 .mobileNavigationMenuTranslate {
   padding: $general-spacing-md;
-  position: absolute;
-  bottom: 0px;
-  // Keeps on top of active submenu
-  z-index: $z-index-top;
+}
+
+.activatePushPanelButton {
+  font-size: 18px !important;
+  font-family: Montserrat;
+  font-weight: 500;
+}
+
+// Less than desktop
+@include r_max($break-desktop-s) {
+  .menuActivator {
+    display: flex;
+    align-items: center;
+  }
+  .mobileNavigationContainer {
+    top: $header-mobile-height;
+  }
+}
+
+// Less than tablet
+@include r_max($break-tablet-s) {
+  .mobileNavigationContainer {
+    top: $header-mobile-height;
+  }
 }

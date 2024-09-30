@@ -7,6 +7,8 @@ $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
 // TODO: need design consult for being in top bar
 .navSearch {
   display: flex;
+  // Fixes alignment on focus since box expands with outline set. Is there another way to handle
+  // outline that won't affect height so dramatically?
   align-items: center;
 
   .searchField {
@@ -15,7 +17,7 @@ $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
     border-right: none;
     border-radius: $rounded-full 0 0 $rounded-full;
     flex: 1;
-    width: 500px;
+    width: 400px;
     max-width: 100%;
     height: $input-height;
 
@@ -37,6 +39,7 @@ $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
     border-radius: 0 $rounded-full $rounded-full 0;
     cursor: pointer;
     height: $input-height;
+    width: 48px;
   }
 
   .searchField,
