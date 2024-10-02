@@ -40,7 +40,7 @@ export function useFooterData() {
 
 export function useHomepageData() {
   return useStrapiHook<HomepageResponse>(
-    "home-page?populate[hero][populate]=*&populate[category_section][populate]=*&populate[opportunity_section][populate]=*&populate[opportunities][populate][image][populate]=*&populate[opportunities][populate][address]=*&populate[opportunities][populate][links][populate]=*&populate[opportunities][populate][calendar_event]=*&populate[opportunities][populate][opportunity_categories]=*&populate[event_section][populate]=*&populate[events][populate][date]=*&populate[events][populate][address]=*&populate[events][populate][calendar_event]=*&populate[events][populate][links]=*&populate[events][populate][image][populate]=*&populate[events][populate][event_categories]=*&populate[two_column_content_blocks][populate][link]=*&populate[two_column_content_blocks][populate][media][populate]=*"
+    "home-page?populate[hero][populate]=*&populate[category_section][populate]=*"
   );
 }
 
@@ -233,26 +233,6 @@ export interface TwoColumnContentBlockResponse
   faq: FaqItem[];
 }
 
-export interface OpportunityResponse extends BaseDatumAttributesResponse {
-  title: string;
-  description: string;
-  calendar_event: CalendarEventResponse;
-  venue: string;
-  email: string;
-  organizer: string;
-  signup_info: string;
-  eligibility_info: string;
-  age_range: string;
-  target_population: string;
-  opportunity_categories: Array<StrapiDatumResponse<CategoryResponse>>;
-  address: AddressResponse;
-  links: LinkResponse[];
-  image: {
-    id: number;
-    image: StrapiObjectResponse<ImageResponse>;
-  };
-}
-
 export interface CalendarEventResponse {
   id: number;
   startdate: string;
@@ -260,21 +240,6 @@ export interface CalendarEventResponse {
   starttime: string | null;
   endtime: string | null;
   recurrence: "none" | "daily" | "weekly" | "monthly" | "yearly";
-}
-
-export interface EventResponse extends BaseDatumAttributesResponse {
-  title: string;
-  venue: string;
-  admissions: string;
-  description: string;
-  calendar_event: CalendarEventResponse;
-  address: AddressResponse;
-  image: {
-    id: number;
-    image: StrapiObjectResponse<ImageResponse>;
-  };
-  links: LinkResponse[];
-  event_categories: Array<StrapiDatumResponse<CategoryResponse>>;
 }
 
 export interface HomepageResponse extends BaseDatumAttributesResponse {
@@ -287,10 +252,6 @@ export interface HomepageResponse extends BaseDatumAttributesResponse {
     buttons: LinkResponse[];
   };
   category_section: ContentBlockResponse;
-  opportunity_section: ContentBlockResponse;
-  opportunities: StrapiArrayResponse<OpportunityResponse>;
-  event_section: ContentBlockResponse;
-  events: StrapiArrayResponse<EventResponse>;
   two_column_content_blocks: StrapiArrayResponse<TwoColumnContentBlockResponse>;
 }
 

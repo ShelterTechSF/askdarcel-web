@@ -1,8 +1,6 @@
 import React from "react";
 import Hero from "components/ui/Hero/Hero";
 import { CategorySection } from "components/ui/Section/CategorySection";
-import { OppEventCardSection } from "components/ui/Section/OppEventCardSection";
-import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
 import { useHomepageData } from "hooks/StrapiAPI";
 import { Homepage, StrapiDatum } from "models/Strapi";
 
@@ -17,16 +15,7 @@ export const HomePage = () => {
     return null;
   }
 
-  const {
-    opportunity_section,
-    opportunities,
-    event_section,
-    events,
-    hero,
-    two_column_content_blocks,
-  } = homePageData || {};
-
-  const twoColumnContentData = two_column_content_blocks.data;
+  const { hero } = homePageData || {};
 
   return (
     <>
@@ -40,21 +29,6 @@ export const HomePage = () => {
         />
       )}
       <CategorySection />
-      <OppEventCardSection
-        sectionType="opportunity"
-        sectionData={opportunity_section}
-        opportunities={opportunities.data ?? []}
-      />
-      <OppEventCardSection
-        sectionType="event"
-        sectionData={event_section}
-        events={events.data ?? []}
-      />
-      {twoColumnContentData?.map((content) => (
-        <TwoColumnContentSection key={content.id} {...content.attributes} />
-      ))}
-
-      {/* Newsletter Component */}
     </>
   );
 };

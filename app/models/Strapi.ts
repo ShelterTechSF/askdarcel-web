@@ -6,7 +6,6 @@ import {
   ContentBlockResponse,
   ContentPageResponse,
   DynamicLinkResponse,
-  EventResponse,
   FooterResponse,
   HeaderResponse,
   HomepageResponse,
@@ -14,7 +13,6 @@ import {
   LinkResponse,
   LogoResponse,
   NavigationMenuResponse,
-  OpportunityResponse,
   StrapiDatumResponse,
   TwoColumnContentBlockResponse,
 } from "hooks/StrapiAPI";
@@ -26,8 +24,6 @@ export interface DynamicLink extends Omit<DynamicLinkResponse, "__component"> {}
 export interface Footer extends FooterResponse {}
 export interface Homepage extends HomepageResponse {}
 export interface ContentBlock extends Omit<ContentBlockResponse, "id"> {}
-export interface Event extends EventResponse {}
-export interface Opportunity extends OpportunityResponse {}
 export interface TwoColumnContentBlock extends TwoColumnContentBlockResponse {}
 export interface PageContent extends ContentPageResponse {}
 export interface Header extends HeaderResponse {}
