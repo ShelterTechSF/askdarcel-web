@@ -26,33 +26,120 @@ import {
   Service,
 } from "../../models";
 import styles from "./ServiceListingPage.module.scss";
+import { algoliasearch } from "algoliasearch";
+import config from "./../../config";
 
-// Page at /services/123
+const searchClient = algoliasearch(
+  config.ALGOLIA_APPLICATION_ID,
+  config.ALGOLIA_READ_ONLY_API_KEY
+);
+
+const INDEX_NAME = `${config.ALGOLIA_INDEX_PREFIX}_services_search`;
+
+// NOTE: `serviceFallback` and `setServiceFallback` is a hack to fetch data from
+// Algolia rather than the Shelter Tech API. It's nott known why some data is
+// not in sync between ST's API and their Algolia instance.
+//
+// DECISION: Manage the fetched service or fallback service result separately.
+// There may be a better way to write the JSX or conditional logic below. Let's
+// tackle that post MVP.
+//
+// As a workaround we've decided to implement a partial view of the Service
+// information with a warning to verify the validity of the information
+// themselves.
 export const ServiceListingPage = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | null>(null);
+  const [serviceFallback, setServiceFallback] = useState<Service | null>(null);
   const [error, setError] = useState<FetchServiceError>();
   const details = useMemo(
     () => (service ? generateServiceDetails(service) : []),
     [service]
   );
-  const { search } = useLocation();
+
+  const { search, pathname } = useLocation();
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
   const { visitDeactivated } = searchState;
 
   useEffect(() => window.scrollTo(0, 0), []);
 
   useEffect(() => {
-    fetchService(id).then((s) => {
-      if ("message" in s) {
-        setService(null);
+    const fetchServiceOrFallback = async () => {
+      try {
+        const response = await fetchService(id);
 
-        setError(s);
-      } else {
-        setService(s);
+        // We need to check the contents of the response since `fetchService`
+        // does not throw. TODO: reconsider this design because processing a
+        // thrown error requires less knowledge of the response type.
+        if ("message" in response) {
+          try {
+            // CAVEAT: Hopefully this does not change!
+            const serviceObjectID = `service_${pathname.split("/")[2]}`;
+            const service = (await searchClient.getObject({
+              indexName: INDEX_NAME,
+              objectID: serviceObjectID,
+            })) as unknown as Service;
+
+            setServiceFallback(service);
+            setService(null);
+          } catch (error) {
+            setService(null);
+            setError(response);
+          }
+        } else {
+          setService(response);
+        }
+      } catch (error) {
+        setError(error as FetchServiceError);
       }
-    });
-  }, [id]);
+    };
+
+    fetchServiceOrFallback();
+  }, [id, pathname]);
+
+  if (serviceFallback) {
+    const formattedLongDescription = serviceFallback.long_description
+      ? removeAsterisksAndHashes(serviceFallback.long_description)
+      : undefined;
+    return (
+      <ListingPageWrapper
+        title="error"
+        description=""
+        sidebarActions={[]}
+        onClickAction={() => "noop"}
+      >
+        <ListingPageHeader
+          title={serviceFallback.name}
+          dataCy="service-page-title"
+        >
+          <div
+            style={{
+              background: "LightYellow",
+              padding: "1em",
+            }}
+          >
+            <strong>
+              {" "}
+              ℹ️ The information on this page is incomplete. Please contact the
+              service provider below to confirm the provider is still active.{" "}
+            </strong>
+          </div>
+        </ListingPageHeader>
+
+        <ListingInfoSection title="About" data-cy="service-about-section">
+          <ReactMarkdown className="rendered-markdown" linkTarget="_blank">
+            {formattedLongDescription || ""}
+          </ReactMarkdown>
+        </ListingInfoSection>
+        <ListingInfoSection title="Contact" data-cy="service-contact-section">
+          <ListingInfoTable
+            rows={[serviceFallback]}
+            rowRenderer={(srv) => <ContactInfoTableRows service={srv} />}
+          />
+        </ListingInfoSection>
+      </ListingPageWrapper>
+    );
+  }
 
   if (error) {
     return (
