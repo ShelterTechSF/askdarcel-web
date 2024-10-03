@@ -7,7 +7,7 @@ import SearchResults from "components/search/SearchResults/SearchResults";
 import Sidebar from "components/search/Sidebar/Sidebar";
 import { Header } from "components/search/Header/Header";
 import { SecondaryNavigationWrapper } from "components/navigation/SecondaryNavigationWrapper";
-import { SearchHeaderSection } from "components/search/Header/SearchHeaderSection";
+import { BrowseHeaderSection } from "components/search/Header/BrowseHeaderSection";
 
 import {
   useEligibilitiesForCategory,
@@ -71,7 +71,7 @@ export const ServiceDiscoveryResults = ({
   return (
     <>
       <SecondaryNavigationWrapper>
-        <SearchHeaderSection descriptionText="Sign up for programs and access resources." />
+        <BrowseHeaderSection descriptionText="Sign up for programs and access resources." />
       </SecondaryNavigationWrapper>
       <div className={styles.container}>
         <Header currentCategory={categoryName} />

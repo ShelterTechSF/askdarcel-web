@@ -19,7 +19,7 @@ export const SearchResultsPage = () => {
         aroundRadius={aroundUserLocationRadius}
         aroundPrecision={DEFAULT_AROUND_PRECISION}
       />
-      <Header />
+
       <div className={styles.flexContainer}>
         <Sidebar
           isSearchResultsPage
