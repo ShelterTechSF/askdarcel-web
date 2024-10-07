@@ -1,13 +1,5 @@
 @import "~styles/utils/_helpers.scss";
 
-.header {
-  margin-bottom: $general-spacing-lg;
-
-  @media screen and (max-width: $break-tablet-s) {
-    margin-bottom: $general-spacing-xs;
-  }
-}
-
 .headerInner {
   display: flex;
   margin: 0 auto;

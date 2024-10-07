@@ -10,23 +10,18 @@ import styles from "./Header.module.scss";
 const { showPrintResultsBtn } = websiteConfig;
 
 interface Props {
-  currentCategory?: string;
+  currentCategory: string;
 }
 
-const DROPDOWN_LINKS = [
-  {
-    id: "all-categories",
-    url: "/search",
-    text: "All categories",
-  },
-  ...CATEGORIES.map((category) => ({
-    id: category.slug,
-    url: `/${category.slug}/results`,
-    text: category.name,
-  })),
-];
+// TODO: This should be the same as the dropdown links in the Navigation dropdown (which comes from Strapi)
+const DROPDOWN_LINKS = CATEGORIES.map((category) => ({
+  id: category.slug,
+  url: `/${category.slug}/results`,
+  text: category.name,
+}));
+
 export const Header = ({ currentCategory }: Props) => {
-  const title = currentCategory || "All categories";
+  const title = currentCategory;
 
   const uuid = crypto.randomUUID();
 

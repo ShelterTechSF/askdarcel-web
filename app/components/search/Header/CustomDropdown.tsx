@@ -132,17 +132,6 @@ export const CustomDropdown: React.FC<DropdownProps> = ({
           aria-activedescendant={currentCategory}
           tabIndex={-1}
         >
-          <li
-            onClick={() => handleCategoryChange("/search")}
-            className={currentCategory === "/search" ? styles.active : ""}
-            role="option"
-            aria-selected={currentCategory === "/search"}
-            id="all-categories"
-            tabIndex={0}
-            onKeyDown={(event) => handleItemKeyDown(event, "/search", 0)}
-          >
-            All categories
-          </li>
           {categories.map((category, index) => (
             <li
               key={category.slug}
