@@ -3,8 +3,21 @@
 .emailSignupContainer {
   display: flex;
   width: 100%;
-  padding: $spacing-16 $spacing-32;
+  padding: $spacing-16 $general-spacing-md;
   flex-direction: column;
   align-items: center;
+  gap: $general-spacing-lg;
   background: $color-secondary;
+
+  h2 {
+    text-align: center;
+  }
+
+  @include r_max($break-tablet-s) {
+    padding: $general-spacing-xl $general-spacing-md;
+
+    h2 {
+      font-size: 26px;
+    }
+  }
 }

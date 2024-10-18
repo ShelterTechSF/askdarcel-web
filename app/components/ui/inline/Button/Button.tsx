@@ -34,6 +34,7 @@ export const Button = ({
   href,
   mobileFullWidth = true,
   isVisualOnly = false,
+  isExternalLink,
 }: {
   children: string | JSX.Element;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -50,6 +51,7 @@ export const Button = ({
   href?: string;
   mobileFullWidth?: boolean;
   isVisualOnly?: boolean; // Maintains button styling as visual cue clickable cards but hidden to screen readers
+  isExternalLink?: boolean;
 }) => {
   const buttonClass = classNames(
     styles.button,
@@ -86,9 +88,10 @@ export const Button = ({
 
   // Links that follow same visual guidelines as buttons
   if (href) {
-    const isExternalLink = !href.startsWith("/");
+    const isExternal = isExternalLink ?? !href?.startsWith("/");
 
-    const linkProps = isExternalLink && { target: "_blank", rel: "noreferrer" };
+    const linkProps = isExternal && { target: "_blank", rel: "noreferrer" };
+
     return (
       <a href={href} className={buttonClass} {...linkProps}>
         {content}
