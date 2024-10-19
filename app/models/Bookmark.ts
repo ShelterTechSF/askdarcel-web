@@ -7,6 +7,7 @@ export interface Bookmark {
   service_id: number | null;
   resource_id: number | null;
   user_id: number;
+  name: string | null;
 }
 
 type PostBookmark = Omit<Bookmark, "id">;

@@ -33,6 +33,8 @@ export const BookmarkModal = ({
     order: number;
   }
 
+// here! -- if null or set by user, pass through setting the bookmark name to the 
+
   // TODO: If bookmark already exists, use bookmark name; otherwise,
   // default to service/resource name. This should be updated with the correct
   // bookmark name prop when the API is operational
@@ -120,6 +122,7 @@ export const BookmarkModal = ({
                 service_id: hit.type === "service" ? hit.id : null,
                 resource_id: hit.type === "resource" ? hit.id : null,
                 user_id: user.id,
+                name: bookmarkName 
               },
               authToken
             )
@@ -163,7 +166,6 @@ export const BookmarkModal = ({
                 value={bookmarkName}
                 onChange={(evt) => setBookmarkName(evt.target.value)}
                 className={styles.bookmarkName}
-                disabled // The API doesn't support setting a name for the bookmark yet.
                 type="text"
                 placeholder="Bookmark Name"
               />
