@@ -6,6 +6,7 @@ import React, {
   useContext,
 } from "react";
 import auth0, { Auth0Result, WebAuth } from "auth0-js";
+import { useHistory } from "react-router-dom";
 import * as Sentry from "@sentry/browser";
 import * as SessionCacher from "utils/SessionCacher";
 import * as AuthService from "utils/AuthService";
@@ -69,6 +70,7 @@ export const AppProvider = ({
   userLocation: GeoCoordinates | null;
   setBookmarksMenuOpen: (open: boolean) => void;
 }) => {
+  const history = useHistory();
   const authObject = SessionCacher.getAuthObject();
   const [authState, setAuthState] = useState<AuthState>(authObject);
 
@@ -133,6 +135,11 @@ export const AppProvider = ({
       })
       .catch((err) => {
         Sentry.captureException(err);
+        if (typeof err === "object" && err.code === "login_required") {
+          setAuthState(null);
+          // Redirect user to log-in page now that their auth state has been reset
+          history.push("/log-in");
+        }
       });
   }
 
