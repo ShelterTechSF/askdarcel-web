@@ -134,7 +134,9 @@ export const ServiceListingPage = () => {
         <ListingInfoSection title="Contact" data-cy="service-contact-section">
           <ListingInfoTable
             rows={[serviceFallback]}
-            rowRenderer={(srv) => <ContactInfoTableRows service={srv} />}
+            rowRenderer={(srv) => (
+              <ContactInfoTableRows key={srv.id} service={srv} />
+            )}
           />
         </ListingInfoSection>
       </ListingPageWrapper>
@@ -234,7 +236,9 @@ export const ServiceListingPage = () => {
       <ListingInfoSection title="Contact" data-cy="service-contact-section">
         <ListingInfoTable
           rows={[service]}
-          rowRenderer={(srv) => <ContactInfoTableRows service={srv} />}
+          rowRenderer={(srv) => (
+            <ContactInfoTableRows key={srv.id} service={srv} />
+          )}
         />
       </ListingInfoSection>
 
@@ -274,7 +278,10 @@ export const ServiceListingPage = () => {
           data-cy="service-tags-section"
         >
           <ListingInfoTable>
-            <LabelTagRows service={service} />
+            <LabelTagRows
+              categories={service.categories}
+              eligibilities={service.eligibilities}
+            />
           </ListingInfoTable>
         </ListingInfoSection>
       )}

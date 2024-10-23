@@ -3,44 +3,48 @@ import { LabelTag } from "components/ui/LabelTag";
 import { Service } from "../../models";
 import styles from "./LabelTagRows.module.scss";
 
-const LabelTagRows = ({ service }: { service: Service }) => {
-  const topLevelCategories = service.categories?.filter(
+const LabelTagRows = ({
+  categories,
+  eligibilities,
+}: {
+  categories?: Service["categories"];
+  eligibilities?: Service["eligibilities"];
+}) => {
+  const topLevelCategories = categories?.filter(
     (srv) => srv.top_level === true
   );
-  const subcategories = service.categories?.filter(
-    (srv) => srv.top_level === false
-  );
+  const subcategories = categories?.filter((srv) => srv.top_level === false);
 
   return (
     <>
-      {topLevelCategories.length > 0 && (
+      {topLevelCategories && topLevelCategories.length > 0 && (
         <tr>
           <th>Categories</th>
-          <td className={styles.labelTags}>
-            {topLevelCategories.map((srv) => (
-              <LabelTag label={srv.name} />
+          <td data-testid={"top-level-categories"} className={styles.labelTags}>
+            {topLevelCategories.map((category) => (
+              <LabelTag key={category.id} label={category.name} />
             ))}
           </td>
         </tr>
       )}
 
-      {subcategories.length > 0 && (
+      {subcategories && subcategories.length > 0 && (
         <tr>
           <th>Subcategories</th>
-          <td className={styles.labelTags}>
-            {subcategories.map((srv) => (
-              <LabelTag label={srv.name} />
+          <td data-testid={"subcategories"} className={styles.labelTags}>
+            {subcategories.map((category) => (
+              <LabelTag key={category.id} label={category.name} />
             ))}
           </td>
         </tr>
       )}
 
-      {service.eligibilities.length > 0 && (
+      {eligibilities && eligibilities.length > 0 && (
         <tr>
           <th>Eligibilities</th>
-          <td className={styles.labelTags}>
-            {service.eligibilities.map((srv) => (
-              <LabelTag label={srv.name} />
+          <td data-testid={"eligibilities"} className={styles.labelTags}>
+            {eligibilities.map((eligibility) => (
+              <LabelTag key={eligibility.id} label={eligibility.name} />
             ))}
           </td>
         </tr>

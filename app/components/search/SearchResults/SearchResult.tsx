@@ -44,28 +44,7 @@ export const SearchResult = forwardRef<HTMLDivElement, SearchResultProps>(
                 )}
               </div>
               <div className={styles.searchResultSubcatContainer}>
-                {hit.categories.length > 0 && (
-                  <LabelTag label={hit.categories[0].toString()} />
-                )}
-                {hit.categories.length > 1 && (
-                  // After pckg update TS started complaining about this, pckg is possibly
-                  // mis-typed
-                  /* eslint-disable @typescript-eslint/ban-ts-comment */
-                  /* @ts-ignore */
-                  <Tooltip
-                    title={hit.categories.slice(1).join(", ")}
-                    position="top"
-                    trigger="mouseenter"
-                    delay={100}
-                    animation="none"
-                    arrow
-                  >
-                    <LabelTag
-                      label={`+${hit.categories.length - 1}`}
-                      withTooltip
-                    />
-                  </Tooltip>
-                )}
+                <LabelTag label={hit.type} />
               </div>
             </div>
           </div>
