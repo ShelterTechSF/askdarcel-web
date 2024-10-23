@@ -26,10 +26,10 @@ import {
   Service,
 } from "../../models";
 import styles from "./ServiceListingPage.module.scss";
-import { algoliasearch } from "algoliasearch";
+import { searchClient } from "@algolia/client-search";
 import config from "./../../config";
 
-const searchClient = algoliasearch(
+const client = searchClient(
   config.ALGOLIA_APPLICATION_ID,
   config.ALGOLIA_READ_ONLY_API_KEY
 );
@@ -75,7 +75,7 @@ export const ServiceListingPage = () => {
           try {
             // CAVEAT: Hopefully this does not change!
             const serviceObjectID = `service_${pathname.split("/")[2]}`;
-            const service = (await searchClient.getObject({
+            const service = (await client.getObject({
               indexName: INDEX_NAME,
               objectID: serviceObjectID,
             })) as unknown as Service;

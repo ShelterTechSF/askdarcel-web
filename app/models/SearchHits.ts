@@ -1,4 +1,4 @@
-import { Hit, SearchHits } from "algoliasearch";
+import { Hit, SearchHits } from "@algolia/client-search";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import algoliasearchHelper from "algoliasearch-helper";
 import { Service } from "./Service";

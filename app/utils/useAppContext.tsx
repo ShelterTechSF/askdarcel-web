@@ -1,4 +1,4 @@
-import { AroundRadius } from "algoliasearch";
+import { AroundRadius } from "@algolia/client-search";
 import React, {
   useMemo,
   createContext,
