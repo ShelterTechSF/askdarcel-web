@@ -46,8 +46,7 @@
     "react-modal": "^3.12.1",
     "react-router-dom": "^6.27.0",
     "react-tippy": "^1.4.0",
-    "swr": "^2.2.5",
-    "whatwg-fetch": "^2.0.1"
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

@@ -52,7 +52,7 @@ const buildDir = path.resolve(__dirname, "build");
 module.exports = {
   mode: process.env.NODE_ENV || "production",
   context: __dirname,
-  entry: ["whatwg-fetch", "@babel/polyfill", path.resolve(appRoot, "init.tsx")],
+  entry: ["@babel/polyfill", path.resolve(appRoot, "init.tsx")],
   output: {
     path: buildDir,
     publicPath: "/dist/",
