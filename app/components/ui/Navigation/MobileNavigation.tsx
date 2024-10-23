@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import mobileNavigationStyles from "components/ui/Navigation/MobileNavigation.module.scss";
 import { Link } from "react-router-dom";
 import {
@@ -8,6 +8,7 @@ import {
 } from "models/Strapi";
 import { GoogleTranslate } from "../GoogleTranslate";
 import { Button } from "components/ui/inline/Button/Button";
+import useClickOutside from "hooks/MenuHooks";
 
 interface MobileNavigationProps {
   menuData: ExtractedNavigationMenusFromNavigationResponse;
@@ -19,24 +20,41 @@ export const MobileNavigation = ({ menuData }: MobileNavigationProps) => {
   ): menuItem is NavigationMenu {
     return "link" in menuItem;
   }
+
+  const filterMenuRef = useRef<HTMLDivElement>(null);
+
   const [activeMobileSubMenu, setActiveMobileSubMenu] = useState("");
   const closeMobileMenu = () => {
     setActiveMobileSubMenu("");
+    setMobileNavigationIsOpen(false);
+  };
+  const goBackToTopMenu = () => {
+    setActiveMobileSubMenu("");
   };
   const [mobileNavigationIsOpen, setMobileNavigationIsOpen] = useState(false);
-  const toggleMobileNav = () => setMobileNavigationIsOpen((prev) => !prev);
   const mobileSubMenuIsActive = !!activeMobileSubMenu;
-  const inSubNavigation = mobileNavigationIsOpen && mobileSubMenuIsActive;
   const mobileNavIconDisplay = mobileNavigationIsOpen ? "xmark" : "bars";
   const mobileNavTextDisplay = mobileNavigationIsOpen ? "Close" : "Menu";
 
+  useClickOutside(
+    filterMenuRef,
+    (event: MouseEvent) => {
+      // Prevents collison between handling the outside click and clicking on the
+      // "Close" button
+      if ((event.target as HTMLElement).innerText !== "Close") {
+        setMobileNavigationIsOpen(false);
+      }
+    },
+    mobileNavigationIsOpen
+  );
+
   const handleOpenMobileNavigation = () => {
-    if (inSubNavigation) {
+    if (mobileSubMenuIsActive) {
       setActiveMobileSubMenu("");
-    } else if (mobileSubMenuIsActive) {
-      setMobileNavigationIsOpen(true);
+    } else if (mobileNavigationIsOpen) {
+      setMobileNavigationIsOpen(false);
     } else {
-      toggleMobileNav();
+      setMobileNavigationIsOpen(true);
     }
   };
 
@@ -49,13 +67,17 @@ export const MobileNavigation = ({ menuData }: MobileNavigationProps) => {
           iconName={mobileNavIconDisplay}
           mobileFullWidth={false}
           styleType="transparent"
-          variant="linkWhite"
+          variant={mobileNavTextDisplay === "Close" ? "brandDark" : "linkWhite"}
+          size="xl"
         >
           {mobileNavTextDisplay}
         </Button>
       </div>
       {mobileNavigationIsOpen && (
-        <div className={mobileNavigationStyles.mobileNavigationContainer}>
+        <div
+          className={mobileNavigationStyles.mobileNavigationContainer}
+          ref={filterMenuRef}
+        >
           {menuData?.map((menuDataItem) => {
             if (menuItemHasLinks(menuDataItem)) {
               const uid = menuDataItem.title;
@@ -93,7 +115,7 @@ export const MobileNavigation = ({ menuData }: MobileNavigationProps) => {
                   >
                     <button
                       type="button"
-                      onClick={closeMobileMenu}
+                      onClick={goBackToTopMenu}
                       className={
                         mobileNavigationStyles.mobileNavigationMenuBack
                       }

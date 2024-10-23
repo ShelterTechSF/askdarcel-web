@@ -44,7 +44,8 @@
   height: 50px;
 
   @include r_max($break-tablet-s) {
-    height: 25px;
+    height: 30px;
+    width: 71px;
   }
 }
 
@@ -84,7 +85,7 @@
     height: $header-mobile-height;
     flex-wrap: wrap;
     padding: $spacing-4_5;
-    gap: $spacing-2_5;
+    gap: $spacing-8;
 
     :nth-child(3) {
       margin-left: auto;
@@ -96,8 +97,8 @@
   .primaryRow {
     height: $header-mobile-height;
     flex-wrap: wrap;
-    padding: $spacing-4_5;
-    gap: $spacing-2_5;
+    padding: $spacing-4;
+    gap: 0;
 
     :nth-child(1) {
       order: 1;

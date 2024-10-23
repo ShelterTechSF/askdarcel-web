@@ -36,7 +36,7 @@
   }
 
   &--xl {
-    font-size: 16px;
+    font-size: 18px;
     padding: $spacing-3_5 $general-spacing-lg;
   }
 
@@ -108,7 +108,6 @@
   }
 
   &--linkWhite {
-    padding: $spacing-0;
     border-bottom: 1px solid transparent;
     border-radius: $rounded-none;
     color: $white;
@@ -141,6 +140,21 @@
   &--transparent {
     background: none;
     color: $black;
+
+    &:hover,
+    &:active {
+      color: $black;
+    }
+  }
+
+  &--brandDark {
+    background: none;
+    color: $color-brand-dark;
+
+    &:hover,
+    &:active {
+      color: $color-brand-dark;
+    }
   }
 }
 

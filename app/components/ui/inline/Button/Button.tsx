@@ -5,7 +5,12 @@ import styles from "./Button.module.scss";
 type ButtonType = "button" | "submit" | "reset";
 type StyleType = "transparent" | "text" | "default";
 type SizeType = "xs" | "sm" | "base" | "lg" | "xl";
-type VariantType = "primary" | "secondary" | "linkBlue" | "linkWhite";
+type VariantType =
+  | "primary"
+  | "secondary"
+  | "linkBlue"
+  | "linkWhite"
+  | "brandDark";
 
 /**
  * NOTE: 😅 This component is an impressively complicated piece of code that
