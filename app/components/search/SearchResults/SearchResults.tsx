@@ -2,33 +2,33 @@ import React, { useCallback } from "react";
 import { SearchMap } from "components/search/SearchMap/SearchMap";
 import { SearchResult } from "components/search/SearchResults/SearchResult";
 import {
-  SearchHit,
   TransformedSearchHit,
   transformSearchResults,
 } from "models/SearchHits";
-import { useInstantSearch, useSearchBox } from "react-instantsearch";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import algoliasearchHelper from "algoliasearch-helper";
+import {
+  useInstantSearch,
+  usePagination,
+  useSearchBox,
+} from "react-instantsearch";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
 import { Loader } from "components/ui";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
+
+export enum SearchMapActions {
+  SearchThisArea,
+}
 
 const SearchResults = ({
   mobileMapIsCollapsed,
 }: {
   mobileMapIsCollapsed: boolean;
 }) => {
+  const { refine: refinePagination } = usePagination();
   const {
+    // Results type is algoliasearchHelper.SearchResults<SearchHit>
     results: searchResults,
     status,
-  }: // uiState: { query },
-  {
-    results: algoliasearchHelper.SearchResults<SearchHit>;
-    status: "idle" | "loading" | "stalled" | "error";
-    // uiState: Partial<{
-    //   query: string;
-    // }>;
   } = useInstantSearch();
   const { query } = useSearchBox();
 
@@ -62,6 +62,13 @@ const SearchResults = ({
         <ClearSearchButton />
       </div>
     );
+  };
+
+  const handleAction = (searchMapAction: SearchMapActions) => {
+    switch (searchMapAction) {
+      case SearchMapActions.SearchThisArea:
+        return refinePagination(0);
+    }
   };
 
   return (
@@ -99,6 +106,7 @@ const SearchResults = ({
       <SearchMap
         hits={searchMapHitData.hits}
         mobileMapIsCollapsed={mobileMapIsCollapsed}
+        handleSearchMapAction={handleAction}
       />
     </div>
   );

@@ -13,14 +13,18 @@ import {
 import "./SearchMap.scss";
 import { TransformedSearchHit } from "../../../models";
 import config from "../../../config";
+import { SearchMapActions } from "components/search/SearchResults/SearchResults";
 
+interface SearchMapProps {
+  hits: TransformedSearchHit[];
+  mobileMapIsCollapsed: boolean;
+  handleSearchMapAction: (searchMapAction: SearchMapActions) => void;
+}
 export const SearchMap = ({
   hits,
   mobileMapIsCollapsed,
-}: {
-  hits: TransformedSearchHit[];
-  mobileMapIsCollapsed: boolean;
-}) => {
+  handleSearchMapAction,
+}: SearchMapProps) => {
   const [googleMapObject, setMapObject] = useState<google.maps.Map | null>(
     null
   );
@@ -32,6 +36,7 @@ export const SearchMap = ({
     if (center?.lat() && center?.lng()) {
       setAroundLatLng(`${center.lat()}, ${center.lng()}`);
     }
+    handleSearchMapAction(SearchMapActions.SearchThisArea);
   }
 
   const aroundLatLngToMapCenter = {
