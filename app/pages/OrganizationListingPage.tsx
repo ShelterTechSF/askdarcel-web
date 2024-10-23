@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams, Redirect, useLocation } from "react-router-dom";
+import { useParams, Navigate, useLocation } from "react-router-dom";
 import qs from "qs";
 import { ListingInfoSection } from "components/ui/Cards/ListingInfoSection";
 import { removeAsterisksAndHashes } from "utils/strings";
@@ -29,7 +29,7 @@ import {
 
 // Page at /organization/123
 export const OrganizationListingPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const { organizationListingId } = useParams();
   const [org, setOrg] = useState<Organization | null>(null);
   const { search } = useLocation();
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
@@ -38,15 +38,15 @@ export const OrganizationListingPage = () => {
   useEffect(() => window.scrollTo(0, 0), []);
 
   useEffect(() => {
-    fetchOrganization(id).then((o) => setOrg(o));
+    fetchOrganization(organizationListingId as string).then((o) => setOrg(o));
     // TODO Handle Errors
-  }, [id]);
+  }, [organizationListingId]);
 
   if (!org) {
     return <Loader />;
   }
   if (org.status === "inactive" && !visitDeactivated) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" />;
   }
 
   const orgLocations = getOrganizationLocations(org);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { match as Match, RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as dataService from "utils/DataService";
 import { DEFAULT_AROUND_PRECISION, useAppContext } from "utils";
 import { Loader } from "components/ui";
@@ -17,17 +17,9 @@ import { CATEGORIES, ServiceCategory } from "../constants";
 import styles from "./ServiceDiscoveryResults.module.scss";
 import { Configure } from "react-instantsearch-core";
 
-type MatchParams = { categorySlug: string };
-
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
-export const ServiceDiscoveryResults = ({
-  location,
-  match,
-}: {
-  location: RouteComponentProps["location"];
-  match: Match<MatchParams>;
-}) => {
-  const { categorySlug } = match.params;
+export const ServiceDiscoveryResults = () => {
+  const { categorySlug } = useParams();
   const category = CATEGORIES.find((c) => c.slug === categorySlug);
   if (category === undefined) {
     throw new Error(`Unknown category slug ${categorySlug}`);

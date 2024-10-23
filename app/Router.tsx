@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { HomePage } from "pages/HomePage";
 import { AboutPage } from "pages/AboutPage";
 import { FaqPage } from "pages/FaqPage/FaqPage";
@@ -16,43 +16,40 @@ import { SearchResultsPage } from "pages/SearchResultsPage/SearchResultsPage";
 
 export const Router = () => {
   return (
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/about" component={AboutPage} />
-      <Route exact path="/faqs" component={FaqPage} />
-      <Route exact path="/demo/listing" component={ListingDebugPage} />
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/faqs" element={<FaqPage />} />
+      <Route path="/demo/listing" element={<ListingDebugPage />} />
       {/* NB: /organizations/new must be listed before /organizations/:id or else the /new
                 step will be interpreted as an ID and will thus break the OrganizationEditPage */}
       <Route
-        exact
-        path="/organizations/:id"
-        component={() => (
+        path="/organizations/:organizationListingId"
+        element={
           <>
             <SecondaryNavigationWrapper>
               <BackButton defaultReturnTo="/search">Back</BackButton>
             </SecondaryNavigationWrapper>
             <OrganizationListingPage />
           </>
-        )}
+        }
       />
 
-      <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route
-        exact
         path="/search"
-        component={() => (
+        element={
           <>
             <SecondaryNavigationWrapper>
               <SearchHeaderSection descriptionText="Sign up for programs and access resources." />
             </SecondaryNavigationWrapper>
             <SearchResultsPage />
           </>
-        )}
+        }
       />
       <Route
-        exact
-        path="/services/:id"
-        component={() => (
+        path="/services/:serviceListingId"
+        element={
           <>
             <SecondaryNavigationWrapper>
               <BackButton defaultReturnTo="/search">
@@ -61,16 +58,13 @@ export const Router = () => {
             </SecondaryNavigationWrapper>
             <ServiceListingPage />
           </>
-        )}
+        }
       />
-      <Route exact path="/terms-of-service" component={TermsOfServicePage} />
+      <Route path="/terms-of-service" element={<TermsOfServicePage />} />
       <Route
-        exact
         path="/:categorySlug/results"
-        component={ServiceDiscoveryResults}
+        element={<ServiceDiscoveryResults />}
       />
-
-      <Redirect to="/" />
-    </Switch>
+    </Routes>
   );
 };

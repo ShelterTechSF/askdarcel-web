@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
 import ReactGA_4 from "react-ga4";
 import { Helmet } from "react-helmet-async";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   GeoCoordinates,
   getLocation,
@@ -21,7 +21,7 @@ const { siteUrl, title } = websiteConfig;
 export const OUTER_CONTAINER_ID = "outer-container";
 
 export const App = () => {
-  const history = useHistory();
+  const location = useLocation();
   const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
 
   useEffect(() => {
@@ -33,19 +33,19 @@ export const App = () => {
       ReactGA_4.initialize(config.GOOGLE_ANALYTICS_GA4_ID);
     }
 
-    return history.listen((loc) => {
-      setTimeout(() => {
-        /* We call setTimeout here to give our views time to update the document title before
-           GA sends its page view event
-        */
-        const page = loc.pathname + loc.search;
-        ReactGA_4.send({
-          hitType: "pageview",
-          page,
-        });
-      }, 500);
-    });
-  }, [history]);
+    setTimeout(() => {
+      // We call setTimeout here to give our views time to update the document
+      // title beforeGA sends its page view event
+      // TODO: This hack is old. Let's figure out if it is still necessary or
+      // there is a different modern approach
+      // (see: https://stackoverflow.com/questions/2497200/how-to-listen-for-changes-to-the-title-element/29540461#29540461)
+      const page = location.pathname + location.search;
+      ReactGA_4.send({
+        hitType: "pageview",
+        page,
+      });
+    }, 500);
+  }, [location]);
 
   if (!userLocation) {
     return <Loader />;
