@@ -19,7 +19,7 @@
   },
   "browser": "app/init.jsx",
   "dependencies": {
-    "@algolia/client-search": "^5.10.1",
+    "@algolia/client-search": "^5.10.2",
     "@babel/polyfill": "^7.4.4",
     "algoliasearch": "^5.10.1",
     "classnames": "^2.2.6",
