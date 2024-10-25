@@ -116,8 +116,7 @@
   visibility: hidden;
 }
 
-.mobileNavigationMenuHeader:has(+ .mobileNavigationMenuListOpen),
-.mobileNavigationMenuListOpen + {
+.mobileNavigationMenuHeader:has(+ .mobileNavigationMenuListOpen) {
   visibility: hidden;
   display: none;
 }
