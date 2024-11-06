@@ -7,7 +7,8 @@ interface Props extends UseRefinementListProps {
 }
 
 const DEFAULT_CONFIG = {
-  limit: 100,
+  // Arbitrary upper limit to ensure all refinements are displayed
+  limit: 9999,
   operator: "or" as const,
 };
 

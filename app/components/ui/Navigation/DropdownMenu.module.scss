@@ -1,16 +1,9 @@
 @import "../../../styles/utils/_helpers.scss";
 @import "../../../styles/utils/_colors.scss";
 
-.navigationMenuContainer {
-  // Important to override react-burger-menu lib styles
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-
-  > * {
-    font-size: 18px;
-    font-family: Montserrat;
-  }
+.navigationMenuContainer > * {
+  font-size: 18px;
+  font-family: Montserrat;
 }
 
 .navigationSubMenu {
@@ -22,6 +15,11 @@
   border-radius: $rounded-md;
   overflow: hidden;
   font-weight: 400;
+  width: max-content;
+
+  @media screen and (max-width: $break-tablet-s) {
+    top: 46px;
+  }
 }
 
 .navigationMenuHeader {
@@ -92,11 +90,11 @@
 
 .categoryMenuContainer {
   position: relative;
-  min-width: 160px;
 
   .navigationSubMenu {
-    top: 50px;
-    left: 0;
+    @include r_max($break-tablet-s) {
+      width: calc(100vw - $general-spacing-xs);
+    }
   }
 
   .navigationMenuHeader {

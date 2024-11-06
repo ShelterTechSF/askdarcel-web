@@ -38,6 +38,7 @@
     align-self: flex-start;
     border-right: 0;
     background-color: #fff;
+    z-index: $z-index-filters-menu;
   }
 
   @media screen and (max-width: $break-tablet-s) {
@@ -67,7 +68,7 @@
 
   @media screen and (max-width: $break-tablet-s) {
     width: 100%;
-    top: 65px;
+    top: 131px;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     animation-name: slideUp;
