@@ -1,3 +1,5 @@
+/* eslint-disable no-script-url */
+
 import React from "react";
 import styles from "./EmailSignup.module.scss";
 import { Button } from "components/ui/inline/Button/Button";
