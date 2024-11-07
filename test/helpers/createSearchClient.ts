@@ -1,5 +1,10 @@
+interface SearchClientFacets {
+  categories: {
+    [category: string]: number;
+  };
+}
 interface Options {
-  [key: string]: any;
+  facets: SearchClientFacets;
 }
 
 /**
@@ -32,6 +37,7 @@ interface Options {
  */
 export function createSearchClient(options: Options) {
   return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     search: (requests: any) =>
       Promise.resolve({
         results: requests.map(() => ({

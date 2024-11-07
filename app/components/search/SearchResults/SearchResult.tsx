@@ -2,7 +2,6 @@ import React, { forwardRef } from "react";
 import { TransformedSearchHit } from "models";
 import { Link } from "react-router-dom";
 import { LabelTag } from "components/ui/LabelTag";
-import { Tooltip } from "react-tippy";
 import { formatPhoneNumber, renderAddressMetadata } from "utils";
 import { removeAsterisksAndHashes } from "utils/strings";
 import ReactMarkdown from "react-markdown";

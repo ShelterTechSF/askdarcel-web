@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // https://support.google.com/analytics/answer/12938611#zippy=%2Cin-this-article
 import ReactGA_4 from "react-ga4";
 import { Helmet } from "react-helmet-async";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   GeoCoordinates,
   getLocation,
