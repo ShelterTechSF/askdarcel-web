@@ -12,7 +12,7 @@ import {
 } from "react-instantsearch";
 import styles from "./SearchResults.module.scss";
 import ClearSearchButton from "../Refinements/ClearSearchButton";
-import { Loader } from "components/ui";
+import { Loader } from "components/ui/Loader";
 import ResultsPagination from "components/search/Pagination/ResultsPagination";
 
 export enum SearchMapActions {

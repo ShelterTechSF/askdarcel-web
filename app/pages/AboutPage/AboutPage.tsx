@@ -1,5 +1,5 @@
 import React from "react";
-import { Loader } from "components/ui";
+import { Loader } from "components/ui/Loader";
 import { usePageContent } from "hooks/StrapiAPI";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
 import { EmailSignup } from "../../components/EmailSignup/Emailsignup";

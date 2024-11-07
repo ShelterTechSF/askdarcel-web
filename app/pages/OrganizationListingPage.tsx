@@ -17,7 +17,7 @@ import {
   ServiceCard,
   WebsiteRenderer,
 } from "../components/listing";
-import { Loader } from "../components/ui";
+import { Loader } from "components/ui/Loader";
 
 import {
   fetchOrganization,

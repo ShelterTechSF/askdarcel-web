@@ -2,7 +2,7 @@ import React from "react";
 import GoogleMap from "google-map-react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
-import { Loader } from "../ui";
+import { Loader } from "components/ui/Loader";
 import LocationTimesAccordion from "./LocationTimesAccordion";
 import {
   createMapOptions,

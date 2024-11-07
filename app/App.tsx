@@ -11,7 +11,9 @@ import {
   websiteConfig,
   AppProvider,
 } from "./utils";
-import { Footer, Navigation, Loader } from "./components/ui";
+import { Footer } from "components/ui/Footer/Footer";
+import { Navigation } from "components/ui/Navigation/Navigation";
+import { Loader } from "components/ui/Loader";
 
 import MetaImage from "./assets/img/Our415_OG.png";
 import styles from "./App.module.scss";

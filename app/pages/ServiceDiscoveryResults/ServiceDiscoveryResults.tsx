@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as dataService from "utils/DataService";
 import { DEFAULT_AROUND_PRECISION, useAppContext } from "utils";
-import { Loader } from "components/ui";
+import { Loader } from "components/ui/Loader";
 import SearchResults from "components/search/SearchResults/SearchResults";
 import Sidebar from "components/search/Sidebar/Sidebar";
 import { Header } from "components/search/Header/Header";
