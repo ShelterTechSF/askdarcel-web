@@ -120,10 +120,6 @@ interface BaseDatumAttributesResponse {
   publishedAt?: string;
 }
 
-interface CategoryResponse extends BaseDatumAttributesResponse {
-  label: string;
-}
-
 export interface LinkResponse {
   id: number;
   url: string;
@@ -200,21 +196,6 @@ export interface ContentBlockResponse {
     color: "primary" | "secondary" | "tertiary";
   };
   link: LinkResponse;
-}
-
-// this corresponds to the "Address" component in Strapi
-interface AddressResponse {
-  id: number;
-  street: string;
-  zipcode: string;
-  geolocation: {
-    address: string;
-    geohash: string;
-    coordinates: {
-      lat: number;
-      lng: number;
-    };
-  } | null;
 }
 
 export interface FaqItem {
