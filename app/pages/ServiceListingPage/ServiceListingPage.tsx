@@ -5,7 +5,6 @@ import qs from "qs";
 import {
   ActionBarMobile,
   MapOfLocations,
-  ServiceAttribution,
   ServiceCard,
   ContactInfoTableRows,
 } from "components/listing";
@@ -209,10 +208,6 @@ export const ServiceListingPage = () => {
         <ReactMarkdown className="rendered-markdown" linkTarget="_blank">
           {formattedLongDescription || ""}
         </ReactMarkdown>
-        <ServiceAttribution
-          attribution={resource.source_attribution}
-          status={resource.status}
-        />
       </ListingInfoSection>
 
       {details.length > 0 && (

@@ -58,9 +58,6 @@ export const App = () => {
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
           <meta property="og:title" content={title} />
-
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@sheltertechorg" />
           <meta
             property="og:description"
             content="Get guided help finding food, housing, health resources and more in San Francisco"
