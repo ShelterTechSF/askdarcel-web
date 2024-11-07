@@ -1,5 +1,4 @@
 import React, { FormEvent, useEffect, useState } from "react";
-import cn from "classnames";
 import { useClearRefinements, useSearchBox } from "react-instantsearch";
 import styles from "./SiteSearchInput.module.scss";
 import { useNavigate } from "react-router-dom";

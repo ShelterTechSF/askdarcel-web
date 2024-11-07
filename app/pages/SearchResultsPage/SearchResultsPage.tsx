@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import SearchResults from "components/search/SearchResults/SearchResults";
 import Sidebar from "components/search/Sidebar/Sidebar";
-import { Header } from "components/search/Header/Header";
 import styles from "./SearchResultsPage.module.scss";
 import { DEFAULT_AROUND_PRECISION, useAppContext } from "utils";
 import { Configure } from "react-instantsearch-core";
