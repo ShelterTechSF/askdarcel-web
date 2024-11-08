@@ -1,9 +1,10 @@
+import { RefinementListItem } from "instantsearch.js/es/connectors/refinement-list/connectRefinementList";
 import React, { useEffect, useState } from "react";
 import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
 import styles from "./RefinementFilters.module.scss";
 
 interface Props extends UseRefinementListProps {
-  transform?: UseRefinementListProps["transformItems"];
+  transform?: (items: RefinementListItem[]) => RefinementListItem[];
   attribute: string;
 }
 
@@ -18,7 +19,6 @@ const BrowseRefinementList = ({ attribute, transform }: Props) => {
   const { items, refine } = useRefinementList({
     attribute,
     sortBy: ["name:asc"],
-    transformItems: transform,
     limit: MAXIMUM_ITEMS,
   });
 
@@ -43,9 +43,11 @@ const BrowseRefinementList = ({ attribute, transform }: Props) => {
     setChecked(checked);
   };
 
+  const transformedItems = transform === undefined ? items : transform(items);
+
   return (
     <ul>
-      {items.map((item) => (
+      {transformedItems.map((item) => (
         <li key={item.label} data-testid={"browserefinementlist-item"}>
           <label className={styles.checkBox}>
             {item.label}

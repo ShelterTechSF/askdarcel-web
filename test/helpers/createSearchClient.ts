@@ -35,7 +35,7 @@ interface Options {
  * @param options Additional customizations of the search response
  * @returns
  */
-export function createSearchClient(options: Options) {
+export function createSearchClient(options?: Options) {
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     search: (requests: any) =>

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import * as dataService from "utils/DataService";
 import { DEFAULT_AROUND_PRECISION, useAppContext } from "utils";
+import { SearchMapActions } from "components/search/SearchResults/SearchResults";
 import { Loader } from "components/ui/Loader";
-import SearchResults from "components/search/SearchResults/SearchResults";
 import Sidebar from "components/search/Sidebar/Sidebar";
 import { Header } from "components/search/Header/Header";
 import { SecondaryNavigationWrapper } from "components/navigation/SecondaryNavigationWrapper";
 import { BrowseHeaderSection } from "components/search/Header/BrowseHeaderSection";
-
 import {
   useEligibilitiesForCategory,
   useSubcategoriesForCategory,
@@ -16,6 +15,16 @@ import {
 import { CATEGORIES, ServiceCategory } from "../constants";
 import styles from "./ServiceDiscoveryResults.module.scss";
 import { Configure } from "react-instantsearch-core";
+import { SearchMap } from "components/search/SearchMap/SearchMap";
+import { SearchResult } from "components/search/SearchResults/SearchResult";
+import {
+  TransformedSearchHit,
+  transformSearchResults,
+} from "models/SearchHits";
+import { useInstantSearch, usePagination } from "react-instantsearch";
+import ResultsPagination from "components/search/Pagination/ResultsPagination";
+import searchResultsStyles from "components/search/SearchResults/SearchResults.module.scss";
+import { SearchResultsHeader } from "components/ui/SearchResultsHeader";
 
 /** Wrapper component that handles state management, URL parsing, and external API requests. */
 export const ServiceDiscoveryResults = () => {
@@ -32,6 +41,18 @@ export const ServiceDiscoveryResults = () => {
   const [isMapCollapsed, setIsMapCollapsed] = useState(false);
   const { userLocation } = useAppContext();
   const { aroundUserLocationRadius, aroundLatLng } = useAppContext();
+  const {
+    // Results type is algoliasearchHelper.SearchResults<SearchHit>
+    results: searchResults,
+    status,
+  } = useInstantSearch();
+  const { refine: refinePagination } = usePagination();
+
+  const handleFirstResultFocus = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
 
   const subcategoryNames = subcategories?.map((c) => c.name);
   const { name: categoryName, sortAlgoliaSubcategoryRefinements } = category;
@@ -49,6 +70,17 @@ export const ServiceDiscoveryResults = () => {
   const algoliaCategoryName = parentCategory?.name
     ? escapeApostrophes(parentCategory.name)
     : null;
+
+  const searchMapHitData = transformSearchResults(searchResults);
+
+  const hasNoResults = searchMapHitData.nbHits === 0 && status === "idle";
+
+  const handleAction = (searchMapAction: SearchMapActions) => {
+    switch (searchMapAction) {
+      case SearchMapActions.SearchThisArea:
+        return refinePagination(0);
+    }
+  };
 
   // TS compiler requires explict null type checks
   if (
@@ -88,7 +120,45 @@ export const ServiceDiscoveryResults = () => {
           />
 
           <div className={styles.results}>
-            <SearchResults mobileMapIsCollapsed={isMapCollapsed} />
+            <div className={searchResultsStyles.searchResultsAndMapContainer}>
+              <div
+                className={`${searchResultsStyles.searchResultsContainer} ${
+                  isMapCollapsed
+                    ? searchResultsStyles.resultsPositionWhenMapCollapsed
+                    : ""
+                }`}
+              >
+                <h2 className="sr-only">Search results</h2>
+                <>
+                  <SearchResultsHeader>
+                    <h2>{searchResults.nbHits} results</h2>
+                  </SearchResultsHeader>
+                  {searchMapHitData.hits.map(
+                    (hit: TransformedSearchHit, index) => (
+                      <SearchResult
+                        hit={hit}
+                        key={`${hit.id} - ${hit.name}`}
+                        ref={index === 0 ? handleFirstResultFocus : null}
+                      />
+                    )
+                  )}
+                  <div
+                    className={`${searchResultsStyles.paginationContainer} ${
+                      hasNoResults ? searchResultsStyles.hidePagination : ""
+                    }`}
+                  >
+                    <div className={searchResultsStyles.resultsPagination}>
+                      <ResultsPagination />
+                    </div>
+                  </div>
+                </>
+              </div>
+              <SearchMap
+                hits={searchMapHitData.hits}
+                mobileMapIsCollapsed={isMapCollapsed}
+                handleSearchMapAction={handleAction}
+              />
+            </div>
           </div>
         </div>
       </div>

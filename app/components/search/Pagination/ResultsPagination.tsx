@@ -8,7 +8,7 @@ const {
   appImages: { algolia },
 } = websiteConfig;
 
-const ResultsPagination = ({ noResults }: { noResults: boolean }) => (
+const ResultsPagination = ({ noResults }: { noResults?: boolean }) => (
   <div>
     <div
       className={`${styles.paginationContainer} ${

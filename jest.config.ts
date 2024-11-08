@@ -67,7 +67,9 @@ const config: Config = {
   // globalTeardown: undefined,
 
   // A set of global variables that need to be available in all test environments
-  // globals: {},
+  globals: {
+    CONFIG: {},
+  },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
   // maxWorkers: "50%",
@@ -91,6 +93,9 @@ const config: Config = {
   moduleNameMapper: {
     // Ensures style imports don't break tests
     "\\.(css|scss)$": "<rootDir>/test/jest/__mocks__/styleMock.ts",
+    "react-markdown": "<rootDir>/test/jest/__mocks__/react-markdown.tsx",
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/test/jest/__mocks__/fileMock.ts",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
