@@ -5,7 +5,7 @@ import websiteConfig from "utils/websiteConfig";
 import { CATEGORIES } from "pages/constants";
 import DropdownMenu from "components/ui/Navigation/DropdownMenu";
 
-import styles from "./Header.module.scss";
+import styles from "./BrowseSubheader.module.scss";
 
 const { showPrintResultsBtn } = websiteConfig;
 
@@ -20,7 +20,7 @@ const DROPDOWN_LINKS = CATEGORIES.map((category) => ({
   text: category.name,
 }));
 
-export const Header = ({ currentCategory }: Props) => {
+export const BrowseSubheader = ({ currentCategory }: Props) => {
   const title = currentCategory;
 
   const uuid = crypto.randomUUID();
@@ -29,9 +29,7 @@ export const Header = ({ currentCategory }: Props) => {
     <div className={styles.header}>
       <div className={styles.headerInner}>
         <div>
-          <h1 className="sr-only">
-            {title === currentCategory ?? "Search results"}
-          </h1>
+          <h1 className="sr-only">{title}</h1>
           <DropdownMenu
             id={uuid}
             title={title}

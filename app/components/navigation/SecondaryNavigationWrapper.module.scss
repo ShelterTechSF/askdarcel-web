@@ -1,9 +1,6 @@
 @import "app/styles/utils/_helpers.scss";
 
 .container {
-  background: $surface-4;
-  color: $text-tertiary;
-
   .innerContainer {
     margin: 0 auto;
     padding: $spacing-6 $general-spacing-lg;
@@ -16,4 +13,14 @@
       justify-content: flex-start;
     }
   }
+}
+
+.primary {
+  background: $surface-4;
+  color: $text-tertiary;
+}
+
+.secondary {
+  background: $color-secondary;
+  color: $text-primary;
 }

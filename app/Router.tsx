@@ -40,7 +40,7 @@ export const Router = () => {
         path="/search"
         element={
           <>
-            <SecondaryNavigationWrapper>
+            <SecondaryNavigationWrapper variant="secondary">
               <SearchHeaderSection descriptionText="Sign up for programs and access resources." />
             </SecondaryNavigationWrapper>
             <SearchResultsPage />

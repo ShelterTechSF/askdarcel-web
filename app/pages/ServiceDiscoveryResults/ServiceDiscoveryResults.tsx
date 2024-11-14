@@ -5,7 +5,7 @@ import { DEFAULT_AROUND_PRECISION, useAppContext } from "utils";
 import { SearchMapActions } from "components/search/SearchResults/SearchResults";
 import { Loader } from "components/ui/Loader";
 import Sidebar from "components/search/Sidebar/Sidebar";
-import { Header } from "components/search/Header/Header";
+import { BrowseSubheader } from "components/search/Header/BrowseSubheader";
 import { SecondaryNavigationWrapper } from "components/navigation/SecondaryNavigationWrapper";
 import { BrowseHeaderSection } from "components/search/Header/BrowseHeaderSection";
 import {
@@ -98,7 +98,7 @@ export const ServiceDiscoveryResults = () => {
         <BrowseHeaderSection descriptionText="Sign up for programs and access resources." />
       </SecondaryNavigationWrapper>
       <div className={styles.container}>
-        <Header currentCategory={categoryName} />
+        <BrowseSubheader currentCategory={categoryName} />
         <Configure
           filters={`categories:'${algoliaCategoryName}'`}
           aroundLatLng={aroundLatLng}
