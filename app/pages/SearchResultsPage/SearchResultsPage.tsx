@@ -1,23 +1,23 @@
 import React, { useCallback, useState } from "react";
-import { SearchMapActions } from "components/search/SearchResults/SearchResults";
-import Sidebar from "components/search/Sidebar/Sidebar";
+import { SearchMapActions } from "components/SearchAndBrowse/SearchResults/SearchResults";
+import Sidebar from "components/SearchAndBrowse/Sidebar/Sidebar";
 import styles from "./SearchResultsPage.module.scss";
 import { DEFAULT_AROUND_PRECISION, useAppContext } from "utils";
 import { Configure } from "react-instantsearch-core";
 import classNames from "classnames";
-import { SearchMap } from "components/search/SearchMap/SearchMap";
-import { SearchResult } from "components/search/SearchResults/SearchResult";
+import { SearchMap } from "components/SearchAndBrowse/SearchMap/SearchMap";
+import { SearchResult } from "components/SearchAndBrowse/SearchResults/SearchResult";
 import {
   TransformedSearchHit,
   transformSearchResults,
 } from "models/SearchHits";
 import { useInstantSearch, usePagination } from "react-instantsearch";
-import searchResultsStyles from "components/search/SearchResults/SearchResults.module.scss";
+import searchResultsStyles from "components/SearchAndBrowse/SearchResults/SearchResults.module.scss";
 import { Loader } from "components/ui/Loader";
-import ResultsPagination from "components/search/Pagination/ResultsPagination";
+import ResultsPagination from "components/SearchAndBrowse/Pagination/ResultsPagination";
 import { NoSearchResultsDisplay } from "components/ui/NoSearchResultsDisplay";
 import { SearchResultsHeader } from "components/ui/SearchResultsHeader";
-import ClearSearchButton from "components/search/Refinements/ClearSearchButton";
+import ClearSearchButton from "components/SearchAndBrowse/Refinements/ClearSearchButton";
 
 // NOTE: The .searchResultsPage is added plain so that it can be targeted by print-specific css
 export const SearchResultsPage = () => {

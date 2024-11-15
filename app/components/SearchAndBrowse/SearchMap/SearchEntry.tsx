@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import websiteConfig from "utils/websiteConfig";
-import { RelativeOpeningTime } from "components/listing/RelativeOpeningTime";
+import { RelativeOpeningTime } from "components/DetailPage/RelativeOpeningTime";
 import type { TransformedSearchHit } from "models/SearchHits";
 import "./SearchEntry.scss";
 

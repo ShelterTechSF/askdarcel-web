@@ -7,14 +7,14 @@ import {
   MapOfLocations,
   ServiceCard,
   ContactInfoTableRows,
-} from "components/listing";
-import { ListingInfoTable } from "components/listing/ListingInfoTable";
+} from "components/DetailPage";
+import { InfoTable } from "components/DetailPage/InfoTable";
 import { Loader } from "components/ui/Loader";
 import { removeAsterisksAndHashes } from "utils/strings";
-import { ListingInfoSection } from "components/ui/Cards/ListingInfoSection";
-import ListingPageHeader from "components/listing/PageHeader";
-import ListingPageWrapper from "components/listing/ListingPageWrapper";
-import LabelTagRows from "components/listing/LabelTagRows";
+import { DetailInfoSection } from "components/ui/Cards/DetailInfoSection";
+import ListingPageHeader from "components/DetailPage/PageHeader";
+import DetailPageWrapper from "components/DetailPage/DetailPageWrapper";
+import LabelTagRows from "components/DetailPage/LabelTagRows";
 import {
   fetchService,
   FetchServiceError,
@@ -25,9 +25,9 @@ import {
   OrganizationAction,
   Service,
 } from "../../models";
-import styles from "./ServiceListingPage.module.scss";
+import styles from "./ServiceDetailPage.module.scss";
 import { searchClient } from "@algolia/client-search";
-import config from "./../../config";
+import config from "../../config";
 
 const client = searchClient(
   config.ALGOLIA_APPLICATION_ID,
@@ -47,7 +47,7 @@ const INDEX_NAME = `${config.ALGOLIA_INDEX_PREFIX}_services_search`;
 // As a workaround we've decided to implement a partial view of the Service
 // information with a warning to verify the validity of the information
 // themselves.
-export const ServiceListingPage = () => {
+export const ServiceDetailPage = () => {
   const { serviceListingId } = useParams();
   const [service, setService] = useState<Service | null>(null);
   const [serviceFallback, setServiceFallback] = useState<Service | null>(null);
@@ -102,7 +102,7 @@ export const ServiceListingPage = () => {
       ? removeAsterisksAndHashes(serviceFallback.long_description)
       : undefined;
     return (
-      <ListingPageWrapper
+      <DetailPageWrapper
         title="error"
         description=""
         sidebarActions={[]}
@@ -126,33 +126,33 @@ export const ServiceListingPage = () => {
           </div>
         </ListingPageHeader>
 
-        <ListingInfoSection title="About" data-cy="service-about-section">
+        <DetailInfoSection title="About" data-cy="service-about-section">
           <ReactMarkdown className="rendered-markdown" linkTarget="_blank">
             {formattedLongDescription || ""}
           </ReactMarkdown>
-        </ListingInfoSection>
-        <ListingInfoSection title="Contact" data-cy="service-contact-section">
-          <ListingInfoTable
+        </DetailInfoSection>
+        <DetailInfoSection title="Contact" data-cy="service-contact-section">
+          <InfoTable
             rows={[serviceFallback]}
             rowRenderer={(srv) => (
               <ContactInfoTableRows key={srv.id} service={srv} />
             )}
           />
-        </ListingInfoSection>
-      </ListingPageWrapper>
+        </DetailInfoSection>
+      </DetailPageWrapper>
     );
   }
 
   if (error) {
     return (
-      <ListingPageWrapper
+      <DetailPageWrapper
         title="error"
         description=""
         sidebarActions={[]}
         onClickAction={() => "noop"}
       >
         {error.message}
-      </ListingPageWrapper>
+      </DetailPageWrapper>
     );
   }
 
@@ -188,7 +188,7 @@ export const ServiceListingPage = () => {
   };
 
   return (
-    <ListingPageWrapper
+    <DetailPageWrapper
       title={service.name}
       description={service.long_description || ""}
       sidebarActions={sidebarActions}
@@ -205,15 +205,15 @@ export const ServiceListingPage = () => {
         />
       </span>
 
-      <ListingInfoSection title="About" data-cy="service-about-section">
+      <DetailInfoSection title="About" data-cy="service-about-section">
         <ReactMarkdown className="rendered-markdown" linkTarget="_blank">
           {formattedLongDescription || ""}
         </ReactMarkdown>
-      </ListingInfoSection>
+      </DetailInfoSection>
 
       {details.length > 0 && (
-        <ListingInfoSection title="Details" data-cy="service-details-section">
-          <ListingInfoTable<{ title: string; value: string }>
+        <DetailInfoSection title="Details" data-cy="service-details-section">
+          <InfoTable<{ title: string; value: string }>
             rowRenderer={(detail) => (
               <tr key={detail.title}>
                 <th>{detail.title}</th>
@@ -226,29 +226,29 @@ export const ServiceListingPage = () => {
             )}
             rows={details}
           />
-        </ListingInfoSection>
+        </DetailInfoSection>
       )}
 
-      <ListingInfoSection title="Contact" data-cy="service-contact-section">
-        <ListingInfoTable
+      <DetailInfoSection title="Contact" data-cy="service-contact-section">
+        <InfoTable
           rows={[service]}
           rowRenderer={(srv) => (
             <ContactInfoTableRows key={srv.id} service={srv} />
           )}
         />
-      </ListingInfoSection>
+      </DetailInfoSection>
 
       {locations.length > 0 && (
-        <ListingInfoSection
+        <DetailInfoSection
           title="Location and hours"
           data-cy="service-loc-hours-section"
         >
           <MapOfLocations locations={locations} />
-        </ListingInfoSection>
+        </DetailInfoSection>
       )}
 
       {resource.services.length > 1 && (
-        <ListingInfoSection
+        <DetailInfoSection
           title="Other services at this organization"
           data-cy="service-other-section"
         >
@@ -265,23 +265,23 @@ export const ServiceListingPage = () => {
                 key={srv.id}
               />
             ))}
-        </ListingInfoSection>
+        </DetailInfoSection>
       )}
       {(service.categories.length > 0 || service.eligibilities.length > 0) && (
-        <ListingInfoSection
+        <DetailInfoSection
           title="Tags"
           borderBottom={false}
           data-cy="service-tags-section"
         >
-          <ListingInfoTable>
+          <InfoTable>
             <LabelTagRows
               categories={service.categories}
               eligibilities={service.eligibilities}
             />
-          </ListingInfoTable>
-        </ListingInfoSection>
+          </InfoTable>
+        </DetailInfoSection>
       )}
-    </ListingPageWrapper>
+    </DetailPageWrapper>
   );
 };
 

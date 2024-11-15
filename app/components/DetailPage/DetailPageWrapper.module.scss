@@ -1,6 +1,6 @@
 @import "../../styles/utils/_helpers.scss";
 
-.listing-wrapper {
+.detail-wrapper {
   background: $color-grey1;
   padding: $section-padding-desktop-vertical $general-spacing-md;
   background: $color-white;
@@ -10,7 +10,7 @@
   }
 }
 
-.listing {
+.detail {
   color: $text-secondary;
 
   p {
@@ -37,7 +37,7 @@
   }
 }
 
-.listing--main {
+.detail--main {
   width: 100%;
   margin: auto;
   display: flex;
@@ -65,7 +65,7 @@
   }
 }
 
-.listing--aside {
+.detail--aside {
   max-height: 100vh;
   display: flex;
   flex-direction: column;

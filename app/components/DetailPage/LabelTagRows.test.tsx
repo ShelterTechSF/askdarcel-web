@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import LabelTagRows from "components/listing/LabelTagRows";
+import LabelTagRows from "components/DetailPage/LabelTagRows";
 
 describe("<LabelTagRows />", () => {
   it("should show top level category labels if they exist", () => {

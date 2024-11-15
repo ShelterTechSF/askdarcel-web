@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "components/search/SearchResults/SearchResults.module.scss";
-import ClearSearchButton from "components/search/Refinements/ClearSearchButton";
+import styles from "components/SearchAndBrowse/SearchResults/SearchResults.module.scss";
+import ClearSearchButton from "components/SearchAndBrowse/Refinements/ClearSearchButton";
 
 export const NoSearchResultsDisplay = ({ query }: { query: string | null }) => (
   <div className={`${styles.noResultsMessage}`}>

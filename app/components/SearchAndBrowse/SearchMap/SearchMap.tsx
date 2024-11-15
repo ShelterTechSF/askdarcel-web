@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from "react";
 import GoogleMap from "google-map-react";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
-import SearchEntry from "components/search/SearchMap/SearchEntry";
+import SearchEntry from "components/SearchAndBrowse/SearchMap/SearchEntry";
 import { useAppContext, useAppContextUpdater } from "utils";
 import { Button } from "components/ui/inline/Button/Button";
 import {
@@ -13,7 +13,7 @@ import {
 import "./SearchMap.scss";
 import { TransformedSearchHit } from "../../../models";
 import config from "../../../config";
-import { SearchMapActions } from "components/search/SearchResults/SearchResults";
+import { SearchMapActions } from "components/SearchAndBrowse/SearchResults/SearchResults";
 
 interface SearchMapProps {
   hits: TransformedSearchHit[];

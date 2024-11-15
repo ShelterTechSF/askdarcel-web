@@ -1,21 +1,21 @@
 import React, { ReactNode } from "react";
-import styles from "./ListingInfoTable.module.scss";
+import styles from "./InfoTable.module.scss";
 
-interface ListingInfoTableProps<T = unknown> {
+interface InfoTableProps<T = unknown> {
   rows?: T[];
   rowRenderer?: (row: T) => JSX.Element;
   children?: ReactNode;
 }
 
-export const ListingInfoTable = <T,>({
+export const InfoTable = <T,>({
   rows,
   rowRenderer,
   children,
-}: ListingInfoTableProps<T>) => {
+}: InfoTableProps<T>) => {
   const useRowRenderer = !children && rows && rowRenderer;
 
   return (
-    <table className={styles.listingInfoTable}>
+    <table className={styles.infoTable}>
       <tbody>
         {children}
         {useRowRenderer && rows.map((row) => rowRenderer(row))}

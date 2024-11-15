@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
 import classNames from "classnames";
-import styles from "./SecondaryNavigationWrapper.module.scss";
+import styles from "./PageHeader.module.scss";
 
 // Provides page-level styling for the secondary navigation bar
-export const SecondaryNavigationWrapper = ({
+export const PageHeader = ({
   children,
   variant = "primary",
 }: {

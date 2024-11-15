@@ -9,7 +9,6 @@ export interface ChangeRequest {
 }
 
 export type ChangeRequestParams = ScheduleDayChangeRequestParams;
-
 interface ScheduleDayChangeRequestParams {
   schedule_id: number;
   type: "schedule_days";

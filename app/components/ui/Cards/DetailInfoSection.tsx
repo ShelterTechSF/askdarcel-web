@@ -1,20 +1,20 @@
 import React from "react";
 import classNames from "classnames";
-import styles from "./ListingInfoSection.module.scss";
+import styles from "./DetailInfoSection.module.scss";
 
-type ListingInfoSectionProps = {
+type DetailInfoSectionProps = {
   title: string;
   borderBottom?: boolean;
 } & React.HTMLProps<HTMLDivElement>;
 
-export const ListingInfoSection = ({
+export const DetailInfoSection = ({
   children,
   title,
   borderBottom = true,
   ...props
-}: ListingInfoSectionProps) => {
+}: DetailInfoSectionProps) => {
   const sectionClassnames = classNames(
-    styles.listingInfoSection,
+    styles.detailInfoSection,
     borderBottom && styles.borderBottom
   );
 

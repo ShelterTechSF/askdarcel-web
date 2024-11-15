@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import styles from "components/search/SearchResults/SearchResults.module.scss";
+import styles from "components/SearchAndBrowse/SearchResults/SearchResults.module.scss";
 
 /**
  * Layout component for the header above the search results list that allows for
