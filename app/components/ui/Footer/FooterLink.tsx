@@ -13,7 +13,7 @@ export const FooterLink = ({ link }: { link: LinkModel }) => {
 
   return (
     <a href={link.url} target="_blank" rel="noopener noreferrer">
-      {link.url}
+      {link.text}
     </a>
   );
 };
