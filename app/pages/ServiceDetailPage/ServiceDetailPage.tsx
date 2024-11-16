@@ -103,7 +103,7 @@ export const ServiceDetailPage = () => {
       : undefined;
     return (
       <DetailPageWrapper
-        title="error"
+        title={`Our415 - ${serviceFallback.name}`}
         description=""
         sidebarActions={[]}
         onClickAction={() => "noop"}
@@ -146,7 +146,7 @@ export const ServiceDetailPage = () => {
   if (error) {
     return (
       <DetailPageWrapper
-        title="error"
+        title="Our415 - Page Error"
         description=""
         sidebarActions={[]}
         onClickAction={() => "noop"}
@@ -189,7 +189,7 @@ export const ServiceDetailPage = () => {
 
   return (
     <DetailPageWrapper
-      title={service.name}
+      title={`Our415 - ${service.name}`}
       description={service.long_description || ""}
       sidebarActions={sidebarActions}
       onClickAction={onClickAction}
