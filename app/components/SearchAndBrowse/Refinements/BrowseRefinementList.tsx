@@ -23,24 +23,26 @@ const BrowseRefinementList = ({ attribute, transform }: Props) => {
   });
 
   useEffect(() => {
+    const newChecked = new Set<string>();
     items.forEach((item) => {
       if (item.isRefined) {
-        checked.add(item.value);
+        newChecked.add(item.value);
       }
     });
+    setChecked(newChecked);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   const changeRefinement = (value: string) => {
     refine(value);
 
-    if (checked.has(value)) {
-      checked.delete(value);
+    const updatedChecked = new Set(checked);
+    if (updatedChecked.has(value)) {
+      updatedChecked.delete(value);
     } else {
-      checked.add(value);
+      updatedChecked.add(value);
     }
-
-    setChecked(checked);
+    setChecked(updatedChecked);
   };
 
   const transformedItems = transform === undefined ? items : transform(items);

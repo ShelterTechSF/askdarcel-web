@@ -14,7 +14,7 @@ import {
 } from "hooks/APIHooks";
 import { CATEGORIES, ServiceCategory } from "../constants";
 import styles from "./BrowseResultsPage.module.scss";
-import { Configure } from "react-instantsearch-core";
+import { Configure, useClearRefinements } from "react-instantsearch-core";
 import { SearchMap } from "components/SearchAndBrowse/SearchMap/SearchMap";
 import { SearchResult } from "components/SearchAndBrowse/SearchResults/SearchResult";
 import {
@@ -47,6 +47,7 @@ export const BrowseResultsPage = () => {
     status,
   } = useInstantSearch();
   const { refine: refinePagination } = usePagination();
+  const { refine: clearRefinements } = useClearRefinements();
 
   const handleFirstResultFocus = useCallback((node: HTMLDivElement | null) => {
     if (node) {
@@ -59,12 +60,13 @@ export const BrowseResultsPage = () => {
 
   // TODO: Handle failure?
   useEffect(() => {
+    clearRefinements();
     dataService
       .get(`/api/categories/${category.id}`)
       .then(({ category: serviceCategory }: { category: ServiceCategory }) => {
         setParentCategory(serviceCategory);
       });
-  }, [category.id]);
+  }, [category.id, clearRefinements]);
 
   const escapeApostrophes = (str: string): string => str.replace(/'/g, "\\'");
   const algoliaCategoryName = parentCategory?.name
