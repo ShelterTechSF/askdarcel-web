@@ -67,7 +67,7 @@ jobs:
       - run: yarn cypress run
       - if: always()
         run: docker compose -f docker-compose.test.yml logs -t # Output all docker logs from API and frontend to help debugging after the fact
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: E2E screenshot(s) and video(s)
