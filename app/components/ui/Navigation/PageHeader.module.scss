@@ -18,6 +18,10 @@
 .primary {
   background: $surface-4;
   color: $text-tertiary;
+
+  h1 {
+    color: $text-tertiary;
+  }
 }
 
 .secondary {
