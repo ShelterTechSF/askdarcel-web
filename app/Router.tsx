@@ -12,6 +12,7 @@ import { PageHeader } from "components/ui/Navigation/PageHeader";
 import { BackButton } from "components/ui/BackButton";
 import { SearchHeaderSection } from "components/SearchAndBrowse/Header/SearchHeaderSection";
 import { SearchResultsPage } from "pages/SearchResultsPage/SearchResultsPage";
+import { PageNotFoundPage } from "pages/PageNotFoundPage/PageNotFoundPage";
 
 export const Router = () => {
   return (
@@ -60,6 +61,7 @@ export const Router = () => {
       />
       <Route path="/terms-of-service" element={<TermsOfServicePage />} />
       <Route path="/:categorySlug/results" element={<BrowseResultsPage />} />
+      <Route path="*" element={<PageNotFoundPage />} />
     </Routes>
   );
 };

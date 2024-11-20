@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams, useLocation, Navigate } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import qs from "qs";
 import {
   ActionBarMobile,
@@ -28,6 +28,7 @@ import {
 import styles from "./ServiceDetailPage.module.scss";
 import { searchClient } from "@algolia/client-search";
 import config from "../../config";
+import PageNotFound from "components/ui/PageNotFound";
 
 const client = searchClient(
   config.ALGOLIA_APPLICATION_ID,
@@ -151,7 +152,7 @@ export const ServiceDetailPage = () => {
         sidebarActions={[]}
         onClickAction={() => "noop"}
       >
-        {error.message}
+        <PageNotFound />
       </DetailPageWrapper>
     );
   }
@@ -160,7 +161,7 @@ export const ServiceDetailPage = () => {
     return <Loader />;
   }
   if (service.status === "inactive" && !visitDeactivated) {
-    return <Navigate to="/" />;
+    return <PageNotFound />;
   }
 
   const { resource, recurringSchedule } = service;

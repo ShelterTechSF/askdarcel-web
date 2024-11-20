@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams, Navigate, useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import qs from "qs";
 import { DetailInfoSection } from "components/ui/Cards/DetailInfoSection";
 import { removeAsterisksAndHashes } from "utils/strings";
@@ -17,8 +17,8 @@ import {
   ServiceCard,
   WebsiteRenderer,
 } from "../components/DetailPage";
+import PageNotFound from "components/ui/PageNotFound";
 import { Loader } from "components/ui/Loader";
-
 import {
   fetchOrganization,
   getOrganizationActions,
@@ -35,18 +35,58 @@ export const OrganizationDetailPage = () => {
   const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
   const { visitDeactivated } = searchState;
 
-  useEffect(() => window.scrollTo(0, 0), []);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  useEffect(() => window.scrollTo(0, 0), []);
   useEffect(() => {
-    fetchOrganization(organizationListingId as string).then((o) => setOrg(o));
-    // TODO Handle Errors
+    const fetchOrganizationWithErrorHandling = async () => {
+      setIsLoading(true);
+      try {
+        const org = await fetchOrganization(organizationListingId as string);
+
+        setOrg(org);
+        setError(null);
+      } catch (err) {
+        setError(err as Error);
+        setOrg(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrganizationWithErrorHandling();
   }, [organizationListingId]);
 
-  if (!org) {
+  if (isLoading) {
     return <Loader />;
   }
+
+  if (error || !org) {
+    return (
+      <DetailPageWrapper
+        title={`Our415`}
+        description=""
+        sidebarActions={[]}
+        onClickAction={() => "noop"}
+      >
+        <PageNotFound />
+      </DetailPageWrapper>
+    );
+  }
+
+  // When is org.status inactive?
   if (org.status === "inactive" && !visitDeactivated) {
-    return <Navigate to="/" />;
+    return (
+      <DetailPageWrapper
+        title={`Our415`}
+        description=""
+        sidebarActions={[]}
+        onClickAction={() => "noop"}
+      >
+        <PageNotFound />
+      </DetailPageWrapper>
+    );
   }
 
   const orgLocations = getOrganizationLocations(org);

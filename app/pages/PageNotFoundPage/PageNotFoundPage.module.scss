@@ -1,0 +1,16 @@
+@import "../../styles/utils/_helpers.scss";
+
+.container {
+  background: $color-grey1;
+  padding: $section-padding-desktop-vertical $general-spacing-md;
+  background: $color-white;
+
+  @include r_max($break-tablet-s) {
+    padding: $section-padding-mobile-vertical $general-spacing-md;
+  }
+}
+
+.inner {
+  max-width: 42rem;
+  margin: auto;
+}

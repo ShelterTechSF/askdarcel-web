@@ -1,0 +1,11 @@
+@import "../../styles/utils/_helpers.scss";
+
+h1 {
+  color: $text-primary;
+}
+
+.description {
+  color: $text-primary;
+  margin-top: $general-spacing-md;
+  margin-bottom: $general-spacing-xl;
+}
