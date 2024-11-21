@@ -898,7 +898,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     }
     const resourceID = params.id;
     if (resourceID) {
-      const url = `/api/resources/${resourceID}`;
+      const url = `/api/v2/resources/${resourceID}`;
       fetch(url)
         .then((r) => r.json())
         .then((data) =>
