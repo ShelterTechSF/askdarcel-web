@@ -159,3 +159,11 @@
     top: $header-mobile-height;
   }
 }
+
+@include r_max($break-mobile) {
+  .mobileNavigationContainer {
+    right: auto;
+    left: 0;
+    width: 100vw;
+  }
+}
