@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams, useLocation } from "react-router-dom";
-import qs from "qs";
 import {
   ActionBarMobile,
   MapOfLocations,
@@ -58,9 +57,7 @@ export const ServiceDetailPage = () => {
     [service]
   );
 
-  const { search, pathname } = useLocation();
-  const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
-  const { visitDeactivated } = searchState;
+  const { pathname } = useLocation();
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -160,7 +157,7 @@ export const ServiceDetailPage = () => {
   if (!service) {
     return <Loader />;
   }
-  if (service.status === "inactive" && !visitDeactivated) {
+  if (service.status === "inactive") {
     return <PageNotFound />;
   }
 

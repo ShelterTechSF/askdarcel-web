@@ -3,6 +3,7 @@ import Hero from "components/ui/Hero/Hero";
 import { CategorySection } from "components/ui/Section/CategorySection";
 import { useHomepageData } from "hooks/StrapiAPI";
 import { Homepage, StrapiDatum } from "models/Strapi";
+import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
 
 export const HomePage = () => {
   const { data, isLoading } = useHomepageData();
@@ -15,11 +16,14 @@ export const HomePage = () => {
     return null;
   }
 
-  const { hero } = homePageData || {};
+  const { hero, two_column_content_blocks } = homePageData || {};
+  const twoColumnContentData = two_column_content_blocks.data;
 
   return (
     <>
-      <h1 className="sr-only">Homepage</h1>
+      <h1 className="sr-only" data-testid={"homepage-title"}>
+        Homepage
+      </h1>
       {hero && (
         <Hero
           backgroundImage={hero.background_image.data?.attributes.url ?? ""}
@@ -29,6 +33,9 @@ export const HomePage = () => {
         />
       )}
       <CategorySection />
+      {twoColumnContentData?.map((content) => (
+        <TwoColumnContentSection key={content.id} {...content.attributes} />
+      ))}
     </>
   );
 };

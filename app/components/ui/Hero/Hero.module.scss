@@ -67,17 +67,3 @@
   margin-top: $general-spacing-xl;
   gap: $general-spacing-s;
 }
-
-.desktop {
-  @media screen and (max-width: $break-tablet-s) {
-    display: none;
-  }
-}
-
-.mobile {
-  display: none;
-  @media screen and (max-width: $break-tablet-s) {
-    display: flex;
-    min-width: 100%;
-  }
-}

@@ -1,11 +1,14 @@
 /**
-  NOTE @rosschapman: Developers may be tempted to auto-generate response types as described in the strapi docs using cli
-  commands from the `@strapi/strapi` module, but I've noticed the output is funky for use in a client application in its
-  raw form. For example, string fields from the recommended module are typed as `Attribute.String` but this type isn't compatible
-  with `string` 🤦. Strapi offers this cumbersome approach to sync types, but also caveats this is not an official
-  solution: https://strapi.io/blog/improve-your-frontend-experience-with-strapi-types-and-type-script. Even so, I still
-  don't trust the generated types in view of the above example.
-*/
+ * NOTE @rosschapman: Developers may be tempted to auto-generate response types as described in the strapi docs using cli
+ * commands from the `@strapi/strapi` module, but I've noticed the output is funky for use in a client application in its
+ * raw form. For example, string fields from the recommended module are typed as `Attribute.String` but this type isn't compatible
+ * with `string` 🤦. Strapi offers this cumbersome approach to sync types, but also caveats this is not an official
+ * solution: https://strapi.io/blog/improve-your-frontend-experience-with-strapi-types-and-type-script. Even so, I still
+ * don't trust the generated types in view of the above example.
+ *
+ * For more information about fetching relational data using the `populate` and
+ * `field` selectors, see: https://docs.strapi.io/dev-docs/api/rest/populate-select
+ */
 
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
@@ -40,7 +43,7 @@ export function useFooterData() {
 
 export function useHomepageData() {
   return useStrapiHook<HomepageResponse>(
-    "home-page?populate[hero][populate]=*&populate[category_section][populate]=*"
+    "home-page?populate[hero][populate]=*&populate[category_section][populate]=*&populate[two_column_content_blocks][populate][link]=*&populate[two_column_content_blocks][populate][media][populate]=*"
   );
 }
 
@@ -114,7 +117,6 @@ export interface StrapiArrayResponse<T> {
 }
 
 interface BaseDatumAttributesResponse {
-  id: string;
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
@@ -155,7 +157,7 @@ export interface ImageFormatResponse {
   hash: string;
   mime: string;
   name: string;
-  path?: string;
+  path: string | null;
   size: number;
   width: number;
   height: number;
@@ -163,16 +165,16 @@ export interface ImageFormatResponse {
 }
 
 export interface FormatsResponse {
-  large: ImageFormatResponse;
-  medium: ImageFormatResponse;
-  small: ImageFormatResponse;
-  thumbnail: ImageFormatResponse;
+  large?: ImageFormatResponse;
+  medium?: ImageFormatResponse;
+  small?: ImageFormatResponse;
+  thumbnail?: ImageFormatResponse;
 }
 
 export interface ImageResponse extends BaseDatumAttributesResponse {
   name: string;
-  alternativeText?: string;
-  caption?: string;
+  alternativeText: string | null;
+  caption: string | null;
   width: number;
   height: number;
   formats: FormatsResponse;
@@ -181,7 +183,7 @@ export interface ImageResponse extends BaseDatumAttributesResponse {
   mime: string;
   size: number;
   url: string;
-  previewUrl?: string;
+  previewUrl: string | null;
   provider: string;
   provider_metadata?: unknown;
 }
@@ -193,7 +195,7 @@ export interface ContentBlockResponse {
   subheader: string;
   background_color: {
     id: number;
-    color: "primary" | "secondary" | "tertiary";
+    color: string;
   };
   link: LinkResponse;
 }
@@ -206,12 +208,12 @@ export interface FaqItem {
 export interface TwoColumnContentBlockResponse
   extends BaseDatumAttributesResponse {
   title: string;
-  media_alignment: "left" | "right";
+  media_alignment: string;
   content: string;
   name: string;
   link: LinkResponse;
   media: DynamicMediaResponse[];
-  faq: FaqItem[];
+  faq?: FaqItem[];
 }
 
 export interface CalendarEventResponse {
@@ -224,7 +226,6 @@ export interface CalendarEventResponse {
 }
 
 export interface HomepageResponse extends BaseDatumAttributesResponse {
-  title: string;
   hero: {
     id: number;
     title: string;

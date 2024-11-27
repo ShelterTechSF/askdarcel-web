@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams, useLocation } from "react-router-dom";
-import qs from "qs";
+import { useParams } from "react-router-dom";
 import { DetailInfoSection } from "components/ui/Cards/DetailInfoSection";
 import { removeAsterisksAndHashes } from "utils/strings";
 import ListingPageHeader from "components/DetailPage/PageHeader";
@@ -31,9 +30,6 @@ import {
 export const OrganizationDetailPage = () => {
   const { organizationListingId } = useParams();
   const [org, setOrg] = useState<Organization | null>(null);
-  const { search } = useLocation();
-  const searchState = useMemo(() => qs.parse(search.slice(1)), [search]);
-  const { visitDeactivated } = searchState;
 
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -76,7 +72,7 @@ export const OrganizationDetailPage = () => {
   }
 
   // When is org.status inactive?
-  if (org.status === "inactive" && !visitDeactivated) {
+  if (org.status === "inactive") {
     return (
       <DetailPageWrapper
         title={`Our415`}

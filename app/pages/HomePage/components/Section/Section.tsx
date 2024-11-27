@@ -22,7 +22,10 @@ export const HomePageSection = ({
   children?: React.ReactNode;
   link?: Link;
 }) => (
-  <section className={`${styles.section} ${styles[backgroundColor]}`}>
+  <section
+    className={`${styles.section} ${styles[backgroundColor]}`}
+    data-testid={"homepage-section"}
+  >
     <div className={styles.content}>
       <div className={styles.header}>
         <div>
