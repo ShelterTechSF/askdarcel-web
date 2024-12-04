@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "components/ui/Navigation/Navigation.module.scss";
-import { GoogleTranslate } from "components/ui/GoogleTranslate";
 import desktopNavigationStyles from "components/ui/Navigation/DesktopNavigation.module.scss";
 import DropdownMenu from "components/ui/Navigation/DropdownMenu";
 import { MobileNavigation } from "components/ui/Navigation/MobileNavigation";
@@ -15,6 +14,7 @@ import { useNavigationData } from "hooks/StrapiAPI";
 import { Router } from "../../../Router";
 import NavigationFocusReset from "./NavigationFocusReset";
 import SkipButton from "./SkipButton";
+import TopBanner from "./TopBanner";
 import { SiteSearchInput } from "components/ui/SiteSearchInput";
 import { InstantSearch } from "react-instantsearch-core";
 import { liteClient } from "algoliasearch/lite";
@@ -66,6 +66,7 @@ export const Navigation = () => {
     >
       <NavigationFocusReset />
       <SkipButton />
+      <TopBanner />
       <div>
         <nav className={styles.siteNav}>
           <div className={styles.primaryRow}>
@@ -107,9 +108,6 @@ export const Navigation = () => {
                   </Link>
                 );
               })}
-              <div className={styles.navigationMenuTranslate}>
-                <GoogleTranslate />
-              </div>
             </div>
           </div>
         </nav>

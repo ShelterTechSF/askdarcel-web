@@ -6,7 +6,6 @@ import {
   NavigationMenu,
   Link as LinkModel,
 } from "models/Strapi";
-import { GoogleTranslate } from "../GoogleTranslate";
 import { Button } from "components/ui/inline/Button/Button";
 import useClickOutside from "hooks/MenuHooks";
 
@@ -166,10 +165,6 @@ export const MobileNavigation = ({ menuData }: MobileNavigationProps) => {
               </li>
             );
           })}
-
-          <div className={mobileNavigationStyles.mobileNavigationMenuTranslate}>
-            <GoogleTranslate />
-          </div>
         </div>
       )}
     </>

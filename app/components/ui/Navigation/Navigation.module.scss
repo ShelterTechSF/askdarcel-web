@@ -63,14 +63,6 @@
   flex-direction: row;
   align-items: center;
 
-  > :nth-last-child(2) {
-    // Adds separator
-    border-right: 1px solid black;
-    padding-right: $spacing-4;
-    margin-right: $spacing-6;
-  }
-  // margin-right: $spacing-6;
-
   > * {
     font-weight: 600;
   }
