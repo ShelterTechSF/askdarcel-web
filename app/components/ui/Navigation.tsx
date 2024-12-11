@@ -135,7 +135,7 @@ const SiteLinks = () => {
           <a
             type="button"
             aria-label="report street crisis"
-            href="https://sf.gov/information/reporting-concerns-about-street-crises-and-conditions"
+            href="https://www.sf.gov/coordinated-street-response-program"
             className={styles.buttonLink}
             target="blank"
             rel="noopener noreferrer"
