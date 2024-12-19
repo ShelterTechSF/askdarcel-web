@@ -27,7 +27,7 @@ describe("Organization Page", () => {
       expect(r.status).to.eq(201);
     });
 
-    cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).then(
+    cy.request<{ resource: Organization }>(`/api/v2/resources/${orgId}`).then(
       (res) => {
         expect(res.status).to.eq(200);
         expect(res.body.resource).to.include.all.keys(
@@ -70,7 +70,7 @@ describe("Organization Page", () => {
   });
 
   it("should render services section with multiple services", () => {
-    cy.request<{ resource: Organization }>(`/api/resources/${orgId}`).then(
+    cy.request<{ resource: Organization }>(`/api/v2/resources/${orgId}`).then(
       (res) => {
         expect(res.status).to.eq(200);
         expect(res.body.resource).to.include.all.keys(
@@ -125,7 +125,7 @@ describe("Organization Page", () => {
 
         // Intercept client's AJAX request to services endpoint and alias as "getResourceData". Pass
         // the alias to #wait method below to delay test execution until the request has returned
-        cy.intercept("GET", `/api/resources/${orgId}`).as("getResourceData");
+        cy.intercept("GET", `/api/v2/resources/${orgId}`).as("getResourceData");
         cy.request<{ services: Service[] }>(
           "POST",
           `/api/resources/${orgId}/services`,
