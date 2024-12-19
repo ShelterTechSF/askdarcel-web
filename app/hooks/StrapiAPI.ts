@@ -77,6 +77,31 @@ export function useNavigationData() {
   };
 }
 
+
+export function useEventsData() {
+  const path = "events?populate[address]=*&populate[calendar_event]=*&populate[links]=*&populate[image][populate]=*";
+
+  const dataFetcher = () =>
+    fetcher<{ data: Array<StrapiDatumResponse<EventResponse>> }>(
+      `${config.STRAPI_API_URL}/api/${path}`,
+      {
+        Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
+      }
+    );
+
+  const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher) as {
+    data: {data: Array<StrapiDatumResponse<EventResponse>>};
+    error: unknown;
+    isLoading: boolean;
+  };
+
+  return {
+    data: data?.data ? data.data.map((eventData) => ({...eventData.attributes, id: eventData.id})) : null,
+    error,
+    isLoading,
+  };
+}
+
 interface Meta {
   pagination?: {
     page: number;
@@ -278,4 +303,41 @@ export interface NavigationMenuResponse {
   // The plurality mismatch here is a quirk of strapi's serialization of repeatable nested components
   link: LinkResponse[];
   title: string;
+}
+
+
+export interface EventResponse extends BaseDatumAttributesResponse {
+  id: number;
+  title: string;
+  venue: string;
+  admissions: string;
+  description: string;
+  calendar_event: CalendarEventResponse;
+  address: AddressResponse;
+  image: {
+    id: number;
+    data: { attributes: ImageResponse};
+  };
+  links: LinkResponse[];
+  event_categories: Array<StrapiDatumResponse<CategoryResponse>>;
+}
+
+
+interface CategoryResponse extends BaseDatumAttributesResponse {
+  label: string;
+}
+
+// this corresponds to the "Address" component in Strapi
+interface AddressResponse {
+  id: number;
+  street: string;
+  zipcode: string;
+  geolocation: {
+    address: string;
+    geohash: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
+  } | null;
 }

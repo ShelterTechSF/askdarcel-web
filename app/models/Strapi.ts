@@ -6,6 +6,7 @@ import {
   ContentBlockResponse,
   ContentPageResponse,
   DynamicLinkResponse,
+  EventResponse,
   FooterResponse,
   HeaderResponse,
   HomepageResponse,
@@ -33,6 +34,7 @@ export interface NavigationMenu
   extends Omit<NavigationMenuResponse, "__component"> {}
 export interface CalendarEvent extends CalendarEventResponse {}
 export interface Image extends ImageResponse {}
+export interface Event extends EventResponse {}
 
 export function extractNavigationMenusFromNavigationResponse(
   navigationResponse: HeaderResponse | null
