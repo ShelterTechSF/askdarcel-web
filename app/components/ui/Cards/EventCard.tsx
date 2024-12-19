@@ -1,24 +1,22 @@
 import React from "react";
 import { Button } from "components/ui/inline/Button/Button";
 import { FormattedDate } from "components/ui/Cards/FormattedDate";
-import styles from "./OppEventCard.module.scss";
+import styles from "./EventCard.module.scss";
 import { EventResponse } from 'hooks/StrapiAPI';
 
-export const OppEventCard = ({event}: {event: EventResponse}) => {
-  console.log("🪵 ~ OppEventCard ~ event:", event);
+export const EventCard = ({event}: {event: EventResponse}) => {
   const {
-    id,
     calendar_event: calendarEvent,
     title,
     image,
+    link,
   } = event;
   const imageUrl = image?.data?.attributes?.url;
   const imageAlternativeText = image?.data?.attributes.alternativeText || "";
-
-  const fullSlug = `/events/${id}`;
+  const linkUrl = link?.url;
 
   return (
-    <div className={styles.oppEventCard}>
+    <div className={styles.eventCard}>
       <img
         alt={imageAlternativeText}
         src={imageUrl}
@@ -29,7 +27,7 @@ export const OppEventCard = ({event}: {event: EventResponse}) => {
       <div className={styles.content}>
         <div>
           <h4 className={styles.contentTitle}>
-            <a href={fullSlug}>{title}</a>
+            <a href={linkUrl}>{title}</a>
           </h4>
           {calendarEvent && (
             <div className={styles.contentTime}>

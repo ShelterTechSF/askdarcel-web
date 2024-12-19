@@ -79,7 +79,7 @@ export function useNavigationData() {
 
 
 export function useEventsData() {
-  const path = "events?populate[address]=*&populate[calendar_event]=*&populate[links]=*&populate[image][populate]=*";
+  const path = "events?populate[address]=*&populate[calendar_event]=*&populate[link]=*&populate[image][populate]=*&filters[featured][$eq]=true";
 
   const dataFetcher = () =>
     fetcher<{ data: Array<StrapiDatumResponse<EventResponse>> }>(
@@ -318,7 +318,7 @@ export interface EventResponse extends BaseDatumAttributesResponse {
     id: number;
     data: { attributes: ImageResponse};
   };
-  links: LinkResponse[];
+  link: LinkResponse;
   event_categories: Array<StrapiDatumResponse<CategoryResponse>>;
 }
 

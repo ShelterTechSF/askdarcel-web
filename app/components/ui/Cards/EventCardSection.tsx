@@ -1,16 +1,15 @@
 import { HomePageSection } from "pages/HomePage/components/Section";
 import React from "react";
-import { OppEventCard } from "../Cards/OppEventCard";
-import styles from "./OppEventCardSection.module.scss";
+import { EventCard } from "./EventCard";
+import styles from "./EventCardSection.module.scss";
 import { Loader } from "../Loader";
-import { Event } from "models/Strapi";
 import { EventResponse } from 'hooks/StrapiAPI';
 
-interface OppEventCardSectionProps {
+interface EventCardSectionProps {
   events?: EventResponse[];
 }
 
-export const OppEventCardSection = (props: OppEventCardSectionProps) => {
+export const EventCardSection = (props: EventCardSectionProps) => {
   const { events } = props;
 
   if (!events) {
@@ -21,12 +20,12 @@ export const OppEventCardSection = (props: OppEventCardSectionProps) => {
     <HomePageSection
       title={'Upcoming events'}
       description={'Description text eplaining this section'}
-      backgroundColor={"primary"}
+      backgroundColor={"tertiary"}
     >
       {events && (
         <div className={styles.cardsContainer}>
           {events?.map((eventData) => (
-            <OppEventCard
+            <EventCard
               event={eventData}
             />
           ))}

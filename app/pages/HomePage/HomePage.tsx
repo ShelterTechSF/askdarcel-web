@@ -4,9 +4,9 @@ import { CategorySection } from "components/ui/Section/CategorySection";
 import { useEventsData, useHomepageData } from "hooks/StrapiAPI";
 import { Event, Homepage, StrapiDatum } from "models/Strapi";
 import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
-import { OppEventCard } from 'components/ui/Cards/OppEventCard';
-import { OppEventCardSection } from 'components/ui/Cards/OppEventCardSection';
-// import { OppEventCard } from 'components/ui/Cards/OppEventCard';
+import { EventCard } from 'components/ui/Cards/EventCard';
+import { EventCardSection } from 'components/ui/Cards/EventCardSection';
+// import { EventCard } from 'components/ui/Cards/EventCard';
 
 export const HomePage = () => {
   const { data: homepageData, isLoading: homepageDataIsLoading } = useHomepageData();
@@ -40,7 +40,7 @@ export const HomePage = () => {
       )}
       <CategorySection />
       {eventsData &&
-      <OppEventCardSection
+      <EventCardSection
         events={eventsData}
       />
       }
