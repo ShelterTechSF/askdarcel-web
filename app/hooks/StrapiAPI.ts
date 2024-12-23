@@ -77,6 +77,43 @@ export function useNavigationData() {
   };
 }
 
+/**
+ * Fetches only featured events with embedded data for associated content types
+ */
+export function useHomePageEventsData() {
+  const path =
+    "events?populate[address]=*&populate[calendar_event]=*&populate[link]=*&populate[image][populate]=*&filters[featured][$eq]=true";
+
+  const dataFetcher = () =>
+    fetcher<{ data: Array<StrapiDatumResponse<EventResponse>> }>(
+      `${config.STRAPI_API_URL}/api/${path}`,
+      {
+        Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
+      }
+    );
+
+  const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher) as {
+    data: { data: Array<StrapiDatumResponse<EventResponse>> };
+    error: unknown;
+    isLoading: boolean;
+  };
+
+  return {
+    data: data?.data ? formatHomePageEventsData(data) : null,
+    error,
+    isLoading,
+  };
+}
+
+export function formatHomePageEventsData(data: {
+  data: Array<StrapiDatumResponse<EventResponse>>;
+}) {
+  return data.data.map((eventData) => ({
+    ...eventData.attributes,
+    id: eventData.id,
+  }));
+}
+
 interface Meta {
   pagination?: {
     page: number;
@@ -222,7 +259,6 @@ export interface CalendarEventResponse {
   enddate: string | null;
   starttime: string | null;
   endtime: string | null;
-  recurrence: "none" | "daily" | "weekly" | "monthly" | "yearly";
 }
 
 export interface HomepageResponse extends BaseDatumAttributesResponse {
@@ -278,4 +314,40 @@ export interface NavigationMenuResponse {
   // The plurality mismatch here is a quirk of strapi's serialization of repeatable nested components
   link: LinkResponse[];
   title: string;
+}
+
+export interface EventResponse extends BaseDatumAttributesResponse {
+  id: number;
+  title: string;
+  description: string | null;
+  calendar_event: CalendarEventResponse | null;
+  address: AddressResponse | { data: null };
+  image: {
+    data: { id: number; attributes: ImageResponse };
+  };
+  link: LinkResponse | null;
+  event_categories?: Array<StrapiDatumResponse<CategoryResponse>>;
+  eligibility_categories?: Array<StrapiDatumResponse<EligibilityResponse>>;
+}
+
+interface CategoryResponse extends BaseDatumAttributesResponse {
+  label: string;
+}
+
+interface EligibilityResponse extends BaseDatumAttributesResponse {
+  label: string;
+}
+
+interface AddressResponse {
+  id: number;
+  street: string;
+  zipcode: string;
+  geolocation: {
+    address: string;
+    geohash: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
+  };
 }

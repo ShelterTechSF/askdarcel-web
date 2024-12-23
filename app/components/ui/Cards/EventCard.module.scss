@@ -1,0 +1,117 @@
+@import "../../../styles/utils/_helpers.scss";
+
+.eventCard {
+  display: flex;
+  background: $white;
+  border: 2px solid $color-grey1;
+  border-radius: $rounded-md;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  &:focus-within {
+    outline: 3px solid $black;
+  }
+
+  &:focus-within {
+    outline: 3px solid $black;
+  }
+
+  &:focus-within {
+    outline: 3px solid $black;
+  }
+
+  &:hover {
+    background: $surface-secondary;
+  }
+
+  @media screen and (max-width: $break-tablet-l) {
+    flex-direction: column;
+  }
+
+  .cardImage {
+    width: 100%;
+    object-fit: cover;
+
+    // Sizes and positions empty image icon
+    display: flex;
+    font-size: 200px;
+    color: $gray-100;
+    align-items: center;
+    justify-content: center;
+
+    &.event {
+      max-width: 40%;
+
+      @media screen and (max-width: $break-tablet-l) {
+        max-width: none;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $general-spacing-md;
+    padding: $general-spacing-lg;
+    height: 100%;
+    width: 100%;
+
+    @media screen and (max-width: $break-tablet-p) {
+      padding: $general-spacing-md;
+
+      button {
+        justify-content: flex-start;
+      }
+    }
+
+    .contentTitle {
+      line-height: 125%;
+      margin-bottom: $general-spacing-md;
+
+      &:active,
+      :focus {
+        outline: none;
+      }
+    }
+
+    .contentTitle a {
+      color: $text-primary;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+
+    .contentTime {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-1;
+      align-items: center;
+
+      p {
+        color: $color-textfade;
+        font-weight: 600;
+        line-height: 125%;
+      }
+    }
+
+    .contentSubtext {
+      color: $text-link;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 150%;
+    }
+  }
+}
