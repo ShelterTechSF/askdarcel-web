@@ -1,14 +1,14 @@
 import React from "react";
 import { Button } from "components/ui/inline/Button/Button";
-import { OrganizationAction } from "../../models";
+import { DetailAction } from "../../models";
 import styles from "./ActionBar.module.scss";
 
 const ActionButton = ({
   action,
   onClickAction,
 }: {
-  action: OrganizationAction;
-  onClickAction: (a: OrganizationAction) => void;
+  action: DetailAction;
+  onClickAction: (a: DetailAction) => void;
 }) => {
   const { icon, link, name, to } = action;
 
@@ -53,6 +53,6 @@ export const ActionBarMobile = ({ actions, onClickAction }: ActionBarProps) => (
 );
 
 export interface ActionBarProps {
-  actions: OrganizationAction[];
-  onClickAction: (action: OrganizationAction) => void;
+  actions: DetailAction[];
+  onClickAction: (action: DetailAction) => void;
 }

@@ -20,10 +20,10 @@ import PageNotFound from "components/ui/PageNotFound";
 import { Loader } from "components/ui/Loader";
 import {
   fetchOrganization,
-  getOrganizationActions,
+  getDetailActions,
   getOrganizationLocations,
   Organization,
-  OrganizationAction,
+  DetailAction,
 } from "../models";
 
 // Page at /organization/123
@@ -86,14 +86,14 @@ export const OrganizationDetailPage = () => {
   }
 
   const orgLocations = getOrganizationLocations(org);
-  const allActions = getOrganizationActions(org);
+  const allActions = getDetailActions(org);
   const sidebarActions = allActions.filter((a) =>
     ["print", "phone", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
     ["phone", "directions"].includes(a.icon)
   );
-  const onClickAction = (action: OrganizationAction) => {
+  const onClickAction = (action: DetailAction) => {
     switch (action.icon) {
       case "print":
         window.print();

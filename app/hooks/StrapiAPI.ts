@@ -13,6 +13,7 @@
 import useSWR from "swr";
 import fetcher from "utils/fetcher";
 import config from "../config";
+import { RootNode } from "@strapi/blocks-react-renderer/dist/BlocksRenderer";
 
 interface SWRHookResult<T> {
   data: StrapiDataResponse<T>;
@@ -102,6 +103,51 @@ export function useHomePageEventsData() {
     data: data?.data ? formatHomePageEventsData(data) : null,
     error,
     isLoading,
+  };
+}
+
+export function useEventData(eventId: string) {
+  const path = `events/${eventId}?populate[address]=*&populate[calendar_event]=*&populate[link]=*&populate[image][populate]=*&populate[event_categories][fields]=label&populate[event_eligibilities][fields]=label`;
+
+  const dataFetcher = () =>
+    fetcher<{ data: StrapiDatumResponse<EventResponse> }>(
+      `${config.STRAPI_API_URL}/api/${path}`,
+      {
+        Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
+      }
+    );
+
+  const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher);
+
+  return {
+    data: formatEventData(data),
+    error,
+    isLoading,
+  };
+}
+
+export function formatEventData(
+  data:
+    | {
+        data: StrapiDatumResponse<EventResponse>;
+      }
+    | undefined
+) {
+  return {
+    ...data?.data?.attributes,
+    id: data?.data?.id,
+    categories: data?.data.attributes.event_categories?.data.map(
+      (category: StrapiDatumResponse<CategoryResponse>) => ({
+        id: category.id,
+        label: category.attributes.label,
+      })
+    ),
+    eligibilities: data?.data.attributes.event_eligibilities?.data.map(
+      (eligibility: StrapiDatumResponse<EligibilityResponse>) => ({
+        id: eligibility.id,
+        label: eligibility.attributes.label,
+      })
+    ),
   };
 }
 
@@ -317,28 +363,30 @@ export interface NavigationMenuResponse {
 }
 
 export interface EventResponse extends BaseDatumAttributesResponse {
-  id: number;
   title: string;
-  description: string | null;
-  calendar_event: CalendarEventResponse | null;
+  description: RootNode[];
+  calendar_event: CalendarEventResponse;
   address: AddressResponse | { data: null };
   image: {
     data: { id: number; attributes: ImageResponse };
   };
   link: LinkResponse | null;
-  event_categories?: Array<StrapiDatumResponse<CategoryResponse>>;
-  eligibility_categories?: Array<StrapiDatumResponse<EligibilityResponse>>;
+  event_categories?: { data: Array<StrapiDatumResponse<CategoryResponse>> };
+  event_eligibilities?: {
+    data: Array<StrapiDatumResponse<EligibilityResponse>>;
+  };
+  age_group: string;
 }
 
-interface CategoryResponse extends BaseDatumAttributesResponse {
+interface CategoryResponse {
   label: string;
 }
 
-interface EligibilityResponse extends BaseDatumAttributesResponse {
+interface EligibilityResponse {
   label: string;
 }
 
-interface AddressResponse {
+export interface AddressResponse {
   id: number;
   street: string;
   zipcode: string;

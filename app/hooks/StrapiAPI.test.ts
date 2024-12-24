@@ -1,12 +1,18 @@
 import { EventResponse, formatHomePageEventsData } from "hooks/StrapiAPI";
 
 describe("formatHomePageEventsData", () => {
-  it("correctly extracts attributes and flattens the data", () => {
+  it("correctly extracts top-level and nested attributes and flattens the data", () => {
     const expected = [
       {
-        id: 1,
         title: "In-Person Youth Crew Q&A Session",
-        description: "lorem ipsum",
+        id: 1,
+        calendar_event: {
+          id: 1837535972032512,
+          startdate: "inventore-eum-eligendi",
+          enddate: null,
+          starttime: null,
+          endtime: null,
+        },
       },
     ];
     const actual = formatHomePageEventsData({
@@ -15,7 +21,13 @@ describe("formatHomePageEventsData", () => {
           id: 1,
           attributes: {
             title: "In-Person Youth Crew Q&A Session",
-            description: "lorem ipsum",
+            calendar_event: {
+              id: 1837535972032512,
+              startdate: "inventore-eum-eligendi",
+              enddate: null,
+              starttime: null,
+              endtime: null,
+            },
           } as EventResponse,
         },
       ],

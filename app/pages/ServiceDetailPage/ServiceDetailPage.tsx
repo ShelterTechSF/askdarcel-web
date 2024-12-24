@@ -18,10 +18,10 @@ import {
   fetchService,
   FetchServiceError,
   generateServiceDetails,
-  getOrganizationActions,
+  getDetailActions,
   getServiceLocations,
   Organization,
-  OrganizationAction,
+  DetailAction,
   Service,
 } from "../../models";
 import styles from "./ServiceDetailPage.module.scss";
@@ -168,14 +168,14 @@ export const ServiceDetailPage = () => {
     ? removeAsterisksAndHashes(service.long_description)
     : undefined;
   const locations = getServiceLocations(service, resource, recurringSchedule);
-  const allActions = getOrganizationActions(resource);
+  const allActions = getDetailActions(resource);
   const sidebarActions = allActions.filter((a) =>
     ["print", "phone", "directions"].includes(a.icon)
   );
   const mobileActions = allActions.filter((a) =>
     ["phone", "directions"].includes(a.icon)
   );
-  const onClickAction = (action: OrganizationAction) => {
+  const onClickAction = (action: DetailAction) => {
     switch (action.icon) {
       case "print":
         window.print();

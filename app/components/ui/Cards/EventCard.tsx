@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "components/ui/inline/Button/Button";
-import { FormattedDate } from "components/ui/Cards/FormattedDate";
+import { formatCalendarEventDisplay } from "components/ui/Cards/FormattedDate";
 import styles from "./EventCard.module.scss";
 import { EventResponse } from "hooks/StrapiAPI";
 
@@ -9,6 +9,7 @@ export const EventCard = ({ event }: { event: EventResponse }) => {
   const imageUrl = image?.data?.attributes?.url;
   const imageAlternativeText = image?.data?.attributes.alternativeText || "";
   const linkUrl = link?.url;
+  const formattedDate = formatCalendarEventDisplay(calendarEvent);
 
   return (
     <div className={styles.eventCard} data-testid={"eventcard"}>
@@ -28,7 +29,7 @@ export const EventCard = ({ event }: { event: EventResponse }) => {
           </h4>
           {calendarEvent && (
             <div className={styles.contentTime}>
-              <FormattedDate calendarEvent={calendarEvent} />
+              <p data-testid="eventcard-formatteddate">{formattedDate}</p>
             </div>
           )}
         </div>

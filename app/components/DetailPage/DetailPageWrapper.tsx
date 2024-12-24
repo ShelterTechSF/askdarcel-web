@@ -2,14 +2,14 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { ActionSidebar } from "components/DetailPage";
 import styles from "./DetailPageWrapper.module.scss";
-import { OrganizationAction } from "models";
+import { DetailAction } from "models";
 
 type DetailPageWrapperProps = {
   title: string;
   description: string;
   children: React.ReactNode;
-  sidebarActions: OrganizationAction[];
-  onClickAction: (action: OrganizationAction) => void;
+  sidebarActions: DetailAction[];
+  onClickAction: (action: DetailAction) => void;
 };
 
 const DetailPageWrapper = ({
