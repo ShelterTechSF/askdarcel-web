@@ -152,7 +152,7 @@ const EditSidebar = ({
             onClick={addService}
             disabled={newResource}
           >
-            <i className="material-icons">add_circle_outline</i>
+            <i className="material-symbols-outlined">add_circle</i>
           </button>
         </h3>
         {newResource && (

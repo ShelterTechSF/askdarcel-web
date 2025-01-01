@@ -38,7 +38,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
         {infoHidden && (
           <span>
             More Info
-            <i className="material-icons">keyboard_arrow_down</i>
+            <i className="material-symbols-outlined">keyboard_arrow_down</i>
           </span>
         )}
       </div>
@@ -72,7 +72,7 @@ export const ServiceDetails = ({ service }: { service: Service }) => {
           >
             <span>
               Less Info
-              <i className="material-icons">keyboard_arrow_up</i>
+              <i className="material-symbols-outlined">keyboard_arrow_up</i>
             </span>
           </div>
         </div>

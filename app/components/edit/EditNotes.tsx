@@ -96,7 +96,7 @@ const EditNotes = ({ notes = [], handleNotesChange }: Props) => {
         className="edit--section--list--item--button"
         onClick={addNote}
       >
-        <i className="material-icons">add_box</i> Add Note
+        <i className="material-symbols-outlined">add_box</i> Add Note
       </button>
     </li>
   );

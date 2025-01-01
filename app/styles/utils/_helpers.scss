@@ -50,7 +50,7 @@ table {
 ////////////////////////////////////////////////////////////////////////////////////////
 // TYPEFACES
 
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap");
 
 $font-family-base: "Open Sans", "Helvetica Neue", "Arial", sans-serif;
@@ -176,12 +176,15 @@ p.message {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// MATERIAL ICONS
+// MATERIAL SYMBOLS
 
-.material-icons {
+.material-symbols-outlined {
   vertical-align: middle;
   position: relative;
   top: -2px;
+
+  // Special CSS property for configuring Material Symbols
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 
   &.blue {
     color: $color-brand;

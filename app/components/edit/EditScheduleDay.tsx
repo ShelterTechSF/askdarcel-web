@@ -84,7 +84,7 @@ const TimeInputRow = ({
               onClick={() => removeTime()}
               className="remove-time icon-button"
             >
-              <i className="material-icons">delete</i>
+              <i className="material-symbols-outlined">delete</i>
             </button>
           )}
         </div>
@@ -200,7 +200,7 @@ class EditScheduleDay extends Component<EditScheduleDayProps> {
               className="icon-button"
               onClick={this.addTime}
             >
-              <i className="material-icons">add</i>
+              <i className="material-symbols-outlined">add</i>
             </button>
           )}
         </div>

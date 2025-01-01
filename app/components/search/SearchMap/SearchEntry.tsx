@@ -88,7 +88,7 @@ export default class SearchEntry extends Component<Props> {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i className="material-icons">directions_outlined</i>
+                  <i className="material-symbols-outlined">directions</i>
                   Go
                 </a>
               </li>

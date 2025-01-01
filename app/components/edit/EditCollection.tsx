@@ -131,7 +131,7 @@ export default function editCollectionHOC<T extends BaseItem>(
               className="trash-button icon-button"
               onClick={() => this.removeItem(index, item)}
             >
-              <i className="material-icons">&#xE872;</i>
+              <i className="material-symbols-outlined">&#xE872;</i>
             </button>
           </div>
         ));

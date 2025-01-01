@@ -290,7 +290,7 @@ const Header = ({ onGoBack }: { onGoBack: () => void }) => (
       onClick={onGoBack}
       tabIndex={0}
     >
-      <i className="material-icons">keyboard_arrow_left</i>
+      <i className="material-symbols-outlined">keyboard_arrow_left</i>
       All resource guides
     </div>
   </div>
