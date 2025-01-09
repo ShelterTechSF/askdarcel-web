@@ -245,7 +245,9 @@ const SavedSearchCard = ({ savedSearch }: { savedSearch: SavedSearch }) => {
       <img src={SearchIcon} alt="Saved Search Icon" />
       <p>Results for &quot;{savedSearch.name}&quot;</p>
       <button type="button" className={styles.savedSearchEditButton}>
-        <span className={`material-icons ${styles.savedSearchEditIcon}`}>
+        <span
+          className={`material-symbols-outlined ${styles.savedSearchEditIcon}`}
+        >
           minimize
         </span>
       </button>
@@ -284,7 +286,7 @@ const BookmarkFolderCard = ({
 
   return (
     <div className={styles.cardItem}>
-      <i className="material-icons">folder</i>
+      <i className="material-symbols-outlined">folder</i>
       <p>{folder.name}</p>
       <div className={styles.bookmarkUpdated}>
         {dateString ? (

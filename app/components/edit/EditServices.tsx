@@ -44,7 +44,7 @@ const EditServices = ({
       id="new-service-button"
       onClick={addService}
     >
-      <i className="material-icons">add_box</i>
+      <i className="material-symbols-outlined">add_box</i>
       Add New Service
     </button>
   </li>

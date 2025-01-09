@@ -134,7 +134,7 @@ const BookmarksInnerMenu = ({
         {activeFolder === null ? (
           ""
         ) : (
-          <i className="material-icons">arrow_left</i>
+          <i className="material-symbols-outlined">arrow_left</i>
         )}
         {activeFolder === null
           ? "All Folders"
@@ -160,7 +160,7 @@ const BookmarksInnerMenu = ({
 const FolderItem = ({ folder }: { folder: Folder }) => (
   <>
     <div className={styles.itemIconBox}>
-      <i className={`material-icons ${styles.folderIcon}`}>folder</i>
+      <i className={`material-symbols-outlined ${styles.folderIcon}`}>folder</i>
       <p className={styles.folderCount}>{folder.bookmarks.length}</p>
     </div>
     <p className={styles.folderName}>{folder.name}</p>
@@ -191,7 +191,7 @@ const FoldersList = ({
 const BookmarkItem = ({ name }: { name: string }) => (
   <>
     <div className={`${styles.itemIconBox} ${styles.bookmarkIconBox}`}>
-      <i className={`material-icons ${styles.bookmarkIcon}`}>star</i>
+      <i className={`material-symbols-outlined ${styles.bookmarkIcon}`}>star</i>
     </div>
     <p className={styles.folderName}>{name}</p>
   </>

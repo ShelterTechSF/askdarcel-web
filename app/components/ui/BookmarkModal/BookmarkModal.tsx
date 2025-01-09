@@ -157,7 +157,9 @@ export const BookmarkModal = ({
       <div className={styles.modalContent}>
         <div>
           <div className={styles.bookmarkDescription}>
-            <i className={`material-icons ${styles.bookmarkIcon}`}>star</i>
+            <i className={`material-symbols-outlined ${styles.bookmarkIcon}`}>
+              star
+            </i>
             <div className={styles.bookmarkNameContainer}>
               <input
                 value={bookmarkName}
@@ -173,7 +175,7 @@ export const BookmarkModal = ({
                 type="button"
                 className={styles.clearBookmarkButton}
               >
-                <i className={`material-icons ${styles.clearBookmarkText}`}>
+                <i className={`material-symbols-outlined ${styles.clearBookmarkText}`}>
                   cancel
                 </i>
               </button>
@@ -201,7 +203,7 @@ export const BookmarkModal = ({
               <span className={selectedFolder?.name ? "" : styles.placeholder}>
                 {selectedFolder?.name ?? "Select Folder"}
               </span>
-              <i className="material-icons">arrow_drop_down</i>
+              <i className="material-symbols-outlined">arrow_drop_down</i>
             </p>
             {expandFolders && (
               <ul className={styles.bookmarkFoldersList}>
@@ -216,7 +218,9 @@ export const BookmarkModal = ({
                         setExpandFolders(false);
                       }}
                     >
-                      <i className={`material-icons ${styles.folderIcon}`}>
+                      <i
+                        className={`material-symbols-outlined ${styles.folderIcon}`}
+                      >
                         folder
                       </i>
                       {folder.name}

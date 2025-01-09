@@ -47,7 +47,9 @@ const ArticleItem = ({ article }: { article: NewsArticle }) => (
         <span className={styles.linkText}>Read more →</span>
         <span className={styles.linkText_mobile}>
           More{" "}
-          <i className={`material-icons ${styles.mobileLinkChevron}`}>
+          <i
+            className={`material-symbols-outlined ${styles.mobileLinkChevron}`}
+          >
             keyboard_arrow_right
           </i>
         </span>
@@ -90,7 +92,7 @@ export const NewsArticles = () => {
           onClick={() => setCollapseCarousel(!collapseCarousel)}
         >
           <i
-            className={`material-icons ${
+            className={`material-symbols-outlined ${
               collapseCarousel
                 ? styles.expandCarouselChev
                 : styles.collapseCarouselChev
@@ -127,14 +129,18 @@ export const NewsArticles = () => {
             <ButtonBack
               className={`${styles.carouselButton} ${styles.carouselButton_prev}`}
             >
-              <i className={`material-icons ${styles.chevronControls}`}>
+              <i
+                className={`material-symbols-outlined ${styles.chevronControls}`}
+              >
                 keyboard_arrow_left
               </i>
             </ButtonBack>
             <ButtonNext
               className={`${styles.carouselButton}  ${styles.chevronControls} ${styles.carouselButton_next}`}
             >
-              <i className={`material-icons ${styles.chevronControls}`}>
+              <i
+                className={`material-symbols-outlined ${styles.chevronControls}`}
+              >
                 keyboard_arrow_right
               </i>
             </ButtonNext>

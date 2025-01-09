@@ -65,7 +65,7 @@ class EditNote extends Component<Props, State> {
             className="delete-note"
             onClick={() => removeNote(index)}
           >
-            <i className="material-icons">&#xE872;</i>
+            <i className="material-symbols-outlined">&#xE872;</i>
           </button>
         </li>
       );

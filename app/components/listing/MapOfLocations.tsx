@@ -64,7 +64,7 @@ export const MapOfLocations = ({
                         </td>
                         <td className="iconcell">
                           <div className="selector">
-                            <i className="material-icons">
+                            <i className="material-symbols-outlined">
                               keyboard_arrow_down
                             </i>
                           </div>
