@@ -3,9 +3,9 @@ import Hero from "components/ui/Hero/Hero";
 import { CategorySection } from "components/ui/Section/CategorySection";
 import { useHomePageEventsData, useHomepageData } from "hooks/StrapiAPI";
 import { Homepage, StrapiDatum } from "models/Strapi";
-import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
 import { EventCardSection } from "components/ui/Cards/EventCardSection";
 import { HomePageSection } from "pages/HomePage/components/Section";
+import { TwoColumnContentSection } from "components/ui/TwoColumnContentSection/TwoColumnContentSection";
 
 export const HomePage = () => {
   const { data: homepageData, isLoading: homepageDataIsLoading } =
@@ -21,8 +21,7 @@ export const HomePage = () => {
     return null;
   }
 
-  const { hero, two_column_content_blocks } = homePageDataAttrs || {};
-  const twoColumnContentData = two_column_content_blocks.data;
+  const { hero, two_column_content_block } = homePageDataAttrs || {};
 
   return (
     <>
@@ -41,15 +40,15 @@ export const HomePage = () => {
       {eventsData && (
         <HomePageSection
           title={"Upcoming events"}
-          description={"Description text eplaining this section"}
+          description={""}
           backgroundColor={"tertiary"}
         >
           <EventCardSection events={eventsData} />
         </HomePageSection>
       )}
 
-      {twoColumnContentData?.map((content) => (
-        <TwoColumnContentSection key={content.id} {...content.attributes} />
+      {two_column_content_block?.map((content) => (
+        <TwoColumnContentSection key={content.id} {...content} />
       ))}
     </>
   );

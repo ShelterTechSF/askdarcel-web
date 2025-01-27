@@ -1,0 +1,17 @@
+@import "../../../styles/utils/_helpers.scss";
+@import "../../../styles/utils/_layoututils.scss";
+
+.singleColumnContentSectionContainer {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.innerContainer {
+  max-width: $page-content-container-max-width;
+  padding: $general-spacing-md;
+}
+
+.image {
+  width: 100%;
+}

@@ -1,16 +1,16 @@
 import React from "react";
 import { Loader } from "components/ui/Loader";
-import { usePageContent } from "hooks/StrapiAPI";
+import { useFaqPageData } from "hooks/StrapiAPI";
 import { Masthead } from "../../components/ui/Masthead/Masthead";
-import { TwoColumnContentSection } from "../../components/ui/TwoColumnContentSection/TwoColumnContentSection";
-import { PageContent, StrapiDatum } from "models/Strapi";
+import { FaqPageContent, StrapiDatum } from "models/Strapi";
+import Accordion from "components/ui/Accordions/Accordion";
 
 export const FaqPage = () => {
-  const { data, isLoading } = usePageContent("FAQ");
+  const { data, isLoading } = useFaqPageData();
 
-  const res = data as Array<StrapiDatum<PageContent>>;
+  const res = data as StrapiDatum<FaqPageContent>;
 
-  const pageData = res?.length ? res[0].attributes : null;
+  const pageData = res?.attributes || null;
 
   if (isLoading) {
     return <Loader />;
@@ -20,9 +20,7 @@ export const FaqPage = () => {
     pageData && (
       <>
         <Masthead title={pageData.masthead} />
-        {pageData.two_column_content_blocks?.data?.map((content) => (
-          <TwoColumnContentSection key={content.id} {...content.attributes} />
-        ))}
+        {pageData.faq && <Accordion items={pageData.faq} />}
       </>
     )
   );

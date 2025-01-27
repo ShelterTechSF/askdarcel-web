@@ -7,8 +7,6 @@ import styles from "../components/ui/Navigation/Navigation.module.scss";
 type homepageComponentEnums = "HomePage";
 
 interface WebsiteConfigSite {
-  aboutPageText: string;
-  aboutPageTitle: string;
   appImages: {
     background: string;
     logoLarge: string;
@@ -48,13 +46,6 @@ interface WebsiteConfigSite {
 const configKey = "defaultWebsiteConfig";
 
 const websiteConfigDefaults = {
-  aboutPageText: `Our415 is an online directory of human services in San
-Francisco. Our goal is to help anyone with access to a smartphone,
-tablet, or computer find the services they need. The guide's
-focus is on homelessness and housing services, but also covers a
-variety of other services, from education and legal aid to senior
-services and re-entry programs.`,
-  aboutPageTitle: "Our415",
   enabledTranslations: ["en", "es", "tl", "zh-TW"],
   footerOptions: {
     showOnListingPages: false,

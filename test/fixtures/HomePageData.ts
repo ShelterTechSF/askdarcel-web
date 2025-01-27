@@ -2,181 +2,72 @@
 // data may have to change as the api changes so developers should feel at
 // liberty to update these fixtures as needed.
 export const HOME_PAGE_DATA = {
-  createdAt: "2024-06-27T15:22:42.946Z",
-  updatedAt: "2024-11-27T16:17:27.744Z",
-  publishedAt: "2024-06-27T15:32:07.510Z",
-  hero: {
-    id: 34,
-    title: "For young people. For families.",
-    description: "Get connected to what SF has to offer.",
-    background_image: {
-      data: {
-        id: 34,
-        attributes: {
-          name: "e7d5460f38719f43ea6562244ba2b6c30b022ee7-1440x670.webp",
-          alternativeText: null,
-          caption: null,
-          width: 1440,
-          height: 670,
-          formats: {
-            large: {
-              ext: ".webp",
-              url: "https://our415cms.s3.us-west-1.amazonaws.com/large_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c.webp",
-              hash: "large_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c",
-              mime: "image/webp",
-              name: "large_e7d5460f38719f43ea6562244ba2b6c30b022ee7-1440x670.webp",
-              path: null,
-              size: 82.84,
-              width: 1000,
-              height: 465,
-              sizeInBytes: 82844,
-            },
-            small: {
-              ext: ".webp",
-              url: "https://our415cms.s3.us-west-1.amazonaws.com/small_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c.webp",
-              hash: "small_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c",
-              mime: "image/webp",
-              name: "small_e7d5460f38719f43ea6562244ba2b6c30b022ee7-1440x670.webp",
-              path: null,
-              size: 30.56,
-              width: 500,
-              height: 233,
-              sizeInBytes: 30556,
-            },
-            medium: {
-              ext: ".webp",
-              url: "https://our415cms.s3.us-west-1.amazonaws.com/medium_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c.webp",
-              hash: "medium_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c",
-              mime: "image/webp",
-              name: "medium_e7d5460f38719f43ea6562244ba2b6c30b022ee7-1440x670.webp",
-              path: null,
-              size: 54.85,
-              width: 750,
-              height: 349,
-              sizeInBytes: 54846,
-            },
-            thumbnail: {
-              ext: ".webp",
-              url: "https://our415cms.s3.us-west-1.amazonaws.com/thumbnail_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c.webp",
-              hash: "thumbnail_e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c",
-              mime: "image/webp",
-              name: "thumbnail_e7d5460f38719f43ea6562244ba2b6c30b022ee7-1440x670.webp",
-              path: null,
-              size: 9.16,
-              width: 245,
-              height: 114,
-              sizeInBytes: 9162,
-            },
-          },
-          hash: "e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c",
-          ext: ".webp",
-          mime: "image/webp",
-          size: 141.65,
-          url: "https://our415cms.s3.us-west-1.amazonaws.com/e7d5460f38719f43ea6562244ba2b6c30b022ee7_1440x670_06be9ef61c.webp",
-          previewUrl: null,
-          provider: "aws-s3",
-          provider_metadata: null,
-          createdAt: "2024-06-25T17:48:11.097Z",
-          updatedAt: "2024-07-09T11:48:22.462Z",
-        },
-      },
-    },
-    buttons: [
-      {
-        id: 100,
-        url: "/search",
-        text: "Services",
-      },
-    ],
-  },
-  category_section: {
+  data: {
     id: 1,
-    header: "test header",
-    subheader: "test subheader",
-    background_color: {
-      id: 1,
-      color: "secondary",
-    },
-    link: {
-      id: 37,
-      url: "/",
-      text: "link text",
-    },
-  },
-  two_column_content_blocks: {
-    data: [
-      {
+    attributes: {
+      createdAt: "2025-01-24T22:44:25.424Z",
+      updatedAt: "2025-01-24T22:56:37.371Z",
+      publishedAt: "2025-01-24T22:44:57.690Z",
+      hero: {
         id: 1,
-        attributes: {
-          title: "homepage two column section",
-          media_alignment: "left",
-          content:
-            "<h2><strong>This is our City.</strong></h2><p>&nbsp;</p><p>Our 415 is your source for everything San Francisco has to offer young people and families.</p>",
-          name: "name of content block",
-          createdAt: "2024-06-27T15:25:10.550Z",
-          updatedAt: "2024-08-13T18:15:46.080Z",
-          publishedAt: "2024-06-27T15:32:01.377Z",
-          link: {
-            id: 203,
-            url: "/about",
-            text: "Learn more about us",
+        title: "HOME_PAGE_HERO_TITLE",
+        description: "HOME_PAGE_HERO_DESCRIPTION",
+        background_image: {
+          data: null,
+        },
+        buttons: [
+          {
+            id: 2,
+            url: "/",
+            text: "HOME_PAGE_HERO_BUTTON",
           },
-          media: [
+        ],
+      },
+      two_column_content_block: [
+        {
+          id: 1,
+          title: "HOME_PAGE_TWO_COLUMN_CONTENT_BLOCK_TITLE",
+          media_align: "right",
+          content: [
             {
-              id: 199,
-              __component: "content.image",
-              image: {
-                data: {
-                  id: 133,
-                  attributes: {
-                    name: "Image (9).png",
-                    alternativeText: null,
-                    caption: null,
-                    width: 720,
-                    height: 510,
-                    formats: {
-                      small: {
-                        ext: ".png",
-                        url: "https://our415cms.s3.us-west-1.amazonaws.com/small_Image_9_43be0898e1.png",
-                        hash: "small_Image_9_43be0898e1",
-                        mime: "image/png",
-                        name: "small_Image (9).png",
-                        path: null,
-                        size: 432.92,
-                        width: 500,
-                        height: 354,
-                        sizeInBytes: 432924,
-                      },
-                      thumbnail: {
-                        ext: ".png",
-                        url: "https://our415cms.s3.us-west-1.amazonaws.com/thumbnail_Image_9_43be0898e1.png",
-                        hash: "thumbnail_Image_9_43be0898e1",
-                        mime: "image/png",
-                        name: "thumbnail_Image (9).png",
-                        path: null,
-                        size: 92.48,
-                        width: 220,
-                        height: 156,
-                        sizeInBytes: 92484,
-                      },
-                    },
-                    hash: "Image_9_43be0898e1",
-                    ext: ".png",
-                    mime: "image/png",
-                    size: 189.15,
-                    url: "https://our415cms.s3.us-west-1.amazonaws.com/Image_9_43be0898e1.png",
-                    previewUrl: null,
-                    provider: "aws-s3",
-                    provider_metadata: null,
-                    createdAt: "2024-07-22T20:48:19.653Z",
-                    updatedAt: "2024-08-13T18:15:40.474Z",
-                  },
+              type: "heading",
+              level: 1,
+              children: [
+                {
+                  bold: true,
+                  text: "HOME_PAGE_TWO_COLUMN_CONTENT_BLOCK_CONTENT",
+                  type: "text",
+                  italic: true,
+                  underline: true,
                 },
-              },
+              ],
             },
           ],
+          media: {
+            data: null,
+          },
         },
-      },
-    ],
+        {
+          id: 2,
+          title: "2",
+          media_align: "left",
+          content: [
+            {
+              type: "paragraph",
+              children: [
+                {
+                  text: "The names openSEAL and Entessa must not be required to allow Recipient to distribute software through any other Contributor to enforce any provision of this License. Severability. (a) If for any version ever published by the Licensed Program or any part thereof, and wants to make Modifications to the Program is made available via Electronic Distribution Mechanism is maintained by a third party intellectual property claims: (a) under intellectual property rights or to use BeOpen trademarks or trade names in a commercial product offering, Product X. That Distributor is then a Commercial Contributor.",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+          media: {
+            data: null,
+          },
+        },
+      ],
+    },
   },
+  meta: {},
 };
