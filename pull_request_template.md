@@ -1,12 +1,13 @@
-###  📝 Description
+### 📝 Description
 
 ### 🍐 Paired with
 
 ### 🔗 Related links
 
-###  🛠 Changes
+### 🛠 Changes
 
 ### 🖼 Screenshots
+
 |         | before | after |
 | ------- | ------ | ----- |
 | desktop |        |       |

@@ -3,7 +3,6 @@ import React, {
   useMemo,
   createContext,
   useContext,
-  useState,
   Dispatch,
   SetStateAction,
 } from "react";
@@ -22,7 +21,11 @@ interface ContextUpdater {
 
 interface AppProviderProps {
   userLocation: GeoCoordinates | null;
+  aroundLatLng: string;
   children: React.ReactNode;
+  setAroundLatLng: Dispatch<SetStateAction<string>>;
+  aroundUserLocationRadius: AroundRadius;
+  setAroundRadius: Dispatch<SetStateAction<"all" | number>>;
 }
 
 export const AppContext = createContext<Context>({
@@ -33,17 +36,20 @@ export const AppContext = createContext<Context>({
 
 export const AppContextUpdater = createContext<ContextUpdater>({
   setAroundRadius: () => "all",
-  setAroundLatLng: () => "all",
+  setAroundLatLng: () => "",
 });
 
 export const useAppContext = () => useContext(AppContext);
 export const useAppContextUpdater = () => useContext(AppContextUpdater);
 
-export const AppProvider = ({ children, userLocation }: AppProviderProps) => {
-  const [aroundUserLocationRadius, setAroundRadius] = useState<AroundRadius>(
-    "all" as const
-  );
-  const [aroundLatLng, setAroundLatLng] = useState<string>("");
+export const AppProvider = ({
+  children,
+  userLocation,
+  aroundLatLng,
+  setAroundLatLng,
+  aroundUserLocationRadius,
+  setAroundRadius,
+}: AppProviderProps) => {
   // We have to use useMemo here to manage the contextValue to ensure that the user's authState
   // propagates downward after authentication. I couldn't find a way to get this to work with
   // useState. Moreover, we can't use a simple object to define contextValue, as the object would

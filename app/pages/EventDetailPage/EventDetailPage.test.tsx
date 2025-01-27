@@ -1,10 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { EventDetailPage } from "pages/EventDetailPage/EventDetailPage";
-import {
-  createFormattedEventData,
-  EVENTS_DATA,
-} from "../../../test/fixtures/EventsData";
+import { createFormattedEventData } from "../../../test/fixtures/EventsData";
 import { useEventData } from "hooks/StrapiAPI";
 import { HelmetProvider } from "react-helmet-async";
 

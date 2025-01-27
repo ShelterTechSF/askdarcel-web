@@ -18,6 +18,7 @@ import { Loader } from "components/ui/Loader";
 import MetaImage from "./assets/img/Our415_OG.png";
 import styles from "./App.module.scss";
 import config from "./config";
+import { AroundRadius } from "algoliasearch";
 
 const { siteUrl, title } = websiteConfig;
 export const OUTER_CONTAINER_ID = "outer-container";
@@ -25,10 +26,15 @@ export const OUTER_CONTAINER_ID = "outer-container";
 export const App = () => {
   const location = useLocation();
   const [userLocation, setUserLocation] = useState<GeoCoordinates | null>(null);
+  const [aroundLatLng, setAroundLatLng] = useState<string>("");
+  const [aroundUserLocationRadius, setAroundRadius] = useState<AroundRadius>(
+    "all" as const
+  );
 
   useEffect(() => {
     getLocation().then((loc) => {
       setUserLocation(loc);
+      setAroundLatLng(`${loc.lat},${loc.lng}`);
     });
 
     if (config.GOOGLE_ANALYTICS_GA4_ID) {
@@ -47,15 +53,30 @@ export const App = () => {
         page,
       });
     }, 500);
-  }, [location]);
+  }, [location, setAroundLatLng]);
 
   if (!userLocation) {
+    console.log("🪵 ~ App ~ userLocation:", userLocation);
+
     return <Loader />;
   }
 
+  const props = {
+    userLocation,
+    aroundLatLng,
+    setAroundLatLng,
+    aroundUserLocationRadius,
+    setAroundRadius,
+  };
+  console.log("🪵 ~ App ~ props:", props);
+
   return (
-    <div id={OUTER_CONTAINER_ID} className={styles.outerContainer}>
-      <AppProvider userLocation={userLocation}>
+    <div
+      id={OUTER_CONTAINER_ID}
+      className={styles.outerContainer}
+      data-testid={"app-container"}
+    >
+      <AppProvider {...props}>
         <Helmet>
           <title>{title}</title>
           <meta property="og:url" content={siteUrl} />
