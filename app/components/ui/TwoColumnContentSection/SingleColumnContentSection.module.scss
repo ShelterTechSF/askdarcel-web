@@ -2,7 +2,7 @@
 @import "../../../styles/utils/_layoututils.scss";
 
 .singleColumnContentSectionContainer {
-  padding: 2rem;
+  padding: $general-spacing-xl;
   display: flex;
   justify-content: center;
 }

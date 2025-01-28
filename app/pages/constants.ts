@@ -39,7 +39,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
   },
   {
     algoliaCategoryName: "Childcare",
-    id: "102",
+    id: "357",
     name: "Childcare",
     slug: "childcare",
     steps: ["subcategories", "results"],
