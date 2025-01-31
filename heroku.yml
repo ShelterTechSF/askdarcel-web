@@ -3,4 +3,4 @@ build:
     web: Dockerfile
 
 run:
-  web: ["nginx", "-g", "daemon off;"]
+  web: nginx -g 'daemon off;'
