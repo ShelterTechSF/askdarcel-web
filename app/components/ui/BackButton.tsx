@@ -27,6 +27,7 @@ export const BackButton = ({
         onClick={backDestination}
         variant="linkWhite"
         arrowVariant="before"
+        mobileFullWidth={false}
       >
         {children}
       </Button>
