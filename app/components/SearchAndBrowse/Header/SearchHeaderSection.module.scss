@@ -25,11 +25,22 @@
     @include r_max($break-tablet-s) {
       display: block;
       width: 100%;
-      margin-bottom: $general-spacing-md;
 
       h1 {
-        margin-bottom: $general-spacing-md;
         font-size: 20px;
+      }
+    }
+  }
+
+  .printAllBtn,
+  .qrCodeBtn {
+    display: none;
+
+    &.showBtn {
+      display: block;
+
+      @media screen and (max-width: $break-tablet-s) {
+        display: none;
       }
     }
   }
