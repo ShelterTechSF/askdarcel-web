@@ -23,7 +23,6 @@
 
 .sidebar {
   flex-shrink: 0;
-  position: sticky;
   height: calc(100vh - $header-height);
   width: 290px;
   top: $header-height;
@@ -38,7 +37,6 @@
     align-self: flex-start;
     border-right: 0;
     background-color: #fff;
-    z-index: $z-index-filters-menu;
   }
 
   @media screen and (max-width: $break-tablet-s) {
@@ -61,6 +59,8 @@
     background-color: #fff;
     animation-duration: 200ms;
     animation-name: slideRight;
+    z-index: $z-index-filters-menu;
+
     &.showFilters {
       display: block;
     }
