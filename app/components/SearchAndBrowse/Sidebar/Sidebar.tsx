@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import type { Category } from "models/Meta";
 import {
   eligibilitiesMapping,
@@ -46,6 +46,14 @@ const Sidebar = ({
     () => setfilterMenuVisible(false),
     filterMenuVisible
   );
+
+  useEffect(() => {
+    if (filterMenuVisible) {
+      document.body.classList.add("lock-scroll");
+    } else {
+      document.body.classList.remove("lock-scroll");
+    }
+  }, [filterMenuVisible]);
 
   let categoryRefinementJsx: React.ReactElement | null = null;
   let eligibilityRefinementJsx: React.ReactElement | null = null;
@@ -179,65 +187,67 @@ const Sidebar = ({
 
         <h2 className={styles.filterResourcesTitleDesktop}>Filter Resources</h2>
         <ClearAllFilters />
-        <div className={styles.filterGroup}>
-          <div className={styles.filterTitle}>Availability</div>
-          <OpenNowFilter />
-        </div>
+        <div className={styles.filterGroupContainer}>
+          <div className={styles.filterGroup}>
+            <div className={styles.filterTitle}>Availability</div>
+            <OpenNowFilter />
+          </div>
 
-        <div
-          className={`${styles.filterGroup} ${
-            eligibilityRefinementJsx ? "" : styles.hideFilterGroup
-          } `}
-        >
-          <h2 className={styles.filterTitle}>Eligibilities</h2>
-          {eligibilityRefinementJsx}
-        </div>
-        {!isSearchResultsPage && (
           <div
             className={`${styles.filterGroup} ${
-              categoryRefinementJsx ? "" : styles.hideFilterGroup
-            }`}
+              eligibilityRefinementJsx ? "" : styles.hideFilterGroup
+            } `}
           >
-            <h2 className={styles.filterTitle}>Subcategories</h2>
-            {categoryRefinementJsx}
+            <h2 className={styles.filterTitle}>Eligibilities</h2>
+            {eligibilityRefinementJsx}
           </div>
-        )}
+          {!isSearchResultsPage && (
+            <div
+              className={`${styles.filterGroup} ${
+                categoryRefinementJsx ? "" : styles.hideFilterGroup
+              }`}
+            >
+              <h2 className={styles.filterTitle}>Subcategories</h2>
+              {categoryRefinementJsx}
+            </div>
+          )}
 
-        <div className={styles.filterGroup}>
-          <h2 className={styles.filterTitle}>Distance</h2>
-          <label className={styles.checkBox}>
-            Within 4 blocks
-            <input
-              type="radio"
-              name="searchRadius"
-              onChange={onChangeValue}
-              value="400"
-              checked={aroundUserLocationRadius === 400}
-              className={styles.refinementInput}
-            />
-          </label>
-          <label className={styles.checkBox}>
-            Walking distance (1 mi.)
-            <input
-              type="radio"
-              name="searchRadius"
-              onChange={onChangeValue}
-              value={DEFAULT_AROUND_PRECISION}
-              checked={aroundUserLocationRadius === DEFAULT_AROUND_PRECISION}
-              className={styles.refinementInput}
-            />
-          </label>
-          <label className={styles.checkBox}>
-            Biking distance (3 mi.)
-            <input
-              type="radio"
-              name="searchRadius"
-              onChange={onChangeValue}
-              value="4828"
-              checked={aroundUserLocationRadius === 4828}
-              className={styles.refinementInput}
-            />
-          </label>
+          <div className={styles.filterGroup}>
+            <h2 className={styles.filterTitle}>Distance</h2>
+            <label className={styles.checkBox}>
+              Within 4 blocks
+              <input
+                type="radio"
+                name="searchRadius"
+                onChange={onChangeValue}
+                value="400"
+                checked={aroundUserLocationRadius === 400}
+                className={styles.refinementInput}
+              />
+            </label>
+            <label className={styles.checkBox}>
+              Walking distance (1 mi.)
+              <input
+                type="radio"
+                name="searchRadius"
+                onChange={onChangeValue}
+                value={DEFAULT_AROUND_PRECISION}
+                checked={aroundUserLocationRadius === DEFAULT_AROUND_PRECISION}
+                className={styles.refinementInput}
+              />
+            </label>
+            <label className={styles.checkBox}>
+              Biking distance (3 mi.)
+              <input
+                type="radio"
+                name="searchRadius"
+                onChange={onChangeValue}
+                value="4828"
+                checked={aroundUserLocationRadius === 4828}
+                className={styles.refinementInput}
+              />
+            </label>
+          </div>
         </div>
       </div>
     </div>

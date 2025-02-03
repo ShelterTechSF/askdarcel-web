@@ -4,6 +4,13 @@
   position: fixed;
 }
 
+body.lock-scroll {
+  @media (max-width: $break-desktop-s) {
+    overflow: hidden;
+    max-height: 100vh;
+  }
+}
+
 // a11y focus states
 a,
 button,

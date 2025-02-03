@@ -83,6 +83,12 @@
   }
 }
 
+.filterGroupContainer {
+  @media screen and (max-width: $break-desktop-s) {
+    margin-bottom: $spacing-24;
+  }
+}
+
 .filterGroup {
   margin-top: $general-spacing-xl;
 }
