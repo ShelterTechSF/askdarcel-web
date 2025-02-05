@@ -21,6 +21,7 @@ import { liteClient } from "algoliasearch/lite";
 import config from "./../../../config";
 import { history as historyRouter } from "instantsearch.js/es/lib/routers";
 import { Loader } from "components/ui/Loader";
+import classNames from "classnames";
 
 const searchClient = liteClient(
   config.ALGOLIA_APPLICATION_ID,
@@ -76,7 +77,12 @@ export const Navigation = () => {
             <SiteSearchInput />
 
             <MobileNavigation menuData={menuData} />
-            <div className={styles.desktopNavigationContainer}>
+            <div
+              className={classNames(
+                styles.desktopNavigationContainer,
+                "no-print"
+              )}
+            >
               {menuData.map((menuDataItem) => {
                 if (menuItemHasLinks(menuDataItem)) {
                   const links = menuDataItem.link.map((linkItem) => ({

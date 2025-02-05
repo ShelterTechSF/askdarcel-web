@@ -26,7 +26,9 @@ const ClearSearchButton = () => {
       mobileFullWidth={false}
       onClick={handleOnClick}
     >
-      <span data-testid={"clear-search-button"}>Clear Search</span>
+      <span className="no-print" data-testid={"clear-search-button"}>
+        Clear Search
+      </span>
     </Button>
   );
 };

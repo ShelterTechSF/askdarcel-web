@@ -4,6 +4,7 @@ import { Button } from "components/ui/inline/Button/Button";
 import websiteConfig from "utils/websiteConfig";
 import { CATEGORIES } from "pages/constants";
 import DropdownMenu from "components/ui/Navigation/DropdownMenu";
+import classNames from "classnames";
 
 import styles from "./BrowseSubheader.module.scss";
 
@@ -26,7 +27,7 @@ export const BrowseSubheader = ({ currentCategory }: Props) => {
   const uuid = crypto.randomUUID();
 
   return (
-    <div className={styles.header}>
+    <div className={classNames(styles.header, "no-print")}>
       <div className={styles.headerInner}>
         <div>
           <h1 className="sr-only">{title}</h1>

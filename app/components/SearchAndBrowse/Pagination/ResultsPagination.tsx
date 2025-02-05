@@ -1,7 +1,7 @@
 import React from "react";
 import { Pagination } from "react-instantsearch";
 import websiteConfig from "utils/websiteConfig";
-
+import classNames from "classnames";
 import styles from "./ResultsPagination.module.scss";
 
 const {
@@ -11,9 +11,11 @@ const {
 const ResultsPagination = ({ noResults }: { noResults?: boolean }) => (
   <div>
     <div
-      className={`${styles.paginationContainer} ${
+      className={classNames(
+        styles.paginationContainer,
+        "no-print",
         noResults ? styles.hidePagination : ""
-      }`}
+      )}
     >
       <div className={styles.resultsPagination}>
         <Pagination

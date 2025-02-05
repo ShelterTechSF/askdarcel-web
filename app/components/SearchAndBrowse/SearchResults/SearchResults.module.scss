@@ -87,6 +87,10 @@
       margin: auto;
     }
   }
+
+  @media print {
+    margin-top: $general-spacing-lg;
+  }
 }
 
 .searchResult {

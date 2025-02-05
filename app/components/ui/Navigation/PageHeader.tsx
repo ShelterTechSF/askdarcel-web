@@ -10,7 +10,7 @@ export const PageHeader = ({
   children: ReactNode;
   variant?: "primary" | "secondary";
 }) => (
-  <div className={classNames(styles.container, styles[variant])}>
+  <div className={classNames(styles.container, styles[variant], "no-print")}>
     <div className={styles.innerContainer}>{children}</div>
   </div>
 );

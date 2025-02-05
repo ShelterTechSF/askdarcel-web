@@ -1,7 +1,8 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { useClearRefinements, useSearchBox } from "react-instantsearch";
-import styles from "./SiteSearchInput.module.scss";
+import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
+import styles from "./SiteSearchInput.module.scss";
 
 /**
  * Sitewide listing search component that controls the search query input
@@ -19,7 +20,7 @@ export const SiteSearchInput = () => {
     setInputValue(newQuery);
   }
 
-  // Sets query, clears refinments, and then redirects to the search page. If the user is already on the
+  // Sets query, clears refinements, and then redirects to the search page. If the user is already on the
   // search page the last step is basically a noop.
   const submitSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -39,7 +40,11 @@ export const SiteSearchInput = () => {
   }, [query]);
 
   return (
-    <form onSubmit={submitSearch} className={styles.navSearch} role="search">
+    <form
+      onSubmit={submitSearch}
+      className={classNames(styles.navSearch, "no-print")}
+      role="search"
+    >
       <input
         onChange={(e) => setQuery(e.target.value)}
         value={inputValue}

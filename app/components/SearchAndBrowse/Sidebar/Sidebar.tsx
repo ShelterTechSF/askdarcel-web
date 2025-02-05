@@ -18,6 +18,7 @@ import useClickOutside from "../../../hooks/MenuHooks";
 import MobileMapToggleButtons from "./MobileMapToggleButtons";
 import styles from "./Sidebar.module.scss";
 import { RefinementListItem } from "instantsearch.js/es/connectors/refinement-list/connectRefinementList";
+import classNames from "classnames";
 
 const Sidebar = ({
   isSearchResultsPage,
@@ -147,7 +148,7 @@ const Sidebar = ({
   }
 
   return (
-    <div className={styles.sidebar}>
+    <div className={classNames(styles.sidebar, "no-print")}>
       <div className={styles.filtersButtonContainer} aria-hidden>
         <Button
           variant="linkBlue"

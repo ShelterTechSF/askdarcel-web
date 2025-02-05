@@ -57,7 +57,7 @@ export const SearchMap = ({
   };
 
   return (
-    <div className="results-map">
+    <div className="results-map no-print">
       <h2 className="sr-only">Map of search results</h2>
       <div className="map-wrapper">
         {/* If map is being overlaid, hide the search area button. It is is neither clickable
