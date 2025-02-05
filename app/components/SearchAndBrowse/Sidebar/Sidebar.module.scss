@@ -29,6 +29,7 @@
   border-right: 1px solid $border-gray;
   padding: 20px 25px 50px 30px;
   overflow-y: auto;
+  position: sticky;
 
   @media screen and (max-width: $break-desktop-s) {
     height: auto;
@@ -37,6 +38,7 @@
     align-self: flex-start;
     border-right: 0;
     background-color: #fff;
+    position: static;
   }
 
   @media screen and (max-width: $break-tablet-s) {
