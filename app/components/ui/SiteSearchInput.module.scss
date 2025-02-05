@@ -53,4 +53,8 @@ $focus-height: calc(#{$input-height} - (#{$border-width} * 2));
       transition: none;
     }
   }
+
+  @media screen and (max-width: $break-tablet-s) {
+    margin-top: $spacing-1_5;
+  }
 }
