@@ -73,9 +73,9 @@
     display: none;
   }
   .primaryRow {
-    height: $header-mobile-height;
+    height: $header-height;
     flex-wrap: nowrap;
-    padding: $spacing-4_5;
+    padding: 0 $spacing-4_5;
     gap: $spacing-8;
 
     :nth-child(2) {
