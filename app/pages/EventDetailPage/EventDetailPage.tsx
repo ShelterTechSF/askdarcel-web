@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
@@ -20,8 +20,6 @@ type TagRow = { title: string; value: ReactNode[] };
 export const EventDetailPage = () => {
   const { eventListingId } = useParams();
   const { data, error, isLoading } = useEventData(eventListingId as string);
-
-  useEffect(() => window.scrollTo(0, 0), []);
 
   if (error) {
     return (

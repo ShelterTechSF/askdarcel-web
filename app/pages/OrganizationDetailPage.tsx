@@ -34,7 +34,6 @@ export const OrganizationDetailPage = () => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => window.scrollTo(0, 0), []);
   useEffect(() => {
     const fetchOrganizationWithErrorHandling = async () => {
       setIsLoading(true);

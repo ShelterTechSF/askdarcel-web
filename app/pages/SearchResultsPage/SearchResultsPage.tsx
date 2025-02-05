@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { SearchMapActions } from "components/SearchAndBrowse/SearchResults/SearchResults";
 import Sidebar from "components/SearchAndBrowse/Sidebar/Sidebar";
 import styles from "./SearchResultsPage.module.scss";
@@ -30,6 +30,8 @@ export const SearchResultsPage = () => {
     status,
     indexUiState: { query = null },
   } = useInstantSearch();
+
+  useEffect(() => window.scrollTo(0, 0), []);
 
   const handleFirstResultFocus = useCallback((node: HTMLDivElement | null) => {
     if (node) {

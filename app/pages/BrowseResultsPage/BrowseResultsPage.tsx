@@ -49,11 +49,7 @@ export const BrowseResultsPage = () => {
   const { refine: refinePagination } = usePagination();
   const { refine: clearRefinements } = useClearRefinements();
 
-  const handleFirstResultFocus = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      node.focus();
-    }
-  }, []);
+  useEffect(() => window.scrollTo(0, 0), []);
 
   const subcategoryNames = subcategories?.map((c) => c.name);
   const { name: categoryName, sortAlgoliaSubcategoryRefinements } = category;
@@ -141,7 +137,7 @@ export const BrowseResultsPage = () => {
                       <SearchResult
                         hit={hit}
                         key={`${hit.id} - ${hit.name}`}
-                        ref={index === 0 ? handleFirstResultFocus : null}
+                        ref={null}
                       />
                     )
                   )}

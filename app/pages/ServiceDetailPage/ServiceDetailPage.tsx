@@ -59,8 +59,6 @@ export const ServiceDetailPage = () => {
 
   const { pathname } = useLocation();
 
-  useEffect(() => window.scrollTo(0, 0), []);
-
   useEffect(() => {
     const fetchServiceOrFallback = async () => {
       try {
