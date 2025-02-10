@@ -2,7 +2,6 @@ import React from "react";
 import GoogleMap from "google-map-react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
-import { Loader } from "components/ui/Loader";
 import LocationTimesAccordion from "./LocationTimesAccordion";
 import {
   createMapOptions,
@@ -20,23 +19,25 @@ export const MapOfLocations = ({
   locations: LocationDetails[];
 }) => {
   const { userLocation } = useAppContext();
-  if (userLocation === null) {
-    return <Loader />;
-  }
-  const { lat, lng } = userLocation;
+
+  const { lat: userLat, lng: userLng } = userLocation;
+  const [serviceLat, serviceLng] = [
+    Number(locations[0].address.latitude),
+    Number(locations[0].address.longitude),
+  ];
 
   return (
-    <div className={styles.locationsMap}>
+    <div className={styles.locationsMap} data-testid="map-of-locations">
       <div className="map">
         <GoogleMap
           bootstrapURLKeys={{
             key: config.GOOGLE_API_KEY,
           }}
-          defaultCenter={{ lat, lng }}
-          defaultZoom={15}
+          defaultCenter={{ lat: serviceLat, lng: serviceLng }}
+          defaultZoom={13}
           options={createMapOptions}
         >
-          <UserLocationMarker lat={lat} lng={lng} />
+          <UserLocationMarker lat={userLat} lng={userLng} />
           {locations.map(({ address, id }, i) => (
             <CustomMarker
               key={id}

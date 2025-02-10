@@ -56,8 +56,6 @@ export const App = () => {
   }, [location, setAroundLatLng]);
 
   if (!userLocation) {
-    console.log("🪵 ~ App ~ userLocation:", userLocation);
-
     return <Loader />;
   }
 
@@ -68,7 +66,6 @@ export const App = () => {
     aroundUserLocationRadius,
     setAroundRadius,
   };
-  console.log("🪵 ~ App ~ props:", props);
 
   return (
     <div
