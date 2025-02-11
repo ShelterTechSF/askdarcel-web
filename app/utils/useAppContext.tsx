@@ -6,10 +6,10 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { COORDS_MID_SAN_FRANCISCO, GeoCoordinates } from "utils";
+import { COORDS_MID_SAN_FRANCISCO, UserLocation } from "utils";
 
 interface Context {
-  userLocation: GeoCoordinates;
+  userLocation: UserLocation;
   aroundUserLocationRadius?: AroundRadius;
   aroundLatLng: string;
 }
@@ -20,7 +20,7 @@ interface ContextUpdater {
 }
 
 interface AppProviderProps {
-  userLocation: GeoCoordinates;
+  userLocation: UserLocation;
   aroundLatLng: string;
   children: React.ReactNode;
   setAroundLatLng: Dispatch<SetStateAction<string>>;
@@ -29,7 +29,10 @@ interface AppProviderProps {
 }
 
 export const AppContext = createContext<Context>({
-  userLocation: COORDS_MID_SAN_FRANCISCO,
+  userLocation: {
+    coords: COORDS_MID_SAN_FRANCISCO,
+    inSanFrancisco: false,
+  },
   aroundUserLocationRadius: "all",
   aroundLatLng: "",
 });

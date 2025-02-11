@@ -39,7 +39,7 @@ const Sidebar = ({
 }) => {
   const [filterMenuVisible, setfilterMenuVisible] = useState(false);
   const filterMenuRef = useRef<HTMLDivElement>(null);
-  const { aroundUserLocationRadius } = useAppContext();
+  const { aroundUserLocationRadius, userLocation } = useAppContext();
   const { setAroundRadius } = useAppContextUpdater();
 
   useClickOutside(
@@ -213,42 +213,46 @@ const Sidebar = ({
             </div>
           )}
 
-          <div className={styles.filterGroup}>
-            <h2 className={styles.filterTitle}>Distance</h2>
-            <label className={styles.checkBox}>
-              Within 4 blocks
-              <input
-                type="radio"
-                name="searchRadius"
-                onChange={onChangeValue}
-                value="400"
-                checked={aroundUserLocationRadius === 400}
-                className={styles.refinementInput}
-              />
-            </label>
-            <label className={styles.checkBox}>
-              Walking distance (1 mi.)
-              <input
-                type="radio"
-                name="searchRadius"
-                onChange={onChangeValue}
-                value={DEFAULT_AROUND_PRECISION}
-                checked={aroundUserLocationRadius === DEFAULT_AROUND_PRECISION}
-                className={styles.refinementInput}
-              />
-            </label>
-            <label className={styles.checkBox}>
-              Biking distance (3 mi.)
-              <input
-                type="radio"
-                name="searchRadius"
-                onChange={onChangeValue}
-                value="4828"
-                checked={aroundUserLocationRadius === 4828}
-                className={styles.refinementInput}
-              />
-            </label>
-          </div>
+          {userLocation.inSanFrancisco && (
+            <div className={styles.filterGroup}>
+              <h2 className={styles.filterTitle}>Distance</h2>
+              <label className={styles.checkBox}>
+                Within 4 blocks
+                <input
+                  type="radio"
+                  name="searchRadius"
+                  onChange={onChangeValue}
+                  value="400"
+                  checked={aroundUserLocationRadius === 400}
+                  className={styles.refinementInput}
+                />
+              </label>
+              <label className={styles.checkBox}>
+                Walking distance (1 mi.)
+                <input
+                  type="radio"
+                  name="searchRadius"
+                  onChange={onChangeValue}
+                  value={DEFAULT_AROUND_PRECISION}
+                  checked={
+                    aroundUserLocationRadius === DEFAULT_AROUND_PRECISION
+                  }
+                  className={styles.refinementInput}
+                />
+              </label>
+              <label className={styles.checkBox}>
+                Biking distance (3 mi.)
+                <input
+                  type="radio"
+                  name="searchRadius"
+                  onChange={onChangeValue}
+                  value="4828"
+                  checked={aroundUserLocationRadius === 4828}
+                  className={styles.refinementInput}
+                />
+              </label>
+            </div>
+          )}
         </div>
       </div>
     </div>

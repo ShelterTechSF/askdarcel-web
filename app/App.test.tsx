@@ -30,7 +30,10 @@ describe("<App />", () => {
   it("sends the correct props to the <AppProvider />", async () => {
     const expectedProps = expect.objectContaining({
       aroundLatLng: "37.7749,-122.4194",
-      userLocation: { lat: 37.7749, lng: -122.4194 },
+      userLocation: {
+        coords: { lat: 37.7749, lng: -122.4194 },
+        inSanFrancisco: false,
+      },
       aroundUserLocationRadius: "all",
       setAroundRadius: expect.any(Function),
       setAroundLatLng: expect.any(Function),

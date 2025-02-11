@@ -3,7 +3,12 @@ import { SearchHit } from "models";
 import { round } from "./numbers";
 import config from "../config";
 
-export type GeoCoordinates = { lat: number; lng: number };
+type GeoCoordinates = { lat: number; lng: number };
+
+export type UserLocation = {
+  coords: GeoCoordinates;
+  inSanFrancisco: boolean;
+};
 
 export const COORDS_MID_SAN_FRANCISCO: GeoCoordinates = {
   lat: 37.7749,
@@ -32,7 +37,7 @@ export const DEFAULT_AROUND_PRECISION = 1600;
  * Get location via HTML5 Geolocation API.
  */
 export const getLocationBrowser = () =>
-  new Promise<GeoCoordinates>((resolve, reject) => {
+  new Promise<UserLocation>((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -41,7 +46,7 @@ export const getLocationBrowser = () =>
             lng: round(position.coords.longitude, 4),
           };
           if (areCoordsInSanFrancisco(coords)) {
-            resolve(coords);
+            resolve({ coords, inSanFrancisco: true });
           } else {
             const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
             console.log(msg); // eslint-disable-line no-console
@@ -64,7 +69,7 @@ export const getLocationBrowser = () =>
  * Get location via the Google Maps Geolocation API.
  */
 export const getLocationGoogle = () =>
-  new Promise<GeoCoordinates>((resolve, reject) => {
+  new Promise<UserLocation>((resolve, reject) => {
     // Results are not very accurate
     let url = "https://www.googleapis.com/geolocation/v1/geolocate";
     if (config.GOOGLE_API_KEY) {
@@ -74,7 +79,7 @@ export const getLocationGoogle = () =>
       .then((r) => r.json())
       .then(({ location }: { location: GeoCoordinates }) => {
         if (areCoordsInSanFrancisco(location)) {
-          resolve(location);
+          resolve({ coords: location, inSanFrancisco: true });
         } else {
           const msg = "User location out of bounds";
           console.log(msg); // eslint-disable-line no-console
@@ -85,8 +90,8 @@ export const getLocationGoogle = () =>
   });
 
 export const useDefaultSanFranciscoLocation = () =>
-  new Promise<GeoCoordinates>((resolve) => {
-    resolve(COORDS_MID_SAN_FRANCISCO);
+  new Promise<UserLocation>((resolve) => {
+    resolve({ coords: COORDS_MID_SAN_FRANCISCO, inSanFrancisco: false });
   });
 
 /**
