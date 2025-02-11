@@ -38,6 +38,10 @@ export const Router = () => {
         element={<ContentPage pageName="Privacy Policy" />}
       />
       <Route
+        path="/accessibility-statement"
+        element={<ContentPage pageName="Accessibility Statement" />}
+      />
+      <Route
         path="/search"
         element={
           <>
