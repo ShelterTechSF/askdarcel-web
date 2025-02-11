@@ -4,8 +4,8 @@ import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
 import styles from "./RefinementFilters.module.scss";
 
 interface Props extends UseRefinementListProps {
-  transform?: (items: RefinementListItem[]) => RefinementListItem[];
   attribute: string;
+  transform?: (items: RefinementListItem[]) => RefinementListItem[];
 }
 
 // Arbitrary upper limit to ensure all refinements are displayed
@@ -18,7 +18,6 @@ const BrowseRefinementList = ({ attribute, transform }: Props) => {
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const { items, refine } = useRefinementList({
     attribute,
-    sortBy: ["name:asc"],
     limit: MAXIMUM_ITEMS,
   });
 
@@ -45,7 +44,8 @@ const BrowseRefinementList = ({ attribute, transform }: Props) => {
     setChecked(updatedChecked);
   };
 
-  const transformedItems = transform === undefined ? items : transform(items);
+  const transformedItems = transform ? transform(items) : items;
+  transformedItems.sort((a, b) => a.label.localeCompare(b.label));
 
   return (
     <ul>

@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import type { Category } from "models/Meta";
 import {
-  eligibilitiesMapping,
-  categoriesMapping,
+  our415EligibilitiesMapping,
+  mapSFSGApiEligibilitiesToOur415ByConfig,
 } from "utils/refinementMappings";
 import ClearAllFilters from "components/SearchAndBrowse/Refinements/ClearAllFilters";
 import OpenNowFilter from "components/SearchAndBrowse/Refinements/OpenNowFilter";
@@ -23,7 +22,6 @@ import classNames from "classnames";
 const Sidebar = ({
   isSearchResultsPage,
   eligibilities,
-  subcategories,
   subcategoryNames = [],
   sortAlgoliaSubcategoryRefinements = false,
   isMapCollapsed,
@@ -31,20 +29,19 @@ const Sidebar = ({
 }: {
   isSearchResultsPage: boolean;
   eligibilities?: object[] | null;
-  subcategories?: Category[] | null;
   subcategoryNames?: string[];
   sortAlgoliaSubcategoryRefinements?: boolean;
   isMapCollapsed: boolean;
   setIsMapCollapsed: (_isMapCollapsed: boolean) => void;
 }) => {
-  const [filterMenuVisible, setfilterMenuVisible] = useState(false);
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const filterMenuRef = useRef<HTMLDivElement>(null);
   const { aroundUserLocationRadius, userLocation } = useAppContext();
   const { setAroundRadius } = useAppContextUpdater();
 
   useClickOutside(
     filterMenuRef,
-    () => setfilterMenuVisible(false),
+    () => setFilterMenuVisible(false),
     filterMenuVisible
   );
 
@@ -106,29 +103,28 @@ const Sidebar = ({
     ]
   );
 
-  // Currently, the Search Results Page uses generic categories/eligibilities while the
-  // Service Results Page uses COVID-specific categories. This logic determines which
-  // of these to use as based on the isSearchResultsPage value
   if (isSearchResultsPage) {
-    categoryRefinementJsx = (
-      <SearchRefinementList
-        attribute="categories"
-        mapping={categoriesMapping}
-      />
-    );
     eligibilityRefinementJsx = (
       <SearchRefinementList
         attribute="eligibilities"
-        mapping={eligibilitiesMapping}
+        mapping={our415EligibilitiesMapping}
       />
     );
   } else {
     if (eligibilities?.length) {
       eligibilityRefinementJsx = (
-        <BrowseRefinementList attribute="eligibilities" />
+        <BrowseRefinementList
+          attribute="eligibilities"
+          transform={(items: RefinementListItem[]) =>
+            mapSFSGApiEligibilitiesToOur415ByConfig(
+              items,
+              our415EligibilitiesMapping
+            )
+          }
+        />
       );
     }
-    if (subcategories?.length) {
+    if (subcategoryNames?.length) {
       categoryRefinementJsx = (
         <BrowseRefinementList
           attribute="categories"
@@ -152,7 +148,7 @@ const Sidebar = ({
       <div className={styles.filtersButtonContainer} aria-hidden>
         <Button
           variant="linkBlue"
-          onClick={() => setfilterMenuVisible(!filterMenuVisible)}
+          onClick={() => setFilterMenuVisible(!filterMenuVisible)}
           iconName="sliders"
           iconVariant="before"
           mobileFullWidth={false}
@@ -178,7 +174,7 @@ const Sidebar = ({
             <Button
               variant="linkBlue"
               mobileFullWidth={false}
-              onClick={() => setfilterMenuVisible(!filterMenuVisible)}
+              onClick={() => setFilterMenuVisible(!filterMenuVisible)}
               size="lg"
             >
               Close
@@ -193,15 +189,6 @@ const Sidebar = ({
             <div className={styles.filterTitle}>Availability</div>
             <OpenNowFilter />
           </div>
-
-          <div
-            className={`${styles.filterGroup} ${
-              eligibilityRefinementJsx ? "" : styles.hideFilterGroup
-            } `}
-          >
-            <h2 className={styles.filterTitle}>Eligibilities</h2>
-            {eligibilityRefinementJsx}
-          </div>
           {!isSearchResultsPage && (
             <div
               className={`${styles.filterGroup} ${
@@ -212,6 +199,14 @@ const Sidebar = ({
               {categoryRefinementJsx}
             </div>
           )}
+          <div
+            className={`${styles.filterGroup} ${
+              eligibilityRefinementJsx ? "" : styles.hideFilterGroup
+            } `}
+          >
+            <h2 className={styles.filterTitle}>Eligibilities</h2>
+            {eligibilityRefinementJsx}
+          </div>
 
           {userLocation.inSanFrancisco && (
             <div className={styles.filterGroup}>

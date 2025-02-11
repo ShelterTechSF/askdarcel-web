@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
 import styles from "./RefinementFilters.module.scss";
 
+// TODO: Why do we have this and BrowseRefinementList? Can we combine?
 interface Props extends UseRefinementListProps {
   mapping: Record<string, string[]>;
 }
