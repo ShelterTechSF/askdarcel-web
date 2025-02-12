@@ -131,6 +131,10 @@
   font-weight: 600;
   text-transform: uppercase;
   margin-top: 5px;
+
+  &:hover {
+    text-decoration: none;
+  }
   i {
     width: 32px;
     font-size: 32px;
