@@ -10,7 +10,7 @@ import { Footer } from "components/ui/Footer/Footer";
 import { Navigation } from "components/ui/Navigation/Navigation";
 import { Loader } from "components/ui/Loader";
 
-import MetaImage from "./assets/img/Our415_OG.png";
+import MetaImage from "./assets/img/our415-og.png";
 import styles from "./App.module.scss";
 import config from "./config";
 import { AroundRadius } from "algoliasearch";
@@ -75,7 +75,7 @@ export const App = () => {
           <meta property="og:title" content={title} />
           <meta
             property="og:description"
-            content="Get guided help finding food, housing, health resources and more in San Francisco"
+            content="Our 415 is your source for everything San Francisco has for young people and families."
           />
           <meta property="og:image" content={MetaImage} />
           <meta property="og:type" content="website" />

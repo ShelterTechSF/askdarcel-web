@@ -1,6 +1,6 @@
 import BackgroundImage from "../assets/img/bg.png";
 import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
-import Our415Logo from "../assets/img/Our415_logo-hori.svg";
+import Our415Logo from "../assets/img/Our415-og.png";
 import SFSeal from "../assets/img/sf-seal.png";
 import styles from "../components/ui/Navigation/Navigation.module.scss";
 
@@ -79,10 +79,10 @@ const defaultWebsiteConfig: WebsiteConfigSite = {
     logoSmall: Our415Logo,
   },
   ...websiteConfigDefaults,
-  siteUrl: "https://askdarcel.org",
-  showBreakingNews: true,
+  siteUrl: "https://our415.org",
+  showBreakingNews: false,
   title: "Our415",
-  showReportCrisis: true,
+  showReportCrisis: false,
 } as const;
 
 /*

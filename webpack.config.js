@@ -81,7 +81,7 @@ module.exports = {
       title: "Our415",
       template: "app/index.html",
       meta: {
-        "og:url": "https://sfserviceguide.org", // TODO: Change This
+        "og:url": "https://www.our415.org",
         "og:title": "Our415 | San Francisco",
         "og:description":
           "Our 415 is your source for everything San Francisco has for young people and families.",
