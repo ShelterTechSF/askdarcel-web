@@ -25,12 +25,12 @@
     background: $surface-secondary;
   }
 
-  @media screen and (max-width: $break-tablet-l) {
+  @media screen and (max-width: $break-tablet-s) {
     flex-direction: column;
   }
 
   .cardImage {
-    width: 200px;
+    max-width: 200px;
     object-fit: cover;
 
     // Sizes and positions empty image icon
@@ -40,12 +40,12 @@
     align-items: center;
     justify-content: center;
 
+    @media screen and (max-width: $break-tablet-s) {
+      max-width: none;
+    }
+
     &.event {
       max-width: 40%;
-
-      @media screen and (max-width: $break-tablet-l) {
-        max-width: none;
-      }
     }
   }
 
@@ -59,7 +59,7 @@
     height: 100%;
     width: 100%;
 
-    @media screen and (max-width: $break-tablet-p) {
+    @media screen and (max-width: $break-tablet-s) {
       padding: $general-spacing-md;
 
       button {
@@ -69,7 +69,13 @@
 
     .contentTitle {
       line-height: 125%;
+      font-size: 1.25rem;
+      font-weight: 600;
       margin-bottom: $general-spacing-md;
+
+      @media screen and (max-width: $break-tablet-s) {
+        font-size: 1.125rem;
+      }
 
       &:active,
       :focus {
@@ -104,6 +110,10 @@
         color: $color-textfade;
         font-weight: 600;
         line-height: 125%;
+        font-size: 1.125rem;
+        @media screen and (max-width: $break-tablet-s) {
+          font-size: 0.875rem;
+        }
       }
     }
 

@@ -22,11 +22,17 @@ export const EventCard = ({ event }: { event: EventResponse }) => {
 
       <div className={styles.content}>
         <div>
-          <h4 className={styles.contentTitle}>
-            <a href={linkUrl} data-testid={"eventcard-link"}>
+          <h3 className={styles.contentTitle}>
+            <a
+              href={linkUrl}
+              data-testid={"eventcard-link"}
+              // While events are external links:
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {title}
             </a>
-          </h4>
+          </h3>
           {calendarEvent && (
             <div className={styles.contentTime}>
               <p data-testid="eventcard-formatteddate">{formattedDate}</p>
@@ -34,7 +40,13 @@ export const EventCard = ({ event }: { event: EventResponse }) => {
           )}
         </div>
 
-        <Button arrowVariant="after" variant="linkBlue" size="lg" isVisualOnly>
+        <Button
+          arrowVariant="after"
+          variant="linkBlue"
+          size="lg"
+          mobileFullWidth={false}
+          isVisualOnly
+        >
           View more
         </Button>
       </div>
