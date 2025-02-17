@@ -10,7 +10,7 @@ export const EmailSignup = () => (
     <h2>Join our mailing list to get updates</h2>
     <Button
       isExternalLink={false}
-      href="javascript:void( window.open( 'https://dcyf.jotform.com/242708128943966', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=500' ) ) "
+      href="javascript:void( window.open( 'https://forms.office.com/g/vns6t1Y5uJ', 'blank', 'scrollbars=yes, toolbar=no, width=700, height=1000' ) ) "
     >
       Sign up today
     </Button>
