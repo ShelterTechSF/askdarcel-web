@@ -19,7 +19,7 @@
     padding: $spacing-0_5;
   }
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     padding: $general-spacing-xl $general-spacing-md;
   }
 }
@@ -37,7 +37,7 @@
 .site-footer__contact {
   font-size: 14px;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     margin-bottom: $general-spacing-xl;
   }
 }
@@ -49,7 +49,7 @@
   margin: 0 $spacing-20 0 $general-spacing-xl;
   justify-content: flex-end;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     flex-direction: column;
     gap: $general-spacing-xxl;
     margin: 0 0 $general-spacing-md;
@@ -80,7 +80,7 @@
   height: 100%;
   padding: 0 $general-spacing-md;
   margin: 0 auto;
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     width: auto;
     margin: 0;
   }
@@ -99,7 +99,7 @@
 .site-footer__top {
   display: flex;
 
-  @media screen and (max-width: $break-tablet-s) {
+  @media screen and (max-width: $break-tablet-p) {
     display: block;
   }
 }
