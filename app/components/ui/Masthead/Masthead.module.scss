@@ -14,9 +14,3 @@
   color: $text-tertiary;
   line-height: 100%;
 }
-
-@media screen and (max-width: $break-tablet-p) {
-  .mastheadContainer {
-    padding: $general-spacing-xl $general-spacing-md;
-  }
-}

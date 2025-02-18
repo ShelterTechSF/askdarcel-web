@@ -316,7 +316,9 @@ export interface HomepageResponse extends BaseDatumAttributesResponse {
 
 export interface FaqPageResponse extends BaseDatumAttributesResponse {
   masthead: string;
+  headercontent: string;
   faq: FaqItem[];
+  image: StrapiObjectResponse<ImageResponse>;
 }
 
 export interface ContentPageResponse extends BaseDatumAttributesResponse {

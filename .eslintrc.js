@@ -9,11 +9,11 @@ module.exports = {
     "prettier",
     "react-app",
     "react-app/jest",
-    "plugin:jsx-a11y/recommended",
+    "plugin:jsx-a11y/strict",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
   ],
-  plugins: ["react", "jsx-a11y", "import", "@typescript-eslint"],
+  plugins: ["react", "import", "@typescript-eslint"],
   parser: "@typescript-eslint/parser",
   parserOptions: { project: ["./tsconfig.json"] },
   env: {

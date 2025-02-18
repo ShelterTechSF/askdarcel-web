@@ -1,17 +1,6 @@
 @import "~styles/utils/_helpers.scss";
 
 .accordion {
-  max-width: 544px;
-  margin: $general-spacing-lg auto $spacing-0;
-
-  @include r_max($break-desktop-s) {
-    margin: $spacing-0 $spacing-0;
-    max-width: 100%;
-  }
-
-  @include r_max($break-tablet-s) {
-  }
-
   .accordionItem {
     border-radius: var(--rounded-md, 6px);
     border: 1px solid var(--tailwind-gray-200, #e5e7eb);
@@ -50,6 +39,7 @@
   .accordionContent {
     padding: $general-spacing-md;
     padding-top: $general-spacing-xs;
+    line-height: 1.5;
   }
 
   .activeItem {
