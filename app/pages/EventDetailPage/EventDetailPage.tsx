@@ -47,7 +47,17 @@ export const EventDetailPage = () => {
   const registrationRows = [
     {
       title: "Event Link",
-      value: data.link?.url || "",
+      value: data.registration_link?.url ? (
+        <a
+          href={data.registration_link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {data.registration_link.url}
+        </a>
+      ) : (
+        "No registration link available"
+      ),
     },
   ];
 
@@ -126,15 +136,11 @@ export const EventDetailPage = () => {
         title="Registration"
         data-testid="eventdetailpage-detailinfosection"
       >
-        <InfoTable<{ title: string; value: string }>
+        <InfoTable<{ title: string; value: ReactNode }>
           rowRenderer={(detail) => (
             <tr key={detail.title}>
               <th>{detail.title}</th>
-              <td>
-                <ReactMarkdown className="rendered-markdown">
-                  {detail.value}
-                </ReactMarkdown>
-              </td>
+              <td>{detail.value}</td>
             </tr>
           )}
           rows={registrationRows}

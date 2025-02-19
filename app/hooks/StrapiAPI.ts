@@ -87,7 +87,7 @@ export function useNavigationData() {
  */
 export function useHomePageEventsData() {
   const path =
-    "events?populate[address]=*&populate[calendar_event]=*&populate[link]=*&populate[image][populate]=*&filters[featured][$eq]=true";
+    "events?populate[address]=*&populate[calendar_event]=*&populate[page_link]=*&populate[image][populate]=*&filters[featured][$eq]=true";
 
   const dataFetcher = () =>
     fetcher<{ data: Array<StrapiDatumResponse<EventResponse>> }>(
@@ -111,7 +111,7 @@ export function useHomePageEventsData() {
 }
 
 export function useEventData(eventId: string) {
-  const path = `events/${eventId}?populate[address]=*&populate[calendar_event]=*&populate[link]=*&populate[image][populate]=*&populate[event_categories][fields]=label&populate[event_eligibilities][fields]=label`;
+  const path = `events/${eventId}?populate[address]=*&populate[calendar_event]=*&populate[registration_link]=*&populate[image][populate]=*&populate[event_categories][fields]=label&populate[event_eligibilities][fields]=label`;
 
   const dataFetcher = () =>
     fetcher<{ data: StrapiDatumResponse<EventResponse> }>(
@@ -379,7 +379,8 @@ export interface EventResponse extends BaseDatumAttributesResponse {
   image: {
     data: { id: number; attributes: ImageResponse };
   };
-  link: LinkResponse | null;
+  page_link: LinkResponse;
+  registration_link: LinkResponse | null;
   event_categories?: { data: Array<StrapiDatumResponse<CategoryResponse>> };
   event_eligibilities?: {
     data: Array<StrapiDatumResponse<EligibilityResponse>>;

@@ -5,10 +5,10 @@ import styles from "./EventCard.module.scss";
 import { EventResponse } from "hooks/StrapiAPI";
 
 export const EventCard = ({ event }: { event: EventResponse }) => {
-  const { calendar_event: calendarEvent, title, image, link } = event;
+  const { calendar_event: calendarEvent, title, image, page_link } = event;
   const imageUrl = image?.data?.attributes?.url;
   const imageAlternativeText = image?.data?.attributes.alternativeText || "";
-  const linkUrl = link?.url;
+  const linkUrl = page_link?.url;
   const formattedDate = formatCalendarEventDisplay(calendarEvent);
 
   return (
