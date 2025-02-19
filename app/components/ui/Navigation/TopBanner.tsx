@@ -5,7 +5,7 @@ import styles from "./TopBanner.module.scss";
 
 const TopBanner = () => {
   return (
-    <div className={classNames(styles.topBanner, "no-print")}>
+    <div role="banner" className={classNames(styles.topBanner, "no-print")}>
       <GoogleTranslate />
     </div>
   );

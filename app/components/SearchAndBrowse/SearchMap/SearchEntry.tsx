@@ -21,7 +21,7 @@ export default class SearchEntry extends Component<Props> {
 
     return (
       <Link to={{ pathname: hit.path }}>
-        <li className={`results-table-entry ${type}-entry`}>
+        <div className={`results-table-entry ${type}-entry`}>
           <div className="entry-details">
             <div className="entry-header">
               <h4 className="entry-headline">{hit.headline}</h4>
@@ -67,7 +67,7 @@ export default class SearchEntry extends Component<Props> {
               </li>
             )}
           </ul>
-        </li>
+        </div>
       </Link>
     );
   }

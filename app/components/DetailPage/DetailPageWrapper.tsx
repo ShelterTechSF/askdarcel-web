@@ -30,12 +30,12 @@ const DetailPageWrapper = ({
       <article className={styles.detail} id="resource">
         <div className={styles["detail--main"]}>
           <div className={styles["detail--main--left"]}>{children}</div>
-          <aside className={`${styles["detail--aside"]} no-print`}>
+          <div className={`${styles["detail--aside"]} no-print`}>
             <ActionSidebar
               actions={sidebarActions}
               onClickAction={onClickAction}
             />
-          </aside>
+          </div>
         </div>
       </article>
     </div>
