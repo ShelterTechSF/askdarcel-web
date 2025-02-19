@@ -42,6 +42,16 @@ export const Router = () => {
         element={<ContentPage pageName="Accessibility Statement" />}
       />
       <Route
+        path="/events/1"
+        element={
+          <ContentPage pageName="San Francisco Recreation and Parks Summer Day Camp Registration" />
+        }
+      />
+      <Route
+        path="/events/2"
+        element={<ContentPage pageName="Youth Jobs and Summer Employment" />}
+      />
+      <Route
         path="/search"
         element={
           <>
