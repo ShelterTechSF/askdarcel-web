@@ -77,6 +77,7 @@ export const SearchResult = forwardRef<HTMLDivElement, SearchResultProps>(
             <a
               href={`tel:${hit.phoneNumber}`}
               className={`${styles.icon} ${styles["icon-phone"]}`}
+              title={`Call ${formatPhoneNumber(hit.phoneNumber)}`}
             >
               <span className="sr-only">
                 Call {formatPhoneNumber(hit.phoneNumber)}
@@ -89,6 +90,7 @@ export const SearchResult = forwardRef<HTMLDivElement, SearchResultProps>(
               rel="noopener noreferrer"
               href={hit.websiteUrl}
               className={`${styles.icon} ${styles["icon-popout"]}`}
+              title="Go to website"
             >
               <span className="sr-only">Go to website</span>
             </a>
