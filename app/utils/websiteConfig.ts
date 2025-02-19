@@ -1,6 +1,6 @@
 import BackgroundImage from "../assets/img/bg.png";
 import SearchByAlgoliaImage from "../assets/img/search-by-algolia.png";
-import Our415Logo from "../assets/img/Our415-og.png";
+import Our415Logo from "../assets/img/our415-og.png";
 import SFSeal from "../assets/img/sf-seal.png";
 import styles from "../components/ui/Navigation/Navigation.module.scss";
 
