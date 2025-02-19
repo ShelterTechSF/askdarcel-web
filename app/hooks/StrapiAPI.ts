@@ -380,7 +380,7 @@ export interface EventResponse extends BaseDatumAttributesResponse {
     data: { id: number; attributes: ImageResponse };
   };
   page_link: LinkResponse;
-  registration_link: LinkResponse | null;
+  registration_link?: LinkResponse | null;
   event_categories?: { data: Array<StrapiDatumResponse<CategoryResponse>> };
   event_eligibilities?: {
     data: Array<StrapiDatumResponse<EligibilityResponse>>;

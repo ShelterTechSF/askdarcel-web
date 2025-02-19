@@ -277,7 +277,7 @@ export const EVENTS_DATA = [
           starttime: "01:00:00",
           endtime: "05:30:00",
         },
-        link: { id: 298, url: "http://example.com", text: "Example.com" },
+        page_link: { id: 298, url: "http://example.com", text: "Example.com" },
         image: {
           data: {
             id: 199,
@@ -959,7 +959,7 @@ export const EVENTS_DATA = [
           starttime: "15:30:00",
           endtime: "16:30:00",
         },
-        link: {
+        page_link: {
           id: 299,
           url: "http://example.com",
           text: "Link destination fake",
