@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRefinementList } from "react-instantsearch";
 import { getCurrentDayTime } from "utils/index";
 import styles from "./RefinementFilters.module.scss";
@@ -21,25 +21,12 @@ import styles from "./RefinementFilters.module.scss";
  * the open_times array.
  */
 const OpenNowFilter = () => {
-  const { refine, items } = useRefinementList({ attribute: "open_times" });
-  const [isChecked, toggleChecked] = useState(false);
-
-  useEffect(() => {
-    const currentDayTime = getCurrentDayTime();
-    if (items.map((item) => item.value).includes(currentDayTime)) {
-      toggleChecked(true);
-    } else {
-      toggleChecked(false);
-    }
-  }, [items]);
+  const { refine } = useRefinementList({ attribute: "open_times" });
+  const [isChecked, setChecked] = useState(false);
 
   const toggleRefinement = () => {
     const currentDayTime = getCurrentDayTime();
-    if (isChecked) {
-      toggleChecked(false);
-    } else if (items.map((item) => item.value).includes(currentDayTime)) {
-      toggleChecked(true);
-    }
+    setChecked((prev) => !prev);
     refine(currentDayTime);
   };
 
