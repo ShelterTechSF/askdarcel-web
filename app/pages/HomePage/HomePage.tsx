@@ -39,7 +39,7 @@ export const HomePage = () => {
       <CategorySection />
       {eventsData && (
         <HomePageSection
-          title={"Upcoming events"}
+          title={"Featured events"}
           description={""}
           backgroundColor={"tertiary"}
         >
