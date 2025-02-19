@@ -3,7 +3,7 @@ import { callableUSPhoneNumber } from "utils/numbers";
 import { htmlWithBreaks } from "utils/cms";
 import Our415Logo from "assets/img/Our415-new-white.svg";
 import SFSeal from "assets/img/sf-seal-white.png";
-import DCYFLogo from "assets/img/dcyf-white.png";
+import DCYFLogo from "assets/img/dcyf-white-new.svg";
 import { useFooterData } from "hooks/StrapiAPI";
 import { Link } from "react-router-dom";
 import { FooterColumn } from "./FooterColumn";
