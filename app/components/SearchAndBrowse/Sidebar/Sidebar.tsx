@@ -82,7 +82,9 @@ const Sidebar = ({
   );
 
   const onChangeValue = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setAroundRadius(Number(evt.target.value));
+    const aroundRadius =
+      evt.target.value === "all" ? "all" : Number(evt.target.value);
+    setAroundRadius(aroundRadius);
   };
 
   const refinementItemTransform = useCallback(
@@ -243,6 +245,17 @@ const Sidebar = ({
                   onChange={onChangeValue}
                   value="4828"
                   checked={aroundUserLocationRadius === 4828}
+                  className={styles.refinementInput}
+                />
+              </label>
+              <label className={styles.checkBox}>
+                Full map area
+                <input
+                  type="radio"
+                  name="searchRadius"
+                  onChange={onChangeValue}
+                  value="all"
+                  checked={aroundUserLocationRadius === "all"}
                   className={styles.refinementInput}
                 />
               </label>
