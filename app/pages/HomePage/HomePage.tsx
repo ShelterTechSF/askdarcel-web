@@ -36,15 +36,20 @@ export const HomePage = () => {
           buttons={hero.buttons}
         />
       )}
-      <CategorySection />
+      <span id="browse-services">
+        <CategorySection />
+      </span>
+
       {eventsData && (
-        <HomePageSection
-          title={"Featured events"}
-          description={""}
-          backgroundColor={"tertiary"}
-        >
-          <EventCardSection events={eventsData} />
-        </HomePageSection>
+        <span id="featured-events">
+          <HomePageSection
+            title={"Featured events"}
+            description={""}
+            backgroundColor={"tertiary"}
+          >
+            <EventCardSection events={eventsData} />
+          </HomePageSection>
+        </span>
       )}
 
       {two_column_content_block?.map((content) => (
