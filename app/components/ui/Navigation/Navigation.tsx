@@ -72,9 +72,8 @@ export const Navigation = () => {
       <div>
         <nav className={styles.siteNav}>
           <div className={styles.primaryRow}>
-            <Link className={`${styles.navLogo}`} to="/">
+            <Link className={`${styles.navLogo}`} to="/" aria-label="Homepage">
               <img src={logoData?.url} alt="" />
-              <span className="sr-only">Homepage</span>
             </Link>
             <SiteSearchInput />
 
