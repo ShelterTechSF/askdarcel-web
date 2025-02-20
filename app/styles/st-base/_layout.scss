@@ -4,6 +4,10 @@
   position: fixed;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 body.lock-scroll {
   @media (max-width: $break-desktop-s) {
     overflow: hidden;
