@@ -23,7 +23,7 @@ const defaultSubheading =
 
 export const CATEGORIES: Readonly<ServiceCategory[]> = [
   {
-    algoliaCategoryName: "Covid-food",
+    algoliaCategoryName: "sfsg-food",
     id: "1000001",
     name: "Food Resources",
     slug: "food-resources",
@@ -31,7 +31,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-hygiene",
+    algoliaCategoryName: "sfsg-hygiene",
     id: "1000002",
     name: "Hygiene Resources",
     slug: "hygiene-resources",
@@ -39,7 +39,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-health",
+    algoliaCategoryName: "sfsg-health",
     id: "1000005",
     name: "Medical Services",
     slug: "medical-services-resources",
@@ -47,7 +47,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-domesticviolence",
+    algoliaCategoryName: "sfsg-domesticviolence",
     id: "1000006",
     name: "Domestic Violence",
     slug: "domestic-violence-resources",
@@ -55,7 +55,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-internet",
+    algoliaCategoryName: "sfsg-internet",
     id: "1000007",
     name: "Internet Access",
     slug: "internet-access-resources",
@@ -63,7 +63,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-finance",
+    algoliaCategoryName: "sfsg-finance",
     id: "1000003",
     name: "Financial Resources",
     slug: "financial-resources",
@@ -71,7 +71,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-jobs",
+    algoliaCategoryName: "sfsg-jobs",
     id: "1000009",
     name: "Job Assistance",
     slug: "job-assistance-resources",
@@ -79,7 +79,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-housing",
+    algoliaCategoryName: "sfsg-housing",
     id: "1000004",
     name: "Rental Assistance",
     slug: "rental-assistance-resources",
@@ -87,7 +87,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-lgbtqa",
+    algoliaCategoryName: "sfsg-lgbtqa",
     id: "1000008",
     name: "LGBTQ Resources",
     slug: "lgbtq-resources",
@@ -95,7 +95,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
     subcategorySubheading: defaultSubheading,
   },
   {
-    algoliaCategoryName: "Covid-shelter",
+    algoliaCategoryName: "sfsg-shelter",
     id: "1000010",
     name: "Shelter Resources",
     slug: "shelter-resources",
@@ -104,7 +104,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
       "If you need shelter, then tell us more about who you are. Select one answer.",
   },
   {
-    algoliaCategoryName: "Covid-longtermhousing",
+    algoliaCategoryName: "sfsg-longtermhousing",
     id: "1000011",
     name: "Long-term Housing",
     slug: "longterm-housing-resources",
@@ -113,7 +113,7 @@ export const CATEGORIES: Readonly<ServiceCategory[]> = [
       "If you need shelter, then tell us more about who you are. Select one answer.",
   },
   {
-    algoliaCategoryName: "Covid-substanceuse",
+    algoliaCategoryName: "sfsg-substanceuse",
     id: "1000012",
     name: "Substance Use Resources",
     slug: "substance-use-resources",
