@@ -58,9 +58,23 @@ export const getLocationBrowser = () =>
 
 /**
  * Get location via the Google Maps Geolocation API.
+ * If the location is cached, don't call the API.
+ * Return the cached location instead.
  */
-export const getLocationGoogle = () =>
-  new Promise<GeoCoordinates>((resolve, reject) => {
+export const getLocationGoogle = () => {
+  const cachedLocation = getCachedUserLocation();
+  if (cachedLocation) {
+    return new Promise<GeoCoordinates>((resolve, reject) => {
+      if (areCoordsInSanFrancisco(cachedLocation)) {
+        resolve(cachedLocation);
+      } else {
+        const msg = "User location out of bounds";
+        reject(msg);
+      }
+    });
+  }
+
+  return new Promise<GeoCoordinates>((resolve, reject) => {
     // Results are not very accurate
     let url = "https://www.googleapis.com/geolocation/v1/geolocate";
     if (config.GOOGLE_API_KEY) {
@@ -69,16 +83,43 @@ export const getLocationGoogle = () =>
     fetch(url, { method: "post" })
       .then((r) => r.json())
       .then(({ location }: { location: GeoCoordinates }) => {
+        setCachedUserLocation(location);
         if (areCoordsInSanFrancisco(location)) {
           resolve(location);
         } else {
           const msg = "User location out of bounds";
-          console.log(msg); // eslint-disable-line no-console
           reject(msg);
         }
       })
       .catch(reject);
   });
+};
+
+/**
+ * Caches the results of the Google geolocation call for a two hours
+ */
+const setCachedUserLocation = (location: GeoCoordinates) => {
+  const now = new Date();
+  const hoursToExpire = 2;
+  const locationObject = {
+    location,
+    expiry: now.setHours(now.getHours() + hoursToExpire),
+  };
+
+  localStorage.setItem("location", JSON.stringify(locationObject));
+};
+
+const getCachedUserLocation = (): GeoCoordinates | null => {
+  const locationString = localStorage.getItem("location");
+  if (locationString) {
+    const { location, expiry } = JSON.parse(locationString);
+    if (new Date() < expiry) {
+      return location;
+    }
+  }
+
+  return null;
+};
 
 export const useDefaultSanFranciscoLocation = () =>
   new Promise<GeoCoordinates>((resolve) => {
