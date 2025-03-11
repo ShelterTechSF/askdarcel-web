@@ -113,24 +113,26 @@ export const EventDetailPage = () => {
         <BlocksRenderer content={data.description || []} />
       </DetailInfoSection>
 
-      <DetailInfoSection
-        title="Details"
-        data-testid="eventdetailpage-detailinfosection"
-      >
-        <InfoTable<{ title: string; value: string }>
-          rowRenderer={(detail) => (
-            <tr key={detail.title}>
-              <th>{detail.title}</th>
-              <td>
-                <ReactMarkdown className="rendered-markdown">
-                  {detail.value}
-                </ReactMarkdown>
-              </td>
-            </tr>
-          )}
-          rows={detailsRows}
-        />
-      </DetailInfoSection>
+      {data.calendar_event?.startdate && (
+        <DetailInfoSection
+          title="Details"
+          data-testid="eventdetailpage-detailinfosection"
+        >
+          <InfoTable<{ title: string; value: string }>
+            rowRenderer={(detail) => (
+              <tr key={detail.title}>
+                <th>{detail.title}</th>
+                <td>
+                  <ReactMarkdown className="rendered-markdown">
+                    {detail.value}
+                  </ReactMarkdown>
+                </td>
+              </tr>
+            )}
+            rows={detailsRows}
+          />
+        </DetailInfoSection>
+      )}
 
       <DetailInfoSection
         title="Registration"

@@ -9,7 +9,10 @@ export const EventCard = ({ event }: { event: EventResponse }) => {
   const imageUrl = image?.data?.attributes?.url;
   const imageAlternativeText = image?.data?.attributes.alternativeText || "";
   const linkUrl = page_link?.url;
-  const formattedDate = formatCalendarEventDisplay(calendarEvent);
+
+  const formattedDate = calendarEvent?.startdate
+    ? formatCalendarEventDisplay(calendarEvent)
+    : null;
 
   return (
     <div className={styles.eventCard} data-testid={"eventcard"}>
@@ -33,7 +36,7 @@ export const EventCard = ({ event }: { event: EventResponse }) => {
               {title}
             </a>
           </h3>
-          {calendarEvent && (
+          {calendarEvent && calendarEvent?.startdate && (
             <div className={styles.contentTime}>
               <p data-testid="eventcard-formatteddate">{formattedDate}</p>
             </div>
