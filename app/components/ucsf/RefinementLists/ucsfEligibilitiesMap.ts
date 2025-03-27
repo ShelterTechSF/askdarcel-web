@@ -397,6 +397,13 @@ export const eligibilityMap: Readonly<UcsfEligibilityMap> = {
         },
         {
           isSeeAll: false,
+          checkedId: "25",
+          name: "African/Black",
+          alias: "Black/African American",
+          checked: false,
+        },
+        {
+          isSeeAll: false,
           checkedId: "48",
           name: "Latinx",
           alias: "Latinx/Hispanic",
