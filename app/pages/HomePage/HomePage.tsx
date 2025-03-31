@@ -43,7 +43,7 @@ export const HomePage = () => {
       {eventsData && (
         <span id="featured-events">
           <HomePageSection
-            title={"Featured events"}
+            title={"Featured resources"}
             description={""}
             backgroundColor={"tertiary"}
           >
