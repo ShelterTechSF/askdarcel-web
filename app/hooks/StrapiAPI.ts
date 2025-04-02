@@ -111,7 +111,7 @@ export function useHomePageEventsData() {
 }
 
 export function useEventData(eventId: string) {
-  const path = `events/${eventId}?populate[address]=*&populate[calendar_event]=*&populate[registration_link]=*&populate[image][populate]=*&populate[event_categories][fields]=label&populate[event_eligibilities][fields]=label`;
+  const path = `events/${eventId}?populate[address]=*&populate[calendar_event]=*&populate[location_name]=*&populate[Language]=*&populate[registration_link]=*&populate[image][populate]=*&populate[event_categories][fields]=label&populate[event_eligibilities][fields]=label`;
 
   const dataFetcher = () =>
     fetcher<{ data: StrapiDatumResponse<EventResponse> }>(
@@ -140,13 +140,13 @@ export function formatEventData(
   return {
     ...data?.data?.attributes,
     id: data?.data?.id,
-    categories: data?.data.attributes.event_categories?.data.map(
+    categories: data?.data?.attributes?.event_categories?.data.map(
       (category: StrapiDatumResponse<CategoryResponse>) => ({
         id: category.id,
         label: category.attributes.label,
       })
     ),
-    eligibilities: data?.data.attributes.event_eligibilities?.data.map(
+    eligibilities: data?.data?.attributes?.event_eligibilities?.data.map(
       (eligibility: StrapiDatumResponse<EligibilityResponse>) => ({
         id: eligibility.id,
         label: eligibility.attributes.label,
@@ -375,6 +375,8 @@ export interface EventResponse extends BaseDatumAttributesResponse {
   title: string;
   description: RootNode[];
   calendar_event: CalendarEventResponse;
+  location_name: string;
+  Language: string;
   address: AddressResponse | { data: null };
   image: {
     data: { id: number; attributes: ImageResponse };

@@ -1,18 +1,17 @@
 import React, { ReactNode } from "react";
-import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { ActionBarMobile } from "components/DetailPage";
-import { InfoTable } from "components/DetailPage/InfoTable";
-import { Loader } from "components/ui/Loader";
-import { DetailInfoSection } from "components/ui/Cards/DetailInfoSection";
-import ListingPageHeader from "components/DetailPage/PageHeader";
-import DetailPageWrapper from "components/DetailPage/DetailPageWrapper";
+import { CalendarEvent } from "models/Strapi";
 import { DetailAction } from "../../models";
+import { InfoTable } from "components/DetailPage/InfoTable";
+import { DetailInfoSection } from "components/ui/Cards/DetailInfoSection";
+import { formatCalendarEventDisplay } from "components/ui/Cards/FormattedDate";
+import { Loader } from "components/ui/Loader";
+import DetailPageWrapper from "components/DetailPage/DetailPageWrapper";
+import ListingPageHeader from "components/DetailPage/PageHeader";
+import { ActionBarMobile } from "components/DetailPage";
 import PageNotFound from "components/ui/PageNotFound";
 import { useEventData } from "hooks/StrapiAPI";
-import { formatCalendarEventDisplay } from "components/ui/Cards/FormattedDate";
-import { CalendarEvent } from "models/Strapi";
 import { LabelTag } from "components/ui/LabelTag";
 
 type TagRow = { title: string; value: ReactNode[] };
@@ -41,9 +40,20 @@ export const EventDetailPage = () => {
   const detailsRows = [
     {
       title: "Date & Time",
-      value: formatCalendarEventDisplay(data.calendar_event as CalendarEvent),
+      value:
+        data.calendar_event?.startdate &&
+        formatCalendarEventDisplay(data.calendar_event as CalendarEvent),
     },
-  ];
+    {
+      title: "Location",
+      value: data.location_name,
+    },
+    {
+      title: "Language",
+      value: data.Language,
+    },
+  ].filter((row) => !!row.value);
+
   const registrationRows = [
     {
       title: "Event Link",
@@ -113,26 +123,20 @@ export const EventDetailPage = () => {
         <BlocksRenderer content={data.description || []} />
       </DetailInfoSection>
 
-      {data.calendar_event?.startdate && (
-        <DetailInfoSection
-          title="Details"
-          data-testid="eventdetailpage-detailinfosection"
-        >
-          <InfoTable<{ title: string; value: string }>
-            rowRenderer={(detail) => (
-              <tr key={detail.title}>
-                <th>{detail.title}</th>
-                <td>
-                  <ReactMarkdown className="rendered-markdown">
-                    {detail.value}
-                  </ReactMarkdown>
-                </td>
-              </tr>
-            )}
-            rows={detailsRows}
-          />
-        </DetailInfoSection>
-      )}
+      <DetailInfoSection
+        title="Details"
+        data-testid="eventdetailpage-detailinfosection"
+      >
+        <InfoTable<{ title: string; value: ReactNode }>
+          rowRenderer={(detail) => (
+            <tr key={detail.title}>
+              <th>{detail.title}</th>
+              <td>{detail.value}</td>
+            </tr>
+          )}
+          rows={detailsRows}
+        />
+      </DetailInfoSection>
 
       <DetailInfoSection
         title="Registration"
