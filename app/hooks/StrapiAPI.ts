@@ -140,13 +140,13 @@ export function formatEventData(
   return {
     ...data?.data?.attributes,
     id: data?.data?.id,
-    categories: data?.data?.attributes?.event_categories?.data.map(
+    categories: data?.data?.attributes?.event_categories?.data?.map(
       (category: StrapiDatumResponse<CategoryResponse>) => ({
         id: category.id,
         label: category.attributes.label,
       })
     ),
-    eligibilities: data?.data?.attributes?.event_eligibilities?.data.map(
+    eligibilities: data?.data?.attributes?.event_eligibilities?.data?.map(
       (eligibility: StrapiDatumResponse<EligibilityResponse>) => ({
         id: eligibility.id,
         label: eligibility.attributes.label,
