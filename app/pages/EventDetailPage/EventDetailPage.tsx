@@ -37,6 +37,24 @@ export const EventDetailPage = () => {
     return <Loader />;
   }
 
+  // Hotfix. NOT a long term solution. Need to make sure bad event slugs are throwing 404s not 400s and that Page Not Found is rendering properly based on error = true
+  if (
+    data.categories === undefined &&
+    data.eligibilities === undefined &&
+    data.id === undefined
+  ) {
+    return (
+      <DetailPageWrapper
+        title="Our415 - Page Not Found"
+        description=""
+        sidebarActions={[]}
+        onClickAction={() => "noop"}
+      >
+        <PageNotFound />
+      </DetailPageWrapper>
+    );
+  }
+
   const detailsRows = [
     {
       title: "Date & Time",
