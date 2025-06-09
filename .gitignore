@@ -11,6 +11,7 @@ config.yml
 .DS_Store
 yarn.lock
 public/sitemap.xml.gz
+.env.local
 
 .vscode/*
 # !.vscode/settings.json

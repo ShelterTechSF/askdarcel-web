@@ -8,8 +8,11 @@ const CopyPlugin = require("copy-webpack-plugin");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const webpack = require("webpack");
 const CompressionPlugin = require("compression-webpack-plugin");
+const dotenv = require("dotenv");
 
 let userConfig = {};
+
+dotenv.config({ path: ".env.local" }); // Using .env.local for non-Docker local development
 
 if (existsSync("config.yml") || process.env.CONFIG_YAML) {
   const CONFIG_YAML = process.env.CONFIG_YAML || "config.yml";
