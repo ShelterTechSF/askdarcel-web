@@ -1,0 +1,32 @@
+version: "3.5"
+services:
+  web:
+    command: npm -- run dev --host 0.0.0.0 --disable-host-check
+    environment:
+      API_URL: http://api:3000
+      API_GO_URL: http://sheltertech-go:3001
+      ALGOLIA_INDEX_PREFIX:
+      ALGOLIA_APPLICATION_ID:
+      ALGOLIA_READ_ONLY_API_KEY:
+      TESTCAFE_RUNNING:
+      IS_PRODUCTION:
+    image: node:18.4
+    networks:
+      - askdarcel
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/usr/src/app:delegated
+      # Mount a separate, named volume over node_modules/ because Docker for
+      # Mac's gRPC FUSE sync is really, really slow for the number of files in
+      # node_modules.
+      - node-modules:/usr/src/app/node_modules
+    working_dir: /usr/src/app
+
+volumes:
+  node-modules:
+
+networks:
+  # Used to connect to askdarcel-api in a different docker-compose instance
+  askdarcel:
+    name: askdarcel
