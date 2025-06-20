@@ -72,10 +72,14 @@ export const VerificationModal = ({
     >
       <div className={styles.modalContent}>
         <h2 className={styles.title}>Please check your email</h2>
-        <p>We&apos;ve sent a code to {email}</p>
+        <div className={styles.modalEmailContainer}>
+          <p>We&apos;ve sent a code to&nbsp;</p>
+          <div className={styles.modalEmail}>{email}</div>
+        </div>
         <div className={styles.verificationDigits}>
           {verificationCode.map((digit, index) => (
             <input
+              className={styles.verificationDigitsInput}
               // Array total index is static; thus it's okay to disable no-array-index-key:
               // eslint-disable-next-line react/no-array-index-key
               key={index}
@@ -90,8 +94,10 @@ export const VerificationModal = ({
             />
           ))}
         </div>
-        <ResendCode resendCode={resendCode} />
-        <Button onClick={onSubmitCode}>{buttonText}</Button>
+        <div className={styles.verificationModalButtons}>
+          <ResendCode resendCode={resendCode} />
+          <Button onClick={onSubmitCode} >{buttonText}</Button>
+        </div>
       </div>
     </Modal>
   );
@@ -99,18 +105,19 @@ export const VerificationModal = ({
 
 const ResendCode = ({ resendCode }: { resendCode: () => Promise<unknown> }) => {
   return (
-    <div>
+    <div className={styles.resendCodeContent}>
       <p>
         Didn&apos;t receive a code? Please check your spam folder.
-        <button
-          type="button"
-          onClick={() => {
-            resendCode();
-          }}
-        >
-          Send another code.
-        </button>
       </p>
+      <button
+        className={styles.resendCodeButton}
+        type="button"
+        onClick={() => {
+          resendCode();
+        }}
+      >
+        Send another code.
+      </button>
     </div>
   );
 };
