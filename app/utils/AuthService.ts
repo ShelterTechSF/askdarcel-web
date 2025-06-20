@@ -102,7 +102,6 @@ export const passwordlessStart = (authClient: WebAuth, email: string) => {
     will initiate a redirect, which is why this function doesn't have a
     meaningful return value.
 */
-console.log("test");
 export const passwordlessLogin = (
   authClient: WebAuth,
   email: string,
