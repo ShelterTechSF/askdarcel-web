@@ -96,7 +96,7 @@ export const VerificationModal = ({
         </div>
         <div className={styles.verificationModalButtons}>
           <ResendCode resendCode={resendCode} />
-          <Button onClick={onSubmitCode} >{buttonText}</Button>
+          <Button onClick={onSubmitCode}>{buttonText}</Button>
         </div>
       </div>
     </Modal>
@@ -106,9 +106,7 @@ export const VerificationModal = ({
 const ResendCode = ({ resendCode }: { resendCode: () => Promise<unknown> }) => {
   return (
     <div className={styles.resendCodeContent}>
-      <p>
-        Didn&apos;t receive a code? Please check your spam folder.
-      </p>
+      <p>Didn&apos;t receive a code? Please check your spam folder.</p>
       <button
         className={styles.resendCodeButton}
         type="button"
