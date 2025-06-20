@@ -27,7 +27,6 @@ export const initializeUserSession = (
     // eslint-disable-next-line no-console
     console.log("cookies exist? ", document.cookie);
     const stateToken = sessionStorage.getItem("authStateToken") ?? "";
-    console.log(`Getting authStateToken: ${stateToken}`);
     authClient.parseHash({ hash, state: stateToken }, (err, authResult) => {
       sessionStorage.removeItem("authStateToken");
 
@@ -108,9 +107,7 @@ export const passwordlessLogin = (
   email: string,
   verificationCode: string
 ) => {
-  console.log("In passwordlessLogin");
   const stateToken = createStateToken();
-  console.log(`Setting authStateToken: ${stateToken}`);
   sessionStorage.setItem("authStateToken", stateToken);
   authClient.passwordlessLogin(
     {
