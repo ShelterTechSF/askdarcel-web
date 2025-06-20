@@ -35,6 +35,14 @@
 .verificationDigits {
   display: flex;
   width: 400px;
+  column-gap: 12px;
+  height: 80px
+}
+
+.verificationDigitsInput {
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #0031db;
 }
 
 .title {
@@ -84,4 +92,37 @@
   max-width: 300px;
   margin-top: 8px;
   border-radius: 3px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.modalEmailContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.modalEmail {
+  font-weight: bold;
+}
+
+.resendCodeContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+}
+
+.verificationModalButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.resendCodeButton {
+  border-radius: 8px;
 }
