@@ -22,9 +22,7 @@ interface SWRHookResult<T> {
 }
 function useStrapiHook<T>(path: string): SWRHookResult<T> {
   const dataFetcher = () =>
-    fetcher<StrapiResponse<T>>(`${config.STRAPI_API_URL}/api/${path}`, {
-      Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
-    });
+    fetcher<StrapiResponse<T>>(`${config.STRAPI_API_URL}/api/${path}`);
 
   const { data, error, isLoading } = useSWR<StrapiResponse<T>>(
     `/api/${path}`,
@@ -63,10 +61,7 @@ export function useNavigationData() {
 
   const dataFetcher = () =>
     fetcher<{ data: StrapiDatumResponse<HeaderResponse> }>(
-      `${config.STRAPI_API_URL}/api/${path}`,
-      {
-        Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
-      }
+      `${config.STRAPI_API_URL}/api/${path}`
     );
 
   const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher) as {
@@ -112,10 +107,7 @@ export function useEventData(eventId: string) {
 
   const dataFetcher = () =>
     fetcher<{ data: StrapiDatumResponse<EventResponse> }>(
-      `${config.STRAPI_API_URL}/api/${path}`,
-      {
-        Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
-      }
+      `${config.STRAPI_API_URL}/api/${path}`
     );
 
   const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher);
