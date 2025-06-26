@@ -208,6 +208,30 @@ const InnerSearchResults = ({
     lng: userLocation.lng,
   });
 
+  const onSearchStateChange = (nextSearchState: SearchState) => {
+    const THRESHOLD = 700;
+    const newPush = Date.now();
+    setLastPush(newPush);
+    const urlParams = {
+      ...nextSearchState,
+      // With our setup, the onSearchStateChange event only runs as a result of editing
+      // refinements. It is not called when the user enters a new query in the search
+      // input field. Thus, the query value will not have changed. However, of relevance to
+      // non-English queries, the nextSearchState arg that's passed to this callback includes
+      // the _translated_ query rather than the user's original untranslated input.
+      // For various reasons, we want to urlParams query value to be the untranslated query.
+      query: untranslatedQuery,
+    };
+
+    const newUrl = nextSearchState ? `search?${qs.stringify(urlParams)}` : "";
+    if (lastPush && newPush - lastPush <= THRESHOLD) {
+      history.replace(newUrl);
+    } else {
+      history.push(newUrl);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className={styles.container}>
       <Helmet>
@@ -234,30 +258,7 @@ const InnerSearchResults = ({
         searchClient={searchClient}
         indexName={`${config.ALGOLIA_INDEX_PREFIX}_services_search`}
         searchState={searchState}
-        onSearchStateChange={(nextSearchState: SearchState) => {
-          const THRESHOLD = 700;
-          const newPush = Date.now();
-          setLastPush(newPush);
-          const urlParams = {
-            ...nextSearchState,
-            // With our setup, the onSearchStateChange event only runs as a result of editing
-            // refinements. It is not called when the user enters a new query in the search
-            // input field. Thus, the query value will not have changed. However, of relevance to
-            // non-English queries, the nextSearchState arg that's passed to this callback includes
-            // the _translated_ query rather than the user's original untranslated input.
-            // For various reasons, we want to urlParams query value to be the untranslated query.
-            query: untranslatedQuery,
-          };
-
-          const newUrl = nextSearchState
-            ? `search?${qs.stringify(urlParams)}`
-            : "";
-          if (lastPush && newPush - lastPush <= THRESHOLD) {
-            history.replace(newUrl);
-          } else {
-            history.push(newUrl);
-          }
-        }}
+        onSearchStateChange={onSearchStateChange}
         createURL={(state: any) => `search?${qs.stringify(state)}`}
       >
         <Configure
