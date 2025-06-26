@@ -91,10 +91,7 @@ export function useHomePageEventsData() {
 
   const dataFetcher = () =>
     fetcher<{ data: Array<StrapiDatumResponse<EventResponse>> }>(
-      `${config.STRAPI_API_URL}/api/${path}`,
-      {
-        Authorization: `Bearer ${config.STRAPI_API_TOKEN}`,
-      }
+      `${config.STRAPI_API_URL}/api/${path}`
     );
 
   const { data, error, isLoading } = useSWR(`/api/${path}`, dataFetcher) as {
