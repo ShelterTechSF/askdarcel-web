@@ -22,17 +22,11 @@ export const initializeUserSession = (
   setAuthState: (a: AuthState) => void
 ) => {
   const promise = new Promise((resolve, reject) => {
-    // eslint-disable-next-line no-console
-    console.log("executing init session function");
-    // eslint-disable-next-line no-console
-    console.log("cookies exist? ", document.cookie);
     const stateToken = sessionStorage.getItem("authStateToken") ?? "";
     authClient.parseHash({ hash, state: stateToken }, (err, authResult) => {
       sessionStorage.removeItem("authStateToken");
 
       if (err) {
-        // eslint-disable-next-line no-console
-        console.log("error initializing session: ", err);
         Sentry.captureException(err);
         reject(err);
       }
