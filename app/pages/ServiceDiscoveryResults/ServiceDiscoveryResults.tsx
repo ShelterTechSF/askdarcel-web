@@ -77,7 +77,7 @@ export const ServiceDiscoveryResults = ({
   const onSearchStateChange = (nextSearchState: SearchState) => {
     setSearchState(nextSearchState);
     history.push(searchStateToURL(location, nextSearchState), nextSearchState);
-    window.scrollTo({ top: 0, behavior: "smooth" })
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // TODO: Handle failure?
