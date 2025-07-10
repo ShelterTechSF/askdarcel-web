@@ -52,6 +52,7 @@ export const CustomMarker = ({
         fill="#276ce5"
         fontWeight="bold"
         textAnchor="middle"
+        textRendering="geometricPrecision"
       >
         {text}
       </text>
