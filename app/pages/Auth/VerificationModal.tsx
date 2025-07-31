@@ -4,6 +4,12 @@ import { Button } from "components/ui/inline/Button/Button";
 
 import styles from "./Auth.module.scss";
 
+const formatTime = (seconds: number) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+};
+
 export const VerificationModal = ({
   email,
   verifyCode,
@@ -36,9 +42,9 @@ export const VerificationModal = ({
         setCountdown(countdown - 1);
       }, 1000);
       return () => clearTimeout(timer);
-    } else {
-      setIsResendDisabled(false);
     }
+    setIsResendDisabled(false);
+    return undefined;
   }, [countdown]);
 
   // Reset countdown when modal opens
@@ -91,12 +97,6 @@ export const VerificationModal = ({
     await resendCode();
     setCountdown(60);
     setIsResendDisabled(true);
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
@@ -156,6 +156,12 @@ const ResendCode = ({
   countdown: number;
   isResendDisabled: boolean;
 }) => {
+  const handleClick = () => {
+    resendCode().catch(() => {
+      // Error handling for resend code
+    });
+  };
+
   return (
     <div className={styles.resendCodeContent}>
       <p>Didn&apos;t receive a code? Please check your spam folder.</p>
@@ -165,17 +171,11 @@ const ResendCode = ({
             Resend code in: {formatTime(countdown)}
           </div>
         ) : (
-          <Button onClick={resendCode} addClass={styles.resendCodeButton}>
+          <Button onClick={handleClick} addClass={styles.resendCodeButton}>
             Send another code
           </Button>
         )}
       </div>
     </div>
   );
-};
-
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
