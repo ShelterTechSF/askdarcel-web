@@ -135,7 +135,12 @@ export const VerificationModal = ({
             countdown={countdown}
             isResendDisabled={isResendDisabled}
           />
-          <Button onClick={onSubmitCode}>{buttonText}</Button>
+          <Button 
+            onClick={onSubmitCode}
+            addClass={styles.verificationModalLoginButton}
+          >
+            {buttonText}
+          </Button>
         </div>
       </div>
     </Modal>
@@ -162,7 +167,6 @@ const ResendCode = ({
         ) : (
           <Button 
             onClick={resendCode}
-            styleType="transparent"
             addClass={styles.resendCodeButton}
           >
             Send another code
