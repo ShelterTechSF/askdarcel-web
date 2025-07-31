@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import { Modal } from "components/ui/Modal/Modal";
 import { Button } from "components/ui/inline/Button/Button";
 
@@ -23,8 +23,31 @@ export const VerificationModal = ({
   const [verificationCode, setVerificationCode] = useState(
     initialVerificationCode
   );
+  const [countdown, setCountdown] = useState(60); // 60 second countdown
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
+  
   const inputRefs: React.RefObject<HTMLInputElement>[] =
     initialVerificationCode.map(() => createRef());
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsResendDisabled(false);
+    }
+  }, [countdown]);
+
+  // Reset countdown when modal opens
+  useEffect(() => {
+    if (modalIsOpen) {
+      setCountdown(60);
+      setIsResendDisabled(true);
+    }
+  }, [modalIsOpen]);
 
   const handleVerificationCodeChange = (index: number, value: string) => {
     const updatedVerificationCode = [...verificationCode];
@@ -64,6 +87,18 @@ export const VerificationModal = ({
     verifyCode(codeString);
   };
 
+  const handleResendCode = async () => {
+    await resendCode();
+    setCountdown(60);
+    setIsResendDisabled(true);
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -95,7 +130,11 @@ export const VerificationModal = ({
           ))}
         </div>
         <div className={styles.verificationModalButtons}>
-          <ResendCode resendCode={resendCode} />
+          <ResendCode 
+            resendCode={handleResendCode}
+            countdown={countdown}
+            isResendDisabled={isResendDisabled}
+          />
           <Button onClick={onSubmitCode}>{buttonText}</Button>
         </div>
       </div>
@@ -103,19 +142,39 @@ export const VerificationModal = ({
   );
 };
 
-const ResendCode = ({ resendCode }: { resendCode: () => Promise<unknown> }) => {
+const ResendCode = ({ 
+  resendCode, 
+  countdown, 
+  isResendDisabled 
+}: { 
+  resendCode: () => Promise<unknown>;
+  countdown: number;
+  isResendDisabled: boolean;
+}) => {
   return (
     <div className={styles.resendCodeContent}>
       <p>Didn&apos;t receive a code? Please check your spam folder.</p>
-      <button
-        className={styles.resendCodeButton}
-        type="button"
-        onClick={() => {
-          resendCode();
-        }}
-      >
-        Send another code.
-      </button>
+      <div className={styles.resendCodeContainer}>
+        {isResendDisabled ? (
+          <div className={styles.countdownText}>
+            Resend code in: {formatTime(countdown)}
+          </div>
+        ) : (
+          <Button 
+            onClick={resendCode}
+            styleType="transparent"
+            addClass={styles.resendCodeButton}
+          >
+            Send another code
+          </Button>
+        )}
+      </div>
     </div>
   );
+};
+
+const formatTime = (seconds: number) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 };

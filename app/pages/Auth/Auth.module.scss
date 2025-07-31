@@ -116,6 +116,22 @@
   row-gap: 5px;
 }
 
+.resendCodeContainer {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdownText {
+  font-size: 15px;
+  color: #404040;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .verificationModalButtons {
   display: flex;
   flex-direction: column;
