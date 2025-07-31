@@ -25,7 +25,7 @@ export const VerificationModal = ({
   );
   const [countdown, setCountdown] = useState(60); // 60 second countdown
   const [isResendDisabled, setIsResendDisabled] = useState(true);
-  
+
   const inputRefs: React.RefObject<HTMLInputElement>[] =
     initialVerificationCode.map(() => createRef());
 
@@ -96,7 +96,7 @@ export const VerificationModal = ({
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
@@ -130,12 +130,12 @@ export const VerificationModal = ({
           ))}
         </div>
         <div className={styles.verificationModalButtons}>
-          <ResendCode 
+          <ResendCode
             resendCode={handleResendCode}
             countdown={countdown}
             isResendDisabled={isResendDisabled}
           />
-          <Button 
+          <Button
             onClick={onSubmitCode}
             addClass={styles.verificationModalLoginButton}
           >
@@ -147,11 +147,11 @@ export const VerificationModal = ({
   );
 };
 
-const ResendCode = ({ 
-  resendCode, 
-  countdown, 
-  isResendDisabled 
-}: { 
+const ResendCode = ({
+  resendCode,
+  countdown,
+  isResendDisabled,
+}: {
   resendCode: () => Promise<unknown>;
   countdown: number;
   isResendDisabled: boolean;
@@ -165,10 +165,7 @@ const ResendCode = ({
             Resend code in: {formatTime(countdown)}
           </div>
         ) : (
-          <Button 
-            onClick={resendCode}
-            addClass={styles.resendCodeButton}
-          >
+          <Button onClick={resendCode} addClass={styles.resendCodeButton}>
             Send another code
           </Button>
         )}
@@ -180,5 +177,5 @@ const ResendCode = ({
 const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
