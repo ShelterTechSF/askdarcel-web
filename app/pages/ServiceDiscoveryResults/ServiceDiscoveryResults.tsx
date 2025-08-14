@@ -83,7 +83,7 @@ export const ServiceDiscoveryResults = ({
   // TODO: Handle failure?
   useEffect(() => {
     dataService
-      .get(`/api/categories/${category.id}`)
+      .get(`/api/v2/categories/${category.id}`)
       .then(({ category: serviceCategory }: { category: ServiceCategory }) => {
         setParentCategory(serviceCategory);
       });
