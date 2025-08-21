@@ -43,7 +43,7 @@ export const useSubcategoriesForCategory = (
   useEffect(() => {
     if (categoryID !== null) {
       dataService
-        .get(`/api/categories/subcategories?id=${categoryID}`)
+        .get(`/api/v2/categories/subcategories/${categoryID}`)
         .then((response) => {
           setSubcategories(response.categories as Category[]);
         });
