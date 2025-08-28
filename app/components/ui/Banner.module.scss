@@ -25,6 +25,7 @@
   display: grid;
   grid-template-columns: 24px 1fr;
   gap: 30px;
+  align-items: baseline;
   @media screen and (max-width: $break-tablet-s) {
     width: 96%;
     gap: 12px;
