@@ -89,7 +89,7 @@
     "html-webpack-plugin": "^5.5.0",
     "image-webpack-loader": "^8.1.0",
     "js-yaml": "^3.13.1",
-    "jsdom": "^15.2.1",
+    "jsdom": "^16.5.0",
     "mocha": "^6.1.4",
     "nyc": "^15.0.0",
     "prettier": "2.8.2",
