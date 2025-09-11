@@ -17,7 +17,7 @@ services:
       retries: 5
 
   api:
-    image: us-west2-docker.pkg.dev/askdarcel-184805/sheltertech/askdarcel-api:latest
+    image: sheltertechsf/askdarcel-api:latest
     networks: [askdarcel]
     ports: ["3000:3000"]
     depends_on: [db]
@@ -33,7 +33,7 @@ services:
       # ALGOLIA_INDEX_PREFIX:
 
   api-go:
-    image: us-west2-docker.pkg.dev/askdarcel-184805/sheltertech/sheltertech-go:latest
+    image: sheltertechsf/sheltertech-go:latest
     networks: [askdarcel]
     ports: ["3001:3001"]
     depends_on:
