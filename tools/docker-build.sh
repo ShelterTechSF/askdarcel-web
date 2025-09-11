@@ -1,8 +1,9 @@
 COMMIT=${TRAVIS_COMMIT::8}
 SANITIZED_BRANCH=$(echo $TRAVIS_BRANCH|sed 's|/|-|g')
-REPO=sheltertechsf/askdarcel-web
+REPO=us-west2-docker.pkg.dev/askdarcel-184805/sheltertech/askdarcel-web
 
-docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+# Configure Docker to use gcloud as a credential helper for Artifact Registry
+gcloud auth configure-docker us-west2-docker.pkg.dev
 
 if [[ -n "$TRAVIS_TAG" ]]; then
     TAG="$TRAVIS_TAG"
