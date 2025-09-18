@@ -5,9 +5,9 @@ name: testsuite
 
 on:
   push:
-    branches: [master]
+    branches: [master, google-cloud-migration]
   pull_request:
-    branches: [master]
+    branches: [master, google-cloud-migration]
 
 env:
   NODE_VERSION: 18.x
