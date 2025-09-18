@@ -138,6 +138,5 @@ jobs:
           context: .
           tags: |
             ${{ env.GCP_REPO }}:latest
-            
 
       - run: echo ${{ steps.docker_build.outputs.digest }}
