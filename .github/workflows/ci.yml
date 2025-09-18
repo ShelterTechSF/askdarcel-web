@@ -137,7 +137,7 @@ jobs:
           push: true
           context: .
           tags: |
-            ${{ env.GCP_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:latest
+            ${{ env.GCP_REPO }}:ci-${{ github.run_number }}
+            ${{ env.DOCKERHUB_REPO }}:ci-${{ github.run_number }}
 
       - run: echo ${{ steps.docker_build.outputs.digest }}
