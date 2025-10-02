@@ -21,7 +21,7 @@ export const useEligibilitiesForCategory = (
   useEffect(() => {
     if (categoryID !== null) {
       dataService
-        .get(`/api/eligibilities?category_id=${categoryID}`)
+        .get(`/api/v2/eligibilities?category_id=${categoryID}`)
         .then((response) => {
           setEligibilities(response.eligibilities as Eligibility[]);
         });

@@ -52,7 +52,7 @@ const AdvancedSearch = () => {
 
     const allPromises = PARENT_ELIGIBILITIES.map((eligibility) => {
       return get(
-        `/api/eligibilities/subeligibilities?id=${eligibility.id}`
+        `/api/v2/eligibilities/subeligibilities?id=${eligibility.id}`
       ).then((response) =>
         response.eligibilities.map(
           (childEligibility: { name: string; id: number }) => ({
