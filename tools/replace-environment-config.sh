@@ -6,7 +6,8 @@
 
 set -euo pipefail
 
-js_bundle=$(find . -maxdepth 1 -type f -name "/app/askdarcel/bundle*.js" -print -quit)
+js_bundle=$(find /app/askdarcel/ -maxdepth 1 -type f -name "bundle.*.js" -print -quit)
+echo $js_bundle
 shift
 
 env_vars='AUTH0_AUDIENCE AUTH0_CLIENT_ID AUTH0_DOMAIN AUTH0_REDIRECT_URI GOOGLE_API_KEY ALGOLIA_INDEX_PREFIX ALGOLIA_APPLICATION_ID ALGOLIA_READ_ONLY_API_KEY MOHCD_SUBDOMAIN MOHCD_DOMAIN SFFAMILIES_DOMAIN LINKSF_DOMAIN'
