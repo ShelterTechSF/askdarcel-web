@@ -40,7 +40,7 @@ module.exports = {
   output: {
     path: buildDir,
     publicPath: "/dist/",
-    filename: "bundle.js",
+    filename: "bundle.[contenthash].js",
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
