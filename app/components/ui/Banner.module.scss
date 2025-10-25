@@ -9,9 +9,12 @@
   color: black;
   background-color: $color-yellow;
   font-size: calc-em(22px);
+  line-height: 1.2;
+  
   strong {
     font-weight: bold;
   }
+  
   @media screen and (max-width: $break-tablet-s) {
     font-size: calc-em(16px);
     padding: calc-em(10px);
@@ -25,6 +28,8 @@
   display: grid;
   grid-template-columns: 24px 1fr;
   gap: 30px;
+  align-items: baseline;
+  
   @media screen and (max-width: $break-tablet-s) {
     width: 96%;
     gap: 12px;
@@ -34,9 +39,11 @@
 .alertIcon {
   width: 24px;
   height: 24px;
-  margin-top: 2px;
+  margin-top: -0.1em;
+  vertical-align: baseline;
+  
   @media screen and (max-width: $break-tablet-s) {
-    margin-top: 0;
+    margin-top: -0.15em;
   }
 }
 
