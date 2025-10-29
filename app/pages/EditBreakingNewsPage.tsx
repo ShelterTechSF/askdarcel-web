@@ -16,7 +16,7 @@ export const EditBreakingNewsPage = () => {
   >([]);
   useEffect(() => {
     dataService
-      .get("/api/news_articles")
+      .get("/api/v2/news_articles")
       .then(({ news_articles }: { news_articles: NewsArticle[] }) => {
         const sortedArticles = news_articles.map<NewsArticle>(
           (article: NewsArticle) => ({
