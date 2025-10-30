@@ -32,7 +32,7 @@ jobs:
       - run: npm ci
       - run: cp config.example.yml config.yml
       - run: CONFIG_YAML=config.docker.yml npm run build
-      - run: touch version.json
+      - run: echo ${{ steps.meta.outputs.tags }} > version.json
 
       # Setup Docker
       - uses: docker/setup-qemu-action@v3
