@@ -66,7 +66,9 @@ export const NewsArticles = () => {
 
   useEffect(() => {
     const fetchBreakingNewsArticles = async () => {
-      const response = await dataService.get("/api/news_articles?active=true");
+      const response = await dataService.get(
+        "/api/v2/news_articles?active=true"
+      );
       const { news_articles }: { news_articles: NewsArticle[] } = response;
       setBreakingNewsArticles(news_articles);
     };
