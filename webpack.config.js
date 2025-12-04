@@ -178,7 +178,7 @@ module.exports = {
     ],
   },
   devServer: {
-    contentBase: buildDir,
+    allowedHosts: "all",
     historyApiFallback: true,
     proxy: {
       "/api-docs": {
@@ -193,5 +193,15 @@ module.exports = {
         pathRewrite: { "^/api/": "" },
       },
     },
+    static: [
+      {
+        directory: buildDir,
+        publicPath: "/dist",
+      },
+      {
+        directory: buildDir,
+        publicPath: "",
+      },
+    ],
   },
 };
