@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   web:
-    command: npm -- run dev --host 0.0.0.0 --disable-host-check
+    command: npm -- run dev --host 0.0.0.0
     environment:
       API_URL: http://api:3000
       API_GO_URL: http://sheltertech-go:3001
