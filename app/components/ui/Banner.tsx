@@ -8,29 +8,18 @@ export const Banner = () => (
       <img src={icon("alert")} alt="attention" className={styles.alertIcon} />
       <div>
         <strong className={styles.title}>
-          SHELTER ACCESS DURING HEAT RISK WEATHER:
+          HELP IDENTIFY AND STOP HUMAN TRAFFICKING
         </strong>
         <p>
           <a
             className={styles.bannerLink}
             target="_blank"
             rel="noreferrer"
-            href="https://t.e2ma.net/message/evwfxh/mhfrepid"
+            href="https://www.sf.gov/help-identify-and-stop-human-trafficking"
           >
-            Get information
+            Resources
           </a>{" "}
-          on expanded shelter access during heat risk weather in San Francisco.
-        </p>
-        <p>
-          <a
-            className={styles.bannerLink}
-            target="_blank"
-            rel="noreferrer"
-            href="https://hsh.sfgov.org/services"
-          >
-            General information
-          </a>{" "}
-          on finding temporary shelter.
+          for victims of human trafficking.
         </p>
       </div>
     </div>
