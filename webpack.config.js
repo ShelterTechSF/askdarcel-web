@@ -39,7 +39,7 @@ module.exports = {
   entry: ["whatwg-fetch", "@babel/polyfill", path.resolve(appRoot, "init.tsx")],
   output: {
     path: buildDir,
-    publicPath: "/dist/",
+    publicPath: process.env.NODE_ENV === "development" ? "/" : "/dist/",
     filename: "bundle.[contenthash].js",
   },
   resolve: {
@@ -193,15 +193,5 @@ module.exports = {
         pathRewrite: { "^/api/": "" },
       },
     },
-    static: [
-      {
-        directory: buildDir,
-        publicPath: "/dist",
-      },
-      {
-        directory: buildDir,
-        publicPath: "",
-      },
-    ],
   },
 };

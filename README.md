@@ -50,9 +50,6 @@ $ cp config.example.yml config.yml
 # Install node dependencies
 $ docker compose run --rm web npm install
 
-# Build static assets bundle
-$ docker compose run --rm web npm run build
-
 # Run dev server
 $ docker compose up
 ```
@@ -116,12 +113,6 @@ To install the dependencies, from the top directory run
 
 ```sh
 npm install
-```
-
-To build the bundled script with webpack run
-
-```sh
-npm run build
 ```
 
 And to run the dev server, run
