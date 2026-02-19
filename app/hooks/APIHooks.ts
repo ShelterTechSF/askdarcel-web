@@ -46,19 +46,20 @@ export const useSubcategoriesForCategory = (
         .get(`/api/v2/categories/subcategories/${categoryID}`)
         .then((response) => {
           const hiddenCategoryIds = [73, 312, 87, 118, 23, 63];
-          const categories: Category[] = response.categories
-            .map((category: Category) => {
+          const categories: Category[] = response.categories.map(
+            (category: Category) => {
               if (hiddenCategoryIds.includes(category.id)) {
                 return {
                   ...category,
-                  hidden: true
+                  hidden: true,
                 };
               }
-              return category
-            });
+              return category;
+            }
+          );
 
           if (categoryID === "1000005" || categoryID === "1000008") {
-            categories.push({ id: 0, name: "HIV & Aging" } as Category)
+            categories.push({ id: 0, name: "HIV & Aging" } as Category);
           }
           setSubcategories(categories);
         });

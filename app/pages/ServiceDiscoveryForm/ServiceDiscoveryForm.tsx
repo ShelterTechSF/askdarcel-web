@@ -121,9 +121,9 @@ const InnerServiceDiscoveryForm = ({
       }
     } else if (stepName === "subcategories") {
       if (selectedSubcategory === 2100017) {
-        history.replace("/services/3792")
+        history.replace("/services/3792");
       } else if (selectedSubcategory === 333) {
-        history.replace("/services/4028")
+        history.replace("/services/4028");
       } else {
         setCurrentStep(currentStep + 1);
       }
@@ -211,7 +211,7 @@ const Content = ({
         118: selected,
         23: selected,
         63: selected,
-      }
+      };
     }
     setSelectedSubcategories(selectedRefinements);
 
@@ -222,15 +222,13 @@ const Content = ({
     }
   };
 
-  const singleCategorySelected = (selected: SelectedRefinements): boolean => {
-    return Object.entries(selected)
-      .reduce((acc, [key, val]) => {
-        if (val) {
-          acc.push(key)
-        }
-        return acc;
-      }, [] as string[]).length === 1;
-  }
+  const singleCategorySelected = (selected: SelectedRefinements): boolean =>
+    Object.entries(selected).reduce((acc, [key, val]) => {
+      if (val) {
+        acc.push(key);
+      }
+      return acc;
+    }, [] as string[]).length === 1;
 
   const handleRadioSelect = (targetCategoryId: number) => {
     setSelectedSubcategories({ [targetCategoryId]: true });
@@ -418,18 +416,20 @@ const FormStep = ({
       <ul className={styles.refinementList}>
         {refinements.map((refinement) => {
           if (refinement.hidden) {
-            return '';
+            return "";
           }
-          return (<li className={styles.listOption} key={refinement.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedRefinements[refinement.id] || false}
-                onChange={() => toggleRefinement(refinement.id)}
-              />
-              <span>{refinement.name}</span>
-            </label>
-          </li>);
+          return (
+            <li className={styles.listOption} key={refinement.id}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedRefinements[refinement.id] || false}
+                  onChange={() => toggleRefinement(refinement.id)}
+                />
+                <span>{refinement.name}</span>
+              </label>
+            </li>
+          );
         })}
       </ul>
     </div>
