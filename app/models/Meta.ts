@@ -50,6 +50,7 @@ export interface Category {
   name: string;
   top_level: boolean;
   featured: boolean;
+  hidden?: boolean;
 }
 
 export interface Eligibility {

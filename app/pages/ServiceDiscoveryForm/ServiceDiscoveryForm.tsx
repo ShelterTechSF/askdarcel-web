@@ -21,6 +21,7 @@ import styles from "./ServiceDiscoveryForm.module.scss";
 interface CategoryRefinement {
   name: string;
   id: number;
+  hidden?: boolean;
 }
 
 interface SelectedRefinements {
@@ -44,8 +45,8 @@ export const ServiceDiscoveryForm = () => {
     category?.id ?? null
   );
 
-  // The selectedSubcategory represents the single subcategory selected by the user in
-  // the RadioFormStep component
+  // The selectedSubcategory represents a single subcategory selected by the user in
+  // the FormStep or RadioFormStep component
   const [selectedSubcategory, setSelectedSubcategory] = useState<number | null>(
     null
   );
@@ -118,6 +119,14 @@ const InnerServiceDiscoveryForm = ({
         setSelectedSubcategory(null);
         setCurrentStep(currentStep + 1);
       }
+    } else if (stepName === "subcategories") {
+      if (selectedSubcategory === 2100017) {
+        history.replace("/services/3792")
+      } else if (selectedSubcategory === 333) {
+        history.replace("/services/4028")
+      } else {
+        setCurrentStep(currentStep + 1);
+      }
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -173,7 +182,7 @@ const Content = ({
   subcategories: CategoryRefinement[];
   categorySlug: string;
   subcategorySubheading: string;
-  setSelectedSubcategory: (targetItemId: number) => void;
+  setSelectedSubcategory: (targetItemId: number | null) => void;
 }) => {
   const [selectedEligibilities, setSelectedEligibilities] =
     useState<SelectedRefinements>({});
@@ -188,11 +197,40 @@ const Content = ({
   };
 
   const handleSubcategoryClick = (targetCategoryId: number) => {
-    setSelectedSubcategories({
+    let selectedRefinements = {
       ...selectedSubcategories,
       [targetCategoryId]: !selectedSubcategories[targetCategoryId],
-    });
+    };
+    if (targetCategoryId === 0) {
+      const selected = selectedRefinements[targetCategoryId];
+      selectedRefinements = {
+        ...selectedRefinements,
+        73: selected,
+        312: selected,
+        87: selected,
+        118: selected,
+        23: selected,
+        63: selected,
+      }
+    }
+    setSelectedSubcategories(selectedRefinements);
+
+    if (singleCategorySelected(selectedRefinements)) {
+      setSelectedSubcategory(targetCategoryId);
+    } else {
+      setSelectedSubcategory(null);
+    }
   };
+
+  const singleCategorySelected = (selected: SelectedRefinements): boolean => {
+    return Object.entries(selected)
+      .reduce((acc, [key, val]) => {
+        if (val) {
+          acc.push(key)
+        }
+        return acc;
+      }, [] as string[]).length === 1;
+  }
 
   const handleRadioSelect = (targetCategoryId: number) => {
     setSelectedSubcategories({ [targetCategoryId]: true });
@@ -246,7 +284,7 @@ const Content = ({
             .filter((elg) => selectedEligibilities[elg.id])
             .map((el) => el.name),
           categories: subcategories
-            .filter((c) => selectedSubcategories[c.id])
+            .filter((c) => c.id !== 0 && selectedSubcategories[c.id])
             .map((c) => c.name),
         },
       };
@@ -378,8 +416,11 @@ const FormStep = ({
       <h1 className={styles.contentText}>{heading}</h1>
       <h2 className={styles.contentText}>{subheading}</h2>
       <ul className={styles.refinementList}>
-        {refinements.map((refinement) => (
-          <li className={styles.listOption} key={refinement.id}>
+        {refinements.map((refinement) => {
+          if (refinement.hidden) {
+            return '';
+          }
+          return (<li className={styles.listOption} key={refinement.id}>
             <label>
               <input
                 type="checkbox"
@@ -388,8 +429,8 @@ const FormStep = ({
               />
               <span>{refinement.name}</span>
             </label>
-          </li>
-        ))}
+          </li>);
+        })}
       </ul>
     </div>
   </div>

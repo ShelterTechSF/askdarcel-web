@@ -45,7 +45,22 @@ export const useSubcategoriesForCategory = (
       dataService
         .get(`/api/v2/categories/subcategories/${categoryID}`)
         .then((response) => {
-          setSubcategories(response.categories as Category[]);
+          const hiddenCategoryIds = [73, 312, 87, 118, 23, 63];
+          const categories: Category[] = response.categories
+            .map((category: Category) => {
+              if (hiddenCategoryIds.includes(category.id)) {
+                return {
+                  ...category,
+                  hidden: true
+                };
+              }
+              return category
+            });
+
+          if (categoryID === "1000005" || categoryID === "1000008") {
+            categories.push({ id: 0, name: "HIV & Aging" } as Category)
+          }
+          setSubcategories(categories);
         });
     }
   }, [categoryID]);

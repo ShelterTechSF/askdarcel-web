@@ -21,7 +21,7 @@ export const coreCategories = [
   },
   {
     algoliaCategoryName: "sfsg-health",
-    name: "Health and COVID-19",
+    name: "Health Services",
     icon: "hospital",
     categorySlug: "medical-services-resources",
   },
