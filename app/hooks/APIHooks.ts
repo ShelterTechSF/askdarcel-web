@@ -30,7 +30,6 @@ export const useEligibilitiesForCategory = (
 
   return eligibilities;
 };
-
 /** Make an API call to fetch all subcategories for a given categoryID.
  *
  * Returns the list of categories. Returns null until the request succeeds.
@@ -45,22 +44,19 @@ export const useSubcategoriesForCategory = (
       dataService
         .get(`/api/v2/categories/subcategories/${categoryID}`)
         .then((response) => {
-          const hiddenCategoryIds = [73, 312, 87, 118, 23, 63];
-          const categories: Category[] = response.categories.map(
-            (category: Category) => {
-              if (hiddenCategoryIds.includes(category.id)) {
-                return {
-                  ...category,
-                  hidden: true,
-                };
-              }
-              return category;
-            }
-          );
+          const categories = response.categories as Category[];
 
+          /*
+           * The sfsg-health (1000005) and sfsg-lgbtqa (1000008) categories
+           * are getting a fake subcategory that represents a group of real
+           * categories from the database.
+           * The fake category will be show in the ServiceDiscoveryForm and
+           * the real categories will be shown in the ServiceDiscoveryResults.
+           */
           if (categoryID === "1000005" || categoryID === "1000008") {
             categories.push({ id: 0, name: "HIV & Aging" } as Category);
           }
+
           setSubcategories(categories);
         });
     }

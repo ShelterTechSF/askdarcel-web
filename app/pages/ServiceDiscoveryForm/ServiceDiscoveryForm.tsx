@@ -21,7 +21,6 @@ import styles from "./ServiceDiscoveryForm.module.scss";
 interface CategoryRefinement {
   name: string;
   id: number;
-  hidden?: boolean;
 }
 
 interface SelectedRefinements {
@@ -121,8 +120,12 @@ const InnerServiceDiscoveryForm = ({
       }
     } else if (stepName === "subcategories") {
       if (selectedSubcategory === 2100017) {
+        // subcategory is "Adult Shelter Reservation"
+        // navigate directly to service "Adult Shelter Reservation System"
         history.replace("/services/3792");
       } else if (selectedSubcategory === 333) {
+        // subcategory is "Affordable Connectivity Program"
+        // navigate directly to service "Affordable Service Programs"
         history.replace("/services/4028");
       } else {
         setCurrentStep(currentStep + 1);
@@ -202,15 +205,20 @@ const Content = ({
       [targetCategoryId]: !selectedSubcategories[targetCategoryId],
     };
     if (targetCategoryId === 0) {
+      /*
+       * The fake category { id: 0, name: "HIV & Aging" } only exists on the frontend
+       * it represents a group of real categories that are hidden in the
+       * ServiceDiscoveryForm but included in the ServiceDiscoveryResults
+       */
       const selected = selectedRefinements[targetCategoryId];
       selectedRefinements = {
         ...selectedRefinements,
-        73: selected,
-        312: selected,
-        87: selected,
-        118: selected,
-        23: selected,
-        63: selected,
+        73: selected,  // HIV Treatment
+        312: selected, // STD/STI Treatment & Prevention
+        87: selected,  // Hospice
+        118: selected, // In-Home Support
+        23: selected,  // Assisted Living
+        63: selected,  // Disease Screening
       };
     }
     setSelectedSubcategories(selectedRefinements);
@@ -223,12 +231,7 @@ const Content = ({
   };
 
   const singleCategorySelected = (selected: SelectedRefinements): boolean =>
-    Object.entries(selected).reduce((acc, [key, val]) => {
-      if (val) {
-        acc.push(key);
-      }
-      return acc;
-    }, [] as string[]).length === 1;
+    Object.values(selected).filter(val => val).length === 1;
 
   const handleRadioSelect = (targetCategoryId: number) => {
     setSelectedSubcategories({ [targetCategoryId]: true });
@@ -415,7 +418,18 @@ const FormStep = ({
       <h2 className={styles.contentText}>{subheading}</h2>
       <ul className={styles.refinementList}>
         {refinements.map((refinement) => {
-          if (refinement.hidden) {
+          /*
+           * The following categories are grouped together under the fake "HIV & Aging" category
+           * { id: 73,  name: "HIV Treatment" }
+           * { id: 312, name: "STD/STI Treatment & Prevention" }
+           * { id: 87,  name: "Hospice" }
+           * { id: 118, name: "In-Home Support" }
+           * { id: 23,  name: "Assisted Living" }
+           * { id: 63,  name: "Disease Screening" }
+           */
+          const hiddenCategoryIds = [73, 312, 87, 118, 23, 63];
+
+          if (hiddenCategoryIds.includes(refinement.id)) {
             return "";
           }
           return (
