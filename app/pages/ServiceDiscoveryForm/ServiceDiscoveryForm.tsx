@@ -213,12 +213,12 @@ const Content = ({
       const selected = selectedRefinements[targetCategoryId];
       selectedRefinements = {
         ...selectedRefinements,
-        73: selected,  // HIV Treatment
+        73: selected, // HIV Treatment
         312: selected, // STD/STI Treatment & Prevention
-        87: selected,  // Hospice
+        87: selected, // Hospice
         118: selected, // In-Home Support
-        23: selected,  // Assisted Living
-        63: selected,  // Disease Screening
+        23: selected, // Assisted Living
+        63: selected, // Disease Screening
       };
     }
     setSelectedSubcategories(selectedRefinements);
@@ -231,7 +231,7 @@ const Content = ({
   };
 
   const singleCategorySelected = (selected: SelectedRefinements): boolean =>
-    Object.values(selected).filter(val => val).length === 1;
+    Object.values(selected).filter((val) => val).length === 1;
 
   const handleRadioSelect = (targetCategoryId: number) => {
     setSelectedSubcategories({ [targetCategoryId]: true });
