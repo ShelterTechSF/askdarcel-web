@@ -119,7 +119,7 @@ const InnerServiceDiscoveryForm = ({
         setCurrentStep(currentStep + 1);
       }
     } else if (stepName === "subcategories") {
-      if (selectedSubcategory === 2100017) {
+      if (selectedSubcategory === 373) {
         // subcategory is "Adult Shelter Reservation"
         // navigate directly to service "Adult Shelter Reservation System"
         history.replace("/services/3792");
