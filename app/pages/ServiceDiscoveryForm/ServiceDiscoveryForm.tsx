@@ -44,8 +44,8 @@ export const ServiceDiscoveryForm = () => {
     category?.id ?? null
   );
 
-  // The selectedSubcategory represents the single subcategory selected by the user in
-  // the RadioFormStep component
+  // The selectedSubcategory represents a single subcategory selected by the user in
+  // the FormStep or RadioFormStep component
   const [selectedSubcategory, setSelectedSubcategory] = useState<number | null>(
     null
   );
@@ -118,6 +118,18 @@ const InnerServiceDiscoveryForm = ({
         setSelectedSubcategory(null);
         setCurrentStep(currentStep + 1);
       }
+    } else if (stepName === "subcategories") {
+      if (selectedSubcategory === 2100017) {
+        // subcategory is "Adult Shelter Reservation"
+        // navigate directly to service "Adult Shelter Reservation System"
+        history.replace("/services/3792");
+      } else if (selectedSubcategory === 333) {
+        // subcategory is "Affordable Connectivity Program"
+        // navigate directly to service "Affordable Service Programs"
+        history.replace("/services/4028");
+      } else {
+        setCurrentStep(currentStep + 1);
+      }
     } else {
       setCurrentStep(currentStep + 1);
     }
@@ -173,7 +185,7 @@ const Content = ({
   subcategories: CategoryRefinement[];
   categorySlug: string;
   subcategorySubheading: string;
-  setSelectedSubcategory: (targetItemId: number) => void;
+  setSelectedSubcategory: (targetItemId: number | null) => void;
 }) => {
   const [selectedEligibilities, setSelectedEligibilities] =
     useState<SelectedRefinements>({});
@@ -188,11 +200,38 @@ const Content = ({
   };
 
   const handleSubcategoryClick = (targetCategoryId: number) => {
-    setSelectedSubcategories({
+    let selectedRefinements = {
       ...selectedSubcategories,
       [targetCategoryId]: !selectedSubcategories[targetCategoryId],
-    });
+    };
+    if (targetCategoryId === 0) {
+      /*
+       * The fake category { id: 0, name: "HIV & Aging" } only exists on the frontend
+       * it represents a group of real categories that are hidden in the
+       * ServiceDiscoveryForm but included in the ServiceDiscoveryResults
+       */
+      const selected = selectedRefinements[targetCategoryId];
+      selectedRefinements = {
+        ...selectedRefinements,
+        73: selected, // HIV Treatment
+        312: selected, // STD/STI Treatment & Prevention
+        87: selected, // Hospice
+        118: selected, // In-Home Support
+        23: selected, // Assisted Living
+        63: selected, // Disease Screening
+      };
+    }
+    setSelectedSubcategories(selectedRefinements);
+
+    if (singleCategorySelected(selectedRefinements)) {
+      setSelectedSubcategory(targetCategoryId);
+    } else {
+      setSelectedSubcategory(null);
+    }
   };
+
+  const singleCategorySelected = (selected: SelectedRefinements): boolean =>
+    Object.values(selected).filter((val) => val).length === 1;
 
   const handleRadioSelect = (targetCategoryId: number) => {
     setSelectedSubcategories({ [targetCategoryId]: true });
@@ -246,7 +285,7 @@ const Content = ({
             .filter((elg) => selectedEligibilities[elg.id])
             .map((el) => el.name),
           categories: subcategories
-            .filter((c) => selectedSubcategories[c.id])
+            .filter((c) => c.id !== 0 && selectedSubcategories[c.id])
             .map((c) => c.name),
         },
       };
@@ -378,18 +417,34 @@ const FormStep = ({
       <h1 className={styles.contentText}>{heading}</h1>
       <h2 className={styles.contentText}>{subheading}</h2>
       <ul className={styles.refinementList}>
-        {refinements.map((refinement) => (
-          <li className={styles.listOption} key={refinement.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedRefinements[refinement.id] || false}
-                onChange={() => toggleRefinement(refinement.id)}
-              />
-              <span>{refinement.name}</span>
-            </label>
-          </li>
-        ))}
+        {refinements.map((refinement) => {
+          /*
+           * The following categories are grouped together under the fake "HIV & Aging" category
+           * { id: 73,  name: "HIV Treatment" }
+           * { id: 312, name: "STD/STI Treatment & Prevention" }
+           * { id: 87,  name: "Hospice" }
+           * { id: 118, name: "In-Home Support" }
+           * { id: 23,  name: "Assisted Living" }
+           * { id: 63,  name: "Disease Screening" }
+           */
+          const hiddenCategoryIds = [73, 312, 87, 118, 23, 63];
+
+          if (hiddenCategoryIds.includes(refinement.id)) {
+            return "";
+          }
+          return (
+            <li className={styles.listOption} key={refinement.id}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedRefinements[refinement.id] || false}
+                  onChange={() => toggleRefinement(refinement.id)}
+                />
+                <span>{refinement.name}</span>
+              </label>
+            </li>
+          );
+        })}
       </ul>
     </div>
   </div>
