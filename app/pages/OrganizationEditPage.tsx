@@ -1596,7 +1596,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
     // fire off resource request
     if (resourceModified) {
       promises.push(
-        dataService.post(`/api/resources/${resource.id}/change_requests`, {
+        dataService.post(`/api/v2/resources/${resource.id}/change_requests`, {
           change_request: {
             field_changes,
             action: ACTION_EDIT
