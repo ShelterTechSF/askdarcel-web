@@ -1599,7 +1599,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
         dataService.post(`/api/v2/resources/${resource.id}/change_requests`, {
           change_request: {
             field_changes,
-            action: ACTION_EDIT
+            action: ACTION_EDIT,
           },
         })
       );
