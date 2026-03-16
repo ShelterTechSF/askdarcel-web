@@ -79,3 +79,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - run: echo ${{ steps.docker_build.outputs.digest }}
+
+      # Authenticate with GKE
+      - uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ${{ secrets.GKE_CLUSTER }}
+          location: ${{ secrets.GKE_ZONE }}
+
+      # Update GKE cluster with new image name
+      # - run: kubectl set image deployment/web web=${{ env.DOCKERHUB_REPO }}:${{ github.ref_name }} -n production
+      - run: kubectl set image deployment/web web=${{ env.GCP_REPO }}:${{ github.ref_name }} -n production
