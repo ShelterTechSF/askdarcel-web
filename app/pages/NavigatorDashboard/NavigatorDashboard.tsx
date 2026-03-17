@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import qs from "qs";
 import * as Sentry from "@sentry/browser";
 import { Link, useHistory } from "react-router-dom";
 
 import { icon } from "assets";
 import { Button } from "components/ui/inline/Button/Button";
+import { Modal } from "components/ui/Modal/Modal";
 import { coreCategories } from "pages/HomePage";
 import { get } from "utils/DataService";
 import { useAppContext } from "utils/useAppContext";
@@ -193,6 +194,12 @@ const BookmarksAndSavedSearches = () => {
     });
   }, [authState]);
 
+  const handleRename = (id: number, newName: string) => {
+    setSavedSearches((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, name: newName } : s))
+    );
+  };
+
   return (
     <div className={styles.bookmarkAndSavedSearchContainer}>
       <h2 className={styles.bookmarksHeader}>Bookmarks and Saved Searches</h2>
@@ -212,7 +219,7 @@ const BookmarksAndSavedSearches = () => {
         <ul className={styles.cardList}>
           {savedSearches.map((search) => (
             <li key={search.id}>
-              <SavedSearchCard savedSearch={search} />
+              <SavedSearchCard savedSearch={search} onRename={handleRename} />
             </li>
           ))}
         </ul>
@@ -221,37 +228,277 @@ const BookmarksAndSavedSearches = () => {
   );
 };
 
-const SavedSearchCard = ({ savedSearch }: { savedSearch: SavedSearch }) => {
+const SearchParamTags = ({
+  categories,
+  eligibilities,
+}: {
+  categories: string[];
+  eligibilities: string[];
+}) => {
+  const tags = [...(categories ?? []), ...(eligibilities ?? [])];
+  if (tags.length === 0) return null;
+  return (
+    <div className={styles.savedSearchTags}>
+      {tags.map((tag) => (
+        <span key={tag} className={styles.savedSearchTag}>
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const RenameSearchModal = ({
+  savedSearch,
+  isOpen,
+  onClose,
+  onSave,
+}: {
+  savedSearch: SavedSearch;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (newName: string) => void;
+}) => {
+  const [labelValue, setLabelValue] = useState(savedSearch.name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Reset input and move focus into the modal when it opens
+  useEffect(() => {
+    if (isOpen) {
+      setLabelValue(savedSearch.name);
+      inputRef.current?.focus();
+    }
+  }, [isOpen, savedSearch.name]);
+
+  const MAX_LENGTH = 60;
+  const trimmed = labelValue.trim();
+  const isEmpty = trimmed.length === 0;
+  const tooLong = trimmed.length > MAX_LENGTH;
+  const isDisabled = isEmpty || tooLong;
+
+  const handleSave = () => {
+    if (isDisabled) return;
+    // TODO: replace with real API call once backend is ready
+    // patchSavedSearch(savedSearch.id, { name: trimmed }, authToken)
+    onSave(trimmed);
+    onClose();
+  };
+
+  const handleClearLabel = () => {
+    // TODO: replace with real API call once backend is ready
+    // patchSavedSearch(savedSearch.id, { name: savedSearch.search.query }, authToken)
+    onSave(savedSearch.search.query);
+    onClose();
+  };
+
+  return (
+    <Modal isOpen={isOpen} closeModal={onClose}>
+      <div className={styles.renameModal}>
+        <h2 className={styles.renameModalHeading}>Rename saved search</h2>
+        <p className={styles.renameModalSubtext}>
+          Give this search a label that makes sense to you. The original search
+          query will not change.
+        </p>
+
+        <label className={styles.renameModalLabel} htmlFor="search-label-input">
+          Label
+        </label>
+        <input
+          id="search-label-input"
+          ref={inputRef}
+          className={styles.renameModalInput}
+          type="text"
+          value={labelValue}
+          maxLength={MAX_LENGTH + 1}
+          onChange={(e) => setLabelValue(e.target.value)}
+        />
+        <div className={styles.renameModalMeta}>
+          {tooLong && (
+            <span className={styles.renameModalError}>
+              Label must be {MAX_LENGTH} characters or fewer.
+            </span>
+          )}
+          {isEmpty && (
+            <span className={styles.renameModalError}>
+              A label is required.
+            </span>
+          )}
+          <span className={styles.renameModalCounter}>
+            {trimmed.length} / {MAX_LENGTH}
+          </span>
+        </div>
+
+        <p className={styles.renameModalLabel}>This search includes</p>
+        <div className={styles.renameModalSearchSummary}>
+          {savedSearch.search.query && (
+            <div className={styles.renameModalSummaryRow}>
+              <span className={styles.renameModalSummaryRowLabel}>Query</span>
+              <span>{savedSearch.search.query}</span>
+            </div>
+          )}
+          {savedSearch.search.categories?.length > 0 && (
+            <div className={styles.renameModalSummaryRow}>
+              <span className={styles.renameModalSummaryRowLabel}>
+                Categories
+              </span>
+              <div className={styles.savedSearchTags}>
+                {savedSearch.search.categories.map((c) => (
+                  <span key={c} className={styles.savedSearchTag}>
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {savedSearch.search.eligibilities?.length > 0 && (
+            <div className={styles.renameModalSummaryRow}>
+              <span className={styles.renameModalSummaryRowLabel}>
+                Eligibilities
+              </span>
+              <div className={styles.savedSearchTags}>
+                {savedSearch.search.eligibilities.map((e) => (
+                  <span key={e} className={styles.savedSearchTag}>
+                    {e}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {savedSearch.name !== savedSearch.search.query && (
+          <button
+            type="button"
+            className={styles.renameModalClearLink}
+            onClick={handleClearLabel}
+          >
+            Clear custom label and use original query
+          </button>
+        )}
+
+        <div className={styles.renameModalActions}>
+          <button
+            type="button"
+            className={styles.renameModalCancelButton}
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          <Button
+            buttonType="button"
+            addClass={styles.renameModalSaveButton}
+            onClick={handleSave}
+          >
+            Save label
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+const SavedSearchCard = ({
+  savedSearch,
+  onRename,
+}: {
+  savedSearch: SavedSearch;
+  onRename: (id: number, newName: string) => void;
+}) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close context menu when clicking outside
+  useEffect(() => {
+    if (!menuOpen) return () => {};
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
+
   let aroundLatLng = null;
   if (savedSearch.search.lat !== null && savedSearch.search.lng !== null) {
     aroundLatLng = `${savedSearch.search.lat}, ${savedSearch.search.lng}`;
   }
 
-  // Mimic the search state object that Algolia InstantSearch would create
   const searchState = {
     refinementList: {
       eligibilities: savedSearch.search.eligibilities,
       categories: savedSearch.search.categories,
     },
-    configure: {
-      aroundLatLng,
-    },
+    configure: { aroundLatLng },
     query: savedSearch.search.query,
   };
   const params = qs.stringify(searchState);
 
+  const isRenamed = savedSearch.name !== savedSearch.search.query;
+
   return (
-    <Link className={styles.cardItem} to={`/search?${params}`}>
-      <img src={SearchIcon} alt="Saved Search Icon" />
-      <p>Results for &quot;{savedSearch.name}&quot;</p>
-      <button type="button" className={styles.savedSearchEditButton}>
-        <span
-          className={`material-symbols-outlined ${styles.savedSearchEditIcon}`}
-        >
-          minimize
-        </span>
-      </button>
-    </Link>
+    <>
+      <div className={styles.cardItem}>
+        <Link className={styles.savedSearchLink} to={`/search?${params}`}>
+          <img src={SearchIcon} alt="Saved Search Icon" />
+          <div className={styles.savedSearchText}>
+            {isRenamed ? (
+              <>
+                <p className={styles.savedSearchAlias}>{savedSearch.name}</p>
+                <p className={styles.savedSearchQuery}>
+                  Search: {savedSearch.search.query}
+                </p>
+              </>
+            ) : (
+              <p>Results for &quot;{savedSearch.name}&quot;</p>
+            )}
+            <SearchParamTags
+              categories={savedSearch.search.categories}
+              eligibilities={savedSearch.search.eligibilities}
+            />
+          </div>
+        </Link>
+        <div className={styles.savedSearchMenuWrapper} ref={menuRef}>
+          <button
+            type="button"
+            className={styles.savedSearchMenuButton}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            aria-label={`More actions for ${savedSearch.name}`}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            <span className="material-symbols-outlined">more_horiz</span>
+          </button>
+          {menuOpen && (
+            <div className={styles.savedSearchMenu} role="menu">
+              <button
+                role="menuitem"
+                type="button"
+                className={styles.savedSearchMenuItem}
+                onClick={() => {
+                  setMenuOpen(false);
+                  setModalOpen(true);
+                }}
+              >
+                Rename
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {modalOpen && (
+        <RenameSearchModal
+          savedSearch={savedSearch}
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onSave={(newName) => onRename(savedSearch.id, newName)}
+        />
+      )}
+    </>
   );
 };
 
@@ -285,7 +532,7 @@ const BookmarkFolderCard = ({
   }, [updatedAt]);
 
   return (
-    <div className={styles.cardItem}>
+    <div className={styles.bookmarkFolderCard}>
       <i className="material-symbols-outlined">folder</i>
       <p>{folder.name}</p>
       <div className={styles.bookmarkUpdated}>
