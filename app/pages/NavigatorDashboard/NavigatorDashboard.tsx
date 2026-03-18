@@ -395,6 +395,7 @@ const RenameSearchModal = ({
             buttonType="button"
             addClass={styles.renameModalSaveButton}
             onClick={handleSave}
+            disabled={isDisabled}
           >
             Save label
           </Button>
