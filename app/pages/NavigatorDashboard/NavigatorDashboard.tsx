@@ -25,6 +25,10 @@ coreCategories.forEach((category) => {
   initialSelectedCategories[category.algoliaCategoryName] = false;
 });
 
+const categorySlugToName: Record<string, string> = Object.fromEntries(
+  coreCategories.map((c) => [c.algoliaCategoryName, c.name])
+);
+
 // TODO: Once we have created the parent eligibilities with children in our production DB,
 // this array will need to contain objects with their name and ID.
 const PARENT_ELIGIBILITIES: { name: string; id: number }[] = [];
@@ -235,7 +239,10 @@ const SearchParamTags = ({
   categories: string[];
   eligibilities: string[];
 }) => {
-  const tags = [...(categories ?? []), ...(eligibilities ?? [])];
+  const tags = [
+    ...(categories ?? []).map((c) => categorySlugToName[c] ?? c),
+    ...(eligibilities ?? []),
+  ];
   if (tags.length === 0) return null;
   return (
     <div className={styles.savedSearchTags}>
@@ -339,12 +346,12 @@ const RenameSearchModal = ({
           {savedSearch.search.categories?.length > 0 && (
             <div className={styles.renameModalSummaryRow}>
               <span className={styles.renameModalSummaryRowLabel}>
-                Categories
+                Service Types
               </span>
               <div className={styles.savedSearchTags}>
                 {savedSearch.search.categories.map((c) => (
                   <span key={c} className={styles.savedSearchTag}>
-                    {c}
+                    {categorySlugToName[c] ?? c}
                   </span>
                 ))}
               </div>
