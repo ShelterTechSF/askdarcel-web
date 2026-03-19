@@ -1559,48 +1559,45 @@ class OrganizationEditPage extends React.Component<Props, State> {
     const promises: Promise<unknown>[] = [];
 
     // Resource
-    const field_changes: Partial<Organization> = {};
+    const resourceChangeRequest: Partial<Organization> = {};
     let resourceModified = false;
     if (name !== resource.name) {
-      field_changes.name = name;
+      resourceChangeRequest.name = name;
       resourceModified = true;
     }
     if (long_description !== resource.long_description) {
-      field_changes.long_description = long_description;
+      resourceChangeRequest.long_description = long_description;
       resourceModified = true;
     }
     if (short_description !== resource.short_description) {
-      field_changes.short_description = short_description;
+      resourceChangeRequest.short_description = short_description;
       resourceModified = true;
     }
     if (website !== resource.website) {
-      field_changes.website = website;
+      resourceChangeRequest.website = website;
       resourceModified = true;
     }
     if (email !== resource.email) {
-      field_changes.email = email;
+      resourceChangeRequest.email = email;
       resourceModified = true;
     }
     if (alternate_name !== resource.alternate_name) {
-      field_changes.alternate_name = alternate_name;
+      resourceChangeRequest.alternate_name = alternate_name;
       resourceModified = true;
     }
     if (legal_status !== resource.legal_status) {
-      field_changes.legal_status = legal_status;
+      resourceChangeRequest.legal_status = legal_status;
       resourceModified = true;
     }
     if (internal_note !== resource.internal_note) {
-      field_changes.internal_note = internal_note;
+      resourceChangeRequest.internal_note = internal_note;
       resourceModified = true;
     }
     // fire off resource request
     if (resourceModified) {
       promises.push(
-        dataService.post(`/api/v2/resources/${resource.id}/change_requests`, {
-          change_request: {
-            field_changes,
-            action: ACTION_EDIT,
-          },
+        dataService.post(`/api/resources/${resource.id}/change_requests`, {
+          change_request: resourceChangeRequest,
         })
       );
     }
