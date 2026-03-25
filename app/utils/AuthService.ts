@@ -63,9 +63,12 @@ export const completeUserSignup = (
   name: string,
   organization: string | null = null
 ) => {
-  passwordlessLogin(authClient, email, verificationCode);
-  // Store user sign up data, which will be saved to our backend after Auth0 success redirect
-  setUserSignUpData({ email, name, organization });
+  passwordlessLogin(
+    authClient,
+    email,
+    verificationCode,
+    { email, name, organization },
+  );
 };
 
 /** This method initiates the log-in/sign-up process by sending a code
@@ -99,7 +102,8 @@ export const passwordlessStart = (authClient: WebAuth, email: string) => {
 export const passwordlessLogin = (
   authClient: WebAuth,
   email: string,
-  verificationCode: string
+  verificationCode: string,
+  userSignUpData?: UserSignUpData
 ) => {
   const stateToken = createStateToken();
   sessionStorage.setItem("authStateToken", stateToken);
@@ -116,6 +120,10 @@ export const passwordlessLogin = (
         Sentry.captureException(err);
       }
     }
+  );
+  // Store user sign up data, which will be saved to our backend after Auth0 success redirect
+  setUserSignUpData(
+    userSignUpData ?? { email, name: '', organization: null }
   );
 };
 
@@ -154,7 +162,7 @@ export const saveUser = (
   authToken: string
 ) => {
   return post(
-    "/api/users",
+    "/api/v2/users",
     { ...userSignUpData, user_external_id: userExternalId },
     { Authorization: `Bearer ${authToken}` }
   );

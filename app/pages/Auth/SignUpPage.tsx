@@ -48,7 +48,7 @@ export const SignUpPage = () => {
             We want to make sure that your account information is safe, so you
             will be sent a verification code to your email each time you log in.
             Please enter in your email address and then check your email to find
-            a 5-number verification code.
+            a 6 digit verification code.
           </p>
           <form className={styles.authForm} onSubmit={signUp}>
             <input

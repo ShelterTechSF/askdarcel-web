@@ -10,6 +10,6 @@ app/utils/config.js
 config.yml
 .DS_Store
 yarn.lock
-
+.vscode
 cypress/videos/**
 cypress/screenshots/**
