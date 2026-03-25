@@ -63,12 +63,11 @@ export const completeUserSignup = (
   name: string,
   organization: string | null = null
 ) => {
-  passwordlessLogin(
-    authClient,
+  passwordlessLogin(authClient, email, verificationCode, {
     email,
-    verificationCode,
-    { email, name, organization },
-  );
+    name,
+    organization,
+  });
 };
 
 /** This method initiates the log-in/sign-up process by sending a code
@@ -122,9 +121,7 @@ export const passwordlessLogin = (
     }
   );
   // Store user sign up data, which will be saved to our backend after Auth0 success redirect
-  setUserSignUpData(
-    userSignUpData ?? { email, name: '', organization: null }
-  );
+  setUserSignUpData(userSignUpData ?? { email, name: "", organization: null });
 };
 
 export const logout = (
