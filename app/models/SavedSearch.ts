@@ -38,3 +38,18 @@ export function createSavedSearch(
     Authorization: `bearer ${authToken}`,
   }).then((resp) => resp.json());
 }
+
+export function patchSavedSearch(
+  id: number,
+  updates: { name: string },
+  authToken: string
+): Promise<SavedSearch> {
+  return fetch(`/api/v2/saved_searches/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `bearer ${authToken}`,
+    },
+    body: JSON.stringify(updates),
+  }).then((resp) => resp.json());
+}
