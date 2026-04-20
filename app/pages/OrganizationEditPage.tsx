@@ -1569,10 +1569,6 @@ class OrganizationEditPage extends React.Component<Props, State> {
       field_changes.long_description = long_description;
       resourceModified = true;
     }
-    if (short_description !== resource.short_description) {
-      field_changes.short_description = short_description;
-      resourceModified = true;
-    }
     if (website !== resource.website) {
       field_changes.website = website;
       resourceModified = true;
