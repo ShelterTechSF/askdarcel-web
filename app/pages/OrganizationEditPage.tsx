@@ -1589,6 +1589,7 @@ class OrganizationEditPage extends React.Component<Props, State> {
       field_changes.internal_note = internal_note;
       resourceModified = true;
     }
+
     // fire off resource request
     if (resourceModified) {
       promises.push(
