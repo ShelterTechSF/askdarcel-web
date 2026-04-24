@@ -37,12 +37,14 @@ const menuStyles = {
 
 export const BookmarksMenu = ({
   isOpen,
+  initialFolderId,
   onStateChange,
   outerContainerId,
   pageWrapId,
   toggleBookmarksMenu,
 }: {
   isOpen: boolean;
+  initialFolderId: number | null;
   onStateChange: (s: State) => void;
   outerContainerId: string;
   pageWrapId: string;
@@ -58,16 +60,22 @@ export const BookmarksMenu = ({
     itemListElement="div"
     width={450}
   >
-    <BookmarksInnerMenu toggleMenu={toggleBookmarksMenu} isOpen={isOpen} />
+  <BookmarksInnerMenu
+    toggleMenu={toggleBookmarksMenu}
+    isOpen={isOpen}
+    initialFolderId={initialFolderId}
+  />
   </Menu>
 );
 
 const BookmarksInnerMenu = ({
   toggleMenu,
   isOpen,
+  initialFolderId,
 }: {
   toggleMenu: (open: boolean) => void;
   isOpen: boolean;
+  initialFolderId: number | null;
 }) => {
   const [activeFolder, setActiveFolder] = useState<number | null>(null);
   const [bookmarkFolders, setBookmarkFolders] = useState<Folder[]>([]);
@@ -105,6 +113,24 @@ const BookmarksInnerMenu = ({
     // dashboard, and then open this BookmarkMenu, it will not reflect the newly
     // added bookmarks.
   }, [authState, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (initialFolderId === null) {
+      setActiveFolder(null);
+      return;
+    }
+
+    const folderIndex = bookmarkFolders.findIndex(
+      (folder) => folder.id === initialFolderId
+    );
+
+    if (folderIndex !== -1) {
+      setActiveFolder(folderIndex);
+    }
+  }, [isOpen, initialFolderId, bookmarkFolders]);
+
 
   const showFolders = () => {
     if (activeFolder !== null) {
