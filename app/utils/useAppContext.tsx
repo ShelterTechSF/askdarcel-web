@@ -96,11 +96,11 @@ export const AppProvider = ({
     // If the SessionCacher has userSignUpData object, that means a user has just been created
     // in Auth0 and a redirect has occurred. Therefore, we save the new user data to our database.
     // The authState must also have propagated or else we won't have the token yet.
-    const newUserData = SessionCacher.getUserSignUpData();
-    if (newUserData && authState) {
+    const userData = SessionCacher.getUserSignUpData();
+    if (userData && authState) {
       SessionCacher.clearUserSignUpData();
       AuthService.saveUser(
-        newUserData,
+        userData,
         authState.user.externalId,
         authState.accessTokenObject.token
       );
