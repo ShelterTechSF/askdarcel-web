@@ -174,19 +174,11 @@ function updateCollectionObject(
   path: string,
   promises: Promise<unknown>[]
 ) {
-  if (path === "phones") {
-    promises.push(
-      dataService.post(`/api/v2/${path}/${id}/change_requests`, {
-        change_request: { action: ACTION_EDIT, field_changes: object },
-      })
-    );
-  } else {
-    promises.push(
-      dataService.post(`/api/${path}/${id}/change_requests`, {
-        change_request: { action: ACTION_EDIT, field_changes: object },
-      })
-    );
-  }
+  promises.push(
+    dataService.post(`/api/${path}/${id}/change_requests`, {
+      change_request: { action: ACTION_EDIT, field_changes: object },
+    })
+  );
 }
 
 /**
@@ -213,7 +205,7 @@ function createNewPhoneNumber(
   promises: Promise<unknown>[]
 ) {
   promises.push(
-    dataService.post("/api/v2/change_requests", {
+    dataService.post("/api/change_requests", {
       change_request: {
         action: ACTION_INSERT,
         field_changes: item,
