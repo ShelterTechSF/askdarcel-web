@@ -13,7 +13,6 @@ import {
   Notes,
   PhoneNumberRenderer,
   RelativeOpeningTime,
-  ResourceCategories,
   ServiceList,
   TableOfOpeningTimes,
   WebsiteRenderer,
@@ -134,7 +133,6 @@ export const OrganizationListingPage = () => {
             >
               <ul className="info">
                 <div className="info--column">
-                  <ResourceCategories categories={org.categories} />
                   {(org.addresses || []).map((address) => (
                     <AddressInfoRenderer address={address} key={address.id} />
                   ))}
