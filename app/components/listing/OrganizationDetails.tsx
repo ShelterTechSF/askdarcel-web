@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import _ from "lodash";
-import { Address, Category, PhoneNumber } from "../../models";
+import { Address, PhoneNumber } from "../../models";
 
 // Given an address object, returns a React DOM element that displays the
 // address on up to three lines:
