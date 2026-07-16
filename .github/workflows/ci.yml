@@ -12,7 +12,6 @@ on:
 env:
   NODE_VERSION: 18.x
   GCP_REPO: us-west2-docker.pkg.dev/askdarcel-184805/sheltertech/askdarcel-web
-  DOCKERHUB_REPO: sheltertechsf/askdarcel-web
 
 jobs:
   lint:
@@ -119,25 +118,19 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      # Login to both registries
+      # Login to GCP Artifact Registry
       - uses: docker/login-action@v3
         with:
           registry: us-west2-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.GCP_SA_KEY }}
 
-      - uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      # Build and push to both registries
+      # Build and push
       - uses: docker/build-push-action@v6
         with:
           push: true
           context: .
           tags: |
             ${{ env.GCP_REPO }}:latest
-            ${{ env.DOCKERHUB_REPO }}:latest
 
       - run: echo ${{ steps.docker_build.outputs.digest }}
