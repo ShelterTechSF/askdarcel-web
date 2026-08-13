@@ -115,4 +115,4 @@ export function APIDelete(
 }
 
 export const getResourceCount = (): Promise<number> =>
-  get("/api/resources/count");
+  get("/api/v2/resources/count");
