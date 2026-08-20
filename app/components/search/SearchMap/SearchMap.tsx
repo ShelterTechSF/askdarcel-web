@@ -15,6 +15,7 @@ import "./SearchMap.scss";
 import { icon } from "assets";
 import { SearchHit } from "../../../models";
 import config from "../../../config";
+import { useInView } from "../../../hooks/useInView";
 
 export const SearchMap = ({
   hits,
@@ -34,10 +35,22 @@ export const SearchMap = ({
   overlayMapWithSearchResults: boolean;
 }) => {
   const { userLocation } = useAppContext();
-  if (userLocation === null) {
+  // Note: this map sits directly alongside the results list (desktop) or
+  // above it (mobile), so it is typically within the initial viewport and
+  // this will load almost immediately for most visitors. It's included here
+  // mainly for consistency/defense-in-depth with MapOfLocations, and so this
+  // page doesn't pay for a map load on layouts/viewports where the map
+  // isn't immediately visible (e.g. a short viewport with a sticky header).
+  const [mapContainerRef, isMapInView] = useInView<HTMLDivElement>({
+    rootMargin: "300px",
+  });
+
+  if (userLocation === null || !isMapInView) {
     return (
-      <div className="mapLoaderContainer">
-        <Loader />
+      <div className="results-map" ref={mapContainerRef}>
+        <div className="mapLoaderContainer">
+          <Loader />
+        </div>
       </div>
     );
   }
@@ -45,7 +58,7 @@ export const SearchMap = ({
   const { lat, lng } = userLocation;
 
   return (
-    <div className="results-map">
+    <div className="results-map" ref={mapContainerRef}>
       <div className="map-wrapper">
         {/* If map is being overlaid, hide the search area button. It is is neither clickable
             nor relevant in this mode.

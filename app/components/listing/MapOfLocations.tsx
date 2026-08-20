@@ -10,6 +10,7 @@ import {
   UserLocationMarker,
 } from "../ui/MapElements";
 import { useAppContext } from "../../utils";
+import { useInView } from "../../hooks/useInView";
 
 export const MapOfLocations = ({
   locationRenderer,
@@ -19,6 +20,16 @@ export const MapOfLocations = ({
   locationRenderer: (loc: LocationDetails) => ReactElement;
 }) => {
   const { userLocation } = useAppContext();
+  // Location/organization detail pages render this component well below the
+  // fold (after About, Details, Contact Info, etc). Since every mount of
+  // <GoogleMap> is a billable Maps JavaScript API "map load", we defer
+  // mounting it until the map container is about to scroll into view. This
+  // avoids paying for a map load on every page view, including the many
+  // visitors who never scroll down that far.
+  const [mapContainerRef, isMapInView] = useInView<HTMLDivElement>({
+    rootMargin: "300px",
+  });
+
   if (userLocation === null) {
     return <Loader />;
   }
@@ -26,25 +37,29 @@ export const MapOfLocations = ({
 
   return (
     <div>
-      <div className="map">
-        <GoogleMap
-          bootstrapURLKeys={{
-            key: config.GOOGLE_API_KEY,
-          }}
-          defaultCenter={{ lat, lng }}
-          defaultZoom={15}
-          options={createMapOptions}
-        >
-          <UserLocationMarker lat={lat} lng={lng} />
-          {locations.map(({ address, id }, i) => (
-            <CustomMarker
-              key={id}
-              lat={address?.latitude || 0}
-              lng={address?.longitude || 0}
-              text={`${i + 1}`}
-            />
-          ))}
-        </GoogleMap>
+      <div className="map" ref={mapContainerRef}>
+        {isMapInView ? (
+          <GoogleMap
+            bootstrapURLKeys={{
+              key: config.GOOGLE_API_KEY,
+            }}
+            defaultCenter={{ lat, lng }}
+            defaultZoom={15}
+            options={createMapOptions}
+          >
+            <UserLocationMarker lat={lat} lng={lng} />
+            {locations.map(({ address, id }, i) => (
+              <CustomMarker
+                key={id}
+                lat={address?.latitude || 0}
+                lng={address?.longitude || 0}
+                text={`${i + 1}`}
+              />
+            ))}
+          </GoogleMap>
+        ) : (
+          <Loader />
+        )}
       </div>
       {locationRenderer && (
         <Accordion>
