@@ -25,6 +25,17 @@ export const areCoordsInSanFrancisco = (coords: GeoCoordinates): boolean => {
 };
 
 /**
+ * Thrown by getLocationBrowser when the browser successfully returns a real
+ * location, but it falls outside the bounds we support. This is distinct
+ * from other rejection reasons (permission denied, unsupported browser,
+ * timeout, etc.) because it means we already have a real answer -- there's
+ * no reason to believe Google's (IP-based, less precise) Geolocation API
+ * would give a meaningfully different result, so callers can skip that
+ * billed API call and fall straight back to the default location.
+ */
+export class OutOfBoundsLocationError extends Error {}
+
+/**
  * Get location via HTML5 Geolocation API.
  */
 export const getLocationBrowser = () =>
@@ -41,7 +52,7 @@ export const getLocationBrowser = () =>
           } else {
             const msg = `User location out of bounds: ${coords.lat},${coords.lng}`;
             console.log(msg); // eslint-disable-line no-console
-            reject(msg);
+            reject(new OutOfBoundsLocationError(msg));
           }
         },
         (error) => {
@@ -134,11 +145,22 @@ export const useDefaultSanFranciscoLocation = () =>
  * inaccurate geolocation results, but this should be removed if more locations
  * are added.
  *
- * @todo if getLocationBrowser is outside SF, errs and tries to load google as well. Fix
  * @returns A Promise of a location, which is either an object with `lat` and
  * `lng` properties or an error if location is unavaible or out of bounds.
  */
 export const getLocation = () =>
-  getLocationBrowser()
-    .catch(() => getLocationGoogle())
-    .catch(() => useDefaultSanFranciscoLocation());
+  getLocationBrowser().catch((reason) => {
+    if (reason instanceof OutOfBoundsLocationError) {
+      // The browser gave us a real, precise location -- it's just outside
+      // the area we support. Calling Google's (IP-based, less precise)
+      // Geolocation API here is very unlikely to give a meaningfully
+      // different answer, so skip that billed call and go straight to the
+      // default location.
+      return useDefaultSanFranciscoLocation();
+    }
+
+    // Any other rejection reason (permission denied, unsupported browser,
+    // timeout, etc.) means we don't have a real location yet, so it's
+    // still worth trying Google's Geolocation API as a fallback.
+    return getLocationGoogle().catch(() => useDefaultSanFranciscoLocation());
+  });
