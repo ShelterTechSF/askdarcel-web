@@ -49,6 +49,16 @@ jobs:
 
   test_e2e:
     runs-on: ubuntu-latest
+    # This job needs secrets.GCP_SA_KEY to auth to GCP and pull private Docker
+    # images. GitHub does not pass repository secrets to `pull_request`
+    # workflow runs triggered from a forked repository (a platform-level
+    # security restriction, not something we control), so this job would
+    # otherwise fail immediately on every external contributor's PR before any
+    # test code runs. Skip it in that case rather than reporting a failure
+    # that has nothing to do with the PR's actual changes. It still runs
+    # normally for internal branches, pull requests within this repo, and
+    # pushes to master, where secrets are available.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
       - uses: google-github-actions/auth@v2
