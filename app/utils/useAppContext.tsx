@@ -36,7 +36,7 @@ export type AuthState = {
 } | null;
 
 interface Context {
-  setBookmarksMenuOpen: (open: boolean) => void;
+  setBookmarksMenuOpen: (open: boolean, folderId?: number | null) => void;
   userLocation: GeoCoordinates | null;
   authState: AuthState;
   setAuthState: (state: AuthState) => void;
@@ -68,7 +68,7 @@ export const AppProvider = ({
 }: {
   children: React.ReactNode;
   userLocation: GeoCoordinates | null;
-  setBookmarksMenuOpen: (open: boolean) => void;
+  setBookmarksMenuOpen: (open: boolean, folderId?: number | null) => void;
 }) => {
   const history = useHistory();
   const authObject = SessionCacher.getAuthObject();

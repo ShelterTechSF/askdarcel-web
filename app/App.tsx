@@ -37,6 +37,19 @@ export const App = () => {
   const history = useHistory();
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [bookmarksMenuOpen, setbookmarksMenuOpen] = useState(false);
+  const [initialBookmarkFolderId, setInitialBookmarkFolderId] =
+  useState<number | null>(null);
+  
+  const setBookmarksMenuOpen = (
+    open: boolean,
+    folderId: number | null = null
+  ) => {
+    setbookmarksMenuOpen(open);
+    if (open) {
+      setInitialBookmarkFolderId(folderId);
+    }
+  };
+
   const [popUpMessage, setPopUpMessage] = useState<PopupMessageProp>({
     message: "",
     visible: false,
@@ -72,7 +85,7 @@ export const App = () => {
     <div id={outerContainerId} className={styles.outerContainer}>
       <AppProvider
         userLocation={userLocation}
-        setBookmarksMenuOpen={setbookmarksMenuOpen}
+        setBookmarksMenuOpen={setBookmarksMenuOpen}
       >
         <Helmet>
           <title>{title}</title>
@@ -104,10 +117,11 @@ export const App = () => {
         />
         <BookmarksMenu
           isOpen={bookmarksMenuOpen}
+          initialFolderId={initialBookmarkFolderId}
           outerContainerId={outerContainerId}
-          onStateChange={(s) => setbookmarksMenuOpen(s.isOpen)}
+          onStateChange={(s) => setBookmarksMenuOpen(s.isOpen)}
           pageWrapId={pageWrapId}
-          toggleBookmarksMenu={() => setbookmarksMenuOpen(!bookmarksMenuOpen)}
+          toggleBookmarksMenu={() => setBookmarksMenuOpen(!bookmarksMenuOpen)}
         />
         <div id={pageWrapId}>
           <Navigation
