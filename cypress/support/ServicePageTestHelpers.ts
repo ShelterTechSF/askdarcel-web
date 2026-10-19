@@ -9,7 +9,6 @@ export class ServicePageTestHelpers {
   SECTION_HOURS_ROWS = '[data-cy="opening-times-row"]';
 
   BUTTON_PRINT = ".action-sidebar--print";
-  BUTTON_DIRECTIONS = ".action-sidebar--directions";
 
   url = (serviceId: number) => `/services/${serviceId}?visitDeactivated=true`;
 

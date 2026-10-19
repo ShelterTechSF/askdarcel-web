@@ -85,8 +85,6 @@ export const getOrganizationActions = (
   org: Organization
 ): OrganizationAction[] => {
   const phoneNumber = org?.phones?.[0]?.number;
-  const latitude = org?.addresses?.[0]?.latitude;
-  const longitude = org?.addresses?.[0]?.longitude;
 
   const actions: OrganizationAction[] = [
     // {
@@ -105,14 +103,6 @@ export const getOrganizationActions = (
       name: "Call",
       icon: "phone",
       link: `tel:${phoneNumber}`,
-    });
-  }
-
-  if (latitude && longitude) {
-    actions.push({
-      name: "Directions",
-      icon: "directions",
-      link: `http://google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
     });
   }
 
