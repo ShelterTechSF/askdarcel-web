@@ -1,0 +1,29 @@
+@import "../../styles/utils/helpers";
+
+.location-index {
+  white-space: nowrap;
+}
+
+.location-address {
+  width: 100%;
+}
+
+.location-directions-link {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid $color-brand;
+  border-radius: 3px;
+  background-color: $color-white;
+  color: $color-brand;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+
+  &:hover,
+  &:focus {
+    background-color: $color-brand;
+    color: $color-white;
+  }
+}

@@ -9,7 +9,9 @@ import {
   CustomMarker,
   UserLocationMarker,
 } from "../ui/MapElements";
+
 import { distanceInMiles, useAppContext } from "../../utils";
+import "./MapOfLocations.scss";
 
 export const MapOfLocations = ({
   locationRenderer,
@@ -65,11 +67,22 @@ export const MapOfLocations = ({
                   <table>
                     <tbody>
                       <tr>
-                        <td className="iconcell">{i + 1}.</td>
-                        <td>
+                        <td className="location-index">{i + 1}.</td>
+                        <td className="location-address">
                           <strong className="notranslate">
                             {loc.address.address_1}
                           </strong>
+                        </td>
+                        <td>
+                          <a
+                            className="location-directions-link"
+                            href={`http://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Directions
+                          </a>
                         </td>
                         <td className="iconcell">
                           <div className="selector">
