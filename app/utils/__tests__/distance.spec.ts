@@ -13,6 +13,9 @@ describe("distanceInMiles", () => {
   });
 
   it("should return the correct distance from civic center to ferry building", () => {
-    expect(distanceInMiles(CIVIC_CENTER, FERRY_BUILDING)).to.be.closeTo(1.999, 0.001);
+    expect(distanceInMiles(CIVIC_CENTER, FERRY_BUILDING)).to.be.closeTo(
+      1.999,
+      0.001
+    );
   });
 });

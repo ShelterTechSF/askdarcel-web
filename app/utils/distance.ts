@@ -15,7 +15,10 @@ const degreesToRadians = (degrees: number): number => {
  *
  * https://www.movable-type.co.uk/scripts/latlong.html
  */
-export const distanceInMiles = (from: GeoCoordinates, to: GeoCoordinates): number => {
+export const distanceInMiles = (
+  from: GeoCoordinates,
+  to: GeoCoordinates
+): number => {
   const meanLat = degreesToRadians((from.lat + to.lat) / 2);
   const x = degreesToRadians(to.lng - from.lng) * Math.cos(meanLat);
   const y = degreesToRadians(to.lat - from.lat);
