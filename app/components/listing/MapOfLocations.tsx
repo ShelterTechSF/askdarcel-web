@@ -1,15 +1,7 @@
 import React, { ReactElement } from "react";
-import GoogleMap from "google-map-react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
-import { Loader } from "../ui";
 import { Accordion, AccordionItem } from "../ui/Accordion";
-import {
-  createMapOptions,
-  CustomMarker,
-  UserLocationMarker,
-} from "../ui/MapElements";
-import { useAppContext } from "../../utils";
 
 export const MapOfLocations = ({
   locationRenderer,
@@ -18,34 +10,8 @@ export const MapOfLocations = ({
   locations: LocationDetails[];
   locationRenderer: (loc: LocationDetails) => ReactElement;
 }) => {
-  const { userLocation } = useAppContext();
-  if (userLocation === null) {
-    return <Loader />;
-  }
-  const { lat, lng } = userLocation;
-
   return (
     <div>
-      <div className="map">
-        <GoogleMap
-          bootstrapURLKeys={{
-            key: config.GOOGLE_API_KEY,
-          }}
-          defaultCenter={{ lat, lng }}
-          defaultZoom={15}
-          options={createMapOptions}
-        >
-          <UserLocationMarker lat={lat} lng={lng} />
-          {locations.map(({ address, id }, i) => (
-            <CustomMarker
-              key={id}
-              lat={address?.latitude || 0}
-              lng={address?.longitude || 0}
-              text={`${i + 1}`}
-            />
-          ))}
-        </GoogleMap>
-      </div>
       {locationRenderer && (
         <Accordion>
           {locations.map((loc, i) => (
@@ -76,7 +42,22 @@ export const MapOfLocations = ({
                 </div>
               }
             >
-              {locationRenderer(loc)}
+              <>
+                <iframe
+                  className="map"
+                  title={`Map of ${loc.address.address_1}`}
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
+                    {
+                      key: config.GOOGLE_API_KEY,
+                      q: `${loc.address.latitude || 0},${
+                        loc.address.longitude || 0
+                      }`,
+                    }
+                  )}`}
+                />
+                {locationRenderer(loc)}
+              </>
             </AccordionItem>
           ))}
         </Accordion>
