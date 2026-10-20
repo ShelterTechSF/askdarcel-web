@@ -50,7 +50,9 @@ export const MapOfLocations = ({
                   src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
                     {
                       key: config.GOOGLE_API_KEY,
-                      q: `${loc.address.latitude || 0},${loc.address.longitude || 0}`,
+                      q: `${loc.address.latitude || 0},${
+                        loc.address.longitude || 0
+                      }`,
                     }
                   )}`}
                 />
