@@ -1,14 +1,8 @@
 import React, { ReactElement } from "react";
-import GoogleMap from "google-map-react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
-import { Loader } from "../ui";
+import { Loader } from "../ui/Loader";
 import { Accordion, AccordionItem } from "../ui/Accordion";
-import {
-  createMapOptions,
-  CustomMarker,
-  UserLocationMarker,
-} from "../ui/MapElements";
 import { distanceInMiles, useAppContext } from "../../utils";
 import "./MapOfLocations.scss";
 
@@ -36,26 +30,6 @@ export const MapOfLocations = ({
 
   return (
     <div>
-      <div className="map">
-        <GoogleMap
-          bootstrapURLKeys={{
-            key: config.GOOGLE_API_KEY,
-          }}
-          defaultCenter={{ lat, lng }}
-          defaultZoom={15}
-          options={createMapOptions}
-        >
-          <UserLocationMarker lat={lat} lng={lng} />
-          {sortedLocations.map(({ address, id }, i) => (
-            <CustomMarker
-              key={id}
-              lat={address?.latitude || 0}
-              lng={address?.longitude || 0}
-              text={`${i + 1}`}
-            />
-          ))}
-        </GoogleMap>
-      </div>
       {locationRenderer && (
         <Accordion>
           {sortedLocations.map((loc, i) => (
@@ -99,7 +73,20 @@ export const MapOfLocations = ({
                 </div>
               }
             >
-              {locationRenderer(loc)}
+              <>
+                <iframe
+                  className="map"
+                  title={`Map of ${loc.address.address_1}`}
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
+                    {
+                      key: config.GOOGLE_API_KEY,
+                      q: `${loc.address.latitude || 0},${loc.address.longitude || 0}`,
+                    }
+                  )}`}
+                />
+                {locationRenderer(loc)}
+              </>
             </AccordionItem>
           ))}
         </Accordion>
