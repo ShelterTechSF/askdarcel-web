@@ -12,7 +12,7 @@ export const Accordion = ({ children }: { children: JSX.Element[] }) => {
           onClick={() => setActiveTab(i)}
           key={ch.key}
         >
-          {ch}
+          {React.cloneElement(ch, { isOpen: activeTab === i })}
         </li>
       ))}
     </ul>
@@ -23,12 +23,14 @@ export const Accordion = ({ children }: { children: JSX.Element[] }) => {
 export const AccordionItem = ({
   children,
   headerRenderer,
+  isOpen = false,
 }: {
   headerRenderer?: JSX.Element;
   children: JSX.Element;
+  isOpen?: boolean;
 }) => (
   <div>
     <header>{headerRenderer}</header>
-    <section>{children}</section>
+    <section>{isOpen ? children : null}</section>
   </div>
 );
