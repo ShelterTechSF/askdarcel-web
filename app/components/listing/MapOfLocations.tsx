@@ -9,7 +9,7 @@ import {
   CustomMarker,
   UserLocationMarker,
 } from "../ui/MapElements";
-import { useAppContext } from "../../utils";
+import { distanceInMiles, useAppContext } from "../../utils";
 
 export const MapOfLocations = ({
   locationRenderer,
@@ -24,6 +24,15 @@ export const MapOfLocations = ({
   }
   const { lat, lng } = userLocation;
 
+  const distanceFromUser = (loc: LocationDetails) =>
+    distanceInMiles(userLocation, {
+      lat: Number(loc.address?.latitude) || 0,
+      lng: Number(loc.address?.longitude) || 0,
+    });
+  const sortedLocations = [...locations].sort(
+    (a, b) => distanceFromUser(a) - distanceFromUser(b)
+  );
+
   return (
     <div>
       <div className="map">
@@ -36,7 +45,7 @@ export const MapOfLocations = ({
           options={createMapOptions}
         >
           <UserLocationMarker lat={lat} lng={lng} />
-          {locations.map(({ address, id }, i) => (
+          {sortedLocations.map(({ address, id }, i) => (
             <CustomMarker
               key={id}
               lat={address?.latitude || 0}
@@ -48,7 +57,7 @@ export const MapOfLocations = ({
       </div>
       {locationRenderer && (
         <Accordion>
-          {locations.map((loc, i) => (
+          {sortedLocations.map((loc, i) => (
             <AccordionItem
               key={loc.address.id}
               headerRenderer={
