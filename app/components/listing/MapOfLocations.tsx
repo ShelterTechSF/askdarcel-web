@@ -66,7 +66,7 @@ export const MapOfLocations = ({
                         <td>
                           <a
                             className="location-directions-link"
-                            href={`http://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
+                            href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
