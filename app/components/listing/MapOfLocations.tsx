@@ -74,15 +74,17 @@ export const MapOfLocations = ({
                           </strong>
                         </td>
                         <td>
-                          <a
-                            className="location-directions-link"
-                            href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            Directions
-                          </a>
+                          {loc.address.latitude && loc.address.longitude && (
+                            <a
+                              className="location-directions-link"
+                              href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Directions
+                            </a>
+                          )}
                         </td>
                         <td className="iconcell">
                           <div className="selector">
