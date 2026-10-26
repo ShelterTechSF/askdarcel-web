@@ -35,7 +35,6 @@ export const MapOfLocations = ({
           items={sortedLocations}
           getKey={(loc) => loc.address.id}
           headerRenderer={(loc, i) => (
-            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             <div>
               <table>
                 <tbody>
