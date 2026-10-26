@@ -1,14 +1,8 @@
 import React, { ReactElement } from "react";
-import GoogleMap from "google-map-react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
 import { Loader } from "../ui";
-import { Accordion, AccordionItem } from "../ui/Accordion";
-import {
-  createMapOptions,
-  CustomMarker,
-  UserLocationMarker,
-} from "../ui/MapElements";
+import { Accordion } from "../ui/Accordion";
 import { distanceInMiles, useAppContext } from "../../utils";
 import "./MapOfLocations.scss";
 
@@ -36,73 +30,66 @@ export const MapOfLocations = ({
 
   return (
     <div>
-      <div className="map">
-        <GoogleMap
-          bootstrapURLKeys={{
-            key: config.GOOGLE_API_KEY,
-          }}
-          defaultCenter={{ lat, lng }}
-          defaultZoom={15}
-          options={createMapOptions}
-        >
-          <UserLocationMarker lat={lat} lng={lng} />
-          {sortedLocations.map(({ address, id }, i) => (
-            <CustomMarker
-              key={id}
-              lat={address?.latitude || 0}
-              lng={address?.longitude || 0}
-              text={`${i + 1}`}
-            />
-          ))}
-        </GoogleMap>
-      </div>
       {locationRenderer && (
-        <Accordion>
-          {sortedLocations.map((loc, i) => (
-            <AccordionItem
-              key={loc.address.id}
-              headerRenderer={
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="location-index">{i + 1}.</td>
-                        <td className="location-address">
-                          <strong className="notranslate">
-                            {loc.address.address_1}
-                          </strong>
-                        </td>
-                        <td>
-                          {loc.address.latitude && loc.address.longitude && (
-                            <a
-                              className="location-directions-link"
-                              href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              Directions
-                            </a>
-                          )}
-                        </td>
-                        <td className="iconcell">
-                          <div className="selector">
-                            <i className="material-symbols-outlined">
-                              keyboard_arrow_down
-                            </i>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  {/* TODO Transportation options */}
-                </div>
-              }
-            >
+        <Accordion
+          items={sortedLocations}
+          getKey={(loc) => loc.address.id}
+          headerRenderer={(loc, i) => (
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td className="location-index">{i + 1}.</td>
+                    <td className="location-address">
+                      <strong className="notranslate">
+                        {loc.address.address_1}
+                      </strong>
+                    </td>
+                    <td>
+                      {loc.address.latitude && loc.address.longitude && (
+                        <a
+                          className="location-directions-link"
+                          href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Directions
+                        </a>
+                      )}
+                    </td>
+                    <td className="iconcell">
+                      <div className="selector">
+                        <i className="material-symbols-outlined">
+                          keyboard_arrow_down
+                        </i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* TODO Transportation options */}
+            </div>
+          )}
+          sectionRenderer={(loc) => (
+            <>
+              {loc.address.latitude && loc.address.longitude && (
+                <iframe
+                  className="map"
+                  title={`Map of ${loc.address.address_1}`}
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
+                    {
+                      key: config.GOOGLE_API_KEY,
+                      q: `${loc.address.latitude},${loc.address.longitude}`,
+                    }
+                  )}`}
+                />
+              )}
               {locationRenderer(loc)}
-            </AccordionItem>
-          ))}
-        </Accordion>
+            </>
+          )}
+        />
       )}
       {/* <table>
         <tbody>
