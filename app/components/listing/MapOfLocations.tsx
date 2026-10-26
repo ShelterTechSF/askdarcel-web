@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
-import { Loader } from "../ui/Loader";
+import { Loader } from "../ui";
 import { Accordion } from "../ui/Accordion";
 import { distanceInMiles, useAppContext } from "../../utils";
 import "./MapOfLocations.scss";
