@@ -9,7 +9,6 @@ import {
   CustomMarker,
   UserLocationMarker,
 } from "../ui/MapElements";
-
 import { distanceInMiles, useAppContext } from "../../utils";
 import "./MapOfLocations.scss";
 
