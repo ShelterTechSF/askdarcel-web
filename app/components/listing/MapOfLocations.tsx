@@ -74,19 +74,19 @@ export const MapOfLocations = ({
           )}
           sectionRenderer={(loc) => (
             <>
-              <iframe
-                className="map"
-                title={`Map of ${loc.address.address_1}`}
-                referrerPolicy="strict-origin-when-cross-origin"
-                src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
-                  {
-                    key: config.GOOGLE_API_KEY,
-                    q: `${loc.address.latitude || 0},${
-                      loc.address.longitude || 0
-                    }`,
-                  }
-                )}`}
-              />
+              {loc.address.latitude && loc.address.longitude && (
+                <iframe
+                  className="map"
+                  title={`Map of ${loc.address.address_1}`}
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
+                    {
+                      key: config.GOOGLE_API_KEY,
+                      q: `${loc.address.latitude},${loc.address.longitude}`,
+                    }
+                  )}`}
+                />
+              )}
               {locationRenderer(loc)}
             </>
           )}
