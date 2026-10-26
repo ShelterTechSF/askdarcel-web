@@ -39,8 +39,6 @@ describe("Service Page", () => {
     cy.visit(page.url(serviceId))
       .get(page.BUTTON_PRINT)
       .should("exist")
-      .get(page.BUTTON_DIRECTIONS)
-      .should("exist")
 
       .get(page.SERVICE_TITLE)
       .should("contain.text", change_request.name)

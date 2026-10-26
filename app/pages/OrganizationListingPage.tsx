@@ -49,12 +49,8 @@ export const OrganizationListingPage = () => {
 
   const orgLocations = getOrganizationLocations(org);
   const allActions = getOrganizationActions(org);
-  const sidebarActions = allActions.filter((a) =>
-    ["print", "directions"].includes(a.icon)
-  );
-  const mobileActions = allActions.filter((a) =>
-    ["phone", "directions"].includes(a.icon)
-  );
+  const sidebarActions = allActions.filter((a) => a.icon === "print");
+  const mobileActions = allActions.filter((a) => a.icon === "phone");
   const onClickAction = (action: OrganizationAction) => {
     switch (action.icon) {
       case "print":
