@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import config from "../../config";
 import { LocationDetails } from "../../models";
 import { Loader } from "../ui/Loader";
-import { Accordion, AccordionItem } from "../ui/Accordion";
+import { Accordion } from "../ui/Accordion";
 import { distanceInMiles, useAppContext } from "../../utils";
 import "./MapOfLocations.scss";
 
@@ -31,67 +31,66 @@ export const MapOfLocations = ({
   return (
     <div>
       {locationRenderer && (
-        <Accordion>
-          {sortedLocations.map((loc, i) => (
-            <AccordionItem
-              key={loc.address.id}
-              headerRenderer={
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="location-index">{i + 1}.</td>
-                        <td className="location-address">
-                          <strong className="notranslate">
-                            {loc.address.address_1}
-                          </strong>
-                        </td>
-                        <td>
-                          {loc.address.latitude && loc.address.longitude && (
-                            <a
-                              className="location-directions-link"
-                              href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              Directions
-                            </a>
-                          )}
-                        </td>
-                        <td className="iconcell">
-                          <div className="selector">
-                            <i className="material-symbols-outlined">
-                              keyboard_arrow_down
-                            </i>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  {/* TODO Transportation options */}
-                </div>
-              }
-            >
-              <>
-                <iframe
-                  className="map"
-                  title={`Map of ${loc.address.address_1}`}
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
-                    {
-                      key: config.GOOGLE_API_KEY,
-                      q: `${loc.address.latitude || 0},${
-                        loc.address.longitude || 0
-                      }`,
-                    }
-                  )}`}
-                />
-                {locationRenderer(loc)}
-              </>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <Accordion
+          items={sortedLocations}
+          getKey={(loc) => loc.address.id}
+          headerRenderer={(loc, i) => (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td className="location-index">{i + 1}.</td>
+                    <td className="location-address">
+                      <strong className="notranslate">
+                        {loc.address.address_1}
+                      </strong>
+                    </td>
+                    <td>
+                      {loc.address.latitude && loc.address.longitude && (
+                        <a
+                          className="location-directions-link"
+                          href={`https://google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${loc.address.latitude},${loc.address.longitude}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Directions
+                        </a>
+                      )}
+                    </td>
+                    <td className="iconcell">
+                      <div className="selector">
+                        <i className="material-symbols-outlined">
+                          keyboard_arrow_down
+                        </i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* TODO Transportation options */}
+            </div>
+          )}
+          sectionRenderer={(loc) => (
+            <>
+              <iframe
+                className="map"
+                title={`Map of ${loc.address.address_1}`}
+                referrerPolicy="strict-origin-when-cross-origin"
+                src={`https://www.google.com/maps/embed/v1/place?${new URLSearchParams(
+                  {
+                    key: config.GOOGLE_API_KEY,
+                    q: `${loc.address.latitude || 0},${
+                      loc.address.longitude || 0
+                    }`,
+                  }
+                )}`}
+              />
+              {locationRenderer(loc)}
+            </>
+          )}
+        />
       )}
       {/* <table>
         <tbody>

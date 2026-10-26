@@ -14,6 +14,11 @@ declare module "*.module.scss" {
   export default classes;
 }
 
+// Global stylesheets imported only for their side effects
+// (`import "./Component.scss"`). Declared after `*.module.scss` so CSS modules
+// keep the more specific class-map type.
+declare module "*.scss";
+
 // Define the type of imported SVG files, which Webpack's url-loader/file-loader
 // will normally import as a string URL to the image or an embedded data: URL.
 //

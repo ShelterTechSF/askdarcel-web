@@ -1,36 +1,31 @@
 import React, { useState } from "react";
 import "./Accordion.scss";
 
-export const Accordion = ({ children }: { children: JSX.Element[] }) => {
+export const Accordion = <T,>({
+  items,
+  getKey,
+  headerRenderer,
+  sectionRenderer,
+}: {
+  items: T[];
+  getKey: (item: T) => string | number;
+  headerRenderer: (item: T, index: number) => React.ReactNode;
+  sectionRenderer: (item: T) => React.ReactNode;
+}) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
     <ul className="accordion">
-      {children.map((ch, i) => (
+      {items.map((item, i) => (
         <li // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
           className={activeTab === i ? "open" : "closed"}
           onClick={() => setActiveTab(i)}
-          key={ch.key}
+          key={getKey(item)}
         >
-          {React.cloneElement(ch, { isOpen: activeTab === i })}
+          <header>{headerRenderer(item, i)}</header>
+          <section>{activeTab === i ? sectionRenderer(item) : null}</section>
         </li>
       ))}
     </ul>
   );
 };
-
-// TODO Enforcing the user to add their own dropdown with a custom renderer is a bit clunky
-export const AccordionItem = ({
-  children,
-  headerRenderer,
-  isOpen = false,
-}: {
-  headerRenderer?: JSX.Element;
-  children: JSX.Element;
-  isOpen?: boolean;
-}) => (
-  <div>
-    <header>{headerRenderer}</header>
-    <section>{isOpen ? children : null}</section>
-  </div>
-);
