@@ -108,7 +108,7 @@ export const EditBreakingNewsPage = () => {
   const onSave = (index: number) => {
     const articleFromState = breakingNewsArticles[index];
     const articleId = articleFromState.id;
-    const route = `/api/news_articles/${articleId ?? ""}`;
+    const route = `/api/v2/news_articles/${articleId ?? ""}`;
 
     if (articleId) {
       dataService.put(route, articleFromState);
@@ -125,7 +125,7 @@ export const EditBreakingNewsPage = () => {
       updatedBreakingNewsArticles.splice(index, 1);
 
       if (articleId) {
-        dataService.APIDelete(`/api/news_articles/${articleId}`);
+        dataService.APIDelete(`/api/v2/news_articles/${articleId}`);
         // Todo: Add a catch here; if this fails, front-end state will be out of sync with the actual data
       }
 
