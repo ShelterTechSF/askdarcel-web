@@ -1561,35 +1561,31 @@ class OrganizationEditPage extends React.Component<Props, State> {
     // Resource
     const field_changes: Partial<Organization> = {};
     let resourceModified = false;
-    if (name !== resource.name) {
+    if (name !== undefined && name !== resource.name) {
       field_changes.name = name;
       resourceModified = true;
     }
-    if (long_description !== resource.long_description) {
+    if (long_description !== undefined && long_description !== resource.long_description) {
       field_changes.long_description = long_description;
       resourceModified = true;
     }
-    if (short_description !== resource.short_description) {
-      field_changes.short_description = short_description;
-      resourceModified = true;
-    }
-    if (website !== resource.website) {
+    if (website !== undefined && website !== resource.website) {
       field_changes.website = website;
       resourceModified = true;
     }
-    if (email !== resource.email) {
+    if (email !== undefined && email !== resource.email) {
       field_changes.email = email;
       resourceModified = true;
     }
-    if (alternate_name !== resource.alternate_name) {
+    if (alternate_name !== undefined && alternate_name !== resource.alternate_name) {
       field_changes.alternate_name = alternate_name;
       resourceModified = true;
     }
-    if (legal_status !== resource.legal_status) {
+    if (legal_status !== undefined && legal_status !== resource.legal_status) {
       field_changes.legal_status = legal_status;
       resourceModified = true;
     }
-    if (internal_note !== resource.internal_note) {
+    if (internal_note !== undefined && internal_note !== resource.internal_note) {
       field_changes.internal_note = internal_note;
       resourceModified = true;
     }
