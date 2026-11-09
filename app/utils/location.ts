@@ -69,7 +69,7 @@ export const useDefaultSanFranciscoLocation = () =>
 /**
  * Get user location.
  *
- * Makes use of the HTML5 Geolocation API. Currently restricts the location to 
+ * Makes use of the HTML5 Geolocation API. Currently restricts the location to
  * within San Francisco to avoid inaccurate geolocation results. This restriction
  * should be removed if more locations are added.
  *
