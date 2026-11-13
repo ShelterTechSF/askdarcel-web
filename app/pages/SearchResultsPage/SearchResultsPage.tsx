@@ -131,8 +131,8 @@ export const SearchResultsPage = () => {
               user_id: user.id,
               name: searchState.query || "",
               search: {
-                eligibilities: searchState.refinementList.eligibilities ?? [],
-                categories: searchState.refinementList.categories ?? [],
+                eligibilities: searchState.refinementList?.eligibilities || [],
+                categories: searchState.refinementList?.categories || [],
                 lat,
                 lng,
                 query: searchState.query ?? "",
